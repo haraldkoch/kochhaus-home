@@ -8,7 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: twuni/docker-registry
+      chart: docker-registry
       version: 1.10.1
       sourceRef:
         kind: HelmRepository
