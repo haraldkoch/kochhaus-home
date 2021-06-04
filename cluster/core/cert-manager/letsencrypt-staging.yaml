@@ -13,7 +13,7 @@ spec:
     - dns01:
         rfc2136:
           nameserver: "${SECRET_EXTERNAL_DNS_SERVER}"
-          tsigKeyName: rndc-key
+          tsigKeyName: externaldns
           tsigAlgorithm: HMACSHA256
           tsigSecretSecretRef:
             name: rfc2136-tsig-secret
