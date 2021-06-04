@@ -10,7 +10,6 @@ spec:
     spec:
       chart: twuni/docker-registry
       version: 1.10.1
-      targetNamespace: kube-system
       sourceRef:
         kind: HelmRepository
         name: twuni-charts
