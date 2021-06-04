@@ -10,7 +10,6 @@ spec:
   - hosts:
     - echo1.kochhaus.net
     - echo2.kochhaus.net
-    secretName: echo-tls
   rules:
   - host: echo1.kochhaus.net
     http:
