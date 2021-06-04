@@ -1,0 +1,56 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: external-dns
+  namespace: networking
+spec:
+  interval: 5m
+  releaseName: external-dns
+  chart:
+    spec:
+      # renovate: registryUrl=https://charts.bitnami.com/bitnami
+      chart: external-dns
+      version: 5.0.2
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    image:
+      repository: bitnami/external-dns
+      tag: 0.8.0-debian-10-r11
+    provider: rfc2316
+    rfc2316:
+      host: ${SECRET_EXTERNAL_DNS_SERVER}
+      zone:
+      tsigSecret: ${SECRET_TSIG_KEY}
+      tsigKeyname: externaldns
+      tsigSecretAlg: hmac-sha256
+    policy: sync
+    sources:
+      - service
+      - ingress
+      - crd
+      # - istio-gateway
+      # - istio-virtualservice
+    domainFilters:
+      - "${SECRET_DOMAIN}"
+    createSecret: true
+    crd:
+      # disabled --pulled from source repo https://raw.githubusercontent.com/kubernetes-sigs/external-dns/master/docs/contributing/crd-source/crd-manifest.yaml
+      create: false
+      apiversion: externaldns.k8s.io/v1alpha1
+      kind: DNSEndpoint
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    logLevel: debug
+    resources:
+      requests:
+        memory: 250Mi
+        cpu: 25m
+      limits:
+        memory: 250Mi
