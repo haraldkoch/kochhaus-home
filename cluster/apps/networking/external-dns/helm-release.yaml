@@ -24,7 +24,7 @@ spec:
     provider: rfc2136
     rfc2136:
       host: ${SECRET_EXTERNAL_DNS_SERVER}
-      zone:
+      zone: ${SECRET_DOMAIN}
       tsigSecret: ${SECRET_TSIG_KEY}
       tsigKeyname: externaldns
       tsigSecretAlg: hmac-sha256
