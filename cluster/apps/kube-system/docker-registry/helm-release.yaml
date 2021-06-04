@@ -17,15 +17,17 @@ spec:
   values:
     service:
       name: registry
-      type: LoadBalancer
+      type: ClusterIP
     persistence:
       enabled: true
     ingress:
       enabled: true
       tls:
       - hosts:
-        - docker.kochhaus.net
+        - "docker.${SECRET_DOMAIN}"
         secretName: docker-tls
+      hosts:
+      - host: "docker.${SECRET_DOMAIN}"
       annotations:
         kubernetes.io/ingress.class: "nginx"
         cert-manager.io/cluster-issuer: "letsencrypt-prod"
