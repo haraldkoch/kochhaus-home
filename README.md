@@ -18,8 +18,12 @@
   - [metallb](https://metallb.universe.tf/): Kubernetes Load Balancer that runs on Kubernetes.
   - [nginx ingress](https://kubernetes.github.io/ingress-nginx/): Ingress controller that uses NGINX (instead of Rancher's default Traefik).
   - [homer](https://github.com/bastienwirtz/homer): a simple home page builder using YAML.
+  - [external-dns](https://github.com/kubernetes-sigs/external-dns): monitors service and ingress resources, and automatically generates DNS updates for them. This lets me maintain DNS mappings and LetsEncrypt certificates without a cloudflare account or domain.
+  - [docker-registry](https://github.com/twuni/docker-registry.helm): Private docker registry.
 
 ## Applications
+
+  - [openweathermap-exporter](https://github.com/blackrez/openweathermap_exporter): a Prometheus exporter for Openweather.
 
 ---
 
