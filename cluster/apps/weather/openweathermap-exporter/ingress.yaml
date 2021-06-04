@@ -2,12 +2,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  name: openweathermap-exporter
+  namespace: weather
+  labels:
+    app: openweathermap-exporter
   annotations:
     kubernetes.io/ingress.class: "nginx"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-  labels:
-    app: openweathermap-exporter
-  name: openweathermap-exporter
 spec:
   tls:
   - hosts:
