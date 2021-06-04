@@ -1,6 +1,6 @@
 #### kochhaus-home - Home Cloud using Flux and GitOps
 
-[![k8s](https://img.shields.io/badge/k8s-v1.20.2-orange?style=flat-square)](https://k8s.io/)
+[![k8s](https://img.shields.io/badge/k8s-v1.20.5%2Bk3s1-green?style=flat-square)](https://k8s.io/)
 [![GitHub last commit](https://img.shields.io/github/last-commit/vaskozl/home-infra?style=flat-square)](https://github.com/vaskozl/home-infra/commits/master)
 
 
