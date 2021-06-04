@@ -49,5 +49,5 @@ spec:
 
     additionalVolumeMounts:
     - name: config-volume
-      mountPath: /www/assets/config-git.yml
+      mountPath: /www/assets/config.yml
       subPath: config.yml
