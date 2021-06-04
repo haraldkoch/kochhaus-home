@@ -11,8 +11,10 @@ spec:
       name: letsencrypt-production
     solvers:
     - dns01:
-        cloudflare:
-          email: "${SECRET_CLOUDFLARE_EMAIL}"
-          apiTokenSecretRef:
-            name: cloudflare-token-secret
-            key: cloudflare-token
+        rfc2136:
+          nameserver: "${SECRET_EXTERNAL_DNS_SERVER}"
+          tsigKeyName: rndc-key
+          tsigAlgorithm: HMACSHA256
+          tsigSecretSecretRef:
+            name: rfc2136-tsig-secret
+            key: tsig-secret-key
