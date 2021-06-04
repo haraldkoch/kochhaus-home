@@ -1,5 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- echo
-- homer
+- echo1.yaml
+- echo2.yaml
+- echo_ingress.yaml
