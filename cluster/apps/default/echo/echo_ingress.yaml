@@ -4,22 +4,31 @@ metadata:
   name: echo-ingress
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
 spec:
   tls:
   - hosts:
     - echo1.kochhaus.net
     - echo2.kochhaus.net
+    secretName: echo-tls
   rules:
   - host: echo1.kochhaus.net
     http:
       paths:
       - backend:
-          serviceName: echo1
-          servicePort: 80
+          service:
+            name: echo1
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
   - host: echo2.kochhaus.net
     http:
       paths:
       - backend:
-          serviceName: echo2
-          servicePort: 80
+          service:
+            name: echo2
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
