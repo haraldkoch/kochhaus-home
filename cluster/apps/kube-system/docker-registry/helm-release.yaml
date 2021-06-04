@@ -15,9 +15,6 @@ spec:
         name: twuni-charts
         namespace: flux-system
   values:
-    service:
-      name: registry
-      type: ClusterIP
     persistence:
       enabled: true
     ingress:
@@ -25,7 +22,6 @@ spec:
       tls:
       - hosts:
         - "docker.${SECRET_DOMAIN}"
-        secretName: docker-tls
       hosts:
       - "docker.${SECRET_DOMAIN}"
       annotations:
