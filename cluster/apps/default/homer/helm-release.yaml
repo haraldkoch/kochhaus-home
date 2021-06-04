@@ -20,6 +20,8 @@ spec:
       repository: b4bz/homer
       tag: 21.03.2
       pullPolicy: IfNotPresent
+    env:
+      TZ: America/Toronto
     ingress:
       enabled: true
       annotations:
@@ -35,5 +37,17 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: homer-config
+        existingClaim: homer-pvc
         mountPath: /www/assets
+
+    additionalVolumes:
+    - name: config-volume
+      configMap:
+        # Provide the name of the ConfigMap containing the files you want
+        # to add to the container
+        name: homer-config
+
+    additionalVolumeMounts:
+    - name: config-volume
+      mountPath: /www/assets/config-git.yml
+      subPath: config.yml

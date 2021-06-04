@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homer-config
+data:
+  config.yml: |
+    # Homepage configuration
+    # See https://fontawesome.com/icons for icons options
+
+    # Optional: Use external configuration file.
+    # Using this will ignore remaining config in this file
+    # externalConfig: https://example.com/server-luci/config.yaml
+
+    title: "Yet Another Kochhaus Dashboard"
+    subtitle: "Homer"
+    # documentTitle: "Welcome" # Customize the browser tab text
+    logo: "assets/logo.png"
+    # Alternatively a fa icon can be provided:
+    # icon: "fas fa-skull-crossbones"
+
+    header: true # Set to false to hide the header
+    footer: '<p>Created with <span class="has-text-danger">❤️</span> with <a href="https://bulma.io/">bulma</a>, <a href="https://vuejs.org/">vuejs</a> & <a href="https://fontawesome.com/">font awesome</a> // Fork me on <a href="https://github.com/bastienwirtz/homer"><i class="fab fa-github-alt"></i></a></p>' # set false if you want to hide it.
+
+    columns: "3" # "auto" or number (must be a factor of 12: 1, 2, 3, 4, 6, 12)
+    connectivityCheck: true # whether you want to display a message when the apps are not accessible anymore (VPN disconnected for example)
+
+    # Optional theming
+    theme: default # 'default' or one of the themes available in 'src/assets/themes'.
+
+    # Optional navbar
+    # links: [] # Allows for navbar (dark mode, layout, and search) without any links
+    links:
+      - name: "Link 1"
+        icon: "fab fa-github"
+        url: "https://github.com/haraldkoch/kochhaus-home"
+        target: "_blank" # optional html tag target attribute
+      - name: "link 2"
+        icon: "fas fa-book"
+        url: "https://github.com/bastienwirtz/homer"
+
+    # Services
+    # First level array represents a group.
+    # Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
+    services:
+      - name: "Application"
+        icon: "fas fa-code-branch"
+        items:
+          - name: "Awesome app"
+            logo: "assets/tools/sample.png"
+            # Alternatively a fa icon can be provided:
+            # icon: "fab fa-jenkins"
+            subtitle: "Bookmark example"
+            tag: "app"
+            url: "https://www.reddit.com/r/selfhosted/"
+            target: "_blank" # optional html tag target attribute
+          - name: "Another one"
+            logo: "assets/tools/sample2.png"
+            subtitle: "Another application"
+            tag: "app"
+            # Optional tagstyle
+            tagstyle: "is-success"
+            url: "#"
+      - name: "Other group"
+        icon: "fas fa-heartbeat"
+        items:
+          - name: "Pi-hole"
+            logo: "assets/tools/sample.png"
+            # subtitle: "Network-wide Ad Blocking" # optional, if no subtitle is defined, PiHole statistics will be shown
+            tag: "other"
+            url: "http://199.85.99.2/admin"
+            type: "PiHole" # optional, loads a specific component that provides extra features. MUST MATCH a file name (without file extension) available in `src/components/services`
+            target: "_blank" # optional html a tag target attribute
+            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
+            # background: red # optional color for card to set color directly without custom stylesheet
