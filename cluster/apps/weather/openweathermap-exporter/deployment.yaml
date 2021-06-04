@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: openweathermap-exporter
+  name: openweathermap-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: openweathermap-exporter
+  template:
+    metadata:
+      labels:
+        app: openweathermap-exporter
+    spec:
+      containers:
+      - name: openweathermap-exporter
+        image: ${PRIVATE_REGISTRY_1}/haraldkoch/ows:latest
+        env:
+        - name: SERVER_PORT
+          value: "2112"
+        - name: OWM_LOCATION
+          value: "TORONTO,CA"
+        - name: OWM_API_KEY
+          value: ${OPENWEATHERMAP_API_KEY}
+        ports:
+        - containerPort: 2112
