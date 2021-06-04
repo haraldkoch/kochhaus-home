@@ -21,8 +21,8 @@ spec:
     image:
       repository: bitnami/external-dns
       tag: 0.8.0-debian-10-r11
-    provider: rfc2316
-    rfc2316:
+    provider: rfc2136
+    rfc2136:
       host: ${SECRET_EXTERNAL_DNS_SERVER}
       zone:
       tsigSecret: ${SECRET_TSIG_KEY}
