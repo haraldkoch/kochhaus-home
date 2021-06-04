@@ -40,6 +40,8 @@ spec:
     createSecret: true
     crd:
       create: false
+      apiversion: externaldns.k8s.io/v1alpha1
+      kind: DNSEndpoint
 #    metrics:
 #      enabled: true
 #      serviceMonitor:
