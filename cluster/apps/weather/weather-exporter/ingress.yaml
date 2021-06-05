@@ -8,11 +8,8 @@ metadata:
     app: weather-exporter
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
-  tls:
-  - hosts:
-    - weather.${SECRET_DOMAIN}
   rules:
   - host: weather.${SECRET_DOMAIN}
     http:
