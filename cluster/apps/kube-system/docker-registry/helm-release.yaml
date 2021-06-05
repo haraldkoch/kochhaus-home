@@ -17,6 +17,7 @@ spec:
   values:
     persistence:
       enabled: true
+      storageClass: nfs-client
     ingress:
       enabled: true
       tls:
