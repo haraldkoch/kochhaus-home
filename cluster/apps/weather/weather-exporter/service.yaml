@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather-exporter-weather-exporter
+  namespace: weather-exporter
+  labels:
+    app: weather-exporter
+spec:
+  ports:
+  - name: weather-exporter
+    port: 9265
+    targetPort: 9265
+    protocol: TCP
+  selector:
+    app: weather-exporter
