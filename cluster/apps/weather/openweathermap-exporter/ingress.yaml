@@ -14,10 +14,10 @@ spec:
   - host: weather.${SECRET_DOMAIN}
     http:
       paths:
-      - backend:
+      - path: /openweathermap-exporter
+        pathType: Prefix
+        backend:
           service:
             name: openweathermap-exporter
             port:
               number: 2112
-        path: /openweathermap-exporter
-        pathType: Prefix
