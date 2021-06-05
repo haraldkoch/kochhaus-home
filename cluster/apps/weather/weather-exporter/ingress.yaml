@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: weather-exporter
-  namespace: weather-exporter
+  namespace: weather
   labels:
     app: weather-exporter
   annotations:
