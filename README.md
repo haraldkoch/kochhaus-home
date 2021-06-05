@@ -20,10 +20,20 @@
   - [homer](https://github.com/bastienwirtz/homer): a simple home page builder using YAML.
   - [external-dns](https://github.com/kubernetes-sigs/external-dns): monitors service and ingress resources, and automatically generates DNS updates for them. This lets me maintain DNS mappings and LetsEncrypt certificates without a cloudflare account or domain.
   - [docker-registry](https://github.com/twuni/docker-registry.helm): Private docker registry.
+  - [nfs-subdir-external-provisioner](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner): creates Persistent Volumes on a pre-existing NFS mount.
+  - [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller): Automatically upgrade the K3S kubernetes instance.
 
 ## Applications
 
   - [openweathermap-exporter](https://github.com/blackrez/openweathermap_exporter): a Prometheus exporter for Openweather.
+  - [weather-exporter](): the much older weather exporter using the DarkSky API.
+
+Yes, this is a lot of infrastructure and heavy lifting to run two small Docker containers. That's not the point; the point is to experiment with Kubernetes and GitOps in a safe space.
+
+I have two longer-term goals:
+
+  1. migrate many of the apps that I currently run on Linode to a K8S cluster at Linode or Digital Ocean.
+  2. Build a small Raspberry Pi cluster at home to run all of this infrastructure, including pi-hole, homeassistant, and maybe even plex!
 
 ---
 
