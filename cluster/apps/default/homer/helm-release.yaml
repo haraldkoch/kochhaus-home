@@ -16,10 +16,6 @@ spec:
         name: k8s-at-home-charts
         namespace: flux-system
   values:
-    image:
-      repository: b4bz/homer
-      tag: 21.03.2
-      pullPolicy: IfNotPresent
 
     env:
       TZ: America/Toronto
