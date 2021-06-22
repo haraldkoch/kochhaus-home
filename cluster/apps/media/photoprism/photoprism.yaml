@@ -5,18 +5,18 @@ metadata:
   name: photoprism
   namespace: media
 spec:
+  interval: 1h
   chart:
     spec:
-      sourceRef:
-        kind: HelmRepository
-        namespace: flux-system
-        name: k8s-at-home
       # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: photoprism
       version: 4.1.1
-  interval: 1h
-
+      sourceRef:
+        kind: HelmRepository
+        namespace: flux-system
+        name: k8s-at-home-charts
   values:
+
     ingress:
       enabled: true
       annotations:
