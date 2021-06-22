@@ -18,13 +18,17 @@ spec:
   values:
 
     ingress:
-      enabled: true
-      annotations:
-        kubernetes.io/ingress.class: nginx
-      hosts:
-        - host: photo.${SECRET_DOMAIN}
-          paths:
-            - path: /
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+        hosts:
+          - host: photo.${SECRET_DOMAIN}
+            paths:
+              - path: /
+        tls:
+          - hosts:
+              - photo.${SECRET_DOMAIN}
 
     podSecurityContext:
       fsGroup: 1000
