@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: photoprism
-      version: 4.1.1
+      version: 5.2.0
       sourceRef:
         kind: HelmRepository
         namespace: flux-system
@@ -46,6 +46,7 @@ spec:
         type: pvc
         existingClaim: photoprism-config
         mountPath: /photoprism/storage
+
       originals:
         enabled: true
         type: custom
@@ -54,7 +55,7 @@ spec:
             server: ${NFS_SERVER_2}
             path: /share/images
         mountPath: /photoprism/originals
-        accessMode: ReadOnlyMany
+
     env:
       TZ: America/Toronto
       PHOTOPRISM_SITE_URL: photo.${SECRET_DOMAIN}
