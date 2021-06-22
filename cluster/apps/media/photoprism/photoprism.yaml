@@ -43,6 +43,7 @@ spec:
     persistence:
       config:
         enabled: true
+        type: pvc
         existingClaim: photoprism-config
         mountPath: /photoprism/storage
       originals:
