@@ -21,12 +21,14 @@
   - [external-dns](https://github.com/kubernetes-sigs/external-dns): monitors service and ingress resources, and automatically generates DNS updates for them. This lets me maintain DNS mappings and LetsEncrypt certificates without a cloudflare account or domain.
   - [docker-registry](https://github.com/twuni/docker-registry.helm): Private docker registry.
   - [nfs-subdir-external-provisioner](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner): creates Persistent Volumes on a pre-existing NFS mount.
+  - [democratic-csi](https://github.com/democratic-csi/democratic-csi): creates Persistent Volumes on a ZFS server as separate datasets, and exports them via NFS to the Kubernetes cluter.
   - [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller): Automatically upgrade the K3S kubernetes instance.
 
 ## Applications
 
   - [openweathermap-exporter](https://github.com/blackrez/openweathermap_exporter): a Prometheus exporter for Openweather.
-  - [weather-exporter](): the much older weather exporter using the DarkSky API.
+  - [weather-exporter](https://github.com/celliott/weather_exporter): the much older weather exporter using the DarkSky API.
+  - [tautulli](https://github.com/Tautulli/Tautulli): Plex usage monitoring application.
 
 Yes, this is a lot of infrastructure and heavy lifting to run two small Docker containers. That's not the point; the point is to experiment with Kubernetes and GitOps in a safe space.
 
