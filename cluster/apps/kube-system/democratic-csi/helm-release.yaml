@@ -1,0 +1,46 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: nfs-subdir-external-provisioner
+  namespace: kube-system
+spec:
+  releaseName: zfs-nfs
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://democratic-csi.github.io/charts/
+      chart: democratic-csi
+      version: 0.8.2
+      sourceRef:
+        kind: HelmRepository
+        name: democratic-csi-charts
+        namespace: flux-system
+  values:
+    csiDriver:
+      # should be globally unique for a given cluster
+      name: "org.democratic-csi.nfs"
+
+    storageClasses:
+    - name: zfs-nfs
+      defaultClass: true
+      reclaimPolicy: Delete
+      volumeBindingMode: Immediate
+      allowVolumeExpansion: true
+      parameters:
+        fsType: nfs
+
+      mountOptions:
+      - noatime
+      - nfsvers=4
+      secrets:
+        provisioner-secret:
+        controller-publish-secret:
+        node-stage-secret:
+        node-publish-secret:
+        controller-expand-secret:
+
+    driver:
+      existingConfigSecret: zfs-nfs-secret
+      config:
+        driver: zfs-generic-nfs
