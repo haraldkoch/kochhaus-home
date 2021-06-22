@@ -54,7 +54,7 @@ spec:
             server: ${NFS_SERVER_2}
             path: /share/images
         mountPath: /photoprism/originals
-
+        accessMode: ReadOnlyMany
     env:
       TZ: America/Toronto
       PHOTOPRISM_SITE_URL: photo.${SECRET_DOMAIN}
