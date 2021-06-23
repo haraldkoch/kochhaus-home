@@ -33,6 +33,7 @@
     // setup datasources
     {
       "matchDatasources": ["helm"],
+      "enabled": true,
     },
     // global docker datasource settings
     {
