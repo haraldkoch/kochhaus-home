@@ -32,6 +32,8 @@
 
 Yes, this is a lot of infrastructure and heavy lifting to run two small Docker containers. That's not the point; the point is to experiment with Kubernetes and GitOps in a safe space.
 
+[![dexhorthy](assets/blog-on-kubernetes.png)](https://twitter.com/dexhorthy/status/856639005462417409)
+
 I have two longer-term goals:
 
   1. migrate many of the apps that I currently run on Linode to a K8S cluster at Linode or Digital Ocean.
