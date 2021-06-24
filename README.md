@@ -3,7 +3,7 @@
 #### kochhaus-home - Home Cloud via Flux v2 | GitOps Toolkit
 > GitOps state for my cluster using flux v2
 
-[![k8s](https://img.shields.io/badge/k8s-v1.20.5%2Bk3s1-green?style=flat-square)](https://k8s.io/)
+[![k8s](https://img.shields.io/badge/k8s-v1.21.1%2Bk3s1-green?style=flat-square)](https://k8s.io/)
 [![GitHub last commit](https://img.shields.io/github/last-commit/haraldkoch/kochhaus-home?style=flat-square)](https://github.com/haraldkoch/kochhaus-home/main)
 [![Renovate](https://github.com/haraldkoch/kochhaus-home/actions/workflows/renovate.yaml/badge.svg)](https://github.com/haraldkoch/kochhaus-home/actions/workflows/renovate.yaml)
 [![Update Flux](https://github.com/haraldkoch/kochhaus-home/actions/workflows/flux-schedule.yaml/badge.svg)](https://github.com/haraldkoch/kochhaus-home/actions/workflows/flux-schedule.yaml)
