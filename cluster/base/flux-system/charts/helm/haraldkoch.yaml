@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: haraldkoch
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: https://haraldkoch.github.io/helm-charts/
+  timeout: 2m
