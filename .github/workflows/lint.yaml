@@ -8,12 +8,11 @@ on: # yamllint disable-line rule:truthy
 
 jobs:
   yaml:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: yamllint
-      uses: reviewdog/action-yamllint@v1
+      uses: ibiqlik/action-yamllint@v3
       with:
-        github_token: ${{ secrets.github_token }}
-        reporter: github-pr-review
-        yamllint_flags: '-c .github/yamllint.config.yaml ./cluster/'
+        config_file: .github/yamllint.config.yaml
+        file_or_dir: ./cluster/
