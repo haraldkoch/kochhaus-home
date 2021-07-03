@@ -1,0 +1,34 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: prometheus-dnssec-exporter
+  namespace: monitoring
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://haraldkoch.github.io/helm-charts/
+      chart: prometheus-dnssec-exporter
+      version: 0.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: haraldkoch
+        namespace: flux-system
+  values:
+
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: "nginx"
+      hosts:
+      - host: "dnssec.${SECRET_DOMAIN}"
+        paths:
+        - path: /
+          pathType: Prefix
+      tls:
+      - hosts:
+        - "dnssec.${SECRET_DOMAIN}"
+
+      configExistingSecretName: prometheus-dnssec-secret
+      configPath: /config/dnssec-checks
