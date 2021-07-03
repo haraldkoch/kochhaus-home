@@ -15,8 +15,8 @@ spec:
         kind: HelmRepository
         name: haraldkoch
         namespace: flux-system
-  values:
 
+  values:
     ingress:
       enabled: true
       annotations:
@@ -30,5 +30,5 @@ spec:
       - hosts:
         - "dnssec.${SECRET_DOMAIN}"
 
-      configExistingSecretName: prometheus-dnssec-secret
-      configPath: /config/dnssec-checks
+    configExistingSecretName: prometheus-dnssec-secret
+    configPath: /config/dnssec-checks
