@@ -20,3 +20,7 @@ spec:
   values:
     env:
       TZ: America/Toronto
+
+    prometheus:
+      podMonitor:
+        enabled: true
