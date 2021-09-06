@@ -8,6 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
+      # github https://github.com/bitnami/charts
       # renovate: registryUrl=https://charts.bitnami.com/bitnami
       chart: metallb
       version: 2.5.4
@@ -16,17 +17,11 @@ spec:
         name: bitnami-charts
         namespace: flux-system
   values:
-    controller:
-      image:
-        repository: metallb/controller
-        tag: v0.10.2
-    speaker:
-      image:
-        repository: metallb/speaker
-        tag: v0.10.2
     configInline:
       address-pools:
       - name: default
         protocol: layer2
         addresses:
         - "${METALLB_LB_RANGE}"
+    prometheusRule:
+      enabled: true
