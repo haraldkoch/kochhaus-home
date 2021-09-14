@@ -21,6 +21,5 @@ spec:
     env:
       TZ: America/Toronto
 
-    prometheus:
-      serviceMonitor:
-        enabled: true
+    metrics:
+      enabled: true
