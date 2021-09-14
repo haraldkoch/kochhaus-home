@@ -2,5 +2,5 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- kube-prometheus-stack
-- prometheus-dnssec-exporter
+- helm-release.yaml
+- host-node-exporter.yaml

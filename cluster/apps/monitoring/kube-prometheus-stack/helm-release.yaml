@@ -1,0 +1,117 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      version: 16.12.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    global:
+      rbac:
+        pspEnabled: false
+
+    server:
+      resources:
+        requests:
+          memory: 1500Mi
+          cpu: 25m
+        limits:
+          memory: 2000Mi
+
+    alertmanager:
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        hosts:
+          - alertmanager.${SECRET_DOMAIN}
+        paths:
+          - /
+        pathType: ImplementationSpecific
+        tls:
+          - secretName: alertmanager-general-tls
+            hosts:
+              - alertmanager.${SECRET_DOMAIN}
+
+    grafana:
+      adminPassword: ${SECRET_GRAFANA_PASSWORD}
+
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: nginx
+        hosts:
+          - grafana.${SECRET_DOMAIN}
+        path: /
+        tls:
+          - secretName: grafana-general-tls
+            hosts:
+              - grafana.${SECRET_DOMAIN}
+
+    nodeExporter:
+      enabled: false
+
+    prometheus:
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        hosts:
+          - prometheus.${SECRET_DOMAIN}
+        paths:
+          - /
+        pathType: ImplementationSpecific
+        tls:
+          - secretName: prometheus-general-tls
+            hosts:
+              - prometheus.${SECRET_DOMAIN}
+
+      prometheusSpec:
+        podMonitorSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+
+    additionalPrometheusRulesMap:
+      dnssec:
+        groups:
+          - name: dnssec.rules
+            rules:
+              - alert: DNSSECSignatureExpiration
+                expr: dnssec_zone_record_days_left < 10
+                for: 1m
+                labels:
+                  severity: critical
+                annotations:
+                  description: The DNSSEC signature for the {{$labels.record}} in {{$labels.zone}} type {{$labels.type}}) expires in {{$value}} day(s)
+                  summary: A DNSSec signature is expiring
+
+              - alert: DNSSECSignatureInvalid
+                expr: dnssec_zone_record_resolves == 0
+                for: 1m
+                labels:
+                  severity: critical
+                annotations:
+                  description: The DNSSEC signature for the {{$labels.record}} in {{$labels.zone}} type {{$labels.type}}) on resolver {{$labels.resolver}} is invalid
+                  summary: A DNSSec signature is invalid
+
+    # cannot be monitored in k3s; runs on localhost
+    kubeControllerManager:
+      enabled: false
+    kubeScheduler:
+      enabled: false
+
+    # we do not have an etcd instance
+    kubeEtcd:
+      enabled: false
+
+    defaultRules:
+      rules:
+        etcd: false
