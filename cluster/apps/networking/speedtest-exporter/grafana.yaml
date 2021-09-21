@@ -94,13 +94,15 @@ data:
           "pluginVersion": "8.0.5",
           "targets": [
             {
-              "expr": "speedtest_ping_latency_milliseconds",
+              "exemplar": true,
+              "expr": "sum without (instance) (speedtest_ping_latency_milliseconds)",
               "interval": "",
               "legendFormat": "Ping (ms)",
               "refId": "A"
             },
             {
-              "expr": "speedtest_jitter_latency_milliseconds",
+              "exemplar": true,
+              "expr": "sum without (instance) (speedtest_jitter_latency_milliseconds)",
               "interval": "",
               "legendFormat": "Jitter (ms)",
               "refId": "B"
@@ -190,7 +192,7 @@ data:
           "targets": [
             {
               "exemplar": true,
-              "expr": "speedtest_download_bits_per_second",
+              "expr": "sum without (instance) (speedtest_download_bits_per_second)  ",
               "interval": "",
               "legendFormat": "Download Speed",
               "refId": "A"
@@ -279,7 +281,7 @@ data:
           "targets": [
             {
               "exemplar": true,
-              "expr": "speedtest_upload_bits_per_second",
+              "expr": "sum without (instance) (speedtest_upload_bits_per_second)",
               "interval": "",
               "legendFormat": "Upload Speed",
               "refId": "A"
@@ -306,5 +308,5 @@ data:
       "timezone": "",
       "title": "Speedtest Dashboard",
       "uid": "-fs18ztMz",
-      "version": 5
+      "version": 6
     }
