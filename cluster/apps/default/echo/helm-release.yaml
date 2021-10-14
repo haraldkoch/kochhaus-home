@@ -5,7 +5,8 @@ metadata:
   name: http-echo
   namespace: default
 spec:
-  interval: 5m
+  interval: 1h
+  timeout: 30m
   chart:
     spec:
       # renovate: registryUrl=https://haraldkoch.github.io/helm-charts/
@@ -15,6 +16,7 @@ spec:
         kind: HelmRepository
         name: haraldkoch
         namespace: flux-system
+
   values:
 
     text: "kochhaus.net echo test"

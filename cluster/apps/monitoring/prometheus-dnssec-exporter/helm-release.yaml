@@ -5,7 +5,8 @@ metadata:
   name: prometheus-dnssec-exporter
   namespace: monitoring
 spec:
-  interval: 5m
+  interval: 1h
+  timeout: 30m
   chart:
     spec:
       # renovate: registryUrl=https://haraldkoch.github.io/helm-charts/
