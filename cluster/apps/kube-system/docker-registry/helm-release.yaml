@@ -5,7 +5,8 @@ metadata:
   name: docker-registry
   namespace: kube-system
 spec:
-  interval: 5m
+  interval: 1h
+  timeout: 30m
   chart:
     spec:
       # renovate: registryUrl=https://helm.twun.io
@@ -15,6 +16,7 @@ spec:
         kind: HelmRepository
         name: twuni-charts
         namespace: flux-system
+
   values:
     persistence:
       enabled: true

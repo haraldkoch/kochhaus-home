@@ -5,7 +5,8 @@ metadata:
   name: metallb
   namespace: metallb-system
 spec:
-  interval: 5m
+  interval: 1h
+  timeout: 30m
   chart:
     spec:
       # github https://github.com/bitnami/charts
@@ -16,6 +17,7 @@ spec:
         kind: HelmRepository
         name: bitnami-charts
         namespace: flux-system
+
   values:
     configInline:
       address-pools:
