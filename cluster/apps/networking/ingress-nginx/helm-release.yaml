@@ -5,7 +5,8 @@ metadata:
   name: ingress-nginx
   namespace: networking
 spec:
-  interval: 5m
+  interval: 1h
+  timeout: 30m
   chart:
     spec:
       # renovate: registryUrl=https://kubernetes.github.io/ingress-nginx
@@ -15,6 +16,7 @@ spec:
         kind: HelmRepository
         name: ingress-nginx-charts
         namespace: flux-system
+
   values:
     controller:
       ingressClass: nginx

@@ -6,6 +6,7 @@ metadata:
   namespace: media
 spec:
   interval: 1h
+  timeout: 30m
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
@@ -15,8 +16,8 @@ spec:
         kind: HelmRepository
         namespace: flux-system
         name: k8s-at-home-charts
-  values:
 
+  values:
     ingress:
       main:
         enabled: true
