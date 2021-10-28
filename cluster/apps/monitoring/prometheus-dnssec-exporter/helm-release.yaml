@@ -18,18 +18,14 @@ spec:
         namespace: flux-system
 
   values:
-    ingress:
-      enabled: true
+    service:
+      type: LoadBalancer
       annotations:
-        kubernetes.io/ingress.class: "nginx"
-      hosts:
-      - host: "dnssec.${SECRET_DOMAIN}"
-        paths:
-        - path: /
-          pathType: Prefix
-      tls:
-      - hosts:
-        - "dnssec.${SECRET_DOMAIN}"
+        external-dns.alpha.kubernetes.io/hostname: "exporters.${SECRET_DOMAIN}"
+        metallb.universe.tf/allow-shared-ip: exporters
+
+    ingress:
+      enabled: false
 
     configExistingSecretName: prometheus-dnssec-secret
     configPath: /config/dnssec-checks
