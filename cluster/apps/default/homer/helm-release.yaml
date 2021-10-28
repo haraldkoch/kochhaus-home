@@ -22,6 +22,10 @@ spec:
     env:
       TZ: America/Toronto
 
+    service:
+      main:
+        type: LoadBalancer
+
     ingress:
       main:
         enabled: true
