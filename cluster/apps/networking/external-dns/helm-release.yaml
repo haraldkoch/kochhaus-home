@@ -39,10 +39,10 @@ spec:
       create: true
       apiversion: externaldns.k8s.io/v1alpha1
       kind: DNSEndpoint
-#    metrics:
-#      enabled: true
-#      serviceMonitor:
-#        enabled: true
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
     logLevel: debug
     resources:
       requests:
