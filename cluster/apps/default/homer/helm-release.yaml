@@ -22,11 +22,16 @@ spec:
     env:
       TZ: America/Toronto
 
-    service:
-      main:
-        type: LoadBalancer
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: "homer2.${SECRET_DOMAIN}"
+# Example of exposing this via LoadBalancer, Metal-LB, and ExternalDNS, instead of Ingress.
+# Note: this doesn't give TLS, an advantage of using an Ingress...
+#    service:
+#      main:
+#        type: LoadBalancer
+#        annotations:
+#          external-dns.alpha.kubernetes.io/hostname: "homer2.${SECRET_DOMAIN}"
+#        ports:
+#          http:
+#            port: 80
 
     ingress:
       main:
