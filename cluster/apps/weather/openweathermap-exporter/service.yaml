@@ -5,7 +5,11 @@ metadata:
   namespace: weather
   labels:
     app: openweathermap-exporter
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: "weather.${SECRET_DOMAIN}"
+    metallb.universe.tf/allow-shared-ip: weather
 spec:
+  type: LoadBalancer
   ports:
   - name: openweathermap-exporter
     port: 2112
