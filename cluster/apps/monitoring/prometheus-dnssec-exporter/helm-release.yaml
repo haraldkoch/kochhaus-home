@@ -11,7 +11,7 @@ spec:
     spec:
       # renovate: registryUrl=https://haraldkoch.github.io/helm-charts/
       chart: prometheus-dnssec-exporter
-      version: 0.3.0
+      version: 0.3.1
       sourceRef:
         kind: HelmRepository
         name: haraldkoch
