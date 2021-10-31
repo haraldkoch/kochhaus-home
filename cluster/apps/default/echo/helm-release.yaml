@@ -11,14 +11,13 @@ spec:
     spec:
       # renovate: registryUrl=https://haraldkoch.github.io/helm-charts/
       chart: http-echo
-      version: 0.1.7
+      version: 0.2.0
       sourceRef:
         kind: HelmRepository
         name: haraldkoch
         namespace: flux-system
 
   values:
-
     text: "kochhaus.net echo test"
 
     ingress:
@@ -26,10 +25,10 @@ spec:
       annotations:
         kubernetes.io/ingress.class: "nginx"
       hosts:
-      - host: "echo.${SECRET_DOMAIN}"
-        paths:
-        - path: /
-          pathType: Prefix
+        - host: "echo.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+              pathType: Prefix
       tls:
-      - hosts:
-        - "echo.${SECRET_DOMAIN}"
+        - hosts:
+            - "echo.${SECRET_DOMAIN}"
