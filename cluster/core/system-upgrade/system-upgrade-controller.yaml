@@ -18,9 +18,9 @@ roleRef:
   kind: ClusterRole
   name: cluster-admin
 subjects:
-- kind: ServiceAccount
-  name: system-upgrade
-  namespace: system-upgrade
+  - kind: ServiceAccount
+    name: system-upgrade
+    namespace: system-upgrade
 ---
 apiVersion: v1
 data:
@@ -29,7 +29,7 @@ data:
   SYSTEM_UPGRADE_JOB_ACTIVE_DEADLINE_SECONDS: "900"
   SYSTEM_UPGRADE_JOB_BACKOFF_LIMIT: "99"
   SYSTEM_UPGRADE_JOB_IMAGE_PULL_POLICY: Always
-  SYSTEM_UPGRADE_JOB_KUBECTL_IMAGE: rancher/kubectl:v1.18.3
+  SYSTEM_UPGRADE_JOB_KUBECTL_IMAGE: rancher/kubectl:v1.22.2
   SYSTEM_UPGRADE_JOB_PRIVILEGED: "true"
   SYSTEM_UPGRADE_JOB_TTL_SECONDS_AFTER_FINISH: "900"
   SYSTEM_UPGRADE_PLAN_POLLING_INTERVAL: 15m
@@ -56,49 +56,49 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: node-role.kubernetes.io/master
-                operator: In
-                values:
-                - "true"
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/master
+                    operator: In
+                    values:
+                      - "true"
       containers:
-      - env:
-        - name: SYSTEM_UPGRADE_CONTROLLER_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.labels['upgrade.cattle.io/controller']
-        - name: SYSTEM_UPGRADE_CONTROLLER_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        envFrom:
-        - configMapRef:
-            name: default-controller-env
-        image: rancher/system-upgrade-controller:v0.8.0
-        imagePullPolicy: IfNotPresent
-        name: system-upgrade-controller
-        volumeMounts:
-        - mountPath: /etc/ssl
-          name: etc-ssl
-        - mountPath: /etc/ca-certificates
-          name: etc-ca-certificates
-        - mountPath: /tmp
-          name: tmp
+        - env:
+            - name: SYSTEM_UPGRADE_CONTROLLER_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['upgrade.cattle.io/controller']
+            - name: SYSTEM_UPGRADE_CONTROLLER_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          envFrom:
+            - configMapRef:
+                name: default-controller-env
+          image: rancher/system-upgrade-controller:v0.8.0
+          imagePullPolicy: IfNotPresent
+          name: system-upgrade-controller
+          volumeMounts:
+            - mountPath: /etc/ssl
+              name: etc-ssl
+            - mountPath: /etc/ca-certificates
+              name: etc-ca-certificates
+            - mountPath: /tmp
+              name: tmp
       serviceAccountName: system-upgrade
       tolerations:
-      - key: CriticalAddonsOnly
-        operator: Exists
-      - effect: NoSchedule
-        key: node-role.kubernetes.io/master
-        operator: Exists
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
       volumes:
-      - hostPath:
-          path: /etc/ssl
-          type: Directory
-        name: etc-ssl
-      - hostPath:
-          path: /etc/ca-certificates
-          type: Directory
-        name: etc-ca-certificates
-      - emptyDir: {}
-        name: tmp
+        - hostPath:
+            path: /etc/ssl
+            type: Directory
+          name: etc-ssl
+        - hostPath:
+            path: /etc/ca-certificates
+            type: Directory
+          name: etc-ca-certificates
+        - emptyDir: {}
+          name: tmp
