@@ -1,28 +1,11 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  annotations:
-    meta.helm.sh/release-name: ingress-nginx
-    meta.helm.sh/release-namespace: networking
-    prometheus-operator-validated: "true"
-  creationTimestamp: "2021-11-10T21:39:33Z"
-  generation: 1
-  labels:
-    app.kubernetes.io/component: controller
-    app.kubernetes.io/instance: ingress-nginx
-    app.kubernetes.io/managed-by: Helm
-    app.kubernetes.io/name: ingress-nginx
-    app.kubernetes.io/version: 1.0.4
-    helm.sh/chart: ingress-nginx-4.0.6
-    helm.toolkit.fluxcd.io/name: ingress-nginx
-    helm.toolkit.fluxcd.io/namespace: networking
-  name: ingress-nginx-controller
-  namespace: networking
-  resourceVersion: "61218790"
-  uid: 6ea8cb14-89a0-4bdf-b2fe-1fdeca52108a
+  name: dnssec
+  namespace: monitoring
 spec:
   groups:
-    - name: dnssec.rules
+    - name: dnssec
       rules:
         - alert: DNSSECSignatureExpiration
           expr: dnssec_zone_record_days_left < 10
