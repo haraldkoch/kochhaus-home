@@ -79,6 +79,7 @@ spec:
       prometheusSpec:
         podMonitorSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
+        ruleSelectorNilUsesHelmValues: false
 
     additionalPrometheusRulesMap:
       dnssec:
