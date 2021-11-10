@@ -22,8 +22,6 @@ spec:
 
     ingress:
       enabled: true
-      annotations:
-        kubernetes.io/ingress.class: "nginx"
       hosts:
         - host: "echo.${SECRET_DOMAIN}"
           paths:

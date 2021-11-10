@@ -33,7 +33,6 @@ spec:
     alertmanager:
       ingress:
         enabled: true
-        ingressClassName: nginx
         hosts:
           - alertmanager.${SECRET_DOMAIN}
         paths:
@@ -49,8 +48,6 @@ spec:
 
       ingress:
         enabled: true
-        annotations:
-          kubernetes.io/ingress.class: nginx
         hosts:
           - grafana.${SECRET_DOMAIN}
         path: /
@@ -65,7 +62,6 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        ingressClassName: nginx
         hosts:
           - prometheus.${SECRET_DOMAIN}
         paths:

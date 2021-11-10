@@ -24,10 +24,7 @@ spec:
     ingress:
       enabled: true
       tls:
-      - hosts:
-        - "docker.${SECRET_DOMAIN}"
+        - hosts:
+            - "docker.${SECRET_DOMAIN}"
       hosts:
-      - "docker.${SECRET_DOMAIN}"
-      annotations:
-        kubernetes.io/ingress.class: "nginx"
-        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        - "docker.${SECRET_DOMAIN}"
