@@ -81,29 +81,6 @@ spec:
         serviceMonitorSelectorNilUsesHelmValues: false
         ruleSelectorNilUsesHelmValues: false
 
-    additionalPrometheusRulesMap:
-      dnssec:
-        groups:
-          - name: dnssec.rules
-            rules:
-              - alert: DNSSECSignatureExpiration
-                expr: dnssec_zone_record_days_left < 10
-                for: 1m
-                labels:
-                  severity: critical
-                annotations:
-                  description: The DNSSEC signature for the {{$labels.record}} in {{$labels.zone}} type {{$labels.type}}) expires in {{$value}} day(s)
-                  summary: A DNSSec signature is expiring
-
-              - alert: DNSSECSignatureInvalid
-                expr: dnssec_zone_record_resolves == 0
-                for: 1m
-                labels:
-                  severity: critical
-                annotations:
-                  description: The DNSSEC signature for the {{$labels.record}} in {{$labels.zone}} type {{$labels.type}}) on resolver {{$labels.resolver}} is invalid
-                  summary: A DNSSec signature is invalid
-
     # cannot be monitored in k3s; runs on localhost
     kubeControllerManager:
       enabled: false
