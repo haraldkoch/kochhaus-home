@@ -35,7 +35,6 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
         hosts:
           - host: "homer.${SECRET_DOMAIN}"
             paths:
