@@ -20,6 +20,8 @@ spec:
   values:
     controller:
       ingressClass: nginx
+      ingressClassResource:
+        default: true
       replicaCount: 1
       service:
         type: LoadBalancer
