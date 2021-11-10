@@ -18,7 +18,7 @@ spec:
         namespace: flux-system
 
   values:
-    text: "kochhaus.net echo test"
+    text: "${SECRET_DOMAIN} echo test"
 
     ingress:
       enabled: true
