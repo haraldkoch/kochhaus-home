@@ -22,6 +22,14 @@ spec:
       ingressClass: nginx
       ingressClassResource:
         default: true
+
+      ## I really shouldn't need this; it flies in the face of the definition of "default"
+      #
+      # Process Ingress objects without ingressClass annotation/ingressClassName field
+      # Overrides value for --watch-ingress-without-class flag of the controller binary
+      # Defaults to false
+      watchIngressWithoutClass: true
+
       replicaCount: 1
       service:
         type: LoadBalancer
