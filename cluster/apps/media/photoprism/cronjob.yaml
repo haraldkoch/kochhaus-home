@@ -1,0 +1,47 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: photoprism-index
+spec:
+  schedule: "0 * * * *"
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      parallelism: 1
+      template:
+        spec:
+          restartPolicy: OnFailure
+          volumes:
+            - name: config
+              persistentVolumeClaim:
+                claimName: photoprism-config
+            - name: originals
+              nfs:
+                server: ${NFS_SERVER_2}
+                path: /share/images
+
+          securityContext:
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsUser: 1000
+
+          containers:
+            - name: photoprism-index
+              image: photoprism/photoprism-arm64:20210523
+              imagePullPolicy: IfNotPresent
+              args:
+                - /photoprism/bin/photoprism
+                - index
+              volumeMounts:
+                - name: config
+                  mountPath: /photoprism/storage
+                - name: originals
+                  mountPath: /photoprism/originals
+              resources:
+                requests:
+                  memory: "1Gi"
+                  cpu: "1"
+                limits:
+                  memory: "2Gi"
+                  cpu: "1"
