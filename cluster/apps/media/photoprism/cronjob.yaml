@@ -2,6 +2,7 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: photoprism-index
+  namespace: media
 spec:
   schedule: "0 * * * *"
   concurrencyPolicy: Forbid
