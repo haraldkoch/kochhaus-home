@@ -64,7 +64,9 @@ spec:
       PHOTOPRISM_SITE_URL: photo.${SECRET_DOMAIN}
       PHOTOPRISM_PUBLIC: false
       PHOTOPRISM_READONLY: true
+      # the chart is picking up the default value. Try to fix this.
+      PHOTOPRISM_ADMIN_PASSWORD: null
 
-    envFrom:
-      - secretRef:
-          name: photoprism-secret
+  valuesFrom:
+    - kind: Secret
+      name: "photoprism-values"
