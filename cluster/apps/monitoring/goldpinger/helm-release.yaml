@@ -24,9 +24,11 @@ spec:
 
     ingress:
       enabled: true
-      path: /
       hosts:
-        - goldpinger.${SECRET_DOMAIN}
+        - host: goldpinger.${SECRET_DOMAIN}
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
       tls:
         - secretName: goldpinger-tls
           hosts:
