@@ -64,7 +64,4 @@ spec:
       PHOTOPRISM_SITE_URL: photo.${SECRET_DOMAIN}
       PHOTOPRISM_PUBLIC: false
       PHOTOPRISM_READONLY: true
-
-    envFrom:
-      - secretRef:
-          name: photoprism-secret
+      PHOTOPRISM_ADMIN_PASSWORD: ${SECRET_PHOTOPRISM_ADMIN_PASSWORD}
