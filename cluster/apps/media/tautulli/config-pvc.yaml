@@ -6,8 +6,8 @@ metadata:
   namespace: media
 spec:
   accessModes:
-  - ReadWriteOnce
-  storageClassName: nfs-client
+    - ReadWriteOnce
+  storageClassName: zfs-nfs
   resources:
     requests:
       storage: 1024Mi
