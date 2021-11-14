@@ -39,17 +39,17 @@ Already provisioned Bare metal or VMs with any modern operating system like Ubun
 :round_pushpin: You need to install the required CLI tools listed below on your workstation.
 
 | Tool                                                               | Purpose                                                             | Minimum version | Required |
-|--------------------------------------------------------------------|---------------------------------------------------------------------|:---------------:|:--------:|
-| [k3sup](https://github.com/alexellis/k3sup)                        | Tool to install k3s on your nodes                                   |    `0.10.2`     |    ✅     |
-| [kubectl](https://kubernetes.io/docs/tasks/tools/)                 | Allows you to run commands against Kubernetes clusters              |    `1.21.0`     |    ✅     |
-| [flux](https://toolkit.fluxcd.io/)                                 | Operator that manages your k8s cluster based on your Git repository |    `0.12.3`     |    ✅     |
-| [SOPS](https://github.com/mozilla/sops)                            | Encrypts k8s secrets with GnuPG                                     |     `3.7.1`     |    ✅     |
-| [GnuPG](https://gnupg.org/)                                        | Encrypts and signs your data                                        |    `2.2.27`     |    ✅     |
-| [pinentry](https://gnupg.org/related_software/pinentry/index.html) | Allows GnuPG to read passphrases and PIN numbers                    |     `1.1.1`     |    ✅     |
-| [direnv](https://github.com/direnv/direnv)                         | Exports env vars based on present working directory                 |    `2.28.0`     |    ❌     |
-| [pre-commit](https://github.com/pre-commit/pre-commit)             | Runs checks during `git commit`                                     |    `2.12.0`     |    ❌     |
-| [kustomize](https://kustomize.io/)                                 | Template-free way to customize application configuration            |     `4.1.0`     |    ❌     |
-| [helm](https://helm.sh/)                                           | Manage Kubernetes applications                                      |     `3.5.4`     |    ❌     |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------- | :-------------: | :------: |
+| [k3sup](https://github.com/alexellis/k3sup)                        | Tool to install k3s on your nodes                                   |    `0.10.2`     |    ✅    |
+| [kubectl](https://kubernetes.io/docs/tasks/tools/)                 | Allows you to run commands against Kubernetes clusters              |    `1.21.0`     |    ✅    |
+| [flux](https://toolkit.fluxcd.io/)                                 | Operator that manages your k8s cluster based on your Git repository |    `0.12.3`     |    ✅    |
+| [SOPS](https://github.com/mozilla/sops)                            | Encrypts k8s secrets with GnuPG                                     |     `3.7.1`     |    ✅    |
+| [GnuPG](https://gnupg.org/)                                        | Encrypts and signs your data                                        |    `2.2.27`     |    ✅    |
+| [pinentry](https://gnupg.org/related_software/pinentry/index.html) | Allows GnuPG to read passphrases and PIN numbers                    |     `1.1.1`     |    ✅    |
+| [direnv](https://github.com/direnv/direnv)                         | Exports env vars based on present working directory                 |    `2.28.0`     |    ❌    |
+| [pre-commit](https://github.com/pre-commit/pre-commit)             | Runs checks during `git commit`                                     |    `2.12.0`     |    ❌    |
+| [kustomize](https://kustomize.io/)                                 | Template-free way to customize application configuration            |     `4.1.0`     |    ❌    |
+| [helm](https://helm.sh/)                                           | Manage Kubernetes applications                                      |     `3.5.4`     |    ❌    |
 
 ### :warning:&nbsp; pre-commit
 
@@ -155,7 +155,7 @@ export FLUX_KEY_FP=AB675CE4CC64251G3S9AE1DAA88ARRTY2C009E2D
 
 1. Ensure you are able to SSH into you nodes with using your private ssh key. This is how k3sup is able to connect to your remote node.
 
-2. Install the master node
+2. Install the control-plane node
 
 ```sh
 k3sup install \
@@ -180,7 +180,7 @@ k3sup join \
 ```sh
 kubectl --kubeconfig=./kubeconfig get nodes
 # NAME           STATUS   ROLES                       AGE     VERSION
-# k8s-master-a   Ready    control-plane,master      4d20h   v1.20.5+k3s1
+# k8s-leader-a   Ready    control-plane             4d20h   v1.20.5+k3s1
 # k8s-worker-a   Ready    worker                    4d20h   v1.20.5+k3s1
 ```
 
@@ -352,7 +352,7 @@ When this is done you no longer have to use `--kubeconfig=./kubeconfig` in your 
 ### VSCode SOPS extension
 
 [VSCode SOPS](https://marketplace.visualstudio.com/items?itemName=signageos.signageos-vscode-sops) is a neat little plugin for those using VSCode.
-It will automatically decrypt you SOPS secrets when you click on the file in the editor and encrypt them when you save  and exit the file.
+It will automatically decrypt you SOPS secrets when you click on the file in the editor and encrypt them when you save and exit the file.
 
 ### :point_right:&nbsp; Debugging
 
