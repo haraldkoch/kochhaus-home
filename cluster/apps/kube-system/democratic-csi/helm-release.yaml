@@ -24,25 +24,28 @@ spec:
       name: "org.democratic-csi.nfs"
 
     storageClasses:
-    - name: zfs-nfs
-      defaultClass: true
-      reclaimPolicy: Delete
-      volumeBindingMode: Immediate
-      allowVolumeExpansion: true
-      parameters:
-        fsType: nfs
+      - name: zfs-nfs
+        defaultClass: true
+        reclaimPolicy: Delete
+        volumeBindingMode: Immediate
+        allowVolumeExpansion: true
+        parameters:
+          fsType: nfs
 
-      mountOptions:
-      - noatime
-      - nfsvers=4
-      secrets:
-        provisioner-secret:
-        controller-publish-secret:
-        node-stage-secret:
-        node-publish-secret:
-        controller-expand-secret:
+        mountOptions:
+          - noatime
+          - nfsvers=4
+        secrets:
+          provisioner-secret:
+          controller-publish-secret:
+          node-stage-secret:
+          node-publish-secret:
+          controller-expand-secret:
 
     driver:
       existingConfigSecret: zfs-nfs-secret
       config:
         driver: zfs-generic-nfs
+
+    volumeSnapshotClasses:
+      - name: zfs-nfs
