@@ -12,3 +12,4 @@ resources:
   - okgolove.yaml
   - prometheus-community-charts.yaml
   - twuni-charts.yaml
+  - vmware-tanzu-charts.yaml
