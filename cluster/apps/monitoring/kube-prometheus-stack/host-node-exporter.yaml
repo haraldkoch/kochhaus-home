@@ -47,7 +47,7 @@ metadata:
     k8s-app: node-exporter
 subsets:
   - addresses:
-      - ip: ${K31_IPV4_ADDRESS}
+      - ip: ${K3S1_IPV4_ADDRESS}
     ports:
       - name: metrics
         port: 9100
