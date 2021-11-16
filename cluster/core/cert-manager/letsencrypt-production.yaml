@@ -6,15 +6,15 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: "${SECRET_CLOUDFLARE_EMAIL}"
+    email: "${SECRET_LETSENCRYPT_EMAIL}"
     privateKeySecretRef:
       name: letsencrypt-production
     solvers:
-    - dns01:
-        rfc2136:
-          nameserver: "${SECRET_EXTERNAL_DNS_SERVER}"
-          tsigKeyName: externaldns
-          tsigAlgorithm: HMACSHA256
-          tsigSecretSecretRef:
-            name: rfc2136-tsig-secret
-            key: tsig-secret-key
+      - dns01:
+          rfc2136:
+            nameserver: "${SECRET_EXTERNAL_DNS_SERVER}"
+            tsigKeyName: externaldns
+            tsigAlgorithm: HMACSHA256
+            tsigSecretSecretRef:
+              name: rfc2136-tsig-secret
+              key: tsig-secret-key
