@@ -20,7 +20,7 @@ spec:
   values:
     persistence:
       enabled: true
-      storageClass: nfs-client
+      storageClass: zfs-nfs
     ingress:
       enabled: true
       tls:
