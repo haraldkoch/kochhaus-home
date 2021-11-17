@@ -77,6 +77,9 @@ spec:
         serviceMonitorSelectorNilUsesHelmValues: false
         ruleSelectorNilUsesHelmValues: false
 
+        nodeSelector:
+          ram: high
+
     # cannot be monitored in k3s; runs on localhost
     kubeControllerManager:
       enabled: false
