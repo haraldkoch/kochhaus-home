@@ -46,3 +46,16 @@ spec:
                 limits:
                   memory: "2Gi"
                   cpu: "1"
+
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - prometheus
+                topologyKey: kubernetes.io/hostname
