@@ -1,4 +1,5 @@
 /cluster/apps/kube-system/democratic-csi/zfs-nfs-secret.yaml
 /cluster/apps/monitoring/prometheus-dnssec-exporter/prometheus-dnssec-secret.yaml
+/cluster/apps/velero/velero/secret.sops.yaml
 /cluster/base/cluster-secrets.yaml
 /cluster/core/cert-manager/secret.enc.yaml
