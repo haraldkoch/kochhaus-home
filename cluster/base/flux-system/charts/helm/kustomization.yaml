@@ -12,5 +12,6 @@ resources:
   - nfs-subdir-external-provisioner.yaml
   - okgolove.yaml
   - prometheus-community-charts.yaml
+  - stakater-charts.yaml
   - twuni-charts.yaml
   - vmware-tanzu-charts.yaml
