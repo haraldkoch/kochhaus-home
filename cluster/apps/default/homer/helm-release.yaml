@@ -48,16 +48,10 @@ spec:
       config:
         enabled: true
         existingClaim: homer-pvc
-        mountPath: /www/assets
+        mountPath: /assets
 
-    additionalVolumes:
-      - name: config-volume
-        configMap:
-          # Provide the name of the ConfigMap containing the files you want
-          # to add to the container
-          name: homer-config
-
-    additionalVolumeMounts:
-      - name: config-volume
-        mountPath: /www/assets/config.yml
-        subPath: config.yml
+      homer-config:
+        enabled: true
+        type: configMap
+        mountPath: /assets/config.yml
+        subpath: config,yml
