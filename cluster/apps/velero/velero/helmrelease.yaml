@@ -36,7 +36,7 @@ spec:
           s3Url: http://${SECRET_BACKUP_SERVER}:9000
       volumeSnapshotLocation:
         name: default
-        provider: zfs-nfs
+        provider: org.democratic-csi.nfs
 
       features: EnableCSI
 
