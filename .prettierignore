@@ -3,3 +3,4 @@
 /cluster/apps/velero/velero/secret.sops.yaml
 /cluster/base/cluster-secrets.yaml
 /cluster/core/cert-manager/secret.enc.yaml
+/cluster/core/democratic-csi/zfs-nfs-secret.yaml
