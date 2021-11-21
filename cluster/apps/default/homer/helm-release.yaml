@@ -44,6 +44,10 @@ spec:
           - hosts:
               - "homer.${SECRET_DOMAIN}"
 
+    controller:
+      annotations:
+        reloader.stakater.com/auto: "true"
+
     persistence:
       config:
         enabled: true
