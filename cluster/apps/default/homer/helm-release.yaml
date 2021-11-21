@@ -47,11 +47,20 @@ spec:
     persistence:
       config:
         enabled: true
+        type: pvc
         existingClaim: homer-pvc
-        mountPath: /assets
+        mountPath: /www/assets
 
-      homer-config:
+      # this was impossible to figure out from the docs. I had to copy it from another user!
+      config-file-ro:
         enabled: true
-        type: configMap
-        mountPath: /assets/config.yml
-        subpath: config,yml
+        mountPath: /www/assets/config.yml
+        subPath: config.yml
+        type: custom
+        volumeSpec:
+          configMap:
+            name: homer-config
+            # an example of renaming configMap items
+            # items:
+            #   - key: homer-config.yaml
+            #     path: config.yml

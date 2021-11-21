@@ -1,75 +1,8 @@
+# yamllint disable
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: homer-config
-  namespace: default
+    name: homer-config
+    namespace: default
 data:
-  config.yml: |
-    # Homepage configuration
-    # See https://fontawesome.com/icons for icons options
-
-    # Optional: Use external configuration file.
-    # Using this will ignore remaining config in this file
-    # externalConfig: https://example.com/server-luci/config.yaml
-
-    title: "Yet Another Kochhaus Dashboard"
-    subtitle: "Homer"
-    # documentTitle: "Welcome" # Customize the browser tab text
-    logo: "assets/logo.png"
-    # Alternatively a fa icon can be provided:
-    # icon: "fas fa-skull-crossbones"
-
-    header: true # Set to false to hide the header
-    footer: '<p>Created with <span class="has-text-danger">❤️</span> with <a href="https://bulma.io/">bulma</a>, <a href="https://vuejs.org/">vuejs</a> & <a href="https://fontawesome.com/">font awesome</a> // Fork me on <a href="https://github.com/bastienwirtz/homer"><i class="fab fa-github-alt"></i></a></p>' # set false if you want to hide it.
-
-    columns: "3" # "auto" or number (must be a factor of 12: 1, 2, 3, 4, 6, 12)
-    connectivityCheck: true # whether you want to display a message when the apps are not accessible anymore (VPN disconnected for example)
-
-    # Optional theming
-    theme: default # 'default' or one of the themes available in 'src/assets/themes'.
-
-    # Optional navbar
-    # links: [] # Allows for navbar (dark mode, layout, and search) without any links
-    links:
-      - name: "Link 1"
-        icon: "fab fa-github"
-        url: "https://github.com/haraldkoch/kochhaus-home"
-        target: "_blank" # optional html tag target attribute
-      - name: "link 2"
-        icon: "fas fa-book"
-        url: "https://github.com/bastienwirtz/homer"
-
-    # Services
-    # First level array represents a group.
-    # Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
-    services:
-      - name: "Application"
-        icon: "fas fa-code-branch"
-        items:
-          - name: "Awesome app"
-            logo: "assets/tools/sample.png"
-            # Alternatively a fa icon can be provided:
-            # icon: "fab fa-jenkins"
-            subtitle: "Bookmark example"
-            tag: "app"
-            url: "https://www.reddit.com/r/selfhosted/"
-            target: "_blank" # optional html tag target attribute
-          - name: "Another one"
-            logo: "assets/tools/sample2.png"
-            subtitle: "Another application"
-            tag: "app"
-            # Optional tagstyle
-            tagstyle: "is-success"
-            url: "#"
-      - name: "Other group"
-        icon: "fas fa-heartbeat"
-        items:
-          - name: "Pi-hole"
-            logo: "assets/tools/sample.png"
-            # subtitle: "Network-wide Ad Blocking" # optional, if no subtitle is defined, PiHole statistics will be shown
-            tag: "other"
-            url: "http://199.85.99.2/admin"
-            type: "PiHole" # optional, loads a specific component that provides extra features. MUST MATCH a file name (without file extension) available in `src/components/services`
-            target: "_blank" # optional html a tag target attribute
-            # class: "green" # optional custom CSS class for card, useful with custom stylesheet
-            # background: red # optional color for card to set color directly without custom stylesheet
+    config.yml: ENC[AES256_GCM,data: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
