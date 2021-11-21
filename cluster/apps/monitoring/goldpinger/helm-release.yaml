@@ -18,6 +18,12 @@ spec:
         namespace: flux-system
 
   values:
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+
     service:
       type: ClusterIP
       port: 80
