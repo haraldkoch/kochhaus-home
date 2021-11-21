@@ -1,0 +1,70 @@
+---
+# Source: velero/templates/serviceaccount-server.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: velero-server
+  labels:
+    app.kubernetes.io/name: velero
+    app.kubernetes.io/instance: velero
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: velero-2.26.5
+---
+# Source: velero/templates/clusterrolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: velero-server
+  labels:
+    app.kubernetes.io/component: server
+    app.kubernetes.io/name: velero
+    app.kubernetes.io/instance: velero
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: velero-2.26.5
+subjects:
+  - kind: ServiceAccount
+    namespace: velero
+    name: velero-server
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+# Source: velero/templates/role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: velero-server
+  labels:
+    app.kubernetes.io/component: server
+    app.kubernetes.io/name: velero
+    app.kubernetes.io/instance: velero
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: velero-2.26.5
+rules:
+  - apiGroups:
+      - "*"
+    resources:
+      - "*"
+    verbs:
+      - "*"
+---
+# Source: velero/templates/rolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: velero-server
+  labels:
+    app.kubernetes.io/component: server
+    app.kubernetes.io/name: velero
+    app.kubernetes.io/instance: velero
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: velero-2.26.5
+subjects:
+  - kind: ServiceAccount
+    namespace: velero
+    name: velero-server
+roleRef:
+  kind: Role
+  name: velero-server
+  apiGroup: rbac.authorization.k8s.io
