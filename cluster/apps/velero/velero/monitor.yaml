@@ -4,6 +4,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: velero
+  namespace: velero
   labels:
     app.kubernetes.io/name: velero
     app.kubernetes.io/instance: velero
@@ -25,6 +26,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: velero
+  namespace: velero
   labels:
     app.kubernetes.io/name: velero
     app.kubernetes.io/instance: velero
