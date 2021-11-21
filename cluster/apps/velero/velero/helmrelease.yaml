@@ -34,6 +34,10 @@ spec:
           region: minio
           s3ForcePathStyle: true
           s3Url: http://${SECRET_BACKUP_SERVER}:9000
+      volumeSnapshotLocation:
+        name: default
+        provider: zfs-nfs
+
       features: EnableCSI
 
     initContainers:
