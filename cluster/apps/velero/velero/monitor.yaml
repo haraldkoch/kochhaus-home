@@ -1,0 +1,44 @@
+---
+# Source: velero/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: velero
+  labels:
+    app.kubernetes.io/name: velero
+    app.kubernetes.io/instance: velero
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: velero-2.26.5
+spec:
+  type: ClusterIP
+  ports:
+    - name: http-monitoring
+      port: 8085
+      targetPort: http-monitoring
+  selector:
+    name: velero
+    app.kubernetes.io/name: velero
+    app.kubernetes.io/instance: velero
+---
+# Source: velero/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: velero
+  labels:
+    app.kubernetes.io/name: velero
+    app.kubernetes.io/instance: velero
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: velero-2.26.5
+spec:
+  namespaceSelector:
+    matchNames:
+      - velero
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: velero
+      app.kubernetes.io/instance: velero
+  endpoints:
+    - port: http-monitoring
+      interval: 30s
+      scrapeTimeout: 10s
