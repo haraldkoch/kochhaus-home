@@ -91,6 +91,10 @@ spec:
         - effect: NoSchedule
           key: node-role.kubernetes.io/control-plane
           operator: Exists
+        # k3s still tags nodes with master also
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
       volumes:
         - hostPath:
             path: /etc/ssl
