@@ -4,7 +4,6 @@ resources:
   - namespaces
   - cert-manager
   - democratic-csi
-  - kube-vip
   - metallb-system
   - nfs-subdir-external-provisioner
   - system-upgrade
