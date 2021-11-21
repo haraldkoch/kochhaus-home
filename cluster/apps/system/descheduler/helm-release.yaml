@@ -23,7 +23,7 @@ spec:
     deschedulerPolicy:
       strategies:
         RemoveDuplicates:
-          enabled: false
+          enabled: true
         RemovePodsViolatingNodeAffinity:
           enabled: true
           params:
@@ -32,7 +32,7 @@ spec:
         RemovePodsViolatingInterPodAntiAffinity:
           enabled: false
         LowNodeUtilization:
-          enabled: false
+          enabled: true
 
   # I do not need this yet, but keeping it for future use.
   postRenderers:
