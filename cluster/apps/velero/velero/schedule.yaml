@@ -4,6 +4,7 @@ apiVersion: velero.io/v1
 kind: Schedule
 metadata:
   name: velero-daily-backup
+  namespace: velero
   annotations:
     "helm.sh/hook": post-install,post-upgrade,post-rollback
     "helm.sh/hook-delete-policy": before-hook-creation

@@ -4,6 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: velero
+  namespace: velero
   labels:
     app.kubernetes.io/name: velero
     app.kubernetes.io/instance: velero
