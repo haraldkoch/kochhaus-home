@@ -1,3 +1,4 @@
+/cluster/apps/default/bookstack/secret.sops.yaml
 /cluster/apps/default/homer/configmap.yaml
 /cluster/apps/kube-system/democratic-csi/zfs-nfs-secret.yaml
 /cluster/apps/monitoring/prometheus-dnssec-exporter/prometheus-dnssec-secret.yaml
