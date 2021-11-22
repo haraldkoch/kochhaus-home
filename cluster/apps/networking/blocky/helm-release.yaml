@@ -1,0 +1,121 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: blocky
+  namespace: network
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: blocky
+      version: 9.0.3
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+
+  values:
+    image:
+      repository: ghcr.io/0xerr0r/blocky
+      tag: v0.17
+
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "blocky-config"
+
+    controller:
+      replicas: 2
+
+    env:
+      TZ: "America/Toronto"
+
+    config: |
+      httpPort: 4000
+      logLevel: info
+
+      upstream:
+        default:
+          - 9.9.9.9
+
+      clientLookup:
+        upstream: ${PRIVATE_DNS_PRIMARY}
+
+      conditional:
+        mapping:
+          ${PRIVATE_STATIC_DOMAIN}: udp:${PRIVATE_DNS_PRIMARY}
+          ${PRIVATE_DYNAMIC_DOMAIN}: udp:${PRIVATE_DNS_PRIMARY}
+          ${PRIVATE_REVERSE_IPV4_DOMAIN}: udp:${PRIVATE_DNS_PRIMARY}
+          ${PRIVATE_REVERSE_IPV6_DOMAIN}: udp:${PRIVATE_DNS_PRIMARY}
+
+      blocking:
+        blackLists:
+          ads:
+          - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+          # from pi.hole
+          - https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
+          - https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
+        whiteLists:
+          ads:
+          - https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt
+          - https://raw.githubusercontent.com/haraldkoch/safelists/main/adlist.txt
+        clientGroupsBlock:
+          default:
+          - ads
+
+      prometheus:
+        enable: true
+        path: /metrics
+
+    service:
+      main:
+        ports:
+          http:
+            port: 4000
+      dns-tcp:
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: ${LB_BLOCKY}
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "blocky.${SECRET_DOMAIN}"
+          metallb.universe.tf/allow-shared-ip: blocky
+        ports:
+          dns-tcp:
+            enabled: true
+            port: 53
+            protocol: TCP
+            targetPort: 53
+      dns-udp:
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: ${LB_BLOCKY}
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "blocky.${SECRET_DOMAIN}"
+          metallb.universe.tf/allow-shared-ip: blocky
+        ports:
+          dns-udp:
+            enabled: true
+            port: 53
+            protocol: UDP
+            targetPort: 53
+
+    metrics:
+      enabled: true
+
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - blocky
+            topologyKey: "kubernetes.io/hostname"
+
+    resources:
+      requests:
+        memory: 256Mi
+      limits:
+        memory: 512Mi
