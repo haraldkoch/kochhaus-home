@@ -18,5 +18,11 @@ spec:
       interval: 5m
 
   values:
+    reloader:
+      deployment:
+        image:
+          name: ghcr.io/k8s-at-home/reloader
+          tag: v0.0.103
+
     podMonitor:
       enabled: true
