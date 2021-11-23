@@ -10,10 +10,11 @@ metadata:
     metallb.universe.tf/allow-shared-ip: weather
 spec:
   type: LoadBalancer
+  ipFamilyPolicy: PreferDualStack
   ports:
-  - name: weather-exporter
-    port: 9265
-    targetPort: 9265
-    protocol: TCP
+    - name: weather-exporter
+      port: 9265
+      targetPort: 9265
+      protocol: TCP
   selector:
     app: weather-exporter
