@@ -30,6 +30,8 @@ spec:
       # Defaults to false
       watchIngressWithoutClass: true
 
+      allowSnippetAnnotations: false
+
       replicaCount: 1
       service:
         type: LoadBalancer
