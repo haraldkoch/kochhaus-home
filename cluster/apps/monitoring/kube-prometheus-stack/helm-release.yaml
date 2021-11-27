@@ -45,6 +45,7 @@ spec:
 
     grafana:
       adminPassword: ${SECRET_GRAFANA_PASSWORD}
+      defaultDashboardsTimezone: America/Toronto
 
       ingress:
         enabled: true
