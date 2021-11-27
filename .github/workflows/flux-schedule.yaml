@@ -4,7 +4,7 @@ name: Schedule - Update Flux
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
   schedule:
-  - cron: '11 12 * * *'
+    - cron: "11 12 * * *"
 
 jobs:
   flux-upgrade:
@@ -23,7 +23,7 @@ jobs:
           CLI_VERSION="$(flux -v)"
           VERSION="v${CLI_VERSION#*flux version }"
           flux install --version="${VERSION}" \
-            --network-policy=false \
+            --network-policy=true \
             --export > ./cluster/base/flux-system/gotk-components.yaml
           echo "::set-output name=flux_version::$VERSION"
 
