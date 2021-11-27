@@ -6,14 +6,14 @@ metadata:
   labels:
     app: openweathermap-exporter
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: "weather.${SECRET_DOMAIN}"
-    metallb.universe.tf/allow-shared-ip: weather
+    external-dns.alpha.kubernetes.io/hostname: "exporters.${SECRET_DOMAIN}"
+    metallb.universe.tf/allow-shared-ip: exporters
 spec:
   type: LoadBalancer
   ports:
-  - name: openweathermap-exporter
-    port: 2112
-    targetPort: 2112
-    protocol: TCP
+    - name: openweathermap-exporter
+      port: 2112
+      targetPort: 2112
+      protocol: TCP
   selector:
     app: openweathermap-exporter
