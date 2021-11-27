@@ -47,6 +47,10 @@ spec:
       adminPassword: ${SECRET_GRAFANA_PASSWORD}
       defaultDashboardsTimezone: America/Toronto
 
+      plugins:
+        - grafana-clock-panel
+        - grafana-piechart-panel
+
       ingress:
         enabled: true
         hosts:
