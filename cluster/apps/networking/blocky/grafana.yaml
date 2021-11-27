@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: blocky-dashboard
-  namespace: networking
+  namespace: monitoring
   labels:
     grafana_dashboard: "1"
 data:
