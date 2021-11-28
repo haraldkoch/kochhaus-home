@@ -47,6 +47,10 @@ spec:
       adminPassword: ${SECRET_GRAFANA_PASSWORD}
       defaultDashboardsTimezone: America/Toronto
 
+      sidecar:
+        dashboards:
+          searchNamespace: ALL
+
       plugins:
         - grafana-clock-panel
         - grafana-piechart-panel
