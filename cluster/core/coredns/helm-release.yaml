@@ -24,6 +24,9 @@ spec:
 
     fullnameOverride: coredns
 
+    service:
+      clusterIP: 10.43.0.10
+
     prometheus:
       service:
         enabled: true
