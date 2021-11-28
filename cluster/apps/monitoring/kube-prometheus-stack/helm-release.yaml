@@ -68,6 +68,9 @@ spec:
     nodeExporter:
       enabled: false
 
+    prometheusOperator:
+      logLevel: debug
+
     prometheus:
       ingress:
         enabled: true
