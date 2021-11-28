@@ -22,9 +22,9 @@ spec:
       repository: coredns/coredns
       tag: 1.8.4
 
-  prometheus:
-    service:
-      enabled: true
+    prometheus:
+      service:
+        enabled: true
 
     servers:
       - zones:
