@@ -14,7 +14,7 @@ spec:
       version: 0.3.7
       sourceRef:
         kind: HelmRepository
-        name: coredns
+        name: coredns-charts
         namespace: flux-system
 
   values:
