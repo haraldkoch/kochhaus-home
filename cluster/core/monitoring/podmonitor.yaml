@@ -11,7 +11,7 @@ spec:
       - flux-system
   selector:
     matchLabels:
-      prometheus.io/scrape: true
+      "prometheus.io/scrape": "true"
 
   # I don't know why putting this match expression in causes the prometheus operator to select zero pods. Ugh.
   #  matchExpressions:
