@@ -8,3 +8,4 @@ resources:
   - metallb-system
   - nfs-subdir-external-provisioner
   - system-upgrade
+  - monitoring
