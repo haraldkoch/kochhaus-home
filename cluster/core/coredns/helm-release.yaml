@@ -22,6 +22,8 @@ spec:
       repository: coredns/coredns
       tag: 1.8.4
 
+    fullnameOverride: coredns
+
     prometheus:
       service:
         enabled: true
