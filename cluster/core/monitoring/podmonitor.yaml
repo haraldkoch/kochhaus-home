@@ -10,8 +10,11 @@ spec:
     matchNames:
       - flux-system
   selector:
-    matchExpressions:
+    matchLabels:
+      prometheus.io/scrape: true
+
   # I don't know why putting this match expression in causes the prometheus operator to select zero pods. Ugh.
+  #  matchExpressions:
   #    - key: app
   #      operator: In
   #      values:
