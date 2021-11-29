@@ -24,6 +24,8 @@ spec:
 
     fullnameOverride: home-dns
 
+    replicaCount: 2
+
     podAnnotations:
       configmap.reloader.stakater.com/reload: "config,zones,home-dns"
       secret.reloader.stakater.com/reload: "dnssec"
