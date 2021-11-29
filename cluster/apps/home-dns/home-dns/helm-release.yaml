@@ -25,6 +25,16 @@ spec:
     fullnameOverride: home-dns
 
     replicaCount: 2
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - blocky
+            topologyKey: "kubernetes.io/hostname"
 
     podAnnotations:
       configmap.reloader.stakater.com/reload: "config,zones,home-dns"
