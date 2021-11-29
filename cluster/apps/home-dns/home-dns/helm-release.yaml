@@ -1,0 +1,82 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: home-dns
+  namespace: home-dns
+spec:
+  interval: 1h
+  timeout: 30m
+  chart:
+    spec:
+      # renovate: registryUrl=https://coredns.github.io/helm
+      chart: coredns
+      version: 1.16.4
+      sourceRef:
+        kind: HelmRepository
+        name: coredns-charts
+        namespace: flux-system
+
+  values:
+    image:
+      repository: coredns/coredns
+      tag: 1.8.4
+
+    fullnameOverride: home-dns
+
+    serviceType: LoadBalancer
+    service:
+      loadBalancerIP: ${LB_HOME_DNS}
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: dns.${SECRET_DOMAIN}
+        metallb.universe.tf/allow-shared-ip: dns
+
+    prometheus:
+      service:
+        enabled: true
+
+    servers:
+      - zones:
+          - zone: .
+            scheme: dns://
+            use_tcp: false
+        port: 53
+        plugins:
+          - name: log
+          - name: errors
+          - name: health
+            configBlock: |-
+              lameduck 5s
+          - name: ready
+          - name: prometheus
+            parameters: :9153
+          # FIXME use router address
+          - name: forward
+            parameters: . ${PRIVATE_DNS_PRIMARY}
+          - name: loop
+          - name: reload
+          - name: loadbalance
+
+    extraVolumeMounts:
+      - name: zones
+        mountPath: /etc/zones
+      - name: config
+        mountPath: /etc/config
+
+    extraVolumes:
+      - name: zones
+        configMap:
+          defaultMode: 420
+          name: zones
+      - name: config
+        configMap:
+          defaultMode: 420
+          name: config
+
+    extraSecrets:
+      - name: dnssec
+        mountPath: /etc/dnssec
+
+    extraConfig:
+      import:
+        parameters: /etc/config/*.conf
