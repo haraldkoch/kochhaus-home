@@ -21,13 +21,11 @@ spec:
   values:
     configInline:
       address-pools:
+        # ipv4 and ipv6 addresses must be in the same pool
         - name: default
           protocol: layer2
           addresses:
             - "${METALLB_LB_RANGE}"
-        - name: ipv6
-          protocol: layer2
-          addresses:
             - "${METALLB_LB_IP6_RANGE}"
 
     prometheusRule:
