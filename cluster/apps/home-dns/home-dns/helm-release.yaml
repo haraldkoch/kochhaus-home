@@ -24,6 +24,10 @@ spec:
 
     fullnameOverride: home-dns
 
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "config,zones,home-dns"
+      secret.reloader.stakater.com/reload: "dnssec"
+
     serviceType: LoadBalancer
     service:
       loadBalancerIP: ${LB_HOME_DNS}
