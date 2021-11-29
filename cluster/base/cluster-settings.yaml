@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 data:
   METALLB_LB_RANGE: 199.85.99.18-199.85.99.27
+  METALLB_LB_IP6_RANGE: fdd5:aa8:9535:10:1::/80
   INGRESS_NGINX_LB: 199.85.99.18
   LB_BLOCKY: 199.85.99.27
   LB_HOME_DNS: 199.85.99.26
