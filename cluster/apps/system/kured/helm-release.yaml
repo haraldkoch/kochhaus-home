@@ -23,7 +23,7 @@ spec:
     updateStrategy: RollingUpdate
     configuration:
       startTime: "7:00"
-      endTime: "10:00"
+      endTime: "12:00"
       timeZone: "America/Toronto"
     tolerations:
       # I'm not using the ARM image yet
