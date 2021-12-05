@@ -22,6 +22,15 @@ spec:
       repository: ghcr.io/home-assistant/home-assistant
       tag: 2021.11.5
 
+    nameOverride: "home-assistant"
+
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
+      pre.hook.backup.velero.io/container: fsfreeze
+      pre.hook.backup.velero.io/command: '["/sbin/fsfreeze", "--freeze", "/data"]'
+      post.hook.backup.velero.io/container: fsfreeze
+      post.hook.backup.velero.io/command: '["/sbin/fsfreeze", "--unfreeze", "/data"]'
+
     persistence:
       config:
         enabled: true
@@ -39,6 +48,7 @@ spec:
 
     env:
       TZ: "America/Toronto"
+
     probes:
       #Circumvention - avoid restart
       liveness:
@@ -62,6 +72,16 @@ spec:
         tls:
           - hosts:
               - ha.${SECRET_DOMAIN}
+
+    additionalContainers:
+      fsfreeze:
+        name: fsfreeze
+        image: ghcr.io/k8s-at-home/fsfreeze:v2.37-r0
+        volumeMounts:
+          - name: config
+            mountPath: /data
+        securityContext:
+          privileged: true
 
     addons:
       codeserver:
