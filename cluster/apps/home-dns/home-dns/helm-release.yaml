@@ -34,7 +34,8 @@ spec:
                   operator: In
                   values:
                     - blocky
-            topologyKey: "kubernetes.io/hostname"
+            # force one instance onto the RPi cluster
+            topologyKey: "kubernetes.io/arch"
 
     podAnnotations:
       configmap.reloader.stakater.com/reload: "config,zones,home-dns"
