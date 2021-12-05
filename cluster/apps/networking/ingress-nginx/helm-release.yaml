@@ -92,9 +92,6 @@ spec:
         limits:
           memory: 500Mi
 
-    defaultBackend:
-      enabled: true
-
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -104,3 +101,16 @@ spec:
                   operator: In
                   values:
                     - "amd64"
+
+    defaultBackend:
+      enabled: true
+
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - "amd64"
