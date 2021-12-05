@@ -18,7 +18,7 @@ spec:
       interval: 5m
   values:
     image:
-      repository: raspernetes/kured
+      repository: quay.io/palfantom/kured
       tag: 1.8.0
     updateStrategy: RollingUpdate
     configuration:
