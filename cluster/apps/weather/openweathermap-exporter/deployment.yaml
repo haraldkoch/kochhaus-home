@@ -16,14 +16,23 @@ spec:
         app: openweathermap-exporter
     spec:
       containers:
-      - name: openweathermap-exporter
-        image: ${PRIVATE_REGISTRY_1}/haraldkoch/ows:latest
-        env:
-        - name: SERVER_PORT
-          value: "2112"
-        - name: OWM_LOCATION
-          value: "TORONTO,CA"
-        - name: OWM_API_KEY
-          value: ${OPENWEATHERMAP_API_KEY}
-        ports:
-        - containerPort: 2112
+        - name: openweathermap-exporter
+          image: ${PRIVATE_REGISTRY_1}/haraldkoch/ows:latest
+          env:
+            - name: SERVER_PORT
+              value: "2112"
+            - name: OWM_LOCATION
+              value: "TORONTO,CA"
+            - name: OWM_API_KEY
+              value: ${OPENWEATHERMAP_API_KEY}
+          ports:
+            - containerPort: 2112
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - "amd64"
