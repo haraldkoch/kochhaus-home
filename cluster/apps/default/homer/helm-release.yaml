@@ -20,6 +20,8 @@ spec:
   values:
     env:
       TZ: America/Toronto
+      UID: 1000
+      GID: 1000
 
     # Example of exposing this via LoadBalancer, Metal-LB, and ExternalDNS, instead of Ingress.
     # Note: this doesn't give TLS, an advantage of using an Ingress...
