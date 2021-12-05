@@ -90,6 +90,15 @@ spec:
           cpu: 15m
         limits:
           memory: 3000Mi
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
 
     resources:
       requests:
