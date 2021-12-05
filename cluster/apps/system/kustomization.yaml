@@ -5,4 +5,5 @@ resources:
   - descheduler
   - docker-registry
   - kured
+  - node-feature-discovery
   - reloader
