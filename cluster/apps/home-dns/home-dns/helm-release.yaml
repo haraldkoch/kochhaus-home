@@ -30,10 +30,10 @@ spec:
         requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:
               matchExpressions:
-                - key: app.kubernetes.io/name
+                - key: app.kubernetes.io/instance
                   operator: In
                   values:
-                    - blocky
+                    - home-dns
             # force one instance onto the RPi cluster
             topologyKey: "kubernetes.io/arch"
 
