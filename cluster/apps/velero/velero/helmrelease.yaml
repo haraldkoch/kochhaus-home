@@ -74,6 +74,16 @@ spec:
         repository: ghcr.io/k8s-at-home/kubectl
         tag: v1.22.3
 
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                    - amd64
+
     deployRestic: true
 
     restic:
@@ -90,15 +100,6 @@ spec:
           cpu: 15m
         limits:
           memory: 3000Mi
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/arch
-                    operator: In
-                    values:
-                      - amd64
 
     resources:
       requests:
