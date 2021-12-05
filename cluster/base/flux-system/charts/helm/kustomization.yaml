@@ -10,6 +10,7 @@ resources:
   - k8s-at-home-charts.yaml
   - kubernetes-sigs-descheduler.yaml
   - kube-vip.yaml
+  - metallb-charts.yaml
   - nfs-subdir-external-provisioner.yaml
   - okgolove.yaml
   - prometheus-community-charts.yaml
