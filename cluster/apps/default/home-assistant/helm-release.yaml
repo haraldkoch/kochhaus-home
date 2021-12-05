@@ -46,6 +46,9 @@ spec:
       readiness:
         enabled: false
 
+    # needed for discovery, mDNS, etc (HomeKit)
+    hostNetwork: true
+
     ingress:
       main:
         enabled: true
