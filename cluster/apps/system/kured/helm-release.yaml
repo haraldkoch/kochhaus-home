@@ -18,8 +18,8 @@ spec:
       interval: 5m
   values:
     image:
-      repository: ghcr.io/k8s-at-home/kured
-      tag: 1.8.1
+      repository: raspernetes/kured
+      tag: 1.8.0
     updateStrategy: RollingUpdate
     configuration:
       startTime: "7:00"
