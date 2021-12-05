@@ -54,18 +54,23 @@ spec:
         existingClaim: homer-pvc
 
       # this was impossible to figure out from the docs. I had to copy it from another user!
-      config-file-ro:
-        enabled: true
-        mountPath: /www/assets/config.yml
-        subPath: config.yml
-        type: custom
-        volumeSpec:
-          configMap:
-            name: homer-config
-            # an example of renaming configMap items
-            # items:
-            #   - key: homer-config.yaml
-            #     path: config.yml
+
+    # This was a cool idea, but it's really hard to edit. decrypt the config map,
+    # extract the file, edit, put the file back, re-encrypt, push - too many steps.
+    # I'm going to try the k8s-at-home code-server add-on instead.
+    #
+    #      config-file-ro:
+    #        enabled: true
+    #        mountPath: /www/assets/config.yml
+    #        subPath: config.yml
+    #        type: custom
+    #        volumeSpec:
+    #          configMap:
+    #            name: homer-config
+    #            # an example of renaming configMap items
+    #            # items:
+    #            #   - key: homer-config.yaml
+    #            #     path: config.yml
 
     addons:
       codeserver:
