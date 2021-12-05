@@ -112,7 +112,7 @@ spec:
                   operator: In
                   values:
                     - blocky
-            topologyKey: "kubernetes.io/hostname"
+            topologyKey: "kubernetes.io/arch"
 
     resources:
       requests:
