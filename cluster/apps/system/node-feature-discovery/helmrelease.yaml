@@ -42,8 +42,10 @@ spec:
       config: |-
         core:
           sources:
+          - cpu
           - custom
           - usb
+          - system
 
         sources:
           usb:
