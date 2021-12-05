@@ -1,0 +1,85 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: home-assistant
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: home-assistant
+      version: 11.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+
+  # See https://github.com/k8s-at-home/charts/blob/master/charts/home-assistant/values.yaml
+  values:
+    image:
+      repository: ghcr.io/home-assistant/home-assistant
+      tag: 2021.11.5
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: home-assistant-pvc
+
+    mariadb:
+      enabled: false
+    postgresql:
+      enabled: false
+    influxdb:
+      enabled: false
+
+    nodeSelector:
+      kubernetes.io/arch: amd64
+
+    env:
+      TZ: "America/Toronto"
+    probes:
+      #Circumvention - avoid restart
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
+
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          nginx.org/websocket-services: home-assistant
+        hosts:
+          - host: ha.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - ha.${SECRET_DOMAIN}
+
+    addons:
+      codeserver:
+        enabled: true
+        image:
+          repository: ghcr.io/k8s-at-home/code-server
+          tag: v3.12.0
+        volumeMounts:
+          - name: config
+            mountPath: /config
+        # FIXME
+        # git:
+        #   # -- Existing secret containing SSH private key
+        #   # The chart expects it to be present under the `id_rsa` key.
+        #   deployKeySecret: git-ssh-keys
+        ingress:
+          enabled: true
+          hosts:
+            - host: ha-editor.${SECRET_DOMAIN}
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - hosts:
+                - ha-editor.${SECRET_DOMAIN}
