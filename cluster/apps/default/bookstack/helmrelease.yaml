@@ -74,6 +74,16 @@ spec:
           limits:
             memory: 192Mi
 
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: kubernetes.io/arch
+                      operator: In
+                      values:
+                        - "amd64"
+
   valuesFrom:
     - kind: Secret
       name: bookstack

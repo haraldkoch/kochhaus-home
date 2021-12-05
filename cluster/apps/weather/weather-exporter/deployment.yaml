@@ -16,18 +16,27 @@ spec:
         app: weather-exporter
     spec:
       containers:
-      - name: weather-exporter
-        image: celliott/weather_exporter:latest
-        env:
-        - name: ENDPOINT_PORT
-          value: "9265"
-        - name: SCRAPE_INTERVAL
-          value: "600"
-        - name: CITIES
-          value: "toronto"
-        - name: UNITS
-          value: "ca"
-        - name: DARK_SKY_API_KEY
-          value: ${SECRET_DARK_SKY_API_KEY}
-        ports:
-        - containerPort: 9265
+        - name: weather-exporter
+          image: celliott/weather_exporter:latest
+          env:
+            - name: ENDPOINT_PORT
+              value: "9265"
+            - name: SCRAPE_INTERVAL
+              value: "600"
+            - name: CITIES
+              value: "toronto"
+            - name: UNITS
+              value: "ca"
+            - name: DARK_SKY_API_KEY
+              value: ${SECRET_DARK_SKY_API_KEY}
+          ports:
+            - containerPort: 9265
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - "amd64"
