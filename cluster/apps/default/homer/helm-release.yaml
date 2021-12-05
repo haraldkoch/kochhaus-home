@@ -51,9 +51,7 @@ spec:
     persistence:
       config:
         enabled: true
-        type: pvc
         existingClaim: homer-pvc
-        mountPath: /www/assets
 
       # this was impossible to figure out from the docs. I had to copy it from another user!
       config-file-ro:
@@ -68,3 +66,29 @@ spec:
             # items:
             #   - key: homer-config.yaml
             #     path: config.yml
+
+    addons:
+      codeserver:
+        enabled: true
+        image:
+          repository: ghcr.io/k8s-at-home/code-server
+          tag: v3.12.0
+        workingDir: "/www/assets"
+        args:
+          - --user-data-dir
+          - "/www/assets/.vscode"
+          - --auth
+          - "none"
+        ingress:
+          enabled: true
+          hosts:
+            - host: home-editor.${SECRET_DOMAIN}
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - hosts:
+                - home-editor.${SECRET_DOMAIN}
+        volumeMounts:
+          - name: config
+            mountPath: /www/assets
