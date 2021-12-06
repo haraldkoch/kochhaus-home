@@ -37,6 +37,9 @@ spec:
     ingress:
       main:
         enabled: true
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "home"
         hosts:
           - host: "homer.${SECRET_DOMAIN}"
             paths:
