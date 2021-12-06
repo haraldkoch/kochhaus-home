@@ -23,6 +23,8 @@ spec:
     ingress:
       main:
         enabled: true
+        annotations:
+          hajimari.io/enable: "false"
         hosts:
           - host: "echo.${SECRET_DOMAIN}"
             paths:
