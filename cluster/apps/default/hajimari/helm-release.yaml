@@ -32,7 +32,7 @@ spec:
         matchNames:
           - default
           - media
-      name: "you"
+      name: "citizen"
       customApps:
         - name: Some External Cluster Service
           url: http://192.168.1.100:5000
