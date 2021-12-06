@@ -4,6 +4,7 @@ resources:
   - bitnami-charts.yaml
   - coredns-charts.yaml
   - democratic-csi-charts.yaml
+  - hajimari.yaml
   - haraldkoch.yaml
   - ingress-nginx-charts.yaml
   - jetstack-charts.yaml
