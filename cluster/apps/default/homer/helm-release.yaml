@@ -88,6 +88,9 @@ spec:
           - "none"
         ingress:
           enabled: true
+          annotations:
+            hajimari.io/enable: "true"
+            hajimari.io/icon: "pencil"
           hosts:
             - host: home-editor.${SECRET_DOMAIN}
               paths:
