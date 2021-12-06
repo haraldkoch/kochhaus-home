@@ -38,6 +38,9 @@ spec:
     ingress:
       main:
         enabled: true
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "notebook-edit-outline"
         hosts:
           - host: kb.${SECRET_DOMAIN}
             paths:
