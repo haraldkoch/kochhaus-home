@@ -63,6 +63,8 @@ spec:
       main:
         enabled: true
         annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "cog-play-outline"
           nginx.org/websocket-services: home-assistant
         hosts:
           - host: ha.${SECRET_DOMAIN}
