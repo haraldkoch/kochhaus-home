@@ -24,6 +24,9 @@ spec:
     ingress:
       main:
         enabled: true
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "television-classic"
         hosts:
           - host: "tautulli.${SECRET_DOMAIN}"
             paths:
