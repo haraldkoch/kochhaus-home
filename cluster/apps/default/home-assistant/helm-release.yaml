@@ -89,6 +89,12 @@ spec:
         image:
           repository: ghcr.io/k8s-at-home/code-server
           tag: v3.12.0
+        workingDir: "/config"
+        args:
+          - --user-data-dir
+          - "/config/.vscode"
+          - --auth
+          - "none"
         volumeMounts:
           - name: config
             mountPath: /config
@@ -99,6 +105,9 @@ spec:
         #   deployKeySecret: git-ssh-keys
         ingress:
           enabled: true
+          annotations:
+            hajimari.io/enable: "true"
+            hajimari.io/icon: "pencil"
           hosts:
             - host: ha-editor.${SECRET_DOMAIN}
               paths:
