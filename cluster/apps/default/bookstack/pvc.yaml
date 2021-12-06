@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: bookstack-mariadb
   namespace: default
+  labels:
+    app.kubernetes.io/name: mariadb
+    app.kubernetes.io/part-of: bookstack
 spec:
   accessModes:
     - ReadWriteOnce
@@ -19,6 +22,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: bookstack-config
   namespace: default
+  labels:
+    app.kubernetes.io/name: bookstack
+    app.kubernetes.io/part-of: bookstack
 spec:
   accessModes:
     - ReadWriteOnce
