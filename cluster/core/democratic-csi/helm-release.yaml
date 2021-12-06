@@ -51,3 +51,4 @@ spec:
       - name: zfs-nfs
         labels:
           velero.io/csi-volumesnapshot-class: "true"
+        deletionPolicy: Retain
