@@ -35,10 +35,14 @@ spec:
           - media
       name: "citizen"
       customApps:
-        []
-        # - name: Some External Cluster Service
-        #   url: http://192.168.1.100:5000
-        #   icon: test-tube
+        - name: Grafana
+          icon: chart-line
+          url: https://grafana.kochhaus.net/
+          group: monitoring
+        - name: Goldpinger
+          icon: table-tennis
+          url: https://goldpinger.kochhaus.net/
+          group: monitoring
       groups:
         - name: Communicate
           links:
