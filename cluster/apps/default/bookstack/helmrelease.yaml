@@ -54,31 +54,12 @@ spec:
             hosts:
               - kb.${SECRET_DOMAIN}
 
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
-      pre.hook.backup.velero.io/container: fsfreeze
-      pre.hook.backup.velero.io/command: '["/sbin/fsfreeze", "--freeze", "/data"]'
-      post.hook.backup.velero.io/container: fsfreeze
-      post.hook.backup.velero.io/command: '["/sbin/fsfreeze", "--unfreeze", "/data"]'
-
     resources:
       requests:
         memory: 128Mi
       limits:
         memory: 192Mi
 
-    additionalContainers:
-      fsfreeze:
-        name: fsfreeze
-        image: ghcr.io/k8s-at-home/fsfreeze:v2.37-r0
-        volumeMounts:
-          - name: config
-            mountPath: /data
-        securityContext:
-          privileged: true
-
-    # -- Enable and configure mariadb database subchart under this key.
-    #    For more options see https://github.com/bitnami/charts/tree/master/bitnami/mariadb
     mariadb:
       enabled: true
       architecture: standalone
@@ -97,27 +78,11 @@ spec:
           enabled: true
           existingClaim: bookstack-mariadb
 
-        podAnnotations:
-          backup.velero.io/backup-volumes: data
-          pre.hook.backup.velero.io/container: fsfreeze
-          pre.hook.backup.velero.io/command: '["/sbin/fsfreeze", "--freeze", "/data"]'
-          post.hook.backup.velero.io/container: fsfreeze
-          post.hook.backup.velero.io/command: '["/sbin/fsfreeze", "--unfreeze", "/data"]'
-
         resources:
           requests:
             memory: 128Mi
           limits:
             memory: 192Mi
-
-        sidecars:
-          - name: fsfreeze
-            image: ghcr.io/k8s-at-home/fsfreeze:v2.37-r0
-            volumeMounts:
-              - name: data
-                mountPath: /data
-            securityContext:
-              privileged: true
 
         affinity:
           nodeAffinity:
