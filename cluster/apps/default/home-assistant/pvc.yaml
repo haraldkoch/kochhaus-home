@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: home-assistant-pvc
   namespace: default
+  labels:
+    app.kubernetes.io/part-of: home-assistant
 spec:
   resources:
     requests:

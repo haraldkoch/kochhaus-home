@@ -22,14 +22,14 @@ spec:
       repository: ghcr.io/home-assistant/home-assistant
       tag: 2021.11.5
 
+    controller:
+      labels:
+        app.kubernetes.io/part-of: home-assistant
+
     nameOverride: "home-assistant"
 
     podAnnotations:
       backup.velero.io/backup-volumes: config
-      pre.hook.backup.velero.io/container: fsfreeze
-      pre.hook.backup.velero.io/command: '["/sbin/fsfreeze", "--freeze", "/data"]'
-      post.hook.backup.velero.io/container: fsfreeze
-      post.hook.backup.velero.io/command: '["/sbin/fsfreeze", "--unfreeze", "/data"]'
 
     persistence:
       config:
@@ -66,6 +66,8 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "home-assistant"
           nginx.org/websocket-services: home-assistant
+        labels:
+          app.kubernetes.io/part-of: home-assistant
         hosts:
           - host: ha.${SECRET_DOMAIN}
             paths:
@@ -74,16 +76,6 @@ spec:
         tls:
           - hosts:
               - ha.${SECRET_DOMAIN}
-
-    additionalContainers:
-      fsfreeze:
-        name: fsfreeze
-        image: ghcr.io/k8s-at-home/fsfreeze:v2.37-r0
-        volumeMounts:
-          - name: config
-            mountPath: /data
-        securityContext:
-          privileged: true
 
     addons:
       codeserver:
