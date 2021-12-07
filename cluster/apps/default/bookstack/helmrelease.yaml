@@ -111,14 +111,13 @@ spec:
             memory: 192Mi
 
         sidecars:
-          - fsfreeze:
-              name: fsfreeze
-              image: ghcr.io/k8s-at-home/fsfreeze:v2.37-r0
-              volumeMounts:
-                - name: data
-                  mountPath: /data
-              securityContext:
-                privileged: true
+          - name: fsfreeze
+            image: ghcr.io/k8s-at-home/fsfreeze:v2.37-r0
+            volumeMounts:
+              - name: data
+                mountPath: /data
+            securityContext:
+              privileged: true
 
         affinity:
           nodeAffinity:
