@@ -5,3 +5,4 @@ resources:
   - helmrelease.yaml
   - secret.sops.yaml
   - prometheus-rule.yaml
+  - bookstack-schedule.yaml
