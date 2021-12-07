@@ -45,6 +45,8 @@ spec:
     ingress:
       main:
         enabled: true
+        labels:
+          app.kubernetes.io/part-of: bookstack
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "notebook-edit-outline"
