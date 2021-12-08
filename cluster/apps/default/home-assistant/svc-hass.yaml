@@ -7,8 +7,6 @@ metadata:
     app.kubernetes.io/instance: home-assistant
     app.kubernetes.io/name: home-assistant
     app.kubernetes.io/part-of: home-assistant
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: "hass.${SECRET_DOMAIN}"
 spec:
   allocateLoadBalancerNodePorts: true
   ipFamilyPolicy: PreferDualStack
