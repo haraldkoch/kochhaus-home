@@ -8,12 +8,13 @@ metadata:
   labels:
     app: kube-node-exporter
 spec:
+  jobLabel: jobLabel
   namespaceSelector:
     matchNames:
       - monitoring
   selector:
     matchLabels:
-      k8s-app: node-exporter
+      app: node-exporter
   endpoints:
     - port: http-metrics
       path: /metrics
@@ -24,8 +25,11 @@ kind: Service
 metadata:
   name: node-exporter
   namespace: monitoring
+  annotations:
+    prometheus.io/scrape: "true"
   labels:
-    k8s-app: node-exporter
+    app: node-exporter
+    jobLabel: node-exporter
 spec:
   type: ExternalName
   externalName: ${K3S_HOSTNAME}
@@ -36,6 +40,8 @@ spec:
       port: 9100
       protocol: TCP
       targetPort: 9100
+  selector:
+    app: node-exporter
 ---
 apiVersion: v1
 kind: Endpoints
@@ -44,7 +50,7 @@ metadata:
   name: node-exporter-1
   namespace: monitoring
   labels:
-    k8s-app: node-exporter
+    app: node-exporter
 subsets:
   - addresses:
       - ip: ${K3S1_IPV4_ADDRESS}
@@ -60,7 +66,7 @@ metadata:
   name: node-exporter-0
   namespace: monitoring
   labels:
-    k8s-app: node-exporter
+    app: node-exporter
 subsets:
   - addresses:
       - ip: ${K3S0_IPV4_ADDRESS}
@@ -76,7 +82,7 @@ metadata:
   name: node-exporter-2
   namespace: monitoring
   labels:
-    k8s-app: node-exporter
+    app: node-exporter
 subsets:
   - addresses:
       - ip: ${K3S2_IPV4_ADDRESS}
@@ -92,7 +98,7 @@ metadata:
   name: node-exporter-3
   namespace: monitoring
   labels:
-    k8s-app: node-exporter
+    app: node-exporter
 subsets:
   - addresses:
       - ip: ${K3S3_IPV4_ADDRESS}
@@ -108,7 +114,7 @@ metadata:
   name: node-exporter-arm
   namespace: monitoring
   labels:
-    k8s-app: node-exporter
+    app: node-exporter
 subsets:
   - addresses:
       - ip: ${K3SARM_IPV4_ADDRESS}
