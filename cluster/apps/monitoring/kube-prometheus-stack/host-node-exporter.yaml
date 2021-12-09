@@ -1,12 +1,61 @@
 ---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  labels:
+    app.kubernetes.io/instance: node-exporter
+    app.kubernetes.io/name: node-exporter
+  name: node-exporter
+  namespace: monitoring
+subsets:
+  - addresses:
+      - ip: ${K3S0_IPV4_ADDRESS}
+        nodeName: k3s0
+      - ip: ${K3S1_IPV4_ADDRESS}
+        nodeName: k3s1
+      - ip: ${K3S2_IPV4_ADDRESS}
+        nodeName: k3s2
+      - ip: ${K3S3_IPV4_ADDRESS}
+        nodeName: k3s3
+      - ip: ${K3SARM_IPV4_ADDRESS}
+        nodeName: k3s-arm
+    ports:
+      - name: http-metrics
+        port: 9100
+        protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    prometheus.io/scrape: "true"
+  labels:
+    app.kubernetes.io/instance: node-exporter
+    app.kubernetes.io/name: node-exporter
+    jobLabel: node-exporter
+  name: node-exporter
+  namespace: monitoring
+spec:
+  externalName: ${K3S_HOSTNAME}
+  clusterIP: ""
+  ports:
+    - name: http-metrics
+      port: 9100
+      protocol: TCP
+      targetPort: 9100
+  selector:
+    app.kubernetes.io/instance: node-exporter
+    app.kubernetes.io/name: node-exporter
+  type: ExternalName
+---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: node-exporter
-  # Namespace of prometheus operator
   namespace: monitoring
   labels:
-    app: kube-node-exporter
+    app.kubernetes.io/instance: node-exporter
+    app.kubernetes.io/name: node-exporter
 spec:
   jobLabel: jobLabel
   namespaceSelector:
@@ -14,111 +63,8 @@ spec:
       - monitoring
   selector:
     matchLabels:
-      app: node-exporter
+      app.kubernetes.io/name: node-exporter
   endpoints:
     - port: http-metrics
       path: /metrics
       interval: 10s
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: node-exporter
-  namespace: monitoring
-  annotations:
-    prometheus.io/scrape: "true"
-  labels:
-    app: node-exporter
-    jobLabel: node-exporter
-spec:
-  type: ExternalName
-  externalName: ${K3S_HOSTNAME}
-  clusterIP: ""
-  # Maybe not relevant
-  ports:
-    - name: http-metrics
-      port: 9100
-      protocol: TCP
-      targetPort: 9100
-  selector:
-    app: node-exporter
----
-apiVersion: v1
-kind: Endpoints
-metadata:
-  # Name must match service name
-  name: node-exporter-1
-  namespace: monitoring
-  labels:
-    app: node-exporter
-subsets:
-  - addresses:
-      - ip: ${K3S1_IPV4_ADDRESS}
-    ports:
-      - name: http-metrics
-        port: 9100
-        protocol: TCP
----
-apiVersion: v1
-kind: Endpoints
-metadata:
-  # Name must match service name
-  name: node-exporter-0
-  namespace: monitoring
-  labels:
-    app: node-exporter
-subsets:
-  - addresses:
-      - ip: ${K3S0_IPV4_ADDRESS}
-    ports:
-      - name: http-metrics
-        port: 9100
-        protocol: TCP
----
-apiVersion: v1
-kind: Endpoints
-metadata:
-  # Name must match service name
-  name: node-exporter-2
-  namespace: monitoring
-  labels:
-    app: node-exporter
-subsets:
-  - addresses:
-      - ip: ${K3S2_IPV4_ADDRESS}
-    ports:
-      - name: http-metrics
-        port: 9100
-        protocol: TCP
----
-apiVersion: v1
-kind: Endpoints
-metadata:
-  # Name must match service name
-  name: node-exporter-3
-  namespace: monitoring
-  labels:
-    app: node-exporter
-subsets:
-  - addresses:
-      - ip: ${K3S3_IPV4_ADDRESS}
-    ports:
-      - name: http-metrics
-        port: 9100
-        protocol: TCP
----
-apiVersion: v1
-kind: Endpoints
-metadata:
-  # Name must match service name
-  name: node-exporter-arm
-  namespace: monitoring
-  labels:
-    app: node-exporter
-subsets:
-  - addresses:
-      - ip: ${K3SARM_IPV4_ADDRESS}
-    ports:
-      - name: http-metrics
-        port: 9100
-        protocol: TCP
