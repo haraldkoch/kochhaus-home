@@ -15,7 +15,7 @@ spec:
     matchLabels:
       k8s-app: node-exporter
   endpoints:
-    - port: metrics
+    - port: http-metrics
       path: /metrics
       interval: 10s
 ---
@@ -32,7 +32,7 @@ spec:
   clusterIP: ""
   # Maybe not relevant
   ports:
-    - name: metrics
+    - name: http-metrics
       port: 9100
       protocol: TCP
       targetPort: 9100
@@ -49,7 +49,7 @@ subsets:
   - addresses:
       - ip: ${K3S1_IPV4_ADDRESS}
     ports:
-      - name: metrics
+      - name: http-metrics
         port: 9100
         protocol: TCP
 ---
@@ -65,7 +65,7 @@ subsets:
   - addresses:
       - ip: ${K3S2_IPV4_ADDRESS}
     ports:
-      - name: metrics
+      - name: http-metrics
         port: 9100
         protocol: TCP
 ---
@@ -81,6 +81,22 @@ subsets:
   - addresses:
       - ip: ${K3S3_IPV4_ADDRESS}
     ports:
-      - name: metrics
+      - name: http-metrics
+        port: 9100
+        protocol: TCP
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  # Name must match service name
+  name: node-exporter-arm
+  namespace: monitoring
+  labels:
+    k8s-app: node-exporter
+subsets:
+  - addresses:
+      - ip: ${K3SARM_IPV4_ADDRESS}
+    ports:
+      - name: http-metrics
         port: 9100
         protocol: TCP
