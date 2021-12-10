@@ -29,7 +29,7 @@ spec:
 
           containers:
             - name: photoprism-index
-              image: photoprism/photoprism:20211203
+              image: photoprism/photoprism:20211210
               imagePullPolicy: IfNotPresent
               args:
                 - /photoprism/bin/photoprism
