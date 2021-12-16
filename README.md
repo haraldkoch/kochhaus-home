@@ -1,9 +1,10 @@
 <img src="https://raw.githubusercontent.com/kubernetes/kubernetes/master/logo/logo.svg" align="left" width="144px" height="144px">
 
 #### kochhaus-home - Home Cloud via Flux v2 | GitOps Toolkit
+
 > GitOps state for my cluster using flux v2
 
-[![k8s](https://img.shields.io/badge/k8s-v1.21.1%2Bk3s1-green?style=flat-square)](https://k8s.io/)
+[![k8s](https://img.shields.io/badge/k8s-v1.22.4%2Bk3s1-green?style=flat-square)](https://k8s.io/)
 [![GitHub last commit](https://img.shields.io/github/last-commit/haraldkoch/kochhaus-home?style=flat-square)](https://github.com/haraldkoch/kochhaus-home/main)
 [![Renovate](https://github.com/haraldkoch/kochhaus-home/actions/workflows/renovate.yaml/badge.svg)](https://github.com/haraldkoch/kochhaus-home/actions/workflows/renovate.yaml)
 [![Update Flux](https://github.com/haraldkoch/kochhaus-home/actions/workflows/flux-schedule.yaml/badge.svg)](https://github.com/haraldkoch/kochhaus-home/actions/workflows/flux-schedule.yaml)
@@ -13,31 +14,42 @@
 
 ## Cluster components
 
-  - [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/): Encrypts secrets which is safe to store - even to a public repository.
-  - [cert-manager](https://cert-manager.io/docs/): Configured to create TLS certs for all ingress services automatically using LetsEncrypt.
-  - [metallb](https://metallb.universe.tf/): Kubernetes Load Balancer that runs on Kubernetes.
-  - [nginx ingress](https://kubernetes.github.io/ingress-nginx/): Ingress controller that uses NGINX (instead of Rancher's default Traefik).
-  - [homer](https://github.com/bastienwirtz/homer): a simple home page builder using YAML.
-  - [external-dns](https://github.com/kubernetes-sigs/external-dns): monitors service and ingress resources, and automatically generates DNS updates for them. This lets me maintain DNS mappings and LetsEncrypt certificates without a cloudflare account or domain.
-  - [docker-registry](https://github.com/twuni/docker-registry.helm): Private docker registry.
-  - [nfs-subdir-external-provisioner](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner): creates Persistent Volumes on a pre-existing NFS mount.
-  - [democratic-csi](https://github.com/democratic-csi/democratic-csi): creates Persistent Volumes on a ZFS server as separate datasets, and exports them via NFS to the Kubernetes cluter.
-  - [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller): Automatically upgrade the K3S kubernetes instance.
+- [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/): Encrypts secrets which is safe to store - even to a public repository.
+- [calico](https://www.tigera.io/project-calico/): container networking with policy enforcement.
+- [metallb](https://metallb.universe.tf/): Kubernetes Load Balancer that runs on Kubernetes.
+- [external-dns](https://github.com/kubernetes-sigs/external-dns): monitors service and ingress resources, and automatically generates DNS updates for them. This lets me maintain DNS mappings and LetsEncrypt certificates without a cloudflare account or domain.
+- [cert-manager](https://cert-manager.io/docs/): Configured to create TLS certs for all ingress services automatically using LetsEncrypt.
+- [nginx ingress](https://kubernetes.github.io/ingress-nginx/): Ingress controller that uses NGINX (instead of Rancher's default Traefik).
+- [docker-registry](https://github.com/twuni/docker-registry.helm): Private docker registry.
+- [nfs-subdir-external-provisioner](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner): creates Persistent Volumes on a pre-existing NFS mount.
+- [democratic-csi](https://github.com/democratic-csi/democratic-csi): creates Persistent Volumes on a ZFS server as separate datasets, and exports them via NFS to the Kubernetes cluter.
+- [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller): Automatically upgrade the K3S kubernetes instance.
+- [prometheus](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack): metrics, monitoring, and alerting
+- [velero](https://velero.io/): backups!
+- And more!
+
+## Home Infrastructure
+
+- [blocky](https://github.com/0xERR0R/blocky): lightweight ad-blocking DNS resolver - this is replacing Pi-Hole.
+- [coredns](https://coredns.io/): host the static portion of my home network's DNS.
+- [hajimari](https://github.com/toboshii/hajimari): a pretty start page with Kubernetes autodiscovery.
+- [openweathermap-exporter](https://github.com/blackrez/openweathermap_exporter): a Prometheus exporter for Openweather.
+- [weather-exporter](https://github.com/celliott/weather_exporter): the much older weather exporter using the DarkSky API.
 
 ## Applications
 
-  - [openweathermap-exporter](https://github.com/blackrez/openweathermap_exporter): a Prometheus exporter for Openweather.
-  - [weather-exporter](https://github.com/celliott/weather_exporter): the much older weather exporter using the DarkSky API.
-  - [tautulli](https://github.com/Tautulli/Tautulli): Plex usage monitoring application.
+- [bookstack](https://www.bookstackapp.com/): full featured documentation platform.
+- [home-assistant](https://www.home-assistant.io/): Home Automation Hub.
+- [tautulli](https://github.com/Tautulli/Tautulli): Plex usage monitoring application.
 
-Yes, this is a lot of infrastructure and heavy lifting to run two small Docker containers. That's not the point; the point is to experiment with Kubernetes and GitOps in a safe space.
+Yes, this is a lot of infrastructure and heavy lifting - the point is to experiment with Kubernetes and GitOps in a safe space. But this is increasingly becoming primary infrastructure for my home LAN...
 
 [![dexhorthy](assets/blog-on-kubernetes.png)](https://twitter.com/dexhorthy/status/856639005462417409)
 
 I have two longer-term goals:
 
-  1. migrate many of the apps that I currently run on Linode to a K8S cluster at Linode or Digital Ocean.
-  2. Build a small Raspberry Pi cluster at home to run all of this infrastructure, including pi-hole, homeassistant, and maybe even plex!
+1. migrate many of the apps that I currently run on Linode to a K8S cluster at Linode or Digital Ocean.
+2. Build a small Raspberry Pi cluster at home to run all of this infrastructure, including pi-hole, homeassistant, and maybe even plex!
 
 ---
 
