@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: home-assistant-external
-  namespace: default
+  namespace: home
   labels:
     app.kubernetes.io/instance: home-assistant
     app.kubernetes.io/name: home-assistant
