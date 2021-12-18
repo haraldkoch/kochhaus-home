@@ -13,4 +13,3 @@ spec:
     - ReadWriteOnce
     - ReadOnlyMany
   storageClassName: zfs-nfs
-  volumeName: pvc-6df1a3f1-0acb-4b11-acfa-faa8715cec73
