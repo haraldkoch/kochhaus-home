@@ -27,6 +27,9 @@ spec:
     service:
       clusterIP: 10.43.0.10
 
+    serviceAccount:
+      create: true
+
     prometheus:
       service:
         enabled: true
