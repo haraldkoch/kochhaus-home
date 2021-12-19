@@ -34,7 +34,7 @@ spec:
 
     ingress:
       enabled: true
-      ingressClassName: "nginx"
+      className: "nginx"
       hosts:
         - host: goldpinger.${SECRET_DOMAIN}
           paths:
