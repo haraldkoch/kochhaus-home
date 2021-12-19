@@ -42,6 +42,14 @@ spec:
           - secretName: alertmanager-general-tls
             hosts:
               - alertmanager.${SECRET_DOMAIN}
+      alertmanagerSpec:
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: "zfs-nfs"
+              resources:
+                requests:
+                  storage: 1Gi
 
     grafana:
       adminPassword: ${SECRET_GRAFANA_PASSWORD}
@@ -86,8 +94,13 @@ spec:
         serviceMonitorSelectorNilUsesHelmValues: false
         ruleSelectorNilUsesHelmValues: false
 
-    #        nodeSelector:
-    #          ram: high
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: zfs-nfs
+              resources:
+                requests:
+                  storage: 10Gi
 
     # cannot be monitored in k3s; runs on localhost
     kubeControllerManager:
