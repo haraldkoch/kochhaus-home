@@ -50,7 +50,7 @@ spec:
     domainFilters:
       - "${SECRET_DOMAIN}"
 
-    createSecret: true
+    txtOwnerId: "homelab"
 
     serviceMonitor:
       enabled: true
