@@ -36,6 +36,9 @@ spec:
             name: external-dns
             key: rfc2136_tsig_secret
 
+    podAnnotations:
+      secret.reloader.stakater.com/reload: external-dns
+
     policy: sync
 
     sources:
