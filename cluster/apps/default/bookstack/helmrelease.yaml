@@ -45,6 +45,7 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClassName: "nginx"
         labels:
           app.kubernetes.io/part-of: bookstack
         annotations:
