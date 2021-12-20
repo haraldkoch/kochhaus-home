@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - blocky
   - external-dns
-  - ingress-nginx
   - speedtest-exporter
   - traefik
   - wildcard-certificate
