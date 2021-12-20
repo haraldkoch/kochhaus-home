@@ -72,7 +72,7 @@ spec:
 
       ingress:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: "traefik"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/appName: "grafana"
@@ -93,7 +93,7 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: "traefik"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/appName: "prometheus"
