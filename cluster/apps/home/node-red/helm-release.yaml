@@ -34,12 +34,14 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
-        labels:
-          app.kubernetes.io/part-of: node-red
+        ingressClassName: "traefik"
         annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "graph-outline"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        labels:
+          app.kubernetes.io/part-of: node-red
         hosts:
           - host: "node-red.${SECRET_DOMAIN}"
             paths:
