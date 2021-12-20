@@ -18,6 +18,7 @@ resources:
   - okgolove.yaml
   - prometheus-community-charts.yaml
   - stakater-charts.yaml
+  - traefik-charts.yaml
   - twuni-charts.yaml
   - vmware-tanzu-charts.yaml
   - weaveworks-kured-charts.yaml
