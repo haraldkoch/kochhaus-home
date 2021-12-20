@@ -37,6 +37,7 @@ spec:
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "alarm-light-outline"
+          hajimari.io/appName: "alertmanager"
         hosts:
           - alertmanager.${SECRET_DOMAIN}
         paths:
@@ -73,6 +74,7 @@ spec:
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "chart-line"
+          hajimari.io/appName: "grafana"
         hosts:
           - grafana.${SECRET_DOMAIN}
         path: /
@@ -91,6 +93,7 @@ spec:
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "chart-line"
+          hajimari.io/appName: "prometheus"
         hosts:
           - prometheus.${SECRET_DOMAIN}
         paths:
