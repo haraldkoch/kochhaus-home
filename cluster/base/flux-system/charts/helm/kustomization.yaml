@@ -1,7 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - bitnami-charts.yaml
   - coredns-charts.yaml
   - democratic-csi-charts.yaml
   - external-dns.yaml
@@ -11,7 +10,6 @@ resources:
   - k8s-at-home-charts.yaml
   - kubernetes-sigs-descheduler.yaml
   - kubernetes-sigs-nfd-charts.yaml
-  - kube-vip.yaml
   - metallb-charts.yaml
   - nfs-subdir-external-provisioner.yaml
   - okgolove.yaml
