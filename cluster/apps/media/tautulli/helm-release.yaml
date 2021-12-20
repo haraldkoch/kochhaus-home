@@ -24,10 +24,12 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: "traefik"
         annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "television-classic"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
           - host: "tautulli.${SECRET_DOMAIN}"
             paths:
@@ -36,6 +38,7 @@ spec:
         tls:
           - hosts:
               - "tautulli.${SECRET_DOMAIN}"
+            secretName: tls.tautulli
 
     persistence:
       config:
