@@ -34,6 +34,7 @@ spec:
           - home
           - media
           - monitoring
+          - netorking
       name: "citizen"
       customApps:
         - name: Goldpinger
