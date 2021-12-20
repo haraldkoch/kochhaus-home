@@ -33,12 +33,9 @@ spec:
           - default
           - home
           - media
+          - monitoring
       name: "citizen"
       customApps:
-        - name: Grafana
-          icon: chart-line
-          url: https://grafana.${SECRET_DOMAIN}/
-          group: monitoring
         - name: Goldpinger
           icon: table-tennis
           url: https://goldpinger.${SECRET_DOMAIN}/
