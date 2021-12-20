@@ -5,4 +5,5 @@ resources:
   - external-dns
   - ingress-nginx
   - speedtest-exporter
+  - traefik
   - wildcard-certificate
