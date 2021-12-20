@@ -36,11 +36,7 @@ spec:
           - monitoring
           - networking
       name: "citizen"
-      customApps:
-        - name: Goldpinger
-          icon: table-tennis
-          url: https://goldpinger.${SECRET_DOMAIN}/
-          group: monitoring
+      customApps: []
       groups: []
     ingress:
       main:
