@@ -33,11 +33,13 @@ spec:
     alertmanager:
       ingress:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: "traefik"
         annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/appName: "alertmanager"
           hajimari.io/enable: "true"
           hajimari.io/icon: "alarm-light-outline"
-          hajimari.io/appName: "alertmanager"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
           - alertmanager.${SECRET_DOMAIN}
         paths:
@@ -72,9 +74,11 @@ spec:
         enabled: true
         ingressClassName: "nginx"
         annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/appName: "grafana"
           hajimari.io/enable: "true"
           hajimari.io/icon: "chart-line"
-          hajimari.io/appName: "grafana"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
           - grafana.${SECRET_DOMAIN}
         path: /
@@ -91,9 +95,11 @@ spec:
         enabled: true
         ingressClassName: "nginx"
         annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          hajimari.io/appName: "prometheus"
           hajimari.io/enable: "true"
           hajimari.io/icon: "chart-line"
-          hajimari.io/appName: "prometheus"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
           - prometheus.${SECRET_DOMAIN}
         paths:
