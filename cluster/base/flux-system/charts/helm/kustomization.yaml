@@ -7,7 +7,6 @@ resources:
   - external-dns.yaml
   - hajimari.yaml
   - haraldkoch.yaml
-  - ingress-nginx-charts.yaml
   - jetstack-charts.yaml
   - k8s-at-home-charts.yaml
   - kubernetes-sigs-descheduler.yaml
