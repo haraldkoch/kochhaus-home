@@ -34,7 +34,12 @@ spec:
 
     ingress:
       enabled: true
-      className: "nginx"
+      className: "traefik"
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "table-tennis"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
       hosts:
         - host: goldpinger.${SECRET_DOMAIN}
           paths:
