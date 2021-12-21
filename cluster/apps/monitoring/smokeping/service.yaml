@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smokeping
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: smokeping
+    app.kubernetes.io/instance: smokeping
+    app.kubernetes.io/part-of: smokeping
+    app.kubernetes.io/version: "2.7.3"
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: smokeping
+    app.kubernetes.io/instance: smokeping
