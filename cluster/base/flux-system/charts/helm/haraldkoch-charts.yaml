@@ -5,6 +5,6 @@ metadata:
   name: haraldkoch-charts
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 15m
   url: https://haraldkoch.github.io/helm-charts/
-  timeout: 2m
+  timeout: 3m

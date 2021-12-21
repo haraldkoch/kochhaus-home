@@ -5,9 +5,8 @@ metadata:
   name: democratic-csi
   namespace: kube-system
 spec:
-  interval: 1h
+  interval: 5m
   releaseName: zfs-nfs
-  timeout: 30m
   chart:
     spec:
       # renovate: registryUrl=https://democratic-csi.github.io/charts/
@@ -17,6 +16,7 @@ spec:
         kind: HelmRepository
         name: democratic-csi-charts
         namespace: flux-system
+    interval: 5m
 
   values:
     csiDriver:

@@ -5,8 +5,7 @@ metadata:
   name: goldpinger
   namespace: monitoring
 spec:
-  interval: 1h
-  timeout: 30m
+  interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://okgolove.github.io/helm-charts/
@@ -16,6 +15,7 @@ spec:
         kind: HelmRepository
         name: okgolove-charts
         namespace: flux-system
+      interval: 5m
 
   values:
     image:
