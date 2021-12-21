@@ -5,8 +5,7 @@ metadata:
   name: external-dns
   namespace: networking
 spec:
-  interval: 1h
-  timeout: 30m
+  interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://kubernetes-sigs.github.io/external-dns/
@@ -16,6 +15,7 @@ spec:
         kind: HelmRepository
         name: external-dns-charts
         namespace: flux-system
+      interval: 5m
 
   values:
     provider: rfc2136

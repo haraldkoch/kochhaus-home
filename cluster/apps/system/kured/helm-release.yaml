@@ -16,6 +16,7 @@ spec:
         name: weaveworks-kured-charts
         namespace: flux-system
       interval: 5m
+
   values:
     image:
       # The weaveworks image does not yet support multi-arch.
