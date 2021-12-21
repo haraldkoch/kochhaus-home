@@ -35,9 +35,9 @@ spec:
               containerPort: 80
               protocol: TCP
           volumeMounts:
-            - mountpath: /config
+            - mountPath: /config
               name: config
-            - mountpath: /data
+            - mountPath: /data
               name: data
           livenessProbe:
             tcpSocket:
