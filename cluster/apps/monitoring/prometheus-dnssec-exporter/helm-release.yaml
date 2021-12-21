@@ -14,7 +14,7 @@ spec:
       version: 0.4.2
       sourceRef:
         kind: HelmRepository
-        name: haraldkoch
+        name: haraldkoch-charts
         namespace: flux-system
 
   values:

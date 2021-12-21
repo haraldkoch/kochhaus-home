@@ -2,9 +2,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: kubernetes-sigs-nfd-charts
+  name: haraldkoch-charts
   namespace: flux-system
 spec:
   interval: 30m
-  url: https://kubernetes-sigs.github.io/node-feature-discovery/charts
-  timeout: 3m
+  url: https://haraldkoch.github.io/helm-charts/
+  timeout: 2m

@@ -14,8 +14,8 @@ spec:
       version: 6.2.0
       sourceRef:
         kind: HelmRepository
-        namespace: flux-system
         name: k8s-at-home-charts
+        namespace: flux-system
 
   values:
     ingress:
