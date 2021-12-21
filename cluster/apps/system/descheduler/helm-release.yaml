@@ -16,6 +16,7 @@ spec:
         name: descheduler-charts
         namespace: flux-system
       interval: 5m
+
   values:
     podAnnotations:
       botkube.io/disable: "true"
