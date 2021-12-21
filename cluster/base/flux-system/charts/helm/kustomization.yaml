@@ -11,7 +11,7 @@ resources:
   - k8s-at-home-charts.yaml
   - metallb-charts.yaml
   - nfs-subdir-external-provisioner-charts.yaml
-  - node-feature-discoery-charts.yaml
+  - node-feature-discovery-charts.yaml
   - okgolove-charts.yaml
   - prometheus-community-charts.yaml
   - stakater-charts.yaml
