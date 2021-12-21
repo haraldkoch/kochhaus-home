@@ -16,7 +16,7 @@ spec:
         kind: HelmRepository
         name: democratic-csi-charts
         namespace: flux-system
-    interval: 5m
+      interval: 5m
 
   values:
     csiDriver:
