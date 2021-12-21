@@ -35,15 +35,9 @@ spec:
               containerPort: 80
               protocol: TCP
           volumeMounts:
-            - mountPath: /config/Alerts
+            # we cannot mount config directly because this container massages it. Copy the files manually for now.
+            - mountPath: /kochhaus
               name: config
-              subPath: Alerts
-            - mountPath: /config/Alerts
-              name: config
-              subPath: General
-            - mountPath: /config/Targets
-              name: config
-              subPath: Targets
             - mountPath: /data
               name: data
           livenessProbe:
