@@ -36,10 +36,12 @@ spec:
               protocol: TCP
           volumeMounts:
             # we cannot mount config directly because this container massages it. Copy the files manually for now.
-            - mountPath: /kochhaus
-              name: config
+            - mountPath: /config
+              name: data
+              subPath: config
             - mountPath: /data
               name: data
+              subPath: data
           livenessProbe:
             tcpSocket:
               port: http
@@ -53,9 +55,6 @@ spec:
             failureThreshold: 5
             timeoutSeconds: 10
       volumes:
-        - name: config
-          secret:
-            secretName: smokeping
         - name: data
           persistentVolumeClaim:
             claimName: smokeping-data
