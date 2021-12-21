@@ -42,6 +42,9 @@ spec:
             - mountPath: /data
               name: data
               subPath: data
+            # mount our secret so we can copy the files easily
+            - mountPath: /kochhaus
+              name: config
           livenessProbe:
             tcpSocket:
               port: http
@@ -55,6 +58,9 @@ spec:
             failureThreshold: 5
             timeoutSeconds: 10
       volumes:
+        - name: config
+          secret:
+            secretName: smokeping
         - name: data
           persistentVolumeClaim:
             claimName: smokeping-data
