@@ -5,3 +5,4 @@ resources:
   - goldpinger
   - kube-prometheus-stack
   - prometheus-dnssec-exporter
+  - smokeping
