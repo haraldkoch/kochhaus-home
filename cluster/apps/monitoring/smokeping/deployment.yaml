@@ -35,8 +35,15 @@ spec:
               containerPort: 80
               protocol: TCP
           volumeMounts:
-            - mountPath: /config
+            - mountPath: /config/Alerts
               name: config
+              subPath: Alerts
+            - mountPath: /config/Alerts
+              name: config
+              subPath: General
+            - mountPath: /config/Targets
+              name: config
+              subPath: Targets
             - mountPath: /data
               name: data
           livenessProbe:
