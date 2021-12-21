@@ -2,8 +2,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: nfs-subdir-external-provisioner
+  name: okgolove-charts
   namespace: flux-system
 spec:
   interval: 30m
-  url: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/
+  url: https://okgolove.github.io/helm-charts/
+  timeout: 2m

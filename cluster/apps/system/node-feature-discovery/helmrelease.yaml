@@ -13,7 +13,7 @@ spec:
       version: 0.9.0
       sourceRef:
         kind: HelmRepository
-        name: kubernetes-sigs-nfd-charts
+        name: node-feature-discovery-charts
         namespace: flux-system
       interval: 5m
   values:

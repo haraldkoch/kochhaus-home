@@ -3,16 +3,16 @@ kind: Kustomization
 resources:
   - coredns-charts.yaml
   - democratic-csi-charts.yaml
-  - external-dns.yaml
-  - hajimari.yaml
-  - haraldkoch.yaml
+  - descheduler-charts.yaml
+  - external-dns-charts.yaml
+  - hajimari-charts.yaml
+  - haraldkoch-charts.yaml
   - jetstack-charts.yaml
   - k8s-at-home-charts.yaml
-  - kubernetes-sigs-descheduler.yaml
-  - kubernetes-sigs-nfd-charts.yaml
   - metallb-charts.yaml
-  - nfs-subdir-external-provisioner.yaml
-  - okgolove.yaml
+  - nfs-subdir-external-provisioner-charts.yaml
+  - node-feature-discoery-charts.yaml
+  - okgolove-charts.yaml
   - prometheus-community-charts.yaml
   - stakater-charts.yaml
   - traefik-charts.yaml
