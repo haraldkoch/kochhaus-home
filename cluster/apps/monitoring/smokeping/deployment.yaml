@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: smokeping
-          image: "ghcr.io/linuxserver/smokeping:version-2.7.3"
+          image: "ghcr.io/linuxserver/smokeping:2.7.3"
           imagePullPolicy: IfNotPresent
           env:
             - name: TZ
