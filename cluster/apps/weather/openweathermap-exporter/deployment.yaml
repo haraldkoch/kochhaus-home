@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: openweathermap-exporter
-          image: ${PRIVATE_REGISTRY_1}/haraldkoch/ows:latest
+          image: ghcr.io/haraldkoch/ows:0.2.0
           env:
             - name: SERVER_PORT
               value: "2112"
@@ -27,12 +27,3 @@ spec:
               value: ${OPENWEATHERMAP_API_KEY}
           ports:
             - containerPort: 2112
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/arch
-                    operator: In
-                    values:
-                      - "amd64"
