@@ -44,9 +44,6 @@ spec:
     influxdb:
       enabled: false
 
-    nodeSelector:
-      kubernetes.io/arch: amd64
-
     env:
       TZ: "America/Toronto"
 
