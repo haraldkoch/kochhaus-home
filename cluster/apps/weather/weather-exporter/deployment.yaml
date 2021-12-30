@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: weather-exporter
-          image: haraldkoch/weather_exporter:0.1.0
+          image: ghcr.io/haraldkoch/weather_exporter:0.1.0
           env:
             - name: ENDPOINT_PORT
               value: "9265"
