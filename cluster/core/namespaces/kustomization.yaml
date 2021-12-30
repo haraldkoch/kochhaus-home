@@ -7,6 +7,7 @@ resources:
   - metallb-system.yaml
   - monitoring.yaml
   - networking.yaml
+  - self-hosted.yaml
   - system.yaml
   - velero.yaml
   - weather.yaml
