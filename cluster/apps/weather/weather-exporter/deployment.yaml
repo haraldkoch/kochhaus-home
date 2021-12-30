@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: weather-exporter
-          image: celliott/weather_exporter:latest
+          image: haraldkoch/weather_exporter:0.1.0
           env:
             - name: ENDPOINT_PORT
               value: "9265"
