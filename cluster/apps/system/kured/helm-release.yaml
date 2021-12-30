@@ -47,5 +47,5 @@ spec:
       - name: notifyUrl
         valueFrom:
           secretKeyRef:
-          name: discord-kured
-          key: discord-webhook
+            name: discord-kured
+            key: discord-webhook
