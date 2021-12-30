@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - prometheus-rule.yaml
+  - secret.sops.yaml
