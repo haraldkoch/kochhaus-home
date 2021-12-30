@@ -43,6 +43,9 @@ spec:
     metrics:
       create: true
 
-    # FIXME: telegram?
-    #extraArgs:
-    #  notify-url: "${SECRET_DISCORD_KURED_WEBHOOK_URL}"
+    extraEnvVars:
+      - name: notifyUrl
+        valueFrom:
+          secretKeyRef:
+          name: discord-kured
+          key: discord-webhook
