@@ -8,6 +8,7 @@ resources:
   - media
   - monitoring
   - networking
+  - self-hosted
   - system
   - system-upgrade
   - velero
