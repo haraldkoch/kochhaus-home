@@ -16,6 +16,8 @@ resources:
   - prometheus-community-charts.yaml
   - stakater-charts.yaml
   - traefik-charts.yaml
+  - triliovault-operator-charts.yaml
+  - triliovault-charts.yaml
   - twuni-charts.yaml
   - vmware-tanzu-charts.yaml
   - weaveworks-kured-charts.yaml
