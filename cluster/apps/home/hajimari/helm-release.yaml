@@ -38,7 +38,37 @@ spec:
           - networking
       name: "citizen"
       customApps: []
-      groups: []
+      groups:
+        - name: Communicate
+          links:
+            - name: Discord
+              url: "https://discord.com/login"
+            - name: Telegram
+              url: "https://web.telegram.org/z/"
+            - name: Slack
+              url: "https://slack.com/signin"
+        - name: mail
+          links:
+            - name: Gmail
+              url: "https://gmail.com"
+            - name: Fastmail
+              url: "https://www.fastmail.com"
+            - name: Kochhaus
+              url: "https://mail.kochhaus.net"
+        - name: Media
+          links:
+            - name: Netflix
+              url: "https://www.netflix.com/browse"
+            - name: Disney+
+              url: "https://www.disneyplus.com/login"
+            - name: Plex
+              url: "https://app.plex.tv/desktop"
+            - name: YouTube
+              url: "https://youtube.com/feed/subscriptions"
+            - name: Amazon Prime
+              url: "https://www.primevideo.com"
+            - name: Spotify
+              url: "https://open.spotify.com/browse"
     ingress:
       main:
         enabled: true
