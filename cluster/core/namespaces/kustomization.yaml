@@ -9,5 +9,6 @@ resources:
   - networking.yaml
   - self-hosted.yaml
   - system.yaml
+  - trilio.yaml
   - velero.yaml
   - weather.yaml
