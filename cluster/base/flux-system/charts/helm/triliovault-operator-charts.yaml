@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: trilio-operator-charts
+  namespace: flux-system
+spec:
+  interval: 15m
+  url: http://charts.k8strilio.net/trilio-stable/k8s-triliovault-operator
+  timeout: 3m
