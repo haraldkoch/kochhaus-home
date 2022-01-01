@@ -18,6 +18,17 @@ spec:
       interval: 5m
 
   values:
+    service:
+      listen:
+        type: LoadBalancer
+        ipFamilyPolicy: PreferDualStack
+        annotations:
+          metallb.universe.tf/allow-shared-ip: syncthing
+      discovery:
+        type: LoadBalancer
+        ipFamilyPolicy: PreferDualStack
+        annotations:
+          metallb.universe.tf/allow-shared-ip: syncthing
     ingress:
       main:
         enabled: true
