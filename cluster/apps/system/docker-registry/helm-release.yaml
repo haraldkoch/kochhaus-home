@@ -18,6 +18,10 @@ spec:
       interval: 5m
 
   values:
+    configData:
+      proxy:
+        remoteurl: https://registry-1.docker.io
+
     persistence:
       enabled: true
       storageClass: zfs-nfs
