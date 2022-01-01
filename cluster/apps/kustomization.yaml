@@ -11,6 +11,5 @@ resources:
   - self-hosted
   - system
   - system-upgrade
-  - trilio
   - velero
   - weather
