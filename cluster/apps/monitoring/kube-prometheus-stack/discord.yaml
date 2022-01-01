@@ -19,7 +19,7 @@ spec:
           # image: benjojo/alertmanager-discord
           # arm64 image (RPi)
           # image: rogerrum/alertmanager-discord
-          image: rogerrum/alertmanager-discord
+          image: rogerrum/alertmanager-discord:1.0.3
           resources:
             limits:
               memory: "128Mi"
@@ -32,6 +32,15 @@ spec:
                 secretKeyRef:
                   key: discord-webhook
                   name: kube-prometheus-stack
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - arm64
 ---
 apiVersion: v1
 kind: Service
