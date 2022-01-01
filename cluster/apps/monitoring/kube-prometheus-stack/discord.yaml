@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alertmanager-discord
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: alertmanager-discord
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: alertmanager-discord
+    spec:
+      containers:
+        - name: alertmanager-discord
+          # amd64 image
+          # image: benjojo/alertmanager-discord
+          # arm64 image (RPi)
+          # image: rogerrum/alertmanager-discord
+          image: rogerrum/alertmanager-discord
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 9094
+          env:
+            - name: DISCORD_WEBHOOK
+              valueFrom:
+                secretKeyRef:
+                  key: discord-webhook
+                  name: kube-prometheus-stack
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: alertmanager-discord
+  namespace: monitoring
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: exporters.kochhaus.net
+    metallb.universe.tf/allow-shared-ip: exporters
+spec:
+  selector:
+    app: alertmanager-discord
+  ports:
+    - port: 9094
+      targetPort: 9094
+  type: LoadBalancer
+  ipFamilyPolicy: PreferDualStack
+---
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: alertmanager
+  namespace: monitoring
+spec:
+  receivers:
+    - name: discord
+      webhookConfigs:
+        - url: "http://alertmanager-discord:9094"
+          sendResolved: true
