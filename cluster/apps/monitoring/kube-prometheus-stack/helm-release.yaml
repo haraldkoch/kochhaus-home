@@ -17,13 +17,6 @@ spec:
         namespace: flux-system
       interval: 5m
 
-  valuesFrom:
-    - kind: Secret
-      name: kube-prometheus-stack
-      valuesKey: discord-webhook
-      targetPath: alertmanager.config.global.slack_api_url
-      optional: false
-
   values:
     global:
       rbac:
