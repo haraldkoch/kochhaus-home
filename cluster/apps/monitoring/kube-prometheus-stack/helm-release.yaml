@@ -187,3 +187,4 @@ spec:
     defaultRules:
       rules:
         etcd: false
+        kubeProxy: false
