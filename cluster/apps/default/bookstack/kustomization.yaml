@@ -5,3 +5,4 @@ resources:
   - pvc.yaml
   - secret.sops.yaml
   - helmrelease.yaml
+  - backup-cronjob.yaml
