@@ -58,15 +58,3 @@ spec:
       targetPort: 9094
   type: LoadBalancer
   ipFamilyPolicy: PreferDualStack
----
-apiVersion: monitoring.coreos.com/v1alpha1
-kind: AlertmanagerConfig
-metadata:
-  name: alertmanager
-  namespace: monitoring
-spec:
-  receivers:
-    - name: discord
-      webhookConfigs:
-        - url: "http://alertmanager-discord:9094"
-          sendResolved: true
