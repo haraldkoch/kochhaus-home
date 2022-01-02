@@ -1,0 +1,79 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: bookstack-backup
+  namespace: default
+spec:
+  schedule: "0 * * * *"
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      parallelism: 1
+      template:
+        spec:
+          restartPolicy: OnFailure
+          volumes:
+            - name: backup
+              nfs:
+                server: ${SECRET_BACKUP_SERVER}
+                path: /backup/data/bookstack
+            - name: config
+              configMap:
+                name: bookstack-mariadb
+                defaultMode: 420
+            - name: data
+              persistentVolumeClaim:
+                claimName: bookstack-mariadb
+
+          securityContext:
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsUser: 1000
+
+          containers:
+            - name: mariadb
+              # same image as the mariadb sidecar
+              image: docker.io/bitnami/mariadb:10.5.12-debian-10-r78
+              imagePullPolicy: IfNotPresent
+              command: ["/bin/sh"]
+              args:
+                - "-c"
+                - "mysqldump -u $DB_USER -p$DB_PASS --opt --add-drop-table --quote-names --databases $DB_DATABASE >/backup/$DB_DATABASE.sql"
+              env:
+                - name: DB_DATABASE
+                  value: bookstack
+                - name: DB_USER
+                  value: bookstack
+                - name: DB_PASS
+                  valueFrom:
+                    secretKeyRef:
+                      name: bookstack
+                      key: mariadb_password
+                - name: TZ
+                  value: America/Toronto
+              volumeMounts:
+                - name: backup
+                  mountPath: /backup
+                - name: config
+                  mountPath: /opt/bitnami/mariadb/conf/my.cnf
+                  subPath: my.cnf
+                - name: data
+                  mountPath: /bitnami/mariadb
+              resources:
+                requests:
+                  memory: "128Mi"
+                  cpu: "1"
+                limits:
+                  memory: "512Mi"
+                  cpu: "1"
+
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: kubernetes.io/arch
+                        operator: In
+                        values:
+                          - "amd64"
