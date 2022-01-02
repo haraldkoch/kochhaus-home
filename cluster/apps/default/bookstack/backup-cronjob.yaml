@@ -39,7 +39,7 @@ spec:
               command: ["/bin/sh"]
               args:
                 - "-c"
-                - "mysqldump -h $DB_HOST --u $DB_USER -p$DB_PASS --opt --add-drop-table --quote-names --databases $DB_DATABASE >/backup/$DB_DATABASE.sql"
+                - "mysqldump -h $DB_HOST -u $DB_USER -p$DB_PASS --quote-names --databases $DB_DATABASE >/backup/$DB_DATABASE.sql"
               env:
                 - name: DB_DATABASE
                   value: bookstack
