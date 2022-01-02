@@ -1,0 +1,22 @@
+---
+k3s_cluster:
+  hosts:
+    k3s0:
+      ansible_user: ansible
+      ansible_python_interpreter: /usr/bin/python
+      k3s_control_node: true
+
+    k3s1:
+      ansible_user: ansible
+      ansible_python_interpreter: /usr/bin/python
+      k3s_control_node: false
+
+    k3s2:
+      ansible_user: ansible
+      ansible_python_interpreter: /usr/bin/python
+      k3s_control_node: false
+
+    k3s3:
+      ansible_user: ansible
+      ansible_python_interpreter: /usr/bin/python
+      k3s_control_node: false

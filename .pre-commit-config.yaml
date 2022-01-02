@@ -23,10 +23,13 @@ repos:
     hooks:
       - id: remove-crlf
       - id: remove-tabs
-  - repo: https://github.com/sirosen/fix-smartquotes
-    rev: 0.2.0
+  - repo: https://github.com/sirosen/texthooks
+    rev: 0.1.0
     hooks:
       - id: fix-smartquotes
+        exclude: ^ansible/manifests/
+      - id: fix-ligatures
+        exclude: ^ansible/manifests/
   - repo: https://github.com/k8s-at-home/sops-pre-commit
     rev: v2.0.3
     hooks:

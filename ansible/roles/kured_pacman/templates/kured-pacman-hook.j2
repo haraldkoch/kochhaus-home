@@ -1,0 +1,15 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+{% if ansible_architecture == 'aarch64' %}
+Target = linux-aarch64
+{% else %}
+{# assume amd64 #}
+Target = linux
+{% endif %}
+
+[Action]
+Description = Signal a reboot to Kured (the KUbernetes REboot Daemon)
+When = PostTransaction
+Exec = /bin/touch /var/run/reboot-required
