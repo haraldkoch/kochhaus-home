@@ -34,11 +34,10 @@ spec:
       config:
         receivers:
           - name: "null"
-          - name: discord
-            webhookConfigs:
+          - name: "discord"
+            webhook_configs:
               - url: "http://alertmanager-discord:9094"
-                sendResolved: true
-
+                send_resolved: true
         route:
           group_by: ["alertname", "job"]
           group_wait: 30s
@@ -47,19 +46,19 @@ spec:
           receiver: "discord"
           routes:
             - receiver: "null"
-              match:
-                alertname: Watchdog
+              matchers:
+                - alertname = Watchdog
             - receiver: "discord"
-              match_re:
-                # severity: critical|warning
-                severity: critical
+              matchers:
+                # - severity =~ critical|warning
+                - severity = critical
               continue: true
 
         inhibit_rules:
-          - source_match:
-              severity: "critical"
-            target_match:
-              severity: "warning"
+          - source_matchers:
+              - severity = "critical"
+            target_matchers:
+              - severity = "warning"
             equal: ["alertname", "namespace"]
 
       ingress:
