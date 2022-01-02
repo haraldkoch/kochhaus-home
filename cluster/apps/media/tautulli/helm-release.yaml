@@ -44,11 +44,21 @@ spec:
       config:
         enabled: true
         existingClaim: tautulli-pvc
+      backup:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${SECRET_BACKUP_SERVER}"
+            path: /backup/data/tautulli
+        mountPath: /config/backups
+        readOnly: false
 
     podSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
       fsGroup: 1000
+
     resources:
       requests:
         memory: 350Mi
