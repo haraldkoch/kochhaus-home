@@ -1,0 +1,76 @@
+---
+- name: Build a cluster with HA control plane
+  hosts: k3s_cluster
+  vars:
+    k3s_become_for_all: true
+    k3s_etcd_datastore: false
+    k3s_use_experimental: false # Note this is required for k3s < v1.19.5+k3s1
+    k3s_install_hard_links: true # required for system-upgrade-controller
+
+    k3s_release_version: v1.22
+
+    # alternate CNI - use Calico for IPv6 support
+    k3s_server_manifests_templates:
+      - "manifests/calico/tigera-operator.yaml"
+      - "manifests/calico/custom-resources.yaml"
+
+    # this may cause a bootstrap issue since the docker registry is pulled from docker.io
+    k3s_registries:
+      mirrors:
+        docker.io:
+          endpoint:
+            - "https://docker.kochhaus.net"
+
+    k3s_server:
+      write-kubeconfig-mode: "0644"
+
+      # disable k3s defaults so we can use Calico
+      flannel-backend: "none" # This needs to be in quotes
+      disable-network-policy: "true"
+
+      disable:
+        - traefik
+        - servicelb
+        - local-storage
+        - coredns
+
+      node-taint:
+        - "node-role.kubernetes.io/control-plane:NoSchedule"
+        # this is still required for compatibility
+        - "node-role.kubernetes.io/master:NoSchedule"
+
+    k3s_agent:
+
+  roles:
+    - role: xanmanning.k3s
+    - role: kured_pacman
+      when: ansible_pkg_mgr == "pacman"
+
+  tasks:
+    - name: Get Kubernetes config file
+      run_once: true
+      slurp:
+        src: /etc/rancher/k3s/k3s.yaml
+      register: kubeconfig_base64
+
+    - name: Write Kubernetes config file with the correct cluster address
+      copy:
+        content: "{{ kubeconfig_base64.content | b64decode | replace('127.0.0.1', hostvars[groups['k3s_cluster'][0]].ansible_host) }}"
+        dest: "{{ playbook_dir }}/kubeconfig.yaml"
+      delegate_to: localhost
+
+    - name: containerd hack to allow fast shutdown/reboot
+      become: yes
+      copy:
+        src: containerd-hack.service
+        dest: /etc/systemd/system/containerd-hack.service
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: enable the containerd hack
+      become: yes
+      systemd:
+        daemon_reload: yes
+        name: containerd-hack
+        enabled: yes
