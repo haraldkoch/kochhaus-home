@@ -4,6 +4,7 @@ resources:
   - helm-release.yaml
 configMapGenerator:
   - name: coredns-values
+    namespace: kube-system
     files:
       - values.yaml
 generatorOptions:
