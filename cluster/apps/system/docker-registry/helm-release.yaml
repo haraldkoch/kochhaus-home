@@ -10,41 +10,13 @@ spec:
     spec:
       # renovate: registryUrl=https://helm.twun.io
       chart: docker-registry
-      version: 1.16.0
+      version: 2.0.0
       sourceRef:
         kind: HelmRepository
         name: twuni-charts
         namespace: flux-system
       interval: 5m
 
-  values:
-    configData:
-      proxy:
-        remoteurl: https://registry-1.docker.io
-
-    persistence:
-      enabled: true
-      storageClass: zfs-nfs
-
-    service:
-      annotations:
-        traefik.ingress.kubernetes.io/buffering: |
-          # 2GiB
-          maxrequestbodybytes: 2147483648
-          # 64MiB
-          memrequestbodybytes: 67108864
-
-    ingress:
-      enabled: true
-      ingressClassName: "traefik"
-      annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-production"
-        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-      hosts:
-        - host: "docker.${SECRET_DOMAIN}"
-          paths:
-            - path: /
-      tls:
-        - hosts:
-            - "docker.${SECRET_DOMAIN}"
-          secretName: tls.docker-registry
+  valuesFrom:
+    - kind: ConfigMap
+      name: registry-values
