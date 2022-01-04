@@ -6,6 +6,7 @@ resources:
   - helm-release.yaml
 configMapGenerator:
   - name: registry-values
-    files: values.yaml
+    files:
+      - values.yaml
 generatorOptions:
   disableNameSuffixHash: true
