@@ -8,3 +8,13 @@ spec:
   interval: 15m
   url: https://k8s-at-home.com/charts/
   timeout: 3m
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: k8s-at-home-library-charts
+  namespace: flux-system
+spec:
+  interval: 15m
+  url: https://library-charts.k8s-at-home.com/
+  timeout: 3m
