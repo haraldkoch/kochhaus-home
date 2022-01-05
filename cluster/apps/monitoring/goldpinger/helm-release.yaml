@@ -46,6 +46,6 @@ spec:
             - path: /
               pathType: ImplementationSpecific
       tls:
-        - secretName: goldpinger-tls
+        - secretName: tls.goldpinger
           hosts:
             - goldpinger.${SECRET_DOMAIN}
