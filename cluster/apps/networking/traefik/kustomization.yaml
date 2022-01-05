@@ -4,3 +4,4 @@ resources:
   - helm-release.yaml
   - dashboard
   - service-monitor.yaml
+  - tls-default.yaml
