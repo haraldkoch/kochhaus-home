@@ -76,7 +76,7 @@ spec:
           - /
         pathType: ImplementationSpecific
         tls:
-          - secretName: alertmanager-general-tls
+          - secretName: tls.alertmanager
             hosts:
               - alertmanager.${SECRET_DOMAIN}
       alertmanagerSpec:
@@ -113,7 +113,7 @@ spec:
           - grafana.${SECRET_DOMAIN}
         path: /
         tls:
-          - secretName: grafana-general-tls
+          - secretName: tls.grafana
             hosts:
               - grafana.${SECRET_DOMAIN}
 
@@ -136,7 +136,7 @@ spec:
           - /
         pathType: ImplementationSpecific
         tls:
-          - secretName: prometheus-general-tls
+          - secretName: tls.prometheus
             hosts:
               - prometheus.${SECRET_DOMAIN}
 
