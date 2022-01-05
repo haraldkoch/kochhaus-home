@@ -5,11 +5,14 @@ metadata:
   name: "${SECRET_DOMAIN/./-}"
   namespace: networking
 spec:
-  secretName: "${SECRET_DOMAIN/./-}-tls"
+  secretName: "tls.${SECRET_DOMAIN/./-}"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
+  #privateKey:
+  #  algorithm: ECDSA
+  #  size: 384
   commonName: "${SECRET_DOMAIN}"
   dnsNames:
-  - "${SECRET_DOMAIN}"
-  - "*.${SECRET_DOMAIN}"
+    - "${SECRET_DOMAIN}"
+    - "*.${SECRET_DOMAIN}"
