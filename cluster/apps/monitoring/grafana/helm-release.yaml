@@ -29,6 +29,7 @@ spec:
       GF_ANALYTICS_CHECK_FOR_UPDATES: false
       GF_LOG_MODE: "console"
       GF_LOG_SERVER_ROOT_URL: "https://grafana.${SECRET_PUBLIC_DOMAIN}"
+      VAR_BLOCKY_URL: "http://blocky.networking.svc.cluster.local:4000"
     adminPassword: "${SECRET_GRAFANA_PASSWORD}"
     defaultDashboardsTimezone: America/Toronto
     dashboardProviders:
