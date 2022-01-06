@@ -6,7 +6,7 @@ configMapGenerator:
   - name: blocky-dashboard
     files:
       # - blocky-dashboard.json=https://raw.githubusercontent.com/0xERR0R/blocky/development/docs/blocky-grafana.json
-      - blocky-dashboard.json
+      - blocky-grafana.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
