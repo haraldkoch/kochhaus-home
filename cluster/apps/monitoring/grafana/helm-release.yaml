@@ -25,7 +25,7 @@ spec:
       VAR_BLOCKY_URL: "http://blocky.networking.svc.cluster.local:4000"
     grafana.ini:
       server:
-        root_url: "https://grafana.${SECRET_PUBLIC_DOMAIN}"
+        root_url: "https://grafana.${SECRET_DOMAIN}"
       analytics:
         check_for_updates: false
       log:
