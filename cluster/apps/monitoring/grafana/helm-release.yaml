@@ -1,0 +1,111 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://grafana.github.io/helm-charts
+      chart: grafana
+      version: 6.20.4
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    replicas: 1
+    env:
+      GF_AUTH_ANONYMOUS_ENABLED: true
+      GF_AUTH_ANONYMOUS_ORG_NAME: "Main Org."
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Viewer"
+      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
+      GF_EXPLORE_ENABLED: true
+      GF_PANELS_DISABLE_SANITIZE_HTML: true
+      GF_USERS_ALLOW_SIGN_UP: false
+      GF_ANALYTICS_CHECK_FOR_UPDATES: false
+      GF_LOG_MODE: "console"
+      GF_LOG_SERVER_ROOT_URL: "https://grafana.${SECRET_PUBLIC_DOMAIN}"
+    adminPassword: "${SECRET_GRAFANA_PASSWORD}"
+    defaultDashboardsTimezone: America/Toronto
+    dashboardProviders:
+      dashboardproviders.yaml:
+        apiVersion: 1
+        providers:
+          - name: "default"
+            orgId: 1
+            folder: ""
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/default
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        # list of datasources that should be deleted from the database
+        deleteDatasources:
+          - name: Loki
+            orgId: 1
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            access: proxy
+            url: http://thanos-query:9090/
+            isDefault: true
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://loki:3100
+    dashboards:
+      default:
+        # Ref: https://grafana.com/grafana/dashboards/7845
+        zfs:
+          gnetId: 7845
+          revision: 4
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/13502
+        minio:
+          gnetId: 13502
+          revision: 10
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/13665
+        speedtest:
+          gnetId: 13665
+          revision: 1
+          datasource: Prometheus
+    sidecar:
+      dashboards:
+        enabled: true
+        searchNamespace: ALL
+      datasources:
+        enabled: true
+        searchNamespace: ALL
+    plugins:
+      - grafana-clock-panel
+      - grafana-piechart-panel
+    serviceMonitor:
+      enabled: true
+    ingress:
+      enabled: true
+      ingressClassName: "traefik"
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        hajimari.io/appName: "grafana"
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "chart-line"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      hosts:
+        - "grafana.${SECRET_DOMAIN}"
+      tls:
+        - hosts:
+            - "grafana.${SECRET_DOMAIN}"
+          secretName: tls.grafana
+    serviceAccount:
+      create: true
+      autoMount: true
+    persistence:
+      enabled: false
