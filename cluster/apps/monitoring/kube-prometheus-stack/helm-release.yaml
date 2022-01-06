@@ -89,33 +89,7 @@ spec:
                   storage: 1Gi
 
     grafana:
-      adminPassword: ${SECRET_GRAFANA_PASSWORD}
-      defaultDashboardsTimezone: America/Toronto
-
-      sidecar:
-        dashboards:
-          searchNamespace: ALL
-
-      plugins:
-        - grafana-clock-panel
-        - grafana-piechart-panel
-
-      ingress:
-        enabled: true
-        ingressClassName: "traefik"
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          hajimari.io/appName: "grafana"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "chart-line"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        hosts:
-          - grafana.${SECRET_DOMAIN}
-        path: /
-        tls:
-          - secretName: tls.grafana
-            hosts:
-              - grafana.${SECRET_DOMAIN}
+      enabled: false
 
     nodeExporter:
       enabled: false
