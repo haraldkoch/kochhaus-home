@@ -1,8 +1,15 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: monitoring
 resources:
   - helm-release.yaml
   - host-node-exporter.yaml
   - secret.sops.yaml
   - discord.yaml
+configMapGenerator:
+  - name: kube-prometheus-stack-values
+    files:
+      - values.yaml
+generatorOptions:
+  disableNameSuffixHash: true
