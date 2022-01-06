@@ -19,17 +19,28 @@ spec:
   values:
     replicas: 1
     env:
-      GF_AUTH_ANONYMOUS_ENABLED: true
-      GF_AUTH_ANONYMOUS_ORG_NAME: "Main Org."
-      GF_AUTH_ANONYMOUS_ORG_ROLE: "Viewer"
-      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
       GF_EXPLORE_ENABLED: true
       GF_PANELS_DISABLE_SANITIZE_HTML: true
-      GF_USERS_ALLOW_SIGN_UP: false
-      GF_ANALYTICS_CHECK_FOR_UPDATES: false
-      GF_LOG_MODE: "console"
-      GF_LOG_SERVER_ROOT_URL: "https://grafana.${SECRET_PUBLIC_DOMAIN}"
+      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
       VAR_BLOCKY_URL: "http://blocky.networking.svc.cluster.local:4000"
+    grafana.ini:
+      server:
+        root_url: "https://grafana.${SECRET_PUBLIC_DOMAIN}"
+      analytics:
+        check_for_updates: false
+      log:
+        mode: console
+      grafana_net:
+        url: https://grafana.net
+      auth.anonymous:
+        enabled: true
+        org_name: "Main Org."
+        org_role: "Viewer"
+      auth.basic:
+        disable_login_form: false
+      users:
+        allow_sign_up: false
+
     adminPassword: "${SECRET_GRAFANA_PASSWORD}"
     defaultDashboardsTimezone: America/Toronto
     dashboardProviders:
