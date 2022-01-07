@@ -3,19 +3,19 @@ rules:
     matches:
       - "^docker.io"
     excludes: []
-    replace: "core.harbor.kochaus.net/dockerhub-proxy"
+    replace: "harbor.kochaus.net/dockerhub-proxy"
     checkUpstream: false
   - name: "quay.io rewrite rule"
     matches:
       - "^quay.io"
     excludes: []
-    replace: "core.harbor.kochaus.net/quay-proxy"
+    replace: "harbor.kochaus.net/quay-proxy"
     checkUpstream: false
   - name: "ghcr.io rewrite rule"
     matches:
       - "^ghcr.io"
     excludes: []
-    replace: "core.harbor.kochaus.net/ghcr-proxy"
+    replace: "harbor.kochaus.net/ghcr-proxy"
     checkUpstream: false
 
 affinity:
