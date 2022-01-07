@@ -28,10 +28,9 @@ servers:
           lameduck 5s
       - name: ready
       - name: rewrite
-        parameters: continue
-        configBlock: |-
-          name docker.kochhaus.net docker-registry.system.svc.cluster.local
-          name harbor.kochhaus.net harbor.harbor.svc.cluster.local
+        parameters: continue name docker.kochhaus.net. docker-registry.system.svc.cluster.local.
+      - name: rewrite
+        parameters: continue name harbor.kochhaus.net. harbor-core.harbor.svc.cluster.local.
       - name: kubernetes
         parameters: cluster.local in-addr.arpa ip6.arpa
         configBlock: |-
