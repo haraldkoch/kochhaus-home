@@ -112,7 +112,7 @@ spec:
                   operator: In
                   values:
                     - blocky
-            topologyKey: "kubernetes.io/arch"
+            topologyKey: "kubernetes.io/hostname"
 
     tolerations:
       - key: "node-role.kubernetes.io/control-plane"
