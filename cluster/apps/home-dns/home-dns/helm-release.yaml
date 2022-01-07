@@ -34,8 +34,8 @@ spec:
                   operator: In
                   values:
                     - home-dns
-            # force one instance onto the RPi cluster
-            topologyKey: "kubernetes.io/arch"
+            topologyKey: "kubernetes.io/hostname"
+
     tolerations:
       - key: "node-role.kubernetes.io/control-plane"
         operator: "Exists"
