@@ -3,19 +3,19 @@ rules:
     matches:
       - "^docker.io"
     excludes: []
-    replace: "harbor.${SECRET_DOMAIN}/dockerhub-proxy"
+    replace: "harbor.${SECRET_DOMAIN}/dockerhub_proxy"
     checkUpstream: false
   - name: "quay.io rewrite rule"
     matches:
       - "^quay.io"
     excludes: []
-    replace: "harbor.${SECRET_DOMAIN}/quay-proxy"
+    replace: "harbor.${SECRET_DOMAIN}/quay_proxy"
     checkUpstream: false
   - name: "ghcr.io rewrite rule"
     matches:
       - "^ghcr.io"
     excludes: []
-    replace: "harbor.${SECRET_DOMAIN}/ghcr-proxy"
+    replace: "harbor.${SECRET_DOMAIN}/ghcr_proxy"
     checkUpstream: false
 
 podAnnotations:
