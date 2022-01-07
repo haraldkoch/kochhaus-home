@@ -2,7 +2,9 @@ rules:
   - name: "docker.io rewrite rule"
     matches:
       - "^docker.io"
-    excludes: []
+    excludes:
+      # solve the chicken / egg problem?
+      - "goharbor/"
     replace: "harbor.${SECRET_DOMAIN}/dockerhub_proxy"
     checkUpstream: true
   - name: "quay.io rewrite rule"
