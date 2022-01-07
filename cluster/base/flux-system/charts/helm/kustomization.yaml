@@ -11,6 +11,7 @@ resources:
   - harbor-charts.yaml
   - jetstack-charts.yaml
   - k8s-at-home-charts.yaml
+  - kube-fleged-charts.yaml
   - metallb-charts.yaml
   - nfs-subdir-external-provisioner-charts.yaml
   - node-feature-discovery-charts.yaml
