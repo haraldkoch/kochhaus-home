@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - descheduler
   - docker-registry
+  - harbor-container-webhook
   - kured
   - node-feature-discovery
   - reloader

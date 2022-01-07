@@ -1,0 +1,36 @@
+rules:
+  - name: "docker.io rewrite rule"
+    matches:
+      - "^docker.io"
+    excludes: []
+    replace: "core.harbor.kochaus.net/dockerhub-proxy"
+    checkUpstream: false
+  - name: "quay.io rewrite rule"
+    matches:
+      - "^quay.io"
+    excludes: []
+    replace: "core.harbor.kochaus.net/quay-proxy"
+    checkUpstream: false
+  - name: "ghcr.io rewrite rule"
+    matches:
+      - "^ghcr.io"
+    excludes: []
+    replace: "core.harbor.kochaus.net/ghcr-proxy"
+    checkUpstream: false
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+                - "amd64"
+
+tolerations:
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Exists"
+  # Still need this for compatability
+  - key: "node-role.kubernetes.io/master"
+    operator: "Exists"
