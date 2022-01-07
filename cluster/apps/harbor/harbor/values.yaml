@@ -3,8 +3,7 @@ expose:
     certSource: none
   ingress:
     hosts:
-      core: core.harbor.${SECRET_DOMAIN}
-      notary: notary.harbor.${SECRET_DOMAIN}
+      core: harbor.${SECRET_DOMAIN}
     annotations:
       # cert-manager.io/cluster-issuer: "letsencrypt-production"
       traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
@@ -17,7 +16,7 @@ expose:
         # 64MiB
         memrequestbodybytes: 67108864
 
-externalURL: https://core.harbor.${SECRET_DOMAIN}
+externalURL: https://harbor.${SECRET_DOMAIN}
 
 harborAdminPassword: "${SECRET_HARBOR_ADMIN_PASSWORD}"
 
