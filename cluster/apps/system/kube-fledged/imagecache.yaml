@@ -13,3 +13,5 @@ spec:
     - images:
         - ghcr.io/0xerr0r/blocky:v0.17
         - coredns/coredns:1.8.6
+        - harbor.kochhaus.net/dockerhub_proxy/coredns/coredns:1.8.6
+        - harbor.kochhaus.net/ghcr_proxy/0xerr0r/blocky:v0.17
