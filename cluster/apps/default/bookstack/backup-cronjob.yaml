@@ -34,7 +34,7 @@ spec:
           containers:
             - name: mariadb
               # same image as the mariadb sidecar
-              image: docker.io/bitnami/mariadb:10.5.12-debian-10-r78
+              image: docker.io/bitnami/mariadb:10.5.13-debian-10-r32
               imagePullPolicy: IfNotPresent
               command: ["/bin/sh"]
               args:
