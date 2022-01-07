@@ -36,6 +36,12 @@ spec:
                     - home-dns
             # force one instance onto the RPi cluster
             topologyKey: "kubernetes.io/arch"
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+      # Still need this for compatability
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
 
     podAnnotations:
       configmap.reloader.stakater.com/reload: "config,zones,home-dns"
