@@ -5,6 +5,9 @@ metadata:
   name: kured
   namespace: system
 spec:
+  extraEnvVars:
+    - name: TZ
+      value: "America/Toronto"
   interval: 5m
   chart:
     spec:
