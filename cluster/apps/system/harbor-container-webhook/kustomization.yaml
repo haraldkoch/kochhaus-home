@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: system
 resources:
   - helm-release.yaml
+  - imagecache.yaml
 configMapGenerator:
   - name: harbor-container-webhook-values
     files:
