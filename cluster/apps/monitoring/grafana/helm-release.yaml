@@ -101,6 +101,7 @@ spec:
       - grafana-piechart-panel
     serviceMonitor:
       enabled: true
+      interval: 30s
     ingress:
       enabled: true
       ingressClassName: "traefik"
