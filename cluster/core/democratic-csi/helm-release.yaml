@@ -18,37 +18,6 @@ spec:
         namespace: flux-system
       interval: 5m
 
-  values:
-    csiDriver:
-      # should be globally unique for a given cluster
-      name: "org.democratic-csi.nfs"
-
-    storageClasses:
-      - name: zfs-nfs
-        defaultClass: true
-        reclaimPolicy: Delete
-        volumeBindingMode: Immediate
-        allowVolumeExpansion: true
-        parameters:
-          fsType: nfs
-
-        mountOptions:
-          - noatime
-          - nfsvers=4
-        secrets:
-          provisioner-secret:
-          controller-publish-secret:
-          node-stage-secret:
-          node-publish-secret:
-          controller-expand-secret:
-
-    driver:
-      existingConfigSecret: zfs-nfs-secret
-      config:
-        driver: zfs-generic-nfs
-
-    volumeSnapshotClasses:
-      - name: zfs-nfs
-        #labels:
-        #  velero.io/csi-volumesnapshot-class: "true"
-        deletionPolicy: Retain
+  valuesFrom:
+    - kind: ConfigMap
+      name: democratic-csi-values
