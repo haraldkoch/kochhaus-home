@@ -1,0 +1,22 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: harbor-container-webhook
+  namespace: system
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://indeedeng-alpha.github.io/harbor-container-webhook/
+      chart: harbor-container-webhook
+      version: 0.3.4
+      sourceRef:
+        kind: HelmRepository
+        name: harbor-container-webhook-charts
+        namespace: flux-system
+      interval: 5m
+
+  valuesFrom:
+    - kind: ConfigMap
+      name: harbor-container-webhook-values
