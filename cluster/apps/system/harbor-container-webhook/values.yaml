@@ -18,6 +18,9 @@ rules:
     replace: "harbor.kochaus.net/ghcr-proxy"
     checkUpstream: false
 
+podAnnotations:
+  configmap.reloader.stakater.com/reload: "harbor-container-webhook"
+
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
