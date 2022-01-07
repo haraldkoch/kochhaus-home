@@ -4,19 +4,19 @@ rules:
       - "^docker.io"
     excludes: []
     replace: "harbor.${SECRET_DOMAIN}/dockerhub_proxy"
-    checkUpstream: false
+    checkUpstream: true
   - name: "quay.io rewrite rule"
     matches:
       - "^quay.io"
     excludes: []
     replace: "harbor.${SECRET_DOMAIN}/quay_proxy"
-    checkUpstream: false
+    checkUpstream: true
   - name: "ghcr.io rewrite rule"
     matches:
       - "^ghcr.io"
     excludes: []
     replace: "harbor.${SECRET_DOMAIN}/ghcr_proxy"
-    checkUpstream: false
+    checkUpstream: true
 
 podAnnotations:
   configmap.reloader.stakater.com/reload: "harbor-container-webhook"
