@@ -1,10 +1,12 @@
 expose:
+  tls:
+    certSource: none
   ingress:
     hosts:
       core: core.harbor.${SECRET_DOMAIN}
       notary: notary.harbor.${SECRET_DOMAIN}
     annotations:
-      cert-manager.io/cluster-issuer: "letsencrypt-production"
+      # cert-manager.io/cluster-issuer: "letsencrypt-production"
       traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
   clusterIP:
     # Annotations on the ClusterIP service
