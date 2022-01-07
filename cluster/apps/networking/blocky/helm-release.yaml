@@ -114,6 +114,13 @@ spec:
                     - blocky
             topologyKey: "kubernetes.io/arch"
 
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+      # Still need this for compatability
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+
     resources:
       requests:
         memory: 256Mi
