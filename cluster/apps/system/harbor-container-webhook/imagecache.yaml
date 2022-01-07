@@ -1,0 +1,15 @@
+---
+apiVersion: kubefledged.io/v1alpha2
+kind: ImageCache
+metadata:
+  name: system-cache
+  namespace: system
+  labels:
+    app.kubernetes.io/name: kube-fledged
+    app.kubernetes.io/instance: kube-fledged
+    app.kubernetes.io/part-of: kube-fledged
+spec:
+  cacheSpec:
+    - images:
+        - ghcr.io/0xerr0r/blocky:v0.17
+        - coredns/coredns:1.8.6
