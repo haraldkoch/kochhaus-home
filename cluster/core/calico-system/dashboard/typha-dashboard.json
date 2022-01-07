@@ -33,7 +33,7 @@
       "type": "row"
     },
     {
-      "datasource": "default",
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 6,
         "w": 5,
@@ -87,7 +87,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -164,7 +164,7 @@
       "valueName": "current"
     },
     {
-      "datasource": "default",
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 6,
         "w": 5,
@@ -218,7 +218,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -299,7 +299,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -380,7 +380,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -458,7 +458,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "default",
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 6,
         "w": 5,
@@ -525,7 +525,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -607,7 +607,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -688,7 +688,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -769,7 +769,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -860,7 +860,7 @@
       "type": "row"
     },
     {
-      "datasource": "default",
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 6,
         "w": 5,
@@ -914,7 +914,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -995,7 +995,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "default",
+      "datasource": "Prometheus",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1084,7 +1084,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1165,7 +1165,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1246,7 +1246,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1327,7 +1327,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1408,7 +1408,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1499,7 +1499,7 @@
       "type": "row"
     },
     {
-      "datasource": "default",
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 6,
         "w": 5,
@@ -1563,7 +1563,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1644,7 +1644,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "default",
+      "datasource": "Prometheus",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1733,7 +1733,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1829,7 +1829,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "default",
+      "datasource": "Prometheus",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1918,7 +1918,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "default",
+      "datasource": "Prometheus",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2013,7 +2013,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -2094,7 +2094,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -2175,7 +2175,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "default",
+      "datasource": "Prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
