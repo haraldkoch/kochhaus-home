@@ -5,19 +5,19 @@ rules:
     excludes:
       # solve the chicken / egg problem?
       - "goharbor/"
-    replace: "harbor-core.harbor.svc.cluster.local:80/dockerhub_proxy"
+    replace: "harbor.harbor.svc.cluster.local:80/dockerhub_proxy"
     checkUpstream: true
   - name: "quay.io rewrite rule"
     matches:
       - "^quay.io"
     excludes: []
-    replace: "harbor-core.harbor.svc.cluster.local:80/quay_proxy"
+    replace: "harbor.harbor.svc.cluster.local:80/quay_proxy"
     checkUpstream: true
   - name: "ghcr.io rewrite rule"
     matches:
       - "^ghcr.io"
     excludes: []
-    replace: "harbor-core.harbor.svc.cluster.local:80/ghcr_proxy"
+    replace: "harbor.harbor.svc.cluster.local:80/ghcr_proxy"
     checkUpstream: true
 
 podAnnotations:
