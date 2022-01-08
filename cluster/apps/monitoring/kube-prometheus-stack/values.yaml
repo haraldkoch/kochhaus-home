@@ -108,6 +108,16 @@ prometheus:
             requests:
               storage: 10Gi
 
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                  - arm64
+
 # cannot be monitored in k3s; runs on localhost
 kubeControllerManager:
   enabled: false
