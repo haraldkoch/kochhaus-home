@@ -17,7 +17,8 @@ rules:
     matches:
       - "^ghcr.io"
     excludes: []
-    replace: "harbor.harbor.svc.cluster.local:80/ghcr_proxy"
+    # replace: "harbor.harbor.svc.cluster.local:80/ghcr_proxy"
+    replace: "image-cache-ghcr-docker-registry.system.svc.cluster.local:5020"
     checkUpstream: true
 
 podAnnotations:
