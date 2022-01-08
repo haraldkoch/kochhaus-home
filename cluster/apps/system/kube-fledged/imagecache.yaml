@@ -13,3 +13,5 @@ spec:
     - images:
         - ghcr.io/0xerr0r/blocky:v0.17
         - coredns/coredns:1.8.6
+        - harbor.${PRIVATE_STATIC_DOMAIN}/ghcr/0xerr0r/blocky:v0.17
+        - harbor.${PRIVATE_STATIC_DOMAIN}/docker/coredns/coredns:1.8.6
