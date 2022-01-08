@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - descheduler
   - docker-registry
-  # - harbor-container-webhook
+  - harbor-container-webhook
   # - image-cache-ghcr
   - kube-fledged
   - kured
