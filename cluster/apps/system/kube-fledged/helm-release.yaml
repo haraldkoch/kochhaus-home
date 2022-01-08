@@ -17,7 +17,7 @@ spec:
         namespace: flux-system
       interval: 5m
 
-values:
-  image:
-    busyboxImageRepository: busybox
-    busyboxImageVersion: "1.35.0"
+  values:
+    image:
+      busyboxImageRepository: busybox
+      busyboxImageVersion: "1.35.0"
