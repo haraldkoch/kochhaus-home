@@ -5,20 +5,25 @@ rules:
     excludes:
       # solve the chicken / egg problem?
       - "goharbor/"
-    replace: "harbor.harbor.svc.cluster.local:80/dockerhub_proxy"
+    replace: "harbor.${PRIVATE_STATIC_DOMAIN}/docker"
     checkUpstream: true
   - name: "quay.io rewrite rule"
     matches:
       - "^quay.io"
     excludes: []
-    replace: "harbor.harbor.svc.cluster.local:80/quay_proxy"
+    replace: "harbor.${PRIVATE_STATIC_DOMAIN}/quay"
     checkUpstream: true
   - name: "ghcr.io rewrite rule"
     matches:
       - "^ghcr.io"
     excludes: []
-    # replace: "harbor.harbor.svc.cluster.local:80/ghcr_proxy"
-    replace: "image-cache-ghcr-docker-registry.system.svc.cluster.local:5020"
+    replace: "harbor.${PRIVATE_STATIC_DOMAIN}/ghcr"
+    checkUpstream: true
+  - name: "k8s.gcr.io rewrite rule"
+    matches:
+      - "^k8s.gcr.io"
+    excludes: []
+    replace: "harbor.${PRIVATE_STATIC_DOMAIN}/k8s_gcr"
     checkUpstream: true
 
 podAnnotations:
