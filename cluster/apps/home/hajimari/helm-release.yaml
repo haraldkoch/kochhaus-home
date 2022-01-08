@@ -37,7 +37,9 @@ spec:
           - monitoring
           - networking
       name: "citizen"
-      customApps: []
+      customApps:
+        - name: Harbor
+          url: https://harbor.${PRIVATE_STATIC_DOMAIN}
       groups:
         - name: Communicate
           links:
