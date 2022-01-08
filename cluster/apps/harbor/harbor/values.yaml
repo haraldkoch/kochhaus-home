@@ -1,13 +1,15 @@
 expose:
+  type: clusterIP
   tls:
     certSource: none
-  ingress:
-    hosts:
-      core: harbor.${SECRET_DOMAIN}
-    annotations:
-      # cert-manager.io/cluster-issuer: "letsencrypt-production"
-      traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+  #ingress:
+  #  hosts:
+  #    core: harbor.${SECRET_DOMAIN}
+  #  annotations:
+  #    # cert-manager.io/cluster-issuer: "letsencrypt-production"
+  #    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
   clusterIP:
+    name: harbor
     # Annotations on the ClusterIP service
     annotations:
       traefik.ingress.kubernetes.io/buffering: |
@@ -16,7 +18,7 @@ expose:
         # 64MiB
         memrequestbodybytes: 67108864
 
-externalURL: https://harbor.${SECRET_DOMAIN}
+externalURL: http://harbor
 
 harborAdminPassword: "${SECRET_HARBOR_ADMIN_PASSWORD}"
 
