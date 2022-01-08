@@ -27,9 +27,9 @@ repos:
     rev: 0.1.0
     hooks:
       - id: fix-smartquotes
-        exclude: ^ansible/manifests/
+        exclude: ^(ansible/manifests/|cluster/core/calico-system)
       - id: fix-ligatures
-        exclude: ^ansible/manifests/
+        exclude: ^(ansible/manifests/|cluster/core/calico-system)
   - repo: https://github.com/k8s-at-home/sops-pre-commit
     rev: v2.0.3
     hooks:
