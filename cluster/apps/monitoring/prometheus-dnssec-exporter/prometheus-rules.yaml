@@ -7,9 +7,18 @@ spec:
   groups:
     - name: dnssec
       rules:
+        - alert: DNSResolverFailure
+          expr: dnssec_zone_record_resolves < 1
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            description: DNS Resolution for target {{ $labels.zone }} is failing for resolver {{ $labels.resolver }}.
+            summary: A DNS resolver is failing.
+
         - alert: DNSSECSignatureExpiration
           expr: dnssec_zone_record_days_left < 10
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
@@ -18,7 +27,7 @@ spec:
 
         - alert: DNSSECSignatureInvalid
           expr: dnssec_zone_record_resolves == 0
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
