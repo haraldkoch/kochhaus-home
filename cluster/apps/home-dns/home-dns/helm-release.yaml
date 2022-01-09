@@ -75,7 +75,7 @@ spec:
             parameters: :9153
           # FIXME use router address
           - name: forward
-            parameters: . ${PRIVATE_DNS_PRIMARY}
+            parameters: . ${PRIVATE_GATEWAY}
           - name: loop
           - name: reload
           - name: loadbalance
