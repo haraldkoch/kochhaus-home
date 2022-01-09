@@ -18,6 +18,12 @@ spec:
       interval: 5m
 
   values:
+    resolvers:
+      - 8.8.8.8:53
+      - 1.1.1.1:53
+      - ${LB_BLOCKY}
+      - ${LB_HOME_DNS}
+
     service:
       type: LoadBalancer
       annotations:
