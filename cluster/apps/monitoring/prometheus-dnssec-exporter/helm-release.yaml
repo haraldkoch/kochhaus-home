@@ -21,8 +21,8 @@ spec:
     resolvers:
       - 8.8.8.8:53
       - 1.1.1.1:53
-      - ${LB_BLOCKY}
-      - ${LB_HOME_DNS}
+      - ${LB_BLOCKY}:53
+      - ${LB_HOME_DNS}:53
 
     service:
       type: LoadBalancer
