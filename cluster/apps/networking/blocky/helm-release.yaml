@@ -53,6 +53,8 @@ spec:
         blackLists:
           ads:
           - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+          # block bitcoin miners
+          - https://raw.githubusercontent.com/hoshsadiq/adblock-nocoin-list/master/hosts.txt
           # from pi.hole
           - https://s3.amazonaws.com/lists.disconnect.me/simple_tracking.txt
           - https://s3.amazonaws.com/lists.disconnect.me/simple_ad.txt
