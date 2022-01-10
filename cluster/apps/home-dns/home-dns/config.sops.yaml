@@ -5,15 +5,15 @@ metadata:
     name: config
     namespace: home-dns
 data:
-    home-dns.conf: ENC[AES256_GCM,data:c7kGlXjFTV60UcWy+a5RU3VcJgYtHmZ7iEOJ3XS/zpKqGp3/k5kkHmGTwdK4l3Y2+0hnRrzQYMgDAIbTOkM1YGeqn8yaQ2XAo+kFcqodThQ6tSz7Vugio173W0oBk7SD3Q+eSA7dMfMdoeHIGsLYPXJVZkZ3c3OG87rghWgPBMM8tkNRWqPorxnJhZsKFeG6WthcOXndlWk9PFsw6fbEBK11a9Vs2dD06feQb757Ap0YqPXq2uNkvITGWVkoi8+FSAlCoL+R5/wgoka8Kpa7hpuaLHNGPqbd+jVpe5xl8u4lz9CHK19QH3NoWz4xIDLq49lvSCTlgrc5oiG2+cpDykpK6bwVLAm2QBcxtXQ1cV24qhUDTTyaQRekm03j5f6dWUfVgDAfAp0G0YkhnVtM6CJXXeaajdf5UQx12k2dY0+17dKJY+Du9f6Pgsa7HIO/viE07QA4gBD25zL0V6X42YS2NvzlPuXEoqnMgdufhBEX3kgCJHiDTWjKIcpi/vpEIKw2Io20aGKjuhzSNTUWHIkSjbhwD1O7,iv:p/pbm6epxEHjC7NsqCB82v/8Q2QuM42z0qNqi4VSGOg=,tag:Lkq2mWJnGWGYv5lUHwqNgQ==,type:str]
+    home-dns.conf: ENC[AES256_GCM,data:R32prNknR3rh/28g1srpHkxNIuoBj9RuDpf8CKMS0sIp61lpV83Rc47HTCFARs0pA5QC43EtCbNeU6d7Nl7JKbMJkVjwafjZUQ4vMFyZTdzMY3c2Bi03bqJFuBbt9Xmza7Du+ILDQ3/1Ioz/Azw1AjqicXEpoeSyDQ9/FhIb1KYGM167KeHaHnOGDmQOX7d7xundxbmy2Uq2MeFthyp8QS+2bnjx7bGyEVaEPdthvKOO/vjdzIG8tCSZ58mj39U4nRw8wnMoiPpjX2RVCzMhuKmRtLoiV9jyjNQaVId7ppLFvFkKsHqNoYKikpSBh7PCttV5DMA7rSQySYnQDX+zncmN7axq5GlZDBZmDt9GIKpYxRhnXqtPD1D98PVXGRsVD/B7CESzHPj04KLmjrp/skJwd+F2NJczG7ZCW75xFelosiL1y3aphOsVSWHHmNrd17H8obSf8+06Kn/joij77CVcnOGyUTIrWwBJMfxnKd0xOT1t49G6Z15QYUbiZCS0ibmC2+YxzZjsYebLs4EW3bVAToVkI3rgTtXfO5fOXQKk6/g7HMJ4Y16GLVngazY5jGT6Y8Db7kv+dI8q593oqK4gogg=,iv:scojiYJ2T/xQTDNyEMAjMLJbbBjWuNiENrU0HJ7/y8M=,tag:ePE2aVHjSTVGVbbK4pjeWg==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-29T01:10:54Z"
-    mac: ENC[AES256_GCM,data:nldTh4UvFlOR4qCaz3iLPeUVu01odBQ4YdWLIjw8dleK1dOeLfFiqsCZo+pPR282HZwz7PdLmVZ86qC8HhS0Fogk1ZODdBnp2TRVOHSQoXdvDIheGLNcAdzOMv8GbVkk+gGjq23WgxVP55CvOPc4oo0esj0dIDdB2G6wWMIyrwU=,iv:X4hPL3mRhwZ42aPFs84NV1t10mg9BxH2vbdEnsb6P2g=,tag:nsjGTnAirt9hkdvq+fkHcg==,type:str]
+    lastmodified: "2022-01-10T01:05:40Z"
+    mac: ENC[AES256_GCM,data:rPoSxtUYJE8Awp8pyvc3GcTTqGE4O86MdpIsNdYzjQw1geSZ6Fu9QZpaBg1OwBeH68dX3rT0DmO86hHGBFf1cQw5o+XFF72d1/Qq9bFwcNTW8XNUtTtjS9CXJRXbBdaU97fulkc6l7zryF1C3eTpVhuAbXw7DgSPWB+HCU9Y5Pc=,iv:srIZy+drhb3KQFefCYaKeI95Wny3cYkkJHpjmqv4ZNk=,tag:J1kTa0g0vw0yxPXE6gxuCw==,type:str]
     pgp:
         - created_at: "2021-11-29T01:10:54Z"
           enc: |-
