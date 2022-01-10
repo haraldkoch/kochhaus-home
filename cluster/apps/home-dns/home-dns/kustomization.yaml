@@ -3,6 +3,5 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - config.sops.yaml
-  - dnssec.sops.yaml
   - zones.sops.yaml
   - helm-release.yaml
