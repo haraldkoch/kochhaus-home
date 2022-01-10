@@ -5,16 +5,18 @@ metadata:
     namespace: home-dns
 type: Opaque
 stringData:
-    Khome-dns.private: ENC[AES256_GCM,data:WvLRoBqTom/icbvg+hRjk8VfbCanoI9kZVqiZWaauCYmpKkN61KMfuUWPcBnE8pDhfbT6UveA/pixf9YTlhkE1cDPoL1Q38GAyY4FeuM9EEOdMR8dguX1sLNp8UXOL4vRJyC27zwhvaFHx3I9OvT+U2FQPGZXPs9H0Y1p6w38DUfIlS4bCMqisxPmnCG5dBhvREJzW4BXPG/XN6bD6RC8Xx6Wzefu0gGPUkN3l08PUk7uqMLIMVYUxB7,iv:ZShe6rjLhQs49RZKmi6PhNBp5tNwIScAvboh+Q0J55I=,tag:4onRL3d4aZ1sZ3jUOtvOkA==,type:str]
-    Khome-dns.key: ENC[AES256_GCM,data:jEKFD9Gcv/5J6MDFSAcLE2jBqGScj553eEj1dlnGgp0bmq52AX5VOVPwt4vivwy7xtAqtmmvAialGDpsarmA5zwCSg05MVG7dRT9NhSDLgHVrfENcEfFFHNzIYtIbLm+WJQ7DrKIi3yArga9w+0PMg60fnsE4bmW/4dMn+z5E72y0Ron8kdilD0LqsDITK+8Qna3CxuSSUX+lHKTgIHrNkbmqbola5ne1y3vFZqukEHjBHXZKBFvIoC968C2q7MibWij9LijoLHQcNljqOmG1cjlOLiNkNfIIoIInhJwNDhrn+0SMrf4lQyb6WEQx1r4zGtWly+509Scm2tljgnCzvADBzb7Qy4ClRxuYt3clK09eOUgOpJK+30X5ojAoyOHRzoxA/zEpZVi7N8CikkgSUJ6zSHjcc7U/l5ciXCaYOYJZWxmokPsqFhlknTopLHONmnnBHl4AA==,iv:evbfWN/hCq3lX7DzOXKBx7D3a7HpwiDsmZtl7k7JJw8=,tag:kRbswnm9i6alFHUBixQzRg==,type:str]
+    Khome-dns.+013+46958.private: ENC[AES256_GCM,data:6YmcX2y+8hoOmetwZfLpfNj+quGT9k1Otp+4yht44Nvf4jFrEt2dsXiavnD6Fq51RK6GQI0wX6cV1Y4viRZ/dzXweo55CiwHlLfwnyDoRwI5c2gmxEwzB35W4HvKSk+giOU+QKu0iLH5XfwgoD/zDKhWxKw3x44CLjO7QT5JGR/nHxwfhZDeqZ/DvL5e816oJ5lxXHTW04Gc/0f39BjOIcHlLcgt/Wm6UW2gwUUUkCirCYoa6G9gU6AB,iv:D1NlNQ60vVrA/9WrmE4Jns1fkFmsIwVOc7+oNhgO0WA=,tag:3z1TS71bRUiykeLnqyQfQg==,type:str]
+    Khome-dns.+013+46958.key: ENC[AES256_GCM,data:cr3x/DvWgqBbAeB9spHUL3bsTsYIXNJb/CPhB21TEWrENmvDWdEbO/xO1xgO7/OoUKrnR8HOykJAJpSK6pNCGa19wJFo5y7dSFDjYK+qkhNle3NqmJus+J1orOgI9wUyM98tNG/PK3fis5fTbOGl+uQhmuQeqLooPOyeyDdzUlnNIBlSME3/Vu0lseob3oj40Ye58eG+IlO3SERnu2xGhJXmR9T7y46k6LV6j1KZbVjzur44TXR2mSMiJEvkHuo7x2dkVoSg3+rNUBFK1iq7rOCkhA2wcK9HKZM39gT7LrtLvoNTFVjCO9dnrpe3oECf9tRl53IJ1kuSC+XZAYrONJGJ0436xorYonbk0NnhJQmSO5vqc8SAT2IDGX84VDL6rqeXR3Mh2FFY8gzn1kPcSMPbcccFMgKVhcpuG8lHvi8PSUpnw16v4ckegZG9B1+HZ0YEAH1i,iv:4JHH6zk9CuhhzMGLFoYuahOP792/5RT7qgizKWMSzto=,tag:dRNZvWpQNAx9DDtpiAwpYQ==,type:str]
+    Khome-dns.+013+16685.private: ENC[AES256_GCM,data:VT0WwEQs+mUgleNG93YolbedCdGCba41XA919dY8OlscjWzoBeIpbBih7NRbjLhfUQUVDjfFqDJDnbV0Ub7q1y+rVTz9VOu6cCaeghjw0LMqm8Ovkn7zob6Kz+qOrQBuN+RbUxVsnKDk19P7zhhjrXP+3Gm/EArhMN2pUyqxBN+KbvQ9sRIbhCx8W7Byol05XtObmH03ockk4AX42ijKD3NOiAL/y98D0QTIBXZJOgYdkYGwGW7twthn,iv:3jSU4mC+0l9Z1tV9uHw++viB26a95MfZvmCRSfV5wSo=,tag:uazOKEdJ89hWZMjCfDULGg==,type:str]
+    Khome-dns.+013+16685.key: ENC[AES256_GCM,data:MYXxfcATQT4nZkTMwOWIrzwdaJThAZwF6RLyIl4J9CIppUfptqKGuMSMCugotkz12ZWlKiKLDVy1/3f7yPScf9HPZDONhsH7mOyO/Oj2svGfAtCnWd/ip1+PmmEIsbChk13yJSMVNGw8nViysbSbv0BdiSwKF/ud0MPw/GYnqNAwhnqQ9elG9b2/VltNADjmSKNyxBUp+N4rwDyolnaAez/vxLQ2WivlBc7aBJe34QLfcB60F5GgQQnTkAkzdsMrmZZDEh/9qVpdIaO9Kj5+AySrBL1i4MrJhdj+2ESMasCiNNcvYMsaZoQ94sq0/33NCDRihEyv2yLjuGyi8yZTvLjU9doJu0OL+Hu8s1kX7sJd0GHer8zmJ8lwEBgx1rmsARyqSyey0acnPc9tCQow0uORIFflujNOYrRNAAgvCzg/XNHb6Lyy/UcZ37gTA8ENxH3J2Cnlbg==,iv:N2kjiOiNWWgPmbE1ZdMgIvHcjjnLoSnFT6dMfDx87a0=,tag:6l4m6FruyzR/Jod9dONddg==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2021-11-29T01:11:03Z"
-    mac: ENC[AES256_GCM,data:kBuxSVkzyiMIK2+ZHrocf7KjYvApybN5EzkXI1/JxYVfAAjYnuN2yosmLVbt7FG76a5b29eb/brF0wxX3A4NzasyDfro5q9lPWGqx8O0GX1tOa3HkEIqeQEJFPUT6OfSuN0UIJM/0TOkCODIZ14/KScUxz+ZhWtcyTkZ/IgGRhU=,iv:5EZwU5V3moCLJoG8mG8UZZgg8ByfdwVpKx8mUdRITsY=,tag:fT0HInKkD641jUB1ilMyPg==,type:str]
+    lastmodified: "2022-01-10T01:03:23Z"
+    mac: ENC[AES256_GCM,data:voDI7+pwppNovNqXbklDHMbB9TbReCJ44d7PzcFcT5Wfwfg2oDRRzFz/kDhYmgGCKIwg2uEG89KtXLdrWk4Pv68nHWL91grK5/Nklu5QTNPN59hKRNs2oz6dyXx6fNMpMJwL8b2qLtEF0f0vIwTJPDgtCE/E5TkiJEZ1w/F0/hw=,iv:7AmqV7FYw/VH5rcHDGo7UKw+dY9d105oM4qsGnyN9Gs=,tag:aZrWdXyVGu6y7ZegnpNi1A==,type:str]
     pgp:
         - created_at: "2021-11-29T01:11:03Z"
           enc: |-
