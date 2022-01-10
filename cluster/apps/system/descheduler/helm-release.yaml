@@ -34,16 +34,16 @@ spec:
           enabled: false
         LowNodeUtilization:
           enabled: true
-      params:
-        nodeResourceUtilizationThresholds:
-          thresholds:
-            cpu: 30
-            memory: 30
-            pods: 20
-          targetThresholds:
-            cpu: 60
-            memory: 60
-            pods: 50
+          params:
+            nodeResourceUtilizationThresholds:
+              thresholds:
+                cpu: 30
+                memory: 30
+                pods: 20
+              targetThresholds:
+                cpu: 60
+                memory: 60
+                pods: 50
 
   # I do not need this yet, but keeping it for future use.
   postRenderers:
