@@ -45,7 +45,6 @@ spec:
 
     podAnnotations:
       configmap.reloader.stakater.com/reload: "config,zones,home-dns"
-      secret.reloader.stakater.com/reload: "dnssec"
 
     serviceType: LoadBalancer
     service:
@@ -95,10 +94,6 @@ spec:
         configMap:
           defaultMode: 420
           name: config
-
-    extraSecrets:
-      - name: dnssec
-        mountPath: /etc/dnssec
 
     extraConfig:
       import:
