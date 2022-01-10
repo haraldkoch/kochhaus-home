@@ -14,13 +14,6 @@
       - "manifests/calico/tigera-operator.yaml"
       - "manifests/calico/custom-resources.yaml"
 
-    # this may cause a bootstrap issue since the docker registry is pulled from docker.io
-    k3s_registries:
-      mirrors:
-        docker.io:
-          endpoint:
-            - "https://docker.kochhaus.net"
-
     k3s_server:
       write-kubeconfig-mode: "0644"
 
@@ -74,3 +67,15 @@
         daemon_reload: yes
         name: containerd-hack
         enabled: yes
+
+    - name: Remove deployed manifest templates
+      ansible.builtin.file:
+        path: "{{ k3s_server_manifests_dir }}/{{ item | basename | regex_replace('\\.j2$', '') }}"
+        state: absent
+      loop: "{{ k3s_server_manifests_templates | default([]) }}"
+
+    - name: Remove deployed manifest urls
+      ansible.builtin.file:
+        path: "{{ k3s_server_manifests_dir }}/{{ item.filename }}"
+        state: absent
+      loop: "{{ k3s_server_manifests_urls | default([]) }}"
