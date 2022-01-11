@@ -75,6 +75,11 @@ spec:
       enabled: true
       architecture: standalone
 
+      image:
+        registry: docker.io
+        repository: bitnami/mariadb
+        tag: 10.5.13-debian-10-r32
+
       commonLabels:
         app.kubernetes.io/part-of: bookstack
 
