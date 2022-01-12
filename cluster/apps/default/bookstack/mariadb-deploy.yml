@@ -39,7 +39,7 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: bookstack-mariadb
+                  name: bookstack
                   key: mariadb-root-password
             - name: MYSQL_LOG_CONSOLE
               value: "false"
@@ -50,7 +50,7 @@ spec:
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: bookstack-mariadb
+                  name: bookstack
                   key: mariadb-password
           image: ghcr.io/linuxserver/mariadb:10.5.13
           imagePullPolicy: IfNotPresent
