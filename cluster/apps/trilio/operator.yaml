@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=http://charts.k8strilio.net/trilio-stable/k8s-triliovault-operator
       chart: k8s-triliovault-operator
-      version: 2.6.5
+      version: 2.6.6
       sourceRef:
         kind: HelmRepository
         name: triliovault-operator-charts
