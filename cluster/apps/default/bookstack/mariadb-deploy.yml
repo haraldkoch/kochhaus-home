@@ -1,0 +1,109 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mariadb
+  namespace: default
+  labels:
+    app.kubernetes.io/name: mariadb
+    app.kubernetes.io/instance: bookstack
+    app.kubernetes.io/part-of: bookstack
+    app.kubernetes.io/component: primary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: bookstack
+      app.kubernetes.io/name: mariadb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        backup.velero.io/backup-volumes: data
+      labels:
+        app.kubernetes.io/name: mariadb
+        app.kubernetes.io/instance: bookstack
+        app.kubernetes.io/part-of: bookstack
+        app.kubernetes.io/component: primary
+    spec:
+      containers:
+        - name: mariadb
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "America/Toronto"
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bookstack-mariadb
+                  key: mariadb-root-password
+            - name: MYSQL_LOG_CONSOLE
+              value: "false"
+            - name: MYSQL_USER
+              value: bookstack
+            - name: MYSQL_DATABASE
+              value: bookstack
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bookstack-mariadb
+                  key: mariadb-password
+          image: ghcr.io/linuxserver/mariadb:10.5.13
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -ec
+                - |
+                  password_aux="${MYSQL_ROOT_PASSWORD:-}"
+                  if [[ -f "${MYSQL_ROOT_PASSWORD_FILE:-}" ]]; then
+                      password_aux=$(cat "$MYSQL_ROOT_PASSWORD_FILE")
+                  fi
+                  mysqladmin status -uroot -p"${password_aux}"
+            failureThreshold: 3
+            initialDelaySeconds: 120
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          ports:
+            - name: mysql
+              containerPort: 3306
+              protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -ec
+                - |
+                  password_aux="${MYSQL_ROOT_PASSWORD:-}"
+                  if [[ -f "${MYSQL_ROOT_PASSWORD_FILE:-}" ]]; then
+                      password_aux=$(cat "$MYSQL_ROOT_PASSWORD_FILE")
+                  fi
+                  mysqladmin status -uroot -p"${password_aux}"
+            failureThreshold: 3
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          resources:
+            limits:
+              memory: 192Mi
+            requests:
+              memory: 128Mi
+          #        securityContext:
+          #          runAsNonRoot: true
+          #          runAsUser: 1000
+          volumeMounts:
+            - name: data
+              mountPath: /config
+      serviceAccount: bookstack-mariadb
+      serviceAccountName: bookstack-mariadb
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: bookstack-mariadb

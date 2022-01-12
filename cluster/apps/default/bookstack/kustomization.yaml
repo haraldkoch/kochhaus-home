@@ -6,3 +6,5 @@ resources:
   - secret.sops.yaml
   - helmrelease.yaml
   - backup-cronjob.yaml
+  - mariadb-deploy.yml
+  - mariadb-svc.yml
