@@ -18,23 +18,16 @@ spec:
               nfs:
                 server: ${SECRET_BACKUP_SERVER}
                 path: /backup/data/bookstack
-            - name: config
-              configMap:
-                name: bookstack-mariadb
-                defaultMode: 420
-            - name: data
-              persistentVolumeClaim:
-                claimName: bookstack-mariadb
 
           securityContext:
-            fsGroup: 1001
-            runAsGroup: 1001
-            runAsUser: 1001
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsUser: 1000
 
           containers:
             - name: mariadb
               # same image as the mariadb sidecar
-              image: docker.io/bitnami/mariadb:10.5.13-debian-10-r32
+              image: ghcr.io/linuxserver/mariadb:10.5.13
               imagePullPolicy: IfNotPresent
               command: ["/bin/sh"]
               args:
@@ -57,11 +50,6 @@ spec:
               volumeMounts:
                 - name: backup
                   mountPath: /backup
-                - name: config
-                  mountPath: /opt/bitnami/mariadb/conf/my.cnf
-                  subPath: my.cnf
-                - name: data
-                  mountPath: /bitnami/mariadb
               resources:
                 requests:
                   memory: "128Mi"
@@ -69,13 +57,3 @@ spec:
                 limits:
                   memory: "512Mi"
                   cpu: "1"
-
-          affinity:
-            nodeAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                  - matchExpressions:
-                      - key: kubernetes.io/arch
-                        operator: In
-                        values:
-                          - "amd64"

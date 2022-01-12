@@ -72,46 +72,7 @@ spec:
     # -- Enable and configure mariadb database subchart under this key.
     #    For more options see https://github.com/bitnami/charts/tree/master/bitnami/mariadb
     mariadb:
-      enabled: true
-      architecture: standalone
-
-      image:
-        registry: docker.io
-        repository: bitnami/mariadb
-        tag: 10.5.13-debian-10-r32
-
-      commonLabels:
-        app.kubernetes.io/part-of: bookstack
-
-      auth:
-        username: bookstack
-        # password: set by valuesFrom
-        database: bookstack
-        # rootPassword: set by valuesFrom
-
-      primary:
-        persistence:
-          enabled: true
-          existingClaim: bookstack-mariadb
-
-        podAnnotations:
-          backup.velero.io/backup-volumes: data
-
-        resources:
-          requests:
-            memory: 128Mi
-          limits:
-            memory: 192Mi
-
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: kubernetes.io/arch
-                      operator: In
-                      values:
-                        - "amd64"
+      enabled: false
 
   valuesFrom:
     - kind: Secret
