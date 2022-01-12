@@ -11,10 +11,10 @@ spec:
   type: ClusterIP
   ipFamilyPolicy: PreferDualStack
   ports:
-    - name: mariadb
+    - name: mysql
       port: 3306
       protocol: TCP
-      targetPort: mariadb
+      targetPort: mysql
   selector:
     app.kubernetes.io/component: primary
     app.kubernetes.io/instance: bookstack
