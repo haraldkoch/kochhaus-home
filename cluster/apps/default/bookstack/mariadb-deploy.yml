@@ -101,8 +101,8 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /config
-      serviceAccount: bookstack-mariadb
-      serviceAccountName: bookstack-mariadb
+      serviceAccount: default
+      serviceAccountName: default
       volumes:
         - name: data
           persistentVolumeClaim:
