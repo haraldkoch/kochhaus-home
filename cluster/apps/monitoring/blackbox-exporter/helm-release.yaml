@@ -59,10 +59,10 @@ spec:
           name: pikvm1
           url: pikvm1
         - module: icmp
-          name: ${SECRET_BACKUP_SERVER}
+          name: ${SECRET_BACKUP_SERVER}-4
           url: ${SECRET_BACKUP_SERVER}
         - module: icmp6
-          name: ${SECRET_BACKUP_SERVER}
+          name: ${SECRET_BACKUP_SERVER}-6
           url: ${SECRET_BACKUP_SERVER}
     prometheusRule:
       enabled: true
