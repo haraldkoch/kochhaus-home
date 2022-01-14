@@ -44,10 +44,10 @@ spec:
 
       conditional:
         mapping:
-          ${PRIVATE_STATIC_DOMAIN}: udp:${LB_HOME_DNS}
-          ${PRIVATE_DYNAMIC_DOMAIN}: udp:${PRIVATE_DNS_PRIMARY}
-          ${PRIVATE_REVERSE_IPV4_DOMAIN}: udp:${PRIVATE_DNS_PRIMARY}
-          ${PRIVATE_REVERSE_IPV6_DOMAIN}: udp:${PRIVATE_DNS_PRIMARY}
+          ${PRIVATE_STATIC_DOMAIN}: ${LB_HOME_DNS}
+          ${PRIVATE_DYNAMIC_DOMAIN}: ${PRIVATE_DNS_PRIMARY}
+          ${PRIVATE_REVERSE_IPV4_DOMAIN}: ${PRIVATE_DNS_PRIMARY}
+          ${PRIVATE_REVERSE_IPV6_DOMAIN}: ${PRIVATE_DNS_PRIMARY}
 
       blocking:
         blackLists:
