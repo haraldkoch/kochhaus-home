@@ -10,6 +10,9 @@ controller:
   externalSnapshotter:
     enabled: false
 
+  podAnnotations:
+    secret.reloader.stakater.com/reload: zfs-nfs-secret
+
 storageClasses:
   - name: zfs-nfs
     defaultClass: true
