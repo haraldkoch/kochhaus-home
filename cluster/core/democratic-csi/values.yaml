@@ -10,6 +10,17 @@ controller:
   externalSnapshotter:
     enabled: false
 
+  externalProvisioner:
+    # copied from default values; overriding timeout from 90s to 180s
+    args:
+      - --v=5
+      - --leader-election
+      - --leader-election-namespace={{ .Release.Namespace }}
+      - --timeout=180s
+      - --worker-threads=10
+      - --extra-create-metadata
+      - --csi-address=/csi-data/csi.sock
+
   podAnnotations:
     secret.reloader.stakater.com/reload: zfs-nfs-secret
 
