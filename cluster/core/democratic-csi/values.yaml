@@ -7,6 +7,9 @@ controller:
   livenessProbe:
     enabled: false
 
+  externalSnapshotter:
+    enabled: false
+
 storageClasses:
   - name: zfs-nfs
     defaultClass: true
@@ -30,9 +33,3 @@ driver:
   existingConfigSecret: zfs-nfs-secret
   config:
     driver: zfs-generic-nfs
-
-volumeSnapshotClasses:
-  - name: zfs-nfs
-    #labels:
-    #  velero.io/csi-volumesnapshot-class: "true"
-    deletionPolicy: Retain
