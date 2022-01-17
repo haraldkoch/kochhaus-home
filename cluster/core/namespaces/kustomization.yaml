@@ -8,9 +8,7 @@ resources:
   - metallb-system.yaml
   - monitoring.yaml
   - networking.yaml
-  - self-hosted.yaml
   - system.yaml
-  - trilio.yaml
   - velero.yaml
   - vpn.yaml
   - weather.yaml
