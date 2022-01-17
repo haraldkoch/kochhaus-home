@@ -44,6 +44,9 @@ spec:
           icmp:
             preferred_ip_protocol: "ip6"
             ip_protocol_fallback: false
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "blackbox-exporter"
+
     serviceMonitor:
       enabled: true
       defaults:
