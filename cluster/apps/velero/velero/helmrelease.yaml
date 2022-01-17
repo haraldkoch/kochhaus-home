@@ -36,8 +36,6 @@ spec:
           s3ForcePathStyle: true
           s3Url: http://${SECRET_BACKUP_SERVER}:9000
 
-      features: EnableCSI
-
     initContainers:
       - name: velero-plugin-for-aws
         image: ghcr.io/k8s-at-home/velero-plugin-for-aws:v1.3.0
