@@ -21,8 +21,6 @@ spec:
     type: Recreate
   template:
     metadata:
-      annotations:
-        backup.velero.io/backup-volumes: data
       labels:
         app.kubernetes.io/name: mariadb
         app.kubernetes.io/instance: bookstack
