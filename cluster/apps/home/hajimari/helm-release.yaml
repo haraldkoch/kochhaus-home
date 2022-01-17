@@ -32,6 +32,7 @@ spec:
       namespaceSelector:
         matchNames:
           - default
+          - downloads
           - home
           - media
           - monitoring
