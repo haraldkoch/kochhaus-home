@@ -6,7 +6,7 @@ server:
   resources:
     requests:
       memory: 1500Mi
-      cpu: 100m
+      cpu: 1
     limits:
       memory: 2000Mi
 
