@@ -113,7 +113,7 @@ prometheus:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-                - key: ${SECRET_DOMAIN/prometheus
+                - key: ${SECRET_DOMAIN}/prometheus
                   operator: In
                   values:
                     - true
