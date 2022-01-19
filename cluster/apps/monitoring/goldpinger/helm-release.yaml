@@ -8,7 +8,6 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://okgolove.github.io/helm-charts/
       chart: goldpinger
       version: 5.1.0
       sourceRef:
