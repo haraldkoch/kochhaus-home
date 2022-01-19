@@ -1,3 +1,4 @@
+/.github/renovate**
 /charts
 *.sops.*
 gotk-components.yaml

@@ -8,7 +8,6 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://indeedeng-alpha.github.io/harbor-container-webhook/
       chart: harbor-container-webhook
       version: 0.3.4
       sourceRef:
