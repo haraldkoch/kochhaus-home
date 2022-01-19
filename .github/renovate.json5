@@ -7,7 +7,7 @@
   "rebaseWhen": "conflicted",
   "helm-values": {
     "fileMatch": [
-      "cluster/.+/helm-release\\.yaml$"
+      "cluster/.+/helm-*release\\.yaml$"
     ]
   },
   "kubernetes": {
@@ -16,7 +16,7 @@
     ],
     "ignorePaths": [
       "cluster/base/"
-    ],
+    ]
   },
   "flux": {
     "fileMatch": [
@@ -24,7 +24,7 @@
     ]
   },
   "regexManagers": [
-    // regexManager to read and process cert-manager CRD's
+    // regexManager to read and process cert-manager CRDs
     {
       "fileMatch": [
         "cluster/crds/cert-manager/.+\\.yaml$"
@@ -34,13 +34,13 @@
       ],
       "datasourceTemplate": "helm"
     },
-    // regexManager to read and process prometheus CRD's
+    // regexManager to read and process kube-prometheus-stack CRDs
     {
       "fileMatch": [
         "cluster/crds/prometheus-operator/.+\\.yaml$"
       ],
       "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/"
+        "registryUrl=(?<registryUrl>.*?)\n *tag: (?<depName>[a-zA-Z-]+)-(?<currentValue>.*)\n"
       ],
       "datasourceTemplate": "helm"
     },
@@ -50,23 +50,34 @@
         "cluster/crds/traefik/.+\\.yaml$"
       ],
       "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
+        "registryUrl=(?<registryUrl>.*?)\n *tag: (?<depName>[a-zA-Z-]+)-(?<currentValue>.*)\n"
       ],
       "datasourceTemplate": "helm"
     },
+    // regexManager to read and process Velero CRDs
+    {
+      "fileMatch": [
+        "cluster/crds/velero/.+\\.yaml$"
+      ],
+      "matchStrings": [
+        "registryUrl=(?<registryUrl>.*?)\n *tag: (?<depName>[a-zA-Z-]+)-(?<currentValue>.*)\n"
+      ],
+      "datasourceTemplate": "helm"
+    }
   ],
   "packageRules": [
     // setup datasources
     {
-      "matchDatasources": ["helm"],
-      "separateMinorPatch": true,
+      "matchDatasources": [
+        "helm"
+      ],
       "ignoreDeprecated": true
     },
     // global docker datasource settings
     {
-      "matchDatasources": ["docker"],
-      "enabled": true,
-      "commitMessageTopic": "container image {{depName}}",
+      "matchDatasources": [
+        "docker"
+      ],
       "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
       "matchUpdateTypes": ["major", "minor", "patch"],
     },
