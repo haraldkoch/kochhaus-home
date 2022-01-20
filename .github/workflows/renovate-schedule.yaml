@@ -4,33 +4,26 @@ name: Schedule - Renovate Helm Releases
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
   schedule:
-    - cron: '13 */12 * * *'
+    - cron: "13 * * * *"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/renovate.json5"
+      - ".github/renovate/**.json"
 
 jobs:
-  renovate-helm-releases:
-    runs-on: ubuntu-20.04
+  renovate:
+    name: Renovate
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 1
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: Renovate Helm Releases
-        uses: k8s-at-home/renovate-helm-releases@v1
-        with:
-          cluster-path: "./cluster"
+      - name: Verify Renovate Configuration
+        uses: suzuki-shunsuke/github-action-renovate-config-validator@v0.1.2
 
-      - name: Create pull request for renovatebot helm-release annotations
-        uses: peter-evans/create-pull-request@v3
+      - name: Renovate
+        uses: renovatebot/github-action@v31.35.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: renovate-annotations
-          delete-branch: true
-          title: "chore(deps): update renovate annotations"
-          signoff: false
-          committer: GitHub <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          commit-message: "chore(deps): update renovate annotations"
-          body: |
-            Update HelmReleases inorder for Renovate to pick up new versions of Helm charts
-          labels: renovate/annotations
+          configurationFile: .github/renovate.json5
