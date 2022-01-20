@@ -116,7 +116,7 @@ prometheus:
                 - key: ${SECRET_DOMAIN}/prometheus
                   operator: In
                   values:
-                    - true
+                    - "true"
 
 # cannot be monitored in k3s; runs on localhost
 kubeControllerManager:
