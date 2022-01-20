@@ -2,7 +2,7 @@
 fail_fast: false
 repos:
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.4.1
+    rev: v2.5.1
     hooks:
       - id: prettier
   - repo: https://github.com/adrienverge/yamllint
@@ -13,7 +13,7 @@ repos:
           - .github/lint/.yamllint.yaml
         id: yamllint
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.1.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -24,14 +24,14 @@ repos:
       - id: remove-crlf
       - id: remove-tabs
   - repo: https://github.com/sirosen/texthooks
-    rev: 0.1.0
+    rev: 0.2.2
     hooks:
       - id: fix-smartquotes
         exclude: ^(ansible/manifests/|cluster/core/calico-system)
       - id: fix-ligatures
         exclude: ^(ansible/manifests/|cluster/core/calico-system)
   - repo: https://github.com/k8s-at-home/sops-pre-commit
-    rev: v2.0.3
+    rev: v2.1.0
     hooks:
       - id: forbid-secrets
 #  - repo: https://github.com/gitguardian/gg-shield
