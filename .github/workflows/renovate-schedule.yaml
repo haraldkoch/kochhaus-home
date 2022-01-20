@@ -3,8 +3,8 @@ name: Schedule - Renovate Helm Releases
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
-  schedule:
-    - cron: "13 * * * *"
+  #  schedule:
+  #    - cron: "13 * * * *"
   push:
     branches:
       - main
