@@ -5748,7 +5748,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: tigera-operator
-          image: quay.io/tigera/operator:v1.24.1
+          image: quay.io/tigera/operator:v1.24.2
           imagePullPolicy: IfNotPresent
           command:
             - operator
