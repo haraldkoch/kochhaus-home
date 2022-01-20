@@ -12,6 +12,8 @@
     "github>haraldkoch/kochhaus-home//.github/renovate/labels",
     "github>haraldkoch/kochhaus-home//.github/renovate/semanticCommits"
   ],
+  "platform": "github",
+  "repositories": ["haraldkoch/kochhaus-home"],
   "timezone": "America/Toronto",
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": [
