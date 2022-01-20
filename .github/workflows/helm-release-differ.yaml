@@ -37,6 +37,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Generate Token
+        uses: tibdex/github-app-token@v1
+        id: generate-token
+        with:
+          app_id: ${{ secrets.DOUG_APP_ID }}
+          private_key: ${{ secrets.DOUG_APP_PRIVATE_KEY }}
       - name: Checkout default branch
         uses: actions/checkout@v2
         with:
@@ -59,11 +65,13 @@ jobs:
         uses: peter-evans/find-comment@v1
         id: find-comment
         with:
+          comment-author: "Doug Piranha [bot]"
           issue-number: "${{ github.event.pull_request.number }}"
           body-includes: helm-release.yaml
       - name: Create or update comment
         uses: peter-evans/create-or-update-comment@v1
         with:
+          token: "${{ steps.generate-token.outputs.token }}"
           comment-id: "${{ steps.find-comment.outputs.comment-id }}"
           issue-number: "${{ github.event.pull_request.number }}"
           body: "${{ steps.diff.outputs.diff }}"
