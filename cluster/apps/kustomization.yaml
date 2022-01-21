@@ -6,6 +6,7 @@ resources:
   - downloads
   - home
   - home-dns
+  - kasten
   - media
   - monitoring
   - networking
