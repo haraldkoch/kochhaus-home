@@ -5,7 +5,7 @@ metadata:
   name: home-assistant
   namespace: home
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: home-assistant
@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: k8s-at-home-charts
         namespace: flux-system
-      interval: 5m
+
   install:
     remediation:
       retries: 3

@@ -5,7 +5,7 @@ metadata:
   name: kured
   namespace: system
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: kured
@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: weaveworks-kured-charts
         namespace: flux-system
-      interval: 5m
 
   values:
     image:

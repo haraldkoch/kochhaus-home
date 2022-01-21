@@ -5,7 +5,7 @@ metadata:
   name: photoprism
   namespace: media
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: photoprism
@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: k8s-at-home-charts
         namespace: flux-system
-      interal: 5m
 
   values:
     ingress:
