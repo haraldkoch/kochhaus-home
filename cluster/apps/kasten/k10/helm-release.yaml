@@ -23,6 +23,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: crypto-svc
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
@@ -31,6 +32,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: dashboardbff-svc
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
@@ -39,6 +41,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: state-svc
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
@@ -47,6 +50,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: aggregatedapis-svc
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
@@ -55,6 +59,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: frontend-svc
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
@@ -63,6 +68,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: kanister-svc
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
@@ -71,6 +77,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: config-svc
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
@@ -79,6 +86,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: auth-svc
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
@@ -87,6 +95,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: gateway
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
@@ -95,6 +104,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: logging-svc
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
@@ -103,6 +113,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: prometheus-server
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
@@ -111,6 +122,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: catalog-svc
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
@@ -119,6 +131,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: jobs-svc
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
@@ -127,6 +140,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: executor-svc
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
@@ -135,6 +149,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: metering-svc
+              namespace: kasten
             spec:
               template:
                 nodeSelector:
