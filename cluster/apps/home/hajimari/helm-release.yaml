@@ -5,7 +5,7 @@ metadata:
   name: hajimari
   namespace: home
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: hajimari
@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: hajimari-charts
         namespace: flux-system
-      interval: 5m
 
   values:
     image:

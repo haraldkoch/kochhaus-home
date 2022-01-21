@@ -5,7 +5,7 @@ metadata:
   name: goldpinger
   namespace: monitoring
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: goldpinger
@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: okgolove-charts
         namespace: flux-system
-      interval: 5m
 
   values:
     image:

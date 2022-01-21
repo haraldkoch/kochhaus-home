@@ -5,7 +5,7 @@ metadata:
   name: prometheus-dnssec-exporter
   namespace: monitoring
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: prometheus-dnssec-exporter
@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: haraldkoch-charts
         namespace: flux-system
-      interval: 5m
 
   values:
     resolvers:
