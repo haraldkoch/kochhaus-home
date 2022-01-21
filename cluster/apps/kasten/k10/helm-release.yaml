@@ -22,18 +22,123 @@ spec:
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
-              name: .*
+              name: crypto-svc
             spec:
               template:
-                spec:
-                  nodeAffinity:
-                    requiredDuringSchedulingIgnoredDuringExecution:
-                      nodeSelectorTerms:
-                        - matchExpressions:
-                            - key: kubernetes.io/arch
-                              operator: In
-                              values:
-                                - amd64
+                nodeSelector:
+                  kubernetes.io/arch: amd64
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: dashboardbff-svc
+            spec:
+              template:
+                nodeSelector:
+                  kubernetes.io/arch: amd64
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: state-svc
+            spec:
+              template:
+                nodeSelector:
+                  kubernetes.io/arch: amd64
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: aggregatedapis-svc
+            spec:
+              template:
+                nodeSelector:
+                  kubernetes.io/arch: amd64
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: frontend-svc
+            spec:
+              template:
+                nodeSelector:
+                  kubernetes.io/arch: amd64
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: kanister-svc
+            spec:
+              template:
+                nodeSelector:
+                  kubernetes.io/arch: amd64
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: config-svc
+            spec:
+              template:
+                nodeSelector:
+                  kubernetes.io/arch: amd64
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: auth-svc
+            spec:
+              template:
+                nodeSelector:
+                  kubernetes.io/arch: amd64
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: gateway
+            spec:
+              template:
+                nodeSelector:
+                  kubernetes.io/arch: amd64
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: logging-svc
+            spec:
+              template:
+                nodeSelector:
+                  kubernetes.io/arch: amd64
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: prometheus-server
+            spec:
+              template:
+                nodeSelector:
+                  kubernetes.io/arch: amd64
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: catalog-svc
+            spec:
+              template:
+                nodeSelector:
+                  kubernetes.io/arch: amd64
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: jobs-svc
+            spec:
+              template:
+                nodeSelector:
+                  kubernetes.io/arch: amd64
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: executor-svc
+            spec:
+              template:
+                nodeSelector:
+                  kubernetes.io/arch: amd64
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: metering-svc
+            spec:
+              template:
+                nodeSelector:
+                  kubernetes.io/arch: amd64
   values:
     eula:
       accept: true
