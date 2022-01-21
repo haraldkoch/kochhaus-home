@@ -26,8 +26,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
@@ -35,8 +36,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
@@ -44,8 +46,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
@@ -53,8 +56,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
@@ -62,8 +66,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
@@ -71,8 +76,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
@@ -80,8 +86,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
@@ -89,8 +96,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
@@ -98,8 +106,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
@@ -107,8 +116,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
@@ -116,8 +126,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
@@ -125,8 +136,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
@@ -134,8 +146,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
@@ -143,8 +156,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
           - kind: Deployment
             apiVersion: apps/v1
             metadata:
@@ -152,8 +166,9 @@ spec:
               namespace: kasten
             spec:
               template:
-                nodeSelector:
-                  kubernetes.io/arch: amd64
+                spec:
+                  nodeSelector:
+                    kubernetes.io/arch: amd64
   values:
     eula:
       accept: true
