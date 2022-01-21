@@ -7,9 +7,6 @@ controller:
   livenessProbe:
     enabled: false
 
-  externalSnapshotter:
-    enabled: false
-
   externalProvisioner:
     # copied from default values; overriding timeout from 90s to 180s
     args:
@@ -47,3 +44,9 @@ driver:
   existingConfigSecret: zfs-nfs-secret
   config:
     driver: zfs-generic-nfs
+
+volumeSnapshotClasses:
+  - name: zfs-nfs
+    #labels:
+    #  velero.io/csi-volumesnapshot-class: "true"
+    deletionPolicy: Retain
