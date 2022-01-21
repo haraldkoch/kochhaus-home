@@ -5,7 +5,7 @@ metadata:
   name: democratic-csi
   namespace: kube-system
 spec:
-  interval: 5m
+  interval: 15m
   releaseName: zfs-nfs
   chart:
     spec:
@@ -15,7 +15,6 @@ spec:
         kind: HelmRepository
         name: democratic-csi-charts
         namespace: flux-system
-      interval: 5m
 
   valuesFrom:
     - kind: ConfigMap

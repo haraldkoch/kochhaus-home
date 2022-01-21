@@ -5,7 +5,7 @@ metadata:
   name: velero
   namespace: velero
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: velero
@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: vmware-tanzu-charts
         namespace: flux-system
-      interval: 5m
 
   values:
     image:
