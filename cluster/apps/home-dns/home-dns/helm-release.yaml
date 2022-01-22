@@ -24,9 +24,12 @@ spec:
               name: home-dns
             rules:
               - apiGroups:
-                  - ""
+                  - networing.k8s.io
                 resources:
                   - ingresses
+                verbs:
+                  - list
+                  - watch
   values:
     image:
       #repository: coredns/coredns
