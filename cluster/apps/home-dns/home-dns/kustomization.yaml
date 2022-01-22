@@ -5,3 +5,4 @@ resources:
   - config.sops.yaml
   - zones.sops.yaml
   - helm-release.yaml
+  - k8s-api.yaml
