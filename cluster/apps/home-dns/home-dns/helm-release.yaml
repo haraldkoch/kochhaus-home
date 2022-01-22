@@ -53,6 +53,9 @@ spec:
         external-dns.alpha.kubernetes.io/hostname: dns.${SECRET_DOMAIN}
         metallb.universe.tf/allow-shared-ip: dns
 
+    serviceAccount:
+      create: true
+
     prometheus:
       service:
         enabled: true
