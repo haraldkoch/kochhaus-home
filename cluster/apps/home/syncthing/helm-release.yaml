@@ -32,7 +32,6 @@ spec:
         enabled: true
         ingressClassName: traefik
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "cloud"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
@@ -42,8 +41,7 @@ spec:
               - path: /
                 pathType: Prefix
         tls:
-          - secretName: tls.syncthing
-            hosts:
+          - hosts:
               - syncthing.${SECRET_DOMAIN}
     persistence:
       data:
