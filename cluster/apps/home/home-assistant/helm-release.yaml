@@ -68,6 +68,7 @@ spec:
         ingressClassName: "traefik"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
+          external-dns/is-public: "true"
           hajimari.io/enable: "true"
           hajimari.io/icon: "home-assistant"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
@@ -107,7 +108,6 @@ spec:
           enabled: true
           ingressClassName: traefik
           annotations:
-            cert-manager.io/cluster-issuer: "letsencrypt-production"
             hajimari.io/enable: "true"
             hajimari.io/icon: "pencil"
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
@@ -121,4 +121,3 @@ spec:
           tls:
             - hosts:
                 - ha-editor.${SECRET_DOMAIN}
-              secretName: tls.haeditor

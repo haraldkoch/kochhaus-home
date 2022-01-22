@@ -45,7 +45,6 @@ alertmanager:
     enabled: true
     ingressClassName: "traefik"
     annotations:
-      cert-manager.io/cluster-issuer: "letsencrypt-production"
       hajimari.io/appName: "alertmanager"
       hajimari.io/enable: "true"
       hajimari.io/icon: "alarm-light-outline"
@@ -56,8 +55,7 @@ alertmanager:
       - /
     pathType: ImplementationSpecific
     tls:
-      - secretName: tls.alertmanager
-        hosts:
+      - hosts:
           - alertmanager.${SECRET_DOMAIN}
   alertmanagerSpec:
     storage:
@@ -79,7 +77,6 @@ prometheus:
     enabled: true
     ingressClassName: "traefik"
     annotations:
-      cert-manager.io/cluster-issuer: "letsencrypt-production"
       hajimari.io/appName: "prometheus"
       hajimari.io/enable: "true"
       hajimari.io/icon: "chart-line"
@@ -90,8 +87,7 @@ prometheus:
       - /
     pathType: ImplementationSpecific
     tls:
-      - secretName: tls.prometheus
-        hosts:
+      - hosts:
           - prometheus.${SECRET_DOMAIN}
 
   prometheusSpec:
