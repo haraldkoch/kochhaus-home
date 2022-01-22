@@ -21,7 +21,7 @@ spec:
       repository: quay.io/prometheus/blackbox-exporter
     ingress:
       enabled: true
-      className: nginx
+      className: traefik
       hosts:
         - host: "blackbox.${SECRET_DOMAIN}"
           paths:
