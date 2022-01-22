@@ -35,7 +35,7 @@ spec:
 
       upstream:
         default:
-          - ${PRIVATE_GATEWAY}
+          - ${LB_HOME_DNS}
 
       clientLookup:
         upstream: ${LB_HOME_DNS}
