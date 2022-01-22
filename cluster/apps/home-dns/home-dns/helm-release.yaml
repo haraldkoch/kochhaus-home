@@ -53,6 +53,9 @@ spec:
         external-dns.alpha.kubernetes.io/hostname: dns.${SECRET_DOMAIN}
         metallb.universe.tf/allow-shared-ip: dns
 
+    # we have our own rbac config to include ingresses
+    rbac:
+      create: false
     prometheus:
       service:
         enabled: true
