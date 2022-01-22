@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: dns.kochhaus.net
+    external-dns.alpha.kubernetes.io/hostname: dns.${SECRET_DOMAIN}
     metallb.universe.tf/allow-shared-ip: dns
   labels:
     app.kubernetes.io/instance: home-dns
