@@ -2,7 +2,7 @@
 - name: Build a cluster with HA control plane
   hosts: k3s_cluster
   vars:
-    k3s_become_for_all: true
+    k3s_become: true
     k3s_etcd_datastore: false
     k3s_use_experimental: false # Note this is required for k3s < v1.19.5+k3s1
     k3s_install_hard_links: true # required for system-upgrade-controller
@@ -22,6 +22,9 @@
       cluster-cidr: 10.42.0.0/16,fdd5:aa8:9535:42::/108
       service-cidr: 10.43.0.0/16,fdd5:aa8:9535:43::/108
       kube-controller-manager-arg: node-cidr-mask-size-ipv6=112
+
+      # need to wait for 1.24 for this ;(
+      #kube-apiserver-arg: feature-gates=MixedProtocolLBService=true
 
       disable-network-policy: "true"
 
