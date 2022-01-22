@@ -189,7 +189,6 @@ spec:
       hosts:
         - "k10.${SECRET_DOMAIN}"
       tls:
-        enabled: true
-        secretName: ""
+        enabled: false
     grafana:
       enabled: false
