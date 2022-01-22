@@ -81,6 +81,7 @@ spec:
             configBlock: |-
               apex home-dns-k8s-gateway.home-dns
               ttl 300
+              fallthrough
           - name: forward
             parameters: . ${PRIVATE_DNS_PRIMARY}
           - name: loop
