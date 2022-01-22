@@ -17,8 +17,10 @@ spec:
 
   values:
     image:
-      repository: coredns/coredns
-      tag: 1.8.7
+      #repository: coredns/coredns
+      #tag: 1.8.7
+      repository: quay.io/oriedge/k8s_gateway
+      tag: v0.2.1
 
     fullnameOverride: home-dns
 
@@ -71,6 +73,11 @@ spec:
           - name: prometheus
             parameters: :9153
           # FIXME use router address
+          - name: k8s_gateway
+            parameters: ${SECRET_DOMAIN}
+            configBlock: |-
+              apex home-dns-k8s-gateway.home-dns
+              ttl 300
           - name: forward
             parameters: . ${PRIVATE_DNS_PRIMARY}
           - name: loop
