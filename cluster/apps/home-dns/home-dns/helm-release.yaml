@@ -15,21 +15,6 @@ spec:
         name: coredns-charts
         namespace: flux-system
 
-  postRenderers:
-    - kustomize:
-        patchesStrategicMerge:
-          - kind: ClusterRole
-            apiVersion: rbac.authorization.k8s.io/v1
-            metadata:
-              name: home-dns
-            rules:
-              - apiGroups:
-                  - networing.k8s.io
-                resources:
-                  - ingresses
-                verbs:
-                  - list
-                  - watch
   values:
     image:
       #repository: coredns/coredns
@@ -67,9 +52,6 @@ spec:
       annotations:
         external-dns.alpha.kubernetes.io/hostname: dns.${SECRET_DOMAIN}
         metallb.universe.tf/allow-shared-ip: dns
-
-    serviceAccount:
-      create: true
 
     prometheus:
       service:
