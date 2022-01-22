@@ -190,6 +190,6 @@ spec:
         - "k10.${SECRET_DOMAIN}"
       tls:
         enabled: true
-        secretName: tls.k10
+        secretName: ""
     grafana:
       enabled: false

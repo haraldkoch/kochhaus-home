@@ -31,7 +31,6 @@ spec:
         enabled: true
         ingressClassName: "traefik"
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
           hajimari.io/enable: "true"
           hajimari.io/icon: "graph-outline"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
@@ -45,7 +44,6 @@ spec:
         tls:
           - hosts:
               - "node-red.${SECRET_DOMAIN}"
-            secretName: tls.node-red
 
     podAnnotations:
       backup.velero.io/backup-volumes: data

@@ -10,7 +10,6 @@ metadata:
     app.kubernetes.io/part-of: smokeping
     app.kubernetes.io/version: "2.7.3"
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-production
     hajimari.io/enable: "true"
     hajimari.io/icon: chart
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
@@ -18,7 +17,6 @@ spec:
   tls:
     - hosts:
         - "smokeping.${SECRET_DOMAIN}"
-      secretName: tls.smokeping
   rules:
     - host: "smokeping.${SECRET_DOMAIN}"
       http:

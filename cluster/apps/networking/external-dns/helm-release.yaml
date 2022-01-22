@@ -19,6 +19,7 @@ spec:
     provider: rfc2136
 
     extraArgs:
+      - --annotation-filter=external-dns/is-public in (true)
       - --rfc2136-host=${SECRET_EXTERNAL_DNS_SERVER}
       - --rfc2136-port=53
       - --rfc2136-zone=${SECRET_DOMAIN}

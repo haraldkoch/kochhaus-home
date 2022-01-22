@@ -25,6 +25,7 @@ spec:
         ingressClassName: "traefik"
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
+          external-dns/is-public: "true"
           hajimari.io/enable: "true"
           hajimari.io/icon: "television-classic"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
