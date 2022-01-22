@@ -55,7 +55,7 @@ spec:
             - name: Fastmail
               url: "https://www.fastmail.com"
             - name: Kochhaus
-              url: "https://mail.kochhaus.net"
+              url: "https://mail.${SECRET_DOMAIN}"
         - name: Media
           links:
             - name: Netflix
