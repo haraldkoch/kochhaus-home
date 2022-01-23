@@ -13,5 +13,7 @@ spec:
     - images:
         - ghcr.io/0xerr0r/blocky:v0.17
         - coredns/coredns:1.8.7
+        - quay.io/oriedge/k8s_gateway:v0.2.1
         - harbor.${PRIVATE_STATIC_DOMAIN}/ghcr/0xerr0r/blocky:v0.17
         - harbor.${PRIVATE_STATIC_DOMAIN}/docker/coredns/coredns:1.8.7
+        - harbor.${PRIVATE_STATIC_DOMAIN}/quay/oriedge/k8s_gateway:v0.2.1
