@@ -7,7 +7,7 @@ metadata:
   labels:
     app.kubernetes.io/instance: weather-exporter
     app.kubernetes.io/name: weather-exporter
-  name: weather-exporter
+  name: weather-exporter-v6
   namespace: weather
 spec:
   ipFamilies:
