@@ -44,7 +44,7 @@ spec:
         operator: "Exists"
 
     podAnnotations:
-      configmap.reloader.stakater.com/reload: "config,zones,home-dns"
+      configmap.reloader.stakater.com/reload: "home-dns-extra,home-dns-zones,home-dns"
 
     serviceType: LoadBalancer
     service:
