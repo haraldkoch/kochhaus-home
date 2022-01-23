@@ -2,18 +2,18 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-    name: config
+    name: home-dns-extra
     namespace: home-dns
 data:
-    home-dns.conf: ENC[AES256_GCM,data:QymcPz/UmUFW7zNBhhEPJVniJPJmZkR8Vx4VNQTQd8EzO00DlE46/IJ2rf3aBoltgOYG20Qd6DvmPum/Vd710PEcU9QAe6mgr9eVQQgDRWCZH2Ytm2U3HMxBcGOvQ/RfecDC66wPVv0R6FuHFU9vnsEBaSCb/JVx1c/tIb+W5cJFjTkMXEz2PYI9mVgOXq5buAMUyqPcVt8WJDNFUCuAbfYxkBHgeAtfT44EDCxKJLP7jDVN5o5+JSRHOQj3KVz5/LQVWx0n9RK/bPQAs2jV7O9pzKf5CECBeeGRoDDCxgrfMINhNf+DE8iuchhxUUDH6/zrmCWSQOwuxvwydSvhe98BGOXpICQFQWnEjlUFfVvpiLIotGNW4dScCZnFMX0VjeGPHf1qyLPxeX0+kdz3psjv/T5gxX9yVYcPVk2ZV6JpZAiaVHilC6sZlDdyJ9bXBfCbmzwUtdipoHzX9co=,iv:6eNt4wo5/y3SzvuEMhzQmlD6PxcQ/E0gX8RBULyv/1I=,tag:IuSz7TujE9565SmxccPXMg==,type:str]
+    home-static.conf: ENC[AES256_GCM,data:Npmg9qGGSzZX+YMeRaHvfNYQ+ZSjrSeM+LVkCvW1/AsTZ8stR2oKEQ/NUMJ5vE84OKpp8WbZKk8WrejBGXdW6gbLDT9bgaWBh8zYE73LftH9kldxdalxGYsPbmqyIs0rGXmHIA9rilH2I0sDrdoPYRTWzzRHWtUlLDNmP8jXx4yS6vSgiSrbaajCVO/f0xaOpF9iyPkoHVuZVwjHVMeX66ml905Lt1PwDmag0QdUbvXjtGhxDS8qgCnIW/xvS+/omFzTI3r3nkakarqLllCHWGV2WBVt372GzEq1NEoXh50VnLxFQ3Nk7Iwx+IjP17FGQisWQlXwbQe4rt8tgTZ9vroLOrPdRawo+IS01KrG/DTjwCD+sJO+aHM61wnyXM7owgwfWlcRt6d7rpZh4S1WqF4ITp0PdTvj43hhQv2JT5raS9B5yEJ1wNLTjvuanbNXHvIiaY7iWP5psMbSbo7DzaU=,iv:cuCKJC/gJLiZtZ/Sp0IKYojyS02rfSrxFUohbQI5aMo=,tag:UG1WJxxO75PL3d3CQJ0WqQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
     azure_kv: []
     hc_vault: []
     age: []
-    lastmodified: "2022-01-10T01:41:55Z"
-    mac: ENC[AES256_GCM,data:H26kAxAZ0Bs0HcfhZsxy0WOIz6EASiMDSrhGTgp3M3F/K+fJP7OFpxQ4WNWhrchDtgJUYrUpLq0hr29/V/dflAOlT3JWe+8vnTSAPMl0uLzvkdAmDI6r2ubxEutOSnj9WB4rWRX+s6TTbLyKML7HXLqhncikWNl78WXWBSskTjA=,iv:/MhKH01tSGSJvL5qzzMzYk8LUbcw9CI7pODM/Co+2uQ=,tag:CBiTGkSCVSpk04EFIV7vzw==,type:str]
+    lastmodified: "2022-01-23T20:37:05Z"
+    mac: ENC[AES256_GCM,data:KyIvQRatZ8ITi2Fl6gGtXW/OfKkBew2Dfv8eJEVijYj2Jpp6xzdJnd1wUoGuDoZDVdKh6NcEH6llK3gppx/KYSbB7/OuJKbqqreSZpiDO9p+k/6bCrM1vvK5Sq62/V5eMyKZPTiq+xQFaJ0uU2l0CuiHa3FuXhitAjUJo/C1AOs=,iv:ncwZQGupRpgCFDYvXrqqLIwfoU/4KYz/lO6sZbhB7D4=,tag:kUJZEiCYpEEgyDjdGjuthw==,type:str]
     pgp:
         - created_at: "2021-11-29T01:10:54Z"
           enc: |-

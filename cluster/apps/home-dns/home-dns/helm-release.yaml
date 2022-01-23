@@ -79,7 +79,7 @@ spec:
           - name: k8s_gateway
             parameters: ${SECRET_DOMAIN}
             configBlock: |-
-              apex home-dns-k8s-gateway.home-dns
+              apex home-dns.home-dns
               ttl 300
               fallthrough
           - name: forward
@@ -98,11 +98,11 @@ spec:
       - name: zones
         configMap:
           defaultMode: 420
-          name: zones
+          name: home-dns-zones
       - name: config
         configMap:
           defaultMode: 420
-          name: config
+          name: home-dns-extra
 
     extraConfig:
       import:
