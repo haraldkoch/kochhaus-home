@@ -75,13 +75,18 @@ spec:
           - name: ready
           - name: prometheus
             parameters: :9153
-          # FIXME use router address
+          # hack for LoadBalancer Services not handled properly by k8s_gateway
+          - name: hosts
+            parameters: /etc/zones/external-static.hosts ${SECRET_DOMAIN}
+            configBlock: |-
+              fallthrough
           - name: k8s_gateway
             parameters: ${SECRET_DOMAIN}
             configBlock: |-
               apex home-dns.home-dns
               ttl 300
               fallthrough
+          # FIXME use router address
           - name: forward
             parameters: . ${PRIVATE_DNS_PRIMARY}
           - name: loop
