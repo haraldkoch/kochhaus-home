@@ -27,7 +27,7 @@ spec:
 
     env:
       TZ: "America/Toronto"
-      APP_URL: "https://kb.${SECRET_DOMAIN}"
+      APP_URL: "https://kb.${SSECRET_DOMAIN}"
       DB_HOST: bookstack-mariadb.default
       DB_USER: bookstack
       # DB_PASS: set by valuesFrom
@@ -54,13 +54,13 @@ spec:
         labels:
           app.kubernetes.io/part-of: bookstack
         hosts:
-          - host: kb.${SECRET_DOMAIN}
+          - host: kb.${SSECRET_DOMAIN}
             paths:
               - path: /
         tls:
           - secretName: tls.bookstack
             hosts:
-              - kb.${SECRET_DOMAIN}
+              - kb.${SSECRET_DOMAIN}
 
     resources:
       requests:
