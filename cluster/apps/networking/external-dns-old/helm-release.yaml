@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: external-dns
+  name: external-dns-old
   namespace: networking
 spec:
   interval: 15m
@@ -16,46 +16,47 @@ spec:
         namespace: flux-system
 
   values:
-    interval: 5m
-    logLevel: debug
-    provider: cloudflare
+    provider: rfc2136
 
     extraArgs:
-      - --cloudflare-proxied
       - --annotation-filter=external-dns/is-public in (true)
+      - --rfc2136-host=${SECRET_EXTERNAL_DNS_SERVER}
+      - --rfc2136-port=53
+      - --rfc2136-zone=${SECRET_DOMAIN}
+      - --rfc2136-min-ttl=0s
+      - --rfc2136-tsig-axfr
+      - --rfc2136-tsig-keyname=externaldns
+      - --rfc2136-tsig-secret-alg=hmac-sha256
 
     env:
-      - name: CF_API_EMAIL
+      - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
         valueFrom:
           secretKeyRef:
-            name: cloudflare-creds
-            key: email
-      - name: CF_API_KEY
-        valueFrom:
-          secretKeyRef:
-            name: cloudflare-creds
-            key: api-key
+            name: external-dns-old
+            key: rfc2136_tsig_secret
 
     podAnnotations:
-      secret.reloader.stakater.com/reload: cloudflare-creds
+      secret.reloader.stakater.com/reload: external-dns-old
 
     policy: sync
 
     sources:
+      - service
       - ingress
 
     domainFilters:
-      - "${SSECRET_DOMAIN}"
+      - "${SECRET_DOMAIN}"
 
-    txtPrefix: "k8s."
     txtOwnerId: "homelab"
 
     serviceMonitor:
       enabled: true
 
+    logLevel: info
+
     resources:
       requests:
-        memory: 100Mi
+        memory: 250Mi
         cpu: 25m
       limits:
         memory: 250Mi
