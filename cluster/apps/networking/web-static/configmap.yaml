@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-static
+  namespace: networking
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <head>
+        <meta charset="UTF-8" />
+
+        <meta name="geo.position" content="40.831782;-74.44867" />
+        <meta name="geo.placename" content="Cedar Knolls, NJ" />
+        <meta name="geo.region" content="US-NJ" />
+        <meta name="geo.country" content="US" />
+
+        <meta name="dc.title" content="home.kochhaus.net" />
+
+        <meta name="tgn.id" content="2375322" />
+        <meta name="tgn.name" content="Hanover" />
+        <meta name="tgn.nation" content="United States" />
+
+        <title>home.kochhaus.net</title>
+        <link href="/standard.css" title="standard" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+
+    <div id="content">
+     <h2 class="center">
+      <a href="index.html">home.kochhaus.net</a>
+     </h2>
+
+     <div class="bar">&nbsp;</div>
+
+     <p>
+      This is home.kochhaus.net. There's nothing here. You're probably looking for
+      <a href="https://www.kochhaus.net/">www.kochhaus.net</a>.
+     </p>
+
+    </div>
+
+    </body>
+    </html>
+  standard.css: |
+    BODY { background: #C77 }
+    .center { text-align: center }
+    .right  { text-align: right }
+    IMG { border: 0 }
+
+    #content {
+        width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .bar {
+        background: #000;
+        font-size: 4px;
+        }
