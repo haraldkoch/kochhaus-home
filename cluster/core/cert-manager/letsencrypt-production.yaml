@@ -16,5 +16,5 @@ spec:
             tsigKeyName: externaldns
             tsigAlgorithm: HMACSHA256
             tsigSecretSecretRef:
-              name: rfc2136-tsig-secret
+              name: cert-manager-secret
               key: tsig-secret-key

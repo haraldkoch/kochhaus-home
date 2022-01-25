@@ -16,5 +16,17 @@ spec:
             tsigKeyName: externaldns
             tsigAlgorithm: HMACSHA256
             tsigSecretSecretRef:
-              name: rfc2136-tsig-secret
+              name: cert-manager-secret
               key: tsig-secret-key
+        selector:
+          dnsZones:
+            - ${SECRET_DOMAIN}
+      - dns01:
+          cloudflare:
+            email: "${SECRET_CLOUDFLARE_EMAIL}"
+            apiKeySecretRef:
+              name: cert-manager-secret
+              key: cloudflare-token
+        selector:
+          dnsZones:
+            - ${SSECRET_DOMAIN}
