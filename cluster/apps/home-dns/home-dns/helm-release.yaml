@@ -75,7 +75,10 @@ spec:
           - name: ready
           - name: prometheus
             parameters: :9153
-          # hack for LoadBalancer Services not handled properly by k8s_gateway
+          # hack for firefox DoH
+          - name: file
+            parameters: /etc/zones/empty.zone use-application-dns.net.
+          # hack for LoadBalancer Services that are not handled properly by k8s_gateway
           - name: hosts
             parameters: /etc/zones/external-static.hosts ${SECRET_INTERNAL_DOMAIN}
             configBlock: |-
