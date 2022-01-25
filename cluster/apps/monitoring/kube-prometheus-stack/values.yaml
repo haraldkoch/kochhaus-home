@@ -50,13 +50,13 @@ alertmanager:
       hajimari.io/icon: "alarm-light-outline"
       traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     hosts:
-      - alertmanager.${SECRET_DOMAIN}
+      - alertmanager.${SECRET_INTERNAL_DOMAIN}
     paths:
       - /
     pathType: ImplementationSpecific
     tls:
       - hosts:
-          - alertmanager.${SECRET_DOMAIN}
+          - alertmanager.${SECRET_INTERNAL_DOMAIN}
   alertmanagerSpec:
     storage:
       volumeClaimTemplate:
@@ -82,13 +82,13 @@ prometheus:
       hajimari.io/icon: "chart-line"
       traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     hosts:
-      - prometheus.${SECRET_DOMAIN}
+      - prometheus.${SECRET_INTERNAL_DOMAIN}
     paths:
       - /
     pathType: ImplementationSpecific
     tls:
       - hosts:
-          - prometheus.${SECRET_DOMAIN}
+          - prometheus.${SECRET_INTERNAL_DOMAIN}
 
   prometheusSpec:
     podMonitorSelectorNilUsesHelmValues: false
@@ -109,7 +109,8 @@ prometheus:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-                - key: ${SECRET_DOMAIN}/prometheus
+                # FIXME - use a different key for this
+                - key: ${SECRET_INTERNAL_DOMAIN}/prometheus
                   operator: In
                   values:
                     - "true"

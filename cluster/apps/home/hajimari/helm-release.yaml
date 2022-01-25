@@ -55,7 +55,7 @@ spec:
             - name: Fastmail
               url: "https://www.fastmail.com"
             - name: Kochhaus
-              url: "https://mail.${SECRET_DOMAIN}"
+              url: "https://mail.${SECRET_INTERNAL_DOMAIN}"
         - name: Media
           links:
             - name: Netflix
@@ -80,14 +80,13 @@ spec:
           hajimari.io/icon: "weather-sunset"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
-          - host: "hajimari.${SECRET_DOMAIN}"
+          - host: "hajimari.${SECRET_INTERNAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "hajimari.${SECRET_DOMAIN}"
-            secretName: "tls.hajimari"
+              - "hajimari.${SECRET_INTERNAL_DOMAIN}"
     persistence:
       data:
         enabled: true
