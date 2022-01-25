@@ -8,3 +8,4 @@ resources:
   - kube-prometheus-stack
   - prometheus-dnssec-exporter
   - smokeping
+  - speedtest
