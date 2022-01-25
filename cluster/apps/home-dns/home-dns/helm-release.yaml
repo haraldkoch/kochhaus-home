@@ -20,7 +20,7 @@ spec:
       #repository: coredns/coredns
       #tag: 1.8.7
       repository: quay.io/oriedge/k8s_gateway
-      tag: v0.2.1
+      tag: v0.2.2
 
     fullnameOverride: home-dns
 
