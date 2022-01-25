@@ -38,7 +38,7 @@ spec:
       main:
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "mqtt.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: "mqtt.${SECRET_INTERNAL_DOMAIN}"
         loadBalancerIP: "${LB_MOSQUITTO}"
         externalTrafficPolicy: Local
 

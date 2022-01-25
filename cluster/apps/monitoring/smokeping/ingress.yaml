@@ -16,9 +16,9 @@ metadata:
 spec:
   tls:
     - hosts:
-        - "smokeping.${SECRET_DOMAIN}"
+        - "smokeping.${SECRET_INTERNAL_DOMAIN}"
   rules:
-    - host: "smokeping.${SECRET_DOMAIN}"
+    - host: "smokeping.${SECRET_INTERNAL_DOMAIN}"
       http:
         paths:
           - path: /

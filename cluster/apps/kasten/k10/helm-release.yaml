@@ -184,10 +184,10 @@ spec:
     ingress:
       create: true
       class: traefik
-      host: "k10.${SECRET_DOMAIN}"
+      host: "k10.${SECRET_INTERNAL_DOMAIN}"
       urlPath: k10
       hosts:
-        - "k10.${SECRET_DOMAIN}"
+        - "k10.${SECRET_INTERNAL_DOMAIN}"
       tls:
         enabled: false
     grafana:

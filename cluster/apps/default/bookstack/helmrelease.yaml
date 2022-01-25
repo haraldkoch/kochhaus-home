@@ -27,7 +27,7 @@ spec:
 
     env:
       TZ: "America/Toronto"
-      APP_URL: "https://kb.${SSECRET_DOMAIN}"
+      APP_URL: "https://kb.${SECRET_PUBLIC_DOMAIN}"
       DB_HOST: bookstack-mariadb.default
       DB_USER: bookstack
       # DB_PASS: set by valuesFrom
@@ -48,20 +48,20 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           external-dns/is-public: "true"
-          external-dns.alpha.kubernetes.io/target: "ipv4.${SSECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_PUBLIC_DOMAIN}"
           hajimari.io/enable: "true"
           hajimari.io/icon: "notebook-edit-outline"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         labels:
           app.kubernetes.io/part-of: bookstack
         hosts:
-          - host: kb.${SSECRET_DOMAIN}
+          - host: kb.${SECRET_PUBLIC_DOMAIN}
             paths:
               - path: /
         tls:
           - secretName: tls.bookstack
             hosts:
-              - kb.${SSECRET_DOMAIN}
+              - kb.${SECRET_PUBLIC_DOMAIN}
 
     resources:
       requests:

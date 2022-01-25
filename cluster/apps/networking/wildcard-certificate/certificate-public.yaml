@@ -1,0 +1,18 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "${SECRET_PUBLIC_DOMAIN}"
+  namespace: networking
+spec:
+  secretName: "tls.${SECRET_PUBLIC_DOMAIN/./-}"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  #privateKey:
+  #  algorithm: ECDSA
+  #  size: 384
+  commonName: "${SECRET_PUBLIC_DOMAIN}"
+  dnsNames:
+    - "${SECRET_PUBLIC_DOMAIN}"
+    - "*.${SECRET_PUBLIC_DOMAIN}"

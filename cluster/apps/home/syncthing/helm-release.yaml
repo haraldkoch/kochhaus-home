@@ -36,13 +36,13 @@ spec:
           hajimari.io/icon: "cloud"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
-          - host: syncthing.${SECRET_DOMAIN}
+          - host: syncthing.${SECRET_INTERNAL_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - syncthing.${SECRET_DOMAIN}
+              - syncthing.${SECRET_INTERNAL_DOMAIN}
     persistence:
       data:
         enabled: true

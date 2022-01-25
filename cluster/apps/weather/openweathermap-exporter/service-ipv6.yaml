@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/instance: openweathermap-exporter
     app.kubernetes.io/name: openweathermap-exporter
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: "exporters.${SECRET_DOMAIN}"
+    external-dns.alpha.kubernetes.io/hostname: "exporters.${SECRET_INTERNAL_DOMAIN}"
     metallb.universe.tf/allow-shared-ip: exporters
 spec:
   type: LoadBalancer
