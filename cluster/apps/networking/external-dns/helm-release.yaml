@@ -45,7 +45,7 @@ spec:
       - ingress
 
     domainFilters:
-      - "${SSECRET_DOMAIN}"
+      - "${SECRET_PUBLIC_DOMAIN}"
 
     txtPrefix: "k8s."
     txtOwnerId: "homelab"

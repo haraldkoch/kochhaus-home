@@ -75,13 +75,13 @@ spec:
         labels:
           app.kubernetes.io/part-of: home-assistant
         hosts:
-          - host: ha.${SECRET_DOMAIN}
+          - host: ha.${SECRET_PUBLIC_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - ha.${SECRET_DOMAIN}
+              - ha.${SECRET_PUBLIC_DOMAIN}
             secretName: tls.homeassistant
 
     addons:
@@ -114,10 +114,10 @@ spec:
           labels:
             app.kubernetes.io/part-of: home-assistant
           hosts:
-            - host: ha-editor.${SECRET_DOMAIN}
+            - host: ha-editor.${SECRET_INTERNAL_DOMAIN}
               paths:
                 - path: /
                   pathType: Prefix
           tls:
             - hosts:
-                - ha-editor.${SECRET_DOMAIN}
+                - ha-editor.${SECRET_INTERNAL_DOMAIN}

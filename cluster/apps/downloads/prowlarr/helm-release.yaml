@@ -29,13 +29,13 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "cloud-search"
         hosts:
-          - host: "prowlarr.${SECRET_DOMAIN}"
+          - host: "prowlarr.${SECRET_INTERNAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "prowlarr.${SECRET_DOMAIN}"
+              - "prowlarr.${SECRET_INTERNAL_DOMAIN}"
     persistence:
       config:
         enabled: true

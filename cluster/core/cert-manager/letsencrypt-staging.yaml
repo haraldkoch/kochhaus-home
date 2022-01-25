@@ -20,7 +20,7 @@ spec:
               key: tsig-secret-key
         selector:
           dnsZones:
-            - ${SECRET_DOMAIN}
+            - ${SECRET_INTERNAL_DOMAIN}
       - dns01:
           cloudflare:
             email: "${SECRET_CLOUDFLARE_EMAIL}"
@@ -29,4 +29,4 @@ spec:
               key: cloudflare-token
         selector:
           dnsZones:
-            - ${SSECRET_DOMAIN}
+            - ${SECRET_PUBLIC_DOMAIN}

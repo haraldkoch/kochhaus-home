@@ -50,7 +50,7 @@ spec:
     service:
       loadBalancerIP: ${LB_HOME_DNS}
       annotations:
-        external-dns.alpha.kubernetes.io/hostname: dns.${SECRET_DOMAIN}
+        external-dns.alpha.kubernetes.io/hostname: dns.${SECRET_INTERNAL_DOMAIN}
         metallb.universe.tf/allow-shared-ip: dns
 
     # we have our own rbac config to include ingresses
@@ -77,11 +77,11 @@ spec:
             parameters: :9153
           # hack for LoadBalancer Services not handled properly by k8s_gateway
           - name: hosts
-            parameters: /etc/zones/external-static.hosts ${SECRET_DOMAIN}
+            parameters: /etc/zones/external-static.hosts ${SECRET_INTERNAL_DOMAIN}
             configBlock: |-
               fallthrough
           - name: k8s_gateway
-            parameters: ${SECRET_DOMAIN}
+            parameters: ${SECRET_PUBLIC_DOMAIN} ${SECRET_INTERNAL_DOMAIN}
             configBlock: |-
               apex home-dns.home-dns
               ttl 300

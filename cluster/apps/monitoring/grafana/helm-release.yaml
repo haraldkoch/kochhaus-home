@@ -24,7 +24,7 @@ spec:
       VAR_BLOCKY_URL: "http://blocky.networking.svc.cluster.local:4000"
     grafana.ini:
       server:
-        root_url: "https://grafana.${SECRET_DOMAIN}"
+        root_url: "https://grafana.${SECRET_INTERNAL_DOMAIN}"
       analytics:
         check_for_updates: false
       log:
@@ -110,10 +110,10 @@ spec:
         hajimari.io/icon: "chart-line"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
       hosts:
-        - "grafana.${SECRET_DOMAIN}"
+        - "grafana.${SECRET_INTERNAL_DOMAIN}"
       tls:
         - hosts:
-            - "grafana.${SECRET_DOMAIN}"
+            - "grafana.${SECRET_INTERNAL_DOMAIN}"
     serviceAccount:
       create: true
       autoMount: true

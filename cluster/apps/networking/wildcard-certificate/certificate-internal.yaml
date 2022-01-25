@@ -2,17 +2,17 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${SECRET_DOMAIN}"
+  name: "${SECRET_INTERNAL_DOMAIN}"
   namespace: networking
 spec:
-  secretName: "tls.${SECRET_DOMAIN}"
+  secretName: "tls.${SECRET_INTERNAL_DOMAIN/./-}"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
   #privateKey:
   #  algorithm: ECDSA
   #  size: 384
-  commonName: "${SECRET_DOMAIN}"
+  commonName: "${SECRET_INTERNAL_DOMAIN}"
   dnsNames:
-    - "${SECRET_DOMAIN}"
-    - "*.${SECRET_DOMAIN}"
+    - "${SECRET_INTERNAL_DOMAIN}"
+    - "*.${SECRET_INTERNAL_DOMAIN}"
