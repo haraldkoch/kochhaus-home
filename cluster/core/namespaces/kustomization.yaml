@@ -9,6 +9,7 @@ resources:
   - metallb-system.yaml
   - monitoring.yaml
   - networking.yaml
+  - remote.yaml
   - system.yaml
   - velero.yaml
   - vpn.yaml
