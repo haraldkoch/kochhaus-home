@@ -6,6 +6,7 @@ resources:
   - goldpinger
   - grafana
   - kube-prometheus-stack
+  - loki
   - prometheus-dnssec-exporter
   - smokeping
   - speedtest

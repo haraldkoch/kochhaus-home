@@ -1,0 +1,64 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: loki
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: loki
+      version: 2.8.4
+      sourceRef:
+        kind: HelmRepository
+        name: grafana-charts
+        namespace: flux-system
+
+  values:
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        hajimari.io/appName: "loki"
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "chart-line"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      hosts:
+        - host: "loki.${SECRET_INTERNAL_DOMAIN}"
+          paths:
+            - /
+      tls:
+        - hosts:
+            - "loki.${SECRET_INTERNAL_DOMAIN}"
+    serviceMonitor:
+      enabled: true
+    # extraArgs:
+    #   log.level: debug
+    config:
+      #limits_config:
+      #  ingestion_rate_mb: 16
+      #  ingestion_burst_size_mb: 24
+      storage_config:
+        aws:
+          bucketnames: loki
+          endpoint: "${SECRET_BACKUP_SERVER}"
+          access_key_id: "${SECRET_MINIO_ACCESS_KEY}"
+          secret_access_key: "${SECRET_MINIO_SECRET_KEY}"
+          s3forcepathstyle: true
+          insecure: false
+        boltdb_shipper:
+          #resync_interval: 5s
+          shared_store: s3
+      ruler:
+        storage:
+          type: local
+          local:
+            directory: /rules
+        rule_path: /tmp/scratch
+        alertmanager_url: http://kube-prometheus-stack-alertmanager:9093
+        ring:
+          kvstore:
+            store: inmemory
+        enable_api: true
