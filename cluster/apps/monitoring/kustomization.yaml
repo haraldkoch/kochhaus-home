@@ -10,3 +10,4 @@ resources:
   - prometheus-dnssec-exporter
   - smokeping
   - speedtest
+  - vector-agent
