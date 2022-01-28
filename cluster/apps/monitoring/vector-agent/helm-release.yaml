@@ -58,8 +58,6 @@ spec:
           endpoint: http://loki:3100
           encoding:
             codec: json
-            except_fields:
-              - message
           batch:
             max_bytes: 2049000
           out_of_order_action: rewrite_timestamp
