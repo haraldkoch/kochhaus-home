@@ -20,7 +20,6 @@ spec:
       enabled: true
       ingressClassName: traefik
       annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-production"
         hajimari.io/appName: "loki"
         hajimari.io/enable: "true"
         hajimari.io/icon: "chart-line"
@@ -43,7 +42,7 @@ spec:
       storage_config:
         aws:
           bucketnames: loki
-          endpoint: "${SECRET_BACKUP_SERVER}"
+          endpoint: "http://${SECRET_BACKUP_SERVER}:9000"
           access_key_id: "${SECRET_MINIO_ACCESS_KEY}"
           secret_access_key: "${SECRET_MINIO_SECRET_KEY}"
           s3forcepathstyle: true
