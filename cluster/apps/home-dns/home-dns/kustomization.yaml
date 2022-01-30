@@ -6,3 +6,4 @@ resources:
   - zones.sops.yaml
   - helm-release.yaml
   - k8s-api.yaml
+  - service-both.yaml
