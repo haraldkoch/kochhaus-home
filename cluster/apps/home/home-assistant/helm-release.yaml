@@ -55,9 +55,17 @@ spec:
     probes:
       #Circumvention - avoid restart
       liveness:
-        enabled: false
+        # give TCP more time to respond
+        timeoutSeconds: 3
       readiness:
-        enabled: false
+        # give TCP more time to respond
+        timeoutSeconds: 3
+      startup:
+        # give TCP more time to respond
+        timeoutSeconds: 3
+
+        # reset to default
+        periodSeconds: 10
 
     # needed for discovery, mDNS, etc (HomeKit)
     hostNetwork: true
