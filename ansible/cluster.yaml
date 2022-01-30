@@ -3,6 +3,7 @@
   hosts: k3s_cluster
   vars:
     k3s_become: true
+    k3s_become_for_all: true
     k3s_etcd_datastore: false
     k3s_use_experimental: false # Note this is required for k3s < v1.19.5+k3s1
     k3s_install_hard_links: true # required for system-upgrade-controller
@@ -13,31 +14,6 @@
     k3s_server_manifests_templates:
       - "manifests/calico/tigera-operator.yaml"
       - "manifests/calico/custom-resources.yaml"
-
-    k3s_server:
-      write-kubeconfig-mode: "0644"
-
-      # disable k3s defaults so we can use Calico
-      flannel-backend: "none" # This needs to be in quotes
-      cluster-cidr: 10.42.0.0/16,fdd5:aa8:9535:42::/108
-      service-cidr: 10.43.0.0/16,fdd5:aa8:9535:43::/108
-      kube-controller-manager-arg: node-cidr-mask-size-ipv6=112
-
-      # need to wait for 1.24 for this ;(
-      #kube-apiserver-arg: feature-gates=MixedProtocolLBService=true
-
-      disable-network-policy: "true"
-
-      disable:
-        - traefik
-        - servicelb
-        - local-storage
-        - coredns
-
-      node-taint:
-        - "node-role.kubernetes.io/control-plane:NoSchedule"
-
-    k3s_agent:
 
   roles:
     - role: xanmanning.k3s
@@ -74,12 +50,14 @@
         enabled: yes
 
     - name: Remove deployed manifest templates
+      become: yes
       ansible.builtin.file:
         path: "{{ k3s_server_manifests_dir }}/{{ item | basename | regex_replace('\\.j2$', '') }}"
         state: absent
       loop: "{{ k3s_server_manifests_templates | default([]) }}"
 
     - name: Remove deployed manifest urls
+      become: yes
       ansible.builtin.file:
         path: "{{ k3s_server_manifests_dir }}/{{ item.filename }}"
         state: absent
