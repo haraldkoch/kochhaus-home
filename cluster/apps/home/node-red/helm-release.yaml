@@ -45,8 +45,6 @@ spec:
           - hosts:
               - "node-red.${SECRET_INTERNAL_DOMAIN}"
 
-    podAnnotations:
-      backup.velero.io/backup-volumes: data
     podLabels:
       app.kubernetes.io/part-of: node-red
 

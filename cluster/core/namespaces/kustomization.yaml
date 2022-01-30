@@ -11,6 +11,5 @@ resources:
   - networking.yaml
   - remote.yaml
   - system.yaml
-  - velero.yaml
   - vpn.yaml
   - weather.yaml

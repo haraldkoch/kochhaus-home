@@ -5,4 +5,3 @@ resources:
   - external-snapshotter
   - prometheus-operator
   - traefik
-  - velero

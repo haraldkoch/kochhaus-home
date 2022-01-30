@@ -12,6 +12,5 @@ resources:
   - networking
   - system
   - system-upgrade
-  - velero
   - weather
   - vpn
