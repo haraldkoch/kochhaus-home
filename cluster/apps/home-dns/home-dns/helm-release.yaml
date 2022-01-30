@@ -46,12 +46,9 @@ spec:
     podAnnotations:
       configmap.reloader.stakater.com/reload: "home-dns-extra,home-dns-zones,home-dns"
 
-    serviceType: LoadBalancer
+    serviceType: ClusterIP
     service:
-      loadBalancerIP: ${LB_HOME_DNS}
-      annotations:
-        external-dns.alpha.kubernetes.io/hostname: dns.${SECRET_INTERNAL_DOMAIN}
-        metallb.universe.tf/allow-shared-ip: dns
+      name: hidden-home-dns-service
 
     # we have our own rbac config to include ingresses
     rbac:

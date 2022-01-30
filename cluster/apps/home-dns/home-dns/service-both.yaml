@@ -7,26 +7,25 @@ metadata:
   labels:
     app.kubernetes.io/instance: home-dns
     app.kubernetes.io/name: coredns
-    k8s-app: coredns
-    kubernetes.io/name: CoreDNS
-  name: home-dns-tcp
+  name: home-dns
   namespace: home-dns
 spec:
-  allocateLoadBalancerNodePorts: true
-  externalTrafficPolicy: Cluster
-  internalTrafficPolicy: Cluster
+  type: LoadBalancer
+  loadBalancerIP: ${LB_HOME_DNS}
+  ipFamilyPolicy: PreferDualStack
   ipFamilies:
     - IPv4
-  ipFamilyPolicy: SingleStack
-  loadBalancerIP: ${LB_HOME_DNS}
+    - IPv6
   ports:
     - name: tcp-53
       port: 53
       protocol: TCP
       targetPort: 53
+    - name: udp-53
+      port: 53
+      protocol: UDP
+      targetPort: 53
   selector:
     app.kubernetes.io/instance: home-dns
     app.kubernetes.io/name: coredns
     k8s-app: coredns
-  sessionAffinity: None
-  type: LoadBalancer
