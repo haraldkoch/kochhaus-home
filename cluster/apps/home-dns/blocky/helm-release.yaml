@@ -73,7 +73,7 @@ spec:
         ports:
           http:
             port: 4000
-      dns-tcp:
+      dns:
         enabled: true
         type: LoadBalancer
         loadBalancerIP: ${LB_BLOCKY}
@@ -86,14 +86,6 @@ spec:
             port: 53
             protocol: TCP
             targetPort: 53
-      dns-udp:
-        enabled: true
-        type: LoadBalancer
-        loadBalancerIP: ${LB_BLOCKY}
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: "blocky.${SECRET_INTERNAL_DOMAIN}"
-          metallb.universe.tf/allow-shared-ip: blocky
-        ports:
           dns-udp:
             enabled: true
             port: 53
