@@ -1,4 +1,3 @@
-# yamllint disable
 ---
 # Source: crds/calico/kdd/crd.projectcalico.org_bgpconfigurations.yaml
 apiVersion: apiextensions.k8s.io/v1
@@ -2491,8 +2490,8 @@ spec:
                   from this pool.
                 type: boolean
               disableBGPExport:
-                description: 'Disable exporting routes from this IP Pool’s CIDR over
-                  BGP. [Default: false]'
+                description: "Disable exporting routes from this IP Pool's CIDR over
+                  BGP. [Default: false]"
                 type: boolean
               ipip:
                 description: 'Deprecated: this field is only used for APIv1 backwards
@@ -3739,9 +3738,9 @@ status:
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: apiservers.operator.tigera.io
   annotations:
-    helm.sh/hook: crd-install
+    controller-gen.kubebuilder.io/version: v0.3.0
+  name: apiservers.operator.tigera.io
 spec:
   group: operator.tigera.io
   names:
@@ -3760,12 +3759,12 @@ spec:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
               of an object. Servers should convert recognized schemas to the latest
-              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources'
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
             type: string
           kind:
             description: 'Kind is a string value representing the REST resource this
               object represents. Servers may infer this from the endpoint the client
-              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds'
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
             type: string
           metadata:
             type: object
@@ -3981,6 +3980,7 @@ spec:
                     enum:
                     - Iptables
                     - BPF
+                    - VPP
                     type: string
                   mtu:
                     description: MTU specifies the maximum transmission unit to use
@@ -4022,6 +4022,12 @@ spec:
                         description: Interface enables IP auto-detection based on
                           interfaces that match the given regex.
                         type: string
+                      kubernetes:
+                        description: Kubernetes configures Calico to detect node addresses
+                          based on the Kubernetes API.
+                        enum:
+                        - NodeInternalIP
+                        type: string
                       skipInterface:
                         description: SkipInterface enables IP auto-detection based
                           on interfaces that do not match the given regex.
@@ -4051,6 +4057,12 @@ spec:
                       interface:
                         description: Interface enables IP auto-detection based on
                           interfaces that match the given regex.
+                        type: string
+                      kubernetes:
+                        description: Kubernetes configures Calico to detect node addresses
+                          based on the Kubernetes API.
+                        enum:
+                        - NodeInternalIP
                         type: string
                       skipInterface:
                         description: SkipInterface enables IP auto-detection based
@@ -4180,7 +4192,7 @@ spec:
                             pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                             x-kubernetes-int-or-string: true
                           description: 'Limits describes the maximum amount of compute
-                            resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                            resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
                           type: object
                         requests:
                           additionalProperties:
@@ -4193,7 +4205,7 @@ spec:
                             resources required. If Requests is omitted for a container,
                             it defaults to Limits if that is explicitly specified,
                             otherwise to an implementation-defined value. More info:
-                            https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                            https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
                           type: object
                       type: object
                   required:
@@ -4268,7 +4280,7 @@ spec:
                   the image path for each image. If not specified or empty, the default
                   for each image will be used. A special case value, UseDefault, is
                   supported to explicitly specify the default image path will be used
-                  for each image. \n Image format:    `<registry>/<imagePath>/<imagePrefix><imageName>:<image-tag>`
+                  for each image. \n Image format:    `<registry><imagePath>/<imagePrefix><imageName>:<image-tag>`
                   \n This option allows configuring the `<imagePath>` portion of the
                   above format."
                 type: string
@@ -4278,7 +4290,7 @@ spec:
                   a prefix on each image. If not specified or empty, no prefix will
                   be used. A special case value, UseDefault, is supported to explicitly
                   specify the default image prefix will be used for each image. \n
-                  Image format:    `<registry>/<imagePath>/<imagePrefix><imageName>:<image-tag>`
+                  Image format:    `<registry><imagePath>/<imagePrefix><imageName>:<image-tag>`
                   \n This option allows configuring the `<imagePrefix>` portion of
                   the above format."
                 type: string
@@ -4330,6 +4342,34 @@ spec:
                       for oneOf, whatever we decide it to be. Same as Deployment `strategy.rollingUpdate`.
                       See https://github.com/kubernetes/kubernetes/issues/35345'
                     properties:
+                      maxSurge:
+                        anyOf:
+                        - type: integer
+                        - type: string
+                        description: 'The maximum number of nodes with an existing
+                          available DaemonSet pod that can have an updated DaemonSet
+                          pod during during an update. Value can be an absolute number
+                          (ex: 5) or a percentage of desired pods (ex: 10%). This
+                          can not be 0 if MaxUnavailable is 0. Absolute number is
+                          calculated from percentage by rounding up to a minimum of
+                          1. Default value is 0. Example: when this is set to 30%,
+                          at most 30% of the total number of nodes that should be
+                          running the daemon pod (i.e. status.desiredNumberScheduled)
+                          can have their a new pod created before the old pod is marked
+                          as deleted. The update starts by launching new pods on 30%
+                          of nodes. Once an updated pod is available (Ready for at
+                          least minReadySeconds) the old DaemonSet pod on that node
+                          is marked deleted. If the old pod becomes unavailable for
+                          any reason (Ready transitions to false, is evicted, or is
+                          drained) an updated pod is immediatedly created on that
+                          node without considering surge limits. Allowing surge implies
+                          the possibility that the resources consumed by the daemonset
+                          on any given node can double if the readiness check fails,
+                          and so resource intensive daemonsets should take into account
+                          that they may cause evictions during disruption. This is
+                          an alpha field and requires enabling DaemonSetUpdateSurge
+                          feature gate.'
+                        x-kubernetes-int-or-string: true
                       maxUnavailable:
                         anyOf:
                         - type: integer
@@ -4338,17 +4378,18 @@ spec:
                           be unavailable during the update. Value can be an absolute
                           number (ex: 5) or a percentage of total number of DaemonSet
                           pods at the start of the update (ex: 10%). Absolute number
-                          is calculated from percentage by rounding up. This cannot
-                          be 0. Default value is 1. Example: when this is set to 30%,
-                          at most 30% of the total number of nodes that should be
-                          running the daemon pod (i.e. status.desiredNumberScheduled)
-                          can have their pods stopped for an update at any given time.
-                          The update starts by stopping at most 30% of those DaemonSet
-                          pods and then brings up new DaemonSet pods in their place.
-                          Once the new pods are available, it then proceeds onto other
-                          DaemonSet pods, thus ensuring that at least 70% of original
-                          number of DaemonSet pods are available at all times during
-                          the update.'
+                          is calculated from percentage by rounding down to a minimum
+                          of one. This cannot be 0 if MaxSurge is 0 Default value
+                          is 1. Example: when this is set to 30%, at most 30% of the
+                          total number of nodes that should be running the daemon
+                          pod (i.e. status.desiredNumberScheduled) can have their
+                          pods stopped for an update at any given time. The update
+                          starts by stopping at most 30% of those DaemonSet pods and
+                          then brings up new DaemonSet pods in their place. Once the
+                          new pods are available, it then proceeds onto other DaemonSet
+                          pods, thus ensuring that at least 70% of original number
+                          of DaemonSet pods are available at all times during the
+                          update.'
                         x-kubernetes-int-or-string: true
                     type: object
                   type:
@@ -4362,10 +4403,11 @@ spec:
                 type: string
               registry:
                 description: "Registry is the default Docker registry used for component
-                  Docker images. If specified, all images will be pulled from this
-                  registry. If not specified then the default registries will be used.
-                  A special case value, UseDefault, is supported to explicitly specify
-                  the default registries will be used. \n Image format:    `<registry>/<imagePath>/<imagePrefix><imageName>:<image-tag>`
+                  Docker images. If specified then the given value must end with a
+                  slash character (`/`) and all images will be pulled from this registry.
+                  If not specified then the default registries will be used. A special
+                  case value, UseDefault, is supported to explicitly specify the default
+                  registries will be used. \n Image format:    `<registry><imagePath>/<imagePrefix><imageName>:<image-tag>`
                   \n This option allows configuring the `<registry>` portion of the
                   above format."
                 type: string
@@ -4681,6 +4723,7 @@ spec:
                         enum:
                         - Iptables
                         - BPF
+                        - VPP
                         type: string
                       mtu:
                         description: MTU specifies the maximum transmission unit to
@@ -4723,6 +4766,12 @@ spec:
                             description: Interface enables IP auto-detection based
                               on interfaces that match the given regex.
                             type: string
+                          kubernetes:
+                            description: Kubernetes configures Calico to detect node
+                              addresses based on the Kubernetes API.
+                            enum:
+                            - NodeInternalIP
+                            type: string
                           skipInterface:
                             description: SkipInterface enables IP auto-detection based
                               on interfaces that do not match the given regex.
@@ -4753,6 +4802,12 @@ spec:
                           interface:
                             description: Interface enables IP auto-detection based
                               on interfaces that match the given regex.
+                            type: string
+                          kubernetes:
+                            description: Kubernetes configures Calico to detect node
+                              addresses based on the Kubernetes API.
+                            enum:
+                            - NodeInternalIP
                             type: string
                           skipInterface:
                             description: SkipInterface enables IP auto-detection based
@@ -4886,7 +4941,7 @@ spec:
                                 pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                                 x-kubernetes-int-or-string: true
                               description: 'Limits describes the maximum amount of
-                                compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                                compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
                               type: object
                             requests:
                               additionalProperties:
@@ -4899,7 +4954,7 @@ spec:
                                 of compute resources required. If Requests is omitted
                                 for a container, it defaults to Limits if that is
                                 explicitly specified, otherwise to an implementation-defined
-                                value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                                value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
                               type: object
                           type: object
                       required:
@@ -4975,7 +5030,7 @@ spec:
                       used as the image path for each image. If not specified or empty,
                       the default for each image will be used. A special case value,
                       UseDefault, is supported to explicitly specify the default image
-                      path will be used for each image. \n Image format:    `<registry>/<imagePath>/<imagePrefix><imageName>:<image-tag>`
+                      path will be used for each image. \n Image format:    `<registry><imagePath>/<imagePrefix><imageName>:<image-tag>`
                       \n This option allows configuring the `<imagePath>` portion
                       of the above format."
                     type: string
@@ -4985,7 +5040,7 @@ spec:
                       as a prefix on each image. If not specified or empty, no prefix
                       will be used. A special case value, UseDefault, is supported
                       to explicitly specify the default image prefix will be used
-                      for each image. \n Image format:    `<registry>/<imagePath>/<imagePrefix><imageName>:<image-tag>`
+                      for each image. \n Image format:    `<registry><imagePath>/<imagePrefix><imageName>:<image-tag>`
                       \n This option allows configuring the `<imagePrefix>` portion
                       of the above format."
                     type: string
@@ -5037,6 +5092,35 @@ spec:
                           our convention for oneOf, whatever we decide it to be. Same
                           as Deployment `strategy.rollingUpdate`. See https://github.com/kubernetes/kubernetes/issues/35345'
                         properties:
+                          maxSurge:
+                            anyOf:
+                            - type: integer
+                            - type: string
+                            description: 'The maximum number of nodes with an existing
+                              available DaemonSet pod that can have an updated DaemonSet
+                              pod during during an update. Value can be an absolute
+                              number (ex: 5) or a percentage of desired pods (ex:
+                              10%). This can not be 0 if MaxUnavailable is 0. Absolute
+                              number is calculated from percentage by rounding up
+                              to a minimum of 1. Default value is 0. Example: when
+                              this is set to 30%, at most 30% of the total number
+                              of nodes that should be running the daemon pod (i.e.
+                              status.desiredNumberScheduled) can have their a new
+                              pod created before the old pod is marked as deleted.
+                              The update starts by launching new pods on 30% of nodes.
+                              Once an updated pod is available (Ready for at least
+                              minReadySeconds) the old DaemonSet pod on that node
+                              is marked deleted. If the old pod becomes unavailable
+                              for any reason (Ready transitions to false, is evicted,
+                              or is drained) an updated pod is immediatedly created
+                              on that node without considering surge limits. Allowing
+                              surge implies the possibility that the resources consumed
+                              by the daemonset on any given node can double if the
+                              readiness check fails, and so resource intensive daemonsets
+                              should take into account that they may cause evictions
+                              during disruption. This is an alpha field and requires
+                              enabling DaemonSetUpdateSurge feature gate.'
+                            x-kubernetes-int-or-string: true
                           maxUnavailable:
                             anyOf:
                             - type: integer
@@ -5046,17 +5130,17 @@ spec:
                               absolute number (ex: 5) or a percentage of total number
                               of DaemonSet pods at the start of the update (ex: 10%).
                               Absolute number is calculated from percentage by rounding
-                              up. This cannot be 0. Default value is 1. Example: when
-                              this is set to 30%, at most 30% of the total number
-                              of nodes that should be running the daemon pod (i.e.
-                              status.desiredNumberScheduled) can have their pods stopped
-                              for an update at any given time. The update starts by
-                              stopping at most 30% of those DaemonSet pods and then
-                              brings up new DaemonSet pods in their place. Once the
-                              new pods are available, it then proceeds onto other
-                              DaemonSet pods, thus ensuring that at least 70% of original
-                              number of DaemonSet pods are available at all times
-                              during the update.'
+                              down to a minimum of one. This cannot be 0 if MaxSurge
+                              is 0 Default value is 1. Example: when this is set to
+                              30%, at most 30% of the total number of nodes that should
+                              be running the daemon pod (i.e. status.desiredNumberScheduled)
+                              can have their pods stopped for an update at any given
+                              time. The update starts by stopping at most 30% of those
+                              DaemonSet pods and then brings up new DaemonSet pods
+                              in their place. Once the new pods are available, it
+                              then proceeds onto other DaemonSet pods, thus ensuring
+                              that at least 70% of original number of DaemonSet pods
+                              are available at all times during the update.'
                             x-kubernetes-int-or-string: true
                         type: object
                       type:
@@ -5070,11 +5154,12 @@ spec:
                     type: string
                   registry:
                     description: "Registry is the default Docker registry used for
-                      component Docker images. If specified, all images will be pulled
+                      component Docker images. If specified then the given value must
+                      end with a slash character (`/`) and all images will be pulled
                       from this registry. If not specified then the default registries
                       will be used. A special case value, UseDefault, is supported
                       to explicitly specify the default registries will be used. \n
-                      Image format:    `<registry>/<imagePath>/<imagePrefix><imageName>:<image-tag>`
+                      Image format:    `<registry><imagePath>/<imagePrefix><imageName>:<image-tag>`
                       \n This option allows configuring the `<registry>` portion of
                       the above format."
                     type: string
@@ -5543,6 +5628,28 @@ rules:
   - apiGroups:
       - ""
     resources:
+      - resourcequotas
+    verbs:
+      - list
+      - get
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - resourcequotas
+    verbs:
+      - create
+      - get
+      - list
+      - update
+      - delete
+      - watch
+    resourceNames:
+      - calico-critical-pods
+      - tigera-critical-pods
+  - apiGroups:
+      - ""
+    resources:
       - nodes
     verbs:
       # Need to update node labels when migrating nodes.
@@ -5748,7 +5855,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: tigera-operator
-          image: quay.io/tigera/operator:v1.24.1
+          image: quay.io/tigera/operator:v1.25.0
           imagePullPolicy: IfNotPresent
           command:
             - operator
@@ -5766,7 +5873,7 @@ spec:
             - name: OPERATOR_NAME
               value: "tigera-operator"
             - name: TIGERA_OPERATOR_INIT_IMAGE_VERSION
-              value: v1.24.1
+              value: v1.25.0
           envFrom:
             - configMapRef:
                 name: kubernetes-services-endpoint
