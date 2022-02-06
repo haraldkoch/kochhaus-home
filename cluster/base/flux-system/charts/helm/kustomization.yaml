@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - coredns-charts.yaml
+  - deliveryhero-charts.yaml
   - democratic-csi-charts.yaml
   - descheduler-charts.yaml
   - external-dns-charts.yaml
