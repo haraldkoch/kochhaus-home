@@ -4,3 +4,6 @@ resources:
   - dashboard
   - tigera-operator.yaml
   - calico-config.yaml
+  - kube-controllers-metrics
+  - felix-metrics
+  - typha-metrics
