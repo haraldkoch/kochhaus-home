@@ -5,6 +5,7 @@ repos:
     rev: v2.5.1
     hooks:
       - id: prettier
+        exclude: ^(ansible/manifests/|cluster/core/calico-system|.*dashboard.json)
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.26.3
     hooks:
@@ -12,7 +13,7 @@ repos:
           - --config-file
           - .github/lint/.yamllint.yaml
         id: yamllint
-        exclude: ^(ansible/manifests/|cluster/core/calico-system)
+        exclude: ^(ansible/manifests/|cluster/core/calico-system|.*dashboard.json)
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.1.0
     hooks:
