@@ -13,12 +13,16 @@ generatorOptions:
   disableNameSuffixHash: true
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
+    grafana_folder: "Network"
   labels:
     grafana_dashboard: "true"
 # # TODO: https://github.com/kubernetes-sigs/kustomize/issues/3787
 # # The datasource in the Calico dashboards needs to be updated to 'default'
 # resources:
 # - https://docs.projectcalico.org/manifests/grafana-dashboards.yaml
+# commonAnnotations:
+#   kustomize.toolkit.fluxcd.io/substitute: disabled
+#   grafana_folder: "Network"
 # commonLabels:
 #   grafana_dashboard: "true"
 # namespace: calico-system
