@@ -9,5 +9,6 @@ resources:
   - loki
   - prometheus-dnssec-exporter
   - smokeping
+  - snmp-exporter
   - speedtest
   - vector-agent
