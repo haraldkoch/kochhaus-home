@@ -4,8 +4,10 @@ kind: ConfigMap
 metadata:
   name: speedtest-exporter-dashboard
   namespace: monitoring
+  annotations:
+    grafana_folder: "Network"
   labels:
-    grafana_dashboard: "1"
+    grafana_dashboard: "true"
 data:
   speedtest_exporter.json: |-
     {
