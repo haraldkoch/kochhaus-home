@@ -9,5 +9,8 @@ configMapGenerator:
       - blocky-grafana.json
 generatorOptions:
   disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+    grafana_folder: "Network"
   labels:
-    grafana_dashboard: "1"
+    grafana_dashboard: "true"

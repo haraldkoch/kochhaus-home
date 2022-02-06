@@ -13,7 +13,8 @@ resources:
   - https://raw.githubusercontent.com/prometheus-operator/kube-prometheus/main/manifests/grafana-dashboardDefinitions.yaml
 
 commonLabels:
-  grafana_dashboard: "1"
+  grafana_dashboard: "true"
 
 commonAnnotations:
   kustomize.toolkit.fluxcd.io/substitute: disabled
+  grafana_folder: "Kubernetes"
