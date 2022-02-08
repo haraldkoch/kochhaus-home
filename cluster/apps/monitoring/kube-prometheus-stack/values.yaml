@@ -98,9 +98,9 @@ prometheus:
 
     remoteWrite:
       - url: http://heimdall.${PRIVATE_STATIC_DOMAIN}:8428/api/v1/write
-        queueConfig:
-          maxSamplesPerSend: 10000
-          maxShards: 30
+        #queueConfig:
+        #  maxSamplesPerSend: 10000
+        #  maxShards: 30
 
     storageSpec:
       volumeClaimTemplate:
