@@ -22,7 +22,7 @@ spec:
         - harbor.${PRIVATE_STATIC_DOMAIN}/docker/calico/pod2daemon-flexvol:v3.22.0
         - docker.io/democraticcsi/democratic-csi:latest
         - docker.io/senthilrch/kubefledged-controller:v0.9.0
-        - gcr.io/k8s-staging-sig-storage/snapshot-controller:v5.0.0
+        - gcr.io/k8s-staging-sig-storage/snapshot-controller:v5.0.1
         - ghcr.io/0xerr0r/blocky:v0.17
         - harbor.${PRIVATE_STATIC_DOMAIN}/ghcr/0xerr0r/blocky:v0.17
         - k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.4.0
