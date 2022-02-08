@@ -55,6 +55,16 @@
     ]
   },
   "regexManagers": [
+    // regexManager to read and process kube-fledged imagecache
+    {
+      "fileMatch": [
+        "cluster/apps/system/kube-fledged/imagecache.yaml"
+      ],
+      matchStrings: [
+        "- (?<depName>.*?):(?<currentValue>.*?)\n"
+      ],
+      datasourceTemplate: "docker"
+    },
     // regexManager to read and process cert-manager CRDs
     {
       "fileMatch": [
