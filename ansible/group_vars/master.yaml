@@ -32,17 +32,17 @@ k3s_server:
 
   kube-controller-manager-arg:
     - node-cidr-mask-size-ipv6=112
-    - "feature-gates=EphemeralContainers=trueMixedProtocolLBService=trueReadWriteOncePod=true"
+    - "feature-gates=EphemeralContainers=true,MixedProtocolLBService=true,ReadWriteOncePod=true"
     # Required to monitor component with kube-prometheus-stack
     - "bind-address=0.0.0.0"
 
   kube-proxy-arg:
-    - "feature-gates=EphemeralContainers=true,MixedProtocolLBService=trueReadWriteOncePod=true"
+    - "feature-gates=EphemeralContainers=true,MixedProtocolLBService=true,ReadWriteOncePod=true"
     # Required to monitor component with kube-prometheus-stack
     - "metrics-bind-address=0.0.0.0"
 
   kube-scheduler-arg:
-    - "feature-gates=EphemeralContainers=trueMixedProtocolLBService=trueReadWriteOncePod=true"
+    - "feature-gates=EphemeralContainers=true,MixedProtocolLBService=true,ReadWriteOncePod=true"
     # Required to monitor component with kube-prometheus-stack
     - "bind-address=0.0.0.0"
 
