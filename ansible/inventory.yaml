@@ -11,7 +11,8 @@ k3s_cluster:
       hosts:
         k3s1:
         k3s2:
-        k3s3:
+        #k3s3:
+        k3s3-tmp:
       vars:
         ansible_user: ansible
         ansible_python_interpreter: /usr/bin/python
