@@ -1,5 +1,6 @@
 ---
 - name: make sure hooks folder exists
+  become: yes
   file:
     dest: /etc/pacman.d/hooks
     owner: root
@@ -8,6 +9,7 @@
     state: directory
 
 - name: copy the pacman hook file
+  become: yes
   template:
     src: kured-pacman-hook.j2
     dest: /etc/pacman.d/hooks/linux.hook
