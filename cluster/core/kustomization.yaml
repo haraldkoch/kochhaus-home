@@ -8,5 +8,6 @@ resources:
   - democratic-csi
   - metallb-system
   - nfs-subdir-external-provisioner
+  - rook-ceph
   - system-upgrade
   - monitoring
