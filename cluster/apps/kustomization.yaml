@@ -5,7 +5,7 @@ resources:
   - default
   - downloads
   - home
-  - home-dns
+  #- home-dns
   - kasten
   - media
   - monitoring
