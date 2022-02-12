@@ -19,3 +19,6 @@ spec:
     image:
       busyboxImageRepository: busybox
       busyboxImageVersion: "1.35.0"
+
+    args:
+      controllerImageCacheRefreshFrequency: 60m
