@@ -5,6 +5,7 @@ metadata:
   namespace: home
   labels:
     app.kubernetes.io/part-of: home-assistant
+    kasten.io/backup-volume: "enabled"
 spec:
   resources:
     requests:
