@@ -17,6 +17,12 @@ spec:
             - name: backup
               persistentVolumeClaim:
                 claimName: ceph-test-pvc
+            - name: direct-mount-scripts
+              projected:
+                defaultMode: 0775
+                sources:
+                  - configMap:
+                      name: direct-mount-scripts
 
           securityContext:
             fsGroup: 1000
@@ -31,7 +37,7 @@ spec:
               command: ["/bin/sh"]
               args:
                 - "-c"
-                - "mysqldump -h $DB_HOST -u $DB_USER -p$DB_PASS --quote-names --databases $DB_DATABASE >/backup/$DB_DATABASE.$$.sql"
+                - "/scripts/backup.sh"
               env:
                 - name: DB_DATABASE
                   value: bookstack
@@ -49,6 +55,8 @@ spec:
               volumeMounts:
                 - name: backup
                   mountPath: /backup
+                - name: direct-mount-scripts
+                  mountPath: /scripts
               resources:
                 requests:
                   memory: "128Mi"
