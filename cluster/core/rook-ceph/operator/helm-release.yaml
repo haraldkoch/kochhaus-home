@@ -32,6 +32,7 @@ spec:
     csi:
       enableCephfsDriver: false
       enableCephfsSnapshotter: false
+    cephCommandsTimeoutSeconds: "20"
     monitoring:
       enabled: true
     resources:
