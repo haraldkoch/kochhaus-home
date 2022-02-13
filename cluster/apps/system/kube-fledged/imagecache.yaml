@@ -12,7 +12,7 @@ spec:
   cacheSpec:
     - images:
         - cnmcavoy/harbor-container-webhook:v0.3.4
-        - coredns/coredns:1.8.7
+        - coredns/coredns:1.9.0
         - harbor.${PRIVATE_STATIC_DOMAIN}/docker/coredns/coredns:1.8.7
         - docker.io/calico/cni:v3.22.0
         - harbor.${PRIVATE_STATIC_DOMAIN}/docker/calico/cni:v3.22.0
