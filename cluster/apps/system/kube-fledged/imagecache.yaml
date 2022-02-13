@@ -23,7 +23,7 @@ spec:
         - docker.io/democraticcsi/democratic-csi:latest
         - ghcr.io/0xerr0r/blocky:v0.17
         - harbor.${PRIVATE_STATIC_DOMAIN}/ghcr/0xerr0r/blocky:v0.17
-        - k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.4.0
+        - k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.5.0
         - k8s.gcr.io/sig-storage/csi-provisioner:v3.1.0
         - k8s.gcr.io/sig-storage/csi-resizer:v1.4.0
         - k8s.gcr.io/sig-storage/csi-snapshotter:v5.0.1
