@@ -1,6 +1,6 @@
 image:
   repository: coredns/coredns
-  tag: 1.8.7
+  tag: 1.9.0
 
 fullnameOverride: coredns
 
