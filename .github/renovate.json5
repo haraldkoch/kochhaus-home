@@ -13,11 +13,11 @@
     "github>haraldkoch/kochhaus-home//.github/renovate/semanticCommits"
   ],
   "platform": "github",
-  "username": "doug-piranha-bot[bot]",
+  //"username": "doug-piranha-bot[bot]",
   "repositories": ["haraldkoch/kochhaus-home"],
   "onboarding": false,
   "requireConfig": false,
-  "gitAuthor": "Doug Piranha Bot <22471051+doug-piranha-bot[bot]@users.noreply.github.com>",
+  //"gitAuthor": "Doug Piranha Bot <22471051+doug-piranha-bot[bot]@users.noreply.github.com>",
   "timezone": "America/Toronto",
   "dependencyDashboardTitle": "Renovate Dashboard 🐟",
   "suppressNotifications": [
