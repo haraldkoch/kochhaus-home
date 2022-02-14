@@ -24,7 +24,7 @@ jobs:
           list-files: json
           filters: |
             yaml:
-              - added|modified: "**/helm-*release.yaml"
+              - added|modified: "**/helm-release.yaml"
     outputs:
       yaml_files: ${{ steps.filter.outputs.yaml_files }}
   helm-release-differ:
