@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: vpn
 resources:
   - secret.sops.yaml
-  - helmrelease.yaml
+  - helm-release.yaml
 configMapGenerator:
   - name: downloads-gateway-values
     files:
