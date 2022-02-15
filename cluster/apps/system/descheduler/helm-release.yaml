@@ -16,6 +16,8 @@ spec:
         namespace: flux-system
 
   values:
+    schedule: "*/15 * * * *"
+
     podAnnotations:
       botkube.io/disable: "true"
 
