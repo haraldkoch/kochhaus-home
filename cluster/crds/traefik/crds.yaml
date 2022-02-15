@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
+  timeout: 2m
   url: https://github.com/traefik/traefik-helm-chart.git
   ref:
     # renovate: registryUrl=https://helm.traefik.io/traefik
