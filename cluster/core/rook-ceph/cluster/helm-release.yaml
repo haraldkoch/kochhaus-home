@@ -45,6 +45,18 @@ spec:
       #        operator: Exists
       #      - effect: NoExecute
       #        operator: Exists
+      healthCheck:
+        livenessProbe:
+          mon:
+            probe:
+              timeoutSeconds: 5
+          mgr:
+            probe:
+              timeoutSeconds: 5
+          osd:
+            probe:
+              timeoutSeconds: 5
+
       crashCollector:
         disable: false
       mgr:
