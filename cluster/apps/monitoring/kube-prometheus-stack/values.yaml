@@ -1,3 +1,5 @@
+fullnameOverride: kps
+
 global:
   rbac:
     pspEnabled: false
