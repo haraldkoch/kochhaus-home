@@ -49,23 +49,35 @@ spec:
         livenessProbe:
           mon:
             probe:
-              timeoutSeconds: 5
+              initialDelaySeconds: 60
+              periodSeconds: 60
+              timeoutSeconds: 10
           mgr:
             probe:
-              timeoutSeconds: 5
+              initialDelaySeconds: 60
+              periodSeconds: 60
+              timeoutSeconds: 10
           osd:
             probe:
-              timeoutSeconds: 5
+              initialDelaySeconds: 60
+              periodSeconds: 60
+              timeoutSeconds: 10
         startupProbe:
           mon:
             probe:
-              timeoutSeconds: 5
+              initialDelaySeconds: 60
+              periodSeconds: 60
+              timeoutSeconds: 10
           mgr:
             probe:
-              timeoutSeconds: 5
+              initialDelaySeconds: 60
+              periodSeconds: 60
+              timeoutSeconds: 10
           osd:
             probe:
-              timeoutSeconds: 5
+              initialDelaySeconds: 60
+              periodSeconds: 60
+              timeoutSeconds: 10
 
       crashCollector:
         disable: false
