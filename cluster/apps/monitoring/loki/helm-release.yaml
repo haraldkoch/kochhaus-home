@@ -56,7 +56,7 @@ spec:
           local:
             directory: /rules
         rule_path: /tmp/scratch
-        alertmanager_url: http://kube-prometheus-stack-alertmanager:9093
+        alertmanager_url: http://kps-alertmanager:9093
         ring:
           kvstore:
             store: inmemory
