@@ -83,7 +83,7 @@ spec:
         nodes:
           - name: "k3s1"
             devices:
-              - name: "vdb"
+              - name: "vdb2"
           - name: "k3s2"
             devices:
               - name: "vdb"
