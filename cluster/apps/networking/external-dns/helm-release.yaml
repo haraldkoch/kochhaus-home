@@ -17,7 +17,7 @@ spec:
 
   values:
     interval: 5m
-    logLevel: debug
+    logLevel: info
     provider: cloudflare
 
     extraArgs:
