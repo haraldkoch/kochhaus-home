@@ -90,6 +90,23 @@ spec:
               - ha.${SECRET_PUBLIC_DOMAIN}
             secretName: tls.homeassistant
 
+      internal:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "home-assistant"
+        labels:
+          app.kubernetes.io/part-of: home-assistant
+        hosts:
+          - host: ha.${SECRET_INTERNAL_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - ha.${SECRET_INTERNAL_DOMAIN}
+
     addons:
       codeserver:
         enabled: true
