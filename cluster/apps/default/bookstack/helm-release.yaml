@@ -60,6 +60,22 @@ spec:
             hosts:
               - kb.${SECRET_PUBLIC_DOMAIN}
 
+      internal:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "notebook-edit-outline"
+        labels:
+          app.kubernetes.io/part-of: bookstack
+        hosts:
+          - host: kb.${SECRET_INTERNAL_DOMAIN}
+            paths:
+              - path: /
+        tls:
+          - hosts:
+              - kb.${SECRET_INTERNAL_DOMAIN}
+
     resources:
       requests:
         memory: 128Mi
