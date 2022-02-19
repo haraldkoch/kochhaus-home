@@ -51,7 +51,7 @@ spec:
     serviceMonitor:
       enabled: true
 
-    logLevel: debug
+    logLevel: info
 
     resources:
       requests:
