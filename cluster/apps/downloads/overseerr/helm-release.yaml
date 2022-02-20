@@ -37,6 +37,7 @@ spec:
         tls:
           - hosts:
               - *host
+            secretName: tls.overseerr
       internal:
         enabled: true
         ingressClassName: "traefik"
