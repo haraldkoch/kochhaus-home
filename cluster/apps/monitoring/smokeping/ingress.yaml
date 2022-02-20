@@ -12,7 +12,6 @@ metadata:
   annotations:
     hajimari.io/enable: "true"
     hajimari.io/icon: chart
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   tls:
     - hosts:

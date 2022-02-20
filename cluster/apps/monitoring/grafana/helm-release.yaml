@@ -111,7 +111,6 @@ spec:
         hajimari.io/appName: "grafana"
         hajimari.io/enable: "true"
         hajimari.io/icon: "chart-line"
-        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
       hosts:
         - "grafana.${SECRET_INTERNAL_DOMAIN}"
       tls:

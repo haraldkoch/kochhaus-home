@@ -23,7 +23,6 @@ spec:
         hajimari.io/appName: "loki"
         hajimari.io/enable: "true"
         hajimari.io/icon: "chart-line"
-        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
       hosts:
         - host: "loki.${SECRET_INTERNAL_DOMAIN}"
           paths:
