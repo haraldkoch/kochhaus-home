@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: k10
-  namespace: kasten
+  namespace: kasten-io
 spec:
   releaseName: k10
   interval: 5m
@@ -31,7 +31,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: crypto-svc
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
@@ -41,7 +41,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: dashboardbff-svc
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
@@ -51,7 +51,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: state-svc
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
@@ -61,7 +61,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: aggregatedapis-svc
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
@@ -71,7 +71,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: frontend-svc
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
@@ -81,7 +81,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: kanister-svc
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
@@ -91,7 +91,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: config-svc
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
@@ -101,7 +101,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: auth-svc
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
@@ -111,7 +111,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: gateway
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
@@ -121,7 +121,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: logging-svc
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
@@ -131,7 +131,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: prometheus-server
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
@@ -141,7 +141,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: catalog-svc
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
@@ -151,7 +151,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: jobs-svc
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
@@ -161,7 +161,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: executor-svc
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
@@ -171,7 +171,7 @@ spec:
             apiVersion: apps/v1
             metadata:
               name: metering-svc
-              namespace: kasten
+              namespace: kasten-io
             spec:
               template:
                 spec:
