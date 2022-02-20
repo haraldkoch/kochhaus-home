@@ -5,8 +5,8 @@ metadata:
   labels:
     prometheus: k8s
     role: alert-rules
-  name: kasten-io
-  namespace: kasten
+  name: kasten
+  namespace: kasten-io
 spec:
   groups:
     - name: kasten.rules

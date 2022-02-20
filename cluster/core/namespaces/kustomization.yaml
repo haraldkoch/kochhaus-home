@@ -4,7 +4,7 @@ resources:
   - cert-manager.yaml
   - downloads.yaml
   - home.yaml
-  - kasten.yaml
+  - kasten-io.yaml
   - media.yaml
   - metallb-system.yaml
   - monitoring.yaml
