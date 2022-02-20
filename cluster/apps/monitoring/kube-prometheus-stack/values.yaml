@@ -53,7 +53,6 @@ alertmanager:
       hajimari.io/appName: "alertmanager"
       hajimari.io/enable: "true"
       hajimari.io/icon: "alarm-light-outline"
-      traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     hosts:
       - alertmanager.${SECRET_INTERNAL_DOMAIN}
     paths:
@@ -85,7 +84,6 @@ prometheus:
       hajimari.io/appName: "prometheus"
       hajimari.io/enable: "true"
       hajimari.io/icon: "chart-line"
-      traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     hosts:
       - prometheus.${SECRET_INTERNAL_DOMAIN}
     paths:

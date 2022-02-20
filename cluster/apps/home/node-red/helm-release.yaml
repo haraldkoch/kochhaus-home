@@ -33,7 +33,6 @@ spec:
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "graph-outline"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         labels:
           app.kubernetes.io/part-of: node-red
         hosts:
