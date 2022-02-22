@@ -17,7 +17,7 @@ spec:
     fullnameOverride: media-browser
     image:
       repository: docker.io/filebrowser/filebrowser
-      tag: v2.20.1
+      tag: v2.21.1
     env:
       TZ: "${TIMEZONE}"
       FB_DATABASE: "/config/filebrowser.db"
