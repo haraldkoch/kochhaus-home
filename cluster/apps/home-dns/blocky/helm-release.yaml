@@ -18,7 +18,7 @@ spec:
   values:
     image:
       repository: ghcr.io/0xerr0r/blocky
-      tag: v0.17
+      tag: v0.18
 
     podAnnotations:
       configmap.reloader.stakater.com/reload: "blocky-config"
