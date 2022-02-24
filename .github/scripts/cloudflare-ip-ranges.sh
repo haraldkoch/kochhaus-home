@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 # Get all cloudflare ipv4 ranges in an array
-ipv4="$(curl -s https://www.cloudflare.com/ips-v4 | jq --raw-input --slurp 'split("\n")')"
+ipv4="$(curl -sL https://www.cloudflare.com/ips-v4 | jq --raw-input --slurp 'split("\n")')"
 if [[ -z "${ipv4}" ]]; then
     exit 1
 fi
 
 # Get all cloudflare ipv6 ranges in an array
-ipv6="$(curl -s https://www.cloudflare.com/ips-v6 | jq --raw-input --slurp 'split("\n")')"
+ipv6="$(curl -sL https://www.cloudflare.com/ips-v6 | jq --raw-input --slurp 'split("\n")')"
 if [[ -z "${ipv6}" ]]; then
     exit 1
 fi
