@@ -23,3 +23,12 @@ spec:
       host: longhorn.${SECRET_INTERNAL_DOMAIN}
       annotations:
         hajimari.io/enable: "true"
+    defaultSettings:
+      backupTargetCredentialSecret: minio-secret
+      backupTarget: s3://longhorn@us-east-1/
+      concurrentAutomaticEngineUpgradePerNodeLimit: 3
+      createDefaultDiskLabeledNodes: true
+      defaultLonghornStaticStorageClass: longhorn
+      defaultReplicaCount: 3
+      storageMinimalAvailablePercentage: 20
+      storageOverProvisioningPercentage: 200
