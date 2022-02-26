@@ -51,7 +51,7 @@ spec:
       data:
         enabled: true
         mountPath: /data
-        existingClaim: node-red-data
+        existingClaim: node-red-data-v2
 
     resources:
       requests:
