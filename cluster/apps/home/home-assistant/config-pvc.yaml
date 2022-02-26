@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: home-assistant-pvc
+  name: home-assistant-config-v2
   namespace: home
   labels:
     app.kubernetes.io/part-of: home-assistant
@@ -12,5 +12,4 @@ spec:
       storage: "1Gi"
   accessModes:
     - ReadWriteOnce
-    - ReadOnlyMany
-  storageClassName: zfs-nfs
+  storageClassName: ceph-block
