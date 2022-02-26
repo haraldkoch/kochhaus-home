@@ -6,7 +6,7 @@ resources:
   - cert-manager
   - coredns
   - democratic-csi
-  - longhorn
+  #- longhorn
   - metallb-system
   - nfs-subdir-external-provisioner
   - rook-ceph
