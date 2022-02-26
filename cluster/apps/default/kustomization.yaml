@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - bookstack
   - ceph-test
-  - longhorn-test
+  #- longhorn-test
