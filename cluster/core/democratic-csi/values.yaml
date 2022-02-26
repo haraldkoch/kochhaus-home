@@ -23,7 +23,7 @@ controller:
 
 storageClasses:
   - name: zfs-nfs
-    defaultClass: true
+    defaultClass: false
     reclaimPolicy: Delete
     volumeBindingMode: Immediate
     allowVolumeExpansion: true
