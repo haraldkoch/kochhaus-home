@@ -45,7 +45,5 @@ spec:
     persistence:
       data:
         enabled: true
-        size: 10Gi
-        accessMode: ReadWriteOnce
-        retain: true
-        storageClass: zfs-nfs
+        mountPath: /data
+        existingClaim: syncthing-data-v2
