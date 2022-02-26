@@ -12,7 +12,7 @@ k3s_cluster:
         k3s1:
         k3s2:
         k3s3:
-        k3s3-tmp:
+        k3sm:
       vars:
         ansible_user: ansible
         ansible_python_interpreter: /usr/bin/python
