@@ -99,6 +99,9 @@ spec:
           - name: "k3s2"
             devices:
               - name: "vdb"
+          - name: "k3s3"
+            devices:
+              - name: "sda3"
           - name: "k3s3-tmp"
             devices:
               - name: "vdb"
