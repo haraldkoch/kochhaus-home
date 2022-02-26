@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: node-red-data
+  name: node-red-data-v2
   namespace: home
   labels:
     app.kubernetes.io/part-of: node-red
@@ -13,4 +13,4 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: zfs-nfs
+  storageClassName: ceph-block
