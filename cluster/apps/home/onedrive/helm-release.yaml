@@ -21,5 +21,8 @@ spec:
       ONEDRIVE_DOWNLOADONLY: 1
       ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE}"
     persistence:
+      config:
+        enabled: true
+        existingClaim: onedrive-config-v2
       data:
         existingClaim: nfs-onedrive-pvc
