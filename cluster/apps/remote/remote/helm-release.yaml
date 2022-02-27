@@ -1,0 +1,56 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: remote
+  namespace: remote
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: /charts/kah-common/
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+  values:
+    image:
+      repository: ubuntu
+      tag: 20.04
+    controller:
+      replicas: 2
+    nameOverride: remote
+    env:
+      TZ: America/Toronto
+    command:
+      - /usr/bin/sshd
+    args:
+      - -D
+    service:
+      main:
+        type: LoadBalancer
+        ipFamilyPolicy: PreferDualStack
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "remote.${SECRET_INTERNAL_DOMAIN}"
+        ports:
+          http:
+            enabled: false
+          ssh:
+            enabled: true
+            port: 22
+    persistence:
+      config:
+        enabled: false
+      sshd:
+        enabled: true
+        mountPath: /etc/ssh
+        type: custom
+        volumeSpec:
+          secret:
+            secretName: remote-config
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 100m
+      limits:
+        memory: 500Mi
