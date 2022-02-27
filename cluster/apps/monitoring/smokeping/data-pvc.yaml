@@ -2,18 +2,15 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: smokeping-data
+  name: smokeping-data-v2
   namespace: monitoring
   labels:
-    app.kubernetes.io/name: smokeping
-    app.kubernetes.io/instance: smokeping
     app.kubernetes.io/part-of: smokeping
-    app.kubernetes.io/version: "2.7.3"
+    kasten.io/backup-volume: "enabled"
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
-  storageClassName: "zfs-nfs"
-  volumeMode: Filesystem
+  storageClassName: ceph-block
