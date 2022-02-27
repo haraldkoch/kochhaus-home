@@ -1,0 +1,37 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-dns
+  namespace: remote
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: UDP
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-remote-access
+  namespace: remote
+spec:
+  podSelector: {}
+  ingress:
+    - from:
+        # Only allow ingress from LAN
+        - ipBlock:
+            cidr: ${NETWORK_K8S_HOST_CIDR}
+  egress:
+    - to:
+        # Only allow egress to LAN
+        - ipBlock:
+            cidr: ${NETWORK_K8S_HOST_CIDR}
+  policyTypes:
+    - Ingress
+    - Egress
