@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: ubuntu
-      tag: 20.04
+      tag: 22.04
     controller:
       replicas: 2
     nameOverride: remote
