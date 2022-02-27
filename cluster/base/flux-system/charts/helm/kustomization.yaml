@@ -14,7 +14,6 @@ resources:
   - k8s-at-home-charts.yaml
   - kasten-charts.yaml
   - kube-fledged-charts.yaml
-  - longhorn-charts.yaml
   - metallb-charts.yaml
   - nfs-subdir-external-provisioner-charts.yaml
   - node-feature-discovery-charts.yaml
