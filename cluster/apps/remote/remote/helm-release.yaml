@@ -1,0 +1,67 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: remote
+  namespace: remote
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: /charts/kah-common/
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+  values:
+    image:
+      repository: ghcr.io/linuxserver/openssh-server
+      tag: version-8.6_p1-r3
+    controller:
+      replicas: 2
+    nameOverride: remote
+    env:
+      TZ: "America/Toronto"
+      PUBLIC_KEY: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIINTg8Hfob/c24Ylp2DM5ZMZj3mt9wTUEfRMncUaPbFk"
+      USER_NAME: "chk"
+    service:
+      main:
+        type: LoadBalancer
+        ipFamilyPolicy: PreferDualStack
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "remote.${SECRET_INTERNAL_DOMAIN}"
+        ports:
+          http:
+            enabled: false
+          ssh:
+            enabled: true
+            primary: true
+            port: 22
+            protocol: TCP
+            targetPort: 2222
+    persistence:
+      config:
+        enabled: false
+      init:
+        enabled: true
+        mountPath: /etc/cont-init.d/45-config
+        subPath: 45-config
+        type: custom
+        volumeSpec:
+          configMap:
+            name: config-initializer
+            defaultMode: 0777
+      sshd:
+        enabled: true
+        mountPath: /sshd
+        type: secret
+        name: sshd-config
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "config-initializer"
+      secret.reloader.stakater.com/reload: "sshd-config"
+    resources:
+      requests:
+        memory: 100Mi
+        cpu: 100m
+      limits:
+        memory: 500Mi
