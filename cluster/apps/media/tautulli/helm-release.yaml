@@ -57,7 +57,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: tautulli-pvc
+        existingClaim: tautulli-config-v2
       backup:
         enabled: true
         type: custom
