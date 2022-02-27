@@ -36,7 +36,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: bookstack-config
+        existingClaim: bookstack-config-v2
 
     ingress:
       main:
