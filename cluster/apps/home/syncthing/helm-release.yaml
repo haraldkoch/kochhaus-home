@@ -45,5 +45,5 @@ spec:
     persistence:
       data:
         enabled: true
-        mountPath: /data
+        mountPath: /var/syncthing
         existingClaim: syncthing-data-v2
