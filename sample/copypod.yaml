@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: datacopy
+  namespace: default
+spec:
+  volumes:
+  - name: old-pv
+    persistentVolumeClaim:
+      claimName: bookstack-config-v2
+  - name: new-pv
+    persistentVolumeClaim:
+      claimName: ceph-test-pvc
+  containers:
+  - name: datacopy
+    image: harbor.dom.ain/library/homelab-tools:latest
+    command:
+    - "sleep"
+    - "36000"
+    volumeMounts:
+    - mountPath: "/mnt/old"
+      name: old-pv
+    - mountPath: "/mnt/new"
+      name: new-pv
