@@ -14,6 +14,6 @@ spec:
         - cnmcavoy/harbor-container-webhook:v0.3.4
         - coredns/coredns:1.9.0
         - docker.io/calico/cni:v3.22.1
-        - docker.io/calico/node:v3.22.0
+        - docker.io/calico/node:v3.22.1
         - docker.io/calico/pod2daemon-flexvol:v3.22.1
         - quay.io/metallb/speaker:v0.12.1
