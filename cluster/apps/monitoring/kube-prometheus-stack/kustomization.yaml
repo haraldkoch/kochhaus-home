@@ -5,8 +5,6 @@ namespace: monitoring
 resources:
   - dashboards
   - helm-release.yaml
-  - secret.sops.yaml
-  - discord.yaml
 configMapGenerator:
   - name: kube-prometheus-stack-values
     files:
