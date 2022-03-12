@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - default
   - downloads
+  - drone
   - home
   - kasten-io
   - kube-system

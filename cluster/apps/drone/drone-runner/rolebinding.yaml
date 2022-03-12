@@ -1,0 +1,18 @@
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: drone-runner-kube
+  namespace: drone
+  labels:
+    app.kubernetes.io/name: drone-runner-kube
+    app.kubernetes.io/instance: drone-runner-kube
+    app.kubernetes.io/component: drone-runner-kube
+subjects:
+  - kind: ServiceAccount
+    name: drone-runner-kube
+    namespace: drone
+roleRef:
+  kind: Role
+  name: drone-runner-kube
+  apiGroup: rbac.authorization.k8s.io

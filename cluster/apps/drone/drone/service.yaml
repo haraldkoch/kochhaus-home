@@ -1,0 +1,22 @@
+---
+# Source: drone/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: drone
+  namespace: drone
+  labels:
+    app.kubernetes.io/name: drone
+    app.kubernetes.io/instance: drone
+    app.kubernetes.io/component: server
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: drone
+    app.kubernetes.io/instance: drone
+    app.kubernetes.io/component: server
