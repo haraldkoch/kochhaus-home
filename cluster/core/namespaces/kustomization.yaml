@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - cert-manager.yaml
   - downloads.yaml
+  - drone.yaml
   - home.yaml
   - kasten-io.yaml
   - media.yaml

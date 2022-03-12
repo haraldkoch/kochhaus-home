@@ -1,0 +1,66 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drone-runner-kube
+  namespace: drone
+  labels:
+    app.kubernetes.io/name: drone-runner-kube
+    app.kubernetes.io/instance: drone-runner-kube
+    app.kubernetes.io/component: drone-runner-kube
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: drone-runner-kube
+      app.kubernetes.io/instance: drone-runner-kube
+      app.kubernetes.io/component: drone-runner-kube
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: drone-runner-kube
+        app.kubernetes.io/instance: drone-runner-kube
+        app.kubernetes.io/component: drone-runner-kube
+      annotations:
+        secret.reloader.stakater.com/reload: drone-secret
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+      serviceAccountName: drone-runner-kube
+      securityContext:
+        {}
+      terminationGracePeriodSeconds: 3600
+      podAffinity:
+      containers:
+        - name: server
+          securityContext:
+            {}
+          image: "drone/drone-runner-kube:linux-amd64"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          resources:
+            {}
+          env:
+            - name: DRONE_NAMESPACE_DEFAULT
+              value: drone
+            - name: DRONE_RPC_HOST
+              value: drone
+            - name: DRONE_RPC_PROTO
+              value: http
+            - name: DRONE_SERVER_HOST
+              value: drone.${SECRET_INTERNAL_DOMAIN}
+            - name: DRONE_SERVER_PROTO
+              value: https
+          envFrom:
+            - secretRef:
+                name: drone-secret

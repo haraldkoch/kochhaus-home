@@ -1,0 +1,62 @@
+---
+# Source: drone/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drone
+  namespace: drone
+  labels:
+    app.kubernetes.io/name: drone
+    app.kubernetes.io/instance: drone
+    app.kubernetes.io/component: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: drone
+      app.kubernetes.io/instance: drone
+      app.kubernetes.io/component: server
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: drone
+        app.kubernetes.io/instance: drone
+        app.kubernetes.io/component: server
+      annotations:
+        secret.reloader.stakater.com/reload: drone-secret
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        {}
+      containers:
+        - name: server
+          securityContext:
+            {}
+          image: "drone/drone:2.11.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {}
+          env:
+            - name: DRONE_SERVER_HOST
+              value: drone.${SECRET_PUBLIC_DOMAIN}
+            - name: DRONE_SERVER_PROTO
+              value: https
+          envFrom:
+            - secretRef:
+                name: drone-secret
+          volumeMounts:
+            - name: storage-volume
+              mountPath: /data
+      volumes:
+        - name: storage-volume
+          persistentVolumeClaim:
+            claimName: drone-data-v1
