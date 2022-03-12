@@ -1,0 +1,30 @@
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: drone-runner-kube
+  namespace: drone
+  labels:
+    app.kubernetes.io/name: drone-runner-kube
+    app.kubernetes.io/instance: drone-runner-kube
+    app.kubernetes.io/component: drone-runner-kube
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - create
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - pods/log
+    verbs:
+      - get
+      - create
+      - delete
+      - list
+      - watch
+      - update
