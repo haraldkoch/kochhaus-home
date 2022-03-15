@@ -31,16 +31,14 @@ spec:
     serviceMonitor:
       enabled: true
       namespace: monitoring
-      params:
-        enabled: true
-        conf:
-          module:
-            - if_mib_ifdescr
-          target:
-            - wifi
       path: /snmp
       #interval: 15s
       scrapeTimeout: 10s
       relabelings:
         - sourceLabels: [__param_target]
           targetLabel: instance
+      params:
+        - name: openwrt-1
+          module:
+            - if_mib_ifdescr
+          target: wifi

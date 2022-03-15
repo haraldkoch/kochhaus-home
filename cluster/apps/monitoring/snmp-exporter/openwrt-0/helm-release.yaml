@@ -31,16 +31,14 @@ spec:
     serviceMonitor:
       enabled: true
       namespace: monitoring
-      params:
-        enabled: true
-        conf:
-          module:
-            - if_mib_ifdescr
-          target:
-            - ${PRIVATE_GATEWAY}
       path: /snmp
       #interval: 15s
       scrapeTimeout: 10s
       relabelings:
         - sourceLabels: [__param_target]
           targetLabel: instance
+      params:
+        - name: openwrt-0
+          module:
+            - if_mib_ifdescr
+          target: ${PRIVATE_GATEWAY}
