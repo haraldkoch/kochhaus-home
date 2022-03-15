@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: snmp-exporter-openwrt-0
+  name: snmp-exporter-openwrt
   namespace: monitoring
 spec:
   interval: 15m
@@ -16,16 +16,16 @@ spec:
         namespace: flux-system
 
   values:
-    fullnameOverride: snmp-exporter-openwrt-0
+    fullnameOverride: snmp-exporter-openwrt
     image:
       repository: quay.io/prometheus/snmp-exporter
     extraArgs:
       - "--config.file=/config/snmp.yaml"
     extraConfigmapMounts:
-      - name: snmp-exporter-openwrt-0
+      - name: snmp-exporter-openwrt
         mountPath: /config/snmp.yaml
         subPath: snmp.yaml
-        configMap: snmp-exporter-openwrt-0
+        configMap: snmp-exporter-openwrt
         readOnly: true
         defaultMode: 420
     serviceMonitor:
@@ -38,7 +38,11 @@ spec:
         - sourceLabels: [__param_target]
           targetLabel: instance
       params:
-        - name: openwrt-0
+        - name: 0
           module:
             - if_mib_ifdescr
           target: ${PRIVATE_GATEWAY}
+        - name: 1
+          module:
+            - if_mib_ifdescr
+          target: wifi
