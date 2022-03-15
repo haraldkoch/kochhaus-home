@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: snmp-exporter-openwrt-0
+  name: snmp-exporter-openwrt
   namespace: monitoring
 data:
   snmp.yaml: |
