@@ -16,6 +16,9 @@ spec:
         namespace: flux-system
 
   values:
+    image:
+      repository: syncthing/syncthing
+      tag: 1.18.2
     service:
       listen:
         type: LoadBalancer
