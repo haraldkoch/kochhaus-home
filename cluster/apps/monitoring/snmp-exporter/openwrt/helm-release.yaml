@@ -38,11 +38,11 @@ spec:
         - sourceLabels: [__param_target]
           targetLabel: instance
       params:
-        - name: 0
+        - name: gw
           module:
             - if_mib_ifdescr
           target: ${PRIVATE_GATEWAY}
-        - name: 1
+        - name: wifi
           module:
             - if_mib_ifdescr
           target: wifi
