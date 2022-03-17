@@ -22,7 +22,7 @@ spec:
     nameOverride: remote
     env:
       TZ: "America/Toronto"
-      PUBLIC_KEY: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIINTg8Hfob/c24Ylp2DM5ZMZj3mt9wTUEfRMncUaPbFk"
+      PUBLIC_KEY_FILE: /sshd/authorized_keys
       USER_NAME: "chk"
     service:
       main:
