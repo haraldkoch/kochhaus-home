@@ -1,0 +1,105 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mosquitto
+  namespace: home
+  labels:
+    app.kubernetes.io/name: mosquitto
+    app.kubernetes.io/instance: mosquitto
+spec:
+  revisionHistoryLimit: 3
+  replicas: 2
+  minReadySeconds: 10
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mosquitto
+      app.kubernetes.io/instance: mosquitto
+  serviceName: mosquitto
+  template:
+    metadata:
+      annotations:
+        secret.reloader.stakater.com/reload: mosquitto-config
+      labels:
+        app.kubernetes.io/name: mosquitto
+        app.kubernetes.io/instance: mosquitto
+    spec:
+      terminationGracePeriod: 10
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - mosquitto
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: mosquitto
+          image: "ghcr.io/k8s-at-home/eclipse-mosquitto:v2.0.14"
+          env:
+            - name: "TZ"
+              value: "America/Toronto"
+          ports:
+            - name: mqtt
+              containerPort: 1883
+              protocol: TCP
+            - name: wss
+              containerPort: 9001
+              protocol: TCP
+          volumeMounts:
+            - name: configinc
+              mountPath: /mosquitto/configinc
+            - name: data
+              mountPath: /mosquitto/data
+            - name: mosquitto-config
+              mountPath: /mosquitto/config/mosquitto.conf
+              subPath: mosquitto.conf
+          livenessProbe:
+            tcpSocket:
+              port: 1883
+            initialDelaySeconds: 0
+            failureThreshold: 3
+            timeoutSeconds: 1
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 1883
+            initialDelaySeconds: 0
+            failureThreshold: 3
+            timeoutSeconds: 1
+            periodSeconds: 10
+          startupProbe:
+            tcpSocket:
+              port: 1883
+            initialDelaySeconds: 0
+            failureThreshold: 30
+            timeoutSeconds: 1
+            periodSeconds: 5
+          resources:
+            limits:
+              memory: 64Mi
+            requests:
+              memory: 32Mi
+      volumes:
+        - name: configinc
+          secret:
+            secretName: mosquitto-config
+        - name: mosquitto-config
+          configMap:
+            name: mosquitto-config
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+        labels:
+          app.kubernetes.io/part-of: mosquitto
+          kasten.io/backup-volume: "enabled"
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "ceph-block"
+        resources:
+          requests:
+            storage: 256Mi

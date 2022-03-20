@@ -4,3 +4,6 @@ resources:
   #- data-pvc.yaml
   - secret.sops.yaml
   #- helm-release.yaml
+  - configmap.yaml
+  - service.yaml
+  - statefulset.yaml
