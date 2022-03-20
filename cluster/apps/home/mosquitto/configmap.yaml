@@ -1,0 +1,24 @@
+---
+# Source: mosquitto/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mosquitto-config
+  namespace: home
+  labels:
+    app.kubernetes.io/name: mosquitto
+    app.kubernetes.io/instance: mosquitto
+data:
+  mosquitto.conf: |
+    listener 1883
+    allow_anonymous false
+    persistence true
+    persistence_location /mosquitto/data
+    autosave_interval 1800
+    include_dir /mosquitto/configinc
+
+    connection broker0
+    address mosquitto-0.mosquitto
+    remote_username broker
+    remote_password ${SECRET_MQTT_BROKER_PASSWORD}
+    topic # both 0
