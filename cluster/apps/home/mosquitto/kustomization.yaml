@@ -5,3 +5,4 @@ resources:
   - configmap.yaml
   - service.yaml
   - statefulset.yaml
+  - script.yaml

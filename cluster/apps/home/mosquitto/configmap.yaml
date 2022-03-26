@@ -9,7 +9,14 @@ metadata:
     app.kubernetes.io/name: mosquitto
     app.kubernetes.io/instance: mosquitto
 data:
-  mosquitto.conf: |
+  mosquitto-main.conf: |
+    listener 1883
+    allow_anonymous false
+    persistence true
+    persistence_location /mosquitto/data
+    autosave_interval 1800
+    include_dir /mosquitto/configinc
+  mosquitto-secondary.conf: |
     listener 1883
     allow_anonymous false
     persistence true
@@ -17,6 +24,7 @@ data:
     autosave_interval 1800
     include_dir /mosquitto/configinc
 
+    # secondaries connect back to the primary
     connection broker0
     address mosquitto-0.mosquitto
     remote_username broker
