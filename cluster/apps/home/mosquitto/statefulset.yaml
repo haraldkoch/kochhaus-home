@@ -55,9 +55,8 @@ spec:
               mountPath: /mosquitto/configinc
             - name: data
               mountPath: /mosquitto/data
-            - name: mosquitto-config
-              mountPath: /mosquitto/config/mosquitto.conf
-              subPath: mosquitto.conf
+            - name: mainconfig
+              mountPath: /mosquitto/config
           livenessProbe:
             tcpSocket:
               port: 1883
@@ -84,13 +83,31 @@ spec:
               memory: 64Mi
             requests:
               memory: 32Mi
+      initContainers:
+        - name: init-set
+          image: alpine:latest
+          command:
+            - /mnt/script/run.sh
+          volumeMounts:
+            - name: mosquitto-script
+              mountPath: /mnt/script
+            - name: mosquitto-config
+              mountPath: /mnt/configmap
+            - name: mainconfig
+              mountPath: /mnt/config
       volumes:
         - name: configinc
           secret:
             secretName: mosquitto-config
+        - name: mainconfig
+          emptyDir: {}
         - name: mosquitto-config
           configMap:
             name: mosquitto-config
+        - name: mosquitto-script
+          configMap:
+            name: mosquitto-script
+            defaultMode: 0555
   volumeClaimTemplates:
     - metadata:
         name: data

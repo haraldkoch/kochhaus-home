@@ -1,0 +1,22 @@
+---
+# Source: mosquitto/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mosquitto-script
+  namespace: home
+  labels:
+    app.kubernetes.io/name: mosquitto
+    app.kubernetes.io/instance: mosquitto
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+data:
+  run.sh: |
+    #!/bin/sh
+    SET_INDEX=${HOSTNAME##*-}
+    echo "Starting initializing for host ${HOSTNAME} pod $SET_INDEX"
+    if [ "$SET_INDEX" = "0" ]; then
+      cp /mnt/configmap/mosquitto-main.conf /mnt/config/mosquitto.conf
+    else
+      cp /mnt/configmap/mosquitto-secondary.conf /mnt/config/mosquitto.conf
+    fi
