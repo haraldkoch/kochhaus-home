@@ -16,9 +16,8 @@ spec:
         namespace: flux-system
 
   values:
-    #image:
-    #  repository: raspbernetes/node-feature-discovery
-    #  tag: "v0.9.0"
+    nodeFeatureRule:
+      createCRD: true
 
     master:
       tolerations:
@@ -38,6 +37,9 @@ spec:
                     values: [""]
 
     worker:
+      annotations:
+        configmap.reloader.stakater.com/reload: node-feature-discovery-worker-conf
+
       config: |-
         core:
           sources:
@@ -74,9 +76,6 @@ spec:
                   class: ["03"]
                   vendor: ["20a0"]
                   device: ["0001"]
-
-      annotations:
-        configmap.reloader.stakater.com/reload: "nfd-worker-conf"
 
       tolerations:
         - effect: "NoExecute"
