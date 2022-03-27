@@ -16,9 +16,9 @@ spec:
         namespace: flux-system
 
   values:
-    image:
-      repository: raspbernetes/node-feature-discovery
-      tag: "v0.9.0"
+    #image:
+    #  repository: raspbernetes/node-feature-discovery
+    #  tag: "v0.9.0"
 
     master:
       tolerations:
