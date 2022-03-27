@@ -40,7 +40,7 @@ spec:
       annotations:
         configmap.reloader.stakater.com/reload: node-feature-discovery-worker-conf
 
-      config: |-
+      config:
         core:
           sources:
           - cpu
