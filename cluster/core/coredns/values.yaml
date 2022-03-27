@@ -6,6 +6,8 @@ fullnameOverride: coredns
 
 service:
   clusterIP: 10.43.0.10
+  annotations:
+    fix.coredns.template: "fnord"
 
 serviceAccount:
   create: true
@@ -43,7 +45,7 @@ servers:
       #    reload 15s
       #    fallthrough
       - name: prometheus
-        parameters: :9153
+        parameters: 0.0.0.0:9153
       - name: forward
         parameters: . /etc/resolv.conf
       - name: cache
