@@ -16,3 +16,5 @@ spec:
   dnsNames:
     - "${SECRET_PUBLIC_DOMAIN}"
     - "*.${SECRET_PUBLIC_DOMAIN}"
+  privateKey:
+    rotationPolicy: Always
