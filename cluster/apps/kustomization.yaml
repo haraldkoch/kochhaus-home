@@ -15,5 +15,6 @@ resources:
   - rook-ceph
   - system
   - system-upgrade
+  - velero
   - weather
   - vpn

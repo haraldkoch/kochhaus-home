@@ -47,6 +47,8 @@ driver:
 
 volumeSnapshotClasses:
   - name: zfs-nfs
+    labels:
+      velero.io/csi-volumesnapshot-class: "true"
     annotations:
       k10.kasten.io/is-snapshot-class: "true"
     deletionPolicy: Retain

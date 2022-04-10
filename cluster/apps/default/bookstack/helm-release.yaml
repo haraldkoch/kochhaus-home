@@ -33,6 +33,9 @@ spec:
       # DB_PASS: set by valuesFrom
       DB_DATABASE: bookstack
 
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
+
     persistence:
       config:
         enabled: true

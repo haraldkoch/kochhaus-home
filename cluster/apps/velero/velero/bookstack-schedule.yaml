@@ -1,0 +1,17 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: bookstack
+  namespace: velero
+spec:
+  schedule: "@every 6h"
+  template:
+    hooks: {}
+    includedNamespaces:
+      - "*"
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/part-of: bookstack
+    metadata: {}
+    ttl: 720h0m0s
+  useOwnerReferencesInBackup: false
