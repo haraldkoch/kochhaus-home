@@ -26,3 +26,5 @@ spec:
         existingClaim: onedrive-config-v2
       data:
         existingClaim: nfs-onedrive-pvc
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
