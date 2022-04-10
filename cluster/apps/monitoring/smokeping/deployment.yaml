@@ -19,6 +19,8 @@ spec:
       app.kubernetes.io/instance: smokeping
   template:
     metadata:
+      annotations:
+        backup.velero.io/backup-volumes: data
       labels:
         app.kubernetes.io/name: smokeping
         app.kubernetes.io/instance: smokeping
