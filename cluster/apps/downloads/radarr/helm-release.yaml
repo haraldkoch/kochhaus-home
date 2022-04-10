@@ -52,6 +52,8 @@ spec:
           port: 9794
           additionalMetrics: true
           unknownQueueItems: true
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
     persistence:
       config:
         enabled: true

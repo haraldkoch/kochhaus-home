@@ -45,6 +45,8 @@ spec:
         tls:
           - hosts:
               - syncthing.${SECRET_INTERNAL_DOMAIN}
+    podAnnotations:
+      backup.velero.io/backup-volumes: data
     persistence:
       data:
         enabled: true
