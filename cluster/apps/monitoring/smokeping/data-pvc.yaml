@@ -6,7 +6,6 @@ metadata:
   namespace: monitoring
   labels:
     app.kubernetes.io/part-of: smokeping
-    kasten.io/backup-volume: "enabled"
 spec:
   accessModes:
     - ReadWriteOnce

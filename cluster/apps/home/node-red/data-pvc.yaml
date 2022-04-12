@@ -6,7 +6,6 @@ metadata:
   namespace: home
   labels:
     app.kubernetes.io/part-of: node-red
-    kasten.io/backup-volume: "enabled"
 spec:
   accessModes:
     - ReadWriteOnce
