@@ -6,7 +6,6 @@ metadata:
   namespace: media
   labels:
     app.kubernetes.io/part-of: tautulli
-    kasten.io/backup-volume: "enabled"
 spec:
   accessModes:
     - ReadWriteOnce

@@ -7,7 +7,6 @@ metadata:
   labels:
     app.kubernetes.io/name: bookstack
     app.kubernetes.io/part-of: bookstack
-    kasten.io/backup-volume: "enabled"
 spec:
   accessModes:
     - ReadWriteOnce

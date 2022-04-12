@@ -6,7 +6,6 @@ resources:
   - downloads
   - drone
   - home
-  #- kasten-io
   - kube-system
   - media
   - monitoring
