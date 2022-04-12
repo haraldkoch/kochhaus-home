@@ -114,9 +114,8 @@ spec:
         name: data
         labels:
           app.kubernetes.io/part-of: mosquitto
-          kasten.io/backup-volume: "enabled"
       spec:
-        accessModes: [ "ReadWriteOnce" ]
+        accessModes: ["ReadWriteOnce"]
         storageClassName: "ceph-block"
         resources:
           requests:
