@@ -20,7 +20,7 @@ spec:
       #repository: ghcr.io/haraldkoch/goldpinger
       #tag: sha-5ba27c2
       repository: bloomberg/goldpinger
-      tag: v3.4.1
+      tag: v3.5.1
 
     tolerations:
       - key: "node-role.kubernetes.io/control-plane"
