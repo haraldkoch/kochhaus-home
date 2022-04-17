@@ -13,6 +13,6 @@ spec:
     - images:
         - coredns/coredns:1.9.1
         - docker.io/calico/cni:v3.22.2
-        - docker.io/calico/node:v3.22.1
+        - docker.io/calico/node:v3.22.2
         - docker.io/calico/pod2daemon-flexvol:v3.22.2
         - quay.io/metallb/speaker:v0.12.1
