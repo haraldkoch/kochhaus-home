@@ -37,8 +37,8 @@ spec:
           - networking
       name: "citizen"
       customApps:
-        - name: Harbor
-          url: https://harbor.${PRIVATE_STATIC_DOMAIN}
+        - name: Home Assistant
+          url: https://hass.${PRIVATE_STATIC_DOMAIN}
       groups:
         - name: Communicate
           links:
