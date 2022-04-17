@@ -35,6 +35,7 @@ spec:
     cephCommandsTimeoutSeconds: "20"
     monitoring:
       enabled: true
+      createPrometheusRules: true
     resources:
       requests:
         cpu: 100m
