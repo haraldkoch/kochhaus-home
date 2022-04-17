@@ -79,7 +79,28 @@ spec:
               initialDelaySeconds: 15
               periodSeconds: 30
               timeoutSeconds: 10
-
+      resources:
+        mgr:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
+        mon:
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+        osd:
+          limits:
+            cpu: "1000m"
+            memory: "1500Mi"
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
       crashCollector:
         disable: false
       mgr:
