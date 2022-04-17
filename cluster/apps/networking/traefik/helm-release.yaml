@@ -88,6 +88,6 @@ spec:
     resources:
       requests:
         memory: 100Mi
-        cpu: 500m
+        cpu: 250m
       limits:
         memory: 500Mi
