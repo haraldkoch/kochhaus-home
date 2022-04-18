@@ -11,11 +11,17 @@ spec:
         # Only allow ingress from K8S
         - ipBlock:
             cidr: 10.0.0.0/8
+        # allow traffic from vpn gateway
+        - ipBlock:
+            cidr: 72.21.17.39/32
   egress:
     - to:
         # Only allow egress to K8S
         - ipBlock:
             cidr: 10.0.0.0/8
+        # allow traffic to vpn gateway
+        - ipBlock:
+            cidr: 72.21.17.39/32
   policyTypes:
     - Ingress
     - Egress
