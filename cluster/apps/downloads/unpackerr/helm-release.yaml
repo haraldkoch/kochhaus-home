@@ -26,6 +26,9 @@ spec:
     envFrom:
       - secretRef:
           name: unpackerr
+    podSecurityContext:
+      supplementalGroups:
+        - 2000
     persistence:
       config:
         enabled: false

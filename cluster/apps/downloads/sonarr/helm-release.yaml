@@ -37,7 +37,7 @@ spec:
               - *host
     podSecurityContext:
       supplementalGroups:
-        - 100
+        - 2000
     metrics:
       enabled: true
       serviceMonitor:
