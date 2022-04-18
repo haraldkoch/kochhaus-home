@@ -21,17 +21,8 @@ spec:
     env:
       TZ: "America/Toronto"
       UN_SONARR_0_URL: http://sonarr:8989
-      UN_SONARR_0_PATHS_0: /complete/sonarr
-      #UN_SONARR_1_URL: http://sonarr-uhd:8989
-      #UN_SONARR_1_PATHS_0: /complete/sonarr-uhd
       UN_RADARR_0_URL: http://radarr:7878
-      UN_RADARR_0_PATHS_0: /complete/radarr
-      #UN_RADARR_1_URL: http://radarr-uhd:7878
-      #UN_RADARR_1_PATHS_0: /complete/radarr-uhd
-      #UN_LIDARR_0_URL: http://lidarr:8686
-      #UN_LIDARR_0_PATHS_0: /complete/lidarr
-      #UN_READARR_0_URL: http://readarr:8787
-      #UN_READARR_0_PATHS_0: /complete/readarr
+
     envFrom:
       - secretRef:
           name: unpackerr
@@ -44,8 +35,8 @@ spec:
         volumeSpec:
           nfs:
             server: "${SECRET_MEDIA_SERVER}"
-            path: /media/requests
-        mountPath: /complete
+            path: /downloads
+        mountPath: "${SECRET_UNPACK_FOLDER}"
     resources:
       requests:
         cpu: 100m

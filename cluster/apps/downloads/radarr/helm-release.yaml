@@ -66,6 +66,14 @@ spec:
             server: "${SECRET_MEDIA_SERVER}"
             path: /media
         mountPath: /media
+      downloads:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${SECRET_MEDIA_SERVER}"
+            path: /downloads
+        mountPath: /downloads
       backup:
         enabled: true
         type: custom
