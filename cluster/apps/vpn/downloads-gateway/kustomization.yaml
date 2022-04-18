@@ -5,9 +5,3 @@ namespace: vpn
 resources:
   - secret.sops.yaml
   - helm-release.yaml
-configMapGenerator:
-  - name: downloads-gateway-values
-    files:
-      - values.yaml
-generatorOptions:
-  disableNameSuffixHash: true
