@@ -1,0 +1,54 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: unpackerr
+  namespace: downloads
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: unpackerr
+      version: 5.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  values:
+    image:
+      repository: docker.io/golift/unpackerr
+      tag: 0.9.9
+    env:
+      TZ: "America/Toronto"
+      UN_SONARR_0_URL: http://sonarr:8989
+      UN_SONARR_0_PATHS_0: /complete/sonarr
+      #UN_SONARR_1_URL: http://sonarr-uhd:8989
+      #UN_SONARR_1_PATHS_0: /complete/sonarr-uhd
+      UN_RADARR_0_URL: http://radarr:7878
+      UN_RADARR_0_PATHS_0: /complete/radarr
+      #UN_RADARR_1_URL: http://radarr-uhd:7878
+      #UN_RADARR_1_PATHS_0: /complete/radarr-uhd
+      #UN_LIDARR_0_URL: http://lidarr:8686
+      #UN_LIDARR_0_PATHS_0: /complete/lidarr
+      #UN_READARR_0_URL: http://readarr:8787
+      #UN_READARR_0_PATHS_0: /complete/readarr
+    envFrom:
+      - secretRef:
+          name: unpackerr
+    persistence:
+      config:
+        enabled: false
+      complete:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${SECRET_MEDIA_SERVER}"
+            path: /media/requests
+        mountPath: /complete
+    resources:
+      requests:
+        cpu: 100m
+        memory: 250Mi
+      limits:
+        memory: 1000Mi

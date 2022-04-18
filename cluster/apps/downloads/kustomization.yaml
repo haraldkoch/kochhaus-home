@@ -8,3 +8,4 @@ resources:
   - prowlarr
   - radarr
   - sonarr
+  - unpackerr
