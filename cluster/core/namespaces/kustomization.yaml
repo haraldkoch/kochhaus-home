@@ -13,6 +13,7 @@ resources:
   - remote.yaml
   - rook-ceph.yaml
   - system.yaml
+  - system-upgrade.yaml
   - velero.yaml
   - vpn.yaml
   - weather.yaml
