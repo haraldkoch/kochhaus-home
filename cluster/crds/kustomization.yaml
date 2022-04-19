@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - external-snapshotter
   - prometheus-operator
+  - rook-ceph
   - traefik
   - velero
