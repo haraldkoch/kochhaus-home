@@ -8,4 +8,5 @@ resources:
   - prowlarr
   - radarr
   - sonarr
+  - trash-updater
   - unpackerr
