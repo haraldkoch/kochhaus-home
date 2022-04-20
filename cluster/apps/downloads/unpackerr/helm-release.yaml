@@ -26,9 +26,9 @@ spec:
     envFrom:
       - secretRef:
           name: unpackerr
-    podSecurityContext:
-      supplementalGroups:
-        - 2000
+    securityContext:
+      runAsUser: 2000
+      runAsGroup: 2000
     persistence:
       config:
         enabled: false
@@ -38,7 +38,7 @@ spec:
         volumeSpec:
           nfs:
             server: "${SECRET_MEDIA_SERVER}"
-            path: /downloads
+            path: /downloads/complete
         mountPath: "${SECRET_UNPACK_FOLDER}"
     resources:
       requests:
