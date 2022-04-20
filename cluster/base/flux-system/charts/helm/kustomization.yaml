@@ -7,6 +7,7 @@ resources:
   - democratic-csi-charts.yaml
   - descheduler-charts.yaml
   - external-dns-charts.yaml
+  - fairwinds-charts.yaml
   - grafana-charts.yaml
   - hajimari-charts.yaml
   - haraldkoch-charts.yaml
