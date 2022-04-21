@@ -9,13 +9,16 @@
 [![Renovate](https://github.com/haraldkoch/kochhaus-home/actions/workflows/schedule-renovate.yaml/badge.svg)](https://github.com/haraldkoch/kochhaus-home/actions/workflows/schedule-renovate.yaml)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-green?logo=pre-commit&logoColor=white&style=flat-square)](https://github.com/pre-commit/pre-commit)
 
-[K3S](https://k3s.io/) test "cluster" on a single [Arch Linux](https://www.archlinux.org/) host on my homelab server.
+[K3S](https://k3s.io/) test cluster on 5 [Arch Linux](https://www.archlinux.org/) hosts. Currently I have:
+- Raspberry Pi 4b (4G) - control plane
+- Raspberry Pi 4b (8G) with an external SSD
+- Two VMs (6G) on my homelab compute server
+- One VM (6G) on my homelab backup / media server
 
 ## Off-cluster support
 
-- [harbor](https://goharbor.io/): Docker registry and local cache - coupled with [harbor-container-webhook](https://github.com/indeedeng-alpha/harbor-container-webhook) to tell Kubernetes to use the cache.
+- [registry](https://github.com/distribution/distribution): I have a host running several instances of the OCI container registry as a pull-through cache for each of the major internet container registries.
 - [blocky](https://github.com/0xERR0R/blocky): lightweight ad-blocking DNS resolver - this is replacing Pi-Hole.
-- [coredns](https://coredns.io/): host the static portion of my home network's DNS.
 
 ## Cluster components
 
@@ -27,9 +30,10 @@
 - [traefik ingress](https://doc.traefik.io/traefik/providers/kubernetes-ingress/): Ingress controller based on Traefik (but not Rancher's default)
 - [nfs-subdir-external-provisioner](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner): creates Persistent Volumes on a pre-existing NFS mount.
 - [democratic-csi](https://github.com/democratic-csi/democratic-csi): creates Persistent Volumes on a ZFS server as separate datasets, and exports them via NFS to the Kubernetes cluter.
+- [rook-ceph](https://rook.io/): on-cluster (hyperconverged) storage - eventually this will all be on SSDs attached to the cluster nodes for low power usage.
 - [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller): Automatically upgrade the K3S kubernetes instance.
 - [prometheus](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack): metrics, monitoring, and alerting
-- [kasten-io](https://www.kasten.io/product/): backups!
+- [velero](https://velero.io/): backups!
 - And more!
 
 ## Home Infrastructure
@@ -41,17 +45,16 @@
 ## Applications
 
 - [bookstack](https://www.bookstackapp.com/): full featured documentation platform.
-- [home-assistant](https://www.home-assistant.io/): Home Automation Hub.
 - [tautulli](https://github.com/Tautulli/Tautulli): Plex usage monitoring application.
 
-Yes, this is a lot of infrastructure and heavy lifting - the point is to experiment with Kubernetes and GitOps in a safe space. But this is increasingly becoming primary infrastructure for my home LAN...
+Yes, this is a lot of infrastructure and heavy lifting - the point is to experiment with Kubernetes and GitOps in a safe space.
 
 [![dexhorthy](assets/blog-on-kubernetes.png)](https://twitter.com/dexhorthy/status/856639005462417409)
 
 I have two longer-term goals:
 
 1. migrate many of the apps that I currently run on Linode to a K8S cluster at Linode or Digital Ocean.
-2. Build a small Raspberry Pi cluster at home to run all of this infrastructure, including pi-hole, homeassistant, and maybe even plex!
+2. Build a small Raspberry Pi cluster at home to run a lot of infrastructure, with the intent of being able to run off a small UPS during power outages.
 
 ---
 
