@@ -5,6 +5,5 @@ resources:
   - hajimari
   - home-assistant
   - mosquitto
-  #- node-red
   - onedrive
   - syncthing
