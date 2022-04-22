@@ -38,7 +38,7 @@ spec:
         volumeSpec:
           nfs:
             server: "${SECRET_MEDIA_SERVER}"
-            path: /downloads/complete
+            path: /media/requests/complete
         mountPath: "${SECRET_UNPACK_FOLDER}"
     resources:
       requests:
