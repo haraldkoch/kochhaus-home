@@ -22,6 +22,10 @@ controller:
   podAnnotations:
     secret.reloader.stakater.com/reload: zfs-nfs-secret
 
+  tolerations:
+    - effect: NoSchedule
+      operator: Exists
+
 storageClasses:
   - name: zfs-nfs
     defaultClass: false

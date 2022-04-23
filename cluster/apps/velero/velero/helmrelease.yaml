@@ -87,9 +87,7 @@ spec:
       podVolumePath: /var/lib/kubelet/pods
       privileged: false
       tolerations:
-        - key: "node-role.kubernetes.io/master"
-          operator: "Exists"
-        - key: "node-role.kubernetes.io/control-plane"
+        - effect: "NoSchedule"
           operator: "Exists"
       resources:
         requests:
