@@ -119,3 +119,6 @@ spec:
       limits:
         cpu: 1000m
         memory: 256Mi
+    tolerations:
+      - effect: NoSchedule
+        operator: Exists

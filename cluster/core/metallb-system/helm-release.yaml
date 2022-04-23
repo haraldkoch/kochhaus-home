@@ -16,13 +16,15 @@ spec:
         namespace: flux-system
 
   values:
+    controller:
+      tolerations:
+        - effect: NoSchedule
+          operator: Exists
     speaker:
       tolerations:
         - effect: NoSchedule
-          key: node-role.kubernetes.io/master
           operator: Exists
-        - effect: NoSchedule
-          key: node-role.kubernetes.io/control-plane
+        - effect: NoExecute
           operator: Exists
 
     configInline:
