@@ -11,7 +11,7 @@
 sonarr:
   - base_url: http://sonarr:8989
     api_key: ${SONARR_APIKEY}
-    quality_definition: hybrid
+    quality_definition: series
     release_profiles:
       - type: series
 
