@@ -15,6 +15,48 @@ spec:
         name: harbor-container-webhook-charts
         namespace: flux-system
 
-  valuesFrom:
-    - kind: ConfigMap
-      name: harbor-container-webhook-values
+  values:
+    rules:
+      - name: "docker.io rewrite rule"
+        matches:
+          - "^docker.io"
+        excludes:
+          # solve the chicken / egg problem?
+          - "goharbor/"
+        replace: "harbor.${PRIVATE_STATIC_DOMAIN}/docker"
+        checkUpstream: true
+      - name: "quay.io rewrite rule"
+        matches:
+          - "^quay.io"
+        excludes: []
+        replace: "harbor.${PRIVATE_STATIC_DOMAIN}/quay"
+        checkUpstream: true
+      - name: "ghcr.io rewrite rule"
+        matches:
+          - "^ghcr.io"
+        excludes: []
+        replace: "harbor.${PRIVATE_STATIC_DOMAIN}/ghcr"
+        checkUpstream: true
+      - name: "k8s.gcr.io rewrite rule"
+        matches:
+          - "^k8s.gcr.io"
+        excludes: []
+        replace: "harbor.${PRIVATE_STATIC_DOMAIN}/k8s_gcr"
+        checkUpstream: true
+
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "harbor-container-webhook"
+
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/arch
+                  operator: In
+                  values:
+                    - "amd64"
+
+    tolerations:
+      - effect: NoSchedule
+        operator: Exists
