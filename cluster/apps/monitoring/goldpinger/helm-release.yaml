@@ -17,16 +17,12 @@ spec:
 
   values:
     image:
-      #repository: ghcr.io/haraldkoch/goldpinger
-      #tag: sha-5ba27c2
       repository: bloomberg/goldpinger
       tag: v3.5.1
 
     tolerations:
-      - key: "node-role.kubernetes.io/control-plane"
-        operator: "Exists"
-      - key: "node-role.kubernetes.io/master"
-        operator: "Exists"
+      - effect: NoSchedule
+        operator: Exists
 
     service:
       type: ClusterIP
