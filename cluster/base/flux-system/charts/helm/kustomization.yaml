@@ -16,6 +16,7 @@ resources:
   - jetstack-charts.yaml
   - k8s-at-home-charts.yaml
   - kube-fledged-charts.yaml
+  - kyverno-charts.yaml
   - metallb-charts.yaml
   - nfs-subdir-external-provisioner-charts.yaml
   - node-feature-discovery-charts.yaml
