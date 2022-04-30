@@ -56,7 +56,3 @@ spec:
                   operator: In
                   values:
                     - "amd64"
-
-    tolerations:
-      - effect: NoSchedule
-        operator: Exists
