@@ -16,7 +16,11 @@ spec:
         namespace: flux-system
 
   values:
+    # CronJob or Deployment
+    kind: Deployment
+
     schedule: "*/5 * * * *"
+    deschedulingInterval: 5m
 
     podAnnotations:
       botkube.io/disable: "true"
