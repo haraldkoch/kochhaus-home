@@ -17,7 +17,7 @@ spec:
 
   values:
     # CronJob or Deployment
-    kind: Deployment
+    kind: CronJob
 
     schedule: "*/5 * * * *"
     deschedulingInterval: 5m
