@@ -8,14 +8,24 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: prometheus-dnssec-exporter
-      version: 0.6.1
+      chart: kah-common-chart
+      version: 1.1.1
       sourceRef:
         kind: HelmRepository
-        name: haraldkoch-charts
+        name: k8s-at-home-charts
         namespace: flux-system
 
   values:
+    nameOverride: prometheus-dnssec-exporter
+
+    image:
+      repository: ghcr.io/haraldkoch/prometheus-dnssec-exporter
+      tag: 0.3.1
+      pullPolicy: IfNotPresent
+
+    env:
+      TZ: America/Toronto
+
     resolvers:
       - 8.8.8.8:53
       - 1.1.1.1:53
@@ -24,6 +34,13 @@ spec:
 
     service:
       main:
+        ports:
+          http:
+            enabled: false
+          metrics:
+            enabled: true
+            protocol: TCP
+            port: 9204
         type: LoadBalancer
         ipFamilyPolicy: PreferDualStack
         annotations:
