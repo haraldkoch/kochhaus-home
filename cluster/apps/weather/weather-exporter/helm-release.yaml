@@ -8,14 +8,18 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: weather-exporter
-      version: 0.1.3
+      chart: kah-common-chart
+      version: 1.1.1
       sourceRef:
         kind: HelmRepository
-        name: haraldkoch-charts
+        name: k8s-at-home-charts
         namespace: flux-system
-
   values:
+    nameOverride: weather-exporter
+    image:
+      repository: ghcr.io/haraldkoch/weather_exporter
+      tag: "0.1.1"
+      pullPolicy: IfNotPresent
     env:
       TZ: America/Toronto
       SCRAPE_INTERVAL: "600"
@@ -24,6 +28,13 @@ spec:
       DARK_SKY_API_KEY: ${SECRET_DARK_SKY_API_KEY}
     service:
       main:
+        ports:
+          http:
+            enabled: false
+          metrics:
+            enabled: true
+            protocol: TCP
+            port: 9265
         type: LoadBalancer
         ipFamilyPolicy: PreferDualStack
         annotations:

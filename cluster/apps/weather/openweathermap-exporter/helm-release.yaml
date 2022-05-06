@@ -8,20 +8,32 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: openweathermap-exporter
-      version: 0.1.1
+      chart: kah-common-chart
+      version: 1.1.1
       sourceRef:
         kind: HelmRepository
-        name: haraldkoch-charts
+        name: k8s-at-home-charts
         namespace: flux-system
-
   values:
+    nameOverride: openweathermap-exporter
+    image:
+      repository: ghcr.io/haraldkoch/openweathermap_exporter
+      tag: "0.1.0"
+      pullPolicy: IfNotPresent
     env:
       TZ: America/Toronto
+      SERVER_PORT: "2112"
       OWM_LOCATION: Toronto,CA
       OWM_API_KEY: ${OPENWEATHERMAP_API_KEY}
     service:
       main:
+        ports:
+          http:
+            enabled: false
+          metrics:
+            enabled: true
+            protocol: TCP
+            port: 2112
         type: LoadBalancer
         ipFamilyPolicy: PreferDualStack
         annotations:
