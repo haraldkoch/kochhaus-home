@@ -63,7 +63,7 @@ spec:
         enabled: true
     backupsEnabled: true
     snapshotsEnabled: false
-    upgradeCRDs: true
+    upgradeCRDs: false
     cleanUpCRDs: false
 
     kubectl:
