@@ -36,8 +36,6 @@ spec:
       main:
         enabled: true
         ingressClassName: "traefik"
-        annotations:
-          hajimari.io/enable: "true"
         hosts:
           - host: "home.${SECRET_INTERNAL_DOMAIN}"
             paths:
