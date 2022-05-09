@@ -42,9 +42,6 @@ spec:
       internal:
         enabled: true
         ingressClassName: "traefik"
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "television-classic"
         hosts:
           - host: &hosti requests.${SECRET_INTERNAL_DOMAIN}
             paths:

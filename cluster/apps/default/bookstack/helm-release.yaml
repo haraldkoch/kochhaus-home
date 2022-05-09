@@ -65,9 +65,6 @@ spec:
       internal:
         enabled: true
         ingressClassName: "traefik"
-        annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "notebook-edit-outline"
         labels:
           app.kubernetes.io/part-of: bookstack
         hosts:
