@@ -28,8 +28,3 @@ spec:
         existingClaim: nfs-onedrive-pvc
     podAnnotations:
       backup.velero.io/backup-volumes: config
-
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
