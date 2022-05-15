@@ -1,0 +1,68 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: heimdall
+  namespace: home
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: heimdall
+      version: 8.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  values:
+    image:
+      repository: linuxserver/heimdall
+      tag: 2.4.12
+    env:
+      TZ: ${CONFIG_TIMEZONE}
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        hosts:
+          - host: &host "dashboard.${SECRET_INTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+    initContainers:
+      new-install:
+        image: busybox:latest
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "/scripts/init-pvc.sh"]
+        volumeMounts:
+          - name: config
+            mountPath: /config
+          - name: backup
+            mountPath: /backups
+          - name: init-pvc
+            mountPath: /scripts
+    persistence:
+      config:
+        enabled: true
+        storageClass: ceph-block
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        mountPath: /config
+        skipuninstall: true
+      backup:
+        enabled: true
+        existingClaim: heimdall-backup-pvc
+        mountPath: /backups
+        readOnly: false
+      init-pvc:
+        enabled: true
+        type: configMap
+        name: heimdall-init
+        mountPath: /scripts
+        readOnly: true
+    resources:
+      requests:
+        memory: 350Mi
+        cpu: 25m
+      limits:
+        memory: 500Mi
