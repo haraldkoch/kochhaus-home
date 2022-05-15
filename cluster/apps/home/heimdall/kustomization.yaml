@@ -1,0 +1,15 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - backup-pvc.yaml
+  - helm-release.yaml
+namespace: home
+configMapGenerator:
+  - name: heimdall-init
+    files:
+      - init-pvc.sh
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
