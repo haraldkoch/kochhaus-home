@@ -24,8 +24,8 @@ spec:
         - name: speedtest
           image: ghcr.io/linuxserver/librespeed:5.2.5
           env:
-            - name: "TZ"
-              value: "America/Toronto"
+            - name: TZ
+              value: ${CONFIG_TIMEZONE}
           ports:
             - containerPort: 80
               name: http

@@ -50,7 +50,7 @@ spec:
       enabled: false
 
     env:
-      TZ: "America/Toronto"
+      TZ: ${CONFIG_TIMEZONE}
 
     probes:
       #Circumvention - avoid restart

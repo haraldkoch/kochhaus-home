@@ -51,7 +51,7 @@ spec:
                       name: bookstack
                       key: mariadb_password
                 - name: TZ
-                  value: America/Toronto
+                  value: ${CONFIG_TIMEZONE}
               volumeMounts:
                 - name: backup
                   mountPath: /backup

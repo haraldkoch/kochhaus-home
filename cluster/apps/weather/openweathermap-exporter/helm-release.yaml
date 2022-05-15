@@ -21,7 +21,7 @@ spec:
       tag: "0.1.0"
       pullPolicy: IfNotPresent
     env:
-      TZ: America/Toronto
+      TZ: ${CONFIG_TIMEZONE}
       SERVER_PORT: "2112"
       OWM_LOCATION: Toronto,CA
       OWM_API_KEY: ${OPENWEATHERMAP_API_KEY}

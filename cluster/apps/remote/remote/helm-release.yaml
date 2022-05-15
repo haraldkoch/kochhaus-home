@@ -22,7 +22,7 @@ spec:
       replicas: 2
     nameOverride: remote
     env:
-      TZ: "America/Toronto"
+      TZ: ${CONFIG_TIMEZONE}
       PUBLIC_KEY_FILE: /sshd/authorized_keys
       USER_NAME: "chk"
     service:

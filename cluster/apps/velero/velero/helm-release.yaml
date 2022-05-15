@@ -21,7 +21,7 @@ spec:
 
     configuration:
       extraEnvVars:
-        TZ: "America/Toronto"
+        TZ: ${CONFIG_TIMEZONE}
 
       provider: aws
 

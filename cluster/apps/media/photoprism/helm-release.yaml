@@ -58,7 +58,7 @@ spec:
         mountPath: /photoprism/originals
 
     env:
-      TZ: America/Toronto
+      TZ: ${CONFIG_TIMEZONE}
       PHOTOPRISM_SITE_URL: photo.${SECRET_INTERNAL_DOMAIN}
       PHOTOPRISM_PUBLIC: false
       PHOTOPRISM_READONLY: true

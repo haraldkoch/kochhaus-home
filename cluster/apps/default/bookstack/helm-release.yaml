@@ -26,8 +26,8 @@ spec:
         app.kubernetes.io/part-of: bookstack
 
     env:
-      TZ: "America/Toronto"
-      APP_URL: "https://kb.${SECRET_PUBLIC_DOMAIN}"
+      TZ: ${CONFIG_TIMEZONE}
+      APP_URL: https://kb.${SECRET_PUBLIC_DOMAIN}
       DB_HOST: bookstack-mariadb.default
       DB_USER: bookstack
       # DB_PASS: set by valuesFrom
