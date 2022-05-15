@@ -19,7 +19,7 @@ spec:
       repository: docker.io/golift/unpackerr
       tag: 0.10.0
     env:
-      TZ: "America/Toronto"
+      TZ: ${CONFIG_TIMEZONE}
       UN_SONARR_0_URL: http://sonarr:8989
       UN_RADARR_0_URL: http://radarr:7878
 

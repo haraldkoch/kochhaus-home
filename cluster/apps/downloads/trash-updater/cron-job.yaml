@@ -39,7 +39,7 @@ spec:
               imagePullPolicy: IfNotPresent
               env:
                 - name: TZ
-                  value: "${TIMEZONE}"
+                  value: ${CONFIG_TIMEZONE}
                 - name: DOTNET_SYSTEM_GLOBALIZATION_INVARIANT
                   value: "1"
               command:
@@ -57,7 +57,7 @@ spec:
               imagePullPolicy: IfNotPresent
               env:
                 - name: TZ
-                  value: "${TIMEZONE}"
+                  value: ${CONFIG_TIMEZONE}
                 - name: DOTNET_SYSTEM_GLOBALIZATION_INVARIANT
                   value: "1"
               command:

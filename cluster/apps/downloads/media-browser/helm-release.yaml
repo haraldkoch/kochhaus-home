@@ -20,7 +20,7 @@ spec:
       repository: docker.io/filebrowser/filebrowser
       tag: v2.21.1
     env:
-      TZ: "${TIMEZONE}"
+      TZ: ${CONFIG_TIMEZONE}
       FB_PORT: 8080
       FB_DATABASE: "/config/filebrowser.db"
       FB_ROOT: "/media"

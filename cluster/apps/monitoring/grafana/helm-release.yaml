@@ -41,7 +41,7 @@ spec:
         allow_sign_up: false
 
     adminPassword: "${SECRET_GRAFANA_PASSWORD}"
-    defaultDashboardsTimezone: America/Toronto
+    defaultDashboardsTimezone: ${CONFIG_TIMEZONE}
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1

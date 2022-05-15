@@ -20,7 +20,7 @@ spec:
       repository: ghcr.io/k8s-at-home/prowlarr-nightly
       tag: v0.4.0.1787
     env:
-      TZ: "America/Toronto"
+      TZ: ${CONFIG_TIMEZONE}
     ingress:
       main:
         enabled: true
