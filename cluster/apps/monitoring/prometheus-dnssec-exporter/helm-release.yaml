@@ -24,7 +24,7 @@ spec:
       pullPolicy: IfNotPresent
 
     env:
-      TZ: America/Toronto
+      TZ: ${CONFIG_TIMEZONE}
 
     resolvers:
       - 8.8.8.8:53

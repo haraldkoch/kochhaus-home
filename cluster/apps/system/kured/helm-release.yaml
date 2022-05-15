@@ -32,7 +32,7 @@ spec:
     configuration:
       startTime: "7:00"
       endTime: "12:00"
-      timeZone: "America/Toronto"
+      timeZone: ${CONFIG_TIMEZONE}
     tolerations:
       - key: "node-role.kubernetes.io/master"
         operator: "Exists"
@@ -43,7 +43,7 @@ spec:
 
     extraEnvVars:
       - name: TZ
-        value: "America/Toronto"
+        value: ${CONFIG_TIMEZONE}
       - name: notifyUrl
         valueFrom:
           secretKeyRef:

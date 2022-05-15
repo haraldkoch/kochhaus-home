@@ -65,7 +65,7 @@ spec:
         type: openvpn
 
         env:
-          TZ: "America/Toronto"
+          TZ: ${CONFIG_TIMEZONE}
           # I think these two are only used by wireguard
           IPTABLES_BACKEND: legacy
           KILLSWITCH: "false"

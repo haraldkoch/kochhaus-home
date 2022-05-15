@@ -17,7 +17,7 @@ spec:
 
   values:
     env:
-      TZ: America/Toronto
+      TZ: ${CONFIG_TIMEZONE}
 
     ingress:
       main:
