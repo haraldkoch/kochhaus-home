@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - actions-runner-controller
   - hajimari
+  - heimdall
   - home-assistant
   - mosquitto
   - onedrive
