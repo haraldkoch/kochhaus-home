@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
   values:
     image:
-      repository: linuxserver/heimdall
+      repository: ghcr.io/linuxserver/heimdall
       tag: 2.4.12
     env:
       TZ: ${CONFIG_TIMEZONE}
