@@ -12,6 +12,7 @@
   - name: load required modules at boot time
     copy:
       content: |
+        ceph
         nbd
         rbd
       dest: /etc/modules-load.d/ceph.conf
@@ -24,5 +25,6 @@
       name: "{{ item }}"
       state: present
     loop:
+    - ceph
     - nbd
     - rbd
