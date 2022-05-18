@@ -8,4 +8,5 @@ resources:
   - home-assistant
   - mosquitto
   - onedrive
+  - sync-browser
   - syncthing
