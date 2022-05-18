@@ -30,9 +30,6 @@ spec:
     crds:
       enabled: true
     csi:
-      enableCephfsDriver: false
-      enableCephfsSnapshotter: false
-
       csiRBDProvisionerResource: |
         - name : csi-provisioner
           resource:
