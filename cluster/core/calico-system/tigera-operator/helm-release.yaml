@@ -1,0 +1,56 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tigera-operator
+  namespace: tigera-operator
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: tigera-operator
+      version: v3.23.1
+      sourceRef:
+        kind: HelmRepository
+        name: calico-charts
+        namespace: flux-system
+
+  install:
+    crds: Create
+    remediation: # perform remediation when helm install fails
+      retries: 5
+
+  upgrade:
+    crds: CreateReplace
+    remediation: # perform remediation when helm upgrade fails
+      retries: 5
+      remediateLastFailure: true # remediate the last failure, when no retries remain
+    cleanupOnFail: true
+
+  rollback:
+    timeout: 10m
+    recreate: true
+    cleanupOnFail: true
+
+  values:
+    # Configures general installation parameters for Calico. Schema is based
+    # on the operator.tigera.io/Installation API documented
+    # here: https://projectcalico.docs.tigera.io/reference/installation/api#operator.tigera.io/v1.InstallationSpec
+    installation:
+      enabled: true
+      # Configures Calico networking.
+      calicoNetwork:
+        # Note: The ipPools section cannot be modified post-install.
+        ipPools:
+          - blockSize: 26
+            cidr: ${NETWORK_K8S_POD_CIDR}
+            encapsulation: VXLANCrossSubnet
+            natOutgoing: Enabled
+            nodeSelector: all()
+          - blockSize: 116
+            cidr: ${NETWORK_K8S_POD_CIDR_V6}
+            encapsulation: None
+            natOutgoing: Enabled
+            nodeSelector: all()
+      nodeMetricsPort: 9091
+      typhaMetricsPort: 9093
