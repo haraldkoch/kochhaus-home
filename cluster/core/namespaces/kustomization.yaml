@@ -15,6 +15,7 @@ resources:
   - rook-ceph.yaml
   - system.yaml
   - system-upgrade.yaml
+  - tigera-operator.yaml
   - velero.yaml
   - vpn.yaml
   - weather.yaml
