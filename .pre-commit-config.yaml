@@ -8,7 +8,7 @@ repos:
           - --config-file
           - .github/lint/.yamllint.yaml
         id: yamllint
-        exclude: ^(ansible/manifests/|cluster/core/calico-system|.*dashboard.json)
+        exclude: ^(ansible/manifests/|.*dashboard.json)
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.2.0
     hooks:
@@ -24,9 +24,9 @@ repos:
     rev: 0.3.1
     hooks:
       - id: fix-smartquotes
-        exclude: ^(ansible/manifests/|cluster/core/calico-system)
+        exclude: ^ansible/manifests/
       - id: fix-ligatures
-        exclude: ^(ansible/manifests/|cluster/core/calico-system)
+        exclude: ^ansible/manifests/
   - repo: https://github.com/k8s-at-home/sops-pre-commit
     rev: v2.1.0
     hooks:
