@@ -22,9 +22,12 @@ spec:
           # image: rogerrum/alertmanager-discord
           image: rogerrum/alertmanager-discord:1.0.3
           resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
             limits:
               memory: "128Mi"
-              cpu: "500m"
+              cpu: "250m"
           ports:
             - containerPort: 9094
           env:
