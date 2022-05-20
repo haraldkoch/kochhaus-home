@@ -104,7 +104,82 @@ spec:
             limits:
               memory: 256Mi
               cpu: 100m
-
+      csiCephFSProvisionerResource: |
+        - name : csi-provisioner
+          resource:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 256Mi
+              cpu: 100m
+        - name : csi-resizer
+          resource:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 256Mi
+              cpu: 100m
+        - name : csi-attacher
+          resource:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 256Mi
+              cpu: 200m
+        - name : csi-snapshotter
+          resource:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 256Mi
+              cpu: 100m
+        - name : csi-cephfsplugin
+          resource:
+            requests:
+              memory: 512Mi
+              cpu: 100m
+            limits:
+              memory: 1Gi
+              cpu: 200m
+        - name : liveness-prometheus
+          resource:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 256Mi
+              cpu: 100m
+      # CEPH CSI CephFS plugin resource requirement list, Put here list of resource
+      # requests and limits you want to apply for plugin pod
+      csiCephFSPluginResource: |
+        - name : driver-registrar
+          resource:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 256Mi
+              cpu: 100m
+        - name : csi-cephfsplugin
+          resource:
+            requests:
+              memory: 512Mi
+              cpu: 100m
+            limits:
+              memory: 1Gi
+              cpu: 200m
+        - name : liveness-prometheus
+          resource:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 256Mi
+              cpu: 100m
     cephCommandsTimeoutSeconds: "20"
     monitoring:
       enabled: true
