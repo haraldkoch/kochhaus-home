@@ -45,6 +45,10 @@ spec:
         LowNodeUtilization:
           enabled: true
           params:
+            nodeFit: true
+            namespaces:
+              exclude:
+                - "remote"
             nodeResourceUtilizationThresholds:
               thresholds:
                 cpu: 50
