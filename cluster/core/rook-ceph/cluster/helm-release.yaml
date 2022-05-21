@@ -82,46 +82,46 @@ spec:
       resources:
         mgr:
           limits:
-            cpu: "1000m"
-            memory: "512Mi"
+            cpu: 500m
+            memory: 512Mi
           requests:
-            cpu: "250m"
-            memory: "256Mi"
+            cpu: 50m
+            memory: 256Mi
         mon:
           limits:
-            cpu: "1000m"
-            memory: "1152Mi"
+            cpu: 1000m
+            memory: 1280Mi
           requests:
-            cpu: "250m"
-            memory: "256Mi"
+            cpu: 100m
+            memory: 256Mi
         osd:
           limits:
-            cpu: "1000m"
-            memory: "1536Mi"
+            cpu: 500m
+            memory: 1536Mi
           requests:
-            cpu: "250m"
-            memory: "256Mi"
+            cpu: 250m
+            memory: 256Mi
         prepareosd:
           limits:
-            cpu: "1000m"
-            memory: "200Mi"
+            cpu: 1000m
+            memory: 200Mi
           requests:
-            cpu: "100m"
-            memory: "50Mi"
+            cpu: 100m
+            memory: 50Mi
         mgr-sidecar:
           limits:
-            cpu: "500m"
-            memory: "100Mi"
+            cpu: 256m
+            memory: 100Mi
           requests:
-            cpu: "100m"
-            memory: "40Mi"
+            cpu: 50m
+            memory: 40Mi
         crashcollector:
           limits:
-            cpu: "500m"
-            memory: "60Mi"
+            cpu: 100m
+            memory: 220M
           requests:
-            cpu: "100m"
-            memory: "60Mi"
+            cpu: 15
+            memory: 64M
         logcollector:
           limits:
             cpu: "500m"
@@ -207,10 +207,10 @@ spec:
             resources:
               limits:
                 cpu: 1000m
-                memory: 1Gi
+                memory: 850M
               requests:
-                cpu: 250m
-                memory: 256Mi
+                cpu: 100m
+                memory: 64M
         storageClass:
           enabled: true
           isDefault: false
