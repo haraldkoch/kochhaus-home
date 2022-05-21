@@ -61,7 +61,8 @@ spec:
         existingClaim: syncthing-data-v3
     resources:
       requests:
-        memory: 100Mi
-        cpu: 100m
+        cpu: 15m
+        memory: 64M
       limits:
-        memory: 750Mi
+        cpu: 100m
+        memory: 64M
