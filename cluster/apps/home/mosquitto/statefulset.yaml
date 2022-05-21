@@ -80,10 +80,12 @@ spec:
             timeoutSeconds: 1
             periodSeconds: 5
           resources:
-            limits:
-              memory: 64Mi
             requests:
-              memory: 32Mi
+              cpu: 15m
+              memory: 64M
+            limits:
+              cpu: 50m
+              memory: 64M
       initContainers:
         - name: init-set
           image: alpine:latest
