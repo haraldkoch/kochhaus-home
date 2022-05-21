@@ -52,3 +52,10 @@ spec:
         enabled: true
         mountPath: /var/syncthing
         existingClaim: syncthing-data-v3
+    resources:
+      requests:
+        cpu: 15m
+        memory: 64M
+      limits:
+        cpu: 100m
+        memory: 128M
