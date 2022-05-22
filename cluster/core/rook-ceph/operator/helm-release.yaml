@@ -66,10 +66,10 @@ spec:
         - name : csi-rbdplugin
           resource:
             requests:
-              memory: 512Mi
-              cpu: 100m
+              memory: 64Mi
+              cpu: 50m
             limits:
-              memory: 1Gi
+              memory: 256Mi
               cpu: 200m
         - name : liveness-prometheus
           resource:
@@ -91,10 +91,10 @@ spec:
         - name : csi-rbdplugin
           resource:
             requests:
-              memory: 512Mi
-              cpu: 100m
+              memory: 64Mi
+              cpu: 50m
             limits:
-              memory: 1Gi
+              memory: 256Mi
               cpu: 200m
         - name : liveness-prometheus
           resource:
@@ -140,10 +140,10 @@ spec:
         - name : csi-cephfsplugin
           resource:
             requests:
-              memory: 512Mi
-              cpu: 100m
+              memory: 64Mi
+              cpu: 50m
             limits:
-              memory: 1Gi
+              memory: 256Gi
               cpu: 200m
         - name : liveness-prometheus
           resource:
@@ -167,10 +167,10 @@ spec:
         - name : csi-cephfsplugin
           resource:
             requests:
-              memory: 512Mi
-              cpu: 100m
+              memory: 64Mi
+              cpu: 50m
             limits:
-              memory: 1Gi
+              memory: 256Mi
               cpu: 200m
         - name : liveness-prometheus
           resource:
