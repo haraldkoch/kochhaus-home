@@ -6,7 +6,6 @@ resources:
   - downloads.yaml
   - drone.yaml
   - home.yaml
-  - kyverno.yaml
   - media.yaml
   - metallb-system.yaml
   - monitoring.yaml
