@@ -5,6 +5,5 @@ resources:
   - external-snapshotter
   - kyverno
   - prometheus-operator
-  - rook-ceph
   - traefik
   - velero

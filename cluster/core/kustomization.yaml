@@ -10,6 +10,5 @@ resources:
   #- kyverno
   - metallb-system
   - nfs-subdir-external-provisioner
-  - rook-ceph
   - system-upgrade
   - monitoring
