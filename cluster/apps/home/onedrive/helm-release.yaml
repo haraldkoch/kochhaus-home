@@ -23,7 +23,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: onedrive-config-v2
+        existingClaim: onedrive-config-v3
       data:
         existingClaim: nfs-onedrive-pvc
     podAnnotations:

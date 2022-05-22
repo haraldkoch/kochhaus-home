@@ -44,7 +44,7 @@ spec:
     persistence:
       config:
         enabled: true
-        storageClass: ceph-block
+        storageClass: zfs-nfs
         accessMode: ReadWriteOnce
         size: 1Gi
         mountPath: /config

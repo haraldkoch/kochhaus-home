@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: tautulli-config-v2
+  name: tautulli-config-v3
   namespace: media
   labels:
     app.kubernetes.io/part-of: tautulli
@@ -11,5 +11,5 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1024Mi
-  storageClassName: ceph-block
+      storage: 2Gi
+  storageClassName: zfs-nfs
