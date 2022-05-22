@@ -7,7 +7,7 @@ resources:
   - cert-manager
   - coredns
   - democratic-csi
-  - kyverno
+  #- kyverno
   - metallb-system
   - nfs-subdir-external-provisioner
   - rook-ceph
