@@ -2,21 +2,6 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: syncthing-data-v3
-  namespace: home
-  labels:
-    app.kubernetes.io/part-of: syncthing
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 10Gi
-  storageClassName: ceph-filesystem
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
   name: syncthing-data-v4
   namespace: home
   labels:
