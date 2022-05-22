@@ -65,4 +65,4 @@ spec:
             secretName: smokeping
         - name: data
           persistentVolumeClaim:
-            claimName: smokeping-data-v2
+            claimName: smokeping-data-v3

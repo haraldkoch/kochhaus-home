@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: bookstack-mariadb-data-v2
+  name: bookstack-mariadb-data-v3
   namespace: default
   labels:
     app.kubernetes.io/name: mariadb
@@ -15,4 +15,4 @@ spec:
     requests:
       storage: 5Gi
 
-  storageClassName: ceph-block
+  storageClassName: zfs-nfs
