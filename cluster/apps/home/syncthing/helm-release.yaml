@@ -51,7 +51,7 @@ spec:
       data:
         enabled: true
         mountPath: /var/syncthing
-        existingClaim: syncthing-data-v3
+        existingClaim: syncthing-data-v4
     resources:
       requests:
         cpu: 15m

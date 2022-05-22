@@ -54,11 +54,11 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: sync-browser-config-v1
+        existingClaim: sync-browser-config-v2
       syncthing:
         enabled: true
         mountPath: /syncthing
-        existingClaim: syncthing-data-v3
+        existingClaim: syncthing-data-v4
     resources:
       requests:
         cpu: 15m
