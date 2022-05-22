@@ -12,4 +12,4 @@ spec:
       storage: "2Gi"
   accessModes:
     - ReadWriteOnce
-  storageClassName: ceph-block
+  storageClassName: zfs-nfs

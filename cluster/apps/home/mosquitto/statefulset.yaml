@@ -118,7 +118,7 @@ spec:
           app.kubernetes.io/part-of: mosquitto
       spec:
         accessModes: ["ReadWriteOnce"]
-        storageClassName: "ceph-block"
+        storageClassName: "zfs-nfs"
         resources:
           requests:
             storage: 256Mi

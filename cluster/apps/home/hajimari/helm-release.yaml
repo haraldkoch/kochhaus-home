@@ -88,7 +88,7 @@ spec:
     persistence:
       data:
         enabled: true
-        existingClaim: hajimari-config-v2
+        existingClaim: hajimari-config-v3
     podAnnotations:
       configmap.reloader.stakater.com/reload: "hajimari-settings"
     resources:
