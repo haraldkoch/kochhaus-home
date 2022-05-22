@@ -12,7 +12,6 @@ resources:
   - monitoring.yaml
   - networking.yaml
   - remote.yaml
-  - rook-ceph.yaml
   - system.yaml
   - system-upgrade.yaml
   - tigera-operator.yaml
