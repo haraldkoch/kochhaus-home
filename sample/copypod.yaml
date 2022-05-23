@@ -8,13 +8,13 @@ spec:
   volumes:
   - name: old-pv
     persistentVolumeClaim:
-      claimName: bookstack-config-v2
+      claimName: bookstack-config-v3
   - name: new-pv
     persistentVolumeClaim:
-      claimName: ceph-test-pvc
+      claimName: iscsi-test-pvc
   containers:
   - name: datacopy
-    image: harbor.dom.ain/library/homelab-tools:latest
+    image: ghcr.io/haraldkoch/rsync:main
     command:
     - "sleep"
     - "36000"
