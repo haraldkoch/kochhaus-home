@@ -57,7 +57,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: tautulli-config-v3
+        existingClaim: tautulli-config-v4
       backup:
         enabled: true
         type: custom

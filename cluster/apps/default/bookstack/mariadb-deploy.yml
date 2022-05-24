@@ -106,4 +106,4 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: bookstack-mariadb-data-v3
+            claimName: bookstack-mariadb-data-v4
