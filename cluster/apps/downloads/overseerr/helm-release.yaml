@@ -54,7 +54,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: overseerr-config-v2
+        existingClaim: overseerr-config-v3
         mountPath: /app/config
     resources:
       requests:
