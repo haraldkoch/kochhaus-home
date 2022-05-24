@@ -48,7 +48,7 @@ spec:
         allowVolumeExpansion: true
         parameters:
           fsType: nfs
-
+          #csi.storage.k8s.io/fstype: nfs
         mountOptions:
           - noatime
           - nfsvers=4

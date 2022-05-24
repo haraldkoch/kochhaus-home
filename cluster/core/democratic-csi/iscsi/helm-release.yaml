@@ -47,7 +47,8 @@ spec:
         volumeBindingMode: Immediate
         allowVolumeExpansion: true
         parameters:
-          csi.storage.k8s.io/fstype: ext4
+          fstype: ext4
+          #csi.storage.k8s.io/fstype: ext4
         mountOptions:
           - relatime
         secrets:
