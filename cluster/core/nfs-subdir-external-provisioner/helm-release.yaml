@@ -22,5 +22,11 @@ spec:
       server: ${SECRET_NFS_SERVER}
       path: ${SECRET_NFS_PATH}
       mountOptions:
+        - nfsvers=4.2
+        - tcp
+        - intr
+        - hard
         - noatime
-        - nfsvers=4
+        - nodiratime
+        - rsize=1048576
+        - wsize=1048576
