@@ -17,7 +17,7 @@ spec:
   values:
     image:
       repository: coredns/coredns
-      tag: 1.9.2
+      tag: 1.9.3
 
     fullnameOverride: coredns
 
