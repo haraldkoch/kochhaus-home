@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: remote
+  name: &app remote
   namespace: remote
 spec:
   interval: 15m
@@ -15,12 +15,12 @@ spec:
         name: k8s-at-home-charts
         namespace: flux-system
   values:
+    nameOverride: *app
     image:
       repository: ghcr.io/linuxserver/openssh-server
       tag: version-8.6_p1-r3
     controller:
       replicas: 2
-    nameOverride: remote
     env:
       TZ: ${CONFIG_TIMEZONE}
       PUBLIC_KEY_FILE: /sshd/authorized_keys

@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: prometheus-dnssec-exporter
+  name: &app prometheus-dnssec-exporter
   namespace: monitoring
 spec:
   interval: 15m
@@ -16,7 +16,7 @@ spec:
         namespace: flux-system
 
   values:
-    nameOverride: prometheus-dnssec-exporter
+    nameOverride: *app
 
     image:
       repository: ghcr.io/haraldkoch/prometheus-dnssec-exporter
