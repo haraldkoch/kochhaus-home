@@ -1,0 +1,49 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app smtp-relay
+  namespace: home
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: kah-common-chart
+      version: 1.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+  values:
+    nameOverride: *app
+    image:
+      repository: docker.io/juanluisbaptiste/postfix
+      tag: 1.5.1
+    env:
+      TZ: "${CONFIG_TIMEZONE}"
+      SMTP_SERVER: "${SECRET_SMTP_RELAY}"
+      SMTP_PORT: "${SECRET_SMTP_RELAY_PORT}"
+      SERVER_HOSTNAME: &hostname "smtp.${SECRET_INTERNAL_DOMAIN}"
+      SMTP_NETWORKS: "${NETWORK_K8S_HOST_CIDR}"
+      ALWAYS_ADD_MISSING_HEADERS: "yes"
+      LOG_SUBJECT: "yes"
+    service:
+      main:
+        type: LoadBalancer
+        ipFamilyPolicy: PreferDualStack
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: *hostname
+        ports:
+          http:
+            enabled: false
+          smtp:
+            enabled: true
+            primary: true
+            port: &port 25
+            protocol: TCP
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        memory: 256Mi

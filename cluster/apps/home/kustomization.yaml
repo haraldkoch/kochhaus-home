@@ -6,5 +6,6 @@ resources:
   - hajimari
   - mosquitto
   - onedrive
+  - smtp-relay
   - sync-browser
   - syncthing
