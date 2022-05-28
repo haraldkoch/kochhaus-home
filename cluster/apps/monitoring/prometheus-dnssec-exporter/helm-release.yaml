@@ -29,8 +29,9 @@ spec:
     resolvers:
       - 8.8.8.8:53
       - 1.1.1.1:53
-      #- ${LB_BLOCKY}:53
-      #- ${LB_HOME_DNS}:53
+      - ${PRIVATE_DNS_PRIMARY}:53
+      - ${PRIVATE_DNS_SECONDARY}:53
+      - ${PRIVATE_GATEWAY}:53
 
     service:
       main:
