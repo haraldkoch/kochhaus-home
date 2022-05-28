@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: media-browser
+  name: &app media-browser
   namespace: downloads
 spec:
   interval: 15m
@@ -15,7 +15,7 @@ spec:
         name: k8s-at-home-charts
         namespace: flux-system
   values:
-    fullnameOverride: media-browser
+    nameOverride: *app
     image:
       repository: docker.io/filebrowser/filebrowser
       tag: v2.21.1
