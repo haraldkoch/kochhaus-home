@@ -18,7 +18,7 @@ spec:
     nameOverride: *app
     image:
       repository: docker.io/filebrowser/filebrowser
-      tag: v2.21.1
+      tag: v2.22.0
     env:
       TZ: ${CONFIG_TIMEZONE}
       FB_PORT: 8080
