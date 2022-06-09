@@ -39,7 +39,7 @@ spec:
           nfs:
             server: "${SECRET_MEDIA_SERVER}"
             path: /media/requests/complete
-        mountPath: "${SECRET_UNPACK_FOLDER}"
+        mountPath: /media/requests/complete
     resources:
       requests:
         cpu: 100m
