@@ -23,15 +23,14 @@ spec:
       tag: 0.3.1
       pullPolicy: IfNotPresent
 
+    args:
+      - --config
+      - /config/dnssec-checks
+      - --resolvers
+      - "8.8.8.8:53,1.1.1.1:53,${PRIVATE_DNS_PRIMARY}:53,${PRIVATE_DNS_SECONDARY}:53,${PRIVATE_GATEWAY}:53"
+
     env:
       TZ: ${CONFIG_TIMEZONE}
-
-    resolvers:
-      - 8.8.8.8:53
-      - 1.1.1.1:53
-      - ${PRIVATE_DNS_PRIMARY}:53
-      - ${PRIVATE_DNS_SECONDARY}:53
-      - ${PRIVATE_GATEWAY}:53
 
     service:
       main:
