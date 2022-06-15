@@ -5,6 +5,7 @@ resources:
   - dashboard
   - dashboard-ingress.yaml
   - helm-release.yaml
+  - middlewares
   - service-monitor.yaml
   - tls-default.yaml
 configMapGenerator:

@@ -14,6 +14,7 @@ resources:
   - system.yaml
   - system-upgrade.yaml
   - tigera-operator.yaml
+  - traefik-system.yaml
   - velero.yaml
   - vpn.yaml
   - weather.yaml
