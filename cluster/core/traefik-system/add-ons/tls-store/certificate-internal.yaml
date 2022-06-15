@@ -2,19 +2,19 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${SECRET_PUBLIC_DOMAIN}"
-  namespace: networking
+  name: "${SECRET_INTERNAL_DOMAIN}"
+  namespace: traefik-system
 spec:
-  secretName: "tls.${SECRET_PUBLIC_DOMAIN/./-}"
+  secretName: "tls.${SECRET_INTERNAL_DOMAIN/./-}"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
   #privateKey:
   #  algorithm: ECDSA
   #  size: 384
-  commonName: "${SECRET_PUBLIC_DOMAIN}"
+  commonName: "${SECRET_INTERNAL_DOMAIN}"
   dnsNames:
-    - "${SECRET_PUBLIC_DOMAIN}"
-    - "*.${SECRET_PUBLIC_DOMAIN}"
+    - "${SECRET_INTERNAL_DOMAIN}"
+    - "*.${SECRET_INTERNAL_DOMAIN}"
   privateKey:
     rotationPolicy: Always

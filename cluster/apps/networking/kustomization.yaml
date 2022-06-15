@@ -4,10 +4,7 @@ kind: Kustomization
 resources:
   - cloudflare-ddns
   - echo-server
-  - error-pages
   - external-dns
   - external-dns-old
   - speedtest-exporter
-  - traefik
   - web-static
-  - wildcard-certificate

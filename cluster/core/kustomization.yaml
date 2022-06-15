@@ -12,3 +12,4 @@ resources:
   - nfs-subdir-external-provisioner
   - system-upgrade
   - monitoring
+  - traefik-system
