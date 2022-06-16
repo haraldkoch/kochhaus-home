@@ -35,7 +35,7 @@ spec:
         ingressClassName: traefik
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-homelan@kubernetescrd"
         hosts:
           - host: &host whoami.${SECRET_INTERNAL_DOMAIN}
             paths:
