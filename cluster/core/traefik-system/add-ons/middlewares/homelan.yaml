@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: homelan-ips
+  namespace: traefik-system
+spec:
+  ipWhiteList:
+    sourceRange:
+      - ${SECRET_HOMELAN_IPV4}
+      - ${SECRET_HOMELAN_IPV6}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: homelan
+  namespace: traefik-system
+spec:
+  chain:
+    middlewares:
+      - name: homelan-ips
