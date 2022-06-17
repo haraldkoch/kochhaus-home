@@ -9,6 +9,11 @@ spec:
     sourceRange:
       - ${SECRET_HOMELAN_IPV4}
       - ${SECRET_HOMELAN_IPV6}
+      # include rfc1918 ranges since traefik chains do not support OR operations
+      # https://github.com/traefik/traefik/issues/6007
+      - 10.0.0.0/8
+      - 172.16.0.0/12
+      - 192.168.0.0/16
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
