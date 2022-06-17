@@ -8,6 +8,4 @@ spec:
   chain:
     middlewares:
       - name: homelan-ips
-      - name: rfc1918-ips
-      - name: homelan-ips
       - name: error-pages

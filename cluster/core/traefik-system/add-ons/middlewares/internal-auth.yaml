@@ -7,7 +7,6 @@ metadata:
 spec:
   chain:
     middlewares:
-      - name: rfc1918-ips
       - name: homelan-ips
       - name: security-auth
         namespace: security
