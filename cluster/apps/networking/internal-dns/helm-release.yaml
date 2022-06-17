@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: external-dns-old
+  name: internal-dns
   namespace: networking
 spec:
   interval: 15m
@@ -16,6 +16,8 @@ spec:
         namespace: flux-system
 
   values:
+    nameOverride: internal-dns
+
     provider: rfc2136
 
     extraArgs:
@@ -31,11 +33,11 @@ spec:
       - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
         valueFrom:
           secretKeyRef:
-            name: external-dns-old
+            name: internal-dns
             key: rfc2136_tsig_secret
 
     podAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-old
+      secret.reloader.stakater.com/reload: internal-dns
 
     policy: sync
 
