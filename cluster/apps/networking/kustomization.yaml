@@ -5,7 +5,7 @@ resources:
   - cloudflare-ddns
   - echo-server
   - external-dns
-  - external-dns-old
+  - internal-dns
   - speedtest-exporter
   - web-static
   - whoami
