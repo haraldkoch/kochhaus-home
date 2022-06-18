@@ -2,9 +2,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
 kind: HelmRepository
 metadata:
-  name: actions-runner-controller-charts
+  name: authentik-charts
   namespace: flux-system
 spec:
   interval: 15m
-  url: https://actions-runner-controller.github.io/actions-runner-controller
+  url: https://charts.goauthentik.io
   timeout: 3m

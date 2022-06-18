@@ -3,6 +3,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - actions-runner-controller-charts.yaml
+  - authentik-charts.yaml
+  - bitnami-charts.yaml
   - calico-charts.yaml
   - coredns-charts.yaml
   - deliveryhero-charts.yaml
@@ -23,6 +25,7 @@ resources:
   - okgolove-charts.yaml
   - prometheus-community-charts.yaml
   - rook-ceph-charts.yaml
+  - runix-charts.yaml
   - stakater-charts.yaml
   - traefik-charts.yaml
   - vector-charts.yaml
