@@ -19,5 +19,5 @@ ipv4ipv6=$(jq \
     -n '$arr1 + $arr2 | sort_by(.)' \
 )
 
-# Output array as a string with \, as delimiter
-echo "${ipv4ipv6}" | jq --raw-output '. | join("\\,")'
+# Output array as a yaml snippet
+echo "${ipv4ipv6}" | yq --prettyPrint
