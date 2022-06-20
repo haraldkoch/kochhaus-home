@@ -2,10 +2,10 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: trash-updater
+  name: &app recyclarr
   namespace: downloads
 spec:
-  schedule: "0 0 * * *"
+  schedule: "0 3 * * *"
   concurrencyPolicy: "Forbid"
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 5
@@ -19,15 +19,15 @@ spec:
           restartPolicy: OnFailure
           initContainers:
             - name: render-config
-              image: ghcr.io/k8s-at-home/trash-updater:v1.8.2
+              image: ghcr.io/k8s-at-home/recyclarr:v2.2.0
               envFrom:
                 - secretRef:
-                    name: arr-apikeys
+                    name: *app
               command:
                 - "/bin/bash"
                 - -c
               args:
-                - "envsubst < /config/trash.yaml > /shared/trash.yaml"
+                - "envsubst < /config/recyclarr.yaml > /shared/recyclarr.yaml"
               volumeMounts:
                 - name: config
                   mountPath: /config
@@ -35,44 +35,46 @@ spec:
                   mountPath: /shared
           containers:
             - name: sonarr
-              image: ghcr.io/k8s-at-home/trash-updater:v1.8.2
+              image: ghcr.io/k8s-at-home/recyclarr:v2.2.0
               imagePullPolicy: IfNotPresent
               env:
                 - name: TZ
                   value: ${CONFIG_TIMEZONE}
-                - name: DOTNET_SYSTEM_GLOBALIZATION_INVARIANT
-                  value: "1"
+                - name: RECYCLARR_APP_DATA
+                  value: /config
               command:
-                - /app/trash
+                - /app/recyclarr
               args:
                 - sonarr
                 - --config
-                - /config/trash.yaml
+                - /config/recyclarr.yaml
               volumeMounts:
                 - name: shared
-                  mountPath: /config
+                  mountPath: /config/recyclarr.yaml
+                  subPath: recyclarr.yaml
                   readOnly: true
             - name: radarr
-              image: ghcr.io/k8s-at-home/trash-updater:v1.8.2
+              image: ghcr.io/k8s-at-home/recyclarr:v2.2.0
               imagePullPolicy: IfNotPresent
               env:
                 - name: TZ
                   value: ${CONFIG_TIMEZONE}
-                - name: DOTNET_SYSTEM_GLOBALIZATION_INVARIANT
-                  value: "1"
+                - name: RECYCLARR_APP_DATA
+                  value: /config
               command:
-                - /app/trash
+                - /app/recyclarr
               args:
                 - radarr
                 - --config
-                - /config/trash.yaml
+                - /config/recyclarr.yaml
               volumeMounts:
                 - name: shared
-                  mountPath: /config
+                  mountPath: /config/recyclarr.yaml
+                  subPath: recyclarr.yaml
                   readOnly: true
           volumes:
             - name: config
               configMap:
-                name: trash-updater-config
+                name: *app
             - name: shared
               emptyDir: {}

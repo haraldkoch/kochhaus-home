@@ -6,9 +6,9 @@ resources:
   - cron-job.yaml
 namespace: downloads
 configMapGenerator:
-  - name: trash-updater-config
+  - name: recyclarr
     files:
-      - trash.yaml
+      - recyclarr.yaml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
