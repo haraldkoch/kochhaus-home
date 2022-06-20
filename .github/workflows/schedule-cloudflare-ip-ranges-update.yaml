@@ -8,7 +8,7 @@ on: # yamllint disable-line rule:truthy
 
 env:
   CLOUDFLARE_IP_RANGES_FILE: >-
-    cluster/apps/networking/traefik/cloudflare-ip-ranges.txt
+    cluster/core/traefik-system/add-ons/middlewares/cloudflare-ip-ranges.txt
 
 jobs:
   cloudflare-ip-ranges-update:
