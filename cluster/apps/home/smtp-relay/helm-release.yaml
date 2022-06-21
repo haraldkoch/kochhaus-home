@@ -18,7 +18,7 @@ spec:
     nameOverride: *app
     image:
       repository: docker.io/juanluisbaptiste/postfix
-      tag: 1.5.1
+      tag: 1.6.0
     env:
       TZ: "${CONFIG_TIMEZONE}"
       SMTP_SERVER: "${SECRET_SMTP_RELAY}"
