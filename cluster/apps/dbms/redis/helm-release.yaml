@@ -21,6 +21,15 @@ spec:
     auth:
       enabled: false
     master:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
       resources:
         requests:
           cpu: 10m
@@ -29,6 +38,27 @@ spec:
           # cpu: 15m
           memory: 34M
     replica:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/component: replica
+                    app.kubernetes.io/instance: redis
+                    app.kubernetes.io/name: redis
+                namespaces:
+                  - dbms
+                topologyKey: kubernetes.io/hostname
+              weight: 1
       resources:
         requests:
           cpu: 10m
