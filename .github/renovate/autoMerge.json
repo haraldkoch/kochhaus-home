@@ -13,7 +13,6 @@
         "patch"
       ],
       "matchPackageNames": [
-        "ghcr.io/k8s-at-home/prowlarr-nightly",
         "renovatebot/github-action"
       ]
     }
