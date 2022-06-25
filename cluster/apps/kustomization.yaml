@@ -6,6 +6,7 @@ resources:
   - dbms
   - downloads
   - drone
+  - flux-system
   - home
   - kube-system
   - media
