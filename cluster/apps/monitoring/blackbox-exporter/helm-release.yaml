@@ -12,7 +12,7 @@ spec:
       version: 5.8.1
       sourceRef:
         kind: HelmRepository
-        name: prometheus-community-charts
+        name: prometheus-community
         namespace: flux-system
 
   values:
