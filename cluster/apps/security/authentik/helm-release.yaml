@@ -12,7 +12,7 @@ spec:
       version: 2022.6.3
       sourceRef:
         kind: HelmRepository
-        name: authentik-charts
+        name: authentik
         namespace: flux-system
       interval: 15m
   dependsOn:

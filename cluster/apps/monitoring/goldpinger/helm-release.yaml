@@ -12,7 +12,7 @@ spec:
       version: 5.2.0
       sourceRef:
         kind: HelmRepository
-        name: okgolove-charts
+        name: okgolove
         namespace: flux-system
 
   values:
