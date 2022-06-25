@@ -5,20 +5,19 @@ metadata:
   name: apps
   namespace: flux-system
 spec:
-  interval: 10m0s
-  dependsOn:
-    - name: core
+  interval: 10m
   path: ./cluster/apps
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: flux-cluster
+  dependsOn:
+    - name: core
   decryption:
     provider: sops
     secretRef:
       name: sops-gpg
   postBuild:
-    substitute: {}
     substituteFrom:
       - kind: ConfigMap
         name: cluster-settings
