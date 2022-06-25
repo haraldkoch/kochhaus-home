@@ -1,0 +1,55 @@
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: linode-backup
+  namespace: default
+spec:
+  schedule: "15 * * * *"
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      parallelism: 1
+      template:
+        spec:
+          restartPolicy: OnFailure
+          volumes:
+            - name: backup
+              nfs:
+                server: ${SECRET_BACKUP_SERVER}
+                path: /backup/data/website-backups/
+            - name: ssh
+              secret:
+                secretName: ssh-config
+
+          securityContext:
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsUser: 1000
+
+          containers:
+            - name: rsync
+              image: ghcr.io/haraldkoch/rsync:main
+              imagePullPolicy: IfNotPresent
+              command: ["/usr/bin/rsync"]
+              args:
+                - -avPSAHX
+                - -i /ssh/id_ed25519
+                - ${SECRET_WEB_BACKUP_USER}@${SECRET_WEB_HOST}:/data/website-backups/
+                - /backup/
+              env:
+                - name: TZ
+                  value: ${CONFIG_TIMEZONE}
+              volumeMounts:
+                - name: backup
+                  mountPath: /backup
+                - name: ssh
+                  mountPath: /ssh
+              resources:
+                requests:
+                  memory: "128Mi"
+                  cpu: "1"
+                limits:
+                  memory: "512Mi"
+                  cpu: "1"
