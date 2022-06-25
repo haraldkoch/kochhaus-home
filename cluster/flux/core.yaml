@@ -5,20 +5,21 @@ metadata:
   name: core
   namespace: flux-system
 spec:
-  interval: 10m0s
-  dependsOn:
-    - name: crds
+  interval: 10m
   path: ./cluster/core
   prune: false
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: flux-cluster
+  dependsOn:
+    - name: charts
+    - name: config
+    - name: crds
   decryption:
     provider: sops
     secretRef:
       name: sops-gpg
   postBuild:
-    substitute: {}
     substituteFrom:
       - kind: ConfigMap
         name: cluster-settings
