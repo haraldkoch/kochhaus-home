@@ -12,7 +12,7 @@ spec:
       version: 1.11.0
       sourceRef:
         kind: HelmRepository
-        name: runix-charts
+        name: runix
         namespace: flux-system
   dependsOn:
     - name: postgres
