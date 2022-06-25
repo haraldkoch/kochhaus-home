@@ -1,5 +1,3 @@
-# Editors
-.vscode/
 # Trash
 .DS_Store
 Thumbs.db
@@ -7,6 +5,14 @@ Thumbs.db
 kubeconfig
 # vscode-sops
 .decrypted~*.yaml
-# gitguardian
-.envrc
-.cache_ggshield
+.config.env
+*.agekey
+*.pub
+*.key
+github-deploy-key*
+# Ansible
+xanmanning.k3s*
+# Terraform
+.terraform
+.terraform.tfstate*
+terraform.tfstate*
