@@ -16,11 +16,14 @@ spec:
         namespace: flux-system
 
   install:
-    crds: CreateReplace
+    createNamespace: true
+    remediation:
+      retries: 5
   upgrade:
-    crds: CreateReplace
+    remediation:
+      retries: 5
   values:
-    installCRDs: true
+    installCRDs: false
     webhook:
       enabled: true
     extraArgs:
