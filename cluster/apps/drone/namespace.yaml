@@ -4,5 +4,6 @@ kind: Namespace
 metadata:
   name: drone
   labels:
-    goldilocks.fairwinds.com/enabled: "true"
     goharbor.io/harbor-container-webhook-disable: "true"
+    goldilocks.fairwinds.com/enabled: "true"
+    kustomize.toolkit.fluxcd.io/prune: disabled
