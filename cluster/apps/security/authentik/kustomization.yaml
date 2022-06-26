@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
   - helm-release.yaml
   - authentik-auth.yaml
+  - database.yaml
   - secrets.sops.yaml

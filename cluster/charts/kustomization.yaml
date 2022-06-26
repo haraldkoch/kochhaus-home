@@ -6,6 +6,7 @@ resources:
   - authentik.yaml
   - bitnami.yaml
   - calico.yaml
+  - cnpg.yaml
   - coredns.yaml
   - deliveryhero.yaml
   - democratic-csi.yaml
