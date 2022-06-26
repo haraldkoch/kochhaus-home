@@ -14,10 +14,14 @@ spec:
         kind: HelmRepository
         name: authentik
         namespace: flux-system
-      interval: 15m
-  dependsOn:
-    - name: postgres
-      namespace: dbms
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+
   values:
     image:
       repository: ghcr.io/goauthentik/server

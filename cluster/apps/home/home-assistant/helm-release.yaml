@@ -14,15 +14,14 @@ spec:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-
   install:
+    createNamespace: true
     remediation:
-      retries: 3
+      retries: 5
   upgrade:
     remediation:
-      retries: 3
+      retries: 5
 
-  # See https://github.com/k8s-at-home/charts/blob/master/charts/home-assistant/values.yaml
   values:
     image:
       repository: ghcr.io/home-assistant/home-assistant
