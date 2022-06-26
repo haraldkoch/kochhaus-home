@@ -14,16 +14,17 @@ spec:
         kind: HelmRepository
         name: rook-ceph
         namespace: flux-system
-  install:
-    createNamespace: true
-    remediation:
-      retries: 3
-  upgrade:
-    remediation:
-      retries: 3
   dependsOn:
     - name: rook-ceph
       namespace: rook-ceph
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+
   values:
     monitoring:
       enabled: true

@@ -17,6 +17,14 @@ spec:
   dependsOn:
     - name: traefik
       namespace: traefik-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+
   values:
     nameOverride: *app
     image:

@@ -15,11 +15,13 @@ spec:
         name: kyverno
         namespace: flux-system
   install:
+    createNamespace: true
     remediation:
       retries: 5
   upgrade:
     remediation:
       retries: 5
+
   values:
     installCRDs: false
     # TODO(kyverno): change mode to ha on next version

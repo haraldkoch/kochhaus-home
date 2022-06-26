@@ -14,7 +14,13 @@ spec:
         kind: HelmRepository
         name: k8s-at-home
         namespace: flux-system
-
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
   postRenderers:
     - kustomize:
         patchesJson6902:
