@@ -1,0 +1,20 @@
+---
+apiVersion: db.movetokube.com/v1alpha1
+kind: Postgres
+metadata:
+  name: authentik
+  namespace: security
+spec:
+  database: authentik
+  dropOnDelete: false
+---
+apiVersion: db.movetokube.com/v1alpha1
+kind: PostgresUser
+metadata:
+  name: authentik
+  namespace: security
+spec:
+  role: authentik
+  database: authentik
+  secretName: authentik-postgres
+  privileges: OWNER

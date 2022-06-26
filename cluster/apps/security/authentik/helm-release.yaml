@@ -47,19 +47,27 @@ spec:
     geoip:
       enabled: true
 
-    # there seems to be a bug in the helm chart that doesn't copy this from the postgresql section below?
-    env:
-      AUTHENTIK_POSTGRESQL__HOST: postgres-postgresql.dbms
-
     envValueFrom:
       AUTHENTIK_SECRET_KEY:
         secretKeyRef:
           name: authentik-secrets
           key: AUTHENTIK_SECRET_KEY
+      AUTHENTIK_POSTGRESQL__HOST:
+        secretKeyRef:
+          name: authentik-postgres-authentik
+          key: HOST
+      AUTHENTIK_POSTGRESQL__NAME:
+        secretKeyRef:
+          name: authentik-postgres-authentik
+          key: DATABASE_NAME
+      AUTHENTIK_POSTGRESQL__USER:
+        secretKeyRef:
+          name: authentik-postgres-authentik
+          key: LOGIN
       AUTHENTIK_POSTGRESQL__PASSWORD:
         secretKeyRef:
-          name: authentik-secrets
-          key: AUTHENTIK_POSTGRESQL__PASSWORD
+          name: authentik-postgres-authentik
+          key: PASSWORD
 
     authentik:
       log_level: debug
@@ -69,10 +77,11 @@ spec:
         host: smtp-relay.home
         port: 25
         from: auth@${SECRET_INTERNAL_DOMAIN}
+      # this is so dumb. If we don't blank these out here, we get two entries in the envFrom: array later.
       postgresql:
-        host: postgres-postgresql.dbms
-        name: authentik
-        user: authentik
+        host: ""
+        name: ""
+        user: ""
       redis:
         host: redis-master.dbms
 
@@ -88,7 +97,7 @@ spec:
         create: true
 
     podAnnotations:
-      secret.reloader.stakater.com/reload: "authentik-secrets"
+      secret.reloader.stakater.com/reload: "authentik-secrets,authentik-postgres-authentik"
 
   valuesFrom:
     - kind: Secret
