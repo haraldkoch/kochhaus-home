@@ -4,7 +4,7 @@
 
 > GitOps state for my cluster using flux v2
 
-[![k8s](https://img.shields.io/badge/k8s-v1.23.6%2Bk3s1-green?style=flat-square)](https://k8s.io/)
+[![k8s](https://img.shields.io/badge/k8s-v1.24.1%2Bk3s1-green?style=flat-square)](https://k8s.io/)
 [![GitHub last commit](https://img.shields.io/github/last-commit/haraldkoch/kochhaus-home?style=flat-square)](https://github.com/haraldkoch/kochhaus-home/main)
 [![Renovate](https://github.com/haraldkoch/kochhaus-home/actions/workflows/schedule-renovate.yaml/badge.svg)](https://github.com/haraldkoch/kochhaus-home/actions/workflows/schedule-renovate.yaml)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-green?logo=pre-commit&logoColor=white&style=flat-square)](https://github.com/pre-commit/pre-commit)
