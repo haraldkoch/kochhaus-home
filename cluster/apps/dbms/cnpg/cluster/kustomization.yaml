@@ -2,8 +2,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - namespace.yaml
-  - cnpg
-  - ext-postgres-operator
-  - pgadmin
-  - redis
+  - backup.yaml
+  - cluster.yaml
+  - secret.sops.yaml
