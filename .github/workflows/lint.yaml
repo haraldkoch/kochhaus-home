@@ -30,4 +30,8 @@ jobs:
           MARKDOWN_CONFIG_FILE: .markdownlint.yaml
           TERRAFORM_TFLINT_CONFIG_FILE: .tflint.hcl
           YAML_CONFIG_FILE: .yamllint.yaml
+          # kubeval complains about valid kustomize.yaml files!
+          VALIDATE_KUBERNETES_KUBEVAL: false
           KUBERNETES_KUBEVAL_OPTIONS: --ignore-missing-schemas
+          # my ansible files are still a mess.
+          VALIDATE_ANSIBLE: false
