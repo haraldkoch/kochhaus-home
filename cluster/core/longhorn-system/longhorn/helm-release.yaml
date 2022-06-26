@@ -5,7 +5,7 @@ metadata:
   name: longhorn
   namespace: longhorn-system
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
       chart: longhorn
@@ -14,6 +14,13 @@ spec:
         kind: HelmRepository
         name: longhorn
         namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
 
   values:
     ingress:

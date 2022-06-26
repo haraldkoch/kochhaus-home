@@ -14,11 +14,15 @@ spec:
         kind: HelmRepository
         name: actions-runner-controller
         namespace: flux-system
-
   install:
     crds: CreateReplace
+    createNamespace: true
+    remediation:
+      retries: 5
   upgrade:
     crds: CreateReplace
+    remediation:
+      retries: 5
 
   values:
     authSecret:
