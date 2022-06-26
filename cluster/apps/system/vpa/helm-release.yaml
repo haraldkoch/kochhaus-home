@@ -14,7 +14,14 @@ spec:
         kind: HelmRepository
         name: fairwinds
         namespace: flux-system
-  timeout: 20m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+
   values:
     recommender:
       enabled: true
