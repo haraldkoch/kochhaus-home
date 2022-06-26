@@ -14,6 +14,9 @@ spec:
         kind: HelmRepository
         name: rook-ceph
         namespace: flux-system
+  dependsOn:
+    - name: cert-manager
+      namespace: cert-manager
   install:
     createNamespace: true
     crds: CreateReplace
@@ -23,9 +26,7 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-  dependsOn:
-    - name: cert-manager
-      namespace: cert-manager
+
   values:
     crds:
       enabled: true

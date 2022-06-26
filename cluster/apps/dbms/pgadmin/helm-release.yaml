@@ -15,7 +15,15 @@ spec:
         name: runix
         namespace: flux-system
   dependsOn:
-    - name: postgres
+    - name: cpng
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+
   values:
     image:
       registry: docker.io

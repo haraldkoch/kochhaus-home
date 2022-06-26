@@ -17,6 +17,13 @@ spec:
   dependsOn:
     - name: cert-manager
       namespace: cert-manager
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
 
   values:
     image:
