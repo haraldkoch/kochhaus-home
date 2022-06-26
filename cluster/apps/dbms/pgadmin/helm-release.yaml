@@ -15,7 +15,7 @@ spec:
         name: runix
         namespace: flux-system
   dependsOn:
-    - name: cpng
+    - name: cnpg
   install:
     createNamespace: true
     remediation:
