@@ -6,5 +6,4 @@ resources:
   - cnpg
   - ext-postgres-operator
   - pgadmin
-  - postgres
   - redis
