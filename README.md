@@ -49,6 +49,9 @@
 - [reloader](https://github.com/stakater/Reloader) - reloads pods when a configMap and/or Secret changes - something that Flux 2 does not manage itself.
 - [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller) - Automatically upgrade the K3S kubernetes instance.
 - [velero](https://velero.io/): backups!
+- [cloudnative-pg](https://cloudnative-pg.io/) - build and manage a postgresql cluster with HA and backups from a custom resource.
+- [ext-postgres-operator](https://github.com/movetokube/postgres-operator) - create databases and users in an existing postgres cluster.
+- [authentik](https://goauthentik.io/) - integrated authentication and user management.
 - And more!
 
 ## Home Infrastructure
@@ -81,17 +84,14 @@ I have two longer-term goals:
 
 The Git repository contains the following directories under `cluster` and are ordered below by how Flux will apply them.
 
-- **base** directory is the entrypoint to Flux
-- **crds** directory contains custom resource definitions (CRDs) that need to exist globally in your cluster before anything else exists
-- **core** directory (depends on **crds**) are important infrastructure applications (grouped by namespace) that should never be pruned by Flux
-- **apps** directory (depends on **core**) is where your common applications (grouped by namespace) could be placed, Flux will prune resources here if they are not tracked by Git anymore
-
-```
-./cluster
-├── ./apps
-├── ./base
-├── ./core
-└── ./crds
+```sh
+📁 cluster      # k8s cluster defined as code
+├─📁 flux       # flux, gitops operator, loaded before everything
+├─📁 crds       # custom resources, loaded before 📁 core and 📁 apps
+├─📁 charts     # helm repos, loaded before 📁 core and 📁 apps
+├─📁 config     # cluster config, loaded before 📁 core and 📁 apps
+├─📁 core       # crucial apps, namespaced dir tree, loaded before 📁 apps
+└─📁 apps       # regular apps, namespaced dir tree, loaded last
 ```
 
 ---
@@ -102,6 +102,7 @@ The Git repository contains the following directories under `cluster` and are or
 - Rancher [System Upgrade Controller](https://github.com/rancher/system-upgrade-controller) to apply updates to k3s.
 - [Renovate](https://github.com/renovatebot/renovate) with the help of the [k8s-at-home/renovate-helm-releases](https://github.com/k8s-at-home/renovate-helm-releases) Github action keeps my application charts and container images up-to-date.
 - [Github Actions](https://docs.github.com/en/actions) automatically runs renovate.
+- Many, many kubernetes operators
 
 ---
 
