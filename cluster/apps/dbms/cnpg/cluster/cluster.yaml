@@ -1,0 +1,38 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: kochhaus
+  namespace: dbms
+spec:
+  instances: 3
+
+  # Example of rolling update strategy:
+  # - unsupervised: automated update of the primary once all
+  #                 replicas have been upgraded (default)
+  # - supervised: requires manual supervision to perform
+  #               the switchover of the primary
+  primaryUpdateStrategy: unsupervised
+
+  # Require 1Gi of space
+  storage:
+    storageClass: zfs-block
+    size: 10Gi
+
+  monitoring:
+    enablePodMonitor: true
+
+  backup:
+    retentionPolicy: "30d"
+    barmanObjectStore:
+      destinationPath: s3://cnpg/
+      endpointURL: http://${SECRET_BACKUP_SERVER}:9000
+      wal:
+        compression: bzip2
+      s3Credentials:
+        accessKeyId:
+          name: cnpg-backup
+          key: ACCESS_KEY_ID
+        secretAccessKey:
+          name: cnpg-backup
+          key: ACCESS_SECRET_KEY
