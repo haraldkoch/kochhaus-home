@@ -8,7 +8,7 @@
     k3s_use_experimental: false # Note this is required for k3s < v1.19.5+k3s1
     k3s_install_hard_links: true # required for system-upgrade-controller
 
-    k3s_release_version: v1.23
+    k3s_release_version: v1.24
 
     # alternate CNI - use Calico for IPv6 support
     k3s_server_manifests_templates:
