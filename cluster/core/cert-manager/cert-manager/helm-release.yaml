@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: jetstack
         namespace: flux-system
-
   install:
     createNamespace: true
     remediation:
@@ -22,6 +21,7 @@ spec:
   upgrade:
     remediation:
       retries: 5
+
   values:
     installCRDs: false
     webhook:
