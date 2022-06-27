@@ -3,7 +3,7 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: linode-backup
-  namespace: default
+  namespace: downloads
 spec:
   schedule: "15 * * * *"
   concurrencyPolicy: Forbid
