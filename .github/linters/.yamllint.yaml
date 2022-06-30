@@ -2,6 +2,8 @@
 ignore: |
   *.sops.*
   gotk-components.yaml
+  /ansible/group_vars/all.yml
+  /ansible/manifests/calico/tigera-operator.yaml
 extends: default
 rules:
   truthy:
