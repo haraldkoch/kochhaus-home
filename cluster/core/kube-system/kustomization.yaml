@@ -5,4 +5,5 @@ resources:
   - namespace.yaml
   - coredns
   - democratic-csi
+  - local-path-provisioner
   - nfs-subdir-external-provisioner
