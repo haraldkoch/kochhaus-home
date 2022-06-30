@@ -38,6 +38,8 @@ spec:
                     operator: In
                     values:
                       - amd64
+      persistence:
+        storageClass: zfs-block
       resources:
         requests:
           cpu: 10m
@@ -67,6 +69,8 @@ spec:
                   - dbms
                 topologyKey: kubernetes.io/hostname
               weight: 1
+      persistence:
+        storageClass: zfs-block
       resources:
         requests:
           cpu: 10m
