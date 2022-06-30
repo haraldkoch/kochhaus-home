@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: system
 resources:
   - helm-release.yaml
-  #- imagecache.yaml
+  - imagecache.yaml
