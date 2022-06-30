@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - cert-manager
   - external-snapshotter
+  - kube-fledged
   - kyverno
   - prometheus-operator
   - system-upgrade-controller
