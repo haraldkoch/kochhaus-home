@@ -101,7 +101,7 @@ _resources() {
     local chart_values=${4}
     local resources=
 
-    helm repo add main "${chart_registry_url}" > /dev/null 2>&1
+    helm repo add main "${chart_registry_url}"
     pushd "$(mktemp -d)" > /dev/null 2>&1
     helm pull "main/${chart_name}" --untar --version "${chart_version}"
     resources=$(echo "${chart_values}" | helm template "${chart_name}" "${chart_name}" --version "${chart_version}" -f -)
