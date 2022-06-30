@@ -5,7 +5,12 @@ metadata:
   name: kochhaus
   namespace: dbms
 spec:
-  instances: 3
+  instances: 2
+
+  # postgres does not like multi-arch clusters, and some of our postgres clients do not work on arm64
+  affinity:
+    nodeSelector:
+      kubernetes.io/arch: amd64
 
   # Example of rolling update strategy:
   # - unsupervised: automated update of the primary once all
@@ -16,7 +21,7 @@ spec:
 
   # Require 1Gi of space
   storage:
-    storageClass: zfs-block
+    storageClass: local-path
     size: 10Gi
 
   monitoring:
