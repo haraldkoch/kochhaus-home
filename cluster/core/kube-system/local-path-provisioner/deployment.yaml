@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: local-path-provisioner
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: local-path-provisioner
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: local-path-provisioner
+    spec:
+      serviceAccountName: local-path-provisioner
+      containers:
+        - name: local-path-provisioner
+          image: rancher/local-path-provisioner:v0.0.22
+          imagePullPolicy: IfNotPresent
+          command:
+            - local-path-provisioner
+            - --debug
+            - start
+            - --config
+            - /etc/config/config.json
+            - --configmap-name
+            - local-path-provisioner
+            - --service-account-name
+            - local-path-provisioner
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/config/
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+      volumes:
+        - name: config-volume
+          configMap:
+            name: local-path-provisioner
