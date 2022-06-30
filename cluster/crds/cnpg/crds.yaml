@@ -1,0 +1,29 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: cnpg-crd-source
+  namespace: flux-system
+spec:
+  interval: 30m
+  url: https://github.com/cloudnative-pg/cloudnative-pg
+  ref:
+    tag: v1.15.1
+  ignore: |
+    # exclude all
+    /*
+    # path to crds
+    !/config/crd/bases
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cnpg-crds
+  namespace: flux-system
+spec:
+  interval: 30m
+  prune: false
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: cnpg-crd-source
