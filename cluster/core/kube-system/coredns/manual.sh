@@ -15,3 +15,4 @@ kubectl annotate -n kube-system clusterrolebinding coredns meta.helm.sh/release-
 kubectl annotate -n kube-system deployment coredns meta.helm.sh/release-name=coredns meta.helm.sh/release-namespace=kube-system
 kubectl annotate -n kube-system service coredns meta.helm.sh/release-name=coredns meta.helm.sh/release-namespace=kube-system
 kubectl annotate -n kube-system service coredns-metrics meta.helm.sh/release-name=coredns meta.helm.sh/release-namespace=kube-system
+kubectl annotate -n kube-system configmap coredns meta.helm.sh/release-name=coredns meta.helm.sh/release-namespace=kube-system
