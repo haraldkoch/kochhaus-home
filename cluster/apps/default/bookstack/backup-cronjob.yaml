@@ -17,7 +17,7 @@ spec:
             - name: backup
               nfs:
                 server: ${SECRET_BACKUP_SERVER}
-                path: /backup/data/bookstack
+                path: /backup/data/k8s/bookstack
 
           securityContext:
             fsGroup: 1000
