@@ -18,7 +18,7 @@ spec:
             - name: backup
               nfs:
                 server: ${SECRET_BACKUP_SERVER}
-                path: /backup/data/website-backups/
+                path: /backup/data/k8s/website-backups
             - name: ssh
               secret:
                 secretName: ssh-config

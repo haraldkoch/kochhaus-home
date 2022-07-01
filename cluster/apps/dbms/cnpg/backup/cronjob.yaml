@@ -17,7 +17,7 @@ spec:
             - name: backup
               nfs:
                 server: ${SECRET_BACKUP_SERVER}
-                path: /backup/data/kubernetes/postgres
+                path: /backup/data/k8s/postgres
 
           securityContext:
             fsGroup: 1000
