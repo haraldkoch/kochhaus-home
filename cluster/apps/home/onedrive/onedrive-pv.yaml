@@ -13,7 +13,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${SECRET_BACKUP_SERVER}
-    path: "/backup/data/onedrive-backup"
+    path: "/backup/data/k8s/onedrive-backup"
   mountOptions:
     - nfsvers=4.2
     - tcp

@@ -71,7 +71,7 @@ spec:
         volumeSpec:
           nfs:
             server: "${SECRET_BACKUP_SERVER}"
-            path: /backup/data/tautulli
+            path: /backup/data/k8s/tautulli
         mountPath: /config/backups
         readOnly: false
 
