@@ -6,20 +6,21 @@ metadata:
   namespace: default
 spec:
   volumes:
-  - name: old-pv
-    persistentVolumeClaim:
-      claimName: bookstack-config-v3
-  - name: new-pv
-    persistentVolumeClaim:
-      claimName: iscsi-test-pvc
+    - name: old-pv
+      persistentVolumeClaim:
+        claimName: bookstack-config-v3
+    - name: new-pv
+      persistentVolumeClaim:
+        claimName: iscsi-test-pvc
   containers:
-  - name: datacopy
-    image: ghcr.io/haraldkoch/rsync:main
-    command:
-    - "sleep"
-    - "36000"
-    volumeMounts:
-    - mountPath: "/mnt/old"
-      name: old-pv
-    - mountPath: "/mnt/new"
-      name: new-pv
+    - name: datacopy
+      image: ghcr.io/haraldkoch/rsync:main
+      imagePullPolicy: Always
+      command:
+        - "sleep"
+        - "36000"
+      volumeMounts:
+        - mountPath: "/mnt/old"
+          name: old-pv
+        - mountPath: "/mnt/new"
+          name: new-pv
