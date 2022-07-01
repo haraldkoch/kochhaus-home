@@ -1,0 +1,68 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: pg-kochhaus-backup
+  namespace: dbms
+spec:
+  schedule: "59 * * * *"
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      parallelism: 1
+      template:
+        spec:
+          restartPolicy: OnFailure
+          volumes:
+            - name: backup
+              nfs:
+                server: ${SECRET_BACKUP_SERVER}
+                path: /backup/data/kubernetes/postgres
+
+          securityContext:
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsUser: 1000
+
+          containers:
+            - name: postgres
+              # same image as the postgres cluster
+              image: ghcr.io/cloudnative-pg/postgresql:14.3
+              imagePullPolicy: IfNotPresent
+              command: ["/bin/sh"]
+              args:
+                - "-c"
+                - "pg_dumpall -U $PGUSER | gzip > /backup/kochhaus-cluster.sql.gz"
+              env:
+                - name: PGHOST
+                  value: kochhaus-rw.dbms
+                - name: PGPORT
+                  value: "5432"
+                - name: PGUSER
+                  value: postgres
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: kochhaus-superuser
+                      key: password
+                - name: TZ
+                  value: ${CONFIG_TIMEZONE}
+              volumeMounts:
+                - name: backup
+                  mountPath: /backup
+              resources:
+                requests:
+                  memory: "128Mi"
+                  cpu: "1"
+                limits:
+                  memory: "512Mi"
+                  cpu: "1"
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: kubernetes.io/arch
+                        operator: In
+                        values:
+                          - "amd64"
