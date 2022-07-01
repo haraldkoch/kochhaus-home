@@ -30,12 +30,14 @@ spec:
 
           containers:
             - name: rsync
-              image: ghcr.io/haraldkoch/rsync:main
+              image: ghcr.io/haraldkoch/rsync:sha-e76e0de
               imagePullPolicy: IfNotPresent
               command: ["/usr/bin/rsync"]
               args:
                 - -avPSAHX
-                - -i /ssh/id_ed25519
+                - --numeric-ids
+                - -e
+                - /usr/bin/ssh -i /ssh/id_ed25519
                 - ${SECRET_WEB_BACKUP_USER}@${SECRET_WEB_HOST}:/data/website-backups/
                 - /backup/
               env:
@@ -46,6 +48,9 @@ spec:
                   mountPath: /backup
                 - name: ssh
                   mountPath: /ssh
+                - name: ssh
+                  mountPath: /etc/passwd
+                  subPath: passwd
               resources:
                 requests:
                   memory: "128Mi"
