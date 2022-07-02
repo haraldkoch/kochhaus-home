@@ -5,11 +5,11 @@ metadata:
   name: kyverno-source
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 12h
   url: https://github.com/kyverno/kyverno.git
   ref:
     # renovate: registryUrl=https://kyverno.github.io/kyverno/ chart=kyverno
-    tag: v1.7.1
+    tag: kyverno-chart-v2.5.1
   ignore: |
     # exclude all
     /*
@@ -22,7 +22,7 @@ metadata:
   name: kyverno-crds
   namespace: flux-system
 spec:
-  interval: 15m
+  interval: 30m
   prune: false
   wait: true
   sourceRef:

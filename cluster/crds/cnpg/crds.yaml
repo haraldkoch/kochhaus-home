@@ -5,7 +5,7 @@ metadata:
   name: cnpg-crd-source
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 12h
   url: https://github.com/cloudnative-pg/cloudnative-pg
   ref:
     tag: v1.15.1
