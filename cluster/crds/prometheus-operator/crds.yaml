@@ -5,12 +5,11 @@ metadata:
   name: prometheus-operator-crd-source
   namespace: flux-system
 spec:
-  interval: 30m
-  timeout: 2m
+  interval: 12h
   url: https://github.com/prometheus-community/helm-charts.git
   ref:
-    # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
-    tag: kube-prometheus-stack-36.2.0
+    # renovate: registryUrl=https://prometheus-community.github.io/helm-charts chart=kube-prometheus-stack
+    tag: kube-prometheus-stack-36.2.1
   ignore: |
     # exclude all
     /*
@@ -23,7 +22,7 @@ metadata:
   name: prometheus-operator-crds
   namespace: flux-system
 spec:
-  interval: 15m
+  interval: 30m
   prune: false
   sourceRef:
     kind: GitRepository
