@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hass
+  namespace: networking
+spec:
+  type: ExternalName
+  externalName: hass.${SECRET_INTERNAL_DOMAIN}.
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
