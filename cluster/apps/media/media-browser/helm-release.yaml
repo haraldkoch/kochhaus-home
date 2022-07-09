@@ -33,7 +33,7 @@ spec:
       FB_DATABASE: "/config/filebrowser.db"
       FB_ROOT: "/media"
       FB_LOG: "stdout"
-      FB_NOAUTH: "true"
+      FB_NOAUTH: "false"
     service:
       main:
         ports:
