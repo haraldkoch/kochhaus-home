@@ -13,6 +13,7 @@ resources:
   - descheduler.yaml
   - external-dns.yaml
   - fairwinds.yaml
+  - gatus.yaml
   - grafana.yaml
   - hajimari.yaml
   - harbor-container-webhook.yaml
