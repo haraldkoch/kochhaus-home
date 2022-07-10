@@ -5,6 +5,7 @@ resources:
   - namespace.yaml
   - alertmanager-discord-webhook
   #- blackbox-exporter
+  - gatus
   - goldpinger
   #- grafana
   #- kube-prometheus-stack
