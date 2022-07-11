@@ -26,7 +26,7 @@ spec:
     nameOverride: *app
     image:
       repository: docker.io/jmalloc/echo-server
-      tag: 0.3.2
+      tag: 0.3.3
     service:
       main:
         ports:
