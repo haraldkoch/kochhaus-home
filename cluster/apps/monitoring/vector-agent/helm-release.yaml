@@ -25,7 +25,7 @@ spec:
   values:
     image:
       repository: timberio/vector
-      tag: 0.22.3-debian
+      tag: 0.23.0-debian
     role: Agent
     env:
       - name: VECTOR_WATCH_CONFIG
