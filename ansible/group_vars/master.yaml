@@ -48,3 +48,7 @@ k3s_server:
 
   kube-apiserver-arg:
     - "feature-gates=EphemeralContainers=true,MixedProtocolLBService=true,ReadWriteOncePod=true"
+
+  etcd-arg:
+    - "election-timeout=5000"
+    - "heartbeat-interval=250"
