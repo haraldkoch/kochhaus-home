@@ -5,8 +5,7 @@ k3s_cluster:
       hosts:
         k3sj:
         k3sm:
-        #k3st:
-        k3sz:
+        k3st:
       vars:
         ansible_user: ansible
         ansible_python_interpreter: /usr/bin/python
