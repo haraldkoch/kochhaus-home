@@ -5732,6 +5732,7 @@ rules:
   - apiGroups:
     - crd.projectcalico.org
     resources:
+    - bgpconfigurations
     - ippools
     - kubecontrollersconfigurations
     verbs:
