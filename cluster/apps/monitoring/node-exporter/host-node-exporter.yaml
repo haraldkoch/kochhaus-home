@@ -17,8 +17,12 @@ subsets:
         nodeName: k3s2
       - ip: ${K3S3_IPV4_ADDRESS}
         nodeName: k3s3
+      - ip: ${K3SJ_IPV4_ADDRESS}
+        nodeName: k3sj
       - ip: ${K3SM_IPV4_ADDRESS}
         nodeName: k3sm
+      - ip: ${K3ST_IPV4_ADDRESS}
+        nodeName: k3st
     ports:
       - name: http-metrics
         port: 9100
