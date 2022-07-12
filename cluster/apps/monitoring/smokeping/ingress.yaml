@@ -13,6 +13,7 @@ metadata:
     hajimari.io/enable: "true"
     hajimari.io/icon: chart
 spec:
+  ingressClassName: traefik
   tls:
     - hosts:
         - "smokeping.${SECRET_INTERNAL_DOMAIN}"
