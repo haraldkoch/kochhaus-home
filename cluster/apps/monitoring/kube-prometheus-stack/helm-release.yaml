@@ -87,6 +87,21 @@ spec:
 
     grafana:
       enabled: false
+      forceDeployDashboards: true
+      sidecar:
+        dashboards:
+          multicluster:
+            etcd:
+              enabled: true
+
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels:
+              - node
+            targetLabel: instance
 
     nodeExporter:
       enabled: false
@@ -134,13 +149,33 @@ spec:
 
     # cannot be monitored in k3s; runs on localhost
     kubeControllerManager:
-      enabled: false
+      enabled: true
+      endpoints:
+        - ${K3SJ_IPV4_ADDRESS}
+        - ${K3SM_IPV4_ADDRESS}
+        - ${K3ST_IPV4_ADDRESS}
     kubeScheduler:
-      enabled: false
-
-    # we now have an etcd instance
+      enabled: true
+      endpoints:
+        - ${K3SJ_IPV4_ADDRESS}
+        - ${K3SM_IPV4_ADDRESS}
+        - ${K3ST_IPV4_ADDRESS}
+    kubeProxy:
+      enabled: true
+      endpoints:
+        - ${K3SJ_IPV4_ADDRESS}
+        - ${K3SM_IPV4_ADDRESS}
+        - ${K3ST_IPV4_ADDRESS}
     kubeEtcd:
       enabled: true
+      endpoints:
+        - ${K3SJ_IPV4_ADDRESS}
+        - ${K3SM_IPV4_ADDRESS}
+        - ${K3ST_IPV4_ADDRESS}
+      service:
+        enabled: true
+        port: 2381
+        targetPort: 2381
 
     defaultRules:
       rules:
