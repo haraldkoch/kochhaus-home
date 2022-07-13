@@ -6,6 +6,9 @@ configMapGenerator:
   - name: node-aggregate-dashboard
     files:
       - node-aggregate.json
+  - name: etcd-dashboard
+    files:
+      - etcd-dashboard.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
