@@ -19,9 +19,9 @@ spec:
   #               the switchover of the primary
   primaryUpdateStrategy: unsupervised
 
-  # Require 1Gi of space
+  # Require 10Gi of space
   storage:
-    storageClass: local-path
+    storageClass: zfs-block
     size: 10Gi
 
   monitoring:
@@ -41,3 +41,8 @@ spec:
         secretAccessKey:
           name: cnpg-backup
           key: ACCESS_SECRET_KEY
+
+  bootstrap:
+    recovery:
+      backup:
+        name: daily-backup
