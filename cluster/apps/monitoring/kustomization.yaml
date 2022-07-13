@@ -8,7 +8,7 @@ resources:
   - gatus
   - goldpinger
   #- grafana
-  #- kube-prometheus-stack
+  - kube-prometheus-stack
   #- kwatch
   #- loki
   - node-exporter
