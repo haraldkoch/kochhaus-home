@@ -41,8 +41,3 @@ spec:
         secretAccessKey:
           name: cnpg-backup
           key: ACCESS_SECRET_KEY
-
-  bootstrap:
-    recovery:
-      backup:
-        name: daily-backup-1657670400
