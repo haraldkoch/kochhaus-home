@@ -57,6 +57,9 @@ spec:
           name: pikvm1
           url: pikvm1
         - module: icmp
+          name: pikvm2
+          url: pikvm2
+        - module: icmp
           name: ${SECRET_BACKUP_SERVER}-4
           url: ${SECRET_BACKUP_SERVER}
         - module: icmp6
