@@ -1,0 +1,63 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: &name pg-kochhaus-restore
+  namespace: dbms
+spec:
+  ttlSecondsAfterFinished: 86400
+  template:
+    spec:
+      automountServiceAccountToken: true
+      restartPolicy: OnFailure
+      volumes:
+        - name: backup
+          nfs:
+            server: ${SECRET_BACKUP_SERVER}
+            path: /backup/data/k8s/postgres
+
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsUser: 1000
+
+      containers:
+        - name: postgres
+          image: ghcr.io/cloudnative-pg/postgresql:14.4
+          command: ["/bin/sh"]
+          args:
+            - "-c"
+            - "gunzip < /backup/kochhaus-cluster.sql.gz | pg_restore -U $PGUSER -f -"
+          env:
+            - name: PGHOST
+              value: kochhaus-rw.dbms
+            - name: PGPORT
+              value: "5432"
+            - name: PGUSER
+              value: postgres
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kochhaus-superuser
+                  key: password
+            - name: TZ
+              value: ${CONFIG_TIMEZONE}
+          volumeMounts:
+            - name: backup
+              mountPath: /backup
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "1"
+            limits:
+              memory: "512Mi"
+              cpu: "1"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - "amd64"
