@@ -13,7 +13,7 @@ spec:
       parallelism: 1
       template:
         spec:
-          restartPolicy: OnFailure
+          restartPolicy: Never
           volumes:
             - name: backup
               nfs:
