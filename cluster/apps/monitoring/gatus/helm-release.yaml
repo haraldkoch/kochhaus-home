@@ -25,6 +25,7 @@ spec:
   values:
     podAnnotations:
       configmap.reloader.stakater.com/reload: "gatus"
+      secret.reloader.stakater.com/reload: "gatus-secret"
 
     ingress:
       enabled: true
