@@ -37,7 +37,7 @@ spec:
                 - -avPSAHX
                 - --numeric-ids
                 - -e
-                - /usr/bin/ssh -i /ssh/id_ed25519
+                - /usr/bin/ssh -i /ssh/id_ed25519 -o GlobalKnownHostsFile=/ssh/known_hosts
                 - ${SECRET_WEB_BACKUP_USER}@${SECRET_WEB_HOST}:/data/website-backups/
                 - /backup/
               env:
