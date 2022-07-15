@@ -6,7 +6,7 @@ metadata:
   namespace: downloads
 spec:
   schedule: "15 * * * *"
-  concurrencyPolicy: Forbid
+  concurrencyPolicy: Replace
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
