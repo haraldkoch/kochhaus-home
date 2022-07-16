@@ -23,6 +23,19 @@ spec:
   upgrade:
     remediation:
       retries: 5
+  postRenderers:
+    - kustomize:
+        patchesJson6902:
+          - target:
+              kind: Deployment
+              name: pgadmin-pgadmin4
+              namespace: dbms
+            patch:
+              - op: add
+                path: /spec/template/metadata
+                value:
+                  labels:
+                    pmb.home.arpa/backup-claim: &claimName "pgadmin-pgadmin4"
 
   values:
     image:
