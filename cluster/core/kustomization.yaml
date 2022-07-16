@@ -5,7 +5,7 @@ resources:
   - calico-system
   - cert-manager
   - kube-system
-  #- kyverno
+  - kyverno
   - metallb-system
   - tigera-operator
   - traefik-system

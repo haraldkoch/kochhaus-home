@@ -1,0 +1,36 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: resources
+spec:
+  generateExistingOnPolicyUpdate: true
+  rules:
+    - name: remove-cpu-limits
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      exclude:
+        any:
+          - resources:
+              annotations:
+                kyverno.io/ignore: "true"
+          # without this flux constantly reloads its pods
+          - resources:
+              namespaces:
+                - flux-system
+      mutate:
+        patchStrategicMerge:
+          spec:
+            initContainers:
+              - (name): "*"
+                resources:
+                  limits:
+                    cpu: null
+            containers:
+              - (name): "*"
+                resources:
+                  limits:
+                    cpu: null
