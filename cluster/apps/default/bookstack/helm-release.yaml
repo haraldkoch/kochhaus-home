@@ -31,6 +31,7 @@ spec:
     controller:
       labels:
         app.kubernetes.io/part-of: bookstack
+        pmb.home.arpa/backup-claim: &claimName "bookstack-config-v3"
 
     env:
       TZ: ${CONFIG_TIMEZONE}
@@ -46,7 +47,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: bookstack-config-v3
+        existingClaim: *claimName
 
     ingress:
       main:
