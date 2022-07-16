@@ -24,9 +24,13 @@ spec:
 
   values:
     installCRDs: false
-    # TODO(kyverno): change mode to ha on next version
-    mode: standalone
     replicaCount: 3
+    extraArgs:
+      - --autogenInternals=false
+      - --clientRateLimitQPS=30
+      - --clientRateLimitBurst=60
+    serviceMonitor:
+      enabled: true
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
@@ -34,5 +38,3 @@ spec:
         labelSelector:
           matchLabels:
             app.kubernetes.io/instance: kyverno
-    serviceMonitor:
-      enabled: true
