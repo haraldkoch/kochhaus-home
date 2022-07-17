@@ -105,10 +105,10 @@ spec:
         prepareosd:
           limits:
             cpu: 1000m
-            memory: 200Mi
+            memory: 400Mi
           requests:
             cpu: 100m
-            memory: 50Mi
+            memory: 200Mi
         mgr-sidecar:
           limits:
             cpu: 256m
