@@ -13,7 +13,7 @@ spec:
         - port: 53
           protocol: UDP
         - port: 53
-          protocol: UDP
+          protocol: TCP
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
