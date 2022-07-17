@@ -29,6 +29,14 @@ spec:
             cidr: ${SECRET_HOMELAN_IPV4}
         - ipBlock:
             cidr: ${SECRET_HOMELAN_IPV6}
+        - ipBlock:
+            cidr: ${NETWORK_K8S_POD_CIDR}
+        - ipBlock:
+            cidr: ${NETWORK_K8S_SERVICE_CIDR}
+        - ipBlock:
+            cidr: ${NETWORK_K8S_SERVICE_CIDR_V6}
+        - ipBlock:
+            cidr: ${NETWORK_K8S_POD_CIDR_V6}
   egress:
     - to:
         # Only allow egress to LAN
@@ -36,6 +44,14 @@ spec:
             cidr: ${SECRET_HOMELAN_IPV4}
         - ipBlock:
             cidr: ${SECRET_HOMELAN_IPV6}
+        - ipBlock:
+            cidr: ${NETWORK_K8S_POD_CIDR}
+        - ipBlock:
+            cidr: ${NETWORK_K8S_SERVICE_CIDR}
+        - ipBlock:
+            cidr: ${NETWORK_K8S_SERVICE_CIDR_V6}
+        - ipBlock:
+            cidr: ${NETWORK_K8S_POD_CIDR_V6}
   policyTypes:
     - Ingress
     - Egress
