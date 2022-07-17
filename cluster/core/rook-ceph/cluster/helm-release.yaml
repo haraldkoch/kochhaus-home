@@ -40,13 +40,13 @@ spec:
           - hosts:
               - *host
     cephClusterSpec:
-      placement:
-        osd:
-          tolerations:
-            - effect: NoSchedule
-              operator: Exists
-            - effect: NoExecute
-              operator: Exists
+      #placement:
+      #  osd:
+      #    tolerations:
+      #      - effect: NoSchedule
+      #        operator: Exists
+      #      - effect: NoExecute
+      #        operator: Exists
       healthCheck:
         livenessProbe:
           mon:
@@ -121,7 +121,7 @@ spec:
             cpu: 100m
             memory: 220M
           requests:
-            cpu: 15
+            cpu: 15m
             memory: 64M
         logcollector:
           limits:
@@ -151,18 +151,18 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
+          - name: "k3s0"
+            devices:
+              - name: "/dev/disk/by-id/ata-KINGSTON_SA400S37240G_50026B7784829853-part3"
           - name: "k3s1"
             devices:
-              - name: "vdb2"
+              - name: "vdb"
           - name: "k3s2"
             devices:
-              - name: "vdb"
+              - name: "/dev/disk/by-id/ata-SAMSUNG_MZ7LH512HALU-000H1_S4HLNF0N721023-part3"
           - name: "k3s3"
             devices:
               - name: "/dev/disk/by-id/ata-KINGSTON_SA400S37240G_50026B76854AA37E-part3"
-          - name: "k3sm"
-            devices:
-              - name: "vdb"
     cephBlockPoolsVolumeSnapshotClass:
       enabled: true
       name: csi-rbdplugin-snapclass
