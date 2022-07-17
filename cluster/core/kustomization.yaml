@@ -7,5 +7,6 @@ resources:
   - kube-system
   - kyverno
   - metallb-system
+  - rook-ceph
   - tigera-operator
   - traefik-system
