@@ -25,7 +25,7 @@ spec:
   values:
     controller:
       labels:
-        pmb.home.arpa/backup-claim: &claimName "syncthing-data-v4"
+        pmb.home.arpa/snapshot-claim: &claimName "syncthing-data-v4"
     image:
       repository: syncthing/syncthing
       tag: 1.20.3
