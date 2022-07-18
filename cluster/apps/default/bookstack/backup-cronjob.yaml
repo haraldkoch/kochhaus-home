@@ -17,12 +17,11 @@ spec:
           volumes:
             - name: config
               persistentVolumeClaim:
-                claimName: bookstack-config-v3
+                claimName: bookstack-config-v4
 
           securityContext:
-            fsGroup: 1000
-            runAsGroup: 1000
-            runAsUser: 1000
+            runAsGroup: 911
+            runAsUser: 011
 
           containers:
             - name: mariadb

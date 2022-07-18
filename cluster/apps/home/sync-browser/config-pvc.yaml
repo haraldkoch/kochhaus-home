@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: sync-browser-config-v2
+  name: sync-browser-config-v3
   namespace: home
 spec:
   accessModes:
@@ -10,4 +10,4 @@ spec:
   resources:
     requests:
       storage: 10Mi
-  storageClassName: zfs-nfs
+  storageClassName: ceph-block

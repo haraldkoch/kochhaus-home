@@ -62,7 +62,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: media-browser-config-v3
+        existingClaim: media-browser-config-v4
       media:
         enabled: true
         type: custom
@@ -70,6 +70,7 @@ spec:
           nfs:
             server: "${SECRET_MEDIA_SERVER}"
             path: /media
+            readOnly: true
         mountPath: /media
     resources:
       requests:

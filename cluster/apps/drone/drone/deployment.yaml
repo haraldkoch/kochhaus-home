@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/name: drone
         app.kubernetes.io/instance: drone
         app.kubernetes.io/component: server
-        pmb.home.arpa/snapshot-claim: "drone-data-v2"
+        pmb.home.arpa/snapshot-claim: &claimName "drone-data-v3"
       annotations:
         secret.reloader.stakater.com/reload: drone-secret
     spec:
@@ -60,4 +60,4 @@ spec:
       volumes:
         - name: storage-volume
           persistentVolumeClaim:
-            claimName: drone-data-v2
+            claimName: *claimName

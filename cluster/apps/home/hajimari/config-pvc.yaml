@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: hajimari-config-v3
+  name: hajimari-config-v4
   namespace: home
   labels:
     app.kubernetes.io/part-of: hajimari
@@ -12,4 +12,4 @@ spec:
   resources:
     requests:
       storage: 128Mi
-  storageClassName: zfs-nfs
+  storageClassName: ceph-block
