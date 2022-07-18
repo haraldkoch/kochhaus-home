@@ -94,6 +94,18 @@ spec:
     mariadb:
       enabled: false
 
+    initContainers:
+      backup:
+        image: alpine:latest
+        command:
+          - /bin/sh
+          - -c
+        args:
+          - mkdir /config/backup && chown 1000:1000 /config/backup
+        volumeMounts:
+          - name: config
+            mountPath: /config
+
   valuesFrom:
     - kind: Secret
       name: bookstack

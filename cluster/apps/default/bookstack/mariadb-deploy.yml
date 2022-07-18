@@ -10,6 +10,7 @@ metadata:
     app.kubernetes.io/part-of: bookstack
     app.kubernetes.io/component: primary
     kustomize.toolkit.fluxcd.io/substitute: disabled
+    pmb.home.arpa/backup-claim: &claimName "bookstack-mariadb-data-v4"
 spec:
   replicas: 1
   selector:
