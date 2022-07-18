@@ -5,7 +5,10 @@ metadata:
   name: drone-data-v2
   namespace: drone
   labels:
-    app.kubernetes.io/part-of: drone
+    app.kubernetes.io/name: &name drone
+    app.kubernetes.io/instance: *name
+    app.kubernetes.io/part-of: *name
+    pmb.home.arpa/snapshot: "true"
 spec:
   resources:
     requests:

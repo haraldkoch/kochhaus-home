@@ -5,8 +5,10 @@ metadata:
   name: bookstack-config-v3
   namespace: default
   labels:
-    app.kubernetes.io/name: bookstack
-    app.kubernetes.io/part-of: bookstack
+    app.kubernetes.io/name: &name bookstack
+    app.kubernetes.io/instance: *name
+    app.kubernetes.io/part-of: *name
+    pmb.home.arpa/snapshot: "true"
 spec:
   accessModes:
     - ReadWriteOnce

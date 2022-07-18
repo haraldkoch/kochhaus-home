@@ -5,7 +5,10 @@ metadata:
   name: syncthing-data-v4
   namespace: home
   labels:
-    app.kubernetes.io/part-of: syncthing
+    app.kubernetes.io/name: &name syncthing
+    app.kubernetes.io/instance: *name
+    app.kubernetes.io/part-of: *name
+    pmb.home.arpa/snapshot: "true"
 spec:
   accessModes:
     - ReadWriteMany

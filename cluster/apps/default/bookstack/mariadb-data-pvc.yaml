@@ -6,7 +6,9 @@ metadata:
   namespace: default
   labels:
     app.kubernetes.io/name: mariadb
+    app.kubernetes.io/instance: bookstack
     app.kubernetes.io/part-of: bookstack
+    pmb.home.arpa/snapshot: "true"
 spec:
   accessModes:
     - ReadWriteOnce
