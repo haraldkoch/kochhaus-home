@@ -1,7 +1,8 @@
+---
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: bookstack-backup
+  name: bookstack-backup-database
   namespace: default
 spec:
   schedule: "0 * * * *"
@@ -14,10 +15,9 @@ spec:
         spec:
           restartPolicy: OnFailure
           volumes:
-            - name: backup
-              nfs:
-                server: ${SECRET_BACKUP_SERVER}
-                path: /backup/data/k8s/bookstack
+            - name: config
+              persistentVolumeClaim:
+                claimName: bookstack-config-v3
 
           securityContext:
             fsGroup: 1000
@@ -32,7 +32,7 @@ spec:
               command: ["/bin/sh"]
               args:
                 - "-c"
-                - "mysqldump -h $DB_HOST -u $DB_USER -p$DB_PASS --quote-names --databases $DB_DATABASE >/backup/$DB_DATABASE.sql"
+                - "mysqldump -h $DB_HOST -u $DB_USER -p$DB_PASS --quote-names --databases $DB_DATABASE >/config/backup/$DB_DATABASE.sql"
               env:
                 - name: DB_DATABASE
                   value: bookstack
@@ -48,8 +48,8 @@ spec:
                 - name: TZ
                   value: ${CONFIG_TIMEZONE}
               volumeMounts:
-                - name: backup
-                  mountPath: /backup
+                - name: config
+                  mountPath: /config
               resources:
                 requests:
                   memory: "128Mi"
