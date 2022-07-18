@@ -9,6 +9,7 @@ metadata:
     app.kubernetes.io/instance: smokeping
     app.kubernetes.io/part-of: smokeping
     app.kubernetes.io/version: "2.7.3"
+    pmb.home.arpa/snapshot-claim: smokeping-data-v4
 spec:
   replicas: 1
   strategy:
@@ -24,7 +25,6 @@ spec:
       labels:
         app.kubernetes.io/name: smokeping
         app.kubernetes.io/instance: smokeping
-        pmb.home.arpa/snapshot-claim: "smokeping-data-v3"
     spec:
       containers:
         - name: smokeping
@@ -66,4 +66,4 @@ spec:
             secretName: smokeping
         - name: data
           persistentVolumeClaim:
-            claimName: smokeping-data-v3
+            claimName: smokeping-data-v4

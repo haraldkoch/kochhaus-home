@@ -23,9 +23,6 @@ spec:
       retries: 5
 
   values:
-    controller:
-      labels:
-        pmb.home.arpa/snapshot-claim: &claimName "syncthing-data-v4"
     image:
       repository: syncthing/syncthing
       tag: 1.20.3
@@ -55,13 +52,11 @@ spec:
         tls:
           - hosts:
               - syncthing.${SECRET_INTERNAL_DOMAIN}
-    podAnnotations:
-      backup.velero.io/backup-volumes: data
     persistence:
       data:
         enabled: true
         mountPath: /var/syncthing
-        existingClaim: *claimName
+        existingClaim: nfs-syncthing-pvc
     resources:
       requests:
         cpu: 15m
