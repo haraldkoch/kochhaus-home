@@ -5,7 +5,10 @@ metadata:
   name: tautulli-config-v4
   namespace: media
   labels:
-    app.kubernetes.io/part-of: tautulli
+    app.kubernetes.io/name: &name tautulli
+    app.kubernetes.io/instance: *name
+    app.kubernetes.io/part-of: *name
+    pmb.home.arpa/snapshot: "true"
 spec:
   accessModes:
     - ReadWriteOnce

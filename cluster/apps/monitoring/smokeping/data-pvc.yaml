@@ -5,7 +5,10 @@ metadata:
   name: smokeping-data-v3
   namespace: monitoring
   labels:
+    app.kubernetes.io/name: smokeping
+    app.kubernetes.io/instance: smokeping
     app.kubernetes.io/part-of: smokeping
+    pmb.home.arpa/snapshot: "true"
 spec:
   accessModes:
     - ReadWriteOnce

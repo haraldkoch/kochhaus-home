@@ -24,7 +24,7 @@ spec:
       labels:
         app.kubernetes.io/name: smokeping
         app.kubernetes.io/instance: smokeping
-        pmb.home.arpa/backup-claim: "smokeping-data-v3"
+        pmb.home.arpa/snapshot-claim: "smokeping-data-v3"
     spec:
       containers:
         - name: smokeping
