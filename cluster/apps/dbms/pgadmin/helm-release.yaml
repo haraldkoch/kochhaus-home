@@ -35,7 +35,7 @@ spec:
                 path: /spec/template/metadata
                 value:
                   labels:
-                    pmb.home.arpa/backup-claim: &claimName "pgadmin-pgadmin4"
+                    pmb.home.arpa/snapshot-claim: &claimName "pgadmin-pgadmin4"
 
   values:
     image:
@@ -72,6 +72,9 @@ spec:
       accessModes:
         - ReadWriteOnce
       size: 100Mi
+      labels:
+        app.kubernetes.io/instance: pgadmin4
+        pmb.home.arpa/snapshot: "true"
     resources:
       requests:
         cpu: 15m

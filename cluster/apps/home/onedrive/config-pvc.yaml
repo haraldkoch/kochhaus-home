@@ -5,10 +5,13 @@ metadata:
   name: onedrive-config-v3
   namespace: home
   labels:
-    app.kubernetes.io/part-of: onedrive
+    app.kubernetes.io/name: &name onedrive
+    app.kubernetes.io/instance: *name
+    app.kubernetes.io/part-of: *name
+    pmb.home.arpa/snapshot: "true"
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
