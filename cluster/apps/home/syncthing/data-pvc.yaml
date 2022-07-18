@@ -1,18 +1,29 @@
 ---
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-syncthing-pv
+  namespace: home
+spec:
+  storageClassName: syncthing
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: ${SECRET_BACKUP_SERVER}
+    path: "/backup/data/k8s/syncthing"
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: syncthing-data-v4
+  name: nfs-syncthing-pvc
   namespace: home
-  labels:
-    app.kubernetes.io/name: &name syncthing
-    app.kubernetes.io/instance: *name
-    app.kubernetes.io/part-of: *name
-    pmb.home.arpa/snapshot: "true"
 spec:
   accessModes:
     - ReadWriteMany
+  storageClassName: syncthing
   resources:
     requests:
       storage: 10Gi
-  storageClassName: zfs-nfs

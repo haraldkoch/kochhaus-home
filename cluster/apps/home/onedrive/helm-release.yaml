@@ -25,7 +25,7 @@ spec:
   values:
     controller:
       labels:
-        pmb.home.arpa/snapshot-claim: &claimName "onedrive-config-v3"
+        pmb.home.arpa/snapshot-claim: &claimName "onedrive-config-v4"
     env:
       TZ: ${CONFIG_TIMEZONE}
       ONEDRIVE_DOWNLOADONLY: 1

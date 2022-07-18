@@ -25,7 +25,7 @@ spec:
   values:
     controller:
       labels:
-        pmb.home.arpa/snapshot-claim: &claimName "tautulli-config-v4"
+        pmb.home.arpa/snapshot-claim: &claimName "tautulli-config-v5"
 
     env:
       TZ: ${CONFIG_TIMEZONE}

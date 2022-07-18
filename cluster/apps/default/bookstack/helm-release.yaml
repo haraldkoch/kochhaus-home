@@ -31,7 +31,7 @@ spec:
     controller:
       labels:
         app.kubernetes.io/part-of: bookstack
-        pmb.home.arpa/snapshot-claim: &claimName "bookstack-config-v3"
+        pmb.home.arpa/snapshot-claim: &claimName "bookstack-config-v4"
 
     env:
       TZ: ${CONFIG_TIMEZONE}
@@ -101,7 +101,7 @@ spec:
           - /bin/sh
           - -c
         args:
-          - mkdir /config/backup && chown 1000:1000 /config/backup
+          - mkdir -p /config/backup && chown 911:911 /config/backup
         volumeMounts:
           - name: config
             mountPath: /config

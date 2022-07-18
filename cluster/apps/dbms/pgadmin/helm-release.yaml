@@ -23,19 +23,6 @@ spec:
   upgrade:
     remediation:
       retries: 5
-  postRenderers:
-    - kustomize:
-        patchesJson6902:
-          - target:
-              kind: Deployment
-              name: pgadmin-pgadmin4
-              namespace: dbms
-            patch:
-              - op: add
-                path: /spec/template/metadata
-                value:
-                  labels:
-                    pmb.home.arpa/snapshot-claim: &claimName "pgadmin-pgadmin4"
 
   values:
     image:
@@ -68,13 +55,10 @@ spec:
             - *host
     persistentVolume:
       enabled: true
-      storageClass: zfs-block
+      storageClass: ceph-block
       accessModes:
         - ReadWriteOnce
       size: 100Mi
-      labels:
-        app.kubernetes.io/instance: pgadmin4
-        pmb.home.arpa/snapshot: "true"
     resources:
       requests:
         cpu: 15m
