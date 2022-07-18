@@ -62,7 +62,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: sync-browser-config-v2
+        existingClaim: sync-browser-config-v3
       syncthing:
         enabled: true
         mountPath: /syncthing
