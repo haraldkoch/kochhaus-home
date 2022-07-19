@@ -27,7 +27,7 @@ spec:
           command: ["/bin/sh"]
           args:
             - "-c"
-            - "gunzip < /backup/kochhaus-cluster.sql.gz | pg_restore -U $PGUSER -f -"
+            - "gunzip < /backup/kochhaus-cluster.dump.gz | pg_restore -U $PGUSER -f -"
           env:
             - name: PGHOST
               value: kochhaus-rw.dbms
