@@ -54,8 +54,6 @@ spec:
         tls:
           - hosts:
               - *host
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
     securityContext:
       runAsUser: 1000
       runAsGroup: 1000

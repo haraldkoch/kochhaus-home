@@ -18,6 +18,5 @@ resources:
   - static
   - system
   - system-upgrade
-  - velero
   - weather
   - vpn
