@@ -62,9 +62,6 @@ spec:
           - hosts:
               - "tautulli.${SECRET_INTERNAL_DOMAIN}"
 
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
-
     persistence:
       config:
         enabled: true

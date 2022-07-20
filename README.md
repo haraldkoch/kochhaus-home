@@ -49,7 +49,6 @@
 - [prometheus](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) - metrics, monitoring, and alerting.
 - [reloader](https://github.com/stakater/Reloader) - reloads pods when a configMap and/or Secret changes - something that Flux 2 does not manage itself.
 - [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller) - Automatically upgrade the K3S kubernetes instance.
-- [velero](https://velero.io/): backups!
 - [cloudnative-pg](https://cloudnative-pg.io/) - build and manage a postgresql cluster with HA and backups from a custom resource.
 - [ext-postgres-operator](https://github.com/movetokube/postgres-operator) - create databases and users in an existing postgres cluster.
 - [authentik](https://goauthentik.io/) - integrated authentication and user management.
