@@ -36,8 +36,6 @@ spec:
         existingClaim: *claimName
       data:
         existingClaim: nfs-onedrive-pvc
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
     resources:
       requests:
         cpu: 15m

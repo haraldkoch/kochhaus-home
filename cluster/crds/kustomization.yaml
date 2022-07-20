@@ -11,4 +11,3 @@ resources:
   - prometheus-operator
   - system-upgrade-controller
   - traefik
-  - velero

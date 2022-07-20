@@ -78,6 +78,4 @@ spec:
 
     volumeSnapshotClasses:
       - name: zfs-block
-        labels:
-          velero.io/csi-volumesnapshot-class: "true"
         deletionPolicy: Retain
