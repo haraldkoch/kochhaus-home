@@ -29,6 +29,8 @@ spec:
 
     fullnameOverride: coredns
 
+    replicaCount: 2
+
     service:
       clusterIP: 10.43.0.10
       annotations:
@@ -78,3 +80,17 @@ spec:
           - name: loop
           - name: reload
           - name: loadbalance
+
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/control-plane
+                  operator: Exists
+
+    tolerations:
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+      - key: node-role.kubernetes.io/master
+        operator: Exists
