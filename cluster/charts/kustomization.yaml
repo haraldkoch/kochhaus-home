@@ -32,3 +32,4 @@ resources:
   - traefik.yaml
   - vector.yaml
   - weaveworks-kured.yaml
+  - woodpecker.yaml
