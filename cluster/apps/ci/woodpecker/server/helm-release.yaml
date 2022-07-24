@@ -1,0 +1,57 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: woodpecker-server
+  namespace: ci
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: woodpecker-server
+      version: 0.15.3
+      sourceRef:
+        kind: HelmRepository
+        name: woodpecker
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+
+  values:
+    env:
+      WOODPECKER_ADMIN: "haraldkoch"
+      WOODPECKER_HOST: "https://woodpecker.${SECRET_PUBLIC_DOMAIN}"
+      WOODPECKER_LOG_LEVEL: "info"
+
+    extraSecretNamesForEnvFrom:
+      - woodpecker-secret
+
+    podAnnotations:
+      secret.reloader.stakater.com/reload: woodpecker-secret
+
+    persistentVolume:
+      existingClaim: woodpecker-data-v1
+
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        external-dns.alpha.kubernetes.io/target: "gw.${SECRET_PUBLIC_DOMAIN}"
+        external-dns/is-public: "true"
+        hajimari.io/enable: "true"
+        hajimari.io/icon: cloud
+      hosts:
+        - host: &host woodpecker.${SECRET_PUBLIC_DOMAIN}
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - hosts:
+            - *host
+          secretName: tls.woodpecker
