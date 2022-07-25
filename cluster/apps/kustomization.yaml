@@ -15,6 +15,7 @@ resources:
   - monitoring
   - networking
   - remote
+  - rook-ceph
   - security
   - static
   - system
