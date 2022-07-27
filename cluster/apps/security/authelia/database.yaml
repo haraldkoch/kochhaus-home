@@ -1,0 +1,20 @@
+---
+apiVersion: db.movetokube.com/v1alpha1
+kind: Postgres
+metadata:
+  name: authelia
+  namespace: security
+spec:
+  database: authentik
+  dropOnDelete: false
+---
+apiVersion: db.movetokube.com/v1alpha1
+kind: PostgresUser
+metadata:
+  name: authelia
+  namespace: security
+spec:
+  role: authelia
+  database: authelia
+  secretName: authelia-postgres
+  privileges: OWNER
