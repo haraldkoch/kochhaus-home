@@ -5,6 +5,10 @@ vars:
   PROJECT_DIR:
     sh: "git rev-parse --show-toplevel"
   CLUSTER_DIR: "{{.PROJECT_DIR}}/cluster"
+  ANSIBLE_DIR: "{{.PROJECT_DIR}}/provision/ansible"
+  TERRAFORM_DIR: "{{.PROJECT_DIR}}/provision/terraform"
+
+dotenv: [".config.env"]
 
 env:
   KUBECONFIG: "{{.CLUSTER_DIR}}/ansible/kubeconfig.yaml"
@@ -16,16 +20,46 @@ includes:
   precommit: .taskfiles/PreCommitTasks.yml
   snapshot: .taskfiles/SnapshotTasks.yml
   terraform: .taskfiles/TerraformTasks.yml
+  sops: .taskfiles/SopsTasks.yml
 
 tasks:
 
-  kubeconfig:
-    desc: Remotely fetch kubeconfig from Kubernetes
+  init:
+    desc: Initialize workstation dependencies with Brew
     cmds:
-      - rsync --verbose --progress --partial --rsync-path="sudo rsync" {{.K3S_PRIMARY_MASTER_NODE_USERNAME}}@{{.K3S_PRIMARY_MASTER_NODE_ADDR}}:/etc/rancher/k3s/k3s.yaml "{{.CLUSTER_DIR}}/kubeconfig"
-      - sed -i '' 's/127.0.0.1/{{.K3S_LB_ADDR}}/g' "{{.CLUSTER_DIR}}/kubeconfig"
-      - chmod go-r "{{.CLUSTER_DIR}}/kubeconfig"
+      - brew install {{.DEPS}} {{.CLI_ARGS}}
+    preconditions:
+      - sh: command -v brew
+        msg: |
+          Homebrew is not installed. Using MacOS, Linux or WSL?
+          Head over to https://brew.sh to get up and running.
     vars:
-      K3S_PRIMARY_MASTER_NODE_USERNAME: "root"
-      K3S_PRIMARY_MASTER_NODE_ADDR: "199.85.99.65"
-      K3S_LB_ADDR: "199.85.99.64"
+      DEPS: >-
+        age
+        ansible
+        direnv
+        fluxcd/tap/flux
+        go-task/tap/go-task
+        helm
+        ipcalc
+        jq
+        kubernetes-cli
+        kustomize
+        pre-commit
+        prettier
+        sops
+        stern
+        terraform
+        tflint
+        yamllint
+        yq
+
+  verify:
+    desc: Verify env settings
+    cmds:
+      - ./configure --verify
+
+  configure:
+    desc: Configure repository from env settings
+    cmds:
+      - ./configure
