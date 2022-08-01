@@ -5,19 +5,18 @@ tasks:
 
   init:
     desc: Initialize terraform dependencies
-    dir: terraform
+    dir: provision/terraform/cloudflare
     cmds:
-      - find . -maxdepth 1 -type d \( ! -name . \) -exec bash -c "cd '{}' && terraform init {{.CLI_ARGS}}" \;
+      - terraform init {{.CLI_ARGS}}
 
   plan:
-    desc: Show the terraform plan
-    dir: terraform
+    desc: Show the changes terraform will make
+    dir: provision/terraform/cloudflare
     cmds:
-      - find . -maxdepth 1 -type d \( ! -name . \) -exec bash -c "cd '{}' && terraform plan {{.CLI_ARGS}}" \;
+      - terraform plan {{.CLI_ARGS}}
 
   apply:
-    desc: Apply the terraform changes
-    dir: terraform
-    interactive: true
+    desc: Apply the changes to Cloudflare
+    dir: provision/terraform/cloudflare
     cmds:
-      - find . -maxdepth 1 -type d \( ! -name . \) -exec bash -c "cd '{}' && terraform apply {{.CLI_ARGS}}" \;
+      - terraform apply {{.CLI_ARGS}}
