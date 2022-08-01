@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: error-pages
-      version: 1.1.2
+      version: 1.2.0
       sourceRef:
         kind: HelmRepository
         name: k8s-at-home
