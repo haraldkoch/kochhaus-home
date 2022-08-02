@@ -1,7 +1,7 @@
 ---
 - name: OS tweaks for production kubernetes
   hosts: all
-  become: yes
+  become: true
   tasks:
 
   # https://github.com/lxc/lxd/blob/master/doc/production-setup.md

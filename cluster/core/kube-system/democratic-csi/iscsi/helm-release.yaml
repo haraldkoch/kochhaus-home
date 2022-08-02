@@ -61,7 +61,7 @@ spec:
         allowVolumeExpansion: true
         parameters:
           fstype: ext4
-          #csi.storage.k8s.io/fstype: ext4
+          # csi.storage.k8s.io/fstype: ext4
         mountOptions:
           - relatime
         secrets:

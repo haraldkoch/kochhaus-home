@@ -45,7 +45,7 @@ spec:
         ingressClassName: "traefik"
         annotations:
           hajimari.io/enable: "true"
-          #hajimari.io/icon: "safe"
+          # hajimari.io/icon: "safe"
         hosts:
           - host: &host "sync-browser.${SECRET_INTERNAL_DOMAIN}"
             paths:

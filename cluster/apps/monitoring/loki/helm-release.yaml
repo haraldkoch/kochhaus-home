@@ -42,9 +42,9 @@ spec:
     # extraArgs:
     #   log.level: debug
     config:
-      #limits_config:
-      #  ingestion_rate_mb: 16
-      #  ingestion_burst_size_mb: 24
+      # limits_config:
+      #   ingestion_rate_mb: 16
+      #   ingestion_burst_size_mb: 24
       storage_config:
         aws:
           bucketnames: loki
@@ -54,7 +54,7 @@ spec:
           s3forcepathstyle: true
           insecure: false
         boltdb_shipper:
-          #resync_interval: 5s
+          # resync_interval: 5s
           shared_store: s3
       ruler:
         storage:

@@ -40,13 +40,6 @@ spec:
           - hosts:
               - *host
     cephClusterSpec:
-      #placement:
-      #  osd:
-      #    tolerations:
-      #      - effect: NoSchedule
-      #        operator: Exists
-      #      - effect: NoExecute
-      #        operator: Exists
       healthCheck:
         livenessProbe:
           mon:
