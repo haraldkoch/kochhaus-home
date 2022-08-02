@@ -9,12 +9,11 @@ resources:
   - goldpinger
   - grafana
   - kube-prometheus-stack
-  #- kwatch
-  #- loki
+  # - loki
   - node-exporter
   - node-problem-detector
   - prometheus-dnssec-exporter
   - smokeping
   - snmp-exporter
   - speedtest
-  #- vector-agent
+  # - vector-agent

@@ -25,6 +25,6 @@
       name: "{{ item }}"
       state: present
     loop:
-    - ceph
-    - nbd
-    - rbd
+      - ceph
+      - nbd
+      - rbd

@@ -9,9 +9,9 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  #privateKey:
-  #  algorithm: ECDSA
-  #  size: 384
+  # privateKey:
+  #   algorithm: ECDSA
+  #   size: 384
   commonName: "${SECRET_INTERNAL_DOMAIN}"
   dnsNames:
     - "${SECRET_INTERNAL_DOMAIN}"
