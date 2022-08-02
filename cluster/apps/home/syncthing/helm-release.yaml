@@ -25,7 +25,7 @@ spec:
   values:
     image:
       repository: syncthing/syncthing
-      tag: 1.20.3
+      tag: 1.20.4
     service:
       listen:
         type: LoadBalancer
