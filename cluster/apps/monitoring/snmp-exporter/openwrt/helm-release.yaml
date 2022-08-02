@@ -39,7 +39,7 @@ spec:
       enabled: true
       namespace: monitoring
       path: /snmp
-      #interval: 15s
+      # interval: 15s
       scrapeTimeout: 10s
       relabelings:
         - sourceLabels: [__param_target]

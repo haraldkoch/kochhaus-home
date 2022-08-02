@@ -65,12 +65,12 @@ spec:
               pods insecure
               fallthrough in-addr.arpa ip6.arpa
               ttl 30
-          #- name: hosts
-          #  parameters: /etc/coredns/NodeHosts
-          #  configBlock: |-
-          #    ttl 60
-          #    reload 15s
-          #    fallthrough
+          # - name: hosts
+          #   parameters: /etc/coredns/NodeHosts
+          #   configBlock: |-
+          #     ttl 60
+          #     reload 15s
+          #     fallthrough
           - name: prometheus
             parameters: 0.0.0.0:9153
           - name: forward

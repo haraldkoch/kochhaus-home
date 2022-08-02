@@ -13,11 +13,7 @@ access_control:
       policy: bypass
       networks: ["internal"]
 
-    # - domain:
-    #     - "radarr-test.${SECRET_PUBLIC_DOMAIN}"
-    #   policy: bypass
-    #   resources: ["^/api([?/].*)?$"]
-
-    # - domain: ["*.${SECRET_PUBLIC_DOMAIN}"]
-    #   policy: bypass
-    #   networks: ["internal"]
+    - domain:
+        - "radarr-test.${SECRET_PUBLIC_DOMAIN}"
+      policy: bypass
+      resources: ["^/api([?/].*)?$"]
