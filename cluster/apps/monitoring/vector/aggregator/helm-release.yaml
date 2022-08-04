@@ -41,6 +41,10 @@ spec:
           type: vector
           address: 0.0.0.0:6010
           version: "2"
+        internet_logs:
+          type: vector
+          address: 0.0.0.0:6020
+          version: "2"
         opnsense_filterlog_logs:
           type: syslog
           address: 0.0.0.0:5140
@@ -106,6 +110,21 @@ spec:
           type: loki
           inputs:
             - journal_logs
+          endpoint: http://loki-gateway:80
+          encoding:
+            codec: json
+          batch:
+            max_bytes: 2049000
+          out_of_order_action: accept
+          remove_label_fields: true
+          remove_timestamp: true
+          labels:
+            hostname: >-
+              {{`{{ host }}`}}
+        loki_internet:
+          type: loki
+          inputs:
+            - internet_logs
           endpoint: http://loki-gateway:80
           encoding:
             codec: json
@@ -206,6 +225,10 @@ spec:
                 path: /spec/externalIPs
                 value:
                   - "${SVC_SYSLOG_ADDR}"
+              - op: add
+                path: /metadata/annotations
+                value:
+                  external-dns.alpha.kubernetes.io/hostname: "vector.${SECRET_INTERNAL_DOMAIN}"
               - op: replace
                 path: /spec/externalTrafficPolicy
                 value: Local
