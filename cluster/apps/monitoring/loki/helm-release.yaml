@@ -159,7 +159,7 @@ spec:
       name: loki-chunks-bucket-v1
       valuesKey: BUCKET_NAME
     - targetPath: loki.structuredConfig.common.storage.s3.endpoint
-      kind: ConfigMap
+      kind: Secret
       name: loki-chunks-bucket-v1
       valuesKey: BUCKET_HOST
     - targetPath: loki.structuredConfig.common.storage.s3.access_key_id
