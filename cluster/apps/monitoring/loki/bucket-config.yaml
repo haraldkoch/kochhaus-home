@@ -6,4 +6,3 @@ metadata:
   namespace: monitoring
 data:
   BUCKET_NAME: loki
-  BUCKET_HOST: mnemosyne
