@@ -90,11 +90,6 @@ spec:
           gnetId: 13502
           revision: 10
           datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/13665
-        speedtest:
-          gnetId: 13665
-          revision: 1
-          datasource: Prometheus
     sidecar:
       dashboards:
         enabled: true
