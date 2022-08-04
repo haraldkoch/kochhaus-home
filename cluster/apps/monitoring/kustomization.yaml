@@ -9,7 +9,7 @@ resources:
   - goldpinger
   - grafana
   - kube-prometheus-stack
-  # - loki
+  - loki
   - node-exporter
   - node-problem-detector
   - prometheus-dnssec-exporter
