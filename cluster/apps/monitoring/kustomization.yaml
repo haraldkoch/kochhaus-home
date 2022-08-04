@@ -16,4 +16,4 @@ resources:
   - smokeping
   - snmp-exporter
   - speedtest
-  # - vector-agent
+  - vector
