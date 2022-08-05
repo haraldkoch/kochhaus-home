@@ -13,6 +13,7 @@ resources:
   - node-exporter
   - node-problem-detector
   - prometheus-dnssec-exporter
+  - prometheus-nut-exporter
   - smokeping
   - snmp-exporter
   - speedtest
