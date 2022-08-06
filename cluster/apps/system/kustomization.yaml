@@ -4,9 +4,9 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - descheduler
-  # - goldilocks
+  - goldilocks
   - kube-fledged
   - kured
   - node-feature-discovery
   - reloader
-  # - vpa
+  - vpa
