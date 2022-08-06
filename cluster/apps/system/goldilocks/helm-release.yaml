@@ -26,32 +26,28 @@ spec:
     controller:
       resources:
         requests:
-          cpu: 50m
-          memory: 32Mi
+          cpu: 10m
+          memory: 64M
         limits:
-          cpu: 200m
-          memory: 96Mi
-
+          memory: 250M
     dashboard:
       replicaCount: 1
-      resources:
-        requests:
-          memory: 32Mi
-        limits:
-          memory: 64Mi
-
       ingress:
         enabled: true
         ingressClassName: "traefik"
         annotations:
           hajimari.io/enable: "true"
-
         hosts:
           - host: &host "goldilocks.${SECRET_INTERNAL_DOMAIN}"
             paths:
               - path: /
                 type: Prefix
-
         tls:
           - hosts:
               - *host
+      resources:
+        requests:
+          cpu: 10m
+          memory: 64Mi
+        limits:
+          memory: 100M
