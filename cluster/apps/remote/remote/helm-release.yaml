@@ -70,10 +70,11 @@ spec:
       secret.reloader.stakater.com/reload: "sshd-config"
     resources:
       requests:
-        memory: 100Mi
-        cpu: 100m
+        cpu: 25m
+        memory: 25Mi
       limits:
-        memory: 500Mi
+        cpu: 100m
+        memory: 100Mi
     tolerations:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists

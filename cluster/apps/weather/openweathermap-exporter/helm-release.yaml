@@ -51,3 +51,10 @@ spec:
       enabled: true
       prometheusRule:
         enabled: true
+    resources:
+      requests:
+        cpu: 15m
+        memory: 32Mi
+      limits:
+        cpu: 15m
+        memory: 96Mi
