@@ -46,3 +46,11 @@ spec:
         secretAccessKey:
           name: cnpg-backup
           key: ACCESS_SECRET_KEY
+
+  resources:
+    requests:
+      cpu: 15m
+      memory: 256Mi
+    limits:
+      cpu: 150m
+      memory: 512Mi

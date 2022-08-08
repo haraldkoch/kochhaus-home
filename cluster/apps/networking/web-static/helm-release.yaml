@@ -62,10 +62,11 @@ spec:
             name: web-static
     resources:
       requests:
-        memory: 100Mi
-        cpu: 100m
+        cpu: 10m
+        memory: 50Mi
       limits:
-        memory: 500Mi
+        cpu: 100m
+        memory: 100Mi
 
     affinity:
       nodeAffinity:
