@@ -23,3 +23,10 @@ spec:
       retries: 5
 
   values:
+    resources:
+      requests:
+        cpu: 15m
+        memory: 128Mi
+      limits:
+        cpu: 15m
+        memory: 192Mi
