@@ -5,7 +5,7 @@ metadata:
   name: authelia
   namespace: security
 spec:
-  database: authentik
+  database: authelia
   dropOnDelete: false
 ---
 apiVersion: db.movetokube.com/v1alpha1
