@@ -26,11 +26,18 @@ spec:
     fullnameOverride: blackbox-exporter
     image:
       repository: quay.io/prometheus/blackbox-exporter
-    securityContext:
-      readOnlyRootFilesystem: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        add: ["NET_RAW"]
+    # recommended by the chart upgrades docs for 7.0.0 but does not work.
+    # securityContext:
+    #   readOnlyRootFilesystem: true
+    #   allowPrivilegeEscalation: false
+    #   capabilities:
+    #     add: ["NET_RAW"]
+    #
+    # Let's try this instead:
+    podSecurityContext:
+      sysctls:
+        - name: net.ipv4.ping_group_range
+          value: "0 65536"
     config:
       modules:
         icmp:
