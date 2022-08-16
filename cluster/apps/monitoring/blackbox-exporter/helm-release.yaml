@@ -26,7 +26,11 @@ spec:
     fullnameOverride: blackbox-exporter
     image:
       repository: quay.io/prometheus/blackbox-exporter
-    allowIcmp: true
+    securityContext:
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        add: ["NET_RAW"]
     config:
       modules:
         icmp:
