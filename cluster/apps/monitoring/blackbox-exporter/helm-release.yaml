@@ -39,6 +39,17 @@ spec:
           icmp:
             preferred_ip_protocol: "ip6"
             ip_protocol_fallback: false
+    ingress:
+      enabled: true
+      className: traefik
+      hosts:
+        - host: &host blackbox.${SECRET_INTERNAL_DOMAIN}
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls:
+        - hosts:
+            - *host
     podAnnotations:
       configmap.reloader.stakater.com/reload: "blackbox-exporter"
 
