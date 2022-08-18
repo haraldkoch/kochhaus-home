@@ -5,6 +5,7 @@ resources:
   - actions-runner-controller.yaml
   - authentik.yaml
   - bitnami.yaml
+  - bjw-s.yaml
   - calico.yaml
   - cnpg.yaml
   - coredns.yaml
