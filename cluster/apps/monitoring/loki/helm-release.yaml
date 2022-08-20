@@ -100,9 +100,6 @@ spec:
         enabled: true
         ingressClassName: traefik
         annotations:
-          hajimari.io/appName: "loki"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "chart-line"
           traefik.ingress.kubernetes.io/buffering: |
             # 10Mb
             maxrequestbodybytes: 10485760
