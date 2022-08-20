@@ -45,7 +45,7 @@ spec:
       name: "citizen"
       customApps:
         - name: Home Assistant
-          url: https://hass.${PRIVATE_STATIC_DOMAIN}
+          url: https://hass.${SECRET_INTERNAL_DOMAIN}
       groups:
         - name: Communicate
           links:
