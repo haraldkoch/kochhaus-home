@@ -70,6 +70,18 @@ spec:
                             value: /data/snapshots/{{ appName }}/logs
                           - name: KOPIA_PASSWORD
                             value: "none"
+                          - name: KUBEXIT_NAME
+                            value: backup-job
+                          - name: KUBEXIT_GRAVEYARD
+                            value: /kubexit
+                          - name: KUBEXIT_POD_NAME
+                            valueFrom:
+                              fieldRef:
+                                fieldPath: metadata.name
+                          - name: KUBEXIT_NAMESPACE
+                            valueFrom:
+                              fieldRef:
+                                fieldPath: metadata.namespace
                         command:
                           - /bin/bash
                           - -c
