@@ -81,3 +81,10 @@ spec:
         operator: Exists
       - effect: NoExecute
         operator: Exists
+    resources:
+      requests:
+        cpu: 100m
+        memory: 921M
+      limits:
+        cpu: 100m
+        memory: 921M

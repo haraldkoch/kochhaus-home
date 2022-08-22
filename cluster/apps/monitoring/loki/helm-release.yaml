@@ -116,6 +116,13 @@ spec:
               - *host
       podAnnotations:
         configmap.reloader.stakater.com/reload: "loki-gateway"
+      resources:
+        requests:
+          cpu: 50m
+          memory: 100Mi
+        limits:
+          cpu: 100m
+          memory: 100Mi
     write:
       replicas: 3
       persistence:
@@ -123,6 +130,13 @@ spec:
         storageClass: ceph-block
       podAnnotations:
         configmap.reloader.stakater.com/reload: "loki"
+      resources:
+        requests:
+          cpu: 500m
+          memory: 384Mi
+        limits:
+          cpu: 500m
+          memory: 384Mi
     read:
       replicas: 3
       extraVolumeMounts:
@@ -143,6 +157,13 @@ spec:
       persistence:
         size: 10Gi
         storageClass: ceph-block
+      resources:
+        requests:
+          cpu: 50m
+          memory: 128Mi
+        limits:
+          cpu: 100m
+          memory: 128Mi
     monitoring:
       selfMonitoring:
         enabled: false
