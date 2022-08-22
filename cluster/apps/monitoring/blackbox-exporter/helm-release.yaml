@@ -64,6 +64,14 @@ spec:
     podAnnotations:
       configmap.reloader.stakater.com/reload: "blackbox-exporter"
 
+    resources:
+      requests:
+        cpu: 15m
+        memory: 100Mi
+      limits:
+        cpu: 15m
+        memory: 100Mi
+
     serviceMonitor:
       enabled: true
       defaults:

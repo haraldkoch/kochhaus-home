@@ -214,6 +214,13 @@ spec:
                     values:
                       - Stateless-Aggregator
               topologyKey: kubernetes.io/hostname
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 100m
+        memory: 256Mi
   postRenderers:
     - kustomize:
         patchesJson6902:

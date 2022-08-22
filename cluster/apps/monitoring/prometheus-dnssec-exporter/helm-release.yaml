@@ -73,6 +73,14 @@ spec:
     podAnnotations:
       secret.reloader.stakater.com/reload: prometheus-dnssec-secret
 
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 100m
+        memory: 100Mi
+
     metrics:
       enabled: true
       serviceMonitor:

@@ -29,13 +29,23 @@ spec:
       rbac:
         pspEnabled: false
 
+    prometheusOperator:
+      resources: {}
+      limits:
+        cpu: 200m
+        memory: 200Mi
+      requests:
+        cpu: 100m
+        memory: 100Mi
+
     server:
       resources:
         requests:
-          memory: 1500Mi
-          cpu: 1
-        limits:
+          cpu: 384m
           memory: 4000Mi
+        limits:
+          cpu: 2
+          memory: 6000Mi
 
     alertmanager:
       config:
@@ -84,7 +94,13 @@ spec:
               resources:
                 requests:
                   storage: 10Mi
-
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 60m
+            memory: 64Mi
     kube-state-metrics:
       metricLabelsAllowlist:
         - "persistentvolumeclaims=[*]"

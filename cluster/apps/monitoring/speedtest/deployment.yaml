@@ -30,6 +30,13 @@ spec:
             - containerPort: 80
               name: http
               protocol: TCP
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+            limits:
+              cpu: 1
+              memory: 100Mi
           livenessProbe:
             failureThreshold: 3
             periodSeconds: 10
