@@ -35,6 +35,13 @@ spec:
         configMap: snmp-exporter-openwrt
         readOnly: true
         defaultMode: 420
+    resources:
+      requests:
+        cpu: 15m
+        memory: 100Mi
+      limits:
+        cpu: 15m
+        memory: 100Mi
     serviceMonitor:
       enabled: true
       namespace: monitoring

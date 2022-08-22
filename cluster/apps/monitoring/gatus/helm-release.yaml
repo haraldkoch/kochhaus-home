@@ -41,6 +41,14 @@ spec:
     serviceMonitor:
       enabled: true
 
+    resources:
+      requests:
+        cpu: 15m
+        memory: 100Mi
+      limits:
+        cpu: 15m
+        memory: 100Mi
+
   valuesFrom:
     - kind: Secret
       name: gatus-secret

@@ -58,6 +58,13 @@ spec:
             initialDelaySeconds: 30
             failureThreshold: 5
             timeoutSeconds: 10
+          resources:
+            requests:
+              cpu: 15m
+              memory: 128Mi
+            limits:
+              cpu: 50m
+              memory: 128Mi
       volumes:
         - name: config
           secret:

@@ -51,3 +51,11 @@ spec:
       tls:
         - hosts:
             - goldpinger.${SECRET_INTERNAL_DOMAIN}
+
+    resources:
+      requests:
+        cpu: 15m
+        memory: 100Mi
+      limits:
+        cpu: 15m
+        memory: 100Mi

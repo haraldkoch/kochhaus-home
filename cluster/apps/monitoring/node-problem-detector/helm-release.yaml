@@ -27,6 +27,13 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 100m
+        memory: 100Mi
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
