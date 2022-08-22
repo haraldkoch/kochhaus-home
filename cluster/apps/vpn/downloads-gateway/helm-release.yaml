@@ -38,10 +38,8 @@ spec:
 
   values:
     image:
-    #  repository: ghcr.io/k8s-at-home/pod-gateway
-    #  tag: v1.7.0
-      repository: ghcr.io/haraldkoch/pod-gateway
-      tag: dev
+      repository: ghcr.io/k8s-at-home/pod-gateway
+      tag: v1.7.0
 
     routed_namespaces:
       - downloads
