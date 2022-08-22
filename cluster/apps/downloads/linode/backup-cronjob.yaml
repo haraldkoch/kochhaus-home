@@ -12,6 +12,9 @@ spec:
     spec:
       parallelism: 1
       template:
+        metadata:
+          labels:
+            setGateway: "false"
         spec:
           restartPolicy: Never
           volumes:
