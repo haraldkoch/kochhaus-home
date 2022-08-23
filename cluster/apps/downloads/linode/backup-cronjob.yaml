@@ -15,6 +15,7 @@ spec:
         metadata:
           labels:
             setGateway: "false"
+            network: linode
         spec:
           restartPolicy: Never
           volumes:
