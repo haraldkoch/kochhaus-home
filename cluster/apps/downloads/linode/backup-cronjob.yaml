@@ -6,7 +6,7 @@ metadata:
   namespace: downloads
 spec:
   schedule: "15 * * * *"
-  concurrencyPolicy: Replace
+  concurrencyPolicy: Forbid
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
@@ -17,7 +17,7 @@ spec:
             setGateway: "false"
             network: linode
         spec:
-          restartPolicy: Never
+          restartPolicy: OnFailure
           volumes:
             - name: backup
               nfs:
@@ -36,14 +36,13 @@ spec:
             - name: rsync
               image: ghcr.io/haraldkoch/rsync:0.1.0
               imagePullPolicy: IfNotPresent
-              command: ["/usr/bin/rsync"]
-              args:
-                - -avSAHX
-                - --numeric-ids
-                - -e
-                - "/usr/bin/ssh -i /ssh/id_rsa -o GlobalKnownHostsFile=/ssh/known_hosts"
-                - ${SECRET_WEB_BACKUP_USER}@${SECRET_WEB_HOST}:/data/website-backups/
-                - /backup/
+              command:
+                - /bin/bash
+                - -c
+                - |-
+                  printf "\e[1;32m%-6s\e[m\n" "Running rsync ..."
+                  /usr/bin/rsync -avSAHX --numeric-ids -e "/usr/bin/ssh -i /ssh/id_rsa -o GlobalKnownHostsFile=/ssh/known_hosts" ${SECRET_WEB_BACKUP_USER}@${SECRET_WEB_HOST}:/data/website-backups/ /backup/
+                  printf "\e[1;32m%-6s\e[m\n" "rsync complete."
               env:
                 - name: TZ
                   value: ${CONFIG_TIMEZONE}
