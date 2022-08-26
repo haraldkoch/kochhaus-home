@@ -155,7 +155,7 @@ spec:
               - name: "/dev/disk/by-id/ata-SAMSUNG_MZ7LH512HALU-000H1_S4HLNF0N721023-part3"
           - name: "k3s3"
             devices:
-              - name: "/dev/disk/by-id/ata-KINGSTON_SA400S37240G_50026B76854AA37E-part3"
+              - name: "/dev/disk/by-id/nvme-KXG50ZNV512G_TOSHIBA_X8UF60F1F6GS-part3"
     cephBlockPoolsVolumeSnapshotClass:
       enabled: true
       name: csi-rbdplugin-snapclass
