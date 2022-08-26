@@ -4,6 +4,8 @@ kind: Cluster
 metadata:
   name: kochhaus
   namespace: dbms
+  annotations:
+    kyverno.io/ignore: "true"
 spec:
   instances: 2
 
