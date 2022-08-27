@@ -75,6 +75,25 @@ spec:
       limits:
         cpu: 100m
         memory: 100Mi
+    affinity:
+      nodeAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1
+            preference:
+              matchExpressions:
+                - key: node-role.kubernetes.io/control-plane
+                  operator: Exists
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - cert-manager
+              topologyKey: kubernetes.io/hostname
     tolerations:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
