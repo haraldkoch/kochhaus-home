@@ -2,12 +2,10 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: internal-auth
+  name: external
   namespace: traefik-system
 spec:
   chain:
     middlewares:
-      - name: homelan-ips
-      - name: security-auth
-        namespace: security
+      - name: cloudflare-only
       - name: error-pages
