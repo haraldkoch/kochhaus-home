@@ -23,6 +23,7 @@ resources:
   - kube-fledged.yaml
   - kyverno.yaml
   - metallb.yaml
+  - metrics-server.yaml
   - nfs-subdir-external-provisioner.yaml
   - node-feature-discovery.yaml
   - okgolove.yaml
