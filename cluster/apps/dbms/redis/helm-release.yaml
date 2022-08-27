@@ -35,6 +35,13 @@ spec:
       getMasterTimeout: 10
       startupProbe:
         failureThreshold: 2
+      resources:
+        requests:
+          cpu: 15m
+          memory: 100Mi
+        limits:
+          cpu: 50m
+          memory: 200Mi
     metrics:
       enabled: true
       serviceMonitor:
