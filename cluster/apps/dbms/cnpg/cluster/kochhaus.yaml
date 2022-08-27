@@ -7,7 +7,7 @@ metadata:
   annotations:
     kyverno.io/ignore: "true"
 spec:
-  instances: 2
+  instances: 3
 
   bootstrap:
     recovery:
@@ -30,6 +30,14 @@ spec:
   storage:
     storageClass: ceph-block
     size: 10Gi
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 250m
+      memory: 640Mi
 
   monitoring:
     enablePodMonitor: true
