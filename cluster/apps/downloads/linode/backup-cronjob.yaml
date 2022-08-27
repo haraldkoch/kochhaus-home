@@ -7,7 +7,8 @@ metadata:
 spec:
   schedule: "15 * * * *"
   concurrencyPolicy: Forbid
-  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
   jobTemplate:
     spec:
       parallelism: 1
@@ -17,7 +18,7 @@ spec:
             setGateway: "false"
             network: linode
         spec:
-          restartPolicy: OnFailure
+          restartPolicy: Never
           volumes:
             - name: backup
               nfs:
