@@ -5,3 +5,4 @@ resources:
   - namespace.yaml
   - bookstack
   - kopia
+  - outline
