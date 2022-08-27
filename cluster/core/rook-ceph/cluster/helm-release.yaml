@@ -144,9 +144,6 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: "k3s0"
-            devices:
-              - name: "/dev/disk/by-id/ata-KINGSTON_SA400S37240G_50026B7784829853-part3"
           - name: "k3s1"
             devices:
               - name: "vdb"
