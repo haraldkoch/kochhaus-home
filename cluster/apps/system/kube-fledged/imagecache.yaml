@@ -14,5 +14,5 @@ spec:
         - coredns/coredns:1.9.3
         - docker.io/calico/cni:v3.24.0
         - docker.io/calico/node:v3.24.0
-        - docker.io/calico/pod2daemon-flexvol:v3.24.0
+        - docker.io/calico/pod2daemon-flexvol:v3.24.1
         - quay.io/metallb/speaker:v0.13.4
