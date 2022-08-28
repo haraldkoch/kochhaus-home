@@ -21,13 +21,10 @@ spec:
   upgrade:
     remediation:
       retries: 5
-
   values:
+    fullnameOverride: reloader
     reloader:
-      deployment:
-        image:
-          name: ghcr.io/k8s-at-home/reloader
-          tag: v0.0.103
-
-    podMonitor:
-      enabled: true
+      reloadStrategy: annotations
+      podMonitor:
+        enabled: true
+        namespace: system
