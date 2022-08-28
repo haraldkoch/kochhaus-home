@@ -29,6 +29,9 @@ spec:
       tag: version-8.6_p1-r3
     controller:
       replicas: 2
+      strategy: RollingUpdate
+      rollingUpdate:
+        surge: 1
     env:
       TZ: ${CONFIG_TIMEZONE}
       PUBLIC_KEY_FILE: /sshd/authorized_keys
