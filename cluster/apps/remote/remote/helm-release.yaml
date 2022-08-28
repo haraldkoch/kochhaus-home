@@ -36,6 +36,7 @@ spec:
     service:
       main:
         type: LoadBalancer
+        externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "remote.${SECRET_INTERNAL_DOMAIN}"
