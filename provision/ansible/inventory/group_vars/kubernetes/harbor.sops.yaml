@@ -1,0 +1,46 @@
+#ENC[AES256_GCM,data:CFYBvUWPLqgdL7i0GMKvT2mwk85Dy/x7Z1n9JJoQ0Ksv63G/1eUvvx8fiGGbbVhweqmfrJeiNrMYDUrlgp5qW5+rbZJRcc9Ylk0h9WW5BA==,iv:+oNIWVGHF4EKT12bh9nVI5rSPlEce31wm+SM+XNH0HU=,tag:fIoX8WcJs5maHQkw2h7xgg==,type:comment]
+#ENC[AES256_GCM,data:loaa7pOneelM1OmnwxupHFjrzv2iyZHZ8vbXWlKajrq5chE31qfXgreCZoHFa2PlCIKKrAye27iQQo8RfwTBn+KzzNLNPi4DJ85KOnXZ,iv:m7xczGq+b1v6OXyx593ryab+g8nubGGpuCqHBDChXl8=,tag:o2sLhILrE/EVbcDbn/3Q9g==,type:comment]
+#ENC[AES256_GCM,data:svXzfsEnXMtZgcFBzAnCw7DxsyIYyeVGv023hcStswApT6Zko4s1Bm8OpBR+faNDxyMR+jEfYE5BEH9jjayAISs/ZD9ovOW0cg==,iv:3u/O+2P7CrPM7p74j6ZMipUrkINT/7sFv51qlqJbzLk=,tag:2vAq7/zfkqQMvN9zQYGqpA==,type:comment]
+k3s_registries:
+    mirrors:
+        docker.io:
+            endpoint:
+                - ENC[AES256_GCM,data:MBRl7NgVCsG0/H7wcJtTKxtXtNloR0UHgq2cpMiR9DutDyIiUesmoA==,iv:lXj9uRipEpf8cu+x58ogsWkVX+oohX5uxst/PjxJZpo=,tag:y4VPxS5eBNrDHPbZBgZl8g==,type:str]
+        k8s.gcr.io:
+            endpoint:
+                - ENC[AES256_GCM,data:FnkDY/Y+uMmNWr7TNqEbr2KiGQBPXb6YcB6TpVKbV6h7R7MEpXIXqZg=,iv:cuFsuWuXQNPTcmB2CGJwT3edl+6/ueN4vbbbJ0019Sc=,tag:L7Ft5p8KZbUwmlRRlkYepw==,type:str]
+        quay.io:
+            endpoint:
+                - ENC[AES256_GCM,data:XYpyuc9YKkdqhjQfYOoFx8fEBrBo1/0wStGdTZBDVqLhPO23lGg=,iv:Edd+xm3T4oaFKtwsb0pL5qcf7OvFpghVng63ZRnghF4=,tag:ooBADqfkdscDv195J5J6Mg==,type:str]
+        gcr.io:
+            endpoint:
+                - ENC[AES256_GCM,data:gHDRLHLxBVaEBGLlMF4b7POCooumeY+Y0RVloPokXepvg/g33g==,iv:f5mMvH0GjEG2ZR1skKxu5atcPeFTHNi7YZ+QbZTF2Kk=,tag:pygIym/FX2e1if1cp3Qm6A==,type:str]
+        ghcr.io:
+            endpoint:
+                - ENC[AES256_GCM,data:/xVUUB6MGue7Tz5+z27gCSiNY5PRaojOT5ERnCq+4bTUNF4RLxw=,iv:wjLTn8hiSKrVhkRodylyh9uvXVBq1BspzT7lzTlDJhI=,tag:RmdXB/7pZcFgF2kQdhF5Tw==,type:str]
+        public.ecr.aws:
+            endpoint:
+                - ENC[AES256_GCM,data:7NPMG4Nh/roVS1CHyjJST1lRN2CsqgxDqTMOyJIKFqzlS1IeSQRCpp8Hqywp,iv:FOp/ap5HSdcMYVrrgfFjPFA7h+fR+I1mHyevFqw3gzA=,tag:KAnIAEFfXHbfF8oyNpzayQ==,type:str]
+        registry.k8s.io:
+            endpoint:
+                - ENC[AES256_GCM,data:vIuMxJmiHkazoQ+wN95vadU19WJVS8nyYD7zsGrk3NSjqGt53peyOnWO3CzMyA==,iv:vpRElQs0c7vYnnWz8YS0ob80RhfqQ70hNejlaBfz0nM=,tag:pSwz4I2dSn+rs360+qivZg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTR2ZUcG5PelhEV0psOFpz
+            RUhnclJ2YUtyckNrMmpKU254clludFUxbkNNClRZZVVNNHJlK2JaTXdhSWpSd1NP
+            UVRENW0vaEVhdUF5ZkxhSVlMYWEvQU0KLS0tIDVVbTJCMm9IclFGL0ptdVdxU0ox
+            cDNobGg5d3NZdG9NaEFtNGhLQlZ0RUkKnGVbSJrhc60f+7Q6ERVpyiv5wi0yji55
+            vAMzNXg1FegMg66I7ssBx7g8+6XGNQZDAhYbYADW1R43skzP1Pa/zA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-08-28T18:16:24Z"
+    mac: ENC[AES256_GCM,data:DzthQibOjaax8yDgZ0MEDXw+TplYmL6K6l7gvlic6GsDGrz6ynfNOqlbnbggRJyHm93Ti7DCsXviqUPDwZpCEYE38qjULV72xHZ0i84Un+rnJyh+6Q0q3T0WyPSjO8IxogR9D4QOEUqd90SmM+oHQbpa6V9aEK/zse2unW1BL8M=,iv:jPhvkKtosyya25x4nbGafW3grI/JQhnMj83dd2FQnJk=,tag:mupks7kV3XQOcbdVvNmDKw==,type:str]
+    pgp: []
+    unencrypted_regex: ^(kind)$
+    version: 3.7.3

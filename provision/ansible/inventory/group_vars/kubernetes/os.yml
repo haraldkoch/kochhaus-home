@@ -1,0 +1,24 @@
+---
+# (string) Timezone for the servers
+# timezone: "America/New_York"
+timezone: "America/Toronto"
+
+# (list) Additional ssh public keys to add to the nodes
+# ssh_authorized_keys:
+
+packages:
+  - gptfdisk
+  - lvm2
+  - nfs-utils
+  - open-iscsi
+  - parted
+  - thin-provisioning-tools
+  - hdparm
+  - htop
+  - intel-gpu-tools
+  - ipvsadm
+  - lm_sensors
+  - vi
+  - nvme-cli
+  - socat
+  - iptables-nft
