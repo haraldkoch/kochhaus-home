@@ -21,21 +21,7 @@ spec:
   upgrade:
     remediation:
       retries: 5
-
   values:
-    image:
-      # The weaveworks image does not yet support multi-arch.
-      # The k8s-at-home image is just a copy, off-docker.
-      # The raspbernetes image is older, but is multi-arch.
-      #
-      # repository: weaveworks/kured
-      # tag: 1.8.1
-      # repository: ghcr.io/k8s-at-home/kured
-      # tag: 1.8.1
-      repository: raspbernetes/kured
-      tag: 1.10.2
-
-    updateStrategy: RollingUpdate
     configuration:
       startTime: "7:00"
       endTime: "12:00"
@@ -47,11 +33,10 @@ spec:
         operator: "Exists"
     metrics:
       create: true
-
     extraEnvVars:
       - name: TZ
         value: ${CONFIG_TIMEZONE}
-      - name: notifyUrl
+      - name: KURED_NOTIFY_URL
         valueFrom:
           secretKeyRef:
             name: discord-kured
