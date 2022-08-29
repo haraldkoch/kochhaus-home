@@ -17,4 +17,5 @@ resources:
   - smokeping
   - snmp-exporter
   - speedtest
+  - tplink-plug-exporter
   - vector
