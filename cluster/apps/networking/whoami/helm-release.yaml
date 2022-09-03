@@ -41,35 +41,28 @@ spec:
       main:
         enabled: true
         ingressClassName: traefik
-        annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-homelan@kubernetescrd"
         hosts:
-          - host: &host whoami.${SECRET_INTERNAL_DOMAIN}
+          - host: &hosti whoami.${SECRET_INTERNAL_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - *host
+              - *hosti
       external:
         enabled: true
         ingressClassName: traefik
         annotations:
           auth.home.arpa/enabled: "true"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          external-dns.alpha.kubernetes.io/target: "gw.${SECRET_PUBLIC_DOMAIN}"
           external-dns.home.arpa/enabled: "true"
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-external-auth@kubernetescrd"
         hosts:
-          - host: &host whoami.${SECRET_PUBLIC_DOMAIN}
+          - host: &hoste whoami.${SECRET_PUBLIC_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - *host
+              - *hoste
             secretName: tls.whoami
     resources:
       requests:
