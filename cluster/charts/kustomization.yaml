@@ -6,6 +6,7 @@ resources:
   - authentik.yaml
   - bitnami.yaml
   - bjw-s.yaml
+  - bokysan.yaml
   - calico.yaml
   - cnpg.yaml
   - coredns.yaml
