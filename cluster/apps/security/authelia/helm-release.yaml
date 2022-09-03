@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-      interval: 15m
   install:
     createNamespace: true
     remediation:
@@ -30,15 +29,11 @@ spec:
     - name: redis
       namespace: dbms
   values:
-    global:
-      nameOverride: *app
     controller:
       replicas: 3
       strategy: RollingUpdate
-      rollingUpdate:
-        surge: 1
     image:
-      repository: docker.io/authelia/authelia
+      repository: ghcr.io/authelia/authelia
       tag: 4.36.6
     envFrom:
       - secretRef:
@@ -49,7 +44,6 @@ spec:
         ports:
           http:
             port: 80
-            targetPort: 1080
           metrics:
             enabled: true
             port: 8080
@@ -96,7 +90,7 @@ spec:
             app.kubernetes.io/name: *app
     resources:
       requests:
-        cpu: 10m
-        memory: 50Mi
+        cpu: 5m
+        memory: 10Mi
       limits:
-        memory: 250Mi
+        memory: 100Mi
