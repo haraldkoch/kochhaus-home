@@ -5,6 +5,7 @@ resources:
   - cloudflare-only.yaml
   - error-handling.yaml
   - external-auth.yaml
+  - external.yaml
   - homelan.yaml
   - https-redirect.yaml
   - internal-auth.yaml
