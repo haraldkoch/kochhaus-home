@@ -29,7 +29,7 @@ spec:
 
     extraArgs:
       - --cloudflare-proxied
-      - --annotation-filter=external-dns/is-public in (true)
+      - --annotation-filter=external-dns.home.arpa/enabled in (true)
 
     env:
       - name: CF_API_EMAIL
