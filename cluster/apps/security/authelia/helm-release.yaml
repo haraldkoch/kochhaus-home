@@ -60,7 +60,7 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           external-dns.alpha.kubernetes.io/target: "gw.${SECRET_PUBLIC_DOMAIN}"
-          external-dns/is-public: "true"
+          external-dns.home.arpa/enabled: "true"
           hajimari.io/appName: authelia
           hajimari.io/enable: "true"
           hajimari.io/icon: shield-account

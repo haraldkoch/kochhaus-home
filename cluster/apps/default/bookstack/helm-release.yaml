@@ -53,7 +53,7 @@ spec:
         annotations:
           cert-manager.io/cluster-issuer: "letsencrypt-production"
           external-dns.alpha.kubernetes.io/target: "gw.${SECRET_PUBLIC_DOMAIN}"
-          external-dns/is-public: "true"
+          external-dns.home.arpa/enabled: "true"
           hajimari.io/enable: "true"
           hajimari.io/icon: "notebook-edit-outline"
         labels:
@@ -63,9 +63,9 @@ spec:
             paths:
               - path: /
         tls:
-          - secretName: tls.bookstack
-            hosts:
+          - hosts:
               - kb.${SECRET_PUBLIC_DOMAIN}
+            secretName: tls.bookstack
 
       internal:
         enabled: true
