@@ -8,11 +8,11 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: app-template
-      version: 0.1.1
+      chart: mail
+      version: 3.5.1
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: bokysan
         namespace: flux-system
   install:
     createNamespace: true
@@ -21,37 +21,52 @@ spec:
   upgrade:
     remediation:
       retries: 5
-
   values:
-    nameOverride: *app
-    image:
-      repository: docker.io/juanluisbaptiste/postfix
-      tag: 1.7.1
-    env:
-      TZ: "${CONFIG_TIMEZONE}"
-      SMTP_SERVER: "${SECRET_SMTP_RELAY}"
-      SMTP_PORT: "${SECRET_SMTP_RELAY_PORT}"
-      SERVER_HOSTNAME: &hostname "smtp.${SECRET_INTERNAL_DOMAIN}"
-      SMTP_NETWORKS: "${NETWORK_K8S_HOST_CIDR}"
-      ALWAYS_ADD_MISSING_HEADERS: "yes"
-      LOG_SUBJECT: "yes"
+    fullnameOverride: smtp-relay
+    config:
+      general:
+        TZ: "${CONFIG_TIMEZONE}"
+        ALLOWED_SENDER_DOMAINS: "${SECRET_INTERNAL_DOMAIN} ${SECRET_PUBLIC_DOMAIN}"
+        RELAYHOST: "[${SECRET_SMTP_RELAY}]:${SECRET_SMTP_RELAY_PORT}"
+      postfix:
+        myhostname: &hostname "smtp.${SECRET_INTERNAL_DOMAIN}"
+        # FIXME: ipv6
+        mynetworks: "${NETWORK_K8S_POD_CIDR},${NETWORK_K8S_SERVICE_CIDR},${NETWORK_K8S_HOST_CIDR}"
+        always_add_missing_headers: yes
+        smtpd_tls_cert_file: /tls/tls.crt
+        smtpd_tls_key_file: /tls/tls.key
+        smtpd_tls_ciphers: medium
+        smtpd_tls_eecdh_grade: strong
+        smtpd_tls_exclude_ciphers: EXPORT,LOW,MD5,aDSS,kECDHe,kDHd,kDHr,SEED,IDEA,RC2,RC4
+        smtpd_tls_loglevel: 1
+        smtpd_tls_mandatory_ciphers: medium
+        smtpd_tls_mandatory_protocols: "!SSLv2, !SSLv3, !TLSv1, !TLSv1.1"
+        smtpd_tls_protocols: "!SSLv2, !SSLv3, !TLSv1, !TLSv1.1"
+        smtpd_tls_security_level: may
+        tls_medium_cipherlist: "AES128+EECDH:AES128+EDH"
+    persistence:
+      enabled: true
+      existingClaim: postfix-queue-v1
     service:
-      main:
-        type: LoadBalancer
-        ipFamilyPolicy: PreferDualStack
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: *hostname
-        ports:
-          http:
-            enabled: false
-          smtp:
-            enabled: true
-            primary: true
-            port: &port 25
-            protocol: TCP
+      type: LoadBalancer
+      ipFamilyPolicy: PreferDualStack
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: *hostname
+    extraVolumes:
+      - name: tls
+        secret:
+          secretName: tls.smtp-relay
+    extraVolumeMounts:
+      - name: tls
+        mountPath: /tls
+    pod:
+      annotations:
+        secret.reloader.stakater.com/reload: "tls.smtp-relay"
+        configmap.reloader.stakater.com/reload: "smtp-relay-mail"
     resources:
       requests:
-        cpu: 50m
-        memory: 100Mi
+        cpu: 100m
+        memory: 128Mi
       limits:
+        cpu: 100m
         memory: 256Mi
