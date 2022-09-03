@@ -5,3 +5,4 @@ resources:
   - add-safe-to-evict.yaml
   - create-snapshot-cronjob.yaml
   - delete-cpu-limits.yaml
+  - update-ingress-annotations.yaml

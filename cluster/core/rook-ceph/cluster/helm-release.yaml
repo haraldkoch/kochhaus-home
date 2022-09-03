@@ -31,8 +31,7 @@ spec:
       createPrometheusRules: true
     ingress:
       dashboard:
-        annotations:
-          kubernetes.io/ingress.class: "traefik"
+        ingressClassName: traefik
         host:
           name: &host "rook.${SECRET_INTERNAL_DOMAIN}"
           path: "/"

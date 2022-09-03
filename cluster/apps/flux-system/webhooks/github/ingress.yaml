@@ -5,10 +5,7 @@ metadata:
   name: webhook-receiver
   namespace: flux-system
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-production"
-    external-dns.alpha.kubernetes.io/target: "gw.${SECRET_PUBLIC_DOMAIN}"
     external-dns.home.arpa/enabled: "true"
-    traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-cloudflare-only@kubernetescrd"
 spec:
   ingressClassName: traefik
   rules:

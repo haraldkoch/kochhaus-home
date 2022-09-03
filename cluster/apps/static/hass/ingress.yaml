@@ -5,12 +5,9 @@ metadata:
   name: hass-external
   namespace: networking
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-production"
-    external-dns.alpha.kubernetes.io/target: "gw.${SECRET_PUBLIC_DOMAIN}"
     external-dns.home.arpa/enabled: "true"
     hajimari.io/enable: "true"
     hajimari.io/icon: "home-assistant"
-    traefik.ingress.kubernetes.io/router.middlewares: traefik-system-external-auth@kubernetescrd
 spec:
   ingressClassName: traefik
   rules:
