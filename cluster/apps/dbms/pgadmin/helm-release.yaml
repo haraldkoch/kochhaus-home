@@ -41,10 +41,7 @@ spec:
             key: password
     ingress:
       enabled: true
-      annotations:
-        kubernetes.io/ingress.class: traefik
-        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
+      ingressClassName: traefik
       hosts:
         - host: &host "pgadmin.${SECRET_INTERNAL_DOMAIN}"
           paths:

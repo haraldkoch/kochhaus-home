@@ -35,18 +35,27 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: traefik
+        hosts:
+          - host: &hosti echo.${SECRET_INTERNAL_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *hosti
+      external:
+        enabled: true
+        ingressClassName: traefik
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-          external-dns.alpha.kubernetes.io/target: "gw.${SECRET_PUBLIC_DOMAIN}"
           external-dns.home.arpa/enabled: "true"
         hosts:
-          - host: &host "echo.${SECRET_PUBLIC_DOMAIN}"
+          - host: &hoste "echo.${SECRET_PUBLIC_DOMAIN}"
             paths:
               - path: /
         tls:
           - hosts:
-              - *host
+              - *hoste
             secretName: tls.echo-server
     resources:
       requests:
