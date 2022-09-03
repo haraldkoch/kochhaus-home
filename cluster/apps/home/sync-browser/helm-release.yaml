@@ -72,3 +72,18 @@ spec:
       limits:
         cpu: 100m
         memory: 64M
+    # if we run on the same node as the main app, we can use ReadWriteOnce and block storage?
+    affinity:
+      podAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - syncthing
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - syncthing
+            topologyKey: kubernetes.io/hostname
