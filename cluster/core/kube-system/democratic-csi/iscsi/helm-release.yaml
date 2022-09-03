@@ -55,7 +55,7 @@ spec:
 
     storageClasses:
       - name: zfs-block
-        defaultClass: true
+        defaultClass: false
         reclaimPolicy: Delete
         volumeBindingMode: Immediate
         allowVolumeExpansion: true
