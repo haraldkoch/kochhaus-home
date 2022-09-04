@@ -21,6 +21,17 @@ spec:
   upgrade:
     remediation:
       retries: 5
+  postRenderers:
+    - kustomize:
+        patchesStrategicMerge:
+          - apiVersion: v1
+            kind: Service
+            metadata:
+              name: smtp-relay
+            spec:
+              externalTrafficPolicy: Local
+              ipFamilyPolicy: PreferDualStack
+              ipFamilies: [IPv4, IPv6]
   values:
     fullnameOverride: smtp-relay
     config:
