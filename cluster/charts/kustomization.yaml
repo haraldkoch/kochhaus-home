@@ -19,6 +19,7 @@ resources:
   - grafana.yaml
   - hajimari.yaml
   - harbor-container-webhook.yaml
+  - ingress-nginx.yaml
   - jetstack.yaml
   - k8s-at-home.yaml
   - kube-fledged.yaml
