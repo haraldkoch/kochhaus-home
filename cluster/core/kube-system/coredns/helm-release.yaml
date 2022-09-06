@@ -50,7 +50,7 @@ spec:
       - zones:
           - zone: .
             scheme: dns://
-            # use_tcp: true
+            use_tcp: true
         port: 53
         plugins:
           - name: log
