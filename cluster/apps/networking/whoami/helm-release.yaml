@@ -29,7 +29,7 @@ spec:
     nameOverride: *app
     image:
       repository: docker.io/traefik/whoami
-      tag: v1.8.1
+      tag: v1.8.6
     controller:
       replicas: 3
     service:
