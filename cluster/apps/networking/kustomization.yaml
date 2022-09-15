@@ -6,6 +6,7 @@ resources:
   - cloudflare-ddns
   - echo-server
   - external-dns
+  - ingress-nginx
   - internal-dns
   - speedtest-exporter
   - web-static

@@ -49,7 +49,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: nginx
         annotations:
           external-dns.home.arpa/enabled: "true"
           hajimari.io/enable: "true"
@@ -67,7 +67,7 @@ spec:
 
       internal:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: nginx
         labels:
           app.kubernetes.io/part-of: bookstack
         hosts:

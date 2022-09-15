@@ -73,7 +73,7 @@ spec:
 
       ingress:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: nginx
         annotations:
           hajimari.io/appName: "alertmanager"
           hajimari.io/enable: "true"
@@ -139,7 +139,7 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: nginx
         annotations:
           hajimari.io/appName: "prometheus"
           hajimari.io/enable: "true"

@@ -50,7 +50,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: nginx
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_INTERNAL_DOMAIN}"
             paths:
