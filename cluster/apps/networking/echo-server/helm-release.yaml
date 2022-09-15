@@ -35,7 +35,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        ingressClassName: nginx
         hosts:
           - host: &hosti echo.${SECRET_INTERNAL_DOMAIN}
             paths:
@@ -46,7 +46,7 @@ spec:
               - *hosti
       external:
         enabled: true
-        ingressClassName: traefik
+        ingressClassName: nginx
         annotations:
           external-dns.home.arpa/enabled: "true"
         hosts:

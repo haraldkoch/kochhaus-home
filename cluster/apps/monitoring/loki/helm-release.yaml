@@ -98,7 +98,7 @@ spec:
       replicas: 3
       ingress:
         enabled: true
-        ingressClassName: traefik
+        ingressClassName: nginx
         annotations:
           traefik.ingress.kubernetes.io/buffering: |
             # 10Mb

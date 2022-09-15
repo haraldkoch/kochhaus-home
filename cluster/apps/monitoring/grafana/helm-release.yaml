@@ -108,7 +108,7 @@ spec:
       interval: 30s
     ingress:
       enabled: true
-      ingressClassName: "traefik"
+      ingressClassName: nginx
       annotations:
         hajimari.io/appName: "grafana"
         hajimari.io/enable: "true"

@@ -13,7 +13,7 @@ metadata:
   name: speedtest
   namespace: monitoring
 spec:
-  ingressClassName: traefik
+  ingressClassName: nginx
   rules:
     - host: speedtest.${SECRET_PUBLIC_DOMAIN}
       http:

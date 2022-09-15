@@ -15,8 +15,8 @@ spec:
         name: bjw-s
         namespace: flux-system
   dependsOn:
-    - name: traefik
-      namespace: traefik-system
+    - name: ingress-nginx
+      namespace: networking
   install:
     createNamespace: true
     remediation:
@@ -40,7 +40,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        ingressClassName: nginx
         hosts:
           - host: &hosti whoami.${SECRET_INTERNAL_DOMAIN}
             paths:
@@ -51,7 +51,7 @@ spec:
               - *hosti
       external:
         enabled: true
-        ingressClassName: traefik
+        ingressClassName: nginx
         annotations:
           auth.home.arpa/enabled: "true"
           external-dns.home.arpa/enabled: "true"

@@ -41,7 +41,7 @@ spec:
             key: password
     ingress:
       enabled: true
-      ingressClassName: traefik
+      ingressClassName: nginx
       hosts:
         - host: &host "pgadmin.${SECRET_INTERNAL_DOMAIN}"
           paths:
