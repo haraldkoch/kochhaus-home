@@ -52,7 +52,7 @@ spec:
             ip_protocol_fallback: false
     ingress:
       enabled: true
-      className: traefik
+      className: nginx
       hosts:
         - host: &host blackbox.${SECRET_INTERNAL_DOMAIN}
           paths:

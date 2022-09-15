@@ -39,7 +39,7 @@ spec:
 
     ingress:
       enabled: true
-      className: "traefik"
+      className: nginx
       annotations:
         hajimari.io/enable: "true"
         hajimari.io/icon: "table-tennis"

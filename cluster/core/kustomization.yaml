@@ -9,4 +9,4 @@ resources:
   - metallb-system
   - rook-ceph
   - tigera-operator
-  - traefik-system
+  #- traefik-system

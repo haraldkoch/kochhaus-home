@@ -1,17 +1,14 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: security
+namespace: networking
 resources:
-  - database.yaml
+  - dashboard
   - helm-release.yaml
-  - secret.sops.yaml
-  - service-monitor.yaml
-patchesStrategicMerge:
-  - patches/env.yaml
+  - certificate.yaml
 configMapGenerator:
-  - name: authelia
+  - name: cloudflare-proxied-networks
     files:
-      - config/configuration.yml
+      - cloudflare-proxied-networks.txt
 generatorOptions:
   disableNameSuffixHash: true

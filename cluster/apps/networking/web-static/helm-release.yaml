@@ -15,8 +15,8 @@ spec:
         name: bjw-s
         namespace: flux-system
   dependsOn:
-    - name: traefik
-      namespace: traefik-system
+    - name: ingress-nginx
+      namespace: networking
   install:
     createNamespace: true
     remediation:
@@ -43,7 +43,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        ingressClassName: nginx
         hosts:
           - host: "home.${SECRET_INTERNAL_DOMAIN}"
             paths:

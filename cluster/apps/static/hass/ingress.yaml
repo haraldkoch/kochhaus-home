@@ -9,7 +9,7 @@ metadata:
     hajimari.io/enable: "true"
     hajimari.io/icon: "home-assistant"
 spec:
-  ingressClassName: traefik
+  ingressClassName: nginx
   rules:
     - host: &host ha.${SECRET_PUBLIC_DOMAIN}
       http:
