@@ -5,6 +5,7 @@ resources:
   - namespace.yaml
   - excalidraw
   - hajimari
+  - miniflux
   - mosquitto
   - onedrive
   - smtp-relay
