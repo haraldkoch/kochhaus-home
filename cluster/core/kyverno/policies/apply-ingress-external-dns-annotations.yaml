@@ -26,5 +26,6 @@ spec:
         patchStrategicMerge:
           metadata:
             annotations:
+              +(cert-manager.io/cluster-issuer): "letsencrypt-production"
               +(external-dns.alpha.kubernetes.io/target): |-
                 gw.${SECRET_PUBLIC_DOMAIN}
