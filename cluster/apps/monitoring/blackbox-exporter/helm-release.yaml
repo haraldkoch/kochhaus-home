@@ -38,6 +38,7 @@ spec:
       sysctls:
         - name: net.ipv4.ping_group_range
           value: "0 65536"
+    pspEnabled: false
     config:
       modules:
         icmp:
