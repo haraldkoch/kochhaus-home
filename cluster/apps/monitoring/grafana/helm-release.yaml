@@ -47,6 +47,9 @@ spec:
       users:
         allow_sign_up: false
 
+    rbac:
+      pspEnabled: false
+
     adminPassword: "${SECRET_GRAFANA_PASSWORD}"
     defaultDashboardsTimezone: ${CONFIG_TIMEZONE}
     dashboardProviders:
