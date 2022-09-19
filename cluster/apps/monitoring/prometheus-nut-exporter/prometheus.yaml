@@ -1,0 +1,117 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: snmp-exporter-apc-ups
+  namespace: monitoring
+spec:
+  groups:
+    - name: prometheus-nut-exporter.rules
+      rules:
+        - alert: UPSOnBattery
+          annotations:
+            summary: ZPM {{$labels.instance}} is running on batteries
+          expr: network_ups_tools_ups_status{flag="OB"} == 1
+          for: 1m
+          labels:
+            severity: warning
+        - alert: UPSLow
+          annotations:
+            summary: ZPM {{ $labels.instance }} is running on batteries
+              and has less that 15 minutes of battery left
+          expr: |
+            (
+              network_ups_tools_ups_status{flag="OB"} == 1
+            and
+              network_ups_tools_battery_runtime < 900
+            )
+          for: 1m
+          labels:
+            severity: critical
+        - alert: UPSBatteryCharge
+          expr: network_ups_tools_battery_charge < 50
+          labels:
+            severity: warning
+          annotations:
+            description: UPS {{ $labels.instance }} battery charge is {{ $value }} which is below 50%.
+            summary: UPS battery low
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/instance: servers
+    app.kubernetes.io/name: prometheus-nut-exporter
+    prometheus: kube-prometheus
+  name: prometheus-nut-exporter-servers
+  namespace: monitoring
+spec:
+  endpoints:
+    - interval: 30s
+      metricRelabelings:
+        - action: replace
+          replacement: servers
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: castor
+          sourceLabels:
+            - server
+          targetLabel: server
+      params:
+        server:
+          - castor
+      path: /ups_metrics
+      port: metrics
+      scheme: http
+      scrapeTimeout: 30s
+  jobLabel: prometheus-nut-exporter
+  namespaceSelector:
+    matchNames:
+      - monitoring
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: prometheus-nut-exporter
+      app.kubernetes.io/name: prometheus-nut-exporter
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/instance: servers
+    app.kubernetes.io/name: prometheus-nut-exporter
+    prometheus: kube-prometheus
+  name: prometheus-nut-exporter-internet
+  namespace: monitoring
+spec:
+  endpoints:
+    - interval: 30s
+      metricRelabelings:
+        - action: replace
+          replacement: internet
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: pollux
+          sourceLabels:
+            - server
+          targetLabel: server
+      params:
+        server:
+          - pollux
+      path: /ups_metrics
+      port: metrics
+      scheme: http
+      scrapeTimeout: 30s
+  jobLabel: prometheus-nut-exporter
+  namespaceSelector:
+    matchNames:
+      - monitoring
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: prometheus-nut-exporter
+      app.kubernetes.io/name: prometheus-nut-exporter
