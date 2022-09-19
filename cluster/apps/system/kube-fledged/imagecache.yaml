@@ -11,7 +11,7 @@ metadata:
 spec:
   cacheSpec:
     - images:
-        - coredns/coredns:1.9.4
+        - coredns/coredns:1.10.0
         - docker.io/calico/cni:v3.24.1
         - docker.io/calico/csi:v3.24.1
         - docker.io/calico/node-driver-registrar:v3.24.1
