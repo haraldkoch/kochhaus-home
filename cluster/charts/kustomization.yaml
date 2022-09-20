@@ -23,6 +23,7 @@ resources:
   - jetstack.yaml
   - k8s-at-home.yaml
   - kube-fledged.yaml
+  - kured.yaml
   - kyverno.yaml
   - metallb.yaml
   - metrics-server.yaml
@@ -35,5 +36,4 @@ resources:
   - stakater.yaml
   - traefik.yaml
   - vector.yaml
-  - weaveworks-kured.yaml
   - woodpecker.yaml
