@@ -37,6 +37,7 @@ spec:
       SERVER_ROOT: /public
     service:
       main:
+        ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 80

@@ -27,6 +27,8 @@ spec:
       configmap.reloader.stakater.com/reload: "gatus"
       secret.reloader.stakater.com/reload: "gatus-secret"
 
+    service:
+      ipFamilyPolicy: PreferDualStack
     ingress:
       enabled: true
       ingressClassName: nginx

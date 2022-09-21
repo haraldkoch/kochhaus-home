@@ -53,6 +53,7 @@ spec:
           name: *app
     service:
       main:
+        ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: &port 8080
