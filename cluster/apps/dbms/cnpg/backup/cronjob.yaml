@@ -47,7 +47,7 @@ spec:
                       name: kochhaus-superuser
                       key: password
                 - name: TZ
-                  value: ${CONFIG_TIMEZONE}
+                  value: ${TIMEZONE}
               volumeMounts:
                 - name: backup
                   mountPath: /backup

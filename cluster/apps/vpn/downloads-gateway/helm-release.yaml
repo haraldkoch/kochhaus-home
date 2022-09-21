@@ -71,7 +71,7 @@ spec:
         type: openvpn
 
         env:
-          TZ: ${CONFIG_TIMEZONE}
+          TZ: ${TIMEZONE}
           # I think these two are only used by wireguard
           IPTABLES_BACKEND: legacy
           KILLSWITCH: "false"

@@ -28,7 +28,7 @@ spec:
       tag: v0.2.0
 
     env:
-      TZ: ${CONFIG_TIMEZONE}
+      TZ: ${TIMEZONE}
 
     hajimari:
       # displays all discovered apps

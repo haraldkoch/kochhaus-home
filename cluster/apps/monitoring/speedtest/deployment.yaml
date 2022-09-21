@@ -25,7 +25,7 @@ spec:
           image: ghcr.io/linuxserver/librespeed:5.2.5
           env:
             - name: TZ
-              value: ${CONFIG_TIMEZONE}
+              value: ${TIMEZONE}
           ports:
             - containerPort: 80
               name: http

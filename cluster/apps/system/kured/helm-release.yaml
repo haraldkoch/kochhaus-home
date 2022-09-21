@@ -25,7 +25,7 @@ spec:
     configuration:
       startTime: "7:00"
       endTime: "12:00"
-      timeZone: ${CONFIG_TIMEZONE}
+      timeZone: ${TIMEZONE}
     tolerations:
       - key: "node-role.kubernetes.io/master"
         operator: "Exists"
@@ -35,7 +35,7 @@ spec:
       create: true
     extraEnvVars:
       - name: TZ
-        value: ${CONFIG_TIMEZONE}
+        value: ${TIMEZONE}
       - name: KURED_NOTIFY_URL
         valueFrom:
           secretKeyRef:
