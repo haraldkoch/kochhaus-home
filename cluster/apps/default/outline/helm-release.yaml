@@ -39,6 +39,7 @@ spec:
     command: ["/bin/sh", "-c", "yarn db:migrate --env=production-ssl-disabled && yarn start --env=production-ssl-disabled"]
     service:
       main:
+        ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 80

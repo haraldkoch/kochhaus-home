@@ -26,6 +26,8 @@ spec:
       startTime: "7:00"
       endTime: "12:00"
       timeZone: ${TIMEZONE}
+    service:
+      ipFamilyPolicy: preferDualStack
     tolerations:
       - key: "node-role.kubernetes.io/master"
         operator: "Exists"

@@ -41,6 +41,7 @@ spec:
       - --without-password
     service:
       main:
+        ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 80

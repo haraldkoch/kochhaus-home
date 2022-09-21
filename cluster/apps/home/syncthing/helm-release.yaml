@@ -27,6 +27,8 @@ spec:
       repository: syncthing/syncthing
       tag: 1.21.0
     service:
+      main:
+        ipFamilyPolicy: PreferDualStack
       listen:
         type: LoadBalancer
         ipFamilyPolicy: PreferDualStack

@@ -41,6 +41,7 @@ spec:
     enableServiceLinks: false
     service:
       main:
+        ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 80

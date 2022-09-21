@@ -32,6 +32,8 @@ spec:
           memory: 250M
     dashboard:
       replicaCount: 1
+      service:
+        ipFamilyPolicy: PreferDualStack
       ingress:
         enabled: true
         ingressClassName: nginx

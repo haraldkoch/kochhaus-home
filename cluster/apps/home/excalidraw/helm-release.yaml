@@ -30,6 +30,7 @@ spec:
       tag: 0.12.0
     service:
       main:
+        ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 8080

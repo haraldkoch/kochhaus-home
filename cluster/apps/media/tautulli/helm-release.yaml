@@ -30,6 +30,9 @@ spec:
     env:
       TZ: ${TIMEZONE}
 
+    service:
+      main:
+        ipFamilyPolicy: PreferDualStack
     ingress:
       main:
         enabled: true

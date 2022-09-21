@@ -36,6 +36,7 @@ spec:
     service:
       type: ClusterIP
       port: 80
+      ipFamilyPolicy: PreferDualStack
 
     ingress:
       enabled: true
