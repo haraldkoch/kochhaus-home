@@ -32,12 +32,10 @@ spec:
           value: "${CONFIG_TIMEZONE}"
       service:
         annotations:
-          # unfortunately external-dns does not seem to support IPv6 yet
-          # metallb.universe.tf/loadBalancerIPs: "${SVC_NGINX_ADDR},${SVC_NGINX_ADDR_V6}"
-          metallb.universe.tf/loadBalancerIPs: "${SVC_NGINX_ADDR}"
+          metallb.universe.tf/loadBalancerIPs: "${SVC_NGINX_ADDR},${SVC_NGINX_ADDR_V6}"
         externalTrafficPolicy: Local
-        ipFamilyPolicy: SingleStack
-        ipFamilies: [IPv4]
+        ipFamilyPolicy: PreferDualStack
+        ipFamilies: [IPv4, IPv6]
       publishService:
         enabled: true
       ingressClassResource:
