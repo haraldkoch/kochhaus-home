@@ -23,6 +23,11 @@ spec:
       retries: 5
 
   values:
+    image:
+      repository: docker.io/samip537/external-dns
+      tag: v1.1.0
+      pullPolicy: IfNotPresent
+
     nameOverride: internal-dns
 
     provider: rfc2136
