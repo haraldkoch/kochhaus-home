@@ -35,6 +35,8 @@ spec:
         configMap: snmp-exporter-openwrt
         readOnly: true
         defaultMode: 420
+    service:
+      ipFamilyPolicy: PreferDualStack
     resources:
       requests:
         cpu: 50m

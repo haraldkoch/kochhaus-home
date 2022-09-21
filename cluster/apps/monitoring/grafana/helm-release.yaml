@@ -109,6 +109,8 @@ spec:
     serviceMonitor:
       enabled: true
       interval: 30s
+    service:
+      ipFamilyPolicy: PreferDualStack
     ingress:
       enabled: true
       ingressClassName: nginx

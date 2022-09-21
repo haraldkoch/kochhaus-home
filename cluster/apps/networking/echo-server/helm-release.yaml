@@ -29,6 +29,7 @@ spec:
       tag: 0.3.3
     service:
       main:
+        ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 8080

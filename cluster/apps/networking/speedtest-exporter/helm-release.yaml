@@ -29,6 +29,9 @@ spec:
     metrics:
       enabled: true
 
+    service:
+      main:
+        ipFamilyPolicy: PreferDualStack
     resources:
       requests:
         cpu: 10m

@@ -51,6 +51,8 @@ spec:
           icmp:
             preferred_ip_protocol: "ip6"
             ip_protocol_fallback: false
+    service:
+      ipFamilyPolicy: PreferDualStack
     ingress:
       enabled: true
       className: nginx

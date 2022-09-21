@@ -36,6 +36,7 @@ spec:
     command: ["/app/glauth", "-c", "/config/config.cfg"]
     service:
       main:
+        ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 5555
