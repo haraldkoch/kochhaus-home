@@ -21,40 +21,18 @@ spec:
   upgrade:
     remediation:
       retries: 5
-
   values:
     nodeFeatureRule:
-      createCRD: true
-
-    master:
-      tolerations:
-        - key: node-role.kubernetes.io/control-plane
-          operator: Exists
-        - key: node-role.kubernetes.io/master
-          operator: Exists
-
-      affinity:
-        nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 1
-              preference:
-                matchExpressions:
-                  - key: "node-role.kubernetes.io/control-plane"
-                    operator: In
-                    values: [""]
-
+      createCRD: false
     worker:
       annotations:
         configmap.reloader.stakater.com/reload: node-feature-discovery-worker-conf
-
       config:
         core:
           sources:
-            - cpu
             - custom
+            - pci
             - usb
-            - system
-
         sources:
           usb:
             deviceClassWhitelist:
@@ -65,27 +43,44 @@ spec:
               - "fe"
               - "ff"
             deviceLabelFields:
-              - "class"
-              - "vendor"
-              - "device"
-
+              - class
+              - vendor
+              - device
           custom:
-            - name: "apcups"
+            - name: apcups
               matchOn:
                 - usbId:
                     class: ["03"]
                     vendor: ["051d"]
                     device: ["0002"]
-
-            - name: "flirc"
+            - name: flirc
               matchOn:
                 - usbId:
                     class: ["03"]
                     vendor: ["20a0"]
                     device: ["0001"]
-
+            - name: intel-gpu
+              matchOn:
+                - pciId:
+                    class: ["0300"]
+                    vendor: ["8086"]
       tolerations:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
         - key: node-role.kubernetes.io/master
           operator: Exists
+    master:
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        - key: node-role.kubernetes.io/master
+          operator: Exists
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: "node-role.kubernetes.io/control-plane"
+                    operator: In
+                    values: [""]
