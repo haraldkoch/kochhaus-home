@@ -27,7 +27,7 @@ spec:
       labels:
         pmb.home.arpa/snapshot-claim: &claimName "onedrive-config-v4"
     env:
-      TZ: ${CONFIG_TIMEZONE}
+      TZ: ${TIMEZONE}
       ONEDRIVE_DOWNLOADONLY: 1
       ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE}"
     persistence:

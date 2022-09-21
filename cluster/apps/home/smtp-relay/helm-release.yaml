@@ -36,7 +36,7 @@ spec:
     fullnameOverride: smtp-relay
     config:
       general:
-        TZ: "${CONFIG_TIMEZONE}"
+        TZ: "${TIMEZONE}"
         ALLOWED_SENDER_DOMAINS: "${SECRET_INTERNAL_DOMAIN} ${SECRET_PUBLIC_DOMAIN} ${PRIVATE_STATIC_DOMAIN}"
         RELAYHOST: "[${SECRET_SMTP_RELAY}]:${SECRET_SMTP_RELAY_PORT}"
       postfix:

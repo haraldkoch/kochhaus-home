@@ -24,7 +24,7 @@ spec:
 
   values:
     env:
-      TZ: ${CONFIG_TIMEZONE}
+      TZ: ${TIMEZONE}
 
     metrics:
       enabled: true

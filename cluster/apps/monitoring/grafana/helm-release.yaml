@@ -51,7 +51,7 @@ spec:
       pspEnabled: false
 
     adminPassword: "${SECRET_GRAFANA_PASSWORD}"
-    defaultDashboardsTimezone: ${CONFIG_TIMEZONE}
+    defaultDashboardsTimezone: ${TIMEZONE}
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1

@@ -28,7 +28,7 @@ spec:
         pmb.home.arpa/snapshot-claim: &claimName "tautulli-config-v5"
 
     env:
-      TZ: ${CONFIG_TIMEZONE}
+      TZ: ${TIMEZONE}
 
     ingress:
       main:

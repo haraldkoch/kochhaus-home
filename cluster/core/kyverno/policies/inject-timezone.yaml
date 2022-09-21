@@ -43,13 +43,13 @@ spec:
                   - mountPath: /etc/localtime
                     name: timezone
                     readOnly: true
-                    subPath: ${CONFIG_TIMEZONE}
+                    subPath: ${TIMEZONE}
                   - mountPath: /usr/share/zoneinfo
                     name: timezone
                     readOnly: true
                 env:
                   - name: TZ
-                    value: ${CONFIG_TIMEZONE}
+                    value: ${TIMEZONE}
             volumes:
               - name: timezone
                 emptyDir: {}

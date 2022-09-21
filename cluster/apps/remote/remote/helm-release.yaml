@@ -33,7 +33,7 @@ spec:
       rollingUpdate:
         surge: 1
     env:
-      TZ: ${CONFIG_TIMEZONE}
+      TZ: ${TIMEZONE}
       PUBLIC_KEY_FILE: /sshd/authorized_keys
       USER_NAME: "chk"
     service:

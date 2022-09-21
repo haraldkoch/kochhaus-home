@@ -29,7 +29,7 @@ spec:
       tag: "0.1.1"
       pullPolicy: IfNotPresent
     env:
-      TZ: ${CONFIG_TIMEZONE}
+      TZ: ${TIMEZONE}
       SCRAPE_INTERVAL: "600"
       CITIES: "toronto"
       UNITS: "ca"

@@ -29,7 +29,7 @@ spec:
       replicaCount: 3
       extraEnvs:
         - name: TZ
-          value: "${CONFIG_TIMEZONE}"
+          value: "${TIMEZONE}"
       service:
         annotations:
           metallb.universe.tf/loadBalancerIPs: "${SVC_NGINX_ADDR},${SVC_NGINX_ADDR_V6}"

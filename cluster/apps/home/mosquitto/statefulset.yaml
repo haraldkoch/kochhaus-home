@@ -42,7 +42,7 @@ spec:
           image: "ghcr.io/k8s-at-home/eclipse-mosquitto:v2.0.15"
           env:
             - name: TZ
-              value: ${CONFIG_TIMEZONE}
+              value: ${TIMEZONE}
           ports:
             - name: mqtt
               containerPort: 1883
