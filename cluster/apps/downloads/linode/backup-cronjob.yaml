@@ -46,7 +46,7 @@ spec:
                   printf "\e[1;32m%-6s\e[m\n" "rsync complete."
               env:
                 - name: TZ
-                  value: ${CONFIG_TIMEZONE}
+                  value: ${TIMEZONE}
               volumeMounts:
                 - name: backup
                   mountPath: /backup

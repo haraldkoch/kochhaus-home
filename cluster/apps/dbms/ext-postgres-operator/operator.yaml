@@ -26,7 +26,7 @@ spec:
             - postgres-operator
           env:
             - name: TZ
-              value: ${CONFIG_TIMEZONE}
+              value: ${TIMEZONE}
             - name: WATCH_NAMESPACE
               value: ""
             - name: POD_NAME

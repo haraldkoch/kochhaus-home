@@ -36,7 +36,7 @@ spec:
             - name: PGID
               value: "1000"
             - name: TZ
-              value: ${CONFIG_TIMEZONE}
+              value: ${TIMEZONE}
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:

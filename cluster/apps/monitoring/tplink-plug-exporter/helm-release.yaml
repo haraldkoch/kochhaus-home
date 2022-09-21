@@ -31,7 +31,7 @@ spec:
       pullPolicy: IfNotPresent
 
     env:
-      TZ: ${CONFIG_TIMEZONE}
+      TZ: ${TIMEZONE}
 
     service:
       main:

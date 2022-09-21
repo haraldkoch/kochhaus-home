@@ -34,7 +34,7 @@ spec:
         pmb.home.arpa/snapshot-claim: &claimName "bookstack-config-v4"
 
     env:
-      TZ: ${CONFIG_TIMEZONE}
+      TZ: ${TIMEZONE}
       APP_URL: https://kb.${SECRET_PUBLIC_DOMAIN}
       DB_HOST: bookstack-mariadb.default
       DB_USER: bookstack
