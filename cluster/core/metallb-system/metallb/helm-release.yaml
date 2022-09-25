@@ -27,6 +27,8 @@ spec:
       enabled: false
 
     speaker:
+      frr:
+        enabled: true
       tolerations:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
