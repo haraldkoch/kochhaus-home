@@ -10,6 +10,7 @@ resources:
   - grafana
   - kube-prometheus-stack
   - loki
+  - network-ups-tools
   - node-exporter
   - node-problem-detector
   - prometheus-dnssec-exporter
