@@ -21,7 +21,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "9.1.5"
+      "version": "9.1.6"
     },
     {
       "type": "datasource",
@@ -116,7 +116,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "9.1.5",
+      "pluginVersion": "9.1.6",
       "targets": [
         {
           "datasource": {
@@ -200,7 +200,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.1.5",
+      "pluginVersion": "9.1.6",
       "targets": [
         {
           "datasource": {
@@ -246,7 +246,7 @@
               }
             ]
           },
-          "unit": "dtdurations"
+          "unit": "s"
         },
         "overrides": []
       },
@@ -271,7 +271,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.1.5",
+      "pluginVersion": "9.1.6",
       "targets": [
         {
           "datasource": {
@@ -334,7 +334,7 @@
         },
         "textMode": "value"
       },
-      "pluginVersion": "9.1.5",
+      "pluginVersion": "9.1.6",
       "targets": [
         {
           "datasource": {
@@ -402,7 +402,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.1.5",
+      "pluginVersion": "9.1.6",
       "targets": [
         {
           "datasource": {
@@ -464,7 +464,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.1.5",
+      "pluginVersion": "9.1.6",
       "targets": [
         {
           "datasource": {
@@ -535,7 +535,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.1.5",
+      "pluginVersion": "9.1.6",
       "targets": [
         {
           "datasource": {
@@ -605,7 +605,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.1.5",
+      "pluginVersion": "9.1.6",
       "targets": [
         {
           "datasource": {
@@ -943,7 +943,7 @@
               }
             ]
           },
-          "unit": "dtdurations"
+          "unit": "s"
         },
         "overrides": []
       },
@@ -1130,6 +1130,6 @@
   "timezone": "",
   "title": "UPS Status",
   "uid": "FYpOrh7Vz",
-  "version": 3,
+  "version": 1,
   "weekStart": ""
 }
