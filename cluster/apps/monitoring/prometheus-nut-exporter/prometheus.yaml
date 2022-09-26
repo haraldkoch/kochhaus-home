@@ -8,33 +8,53 @@ spec:
   groups:
     - name: prometheus-nut-exporter.rules
       rules:
-        - alert: UPSOnBattery
+        - alert: NutExporterAbsent
           annotations:
-            summary: ZPM {{$labels.instance}} is running on batteries
+            description: NUT exporter has disappeared from Prometheus target discovery.
+            summary: NUT Exporter is down.
+          expr: |
+            absent(up{job=~".*prometheus-nut-exporter.*"} == 1)
+          for: 5m
+          labels:
+            severity: critical
+        - alert: UpsOnBattery
+          annotations:
+            description: ZPM {{ $labels.instance }} has lost power and is running on battery.
+            summary: ZPM is running on battery.
           expr: network_ups_tools_ups_status{flag="OB"} == 1
-          for: 1m
+          for: 10s
           labels:
             severity: warning
-        - alert: UPSLow
+        - alert: UpsLowRuntime
           annotations:
-            summary: ZPM {{ $labels.instance }} is running on batteries
-              and has less that 15 minutes of battery left
+            description: ZPM {{ $labels.instance }} battery is low and the system is getting
+              ready to shutdown.
+            summary: ZPM battery is low.
           expr: |
             (
               network_ups_tools_ups_status{flag="OB"} == 1
             and
-              network_ups_tools_battery_runtime < 900
+              network_ups_tools_battery_runtime < 600
             )
           for: 1m
           labels:
             severity: critical
-        - alert: UPSBatteryCharge
+        - alert: UpsLowBattery
           expr: network_ups_tools_battery_charge < 50
           labels:
             severity: warning
           annotations:
-            description: UPS {{ $labels.instance }} battery charge is {{ $value }} which is below 50%.
-            summary: UPS battery low
+            description: ZPM {{ $labels.instance }} battery charge is {{ $value }} which is below 50%.
+            summary: ZPM battery low
+        - alert: UpsBatteryReplace
+          annotations:
+            description: UPS {{ $labels.ups }} battery needs to be replaced.
+            summary: Replace UPS battery.
+          expr: |
+            network_ups_tools_ups_status{flag="RB"} == 1
+          for: 10s
+          labels:
+            severity: warning
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -103,6 +123,46 @@ spec:
       params:
         server:
           - pollux
+      path: /ups_metrics
+      port: metrics
+      scheme: http
+      scrapeTimeout: 30s
+  jobLabel: prometheus-nut-exporter
+  namespaceSelector:
+    matchNames:
+      - monitoring
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: prometheus-nut-exporter
+      app.kubernetes.io/name: prometheus-nut-exporter
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/instance: kubernetes
+    app.kubernetes.io/name: prometheus-nut-exporter
+    prometheus: kube-prometheus
+  name: prometheus-nut-exporter-kubernetes
+  namespace: monitoring
+spec:
+  endpoints:
+    - interval: 30s
+      metricRelabelings:
+        - action: replace
+          replacement: kubernetes
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: kubernetes
+          sourceLabels:
+            - server
+          targetLabel: server
+      params:
+        server:
+          - network-ups-tools
       path: /ups_metrics
       port: metrics
       scheme: http
