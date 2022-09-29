@@ -10,7 +10,6 @@ metadata:
     app.kubernetes.io/part-of: bookstack
     app.kubernetes.io/component: primary
     kustomize.toolkit.fluxcd.io/substitute: disabled
-    pmb.home.arpa/snapshot-claim: &claimName "bookstack-mariadb-data-v5"
 spec:
   replicas: 1
   selector:
@@ -107,4 +106,4 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: *claimName
+            claimName: bookstack-mariadb-data-v5
