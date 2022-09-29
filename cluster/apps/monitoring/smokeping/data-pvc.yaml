@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/name: smokeping
     app.kubernetes.io/instance: smokeping
     app.kubernetes.io/part-of: smokeping
-    pmb.home.arpa/snapshot: "true"
+    snapshot.home.arpa/enabled: "true"
 spec:
   accessModes:
     - ReadWriteOnce

@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/name: &name tautulli
     app.kubernetes.io/instance: *name
     app.kubernetes.io/part-of: *name
-    pmb.home.arpa/snapshot: "true"
+    snapshot.home.arpa/enabled: "true"
 spec:
   accessModes:
     - ReadWriteOnce

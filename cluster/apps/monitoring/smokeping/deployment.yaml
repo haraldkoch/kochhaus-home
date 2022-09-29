@@ -9,7 +9,6 @@ metadata:
     app.kubernetes.io/instance: smokeping
     app.kubernetes.io/part-of: smokeping
     app.kubernetes.io/version: "2.7.3"
-    pmb.home.arpa/snapshot-claim: smokeping-data-v4
 spec:
   replicas: 1
   strategy:

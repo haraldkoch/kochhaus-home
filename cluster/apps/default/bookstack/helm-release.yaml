@@ -28,11 +28,6 @@ spec:
       tag: version-v21.10.3
       pullPolicy: Always
 
-    controller:
-      labels:
-        app.kubernetes.io/part-of: bookstack
-        pmb.home.arpa/snapshot-claim: &claimName "bookstack-config-v4"
-
     env:
       TZ: ${TIMEZONE}
       APP_URL: https://kb.${SECRET_PUBLIC_DOMAIN}
@@ -44,7 +39,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: *claimName
+        existingClaim: bookstack-config-v4
 
     service:
       main:

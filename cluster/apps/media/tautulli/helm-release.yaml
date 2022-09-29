@@ -23,10 +23,6 @@ spec:
       retries: 5
 
   values:
-    controller:
-      labels:
-        pmb.home.arpa/snapshot-claim: &claimName "tautulli-config-v5"
-
     env:
       TZ: ${TIMEZONE}
 
@@ -66,7 +62,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: *claimName
+        existingClaim: tautulli-config-v5
       backup:
         enabled: true
         type: custom

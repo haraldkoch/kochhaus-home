@@ -23,9 +23,6 @@ spec:
       retries: 5
 
   values:
-    controller:
-      labels:
-        pmb.home.arpa/snapshot-claim: &claimName "onedrive-config-v4"
     env:
       TZ: ${TIMEZONE}
       ONEDRIVE_DOWNLOADONLY: 1
@@ -33,7 +30,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: *claimName
+        existingClaim: onedrive-config-v4
       data:
         existingClaim: nfs-onedrive-pvc
     resources:
