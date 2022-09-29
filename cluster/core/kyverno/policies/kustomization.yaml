@@ -8,3 +8,4 @@ resources:
   - apply-ingress-whitelist-annotations.yaml
   - create-snapshot-cronjob.yaml
   - delete-cpu-limits.yaml
+  - snapshot-cronjob-controller.yaml
