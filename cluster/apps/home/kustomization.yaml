@@ -6,6 +6,7 @@ resources:
   - excalidraw
   - hajimari
   - miniflux
+  - minio
   - mosquitto
   - onedrive
   - smtp-relay
