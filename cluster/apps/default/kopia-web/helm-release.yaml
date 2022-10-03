@@ -24,6 +24,20 @@ spec:
   values:
     global:
       nameOverride: *app
+    initContainers:
+      wait-for-repo:
+        image: ghcr.io/onedr0p/kopia:0.12.0@sha256:08f661428342edeac13866e14455cd044624ebc91990fa73e74619d2fbcee8ed
+        command:
+          - /bin/bash
+          - -c
+          - |-
+            until [ -f /snapshots/kopia.repository.f ]; do
+                printf "\e[1;32m%-6s\e[m\n" "Awaiting for the Kopia repo to become ready ..."
+                sleep 1
+            done
+        volumeMounts:
+          - name: snapshots
+            mountPath: /snapshots
     image:
       repository: ghcr.io/onedr0p/kopia
       tag: 0.12.0@sha256:08f661428342edeac13866e14455cd044624ebc91990fa73e74619d2fbcee8ed
@@ -71,17 +85,17 @@ spec:
         subPath: repository.config
         mountPath: /config/repository.config
         readOnly: true
-      backups:
+      snapshots:
         enabled: true
         type: nfs
         server: ${SECRET_BACKUP_SERVER}
         path: /backup/data/k8s
-        mountPath: /backups
+        mountPath: /snapshots
     podAnnotations:
       configmap.reloader.stakater.com/reload: *app
     resources:
       requests:
         cpu: 10m
-        memory: 250Mi
+        memory: 100Mi
       limits:
-        memory: 500Mi
+        memory: 250Mi
