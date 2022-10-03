@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - cloudflare-ddns
-  - echo-server
   - external-dns
   - ingress-nginx
   - internal-dns
