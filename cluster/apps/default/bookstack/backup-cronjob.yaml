@@ -26,7 +26,7 @@ spec:
           containers:
             - name: mariadb
               # same image as the mariadb sidecar
-              image: ghcr.io/linuxserver/mariadb:10.5.17
+              image: ghcr.io/linuxserver/mariadb:10.6.9
               imagePullPolicy: IfNotPresent
               command: ["/bin/sh"]
               args:
