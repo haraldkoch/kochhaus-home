@@ -86,7 +86,7 @@ spec:
               url: "https://open.spotify.com/browse"
     service:
       main:
-        ipFamilyPolicy: PreferDualStack
+        ipFamilyPolicy: SingleStack
     ingress:
       main:
         enabled: true
