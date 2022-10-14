@@ -23,7 +23,7 @@ spec:
   values:
     image:
       repository: ghcr.io/jr0dd/network-ups-tools
-      tag: v2.8.0@sha256:c89ffd104e925a6524a2e4d30472573bb5de71aac733efaac9a82c2f34b9fad0
+      tag: v2.8.0@sha256:1d0f0cec5040b030c09d8f013527f99bde595c8d43b6e901b376f7e59bee8ba0
     controller:
       strategy: RollingUpdate
     env:
