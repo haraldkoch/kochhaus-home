@@ -64,12 +64,7 @@ spec:
         existingClaim: media-browser-config-v4
       media:
         enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: "${SECRET_MEDIA_SERVER}"
-            path: /media
-            readOnly: true
+        existingClaim: media-nfs
         mountPath: /media
     resources:
       requests:
