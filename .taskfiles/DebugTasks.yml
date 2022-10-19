@@ -74,10 +74,3 @@ tasks:
               "restartPolicy": "Never"
             }
           }'
-
-  ceph:
-    desc: |-
-      Connect to the rook-ceph tools container to perform CLI operations.
-    interactive: true
-    cmds:
-      - kubectl exec -n rook-ceph -ti deployment/rook-ceph-tools -- /bin/sh
