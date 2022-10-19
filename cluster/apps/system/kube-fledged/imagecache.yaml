@@ -15,6 +15,6 @@ spec:
         - docker.io/calico/cni:v3.24.1
         - docker.io/calico/csi:v3.24.1
         - docker.io/calico/node-driver-registrar:v3.24.1
-        - docker.io/calico/node:v3.24.1
+        - docker.io/calico/node:v3.24.2
         - docker.io/calico/pod2daemon-flexvol:v3.24.1
         - quay.io/metallb/speaker:v0.13.6
