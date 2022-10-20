@@ -7,6 +7,6 @@ resources:
   - external-dns
   - ingress-nginx
   - internal-dns
-  - speedtest-exporter
+  - speedtest
   - web-static
   - whoami
