@@ -17,6 +17,6 @@ resources:
   - prometheus-nut-exporter
   - smokeping
   - snmp-exporter
-  - speedtest
+  - speedtest-exporter
   - tplink-plug-exporter
   - vector
