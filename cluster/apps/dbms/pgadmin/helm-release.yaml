@@ -29,7 +29,8 @@ spec:
       registry: docker.io
       repository: dpage/pgadmin4
       tag: "6.15"
-    deploymentStrategy:
+    # pgadmin upgrades get stuck on the PV if we use RollingUpdate
+    strategy:
       type: Recreate
     existingSecret: pgadmin-secrets
     env:
