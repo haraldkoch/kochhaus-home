@@ -16,5 +16,6 @@ xanmanning.k3s*
 .terraform
 .terraform.tfstate*
 terraform.tfstate*
+megalinter-reports
 # gitguardian
 .cache_ggshield
