@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 10m
   ref:
-    branch: main
+    branch: bgp
   url: https://github.com/haraldkoch/kochhaus-home
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
