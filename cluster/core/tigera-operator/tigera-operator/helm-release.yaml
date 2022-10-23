@@ -53,5 +53,8 @@ spec:
             encapsulation: None
             natOutgoing: Enabled
             nodeSelector: all()
+      nodeAddressAutodetectionV4:
+        cidrs:
+          - ${NETWORK_K8S_HOST_CIDR}
       nodeMetricsPort: 9091
       typhaMetricsPort: 9093
