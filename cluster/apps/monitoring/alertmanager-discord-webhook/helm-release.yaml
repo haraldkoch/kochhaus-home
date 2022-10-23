@@ -38,7 +38,10 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: exporters.${SECRET_INTERNAL_DOMAIN}
           metallb.universe.tf/allow-shared-ip: exporters
+          metallb.universe.tf/address-pool: routed
+          metallb.universe.tf/loadBalancerIPs: "${SVC_EXPORTERS_ADDR},${SVC_EXPORTERS_ADDR_V6}"
         ipFamilyPolicy: PreferDualStack
+        externalTrafficPolicy: Local
     ingress:
       main:
         enabled: false
