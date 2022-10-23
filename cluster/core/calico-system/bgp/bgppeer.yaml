@@ -5,7 +5,7 @@ metadata:
   name: ipv4
 spec:
   peerIP: 192.168.20.1
-  asNumber: 64567
+  asNumber: 64512
   keepOriginalNextHop: true
 ---
 apiVersion: crd.projectcalico.org/v1
@@ -14,5 +14,5 @@ metadata:
   name: ipv6
 spec:
   peerIP: fdd5:aa8:9535:20::1
-  asNumber: 64567
+  asNumber: 64512
   keepOriginalNextHop: true
