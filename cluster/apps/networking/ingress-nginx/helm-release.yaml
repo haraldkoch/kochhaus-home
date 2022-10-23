@@ -33,6 +33,7 @@ spec:
       service:
         annotations:
           metallb.universe.tf/loadBalancerIPs: "${SVC_NGINX_ADDR},${SVC_NGINX_ADDR_V6}"
+          metallb.universe.tf/address-pool: routed
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         ipFamilies: [IPv4, IPv6]
