@@ -1,0 +1,11 @@
+---
+apiVersion: crd.projectcalico.org/v1
+kind: BGPConfiguration
+metadata:
+  name: default
+spec:
+  asNumber: 64512
+  nodeToNodeMeshEnabled: true
+  serviceExternalIPs:
+    - cidr: 192.168.21.0/24
+    - cidr: fdd5:aa8:9535:21::/80

@@ -1,0 +1,8 @@
+---
+apiVersion: crd.projectcalico.org/v1
+kind: BGPPeer
+metadata:
+  name: ipv4
+spec:
+  peerIP: 192.168.20.1
+  asNumber: 64567
