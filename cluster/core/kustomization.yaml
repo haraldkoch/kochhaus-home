@@ -6,6 +6,5 @@ resources:
   - cert-manager
   - kube-system
   - kyverno
-  #- metallb-system
   - rook-ceph
   - tigera-operator

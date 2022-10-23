@@ -10,8 +10,6 @@ metadata:
     app.kubernetes.io/instance: mosquitto
   annotations:
     external-dns.alpha.kubernetes.io/hostname: mqtt.${SECRET_INTERNAL_DOMAIN}
-    metallb.universe.tf/allow-shared-ip: exporters
-    metallb.universe.tf/loadBalancerIPs: ${SVC_MOSQUITTO_ADDR}
 spec:
   type: LoadBalancer
   externalIPs:
