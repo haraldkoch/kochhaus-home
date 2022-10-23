@@ -6,6 +6,7 @@ metadata:
 spec:
   asNumber: 64512
   nodeToNodeMeshEnabled: true
+  serviceClusterIPs: []
   serviceExternalIPs:
     - cidr: 192.168.21.0/24
     - cidr: fdd5:aa8:9535:21::/80
