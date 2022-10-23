@@ -6,8 +6,8 @@ metadata:
   namespace: metallb-system
 spec:
   addresses:
-    - 192.168.21.0/24
-    - fdd5:aa8:9535:21::/64
+    - 192.168.21.0/25
+    - fdd5:aa8:9535:21:1::/64
   autoAssign: false
 ---
 apiVersion: metallb.io/v1beta2
