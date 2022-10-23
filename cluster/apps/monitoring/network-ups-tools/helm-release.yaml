@@ -30,17 +30,18 @@ spec:
       TZ: "${TIMEZONE}"
     service:
       main:
-        type: LoadBalancer
-        ipFamilyPolicy: PreferDualStack
-        externalTrafficPolicy: Local
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: "exporters.${SECRET_INTERNAL_DOMAIN}"
-          metallb.universe.tf/allow-shared-ip: exporters
-          metallb.universe.tf/loadBalancerIPs: "${SVC_EXPORTERS_ADDR},${SVC_EXPORTERS_ADDR_V6}"
         ports:
           http:
             port: 3493
             protocol: TCP
+        type: LoadBalancer
+        externalIPs:
+          - ${SVC_EXPORTERS_ADDR}
+          - ${SVC_EXPORTERS_ADDR_V6}
+        externalTrafficPolicy: Local
+        ipFamilyPolicy: PreferDualStack
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "exporters.${SECRET_INTERNAL_DOMAIN}"
       metrics:
         enabled: false
         ports:
