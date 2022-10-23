@@ -37,7 +37,7 @@ spec:
             port: 9094
         type: LoadBalancer
         externalIPs:
-          - ${SVC_EXPORTERS_ADDR}
+          - ${SVC_EXPORTERS_ADDR_V4}
           - ${SVC_EXPORTERS_ADDR_V6}
         externalTrafficPolicy: Cluster
         ipFamilyPolicy: PreferDualStack
