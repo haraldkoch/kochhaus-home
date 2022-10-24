@@ -31,8 +31,9 @@ spec:
         - name: TZ
           value: "${TIMEZONE}"
       service:
-        annotations:
-          metallb.universe.tf/loadBalancerIPs: "${SVC_NGINX_ADDR},${SVC_NGINX_ADDR_V6}"
+        externalIPs:
+          - ${SVC_NGINX_ADDR_V4}
+          - ${SVC_NGINX_ADDR_V6}
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         ipFamilies: [IPv4, IPv6]

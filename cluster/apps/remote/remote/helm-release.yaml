@@ -39,6 +39,9 @@ spec:
     service:
       main:
         type: LoadBalancer
+        externalIPs:
+          - ${SVC_REMOTE_ADDR_V4}
+          - ${SVC_REMOTE_ADDR_V6}
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         annotations:
