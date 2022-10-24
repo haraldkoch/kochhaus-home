@@ -45,7 +45,7 @@ spec:
       postfix:
         myhostname: &hostname "smtp.${SECRET_INTERNAL_DOMAIN}"
         # FIXME: ipv6
-        mynetworks: "${NETWORK_K8S_POD_CIDR},${NETWORK_K8S_SERVICE_CIDR},${NETWORK_K8S_HOST_CIDR}"
+        mynetworks: "${NETWORK_K8S_POD_CIDR},${NETWORK_K8S_SERVICE_CIDR},${NETWORK_K8S_HOST_CIDR},${SECRET_HOMELAN_IPV4},[fdd5:aa8:9535::]/48"
         always_add_missing_headers: yes
         smtpd_tls_cert_file: /tls/tls.crt
         smtpd_tls_key_file: /tls/tls.key
