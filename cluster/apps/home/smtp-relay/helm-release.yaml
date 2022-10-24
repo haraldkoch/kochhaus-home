@@ -29,6 +29,9 @@ spec:
             metadata:
               name: smtp-relay
             spec:
+              externalIPs:
+                - ${SVC_SMTP_RELAY_ADDR_V4}
+                - ${SVC_SMTP_RELAY_ADDR_V6}
               externalTrafficPolicy: Local
               ipFamilyPolicy: PreferDualStack
               ipFamilies: [IPv4, IPv6]

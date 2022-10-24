@@ -230,8 +230,7 @@ spec:
             patch:
               - op: add
                 path: /spec/externalIPs
-                value:
-                  - "${SVC_SYSLOG_ADDR}"
+                value: ["${SVC_SYSLOG_ADDR_V4}", "${SVC_SYSLOG_ADDR_V6}"]
               - op: add
                 path: /metadata/annotations
                 value:
