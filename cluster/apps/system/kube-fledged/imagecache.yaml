@@ -12,7 +12,7 @@ spec:
   cacheSpec:
     - images:
         - coredns/coredns:1.10.0
-        - docker.io/calico/cni:v3.24.2
+        - docker.io/calico/cni:v3.24.3
         - docker.io/calico/csi:v3.24.2
         - docker.io/calico/node-driver-registrar:v3.24.2
         - docker.io/calico/node:v3.24.2
