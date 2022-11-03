@@ -182,7 +182,7 @@ spec:
         #     codec: json
     image:
       repository: timberio/vector
-      tag: 0.24.2-debian
+      tag: 0.25.0-debian
     role: Stateless-Aggregator
     replicas: 3
     # env:
