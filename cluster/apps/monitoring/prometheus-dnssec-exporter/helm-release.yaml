@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.2.2
+      version: 1.0.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -57,7 +57,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: exporters.${SECRET_INTERNAL_DOMAIN}
 
-    configmap:
+    configMaps:
       config:
         enabled: false
 
