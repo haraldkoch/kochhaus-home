@@ -51,7 +51,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "exporters.${SECRET_INTERNAL_DOMAIN}"
 
-    configmap:
+    configMaps:
       config:
         enabled: false
 

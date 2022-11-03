@@ -64,7 +64,7 @@ spec:
         hostPath: /dev/bus/usb/002/001
         mountPath: /dev/bus/usb/001/001
         readOnly: false
-    configmap:
+    configMaps:
       config:
         enabled: true
         data:
