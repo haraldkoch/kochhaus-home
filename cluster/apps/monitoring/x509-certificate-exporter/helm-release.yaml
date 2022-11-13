@@ -1,0 +1,68 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: x509-certificate-exporter
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: x509-certificate-exporter
+      version:
+      sourceRef:
+        kind: HelmRepository
+        name: enix
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    hostPathsExporter:
+      daemonSets:
+        cp:
+          nodeSelector:
+            node-role.kubernetes.io/control-plane: "true"
+          tolerations:
+            - effect: NoSchedule
+              key: node-role.kubernetes.io/control-plane
+              operator: Exists
+          watchFiles:
+            - /var/lib/rancher/k3s/agent/client-ca.crt
+            - /var/lib/rancher/k3s/agent/client-k3s-controller.crt
+            - /var/lib/rancher/k3s/agent/client-kubelet.crt
+            - /var/lib/rancher/k3s/agent/client-kube-proxy.crt
+            - /var/lib/rancher/k3s/agent/server-ca.crt
+            - /var/lib/rancher/k3s/agent/serving-kubelet.crt
+            - /var/lib/rancher/k3s/server/tls/client-admin.crt
+            - /var/lib/rancher/k3s/server/tls/client-auth-proxy.crt
+            - /var/lib/rancher/k3s/server/tls/client-ca.crt
+            - /var/lib/rancher/k3s/server/tls/client-controller.crt
+            - /var/lib/rancher/k3s/server/tls/client-k3s-cloud-controller.crt
+            - /var/lib/rancher/k3s/server/tls/client-k3s-controller.crt
+            - /var/lib/rancher/k3s/server/tls/client-kube-apiserver.crt
+            - /var/lib/rancher/k3s/server/tls/client-kube-proxy.crt
+            - /var/lib/rancher/k3s/server/tls/client-scheduler.crt
+            - /var/lib/rancher/k3s/server/tls/etcd/client.crt
+            - /var/lib/rancher/k3s/server/tls/etcd/peer-ca.crt
+            - /var/lib/rancher/k3s/server/tls/etcd/peer-server-client.crt
+            - /var/lib/rancher/k3s/server/tls/etcd/server-ca.crt
+            - /var/lib/rancher/k3s/server/tls/etcd/server-client.crt
+            - /var/lib/rancher/k3s/server/tls/request-header-ca.crt
+            - /var/lib/rancher/k3s/server/tls/server-ca.crt
+            - /var/lib/rancher/k3s/server/tls/serving-kube-apiserver.crt
+          # rancher k3s includes the ca cert in the user cert in kubeconfig, which generates a parsing warning
+          # watchKubeconfFiles:
+          #   - /etc/rancher/k3s/k3s.yaml
+        workers:
+          watchFiles:
+            - /var/lib/rancher/k3s/agent/client-ca.crt
+            - /var/lib/rancher/k3s/agent/client-k3s-controller.crt
+            - /var/lib/rancher/k3s/agent/client-kubelet.crt
+            - /var/lib/rancher/k3s/agent/client-kube-proxy.crt
+            - /var/lib/rancher/k3s/agent/server-ca.crt
+            - /var/lib/rancher/k3s/agent/serving-kubelet.crt

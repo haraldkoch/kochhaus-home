@@ -20,3 +20,4 @@ resources:
   - speedtest-exporter
   - tplink-plug-exporter
   - vector
+  - x509-certificate-exporter
