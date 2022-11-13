@@ -1,0 +1,15 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+configMapGenerator:
+  - name: x509-certificate-exporter-dashboard
+    files:
+      - x509-certificate-exporter.json=https://grafana.com/api/dashboards/13922/revisions/3/download
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+    grafana_folder: "Certificates"
+  labels:
+    grafana_dashboard: "true"
