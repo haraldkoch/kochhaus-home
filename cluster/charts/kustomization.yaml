@@ -13,6 +13,7 @@ resources:
   - deliveryhero.yaml
   - democratic-csi.yaml
   - descheduler.yaml
+  - enix.yaml
   - external-dns.yaml
   - fairwinds.yaml
   - gatus.yaml
