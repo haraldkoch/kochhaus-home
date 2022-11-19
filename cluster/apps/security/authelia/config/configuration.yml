@@ -21,8 +21,11 @@ access_control:
     - domain: ["grafana.${SECRET_PUBLIC_DOMAIN}"]
       policy: bypass
     - domain: ["navidrome.${SECRET_PUBLIC_DOMAIN}"]
-      policy: bypass
       resources: ["^/rest.*$"]
+      policy: bypass
+    - domain: ["navidrome.${SECRET_PUBLIC_DOMAIN}"]
+      resources: ["^/metrics.*$"]
+      policy: deny
 
 identity_providers:
   oidc:
