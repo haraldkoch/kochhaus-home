@@ -2,5 +2,25 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-5.0/deploy/kubernetes/snapshot-controller/rbac-snapshot-controller.yaml
-  - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/release-5.0/deploy/kubernetes/snapshot-controller/setup-snapshot-controller.yaml
+  - github.com/kubernetes-csi/external-snapshotter//client/config/crd?ref=v6.0.1
+  - github.com/kubernetes-csi/external-snapshotter//deploy/kubernetes/snapshot-controller?ref=v6.0.1
+patchesStrategicMerge:
+  - |-
+    kind: Deployment
+    apiVersion: apps/v1
+    metadata:
+      name: snapshot-controller
+      namespace: kube-system
+    spec:
+      replicas: 3
+      template:
+        spec:
+          containers:
+            - name: snapshot-controller
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app: snapshot-controller
