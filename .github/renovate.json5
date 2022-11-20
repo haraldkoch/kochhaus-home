@@ -1,6 +1,20 @@
 {
   "extends": [
-    "github>bjw-s/home-ops//.github/renovate/disabledDatasources.json5",
+    "config:base",
+    "docker:enableMajor",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":enablePreCommit",
+    ":automergeDigest",
+    ":automergeBranch",
+    "github>haraldkoch/kochhaus-home//.github/renovate/allowedVersions.json5",
+    "github>haraldkoch/kochhaus-home//.github/renovate/autoMerge.json5",
+    "github>haraldkoch/kochhaus-home//.github/renovate/commitMessage.json5",
+    "github>haraldkoch/kochhaus-home//.github/renovate/disabledDatasources.json5",
+    "github>haraldkoch/kochhaus-home//.github/renovate/groups.json5",
+    "github>haraldkoch/kochhaus-home//.github/renovate/labels.json5",
+    "github>haraldkoch/kochhaus-home//.github/renovate/semanticCommits.json5"
   ],
   "enabled": true,
   "semanticCommits": "enabled",
@@ -8,6 +22,8 @@
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
+  "commitBodyTable": true,
+  "ignorePaths": ["archive/**"],
   "pre-commit": {
     "enabled": true
   },
@@ -29,7 +45,7 @@
       "description": "Process CRD dependencies",
       "fileMatch": ["cluster/crds/.+\\.ya?ml$"],
       "matchStrings": [
-        // GitRepository and Flux Kustomization where 'Git release/tag' matches 'Helm' version
+        // GitRepository where 'Git release/tag' matches 'Helm' version
         "registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
         // Kustomization where 'GitHub release artifact URL' matches 'Docker image' version
         "datasource=(?<datasource>\\S+) image=(?<depName>\\S+)\n.*?-\\s(.*?)\/(?<currentValue>[^/]+)\/[^/]+\n"
@@ -58,61 +74,23 @@
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+    },
+    {
+      "description": "Process raw GitHub URLs",
+      "fileMatch": ["cluster/.+\\.ya?ml$"],
+      "matchStrings": [
+        "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
     }
   ],
   "packageRules": [
-    // setup datasources
     {
-      "matchDatasources": ["helm"],
-      "separateMinorPatch": true,
-      "ignoreDeprecated": true
-    },
-    // global docker datasource settings
-    {
+      "description": "Use custom versioning for Minio",
       "matchDatasources": ["docker"],
-      "enabled": true,
-      "commitMessageTopic": "container image {{depName}}",
-      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
-      "matchUpdateTypes": ["major", "minor", "patch"]
-    },
-    {
-      "description": "Group Cert-Manager image (for CRDs) and chart",
-      "groupName": "Cert-Manager",
-      "matchPackagePatterns": ["cert-manager"],
-      "matchDatasources": ["docker", "helm"],
-      "group": { "commitMessageTopic": "{{{groupName}}} group" },
-      "separateMinorPatch": true
-    },
-    // add labels according to package and update types
-    {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["major"],
-      "labels": ["renovate/image", "dep/major"]
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["minor"],
-      "labels": ["renovate/image", "dep/minor"]
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["patch"],
-      "labels": ["renovate/image", "dep/patch"]
-    },
-    {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["major"],
-      "labels": ["renovate/helm", "dep/major"]
-    },
-    {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["minor"],
-      "labels": ["renovate/helm", "dep/minor"]
-    },
-    {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["patch"],
-      "labels": ["renovate/helm", "dep/patch"]
+      "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z(-(?<compatibility>.*))?$",
+      "matchPackageNames": ["quay.io/minio/minio"]
     }
   ]
 }
