@@ -8,7 +8,7 @@ spec:
   interval: 12h
   url: https://github.com/senthilrch/kube-fledged.git
   ref:
-    tag: v0.9.0
+    tag: v0.10.0
   ignore: |
     # exclude all
     /*
