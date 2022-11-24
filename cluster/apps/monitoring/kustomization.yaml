@@ -15,6 +15,7 @@ resources:
   - node-problem-detector
   - prometheus-dnssec-exporter
   - prometheus-nut-exporter
+  - smartctl-exporter
   - smokeping
   - snmp-exporter
   - speedtest-exporter
