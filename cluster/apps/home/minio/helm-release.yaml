@@ -53,7 +53,6 @@ spec:
     serviceMonitor:
       main:
         enabled: true
-        service: main
         endpoints:
           - port: api
             scheme: http
@@ -67,6 +66,19 @@ spec:
       main:
         enabled: true
         ingressClassName: "nginx"
+        hosts:
+          - host: &host-console "{{ .Release.Name }}.${SECRET_INTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  port: *port-console
+        tls:
+          - hosts:
+              - *host-console
+      s3:
+        enabled: true
+        ingressClassName: "nginx"
         annotations:
           external-dns.home.arpa/enabled: "true"
           nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
@@ -75,12 +87,6 @@ spec:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             chunked_transfer_encoding off;
         hosts:
-          - host: &host-console "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  port: *port-console
           - host: &host-api "s3.${SECRET_PUBLIC_DOMAIN}"
             paths:
               - path: /
@@ -89,9 +95,8 @@ spec:
                   port: *port-api
         tls:
           - hosts:
-              - *host-console
               - *host-api
-            secretName: tls.minio
+            secretName: tls.minio-s3
     podSecurityContext:
       runAsUser: 103
       runAsGroup: 103
