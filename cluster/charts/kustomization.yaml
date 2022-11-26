@@ -32,3 +32,4 @@ resources:
   - runix.yaml
   - stakater.yaml
   - vector.yaml
+  - weave-gitops.yaml
