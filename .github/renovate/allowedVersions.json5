@@ -3,7 +3,7 @@
     {
       "matchDatasources": ["docker"],
       "matchPackageNames": ["docker.io/kopia/kopia"],
-      "allowedVersions": "<10"
+      "allowedVersions": "<2"
     }
   ]
 }
