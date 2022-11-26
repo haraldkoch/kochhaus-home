@@ -1,9 +1,0 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
-metadata:
-  name: harbor-container-webhook
-  namespace: flux-system
-spec:
-  interval: 1h
-  url: https://indeedeng-alpha.github.io/harbor-container-webhook/
