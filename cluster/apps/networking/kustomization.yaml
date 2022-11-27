@@ -7,6 +7,7 @@ resources:
   - external-dns
   - ingress-nginx
   - internal-dns
+  - opnsense-backup
   - speedtest
   - web-static
   - whoami
