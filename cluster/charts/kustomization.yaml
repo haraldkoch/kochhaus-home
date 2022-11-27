@@ -11,6 +11,7 @@ resources:
   - deliveryhero.yaml
   - democratic-csi.yaml
   - descheduler.yaml
+  - emqx.yaml
   - enix.yaml
   - external-dns.yaml
   - fairwinds.yaml
