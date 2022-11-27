@@ -5,3 +5,4 @@ namespace: ci
 resources:
   - secret.sops.yaml
   - helm-release.yaml
+  - rbac.yaml
