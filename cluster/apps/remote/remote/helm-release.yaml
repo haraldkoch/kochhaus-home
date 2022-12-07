@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.2.1
+      version: 1.2.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -39,6 +39,9 @@ spec:
     service:
       main:
         type: LoadBalancer
+        externalIPs:
+          - ${SVC_REMOTE_ADDR_V4}
+          - ${SVC_REMOTE_ADDR_V6}
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         annotations:
@@ -87,19 +90,15 @@ spec:
               matchExpressions:
                 - key: node-role.kubernetes.io/control-plane
                   operator: Exists
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: app.kubernetes.io/name
-                    operator: In
-                    values:
-                      - cert-manager
-              topologyKey: kubernetes.io/hostname
     tolerations:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
       - key: node-role.kubernetes.io/master
         operator: Exists
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: *app

@@ -25,20 +25,24 @@ spec:
   values:
     image:
       repository: syncthing/syncthing
-      tag: 1.21.0
+      tag: 1.22.2
     service:
       main:
         ipFamilyPolicy: PreferDualStack
       listen:
         type: LoadBalancer
+        externalIPs:
+          - ${SVC_SYNCTHING_ADDR_V4}
+          - ${SVC_SYNCTHING_ADDR_V6}
+        externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
-        annotations:
-          metallb.universe.tf/allow-shared-ip: syncthing
       discovery:
         type: LoadBalancer
+        externalIPs:
+          - ${SVC_SYNCTHING_ADDR_V4}
+          - ${SVC_SYNCTHING_ADDR_V6}
+        externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
-        annotations:
-          metallb.universe.tf/allow-shared-ip: syncthing
     ingress:
       main:
         enabled: true

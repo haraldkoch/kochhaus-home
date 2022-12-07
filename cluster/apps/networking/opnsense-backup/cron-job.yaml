@@ -1,0 +1,47 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: &app opnsense-backup
+  namespace: networking
+spec:
+  schedule: "@daily"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 86400
+      template:
+        spec:
+          automountServiceAccountToken: false
+          restartPolicy: Never
+          containers:
+            - name: *app
+              image: ghcr.io/onedr0p/kubernetes-kubectl:1.25.4@sha256:0d416e4095a476b900e93c8c818fbb17eda876709e3a00a4a3c7a725e95816ca
+              env:
+                - name: OPNSENSE_URL
+                  value: "https://gw.${PRIVATE_STATIC_DOMAIN}"
+                - name: S3_URL
+                  value: "http://minio.home.svc.cluster.local:9000"
+              envFrom:
+                - secretRef:
+                    name: *app
+              command:
+                - "/bin/bash"
+                - &scriptPath "/app/opnsense-backup.sh"
+              volumeMounts:
+                - name: *app
+                  mountPath: *scriptPath
+                  subPath: &scriptName opnsense-backup.sh
+                  readOnly: true
+          volumes:
+            - name: *app
+              projected:
+                defaultMode: 0775
+                sources:
+                  - configMap:
+                      name: *app
+                      items:
+                        - key: *scriptName
+                          path: *scriptName

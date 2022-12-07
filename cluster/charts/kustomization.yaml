@@ -2,8 +2,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - actions-runner-controller.yaml
-  - authentik.yaml
   - bitnami.yaml
   - bjw-s.yaml
   - bokysan.yaml
@@ -13,19 +11,19 @@ resources:
   - deliveryhero.yaml
   - democratic-csi.yaml
   - descheduler.yaml
+  - emqx.yaml
+  - enix.yaml
   - external-dns.yaml
   - fairwinds.yaml
   - gatus.yaml
   - grafana.yaml
   - hajimari.yaml
-  - harbor-container-webhook.yaml
   - ingress-nginx.yaml
   - jetstack.yaml
   - k8s-at-home.yaml
   - kube-fledged.yaml
   - kured.yaml
   - kyverno.yaml
-  - metallb.yaml
   - metrics-server.yaml
   - nfs-subdir-external-provisioner.yaml
   - node-feature-discovery.yaml
@@ -34,6 +32,5 @@ resources:
   - rook-ceph.yaml
   - runix.yaml
   - stakater.yaml
-  - traefik.yaml
   - vector.yaml
-  - woodpecker.yaml
+  - weave-gitops.yaml

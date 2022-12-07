@@ -1,0 +1,62 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: speedtest
+  namespace: networking
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.2.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    controller:
+      replicas: 2
+      strategy: RollingUpdate
+    image:
+      repository: ghcr.io/linuxserver/librespeed
+      tag: 5.2.5
+    env:
+      TZ: ${TIMEZONE}
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+        ipFamilyPolicy: PreferDualStack
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          external-dns.home.arpa/enabled: "true"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: dial
+        hosts:
+          - host: &host speedtest.${SECRET_PUBLIC_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+            secretName: tls.speedtest
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 1
+        memory: 100Mi

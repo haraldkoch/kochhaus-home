@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: ingress-nginx
-      version: 4.2.5
+      version: 4.4.0
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx
@@ -31,8 +31,9 @@ spec:
         - name: TZ
           value: "${TIMEZONE}"
       service:
-        annotations:
-          metallb.universe.tf/loadBalancerIPs: "${SVC_NGINX_ADDR},${SVC_NGINX_ADDR_V6}"
+        externalIPs:
+          - ${SVC_NGINX_ADDR_V4}
+          - ${SVC_NGINX_ADDR_V6}
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         ipFamilies: [IPv4, IPv6]
@@ -84,11 +85,11 @@ spec:
       enabled: true
       image:
         repository: ghcr.io/tarampampam/error-pages
-        tag: 2.18.0
+        tag: 2.19.0
       replicaCount: 3
       extraEnvs:
         - name: TEMPLATE_NAME
-          value: ghost
+          value: lost-in-space
         - name: SHOW_DETAILS
           value: "false"
       affinity:

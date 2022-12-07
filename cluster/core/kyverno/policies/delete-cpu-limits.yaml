@@ -16,14 +16,23 @@ spec:
       match:
         any:
           - resources:
-              kinds: [Pod]
+              kinds: ["Pod"]
       exclude:
         any:
           - resources:
-              kinds: [Pod]
+              namespaces:
+                - calico-system
+                - tigera-operator
+          - resources:
+              kinds: ["Pod"]
               selector:
                 matchLabels:
                   job-name: "*"
+          - resources:
+              kinds: ["Pod"]
+              selector:
+                matchLabels:
+                  statefulset.kubernetes.io/pod-name: "*"
           - resources:
               annotations:
                 kyverno.io/ignore: "true"

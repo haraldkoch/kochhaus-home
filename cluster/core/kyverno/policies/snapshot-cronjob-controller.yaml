@@ -7,15 +7,9 @@ metadata:
     policies.kyverno.io/title: Snapshot CronJob controller
     policies.kyverno.io/subject: PersistentVolumeClaim
     policies.kyverno.io/description: |
-      This policy creates a Kopia snapshot CronJob for labeled PersistentVolumeClaims
-
-      The following labels on PVCs with their respective labels are required for this to run:
+      This policy creates a Kopia snapshot CronJob for labeled PersistentVolumeClaims.
+      The following label on PVCs are required for this to run:
         - snapshot.home.arpa/enabled
-        - app.kubernetes.io/name
-        - app.kubernetes.io/instance
-
-      An optional label of "snapshot.home.arpa/ignoreAffinity" may be set on the PVC
-      if the pod is guaranteed to not run during the time of this jobs execution
 spec:
   generateExistingOnPolicyUpdate: true
   mutateExistingOnPolicyUpdate: true
@@ -28,9 +22,9 @@ spec:
                 - PersistentVolumeClaim
               selector:
                 matchLabels:
-                  snapshot.home.arpa/enabled: "true"
                   app.kubernetes.io/name: "*"
                   app.kubernetes.io/instance: "*"
+                  snapshot.home.arpa/enabled: "true"
       context:
         - name: appName
           variable:
@@ -44,7 +38,6 @@ spec:
         - name: nodeAffinity
           variable:
             value:
-              ignored: "{{ (request.object.metadata.labels.\"snapshot.home.arpa/ignoreAffinity\" || 'false') == 'false' }}"
               labels:
                 - key: app.kubernetes.io/name
                   operator: "In"
@@ -90,12 +83,12 @@ spec:
                     # Stagger jobs to run randomly within X seconds to avoid bringing down all apps at once
                     initContainers:
                       - name: wait
-                        image: ghcr.io/onedr0p/kopia:0.12.0@sha256:08f661428342edeac13866e14455cd044624ebc91990fa73e74619d2fbcee8ed
+                        image: ghcr.io/onedr0p/kopia:0.12.1@sha256:ed13c180efbe3bbaf9101ebf6951666eddf9d97a08e695d366088fee9b60d508
                         command: ["/scripts/sleep.sh"]
                         args: ["1", "900"]
                     containers:
                       - name: snapshot
-                        image: ghcr.io/onedr0p/kopia:0.12.0@sha256:08f661428342edeac13866e14455cd044624ebc91990fa73e74619d2fbcee8ed
+                        image: ghcr.io/onedr0p/kopia:0.12.1@sha256:ed13c180efbe3bbaf9101ebf6951666eddf9d97a08e695d366088fee9b60d508
                         env:
                           - name: KOPIA_CACHE_DIRECTORY
                             value: /snapshots/{{ namespace }}/{{ appName }}/{{ claimName }}/cache
@@ -137,4 +130,4 @@ spec:
                         requiredDuringSchedulingIgnoredDuringExecution:
                           - topologyKey: kubernetes.io/hostname
                             labelSelector:
-                              matchExpressions: "{{ nodeAffinity.ignored && [] || nodeAffinity.labels }}"
+                              matchExpressions: "{{ nodeAffinity.labels }}"
