@@ -8,8 +8,8 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: loki-simple-scalable
-      version: 1.8.11
+      chart: loki
+      version: 3.6.0
       sourceRef:
         kind: HelmRepository
         name: grafana
@@ -42,6 +42,8 @@ spec:
           split_queries_by_interval: 15m
           ingestion_rate_mb: 8
           ingestion_burst_size_mb: 16
+          shard_streams:
+            enabled: true
         schema_config:
           configs:
             - from: "2021-08-01"
@@ -100,12 +102,6 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          traefik.ingress.kubernetes.io/buffering: |
-            # 10Mb
-            maxrequestbodybytes: 10485760
-            # 5Mb
-            memrequestbodybytes: 5242880
-          nginx.ingress.kubernetes.io/client_max_body_size: "10485760"
         hosts:
           - host: &host "loki.${SECRET_INTERNAL_DOMAIN}"
             paths:
@@ -165,12 +161,20 @@ spec:
           cpu: 100m
           memory: 128Mi
     monitoring:
+      serviceMonitor:
+        enabled: false
+        metricsInstance:
+          enabled: false
       selfMonitoring:
         enabled: false
         grafanaAgent:
           installOperator: false
+        lokiCanary:
+          enabled: false
       podAnnotations:
         configmap.reloader.stakater.com/reload: "loki,loki-alerting-rules"
+    test:
+      enabled: false
   valuesFrom:
     - targetPath: loki.structuredConfig.common.storage.s3.bucketnames
       kind: ConfigMap

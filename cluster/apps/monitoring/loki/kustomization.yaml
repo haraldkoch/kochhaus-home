@@ -5,6 +5,4 @@ resources:
   - bucket-config.yaml
   - bucket-secret.sops.yaml
   - config-map.yaml
-  - dashboard
   - helm-release.yaml
-  - prometheus-rule.yaml
