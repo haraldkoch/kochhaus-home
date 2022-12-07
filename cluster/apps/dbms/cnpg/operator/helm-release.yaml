@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: cloudnative-pg
-      version: 0.15.0
+      version: 0.16.0
       sourceRef:
         kind: HelmRepository
         name: cnpg
@@ -23,11 +23,6 @@ spec:
       retries: 5
 
   values:
-    image:
-      repository: ghcr.io/cloudnative-pg/cloudnative-pg-testing
-      pullPolicy: IfNotPresent
-      # -- Overrides the image tag whose default is the chart appVersion.
-      tag: "dev-413"
     config:
       data:
         INHERITED_ANNOTATIONS: kyverno.io/ignore

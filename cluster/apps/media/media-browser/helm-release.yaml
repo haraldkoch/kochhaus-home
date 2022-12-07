@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.2.1
+      version: 1.2.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,7 +26,7 @@ spec:
     nameOverride: *app
     image:
       repository: docker.io/filebrowser/filebrowser
-      tag: v2.22.4
+      tag: v2.23.0
     env:
       TZ: ${TIMEZONE}
       FB_PORT: 8080
@@ -58,18 +58,15 @@ spec:
     securityContext:
       runAsUser: 2000
       runAsGroup: 2000
+      fsGroup: 2000
+      fsGroupChangePolicy: "OnRootMismatch"
     persistence:
       config:
         enabled: true
         existingClaim: media-browser-config-v4
       media:
         enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: "${SECRET_MEDIA_SERVER}"
-            path: /media
-            readOnly: true
+        existingClaim: media-nfs
         mountPath: /media
     resources:
       requests:

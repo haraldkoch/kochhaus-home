@@ -6,7 +6,6 @@ resources:
   - database.yaml
   - helm-release.yaml
   - secret.sops.yaml
-  - service-monitor.yaml
 patchesStrategicMerge:
   - patches/env.yaml
 configMapGenerator:

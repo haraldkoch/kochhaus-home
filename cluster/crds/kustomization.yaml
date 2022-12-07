@@ -7,6 +7,5 @@ resources:
   - external-snapshotter
   - kube-fledged
   - kyverno
-  - metallb
   - prometheus-operator
   - system-upgrade-controller

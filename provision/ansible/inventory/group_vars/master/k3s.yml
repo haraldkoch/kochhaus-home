@@ -34,7 +34,6 @@ k3s_server:
   cluster-cidr: "10.42.0.0/16,fdd5:aa8:9535:42::/108"
   # Network CIDR to use for service IPs
   service-cidr: "10.43.0.0/16,fdd5:aa8:9535:43::/108"
-  # the switch from master to control-plane is ongoing
   node-taint:
     - "node-role.kubernetes.io/control-plane:NoSchedule"
   kubelet-arg:

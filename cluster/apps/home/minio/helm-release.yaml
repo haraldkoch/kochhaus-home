@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.2.1
+      version: 1.2.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: quay.io/minio/minio
-      tag: RELEASE.2022-09-07T22-25-02Z
+      tag: RELEASE.2022-12-07T00-56-37Z
     env:
       TZ: "${TIMEZONE}"
       MINIO_UPDATE: "off"
@@ -50,8 +50,33 @@ spec:
           api:
             enabled: true
             port: &port-api 9000
+    serviceMonitor:
+      main:
+        enabled: true
+        endpoints:
+          - port: api
+            scheme: http
+            path: /minio/v2/metrics/cluster
+            interval: 1m
+            scrapeTimeout: 10s
+            bearerTokenSecret:
+              name: minio-prometheus
+              key: token
     ingress:
       main:
+        enabled: true
+        ingressClassName: "nginx"
+        hosts:
+          - host: &host-console "{{ .Release.Name }}.${SECRET_INTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  port: *port-console
+        tls:
+          - hosts:
+              - *host-console
+      s3:
         enabled: true
         ingressClassName: "nginx"
         annotations:
@@ -62,12 +87,6 @@ spec:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             chunked_transfer_encoding off;
         hosts:
-          - host: &host-console "{{ .Release.Name }}.${SECRET_PUBLIC_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  port: *port-console
           - host: &host-api "s3.${SECRET_PUBLIC_DOMAIN}"
             paths:
               - path: /
@@ -76,9 +95,8 @@ spec:
                   port: *port-api
         tls:
           - hosts:
-              - *host-console
               - *host-api
-            secretName: tls.minio
+            secretName: tls.minio-s3
     podSecurityContext:
       runAsUser: 103
       runAsGroup: 103

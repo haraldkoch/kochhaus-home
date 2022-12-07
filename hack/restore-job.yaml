@@ -2,17 +2,20 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "${APP}-restore-snapshot"
-  namespace: "${NAMESPACE}"
+  name: ${APP}-${CLAIM}-restore
+  namespace: ${NAMESPACE}
 spec:
   ttlSecondsAfterFinished: 3600
   template:
+    metadata:
+      labels:
+        setGateway: "false"
     spec:
       automountServiceAccountToken: false
       restartPolicy: OnFailure
       containers:
         - name: restore
-          image: ghcr.io/onedr0p/kopia:0.11.3@sha256:2ae9ede0edac68c09d517abd71fa12c96efcf19f27ce7ffca968cebb10ed0e2d
+          image: ghcr.io/onedr0p/kopia:0.12.1@sha256:e333295b519ce586e7c050c970b2255d87bdb2979298ff87ebdb1113e381ba3b
           env:
             - name: KOPIA_PASSWORD
               value: "none"
@@ -21,22 +24,22 @@ spec:
             - -c
             - |-
               shopt -s dotglob
-              printf "\e[1;32m%-6s\e[m\n" "[01/03] Remove previous data ..." && rm -rf /data/config/*
-              printf "\e[1;32m%-6s\e[m\n" "[02/03] Connect to repo ..."      && kopia repo connect filesystem --path=/data/backups --override-hostname=cluster --override-username=root
-              printf "\e[1;32m%-6s\e[m\n" "[03/03] Restore snapshot ..."     && kopia snap restore "${SNAPSHOT}" /data/config
-              printf "\e[1;32m%-6s\e[m\n" "[09/09] Disconnect from repo ..." && kopia repo disconnect
+              printf "\e[1;32m%-6s\e[m\n" "[01/04] Connect to repo ..."      && kopia repo connect filesystem --path=/snapshots --override-hostname=cluster --override-username=root
+              printf "\e[1;32m%-6s\e[m\n" "[02/04] Remove previous data ..." && rm -rf /data/${NAMESPACE}/${APP}/${CLAIM}/*
+              printf "\e[1;32m%-6s\e[m\n" "[03/04] Restore snapshot ..."     && kopia snap restore "${SNAPSHOT}" /data/${NAMESPACE}/${APP}/${CLAIM}
+              printf "\e[1;32m%-6s\e[m\n" "[04/04] Disconnect from repo ..." && kopia repo disconnect
           volumeMounts:
-            - name: config
-              mountPath: /data/config
-            - name: backups
-              mountPath: /data/backups
+            - name: data
+              mountPath: /data/${NAMESPACE}/${APP}/${CLAIM}
+            - name: snapshots
+              mountPath: /snapshots
           securityContext:
             privileged: true
       volumes:
-        - name: config
+        - name: data
           persistentVolumeClaim:
-            claimName: "${VOLUME}"
-        - name: backups
+            claimName: ${CLAIM}
+        - name: snapshots
           nfs:
             server: mnemosyne
             path: /backup/data/k8s/kopia

@@ -11,8 +11,7 @@ spec:
 
   bootstrap:
     recovery:
-      backup:
-        name: daily-backup-1660435200
+      source: kochhaus
 
   # postgres does not like multi-arch clusters, and some of our postgres clients do not work on arm64
   affinity:
@@ -45,7 +44,7 @@ spec:
   backup:
     retentionPolicy: "30d"
     barmanObjectStore:
-      destinationPath: s3://cnpg/
+      destinationPath: s3://cnpg/v2
       endpointURL: http://${SECRET_BACKUP_SERVER}:9000
       wal:
         compression: bzip2
@@ -56,3 +55,19 @@ spec:
         secretAccessKey:
           name: cnpg-backup
           key: ACCESS_SECRET_KEY
+
+  externalClusters:
+    - name: kochhaus
+      barmanObjectStore:
+        destinationPath: s3://cnpg/v1
+        endpointURL: http://${SECRET_BACKUP_SERVER}:9000
+        s3Credentials:
+          accessKeyId:
+            name: cnpg-backup
+            key: ACCESS_KEY_ID
+          secretAccessKey:
+            name: cnpg-backup
+            key: ACCESS_SECRET_KEY
+        wal:
+          compression: bzip2
+          maxParallel: 8
