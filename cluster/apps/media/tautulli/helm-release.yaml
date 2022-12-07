@@ -28,7 +28,8 @@ spec:
 
     service:
       main:
-        ipFamilyPolicy: PreferDualStack
+        # tautulli container does not support IPv6
+        ipFamilyPolicy: SingleStack
     ingress:
       main:
         enabled: true

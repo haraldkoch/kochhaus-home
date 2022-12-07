@@ -1,0 +1,118 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: bookstack
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: bookstack
+      version: 5.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+
+  values:
+    image:
+      repository: ghcr.io/linuxserver/bookstack
+      tag: version-v21.10.3
+      pullPolicy: Always
+
+    env:
+      TZ: ${TIMEZONE}
+      APP_URL: https://kb.${SECRET_PUBLIC_DOMAIN}
+      DB_HOST: bookstack-mariadb.default
+      DB_USER: bookstack
+      # DB_PASS: set by valuesFrom
+      DB_DATABASE: bookstack
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: bookstack-config-v4
+
+    service:
+      main:
+        ipFamilyPolicy: SingleStack
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          external-dns.home.arpa/enabled: "true"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "notebook-edit-outline"
+        labels:
+          app.kubernetes.io/part-of: bookstack
+        hosts:
+          - host: kb.${SECRET_PUBLIC_DOMAIN}
+            paths:
+              - path: /
+        tls:
+          - hosts:
+              - kb.${SECRET_PUBLIC_DOMAIN}
+            secretName: tls.bookstack
+
+      internal:
+        enabled: true
+        ingressClassName: nginx
+        labels:
+          app.kubernetes.io/part-of: bookstack
+        hosts:
+          - host: kb.${SECRET_INTERNAL_DOMAIN}
+            paths:
+              - path: /
+        tls:
+          - hosts:
+              - kb.${SECRET_INTERNAL_DOMAIN}
+
+    resources:
+      requests:
+        memory: 128Mi
+      limits:
+        memory: 192Mi
+
+    # -- Enable and configure mariadb database subchart under this key.
+    #    For more options see https://github.com/bitnami/charts/tree/master/bitnami/mariadb
+    mariadb:
+      enabled: false
+
+    initContainers:
+      backup:
+        image: alpine:latest
+        command:
+          - /bin/sh
+          - -c
+        args:
+          - mkdir -p /config/backup && chown 911:911 /config/backup
+        volumeMounts:
+          - name: config
+            mountPath: /config
+
+  valuesFrom:
+    - kind: Secret
+      name: bookstack
+      valuesKey: mariadb_password
+      targetPath: env.DB_PASS
+      optional: false
+    - kind: Secret
+      name: bookstack
+      valuesKey: mariadb_password
+      targetPath: mariadb.auth.password
+      optional: false
+    - kind: Secret
+      name: bookstack
+      valuesKey: mariadb_root_password
+      targetPath: mariadb.auth.rootPassword
+      optional: false

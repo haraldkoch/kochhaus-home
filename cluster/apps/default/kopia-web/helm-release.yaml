@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.2.1
+      version: 1.2.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,7 +26,7 @@ spec:
       nameOverride: *app
     initContainers:
       wait-for-repo:
-        image: ghcr.io/onedr0p/kopia:0.12.0@sha256:08f661428342edeac13866e14455cd044624ebc91990fa73e74619d2fbcee8ed
+        image: ghcr.io/onedr0p/kopia:0.12.1@sha256:ed13c180efbe3bbaf9101ebf6951666eddf9d97a08e695d366088fee9b60d508
         command:
           - /bin/bash
           - -c
@@ -40,7 +40,7 @@ spec:
             mountPath: /snapshots
     image:
       repository: ghcr.io/onedr0p/kopia
-      tag: 0.12.0@sha256:08f661428342edeac13866e14455cd044624ebc91990fa73e74619d2fbcee8ed
+      tag: 0.12.1@sha256:ed13c180efbe3bbaf9101ebf6951666eddf9d97a08e695d366088fee9b60d508
     env:
       TZ: "${TIMEZONE}"
       KOPIA_PASSWORD: "none"
@@ -89,7 +89,7 @@ spec:
         enabled: true
         type: nfs
         server: ${SECRET_BACKUP_SERVER}
-        path: /backup/data/k8s
+        path: /backup/data/k8s/kopia
         mountPath: /snapshots
     podAnnotations:
       configmap.reloader.stakater.com/reload: *app

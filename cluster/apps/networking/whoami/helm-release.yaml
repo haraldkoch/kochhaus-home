@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.2.1
+      version: 1.2.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -29,7 +29,7 @@ spec:
     nameOverride: *app
     image:
       repository: docker.io/traefik/whoami
-      tag: v1.8.6
+      tag: v1.8.7
     controller:
       replicas: 3
     service:

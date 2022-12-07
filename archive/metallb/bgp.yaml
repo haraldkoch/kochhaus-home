@@ -1,0 +1,19 @@
+---
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
+metadata:
+  name: routed
+  namespace: metallb-system
+spec:
+  myASN: 64512
+  peerASN: 64567
+  peerAddress: 192.168.20.1
+---
+apiVersion: metallb.io/v1beta1
+kind: BGPAdvertisement
+metadata:
+  name: routed
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - default

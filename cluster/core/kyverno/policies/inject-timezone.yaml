@@ -21,12 +21,17 @@ spec:
           - resources:
               kinds:
                 - Pod
+      exclude:
+        any:
+          - resources:
+              annotations:
+                kyverno.io/ignore: "true"
       mutate:
         patchStrategicMerge:
           spec:
             initContainers:
               - name: provide-timezone
-                image: quay.io/k8tz/k8tz:0.8.0
+                image: quay.io/k8tz/k8tz:0.10.0
                 imagePullPolicy: IfNotPresent
                 resources:
                   requests:

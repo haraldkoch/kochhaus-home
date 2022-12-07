@@ -1,0 +1,10 @@
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: default
+  namespace: metallb-system
+spec:
+  addresses:
+    - "${METALLB_LB_RANGE}"
+    - "${METALLB_LB_RANGE_V6}"

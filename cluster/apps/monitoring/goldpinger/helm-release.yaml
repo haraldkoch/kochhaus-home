@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: goldpinger
-      version: 5.4.2
+      version: 5.5.0
       sourceRef:
         kind: HelmRepository
         name: okgolove
@@ -25,7 +25,7 @@ spec:
   values:
     image:
       repository: bloomberg/goldpinger
-      tag: v3.6.1
+      tag: v3.7.0
 
     tolerations:
       - key: node-role.kubernetes.io/control-plane
