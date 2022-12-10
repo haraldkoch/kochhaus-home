@@ -21,6 +21,8 @@ curl -fsSL \
     --output "/tmp/${config_filename}" \
     "${OPNSENSE_URL}/api/backup/backup/download"
 
+/bin/ls -l "/tmp/${config_filename}"
+
 echo "Upload backup to s3 bucket ..."
 curl -fsSL \
     -X PUT -T "/tmp/${config_filename}" \
