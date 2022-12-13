@@ -29,7 +29,7 @@ spec:
 
     fullnameOverride: coredns
 
-    replicaCount: 2
+    replicaCount: 3
 
     service:
       clusterIP: 10.43.0.10
@@ -94,3 +94,11 @@ spec:
         operator: Exists
       - key: node-role.kubernetes.io/master
         operator: Exists
+
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/instance: coredns
