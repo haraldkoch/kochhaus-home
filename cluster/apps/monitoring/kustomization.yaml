@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - alertmanager-discord-webhook
+  - apprise
   - blackbox-exporter
   - gatus
   - goldpinger
