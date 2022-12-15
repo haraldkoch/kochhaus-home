@@ -68,7 +68,7 @@ metadata:
   name: &name kopia-sync
   namespace: default
 spec:
-  schedule: "0 */12 * * *"
+  schedule: "0 7,19 * * *"
   suspend: false
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 1
