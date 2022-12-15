@@ -115,10 +115,10 @@ spec:
       resources:
         requests:
           cpu: 50m
-          memory: 100Mi
+          memory: 32Mi
         limits:
           cpu: 100m
-          memory: 100Mi
+          memory: 64Mi
     write:
       replicas: 3
       persistence:
@@ -128,11 +128,11 @@ spec:
         configmap.reloader.stakater.com/reload: "loki"
       resources:
         requests:
-          cpu: 500m
+          cpu: 250m
           memory: 384Mi
         limits:
           cpu: 500m
-          memory: 384Mi
+          memory: 512Mi
     read:
       replicas: 3
       extraVolumeMounts:
@@ -158,8 +158,8 @@ spec:
           cpu: 50m
           memory: 128Mi
         limits:
-          cpu: 100m
-          memory: 128Mi
+          cpu: 500m
+          memory: 192Mi
     monitoring:
       serviceMonitor:
         enabled: false
