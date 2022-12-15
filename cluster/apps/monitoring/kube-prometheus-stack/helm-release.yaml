@@ -38,15 +38,6 @@ spec:
         cpu: 100m
         memory: 100Mi
 
-    server:
-      resources:
-        requests:
-          cpu: 384m
-          memory: 4000Mi
-        limits:
-          cpu: 2
-          memory: 6000Mi
-
     alertmanager:
       config:
         receivers:
@@ -166,6 +157,14 @@ spec:
               resources:
                 requests:
                   storage: 30Gi
+
+        resources:
+          requests:
+            cpu: 384m
+            memory: 4000Mi
+          limits:
+            cpu: 2
+            memory: 6000Mi
 
         affinity:
           nodeAffinity:
