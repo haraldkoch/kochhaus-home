@@ -25,7 +25,7 @@ spec:
   values:
     image:
       repository: driveone/onedrive
-      tag: 2.4.20
+      tag: 2.4.22
     env:
       TZ: ${TIMEZONE}
       ONEDRIVE_DOWNLOADONLY: 1
