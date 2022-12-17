@@ -14,6 +14,7 @@ resources:
   - emqx.yaml
   - enix.yaml
   - external-dns.yaml
+  - external-secrets.yaml
   - fairwinds.yaml
   - gatus.yaml
   - grafana.yaml
