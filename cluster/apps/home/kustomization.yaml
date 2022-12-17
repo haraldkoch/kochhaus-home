@@ -9,7 +9,7 @@ resources:
   - miniflux
   - minio
   - onedrive
-  #- radicale
+  - radicale
   - smtp-relay
   - sync-browser
   - syncthing
