@@ -28,7 +28,7 @@ repos:
         exclude: ^ansible/manifests/
       - id: fix-ligatures
         exclude: ^ansible/manifests/
-  - repo: https://github.com/k8s-at-home/sops-pre-commit
+  - repo: https://github.com/onedr0p/sops-pre-commit
     rev: v2.1.1
     hooks:
       - id: forbid-secrets
