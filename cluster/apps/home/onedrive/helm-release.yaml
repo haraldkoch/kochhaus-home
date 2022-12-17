@@ -8,31 +8,50 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: onedrive
-      version: 2.4.3
+      chart: app-template
+      version: 1.2.0
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
   install:
     createNamespace: true
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
     remediation:
-      retries: 5
+      retries: 3
 
   values:
+    image:
+      repository: driveone/onedrive
+      tag: 2.4.20
     env:
       TZ: ${TIMEZONE}
       ONEDRIVE_DOWNLOADONLY: 1
       ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE}"
+      ONEDRIVE_UID: 1000
+      ONEDRIVE_GID: 1000
+    service:
+      main:
+        enabled: false
     persistence:
       config:
         enabled: true
         existingClaim: onedrive-config-v4
+        mountPath: /onedrive/conf
       data:
+        enabled: true
         existingClaim: nfs-onedrive-pvc
+        mountPath: /onedrive/data
+      onedrive-settings:
+        enabled: true
+        type: custom
+        mountPath: /onedrive/conf/config
+        subPath: config
+        volumeSpec:
+          configMap:
+            name: onedrive-settings
     resources:
       requests:
         cpu: 15m
