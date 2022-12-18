@@ -6,3 +6,4 @@ resources:
   - external-secrets
   - glauth
   - authelia
+  - onepassword-connect
