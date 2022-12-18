@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: home
 resources:
   - helm-release.yaml
+  - externalsecret.yaml
   - secret.sops.yaml
   - pvc.yaml
 commonLabels:
