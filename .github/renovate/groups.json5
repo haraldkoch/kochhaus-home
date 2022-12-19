@@ -1,35 +1,13 @@
 {
   "packageRules": [
     {
-      "description": "1Password Connect and Sync images",
-      "groupName": "1Password",
-      "matchPackagePatterns": ["1password"],
-      "matchDatasources": ["docker"],
-      "group": { "commitMessageTopic": "{{{groupName}}} group" },
-      "separateMinorPatch": true
-    },
-    {
       "description": "Cert-Manager image (for CRDs) and chart",
       "groupName": "Cert-Manager",
       "matchPackagePatterns": ["cert-manager"],
       "matchDatasources": ["docker", "helm"],
-      "group": { "commitMessageTopic": "{{{groupName}}} group" },
-      "separateMinorPatch": true
-    },
-    {
-      "description": "External Snapshotter kustomization (for CRDs) and chart",
-      "groupName": "External Snapshotter",
-      "matchPackagePatterns": ["external-snapshotter", "snapshot-controller"],
-      "matchDatasources": ["docker", "github-tags"],
-      "group": { "commitMessageTopic": "{{{groupName}}} group" },
-      "separateMinorPatch": true
-    },
-    {
-      "description": "Immich images",
-      "groupName": "Immich",
-      "matchPackagePatterns": ["immich"],
-      "matchDatasources": ["docker"],
-      "group": { "commitMessageTopic": "{{{groupName}}} group" },
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
       "separateMinorPatch": true
     },
     {
@@ -37,7 +15,29 @@
       "groupName": "Node Feature Discovery",
       "matchPackagePatterns": ["node-feature-discovery"],
       "matchDatasources": ["helm", "github-tags"],
-      "group": { "commitMessageTopic": "{{{groupName}}} group" },
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
+      "description": "1Password Connect and Sync images",
+      "groupName": "1Password",
+      "matchPackagePatterns": ["1password"],
+      "matchDatasources": ["docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
+      "description": "Immich images",
+      "groupName": "Immich",
+      "matchPackagePatterns": ["immich"],
+      "matchDatasources": ["docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
       "separateMinorPatch": true
     },
     {
@@ -45,7 +45,19 @@
       "groupName": "Rook-Ceph",
       "matchPackagePatterns": ["rook.ceph"],
       "matchDatasources": ["docker", "helm"],
-      "group": { "commitMessageTopic": "{{{groupName}}} group" },
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
+      "description": "External Snapshotter charts",
+      "groupName": "External Snapshotter",
+      "matchPackageNames": ["snapshot-controller", "snapshot-validation-webhook"],
+      "matchDatasources": ["helm"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
       "separateMinorPatch": true
     },
     {
@@ -54,7 +66,9 @@
       "matchPackagePatterns": ["thanos"],
       "matchDatasources": ["docker", "github-releases", "helm"],
       "matchUpdateTypes": ["minor", "patch"],
-      "group": { "commitMessageTopic": "{{{groupName}}} group" },
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
       "separateMinorPatch": false
     },
     {
@@ -63,7 +77,9 @@
       "matchPackagePatterns": ["vector"],
       "matchDatasources": ["docker", "github-releases", "helm"],
       "matchUpdateTypes": ["minor", "patch"],
-      "group": { "commitMessageTopic": "{{{groupName}}} group" },
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
       "separateMinorPatch": false
     }
   ]
