@@ -11,10 +11,10 @@
     "github>haraldkoch/kochhaus-home//.github/renovate/allowedVersions.json5",
     "github>haraldkoch/kochhaus-home//.github/renovate/autoMerge.json5",
     "github>haraldkoch/kochhaus-home//.github/renovate/commitMessage.json5",
-    "github>haraldkoch/kochhaus-home//.github/renovate/disabledDatasources.json5",
     "github>haraldkoch/kochhaus-home//.github/renovate/groups.json5",
     "github>haraldkoch/kochhaus-home//.github/renovate/labels.json5",
-    "github>haraldkoch/kochhaus-home//.github/renovate/semanticCommits.json5"
+    "github>haraldkoch/kochhaus-home//.github/renovate/semanticCommits.json5",
+    "helpers:pinGitHubActionDigests"
   ],
   "enabled": true,
   "semanticCommits": "enabled",
@@ -87,10 +87,16 @@
   ],
   "packageRules": [
     {
+      "description": "Loose versioning for non-semver packages",
+      "matchDatasources": ["docker"],
+      "versioning": "loose",
+      "matchPackagePatterns": ["changedetection", "immich", "plex", "qbittorrent"]
+    },
+    {
       "description": "Use custom versioning for Minio",
       "matchDatasources": ["docker"],
-      "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z(-(?<compatibility>.*))?$",
-      "matchPackageNames": ["quay.io/minio/minio"]
+      "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$",
+      "matchPackagePatterns": ["minio"]
     }
   ]
 }
