@@ -75,7 +75,7 @@ spec:
               app.kubernetes.io/name: ingress-nginx
               app.kubernetes.io/component: controller
       podAnnotations:
-        configmap.reloader.stakater.com/reload: "cloudflare-proxied-networks,ingress-nginx-controller"
+        configmap.reloader.stakater.com/reload: "cloudflare-networks,ingress-nginx-controller"
       resources:
         requests:
           cpu: 10m
@@ -112,5 +112,5 @@ spec:
     # https://www.cloudflare.com/ips/
     - targetPath: controller.config.proxy-real-ip-cidr
       kind: ConfigMap
-      name: cloudflare-proxied-networks
-      valuesKey: cloudflare-proxied-networks.txt
+      name: cloudflare-networks
+      valuesKey: cloudflare-networks.txt
