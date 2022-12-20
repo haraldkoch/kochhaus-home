@@ -37,12 +37,22 @@ async function helmTemplate (releaseName, repositoryName, chartName, chartVersio
   await fs.writeFile(valuesFile.stdout.trim(), values.toString());
 
   const manifestsFile = await $`mktemp`
-  const manifests = await $`helm template --kube-version 1.24.8 --release-name ${releaseName} --skip-crds ${repositoryName}/${chartName} --version ${chartVersion} --values ${valuesFile.stdout.trim()}`
-  await fs.writeFile(manifestsFile.stdout.trim(), manifests.stdout.trim());
+  const manifests = await $`helm template --kube-version 1.24.8 --release-name ${releaseName} --include-crds=false ${repositoryName}/${chartName} --version ${chartVersion} --values ${valuesFile.stdout.trim()}`
 
-  //TODO: Refactor in a more javascript way
-  await $`yq --inplace eval-all 'del(.metadata,.spec.template.metadata,.spec.selector)' ${manifestsFile.stdout.trim()}`
+  // Remove docs that are CustomResourceDefinition and keys with contain generated fields
+  let documents = YAML.parseAllDocuments(manifests.stdout.trim());
+  documents = documents.filter(doc => doc.get('kind') !== 'CustomResourceDefinition');
+  documents.forEach(doc => {
+    const del = (path) => doc.hasIn(path) ? doc.deleteIn(path) : false;
+    del(['metadata', 'labels', 'app.kubernetes.io/version']);
+    del(['metadata', 'labels', 'chart']);
+    del(['metadata', 'labels', 'helm.sh/chart']);
+    del(['spec', 'template', 'metadata', 'labels', 'app.kubernetes.io/version']);
+    del(['spec', 'template', 'metadata', 'labels', 'chart']);
+    del(['spec', 'template', 'metadata', 'labels', 'helm.sh/chart']);
+  });
 
+  await fs.writeFile(manifestsFile.stdout.trim(), documents.map(doc => doc.toString({directives: true})).join('\n'));
   return manifestsFile.stdout.trim()
 }
 
