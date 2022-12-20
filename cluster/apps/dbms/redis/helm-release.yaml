@@ -5,7 +5,7 @@ metadata:
   name: &app redis
   namespace: dbms
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: redis
