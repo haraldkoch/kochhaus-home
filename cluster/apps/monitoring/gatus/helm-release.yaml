@@ -23,6 +23,9 @@ spec:
       retries: 5
 
   values:
+    image:
+      repository: ghcr.io/twin/gatus
+      tag: v5.1.0
     podAnnotations:
       configmap.reloader.stakater.com/reload: "gatus"
       secret.reloader.stakater.com/reload: "gatus-secret"
