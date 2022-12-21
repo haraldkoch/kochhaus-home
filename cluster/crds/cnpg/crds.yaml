@@ -8,7 +8,7 @@ spec:
   interval: 12h
   url: https://github.com/cloudnative-pg/cloudnative-pg
   ref:
-    tag: v1.18.0
+    tag: v1.18.1
   ignore: |
     # exclude all
     /*
