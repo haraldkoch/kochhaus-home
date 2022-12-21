@@ -44,7 +44,7 @@
       "description": "Rook-Ceph image and chart",
       "groupName": "Rook-Ceph",
       "matchPackagePatterns": ["rook.ceph"],
-      "matchDatasources": ["docker", "helm"],
+      "matchDatasources": ["docker", "github-releases", "github-tags", "helm"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
