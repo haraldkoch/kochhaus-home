@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: smokeping-config-v1
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: smokeping
+    app.kubernetes.io/instance: smokeping
+    app.kubernetes.io/part-of: smokeping
+    snapshot.home.arpa/enabled: "true"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Mi
+  storageClassName: ceph-block
