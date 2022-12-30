@@ -28,7 +28,7 @@ spec:
           containers:
             - name: postgres
               # same image as the postgres cluster
-              image: ghcr.io/cloudnative-pg/postgresql:14.6
+              image: ghcr.io/cloudnative-pg/postgresql:14.5
               imagePullPolicy: IfNotPresent
               command: ["/bin/sh"]
               args:
