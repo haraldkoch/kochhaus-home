@@ -1,0 +1,93 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app smokeping
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 0.2.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controller:
+      annotations:
+        reloader.stakater.com/auto: "true"
+    image:
+      repository: ghcr.io/linuxserver/smokeping
+      tag: 2.7.3
+    env:
+      TZ: ${TIMEZONE}
+    persistence:
+      config:
+        enabled: true
+        existingClaim: smokeping-config-v1
+      data:
+        enabled: true
+        existingClaim: smokeping-data-v4
+      kochhaus:
+        enabled: true
+        type: secret
+        name: *app
+    initContainers:
+      copy-config:
+        image: ghcr.io/onedr0p/kubernetes-kubectl:1.26.0@sha256:6ee3353da3495bc99d73af29a4495bb95570e31e71579cfce719c4123882723d
+        command:
+          - /bin/sh
+          - -c
+          - |-
+            /bin/cp /kochhaus/* /config
+        volumeMounts:
+          - name: config
+            mountPath: /config
+          - name: kochhaus
+            mountPath: /kochhaus
+        securityContext:
+          runAsUser: 102
+          runAsGroup: 101
+    podSecurityContext:
+      fsGroup: 101
+      fsGroupChangePolicy: "OnRootMismatch"
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+        ipFamilyPolicy: PreferDualStack
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          hajimari.io/enable: "true"
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_INTERNAL_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    resources:
+      requests:
+        cpu: 15m
+        memory: 128Mi
+      limits:
+        cpu: 50m
+        memory: 128Mi
