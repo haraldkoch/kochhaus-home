@@ -14,16 +14,20 @@ spec:
         kind: HelmRepository
         name: rook-ceph
         namespace: flux-system
-  dependsOn:
-    - name: rook-ceph
-      namespace: rook-ceph
+  maxHistory: 3
   install:
     createNamespace: true
     remediation:
-      retries: 5
+      retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
-      retries: 5
+      retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: rook-ceph
+      namespace: rook-ceph
 
   values:
     monitoring:
