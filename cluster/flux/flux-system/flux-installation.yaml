@@ -52,7 +52,7 @@ spec:
         apiVersion: networking.k8s.io/v1
         kind: NetworkPolicy
         metadata:
-          name: all
+          name: not-used
     - target:
         kind: Deployment
         labelSelector: control-plane=controller
@@ -71,8 +71,25 @@ spec:
                     - matchExpressions:
                       - key: node-role.kubernetes.io/control-plane
                         operator: Exists
+              containers:
+                - name: manager
+                  resources:
+                    requests:
+                      memory: 512Mi
+                    limits:
+                      memory: "2Gi"
               tolerations:
               - key: node-role.kubernetes.io/control-plane
                 operator: Exists
               - key: node-role.kubernetes.io/master
                 operator: Exists
+    - target:
+        kind: Deployment
+        name: "(kustomize-controller|helm-controller|source-controller)"
+      patch: |
+        - op: add
+          path: /spec/template/spec/containers/0/args/-
+          value: --concurrent=20
+        - op: add
+          path: /spec/template/spec/containers/0/args/-
+          value: --requeue-dependency=5s
