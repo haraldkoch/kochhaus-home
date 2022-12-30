@@ -15,24 +15,19 @@ spec:
         name: calico
         namespace: flux-system
 
+  maxHistory: 3
   install:
     createNamespace: true
-    crds: Create
-    remediation: # perform remediation when helm install fails
-      retries: 5
-
-  upgrade:
     crds: CreateReplace
-    remediation: # perform remediation when helm upgrade fails
-      retries: 5
-      remediateLastFailure: true # remediate the last failure, when no retries remain
+    remediation:
+      retries: 3
+  upgrade:
     cleanupOnFail: true
-
-  rollback:
-    timeout: 10m
-    recreate: true
-    cleanupOnFail: true
-
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
   values:
     # Configures general installation parameters for Calico. Schema is based
     # on the operator.tigera.io/Installation API documented

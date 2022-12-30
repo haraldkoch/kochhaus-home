@@ -14,18 +14,22 @@ spec:
         kind: HelmRepository
         name: rook-ceph
         namespace: flux-system
-  dependsOn:
-    - name: cert-manager
-      namespace: cert-manager
+  maxHistory: 3
   install:
     createNamespace: true
     crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
+    cleanupOnFail: true
     crds: CreateReplace
     remediation:
       retries: 3
+  uninstall:
+    keepHistory: false
+  dependsOn:
+    - name: cert-manager
+      namespace: cert-manager
 
   values:
     crds:
