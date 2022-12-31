@@ -49,6 +49,13 @@ spec:
                   key: password
             - name: POSTGRES_URI_ARGS
               value: ""
+          resources:
+            requests:
+              cpu: 15m
+              memory: 128Mi
+            limits:
+              cpu: 100m
+              memory: 256Mi
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -58,10 +65,3 @@ spec:
                     operator: In
                     values:
                       - amd64
-      resources:
-        requests:
-          cpu: 15m
-          memory: 32Mi
-        limits:
-          cpu: 100m
-          memory: 64Mi
