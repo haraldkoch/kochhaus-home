@@ -63,8 +63,8 @@ spec:
         type: custom
         mountPath: /public/
         volumeSpec:
-          configMap:
-            name: web-static
+          secret:
+            secretName: web-static
     resources:
       requests:
         cpu: 10m
