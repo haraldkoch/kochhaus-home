@@ -5,13 +5,13 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
-    paths: ["kubernetes/**"]
+    paths: ["cluster/**"]
   pull_request:
     branches: ["main"]
-    paths: ["kubernetes/**"]
+    paths: ["cluster/**"]
 
 env:
-  KUBERNETES_DIR: ./kubernetes
+  KUBERNETES_DIR: ./cluster
   SCHEMA_DIR: /home/runner/.datree/crdSchemas
 
 jobs:
@@ -32,7 +32,7 @@ jobs:
       - name: Download CRDs
         run: |
           mkdir -p ${{ env.SCHEMA_DIR }}
-          flux pull artifact oci://ghcr.io/onedr0p/cluster-crds-oci:latest \
+          flux pull artifact oci://ghcr.io/haraldkoch/kubernetes-schemas-oci:latest \
               --output=${{ env.SCHEMA_DIR }}
 
       - name: Run kubeconform
