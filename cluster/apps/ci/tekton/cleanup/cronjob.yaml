@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: tekton-pipelinerun-cleaner
+  namespace: ci
+  labels:
+    app: tekton-pipelinerun-cleaner
+    app.kubernetes.io/name: tekton-pipelinerun-cleaner
+    app.kubernetes.io/component: pipelinerun-cleaner
+    app.kubernetes.io/part-of: tekton
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+spec:
+  schedule: "*/15 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          serviceAccount: tekton-pipelinerun-cleaner
+          containers:
+            - name: kubectl
+              image: docker.io/alpine/k8s:1.25.5
+              env:
+                - name: NUM_TO_KEEP
+                  value: "3"
+              command:
+                - /bin/bash
+                - -c
+                - >
+                  while read -r PIPELINE; do
+                    while read -r PIPELINE_TO_REMOVE; do
+                      test -n "${PIPELINE_TO_REMOVE}" || continue;
+                      kubectl delete ${PIPELINE_TO_REMOVE} \
+                          && echo "$(date -Is) PipelineRun ${PIPELINE_TO_REMOVE} deleted." \
+                          || echo "$(date -Is) Unable to delete PipelineRun ${PIPELINE_TO_REMOVE}.";
+                    done < <(kubectl get pipelinerun -l tekton.dev/pipeline=${PIPELINE} --sort-by=.metadata.creationTimestamp -o name | head -n -${NUM_TO_KEEP});
+                  done < <(kubectl get pipelinerun -o go-template='{{range .items}}{{index .metadata.labels "tekton.dev/pipeline"}}{{"\n"}}{{end}}' | uniq);
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 32Mi
+                limits:
+                  cpu: 100m
+                  memory: 64Mi
