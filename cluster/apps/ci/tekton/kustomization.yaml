@@ -1,0 +1,66 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: ci
+
+resources:
+  # Git Clone - https://hub.tekton.dev/tekton/task/git-clone
+  - https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.8/git-clone.yaml
+  # Git CLI - https://hub.tekton.dev/tekton/task/git-cli
+  - https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-cli/0.4/git-cli.yaml
+  # Buildah - https://hub.tekton.dev/tekton/task/buildah
+  - https://raw.githubusercontent.com/tektoncd/catalog/main/task/buildah/0.5/buildah.yaml
+  # Kubernetes Actions - https://hub.tekton.dev/tekton/task/kubernetes-actions
+  - https://raw.githubusercontent.com/tektoncd/catalog/main/task/kubernetes-actions/0.2/kubernetes-actions.yaml
+  # Curl - https://hub.tekton.dev/tekton/task/curl
+  - https://raw.githubusercontent.com/tektoncd/catalog/main/task/curl/0.1/curl.yaml
+
+  - show-readme.yaml
+  - cleanup
+
+# patchesJSON6902:
+#   - target:
+#       group: tekton.dev
+#       version: v1beta1
+#       kind: Task
+#     patch: |-
+#       - op: add
+#         path: "/metadata/annotations/kustomize.toolkit.fluxcd.io~1substitute"
+#         value: disabled
+
+patchesStrategicMerge:
+  - |-
+    apiVersion: tekton.dev/v1beta1
+    kind: Task
+    metadata:
+      name: git-clone
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
+  - |-
+    apiVersion: tekton.dev/v1beta1
+    kind: Task
+    metadata:
+      name: git-cli
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
+  - |-
+    apiVersion: tekton.dev/v1beta1
+    kind: Task
+    metadata:
+      name: buildah
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
+  - |-
+    apiVersion: tekton.dev/v1beta1
+    kind: Task
+    metadata:
+      name: kubernetes-actions
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled
+  - |-
+    apiVersion: tekton.dev/v1beta1
+    kind: Task
+    metadata:
+      name: curl
+      annotations:
+        kustomize.toolkit.fluxcd.io/substitute: disabled

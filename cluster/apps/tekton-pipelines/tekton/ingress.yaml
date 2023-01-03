@@ -1,0 +1,25 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tekton-dashboard
+  namespace: tekton-pipelines
+  annotations:
+    hajimari.io/enable: "true"
+    hajimari.io/appName: Tekton
+    hajimari.io/icon: robot-industrial
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: &host tekton.${SECRET_INTERNAL_DOMAIN}
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: tekton-dashboard
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - *host

@@ -1,0 +1,16 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: show-readme
+  namespace: ci
+spec:
+  description: Read and display README file.
+  workspaces:
+    - name: source
+  steps:
+    - name: read
+      image: alpine:latest
+      script: |
+        #!/usr/bin/env sh
+        cat $(workspaces.source.path)/README.md
