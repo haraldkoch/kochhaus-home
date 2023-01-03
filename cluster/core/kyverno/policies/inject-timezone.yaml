@@ -26,6 +26,9 @@ spec:
           - resources:
               annotations:
                 kyverno.io/ignore: "true"
+          - resources:
+              namespaces:
+                - tekton-pipelines
       mutate:
         patchStrategicMerge:
           spec:
