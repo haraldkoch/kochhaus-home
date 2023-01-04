@@ -7,3 +7,4 @@ resources:
   - ext-postgres-operator
   - pgadmin
   - redis
+  - redis-haproxy
