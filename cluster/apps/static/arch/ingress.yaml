@@ -2,26 +2,24 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hass-external
+  name: arch
   namespace: networking
   annotations:
     external-dns.home.arpa/enabled: "true"
-    hajimari.io/enable: "true"
-    hajimari.io/icon: "home-assistant"
 spec:
   ingressClassName: nginx
   rules:
-    - host: &host ha.${SECRET_PUBLIC_DOMAIN}
+    - host: &host arch.${SECRET_PUBLIC_DOMAIN}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: hass
+                name: arch
                 port:
-                  number: 443
+                  number: 80
   tls:
     - hosts:
         - *host
-      secretName: tls.homeassistant
+      secretName: tls.arch
