@@ -8,6 +8,7 @@ resources:
   - ingress-nginx
   - internal-dns
   - opnsense-backup
+  - smtp-relay
   - speedtest
   - web-static
   - whoami
