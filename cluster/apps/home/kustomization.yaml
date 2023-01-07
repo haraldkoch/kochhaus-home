@@ -10,6 +10,5 @@ resources:
   - minio
   - onedrive
   - radicale
-  - smtp-relay
   - sync-browser
   - syncthing
