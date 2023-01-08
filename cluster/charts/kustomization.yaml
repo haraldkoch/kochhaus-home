@@ -9,6 +9,7 @@ resources:
   - calico.yaml
   - cnpg.yaml
   - coredns.yaml
+  - csi-driver-nfs.yaml
   - deliveryhero.yaml
   - democratic-csi.yaml
   - descheduler.yaml

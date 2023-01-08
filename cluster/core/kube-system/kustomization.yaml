@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - coredns
+  - csi-driver-nfs
   - democratic-csi
   - kube-vip
   - local-path-provisioner
