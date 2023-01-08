@@ -1,0 +1,25 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  annotations:
+    meta.helm.sh/release-name: csi-driver-nfs
+    meta.helm.sh/release-namespace: kube-system
+  labels:
+    app.kubernetes.io/name: csi-driver-nfs
+    app.kubernetes.io/instance: nfs-direct
+  name: nfs-direct
+provisioner: nfs.csi.k8s.io
+parameters:
+  server: ${SECRET_NFS_SERVER}
+  share: ${SECRET_NFS_PATH}
+reclaimPolicy: Delete
+volumeBindingMode: Immediate
+mountOptions:
+  - nfsvers=4.2
+  - tcp
+  - intr
+  - hard
+  - noatime
+  - nodiratime
+  - rsize=1048576
+  - wsize=1048576
