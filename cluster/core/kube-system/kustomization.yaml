@@ -8,4 +8,3 @@ resources:
   - democratic-csi
   - kube-vip
   - local-path-provisioner
-  - nfs-subdir-external-provisioner
