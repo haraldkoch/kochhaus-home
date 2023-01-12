@@ -31,6 +31,16 @@
       "separateMinorPatch": true
     },
     {
+      "description": "Calico images",
+      "groupName": "Calico",
+      "matchPackagePatterns": ["calico"],
+      "matchDatasources": ["docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
       "description": "Immich images",
       "groupName": "Immich",
       "matchPackagePatterns": ["immich"],
