@@ -8,4 +8,4 @@ resources:
   - pgadmin
   - postgres-backup
   - redis
-  - redis-haproxy
+  - redis-lb
