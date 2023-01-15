@@ -168,7 +168,7 @@ spec:
             memory: 4000Mi
           limits:
             cpu: 2
-            memory: 6000Mi
+            memory: 8000Mi
 
         affinity:
           nodeAffinity:
