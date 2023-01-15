@@ -8,6 +8,7 @@ resources:
   - hajimari
   - miniflux
   - minio
+  - nextcloud
   - onedrive
   - radicale
   - sync-browser
