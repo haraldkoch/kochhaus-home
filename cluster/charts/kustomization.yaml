@@ -28,6 +28,7 @@ resources:
   - kured.yaml
   - kyverno.yaml
   - metrics-server.yaml
+  - nextcloud.yaml
   - nfs-subdir-external-provisioner.yaml
   - node-feature-discovery.yaml
   - okgolove.yaml
