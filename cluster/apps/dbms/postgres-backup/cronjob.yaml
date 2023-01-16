@@ -30,12 +30,12 @@ spec:
                 - name: POSTGRES_USER
                   valueFrom:
                     secretKeyRef:
-                      name: postgres-superuser
+                      name: kochhaus-superuser
                       key: username
                 - name: POSTGRES_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: postgres-superuser
+                      name: kochhaus-superuser
                       key: password
                 - name: POSTGRES_DB
                   value: 'authelia,gatus,miniflux,outline'
