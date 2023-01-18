@@ -27,8 +27,8 @@ spec:
     keepHistory: false
   values:
     image:
-      repository: rogerrum/alertmanager-discord
-      tag: 1.0.4
+      repository: benjojo/alertmanager-discord
+      tag: latest@sha256:7d27cd8494b269fe592cf6a9d7f6bdf14ac628bba34c381dc43cf533eaa95158
     env:
       TZ: ${TIMEZONE}
     envFrom:
