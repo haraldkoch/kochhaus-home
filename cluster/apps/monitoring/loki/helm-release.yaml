@@ -144,10 +144,10 @@ spec:
       resources:
         requests:
           cpu: 50m
-          memory: 128Mi
+          memory: 256Mi
         limits:
           cpu: 500m
-          memory: 256Mi
+          memory: 512Mi
     backend:
       replicas: 3
       persistence:
@@ -167,10 +167,10 @@ spec:
       resources:
         requests:
           cpu: 50m
-          memory: 128Mi
+          memory: 256Mi
         limits:
           cpu: 500m
-          memory: 192Mi
+          memory: 512Mi
     monitoring:
       serviceMonitor:
         enabled: false
