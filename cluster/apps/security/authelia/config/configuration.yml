@@ -73,6 +73,6 @@ identity_providers:
         public: false
         authorization_policy: two_factor
         pre_configured_consent_duration: 1y
-        scopes: ["openid", "profile", "groups", "email"]
+        scopes: ["openid", "profile", "groups", "email", "offline_access"]
         redirect_uris: ["https://gitops.${SECRET_PUBLIC_DOMAIN}/oauth2/callback"]
         userinfo_signing_algorithm: none
