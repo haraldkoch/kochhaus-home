@@ -5,3 +5,4 @@ resources:
   - backup.yaml
   - kochhaus.yaml
   - secret.sops.yaml
+  - service.yaml
