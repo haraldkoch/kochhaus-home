@@ -3,7 +3,7 @@ Configuring K3S to use Harbor as a pull-through cache
 
 The file `harbor.sops.yaml` in this folder contains an encrypted version of a
 value for the k3s_registries: key used by the k3s installer role. The contents
-are, approximately as follows. I've ecrypted the file so that I can use the
+are, approximately as follows. I've encrypted the file so that I can use the
 FQDN of the harbor server without leaking it.
 
 
