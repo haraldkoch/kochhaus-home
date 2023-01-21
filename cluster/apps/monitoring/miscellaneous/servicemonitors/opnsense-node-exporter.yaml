@@ -1,0 +1,59 @@
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: &app opnsense-node-exporter
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+    jobLabel: node-exporter
+subsets:
+  - addresses:
+      - ip: 192.168.20.1
+    ports:
+      - name: metrics
+        port: 9100
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: &app opnsense-node-exporter
+  namespace: monitoring
+  annotations:
+    prometheus.io/scrape: "true"
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+    jobLabel: node-exporter
+spec:
+  type: ExternalName
+  externalName: gw.${PRIVATE_STATIC_DOMAIN}
+  ports:
+    - name: metrics
+      port: &port 9100
+      protocol: TCP
+      targetPort: *port
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: &app opnsense-node-exporter
+  namespace: monitoring
+  labels: &labels
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+    jobLabel: node-exporter
+spec:
+  namespaceSelector:
+    matchNames: ["monitoring"]
+  selector:
+    matchLabels:
+      <<: *labels
+  jobLabel: jobLabel
+  endpoints:
+    - port: metrics
+      path: /metrics
+      interval: 1m
+      scrapeTimeout: 10s
+      honorLabels: true
