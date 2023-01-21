@@ -39,11 +39,12 @@ spec:
     existingSecret: pgadmin-secrets
     env:
       email: ${SECRET_ADMIN_EMAIL}
-      password:
-        valueFrom:
-          secretKeyRef:
-            name: pgadmin-secrets
-            key: password
+      variables:
+        - name: password
+          valueFrom:
+            secretKeyRef:
+              name: pgadmin-secrets
+              key: password
     ingress:
       enabled: true
       ingressClassName: nginx
@@ -55,6 +56,7 @@ spec:
       tls:
         - hosts:
             - *host
+          secretName: tls.pgadmin4
     persistentVolume:
       enabled: true
       storageClass: ceph-block
