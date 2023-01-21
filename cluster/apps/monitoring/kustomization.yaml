@@ -11,6 +11,7 @@ resources:
   - grafana
   - kube-prometheus-stack
   - loki
+  - miscellaneous
   - network-ups-tools
   - node-exporter
   - node-problem-detector
