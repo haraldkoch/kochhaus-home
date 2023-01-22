@@ -21,7 +21,7 @@ spec:
           serviceAccount: tekton-pipelinerun-cleaner
           containers:
             - name: kubectl
-              image: docker.io/alpine/k8s:1.26.0
+              image: docker.io/alpine/k8s:1.26.1
               env:
                 - name: NUM_TO_KEEP
                   value: "3"
