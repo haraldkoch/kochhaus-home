@@ -6,3 +6,4 @@ resources:
   - config-pvc.yaml
   - data-pvc.yaml
   - secret.sops.yaml
+  - volsync.yaml

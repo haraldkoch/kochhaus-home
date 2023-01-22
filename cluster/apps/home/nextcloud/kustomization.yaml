@@ -7,3 +7,4 @@ resources:
   - nfs-pvc.yaml
   - postgres.yaml
   - helm-release.yaml
+  - volsync.yaml

@@ -6,3 +6,4 @@ resources:
   - helm-release.yaml
   - configmap.yaml
   - onedrive-pv.yaml
+  - volsync.yaml
