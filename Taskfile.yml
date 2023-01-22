@@ -22,6 +22,7 @@ includes:
   snapshot: .taskfiles/SnapshotTasks.yml
   terraform: .taskfiles/TerraformTasks.yml
   sops: .taskfiles/SopsTasks.yml
+  vs: .taskfiles/VolSync/Tasks.yml
 
 tasks:
 
