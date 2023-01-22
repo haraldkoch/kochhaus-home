@@ -6,5 +6,6 @@ resources:
   - apply-ingress-auth-annotations.yaml
   - apply-ingress-external-dns-annotations.yaml
   - apply-ingress-whitelist-annotations.yaml
+  - apply-volsync-annotations.yaml
   - delete-cpu-limits.yaml
   - snapshot-cronjob-controller.yaml

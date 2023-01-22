@@ -1,0 +1,31 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: apply-volsync-annotations
+  annotations:
+    policies.kyverno.io/title: Apply Volsync Annotations
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Apply additional annotations to Volsync Mover Pods.
+spec:
+  mutateExistingOnPolicyUpdate: true
+  generateExistingOnPolicyUpdate: true
+  rules:
+    - name: gateway
+      match:
+        any:
+          - resources:
+              kinds: ["batch/v1/Job"]
+              namespaces: ["downloads"]
+              selector:
+                matchLabels:
+                  app.kubernetes.io/created-by: volsync
+      mutate:
+        patchStrategicMerge:
+          spec:
+            template:
+              metadata:
+                labels:
+                  +(setGateway): "false"
+                  +(network): "linode"
