@@ -47,7 +47,7 @@ spec:
         name: *app
     initContainers:
       copy-config:
-        image: ghcr.io/onedr0p/kubernetes-kubectl:1.26.1@sha256:c85224928b2e384e63bd8c9ba89753dd3d1cd9c178350d83efa3182b480c31a0
+        image: ghcr.io/haraldkoch/kubernetes-kubectl:1.26.1@sha256:dfe9fc3c2c554227976591b9244667e7d71069b9be0abc46007286ed4599b1de
         command:
           - /bin/sh
           - -c
