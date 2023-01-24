@@ -32,7 +32,8 @@ spec:
   values:
     monitoring:
       enabled: true
-      createPrometheusRules: true
+      # deploy manually so that we can patch the rules
+      createPrometheusRules: false
     ingress:
       dashboard:
         ingressClassName: nginx
