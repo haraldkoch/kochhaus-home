@@ -8,7 +8,15 @@ spec:
   groups:
     - name: GitOpsToolkit
       rules:
-        - alert: ReconciliationFailure
+        - alert: FluxComponentAbsent
+          annotations:
+            summary: Flux component has disappeared from Prometheus target discovery.
+          expr: |
+            absent(up{job=~".*flux-system.*"} == 1)
+          for: 15m
+          labels:
+            severity: critical
+        - alert: FluxReconciliationFailure
           expr: |
             max(gotk_reconcile_condition{status="False",type="Ready"}) by (namespace, name, kind)
             + on(namespace, name, kind) (max(gotk_reconcile_condition{status="Deleted"}) by (namespace, name, kind)) * 2 == 1
