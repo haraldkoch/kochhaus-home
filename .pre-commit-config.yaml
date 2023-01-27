@@ -38,6 +38,10 @@ repos:
       - id: terraform-fmt
       - id: terraform-validate
       - id: tflint
+  - repo: https://github.com/renovatebot/pre-commit-hooks
+    rev: 34.112.2
+    hooks:
+      - id: renovate-config-validator
   - repo: https://github.com/gitguardian/gg-shield
     rev: v1.14.2
     hooks:
