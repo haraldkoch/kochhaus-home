@@ -3,8 +3,11 @@
 Thumbs.db
 # k8s
 kubeconfig
+kubeconfig.yaml
 # vscode-sops
 .decrypted~*.yaml
+# gitguardian
+.cache_ggshield
 .config.env
 *.agekey
 *.pub
@@ -16,6 +19,3 @@ xanmanning.k3s*
 .terraform
 .terraform.tfstate*
 terraform.tfstate*
-megalinter-reports
-# gitguardian
-.cache_ggshield
