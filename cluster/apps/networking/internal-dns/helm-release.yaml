@@ -64,7 +64,7 @@ spec:
     domainFilters:
       - "${SECRET_INTERNAL_DOMAIN}"
 
-    txtOwnerId: "homelab"
+    txtOwnerId: "internal"
 
     serviceMonitor:
       enabled: true
