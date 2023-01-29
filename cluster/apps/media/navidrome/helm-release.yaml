@@ -62,7 +62,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: tls.navidrome
     podSecurityContext:
       runAsUser: 1022
       runAsGroup: 2000

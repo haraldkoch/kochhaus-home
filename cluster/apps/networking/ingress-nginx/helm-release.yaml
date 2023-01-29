@@ -69,7 +69,7 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: |-
-          networking/tls.${SECRET_INTERNAL_DOMAIN/./-}
+          networking/tls.${CLUSTER_DOMAIN/./-}
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname

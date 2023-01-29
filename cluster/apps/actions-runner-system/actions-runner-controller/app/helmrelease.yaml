@@ -55,7 +55,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: tls.arc-webhook
     metrics:
       serviceMonitor: true
       port: 8080
