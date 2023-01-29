@@ -46,7 +46,7 @@ spec:
           external-dns.home.arpa/enabled: "true"
           hajimari.io/enable: "true"
         hosts:
-          - host: &host "draw.${SECRET_PUBLIC_DOMAIN}"
+          - host: &host "draw.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

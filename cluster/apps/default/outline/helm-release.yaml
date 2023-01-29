@@ -56,7 +56,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "notebook-edit-outline"
         hosts:
-          - host: &host "docs.${SECRET_PUBLIC_DOMAIN}"
+          - host: &host "docs.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

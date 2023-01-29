@@ -49,7 +49,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: dial
         hosts:
-          - host: &host speedtest.${SECRET_PUBLIC_DOMAIN}
+          - host: &host speedtest.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix

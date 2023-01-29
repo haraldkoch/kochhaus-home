@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: &host "flux-receiver.${SECRET_PUBLIC_DOMAIN}"
+    - host: &host "flux-receiver.${CLUSTER_DOMAIN}"
       http:
         paths:
           - path: /hook/
