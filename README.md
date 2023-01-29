@@ -10,17 +10,17 @@
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-green?logo=pre-commit&logoColor=white&style=flat-square)](https://github.com/pre-commit/pre-commit)
 [![GitHub Super-Linter](https://github.com/haraldkoch/kochhaus-home/workflows/Lint/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
-[K3S](https://k3s.io/) test cluster on 5 [Arch Linux](https://www.archlinux.org/) hosts. Currently I have:
-- Raspberry Pi 4b (4G) - control plane
-- Raspberry Pi 4b (8G) with an external SSD
-- Two VMs (6G) on my homelab compute server
-- One VM (6G) on my homelab backup / media server
+[K3S](https://k3s.io/) in a 7-node cluster running [Arch Linux](https://www.archlinux.org/).
+- Four Lenovo M900 Tinys
+- Three VMs on my older homelab servers.
+
+There's a full server list below.
 
 ## Off-cluster support
 
-- [registry](https://github.com/distribution/distribution) - I have a host running several instances of the OCI container registry as a pull-through cache for each of the major internet container registries.
+- [registry](https://goharbor.io) - I have a separate host running Kubernetes and an instance of the Harbor container registry, configured as a pull-through cache.
 - [named](https://www.isc.org/bind/) - primary home DNS running on a pair of (redundant) Raspberry Pi 3s.
-- [blocky](https://github.com/0xERR0R/blocky) - lightweight ad-blocking DNS resolver - this is replacing Pi-Hole.
+- [blocky](https://github.com/0xERR0R/blocky) - lightweight ad-blocking DNS resolver - this has replaced an older Pi-Hole. Thinking of checking out NextDNS.
 
 ## Cluster components
 
@@ -33,7 +33,7 @@
 - [cert-manager](https://cert-manager.io/docs/) - Configured to create TLS certs for all ingress services automatically using LetsEncrypt.
 - [external-dns](https://github.com/kubernetes-sigs/external-dns) - monitors service and ingress resources, and automatically generates DNS updates for them. This lets me maintain DNS mappings and LetsEncrypt certificates without a cloudflare account or domain.
 - [metallb](https://metallb.universe.tf/) - Kubernetes Load Balancer that runs on Kubernetes.
-- [traefik ingress](https://doc.traefik.io/traefik/providers/kubernetes-ingress/) - Ingress controller based on Traefik (but not Rancher's default)
+- [nginx ingress](https://github.com/kubernetes/ingress-nginx) - Ingress controller. I used to use Traefik, but it it much more challenging to configure correctly.
 
 ### Storage
 
@@ -52,22 +52,23 @@
 - [cloudnative-pg](https://cloudnative-pg.io/) - build and manage a postgresql cluster with HA and backups from a custom resource.
 - [ext-postgres-operator](https://github.com/movetokube/postgres-operator) - create databases and users in an existing postgres cluster.
 - [authentik](https://goauthentik.io/) - integrated authentication and user management.
+- [volsync]() - data backup and restore. In a GitOps environment I don't need to backup the Kubernetes resources the way Velero and K10 do, and those tools are hard to manage. VolSync backs up my data.
 - And more!
 
 ## Home Infrastructure
 
 - [hajimari](https://github.com/toboshii/hajimari): a pretty start page with Kubernetes autodiscovery.
 - [openweathermap-exporter](https://github.com/blackrez/openweathermap_exporter): a Prometheus exporter for Openweather.
-- [weather-exporter](https://github.com/celliott/weather_exporter): the much older weather exporter using the DarkSky API.
 
 ## Applications
 
-- [bookstack](https://www.bookstackapp.com/) - full featured documentation platform.
+- [outline](https://www.getoutline.com/) - full featured documentation platform.
 - [tautulli](https://github.com/Tautulli/Tautulli) - Plex usage monitoring application.
 - [onedrive](https://github.com/abraunegg/onedrive) - syncs my OneDrive folder from Microsoft, as a local backup.
 - [syncthing](https://syncthing.net/) - simple, peer-to-peer file synch app replacing Dropbox or NextCloud.
-- [drone](https://readme.drone.io/) - CI/CD tool
 - [actions-runner](https://github.com/actions-runner-controller/actions-runner-controller) - Run GitHub Actions at home!
+- [tekton](https://tekton.dev/) - simple CI/CD tooling.
+- [nextcloud](https://nextcloud.com/) - Finally - moving applications from Linode to my homelab.
 
 Yes, this is a lot of infrastructure and heavy lifting - the point is to experiment with Kubernetes and GitOps in a safe space.
 
@@ -75,7 +76,7 @@ Yes, this is a lot of infrastructure and heavy lifting - the point is to experim
 
 I have two longer-term goals:
 
-1. migrate many of the apps that I currently run on Linode to a K8S cluster at Linode or Digital Ocean.
+1. migrate many of the apps that I currently run on Linode to my HomeLab.
 2. Build a small Raspberry Pi cluster at home to run a lot of infrastructure, with the intent of being able to run off a small UPS during power outages.
 
 ---
