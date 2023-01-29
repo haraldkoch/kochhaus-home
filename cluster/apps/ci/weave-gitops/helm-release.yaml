@@ -50,7 +50,6 @@ spec:
       tls:
         - hosts:
             - *host
-          secretName: tls.gitops
     networkPolicy:
       create: false
     metrics:

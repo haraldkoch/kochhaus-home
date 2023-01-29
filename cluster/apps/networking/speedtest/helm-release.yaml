@@ -56,7 +56,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: tls.speedtest
     resources:
       requests:
         cpu: 50m

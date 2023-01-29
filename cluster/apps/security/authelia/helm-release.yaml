@@ -83,7 +83,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: tls.authelia
     podSecurityContext:
       runAsUser: 568
       runAsGroup: 568

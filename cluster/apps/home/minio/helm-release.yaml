@@ -100,7 +100,6 @@ spec:
         tls:
           - hosts:
               - *host-api
-            secretName: tls.minio-s3
     podSecurityContext:
       runAsUser: 103
       runAsGroup: 103

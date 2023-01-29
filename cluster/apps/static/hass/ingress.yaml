@@ -24,4 +24,3 @@ spec:
   tls:
     - hosts:
         - *host
-      secretName: tls.homeassistant

@@ -56,7 +56,6 @@ spec:
       tls:
         - hosts:
             - *host
-          secretName: tls.pgadmin4
     persistentVolume:
       enabled: true
       storageClass: ceph-block

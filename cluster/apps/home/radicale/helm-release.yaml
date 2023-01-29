@@ -59,7 +59,6 @@ spec:
         tls:
           - hosts:
               - *host
-            secretName: tls.radicale
 
     persistence:
       config:
