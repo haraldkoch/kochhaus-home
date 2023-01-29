@@ -48,13 +48,13 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "television-classic"
         hosts:
-          - host: "tautulli.${SECRET_PUBLIC_DOMAIN}"
+          - host: "tautulli.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "tautulli.${SECRET_PUBLIC_DOMAIN}"
+              - "tautulli.${CLUSTER_DOMAIN}"
             secretName: tls.tautulli
 
       internal:

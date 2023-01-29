@@ -53,7 +53,7 @@ spec:
           hajimari.io/enable: "true"
           nginx.ingress.kubernetes.io/proxy-body-size: 4G
         hosts:
-          - host: &host "radicale.${SECRET_PUBLIC_DOMAIN}"
+          - host: &host "radicale.${CLUSTER_DOMAIN}"
             paths:
               - path: /
         tls:

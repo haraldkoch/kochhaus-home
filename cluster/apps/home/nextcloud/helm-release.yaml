@@ -40,7 +40,7 @@ spec:
       existingSecret:
         enabled: true
         secretName: nextcloud
-      host: &host cloud.${SECRET_PUBLIC_DOMAIN}
+      host: &host cloud.${CLUSTER_DOMAIN}
       mail:
         enabled: true
         fromAddress: admin
