@@ -1,0 +1,26 @@
+.:1053 {
+  errors
+  log
+  health {
+    lameduck 5s
+  }
+  ready
+  k8s_gateway ${SECRET_PUBLIC_DOMAIN} ${SECRET_INTERNAL_DOMAIN} {
+    apex  k8s-gateway.network
+    resources Ingress Service
+    ttl 300
+  }
+  acl {
+    allow type AXFR net ${SECRET_HOMELAN_IPV4}
+    allow type IXFR net ${SECRET_HOMELAN_IPV4}
+    block type AXFR net *
+    block type IXFR net *
+  }
+  transfer {
+    to ${PRIVATE_DNS_PRIMARY} ${PRIVATE_DNS_SECONDARY}
+  }
+  prometheus 0.0.0.0:9153
+  loop
+  reload
+  loadbalance
+}
