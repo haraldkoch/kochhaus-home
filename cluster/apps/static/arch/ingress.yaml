@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: &host arch.${SECRET_PUBLIC_DOMAIN}
+    - host: &host arch.${CLUSTER_DOMAIN}
       http:
         paths:
           - path: /

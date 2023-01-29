@@ -2,7 +2,7 @@
 #   - traefik.ingress.kubernetes.io/router.entrypoints: websecure
 # external-dns:
 #   - cert-manager.io/cluster-issuer: "letsencrypt-production"
-#   - external-dns.alpha.kubernetes.io/target: "gw.${SECRET_PUBLIC_DOMAIN}"
+#   - external-dns.alpha.kubernetes.io/target: "gw.${CLUSTER_DOMAIN}"
 # internal (no auth):
 #   - traefik.ingress.kubernetes.io/router.middlewares: "traefik-system-internal@kubernetescrd"
 # internal-auth: (not used)
@@ -51,7 +51,7 @@ spec:
             annotations:
               +(cert-manager.io/cluster-issuer): "letsencrypt-production"
               +(external-dns.alpha.kubernetes.io/target): |-
-                gw.${SECRET_PUBLIC_DOMAIN}
+                gw.${CLUSTER_DOMAIN}
 
     - name: external-auth
       match:

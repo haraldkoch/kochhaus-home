@@ -34,8 +34,8 @@ spec:
       create: true
       clientID: weave-gitops
       clientSecret: "${SECRET_WEAVEGITOPS_OAUTH_CLIENT_SECRET}"
-      issuerURL: "https://auth.${SECRET_PUBLIC_DOMAIN}"
-      redirectURL: "https://gitops.${SECRET_PUBLIC_DOMAIN}/oauth2/callback"
+      issuerURL: "https://auth.${CLUSTER_DOMAIN}"
+      redirectURL: "https://gitops.${CLUSTER_DOMAIN}/oauth2/callback"
     ingress:
       enabled: true
       className: nginx
@@ -43,7 +43,7 @@ spec:
         external-dns.home.arpa/enabled: "true"
         hajimari.io/enable: "true"
       hosts:
-        - host: &host "gitops.${SECRET_PUBLIC_DOMAIN}"
+        - host: &host "gitops.${CLUSTER_DOMAIN}"
           paths:
             - path: /
               pathType: Prefix

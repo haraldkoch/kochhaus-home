@@ -35,12 +35,12 @@ spec:
       MINIO_PROMETHEUS_URL: http://kps-prometheus.monitoring.svc.cluster.local:9090
       MINIO_PROMETHEUS_JOB_ID: minio
       MINIO_BROWSER_REDIRECT_URL: "https://minio.${SECRET_INTERNAL_DOMAIN}"
-      MINIO_SERVER_URL: "https://s3.${SECRET_PUBLIC_DOMAIN}"
-      # MINIO_IDENTITY_OPENID_CONFIG_URL: "https://auth.${SECRET_PUBLIC_DOMAIN}/.well-known/openid-configuration"
+      MINIO_SERVER_URL: "https://s3.${CLUSTER_DOMAIN}"
+      # MINIO_IDENTITY_OPENID_CONFIG_URL: "https://auth.${CLUSTER_DOMAIN}/.well-known/openid-configuration"
       # MINIO_IDENTITY_OPENID_CLIENT_ID: minio
       # MINIO_IDENTITY_OPENID_CLIENT_SECRET: "${SECRET_MINIO_OAUTH_CLIENT_SECRET}"
       # MINIO_IDENTITY_OPENID_SCOPES: "openid,profile,email,groups"
-      # MINIO_IDENTITY_OPENID_REDIRECT_URI: "https://minio.${SECRET_PUBLIC_DOMAIN}/oauth_callback"
+      # MINIO_IDENTITY_OPENID_REDIRECT_URI: "https://minio.${CLUSTER_DOMAIN}/oauth_callback"
     envFrom:
       - secretRef:
           name: *app
@@ -91,7 +91,7 @@ spec:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             chunked_transfer_encoding off;
         hosts:
-          - host: &host-api "s3.${SECRET_PUBLIC_DOMAIN}"
+          - host: &host-api "s3.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

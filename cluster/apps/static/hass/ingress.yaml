@@ -11,7 +11,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: &host ha.${SECRET_PUBLIC_DOMAIN}
+    - host: &host ha.${CLUSTER_DOMAIN}
       http:
         paths:
           - path: /
