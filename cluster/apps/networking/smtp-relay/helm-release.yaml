@@ -36,7 +36,7 @@ spec:
       tag: 0.6.2
     env:
       DEBUG: "true"
-      SMTP_DOMAIN: ${SECRET_INTERNAL_DOMAIN}
+      SMTP_DOMAIN: ${CLUSTER_DOMAIN}
       SMTP_SERVER: ${SECRET_SMTP_RELAY}
       SMTP_PORT: ${SECRET_SMTP_RELAY_PORT}
     service:
@@ -45,7 +45,7 @@ spec:
         externalIPs: ["${SVC_SMTP_RELAY_ADDR_V4}"]
         externalTrafficPolicy: Local
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: smtp.${SECRET_INTERNAL_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: smtp.${CLUSTER_DOMAIN}
         ports:
           http:
             port: 25

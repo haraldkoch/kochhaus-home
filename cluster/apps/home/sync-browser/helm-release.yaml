@@ -52,7 +52,7 @@ spec:
           hajimari.io/enable: "true"
           # hajimari.io/icon: "safe"
         hosts:
-          - host: &host "sync-browser.${SECRET_INTERNAL_DOMAIN}"
+          - host: &host "sync-browser.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

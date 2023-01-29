@@ -54,7 +54,7 @@ spec:
         - group: Home
           apps:
             - name: Home Assistant
-              url: https://hass.${SECRET_INTERNAL_DOMAIN}
+              url: https://hass.${CLUSTER_DOMAIN}
               icon: mdi:home-automation
       showGlobalBookmarks: true
       globalBookmarks:
@@ -99,13 +99,13 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "weather-sunset"
         hosts:
-          - host: "hajimari.${SECRET_INTERNAL_DOMAIN}"
+          - host: &host "hajimari.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "hajimari.${SECRET_INTERNAL_DOMAIN}"
+              - *host
     persistence:
       data:
         enabled: true

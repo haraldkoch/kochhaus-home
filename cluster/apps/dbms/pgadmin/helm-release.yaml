@@ -49,7 +49,7 @@ spec:
       enabled: true
       ingressClassName: nginx
       hosts:
-        - host: &host "pgadmin.${SECRET_INTERNAL_DOMAIN}"
+        - host: &host "pgadmin.${CLUSTER_DOMAIN}"
           paths:
             - path: /
               pathType: Prefix

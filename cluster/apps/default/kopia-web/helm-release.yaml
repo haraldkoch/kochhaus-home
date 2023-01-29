@@ -71,7 +71,7 @@ spec:
         enabled: true
         ingressClassName: nginx
         hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_INTERNAL_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

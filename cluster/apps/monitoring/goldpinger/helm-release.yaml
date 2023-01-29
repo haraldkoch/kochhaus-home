@@ -49,13 +49,13 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: "table-tennis"
       hosts:
-        - host: goldpinger.${SECRET_INTERNAL_DOMAIN}
+        - host: &host goldpinger.${CLUSTER_DOMAIN}
           paths:
             - path: /
               pathType: ImplementationSpecific
       tls:
         - hosts:
-            - goldpinger.${SECRET_INTERNAL_DOMAIN}
+            - *host
 
     resources:
       requests:

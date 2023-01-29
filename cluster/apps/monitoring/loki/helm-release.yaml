@@ -113,7 +113,7 @@ spec:
         annotations:
           hajimari.io/enable: "false"
         hosts:
-          - host: &host "loki.${SECRET_INTERNAL_DOMAIN}"
+          - host: &host "loki.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
