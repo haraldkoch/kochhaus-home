@@ -48,8 +48,6 @@ spec:
           - ${SVC_REMOTE_ADDR_V6}
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: "remote.${SECRET_INTERNAL_DOMAIN}"
         ports:
           http:
             enabled: false
