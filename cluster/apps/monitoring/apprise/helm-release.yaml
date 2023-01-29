@@ -53,7 +53,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: bell-cog
         hosts:
-          - host: &host "apprise.${SECRET_INTERNAL_DOMAIN}"
+          - host: &host "apprise.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

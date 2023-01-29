@@ -61,7 +61,7 @@ spec:
       enabled: true
       className: nginx
       hosts:
-        - host: &host blackbox.${SECRET_INTERNAL_DOMAIN}
+        - host: &host blackbox.${CLUSTER_DOMAIN}
           paths:
             - path: /
               pathType: ImplementationSpecific

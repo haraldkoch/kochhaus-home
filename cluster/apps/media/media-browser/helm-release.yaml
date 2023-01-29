@@ -52,7 +52,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "television-classic"
         hosts:
-          - host: &host "media-browser.${SECRET_INTERNAL_DOMAIN}"
+          - host: &host "media-browser.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
