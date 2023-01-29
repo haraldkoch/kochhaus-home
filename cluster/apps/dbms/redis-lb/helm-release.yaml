@@ -62,7 +62,7 @@ spec:
         enabled: true
         ingressClassName: nginx
         hosts:
-          - host: "redis-ui.${SECRET_INTERNAL_DOMAIN}"
+          - host: "redis-ui.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

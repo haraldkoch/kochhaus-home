@@ -9,8 +9,8 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: smtp.${SECRET_INTERNAL_DOMAIN}
+  commonName: smtp.${CLUSTER_DOMAIN}
   dnsNames:
-    - smtp.${SECRET_INTERNAL_DOMAIN}
+    - smtp.${CLUSTER_DOMAIN}
   privateKey:
     rotationPolicy: Always

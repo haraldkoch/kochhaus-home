@@ -42,7 +42,7 @@ spec:
       annotations:
         hajimari.io/enable: "true"
       hosts:
-        - &host gatus.${SECRET_INTERNAL_DOMAIN}
+        - &host gatus.${CLUSTER_DOMAIN}
       tls:
         - hosts:
             - *host

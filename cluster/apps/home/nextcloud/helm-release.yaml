@@ -44,7 +44,7 @@ spec:
       mail:
         enabled: true
         fromAddress: admin
-        domain: ${SECRET_INTERNAL_DOMAIN}
+        domain: ${CLUSTER_DOMAIN}
         smtp:
           host: ${SECRET_SMTP_RELAY}
           port: ${SECRET_SMTP_RELAY_PORT}

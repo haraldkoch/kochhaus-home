@@ -57,7 +57,7 @@ spec:
         enabled: true
         ingressClassName: "nginx"
         hosts:
-          - host: &host "1pwconnect.${SECRET_INTERNAL_DOMAIN}"
+          - host: &host "1pwconnect.${CLUSTER_DOMAIN}"
             paths:
               - path: /
         tls:

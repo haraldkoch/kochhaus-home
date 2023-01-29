@@ -35,7 +35,7 @@ spec:
       VAR_BLOCKY_URL: "http://blocky.networking.svc.cluster.local:4000"
     grafana.ini:
       server:
-        root_url: "https://grafana.${SECRET_INTERNAL_DOMAIN}"
+        root_url: "https://grafana.${CLUSTER_DOMAIN}"
       analytics:
         check_for_updates: false
       log:
@@ -123,10 +123,10 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: "chart-line"
       hosts:
-        - "grafana.${SECRET_INTERNAL_DOMAIN}"
+        - &host "grafana.${CLUSTER_DOMAIN}"
       tls:
         - hosts:
-            - "grafana.${SECRET_INTERNAL_DOMAIN}"
+            - *host
     serviceAccount:
       create: true
       autoMount: true

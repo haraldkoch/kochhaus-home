@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: postgres.${SECRET_INTERNAL_DOMAIN}
+    external-dns.alpha.kubernetes.io/hostname: postgres.${CLUSTER_DOMAIN}
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local

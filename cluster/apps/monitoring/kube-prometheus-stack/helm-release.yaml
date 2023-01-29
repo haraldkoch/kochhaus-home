@@ -74,13 +74,13 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "alarm-light-outline"
         hosts:
-          - alertmanager.${SECRET_INTERNAL_DOMAIN}
+          - alertmanager.${CLUSTER_DOMAIN}
         paths:
           - /
         pathType: ImplementationSpecific
         tls:
           - hosts:
-              - alertmanager.${SECRET_INTERNAL_DOMAIN}
+              - alertmanager.${CLUSTER_DOMAIN}
       alertmanagerSpec:
         storage:
           volumeClaimTemplate:
@@ -140,13 +140,13 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "chart-line"
         hosts:
-          - prometheus.${SECRET_INTERNAL_DOMAIN}
+          - prometheus.${CLUSTER_DOMAIN}
         paths:
           - /
         pathType: ImplementationSpecific
         tls:
           - hosts:
-              - prometheus.${SECRET_INTERNAL_DOMAIN}
+              - prometheus.${CLUSTER_DOMAIN}
 
       prometheusSpec:
         podMonitorSelectorNilUsesHelmValues: false
@@ -175,7 +175,7 @@ spec:
             requiredDuringSchedulingIgnoredDuringExecution:
               nodeSelectorTerms:
                 - matchExpressions:
-                    - key: ${SECRET_INTERNAL_DOMAIN}/prometheus
+                    - key: ${CLUSTER_DOMAIN}/prometheus
                       operator: In
                       values:
                         - "true"

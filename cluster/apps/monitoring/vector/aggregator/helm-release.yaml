@@ -38,7 +38,7 @@ spec:
     service:
       main:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "vector.${SECRET_INTERNAL_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: "vector.${CLUSTER_DOMAIN}"
         type: LoadBalancer
         externalIPs: ["${SVC_SYSLOG_ADDR_V4}", "${SVC_SYSLOG_ADDR_V6}"]
         externalTrafficPolicy: Local
