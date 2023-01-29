@@ -50,13 +50,13 @@ spec:
         enabled: true
         ingressClassName: nginx
         hosts:
-          - host: "home.${SECRET_INTERNAL_DOMAIN}"
+          - host: &host "home.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "home.${SECRET_INTERNAL_DOMAIN}"
+              - *host
     persistence:
       config:
         enabled: true
