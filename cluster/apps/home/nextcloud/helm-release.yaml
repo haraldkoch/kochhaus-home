@@ -95,7 +95,6 @@ spec:
       tls:
         - hosts:
             - *host
-          secretName: tls.nextcloud
     persistence:
       enabled: true
       existingClaim: nextcloud

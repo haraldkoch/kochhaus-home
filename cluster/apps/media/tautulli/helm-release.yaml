@@ -55,7 +55,6 @@ spec:
         tls:
           - hosts:
               - "tautulli.${CLUSTER_DOMAIN}"
-            secretName: tls.tautulli
 
       internal:
         enabled: true
