@@ -25,23 +25,8 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
     fullnameOverride: kps
-
-    global:
-      rbac:
-        pspEnabled: false
-
-    prometheusOperator:
-      resources: {}
-      limits:
-        cpu: 200m
-        memory: 200Mi
-      requests:
-        cpu: 100m
-        memory: 100Mi
-
     alertmanager:
       config:
         receivers:
@@ -65,7 +50,6 @@ spec:
                 # - severity =~ critical|warning
                 - severity = critical
               continue: true
-
       ingress:
         enabled: true
         ingressClassName: nginx
@@ -96,20 +80,6 @@ spec:
           limits:
             cpu: 60m
             memory: 64Mi
-    kube-state-metrics:
-      metricLabelsAllowlist:
-        - "persistentvolumeclaims=[*]"
-      prometheus:
-        monitor:
-          enabled: true
-          relabelings:
-            - action: replace
-              regex: (.*)
-              replacement: $1
-              sourceLabels:
-                - __meta_kubernetes_pod_node_name
-              targetLabel: kubernetes_node
-
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -118,19 +88,44 @@ spec:
           multicluster:
             etcd:
               enabled: true
-
     kubelet:
       enabled: true
       serviceMonitor:
         metricRelabelings:
           - action: replace
-            sourceLabels:
-              - node
+            sourceLabels: ["node"]
             targetLabel: instance
-
+    kube-state-metrics:
+      metricLabelsAllowlist: ["persistentvolumeclaims=[*]"]
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              targetLabel: kubernetes_node
+    kubeApiServer:
+      enabled: true
+    kubeControllerManager:
+      enabled: true
+      endpoints: ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+    kubeScheduler:
+      enabled: true
+      endpoints: ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+    kubeProxy:
+      enabled: true
+      endpoints: ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+    kubeEtcd:
+      enabled: true
+      endpoints: ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+      service:
+        enabled: true
+        port: 2381
+        targetPort: 2381
     nodeExporter:
       enabled: false
-
     prometheus:
       ingress:
         enabled: true
@@ -147,13 +142,11 @@ spec:
         tls:
           - hosts:
               - prometheus.${CLUSTER_DOMAIN}
-
       prometheusSpec:
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
-
         storageSpec:
           volumeClaimTemplate:
             spec:
@@ -161,7 +154,6 @@ spec:
               resources:
                 requests:
                   storage: 50Gi
-
         resources:
           requests:
             cpu: 384m
@@ -169,7 +161,6 @@ spec:
           limits:
             cpu: 2
             memory: 8000Mi
-
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -179,38 +170,11 @@ spec:
                       operator: In
                       values:
                         - "true"
-
-    # cannot be monitored in k3s; runs on localhost
-    kubeControllerManager:
-      enabled: true
-      endpoints:
-        - ${K3SJ_IPV4_ADDRESS}
-        - ${K3SM_IPV4_ADDRESS}
-        - ${K3ST_IPV4_ADDRESS}
-    kubeScheduler:
-      enabled: true
-      endpoints:
-        - ${K3SJ_IPV4_ADDRESS}
-        - ${K3SM_IPV4_ADDRESS}
-        - ${K3ST_IPV4_ADDRESS}
-    kubeProxy:
-      enabled: true
-      endpoints:
-        - ${K3SJ_IPV4_ADDRESS}
-        - ${K3SM_IPV4_ADDRESS}
-        - ${K3ST_IPV4_ADDRESS}
-    kubeEtcd:
-      enabled: true
-      endpoints:
-        - ${K3SJ_IPV4_ADDRESS}
-        - ${K3SM_IPV4_ADDRESS}
-        - ${K3ST_IPV4_ADDRESS}
-      service:
-        enabled: true
-        port: 2381
-        targetPort: 2381
-
-    defaultRules:
-      rules:
-        etcd: true
-        kubeProxy: false
+    prometheusOperator:
+      resources:
+        limits:
+          cpu: 200m
+          memory: 200Mi
+        requests:
+          cpu: 100m
+          memory: 100Mi
