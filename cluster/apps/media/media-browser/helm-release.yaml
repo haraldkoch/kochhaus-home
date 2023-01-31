@@ -50,7 +50,7 @@ spec:
         ingressClassName: nginx
         annotations:
           hajimari.io/enable: "true"
-          hajimari.io/icon: "television-classic"
+          hajimari.io/icon: mdi:multimedia
         hosts:
           - host: &host "media-browser.${CLUSTER_DOMAIN}"
             paths:

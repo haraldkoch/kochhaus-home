@@ -70,6 +70,10 @@ spec:
       main:
         enabled: true
         ingressClassName: "nginx"
+        annotations:
+          hajimari.io/appName: "Minio Console"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: mdi:pail
         hosts:
           - host: &host-console "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:

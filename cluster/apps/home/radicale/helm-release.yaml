@@ -51,6 +51,7 @@ spec:
         annotations:
           external-dns.home.arpa/enabled: "true"
           hajimari.io/enable: "true"
+          hajimari.io/icon: mdi:calendar
           nginx.ingress.kubernetes.io/proxy-body-size: 4G
         hosts:
           - host: &host "radicale.${CLUSTER_DOMAIN}"

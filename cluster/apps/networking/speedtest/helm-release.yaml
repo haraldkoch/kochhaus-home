@@ -47,7 +47,7 @@ spec:
         annotations:
           external-dns.home.arpa/enabled: "true"
           hajimari.io/enable: "true"
-          hajimari.io/icon: dial
+          hajimari.io/icon: mdi:speedometer
         hosts:
           - host: &host speedtest.${CLUSTER_DOMAIN}
             paths:
