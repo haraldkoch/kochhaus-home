@@ -61,6 +61,10 @@ spec:
       main:
         enabled: true
         ingressClassName: nginx
+        annotations:
+          hajimari.io/appName: "Redis Load Balancer"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: simple-icons:redis
         hosts:
           - host: "redis-ui.${CLUSTER_DOMAIN}"
             paths:

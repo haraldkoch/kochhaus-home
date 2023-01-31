@@ -76,6 +76,7 @@ spec:
         ingressClassName: nginx
         annotations:
           hajimari.io/enable: "true"
+          hajimari.io/icon: mdi:table-tennis
         hosts:
           - host: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:

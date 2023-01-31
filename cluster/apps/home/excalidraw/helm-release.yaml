@@ -45,6 +45,7 @@ spec:
         annotations:
           external-dns.home.arpa/enabled: "true"
           hajimari.io/enable: "true"
+          hajimari.io/icon: mdi:draw-pen
         hosts:
           - host: &host "draw.${CLUSTER_DOMAIN}"
             paths:
