@@ -63,6 +63,7 @@ spec:
       annotations:
         external-dns.home.arpa/enabled: "true"
         hajimari.io/enable: "true"
+        hajimari.io/icon: mdi:dropbox
         nginx.ingress.kubernetes.io/proxy-body-size: "10G"
         nginx.ingress.kubernetes.io/proxy-buffering: "off"
         nginx.ingress.kubernetes.io/proxy-request-buffering: "off"

@@ -40,12 +40,16 @@ spec:
       # namespaces to discover applications
       namespaceSelector:
         matchNames:
+          - ci
+          - dbms
           - default
           - downloads
           - home
           - media
           - monitoring
           - networking
+          - rook-ceph
+          - tekton-pipelines
       name: Citizen
       title: Hajimari
       alwaysTargetBlank: true

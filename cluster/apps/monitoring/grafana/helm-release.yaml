@@ -121,7 +121,7 @@ spec:
       annotations:
         hajimari.io/appName: "grafana"
         hajimari.io/enable: "true"
-        hajimari.io/icon: "chart-line"
+        hajimari.io/icon: simple-icons:grafana
       hosts:
         - &host "grafana.${CLUSTER_DOMAIN}"
       tls:

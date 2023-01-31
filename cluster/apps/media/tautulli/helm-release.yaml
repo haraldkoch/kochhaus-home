@@ -46,7 +46,7 @@ spec:
         annotations:
           external-dns.home.arpa/enabled: "true"
           hajimari.io/enable: "true"
-          hajimari.io/icon: "television-classic"
+          hajimari.io/icon: mdi:chart-bar
         hosts:
           - host: "tautulli.${CLUSTER_DOMAIN}"
             paths:

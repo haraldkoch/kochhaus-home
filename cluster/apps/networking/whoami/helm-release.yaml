@@ -49,6 +49,9 @@ spec:
         annotations:
           auth.home.arpa/enabled: "true"
           external-dns.home.arpa/enabled: "true"
+          hajimari.io/appName: "Who Am I?"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: mdi:id-card-outline
         hosts:
           - host: &host whoami.${CLUSTER_DOMAIN}
             paths:
