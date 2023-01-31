@@ -30,8 +30,12 @@ spec:
     alertmanager:
       config:
         receivers:
-          - name: "null"
-          - name: "discord"
+          - name: heartbeat
+            webhook_configs:
+              - url: "https://hc-ping.com/${SECRET_ALERTMANAGER_HEALTHCHECKS_TOKEN}"
+                send_resolved: true
+          - name: "null" # quote
+          - name: discord
             webhook_configs:
               - url: "http://alertmanager-discord:9094"
                 send_resolved: true
@@ -40,16 +44,27 @@ spec:
           group_wait: 30s
           group_interval: 5m
           repeat_interval: 6h
-          receiver: "discord"
+          receiver: discord
           routes:
+            - receiver: heartbeat
+              group_wait: 0s
+              group_interval: 5m
+              repeat_interval: 1h
+              matchers:
+                - alertname =~ "Watchdog"
             - receiver: "null"
               matchers:
-                - alertname =~ "InfoInhibitor|Watchdog"
-            - receiver: "discord"
+                - alertname =~ "InfoInhibitor"
+            - receiver: discord
               matchers:
-                # - severity =~ critical|warning
                 - severity = critical
               continue: true
+        inhibit_rules:
+          - source_matchers:
+              - severity = "critical"
+            target_matchers:
+              - severity = "warning"
+            equal: ["alertname", "namespace"]
       ingress:
         enabled: true
         ingressClassName: nginx
@@ -66,6 +81,8 @@ spec:
           - hosts:
               - alertmanager.${CLUSTER_DOMAIN}
       alertmanagerSpec:
+        # replicas: 3
+        # podAffinity: hard
         storage:
           volumeClaimTemplate:
             spec:
