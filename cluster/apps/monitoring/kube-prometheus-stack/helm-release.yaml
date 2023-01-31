@@ -67,19 +67,17 @@ spec:
             equal: ["alertname", "namespace"]
       ingress:
         enabled: true
+        pathType: Prefix
         ingressClassName: nginx
         annotations:
-          hajimari.io/appName: "alertmanager"
+          hajimari.io/appName: "Alert Manager"
           hajimari.io/enable: "true"
-          hajimari.io/icon: "alarm-light-outline"
+          hajimari.io/icon: mdi:alert-decagram-outline
         hosts:
-          - alertmanager.${CLUSTER_DOMAIN}
-        paths:
-          - /
-        pathType: ImplementationSpecific
+          - &host alertmanager.${CLUSTER_DOMAIN}
         tls:
           - hosts:
-              - alertmanager.${CLUSTER_DOMAIN}
+              - *host
       alertmanagerSpec:
         # replicas: 3
         # podAffinity: hard
@@ -148,17 +146,15 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          hajimari.io/appName: "prometheus"
+          hajimari.io/appName: "Prometheus"
           hajimari.io/enable: "true"
-          hajimari.io/icon: "chart-line"
+          hajimari.io/icon: simple-icons:prometheus
+        pathType: Prefix
         hosts:
-          - prometheus.${CLUSTER_DOMAIN}
-        paths:
-          - /
-        pathType: ImplementationSpecific
+          - &host prometheus.${CLUSTER_DOMAIN}
         tls:
           - hosts:
-              - prometheus.${CLUSTER_DOMAIN}
+              - *host
       prometheusSpec:
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
