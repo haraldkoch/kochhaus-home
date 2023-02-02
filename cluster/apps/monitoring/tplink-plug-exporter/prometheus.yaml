@@ -35,7 +35,7 @@ spec:
           targetLabel: target
       params:
         target:
-          - 199.85.99.137
+          - 192.168.30.132
       path: /scrape
       port: metrics
       scheme: http
@@ -75,7 +75,7 @@ spec:
           targetLabel: target
       params:
         target:
-          - 199.85.99.138
+          - 192.168.30.133
       path: /scrape
       port: metrics
       scheme: http
@@ -115,7 +115,7 @@ spec:
           targetLabel: target
       params:
         target:
-          - 199.85.99.139
+          - 192.168.30.134
       path: /scrape
       port: metrics
       scheme: http
