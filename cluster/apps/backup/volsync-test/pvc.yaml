@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: volsync-test-v1
+  namespace: backup
+  labels:
+    app.kubernetes.io/name: volsync-test
+    app.kubernetes.io/instance: volsync-test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 128Mi
