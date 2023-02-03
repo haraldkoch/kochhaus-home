@@ -58,7 +58,7 @@ spec:
      additionalContainers:
        git-sync:
          name: git-sync
-         image: k8s.gcr.io/git-sync/git-sync:v3.6.1
+         image: k8s.gcr.io/git-sync/git-sync:v3.6.3
          env:
            GIT_SYNC_REPO: https://github.com/haraldkoch/haraldkoch.git
            GIT_SYNC_ROOT: /config/git
