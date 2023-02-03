@@ -21,7 +21,7 @@ tasks:
               "containers": [
                 {
                   "name": "debug",
-                  "image": "ghcr.io/onedr0p/alpine:rolling",
+                  "image": "ghcr.io/haraldkoch/alpine:rolling",
                   "command": [
                     "/bin/bash"
                   ],
@@ -30,19 +30,19 @@ tasks:
                   "tty": true,
                   "volumeMounts": [
                     {
-                      "name": "config",
-                      "mountPath": "/data/config"
+                      "name": "data",
+                      "mountPath": "/data"
                     },
                     {
                       "name": "backups",
-                      "mountPath": "/data/backups"
+                      "mountPath": "/backups"
                     }
                   ]
                 }
               ],
               "volumes": [
                 {
-                  "name": "config",
+                  "name": "data",
                   "persistentVolumeClaim": {
                     "claimName": "{{.PVC}}"
                   }
