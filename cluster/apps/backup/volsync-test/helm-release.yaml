@@ -1,0 +1,79 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app volsync-test
+  namespace: backup
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.3.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+
+
+  values:
+    nameOverride: *app
+    image:
+      repository: joseluisq/static-web-server
+      tag: 2.14.1-alpine
+    controller:
+      replicas: 1
+    env:
+      SERVER_PORT: 80
+      SERVER_ROOT: /config/git/haraldkoch.git
+    persistence:
+      config:
+        enabled: true
+        existingClaim: volsync-test-v1
+        mountPath: /config
+    service:
+      main:
+        ports:
+          http:
+            port: 80
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          hajimari.io/enable: "true"
+        hosts:
+          - host: &host "volsync-test.${CLUSTER_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    # additionalContainers:
+    #   git-sync:
+    #     name: git-sync
+    #     image: k8s.gcr.io/git-sync/git-sync:v3.6.1
+    #     env:
+    #       GIT_SYNC_REPO: https://github.com/haraldkoch/haraldkoch.git
+    #       GIT_SYNC_ROOT: /config/git
+    #       GIT_SYNC_BRANCH: main
+    #     volumeMounts:
+    #       - name: config
+    #         mountPath: /config
+    podSecurityContext:
+      runAsUser: 65533
+      runAsGroup: 65533
+      fsGroup: 65533
+      fsGroupChangePolicy: "OnRootMismatch"
