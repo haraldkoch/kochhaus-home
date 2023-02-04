@@ -35,7 +35,7 @@ spec:
 
           containers:
             - name: rsync
-              image: ghcr.io/haraldkoch/rsync:0.1.0
+              image: ghcr.io/haraldkoch/rsync:3.2.7
               imagePullPolicy: IfNotPresent
               command:
                 - /bin/sh
