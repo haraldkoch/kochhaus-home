@@ -35,6 +35,7 @@ spec:
       pullPolicy: IfNotPresent
 
     args:
+      - /app/prometheus-dnssec-exporter
       - --config
       - /config/dnssec-checks
       - --resolvers
