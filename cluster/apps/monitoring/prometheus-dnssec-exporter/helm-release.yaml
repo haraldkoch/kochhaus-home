@@ -31,7 +31,7 @@ spec:
 
     image:
       repository: ghcr.io/haraldkoch/prometheus-dnssec-exporter
-      tag: v0.4.1
+      tag: v0.5.0
       pullPolicy: IfNotPresent
 
     args:
