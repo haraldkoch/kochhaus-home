@@ -11,7 +11,7 @@ metadata:
 spec:
   cacheSpec:
     - images:
-        - coredns/coredns:1.10.0
+        - coredns/coredns:1.10.1
         - docker.io/calico/cni:v3.25.0
         - docker.io/calico/node:v3.25.0
         - docker.io/calico/pod2daemon-flexvol:v3.25.0
