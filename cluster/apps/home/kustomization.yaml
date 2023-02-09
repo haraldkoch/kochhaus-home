@@ -9,6 +9,7 @@ resources:
   - miniflux
   - minio
   - nextcloud
+  - node-red
   - onedrive
   - radicale
   - sync-browser
