@@ -30,6 +30,7 @@ spec:
       startTime: "7:00"
       endTime: "12:00"
       timeZone: ${TIMEZONE}
+      period: "15m"
     service:
       ipFamilyPolicy: preferDualStack
     tolerations:
