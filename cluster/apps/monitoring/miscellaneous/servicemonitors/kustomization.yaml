@@ -4,4 +4,5 @@ kind: Kustomization
 resources:
   - nas-node-exporter.yaml
   - nas-smartctl-exporter.yaml
+  - opnsense-haproxy.yaml
   - opnsense-node-exporter.yaml
