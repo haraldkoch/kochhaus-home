@@ -32,7 +32,7 @@ spec:
     image:
       registry: docker.io
       repository: dpage/pgadmin4
-      tag: "6.19"
+      tag: "6.20"
     # pgadmin upgrades get stuck on the PV if we use RollingUpdate
     strategy:
       type: Recreate
