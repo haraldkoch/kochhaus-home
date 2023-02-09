@@ -107,6 +107,13 @@ spec:
       datasources:
         enabled: true
         searchNamespace: ALL
+      resources:
+        requests:
+          cpu: 15m
+          memory: 64Mi
+        limits:
+          cpu: 100m
+          memory: 128Mi
     plugins:
       - grafana-clock-panel
       - grafana-piechart-panel
@@ -123,7 +130,7 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: simple-icons:grafana
       hosts:
-        - &host "grafana.${CLUSTER_DOMAIN}"
+        - &host grafana.${CLUSTER_DOMAIN}
       tls:
         - hosts:
             - *host
