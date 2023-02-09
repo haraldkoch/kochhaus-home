@@ -146,7 +146,7 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          hajimari.io/appName: "Prometheus"
+          hajimari.io/appName: Prometheus
           hajimari.io/enable: "true"
           hajimari.io/icon: simple-icons:prometheus
         pathType: Prefix
