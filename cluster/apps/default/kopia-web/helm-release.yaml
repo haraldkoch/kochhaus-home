@@ -30,7 +30,7 @@ spec:
       nameOverride: *app
     initContainers:
       wait-for-repo:
-        image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:f71f4f856208f7f31341220c7f6080cd7345eadb77ef6e86c29cac64d2e52b4d
+        image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:7326c0839ca6e98293a2b4258481b13d20498d4cdde0687776e7f26ffd03798e
         command:
           - /bin/bash
           - -c
@@ -44,7 +44,7 @@ spec:
             mountPath: /snapshots
     image:
       repository: ghcr.io/haraldkoch/kopia
-      tag: 0.12.1@sha256:f71f4f856208f7f31341220c7f6080cd7345eadb77ef6e86c29cac64d2e52b4d
+      tag: 0.12.1@sha256:7326c0839ca6e98293a2b4258481b13d20498d4cdde0687776e7f26ffd03798e
     env:
       TZ: "${TIMEZONE}"
       KOPIA_PASSWORD: "none"
