@@ -53,7 +53,7 @@ spec:
       namespace: monitoring
       path: /snmp
       interval: 60s
-      scrapeTimeout: 45s
+      scrapeTimeout: 55s
       relabelings:
         - sourceLabels: [__param_target]
           targetLabel: instance
