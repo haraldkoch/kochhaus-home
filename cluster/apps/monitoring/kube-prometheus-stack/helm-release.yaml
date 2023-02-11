@@ -26,7 +26,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    fullnameOverride: kps
+    cleanPrometheusOperatorObjectNames: true
     alertmanager:
       config:
         receivers:
@@ -79,12 +79,12 @@ spec:
           - hosts:
               - *host
       alertmanagerSpec:
-        # replicas: 3
-        # podAffinity: hard
+        replicas: 3
+        podAffinity: hard
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: ceph-block
+              storageClassName: local-path
               resources:
                 requests:
                   storage: 10Mi
@@ -95,6 +95,15 @@ spec:
           limits:
             cpu: 60m
             memory: 64Mi
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: ${CLUSTER_DOMAIN}/prometheus
+                      operator: In
+                      values:
+                        - "true"
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -155,27 +164,43 @@ spec:
         tls:
           - hosts:
               - *host
+      thanosService:
+        enabled: true
+      thanosServiceMonitor:
+        enabled: true
       prometheusSpec:
+        replicas: 3
+        replicaExternalLabelName: __replica__ # must match with thanos value `.query.replicaLabel[0]`
+        # Breaks any metric that has an existing "cluster" label on a metric
+        # externalLabels:
+        #   cluster: home # must match with thanos value `.ruler.clusterName`
+        thanos:
+          image: quay.io/thanos/thanos:v0.30.2
+          objectStorageConfig:
+            name: thanos-objstore-secret
+            key: objstore.yml
+        podAntiAffinity: hard
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
+        retention: 2d
+        retentionSize: 6GB
         enableAdminAPI: true
         walCompression: true
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: ceph-block
+              storageClassName: local-path
               resources:
                 requests:
-                  storage: 50Gi
+                  storage: 20Gi
         resources:
           requests:
-            cpu: 384m
-            memory: 4000Mi
+            cpu: 150m
+            memory: 2000Mi
           limits:
-            cpu: 2
-            memory: 8000Mi
+            memory: 7000Mi
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -187,9 +212,8 @@ spec:
                         - "true"
     prometheusOperator:
       resources:
-        limits:
-          cpu: 200m
-          memory: 200Mi
         requests:
           cpu: 100m
-          memory: 100Mi
+          memory: 256Mi
+        limits:
+          memory: 384Mi

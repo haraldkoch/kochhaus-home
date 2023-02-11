@@ -32,7 +32,6 @@ spec:
       GF_EXPLORE_ENABLED: true
       GF_PANELS_DISABLE_SANITIZE_HTML: true
       GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
-      VAR_BLOCKY_URL: "http://blocky.networking.svc.cluster.local:4000"
     grafana.ini:
       server:
         root_url: "https://grafana.${CLUSTER_DOMAIN}"
@@ -79,12 +78,12 @@ spec:
           - name: Prometheus
             type: prometheus
             access: proxy
-            url: http://kps-prometheus:9090/
+            url: http://kube-prometheus-stack-prometheus.monitoring:9090/
             isDefault: true
           - name: Loki
             type: loki
             access: proxy
-            url: http://loki-gateway.monitoring.svc.cluster.local:80
+            url: http://loki-gateway.monitoring:80
     dashboards:
       default:
         # Ref: https://grafana.com/grafana/dashboards/7845
