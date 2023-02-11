@@ -25,35 +25,73 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
-    replicas: 1
-    env:
-      GF_EXPLORE_ENABLED: true
-      GF_PANELS_DISABLE_SANITIZE_HTML: true
-      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
-    grafana.ini:
-      server:
-        root_url: "https://grafana.${CLUSTER_DOMAIN}"
-      analytics:
-        check_for_updates: false
-      log:
-        mode: console
-      grafana_net:
-        url: https://grafana.net
-      auth.anonymous:
-        enabled: true
-        org_name: "Main Org."
-        org_role: "Viewer"
-      auth.basic:
-        disable_login_form: false
-      users:
-        allow_sign_up: false
-
+    extraInitContainers:
+      - name: init-db
+        image: ghcr.io/haraldkoch/postgres-initdb:14.6
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: grafana-secret
+    replicas: 2
     rbac:
       pspEnabled: false
-
-    adminPassword: "${SECRET_GRAFANA_PASSWORD}"
+    testFramework:
+      enabled: false
+    # admin:
+    #   existingSecret: grafana-secret
+    env:
+      GF_ANALYTICS_CHECK_FOR_UPDATES: false
+      GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.${CLUSTER_DOMAIN}/api/oidc/userinfo
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.${CLUSTER_DOMAIN}/api/oidc/authorization
+      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: grafana
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://auth.${CLUSTER_DOMAIN}/api/oidc/token
+      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
+      GF_EXPLORE_ENABLED: true
+      GF_GRAFANA_NET_URL: https://grafana.net
+      GF_LOG_FILTERS: rendering:debug
+      GF_LOG_MODE: console
+      GF_PANELS_DISABLE_SANITIZE_HTML: true
+      GF_PATHS_DATA: /var/lib/grafana/data
+      GF_PATHS_LOGS: /var/log/grafana
+      GF_PATHS_PLUGINS: /var/lib/grafana/plugins
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
+      GF_SECURITY_ALLOW_EMBEDDING: true
+      GF_SECURITY_COOKIE_SAMESITE: grafana
+      GF_SERVER_ROOT_URL: https://grafana.${CLUSTER_DOMAIN}
+    envFromSecrets:
+      - name: grafana-secret
+    grafana.ini:
+      auth:
+        signout_redirect_url: https://auth.${CLUSTER_DOMAIN}/logout
+        oauth_auto_login: false
+      auth.generic_oauth:
+        enabled: true
+        name: Authelia
+        client_id: # Set by env vars
+        client_secret: # Set by env vars secret
+        auth_url: # Set by env vars
+        token_url: # Set by env vars
+        api_url: # Set by env vars
+        scopes: "openid profile email groups"
+        empty_scopes: false
+        login_attribute_path: preferred_username
+        groups_attribute_path: groups
+        name_attribute_path: name
+        use_pkce: true
+      auth.generic_oauth.group_mapping:
+        role_attribute_path: |
+          contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'people') && 'Viewer'
+        org_id: 1
+      auth.basic:
+        enabled: false
+        # disable_login_form: false
+      auth.anonymous:
+        enabled: true
+        org_name: HomeOps
+        org_id: 1
+        org_role: Viewer
     defaultDashboardsTimezone: ${TIMEZONE}
     dashboardProviders:
       dashboardproviders.yaml:
@@ -70,31 +108,93 @@ spec:
     datasources:
       datasources.yaml:
         apiVersion: 1
-        # list of datasources that should be deleted from the database
         deleteDatasources:
           - name: Loki
+            orgId: 1
+          - name: Alertmanager
             orgId: 1
         datasources:
           - name: Prometheus
             type: prometheus
             access: proxy
-            url: http://kube-prometheus-stack-prometheus.monitoring:9090/
+            url: http://thanos-query.monitoring:9090
             isDefault: true
           - name: Loki
             type: loki
             access: proxy
             url: http://loki-gateway.monitoring:80
+          - name: Alertmanager
+            type: alertmanager
+            access: proxy
+            url: http://kube-prometheus-stack-alertmanager.monitoring:9093
+            jsonData:
+              implementation: prometheus
     dashboards:
       default:
-        # Ref: https://grafana.com/grafana/dashboards/7845
+        # Ref: https://grafana.com/grafana/dashboards/7845-zfs/
         zfs:
           gnetId: 7845
           revision: 4
           datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/13502
+        # Ref: https://grafana.com/grafana/dashboards/13502-minio-dashboard/
         minio:
           gnetId: 13502
           revision: 10
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/1860-node-exporter-full/
+        node-exporter-full:
+          gnetId: 1860
+          revision: 29
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/763-redis-dashboard-for-prometheus-redis-exporter-1-x/
+        redis:
+          gnetId: 763
+          revision: 4
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/5342-ceph-pools/
+        ceph-pools:
+          gnetId: 5342
+          revision: 9
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/5336-ceph-osd-single/
+        ceph-osd:
+          gnetId: 5336
+          revision: 9
+          datasource: Prometheus
+        # Ref: https://grafana.com/grafana/dashboards/2842-ceph-cluster/
+        ceph-cluster:
+          gnetId: 2842
+          revision: 16
+          datasource: Prometheus
+        cert-manager:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+          datasource: Prometheus
+        flux-cluster:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
+          datasource: Prometheus
+        flux-control-plane:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/control-plane.json
+          datasource: Prometheus
+        flux-logs:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/logs.json
+          datasource: Prometheus
+        kubernetes-api-server:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
+          datasource: Prometheus
+        kubernetes-coredns:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
+          datasource: Prometheus
+        kubernetes-global:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
+          datasource: Prometheus
+        kubernetes-namespaces:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
+          datasource: Prometheus
+        kubernetes-nodes:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
+          datasource: Prometheus
+        kubernetes-pods:
+          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
           datasource: Prometheus
     sidecar:
       dashboards:
@@ -116,15 +216,19 @@ spec:
     plugins:
       - grafana-clock-panel
       - grafana-piechart-panel
+      - grafana-worldmap-panel
+      - natel-discrete-panel
+      - pr0ps-trackmap-panel
+      - vonage-status-panel
     serviceMonitor:
       enabled: true
-      interval: 30s
     service:
       ipFamilyPolicy: PreferDualStack
     ingress:
       enabled: true
       ingressClassName: nginx
       annotations:
+        external-dns.home.arpa/enabled: "true"
         hajimari.io/appName: "grafana"
         hajimari.io/enable: "true"
         hajimari.io/icon: simple-icons:grafana
@@ -133,9 +237,13 @@ spec:
       tls:
         - hosts:
             - *host
-    serviceAccount:
-      create: true
-      autoMount: true
+    imageRenderer:
+      enabled: true
+      replicas: 2
+      networkPolicy:
+        limitIngress: false
+      serviceMonitor:
+        enabled: true
     persistence:
       enabled: false
     resources:
@@ -145,3 +253,14 @@ spec:
       limits:
         cpu: 500m
         memory: 512Mi
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values: ["grafana"]
+              topologyKey: kubernetes.io/hostname
