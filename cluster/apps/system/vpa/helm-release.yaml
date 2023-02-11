@@ -31,7 +31,7 @@ spec:
       enabled: true
       extraArgs:
         storage: prometheus
-        prometheus-address: http://kps-prometheus.monitoring:9090
+        prometheus-address: http://kube-prometheus-stack-prometheus.monitoring:9090
     updater:
       enabled: false
     admissionController:
