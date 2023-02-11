@@ -135,6 +135,13 @@ spec:
     kubeControllerManager:
       enabled: true
       endpoints: ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+    # the default selector is "k8s-app: kube-dns" which is [redacted].
+    coreDns:
+      enabled: true
+      service:
+        selector:
+          app.kubernetes.io/name: coredns
+          app.kubernetes.io/instance: coredns
     kubeScheduler:
       enabled: true
       endpoints: ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
