@@ -21,6 +21,7 @@ resources:
   - smokeping
   - snmp-exporter
   - speedtest-exporter
+  - thanos
   - tplink-plug-exporter
   - vector
   - x509-certificate-exporter
