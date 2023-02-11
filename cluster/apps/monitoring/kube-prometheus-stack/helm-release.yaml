@@ -57,7 +57,7 @@ spec:
                 - alertname =~ "InfoInhibitor"
             - receiver: discord
               matchers:
-                - severity = critical
+                - severity = "critical"
               continue: true
         inhibit_rules:
           - source_matchers:
