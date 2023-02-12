@@ -79,12 +79,12 @@ spec:
           - hosts:
               - *host
       alertmanagerSpec:
-        replicas: 3
+        replicas: 2
         podAffinity: hard
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-path
+              storageClassName: ceph-block
               resources:
                 requests:
                   storage: 10Mi
@@ -176,7 +176,7 @@ spec:
       thanosServiceMonitor:
         enabled: true
       prometheusSpec:
-        replicas: 3
+        replicas: 1
         replicaExternalLabelName: __replica__ # must match with thanos value `.query.replicaLabel[0]`
         # Breaks any metric that has an existing "cluster" label on a metric
         # externalLabels:
@@ -198,7 +198,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: local-path
+              storageClassName: ceph-block
               resources:
                 requests:
                   storage: 20Gi
