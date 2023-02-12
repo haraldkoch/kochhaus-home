@@ -1,0 +1,30 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: &app sr505n-cache
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/part-of: *app
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+    prometheus: "kube-prometheus"
+spec:
+  endpoints:
+    - port: http
+      honorLabels: true
+      path: /sr505n.prom
+      interval: 30s
+      metricRelabelings:
+        - sourceLabels: [instance]
+          targetLabel: instance
+          replacement: 192.168.1.1
+        - sourceLabels: [target]
+          targetLabel: target
+          replacement: sr505n
+  jobLabel: *app
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: *app
+      app.kubernetes.io/instance: *app
