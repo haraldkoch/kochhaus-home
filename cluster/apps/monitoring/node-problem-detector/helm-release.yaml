@@ -25,7 +25,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
     image:
       repository: k8s.gcr.io/node-problem-detector/node-problem-detector
@@ -36,11 +35,11 @@ spec:
         enabled: true
     resources:
       requests:
-        cpu: 50m
-        memory: 100Mi
+        cpu: 15m
+        memory: 64Mi
       limits:
         cpu: 100m
-        memory: 100Mi
+        memory: 64Mi
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
