@@ -25,15 +25,10 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
     image:
       repository: ghcr.io/twin/gatus
       tag: v5.3.0
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: "gatus"
-      secret.reloader.stakater.com/reload: "gatus-secret"
-
     service:
       ipFamilyPolicy: PreferDualStack
     ingress:
@@ -47,10 +42,8 @@ spec:
       tls:
         - hosts:
             - *host
-
     serviceMonitor:
       enabled: true
-
     resources:
       requests:
         cpu: 15m
@@ -58,11 +51,9 @@ spec:
       limits:
         cpu: 15m
         memory: 100Mi
-
   valuesFrom:
     - kind: Secret
       name: gatus-secret
-
     - kind: Secret
       name: gatus-postgres-gatus
       valuesKey: POSTGRES_URL
