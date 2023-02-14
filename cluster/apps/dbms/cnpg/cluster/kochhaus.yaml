@@ -7,11 +7,12 @@ metadata:
   annotations:
     kyverno.io/ignore: "true"
 spec:
-  instances: 3
 
-  bootstrap:
-    recovery:
-      source: kochhaus
+  description: Postgresql cluster for KochHaus
+
+  imageName: ghcr.io/cloudnative-pg/postgresql:14.7
+
+  instances: 3
 
   # postgres does not like multi-arch clusters, and some of our postgres clients do not work on arm64
   affinity:
@@ -25,7 +26,6 @@ spec:
   #               the switchover of the primary
   primaryUpdateStrategy: unsupervised
 
-  # Require 10Gi of space
   storage:
     storageClass: ceph-block
     size: 10Gi
@@ -56,18 +56,23 @@ spec:
           name: cnpg-backup
           key: ACCESS_SECRET_KEY
 
-  externalClusters:
-    - name: kochhaus
-      barmanObjectStore:
-        destinationPath: s3://cnpg/v1
-        endpointURL: http://${SECRET_BACKUP_SERVER}:9000
-        s3Credentials:
-          accessKeyId:
-            name: cnpg-backup
-            key: ACCESS_KEY_ID
-          secretAccessKey:
-            name: cnpg-backup
-            key: ACCESS_SECRET_KEY
-        wal:
-          compression: bzip2
-          maxParallel: 8
+  # the recovery source here is taken from the externalClusters section below.
+  #bootstrap:
+  #  recovery:
+  #    source: kochhaus
+
+  externalClusters: []
+  #  - name: kochhaus
+  #    barmanObjectStore:
+  #      destinationPath: s3://cnpg/v1
+  #      endpointURL: http://${SECRET_BACKUP_SERVER}:9000
+  #      s3Credentials:
+  #        accessKeyId:
+  #          name: cnpg-backup
+  #          key: ACCESS_KEY_ID
+  #        secretAccessKey:
+  #          name: cnpg-backup
+  #          key: ACCESS_SECRET_KEY
+  #      wal:
+  #        compression: bzip2
+  #        maxParallel: 8
