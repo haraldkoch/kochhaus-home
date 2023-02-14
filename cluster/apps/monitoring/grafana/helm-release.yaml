@@ -41,7 +41,6 @@ spec:
     # admin:
     #   existingSecret: grafana-secret
     env:
-      GF_ANALYTICS_CHECK_FOR_UPDATES: false
       GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.${CLUSTER_DOMAIN}/api/oidc/userinfo
       GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.${CLUSTER_DOMAIN}/api/oidc/authorization
       GF_AUTH_GENERIC_OAUTH_CLIENT_ID: grafana
@@ -63,6 +62,9 @@ spec:
     envFromSecrets:
       - name: grafana-secret
     grafana.ini:
+      analytics:
+        check_for_updates: false
+        reporting_enabled: false
       auth:
         signout_redirect_url: https://auth.${CLUSTER_DOMAIN}/logout
         oauth_auto_login: false
