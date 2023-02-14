@@ -27,21 +27,15 @@ spec:
     keepHistory: false
 
   values:
-    image:
-      repository: bloomberg/goldpinger
-      tag: v3.7.0
-
     tolerations:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
       - key: node-role.kubernetes.io/master
         operator: Exists
-
     service:
       type: ClusterIP
       port: 80
       ipFamilyPolicy: PreferDualStack
-
     ingress:
       enabled: true
       className: nginx
@@ -60,7 +54,7 @@ spec:
     resources:
       requests:
         cpu: 15m
-        memory: 100Mi
+        memory: 64M
       limits:
         cpu: 15m
-        memory: 100Mi
+        memory: 64M
