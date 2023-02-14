@@ -2,8 +2,8 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: gatus
+  name: minicloudlabs
   namespace: flux-system
 spec:
   interval: 1h
-  url: https://avakarev.github.io/gatus-chart
+  url: https://minicloudlabs.github.io/helm-charts
