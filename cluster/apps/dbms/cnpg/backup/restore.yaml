@@ -23,7 +23,7 @@ spec:
 
       containers:
         - name: postgres
-          image: ghcr.io/cloudnative-pg/postgresql:14.6
+          image: ghcr.io/cloudnative-pg/postgresql:14.7
           command: ["/bin/sh"]
           args:
             - "-c"
