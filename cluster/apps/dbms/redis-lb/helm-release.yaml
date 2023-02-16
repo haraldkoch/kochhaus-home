@@ -30,11 +30,8 @@ spec:
     controller:
       replicas: 2
       strategy: RollingUpdate
-      rollingUpdate:
-        unavailable: 2
-        surge: 0
       annotations:
-        configmap.reloader.stakater.com/reload: redis-haproxy-config
+        reloader.stakater.com/auto: "true"
     image:
       repository: haproxy
       tag: "2.7"

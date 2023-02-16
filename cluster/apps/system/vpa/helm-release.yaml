@@ -25,13 +25,18 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
     recommender:
       enabled: true
       extraArgs:
         storage: prometheus
         prometheus-address: http://kube-prometheus-stack-prometheus.monitoring:9090
+      resources:
+        requests:
+          cpu: 10m
+          memory: 100M
+        limits:
+          memory: 200M
     updater:
       enabled: false
     admissionController:

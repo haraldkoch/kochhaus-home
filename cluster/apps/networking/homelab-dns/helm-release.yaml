@@ -25,13 +25,7 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
-    image:
-      repository: docker.io/samip537/external-dns
-      tag: v1.2.0
-      pullPolicy: IfNotPresent
-
     nameOverride: *app
 
     provider: rfc2136
@@ -64,14 +58,17 @@ spec:
     domainFilters:
       - "${CLUSTER_DOMAIN}"
 
-    txtOwnerId: "homelab"
     # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
     txtPrefix: "homelab+"
+    txtOwnerId: "homelab"
+
+    logLevel: info
+
+    deploymentAnnotations:
+      reloader.stakater.com/auto: "true"
 
     serviceMonitor:
       enabled: true
-
-    logLevel: info
 
     resources:
       requests:
@@ -80,3 +77,7 @@ spec:
       limits:
         cpu: 50m
         memory: 100Mi
+
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"

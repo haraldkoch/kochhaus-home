@@ -28,6 +28,9 @@ spec:
   values:
     global:
       nameOverride: *app
+    controller:
+      annotations:
+        reloader.stakater.com/auto: "true"
     initContainers:
       wait-for-repo:
         image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:e2e2faefdcc865f04f1bae71518b867d2541e8889dd99bfc6f2bda766e179481
@@ -95,8 +98,6 @@ spec:
         server: ${SECRET_BACKUP_SERVER}
         path: /backup/data/k8s/kopia
         mountPath: /snapshots
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: *app
     resources:
       requests:
         cpu: 10m

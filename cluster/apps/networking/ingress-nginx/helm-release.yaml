@@ -97,6 +97,12 @@ spec:
           value: lost-in-space
         - name: SHOW_DETAILS
           value: "false"
+      resources:
+        requests:
+          cpu: 15m
+          memory: 16Mi
+        limits:
+          memory: 32Mi
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

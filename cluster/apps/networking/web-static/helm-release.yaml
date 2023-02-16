@@ -28,7 +28,6 @@ spec:
   dependsOn:
     - name: ingress-nginx
       namespace: networking
-
   values:
     nameOverride: *app
     image:
@@ -36,6 +35,9 @@ spec:
       tag: 2.14.2-alpine
     controller:
       replicas: 2
+      annotations:
+        reloader.stakater.com/auto: "true"
+      strategy: RollingUpdate
     env:
       SERVER_PORT: 80
       SERVER_ROOT: /public
@@ -49,6 +51,8 @@ spec:
       main:
         enabled: true
         ingressClassName: nginx
+        annotations:
+          hajimari.io/enable: "true"
         hosts:
           - host: &host "home.${CLUSTER_DOMAIN}"
             paths:
@@ -60,11 +64,16 @@ spec:
     persistence:
       config:
         enabled: true
-        type: custom
-        mountPath: /public/
-        volumeSpec:
-          secret:
-            secretName: web-static
+        name: web-static
+        type: secret
+        mountPath: /public
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: *app
     resources:
       requests:
         cpu: 10m
@@ -72,13 +81,3 @@ spec:
       limits:
         cpu: 100m
         memory: 100Mi
-
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: kubernetes.io/arch
-                  operator: In
-                  values:
-                    - amd64

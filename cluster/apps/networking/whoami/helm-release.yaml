@@ -28,7 +28,6 @@ spec:
   dependsOn:
     - name: ingress-nginx
       namespace: networking
-
   values:
     nameOverride: *app
     image:
