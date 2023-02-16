@@ -5,6 +5,8 @@ metadata:
   name: ext-postgres-operator
   labels:
     app.kubernetes.io/name: ext-postgres-operator
+  annotations:
+    reloader.stakater.com/auto: "true"
 spec:
   replicas: 1
   selector:
@@ -14,8 +16,6 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: ext-postgres-operator
-      annotations:
-        secret.reloader.stakater.com/reload: "kochhaus-superuser"
     spec:
       serviceAccountName: ext-postgres-operator
       containers:
@@ -54,14 +54,5 @@ spec:
               cpu: 15m
               memory: 128Mi
             limits:
-              cpu: 100m
-              memory: 256Mi
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                  - key: kubernetes.io/arch
-                    operator: In
-                    values:
-                      - amd64
+              cpu: 50m
+              memory: 192Mi

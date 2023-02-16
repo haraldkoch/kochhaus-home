@@ -25,7 +25,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
     fullnameOverride: blackbox-exporter
     image:
@@ -69,15 +68,14 @@ spec:
         - hosts:
             - *host
     podAnnotations:
-      configmap.reloader.stakater.com/reload: "blackbox-exporter"
-
+      reloader.stakater.com/auto: "true"
     resources:
       requests:
         cpu: 15m
-        memory: 100Mi
+        memory: 64M
       limits:
-        cpu: 15m
-        memory: 100Mi
+        cpu: 100m
+        memory: 64M
 
     serviceMonitor:
       enabled: true

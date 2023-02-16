@@ -25,10 +25,7 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
-    interval: 5m
-    logLevel: info
     provider: cloudflare
 
     extraArgs:
@@ -61,6 +58,11 @@ spec:
     txtPrefix: "k8s."
     txtOwnerId: "homelab"
 
+    logLevel: info
+
+    deploymentAnnotations:
+      reloader.stakater.com/auto: "true"
+
     serviceMonitor:
       enabled: true
 
@@ -71,3 +73,7 @@ spec:
       limits:
         cpu: 50m
         memory: 100Mi
+
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"

@@ -25,15 +25,15 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
     controller:
       resources:
         requests:
-          cpu: 10m
-          memory: 64M
+          cpu: 50m
+          memory: 32Mi
         limits:
-          memory: 250M
+          cpu: 200m
+          memory: 96Mi
     dashboard:
       replicaCount: 1
       service:
@@ -44,7 +44,7 @@ spec:
         annotations:
           hajimari.io/enable: "true"
         hosts:
-          - host: &host "goldilocks.${CLUSTER_DOMAIN}"
+          - host: &host goldilocks.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 type: Prefix
@@ -54,6 +54,6 @@ spec:
       resources:
         requests:
           cpu: 10m
-          memory: 64Mi
+          memory: 32Mi
         limits:
-          memory: 100M
+          memory: 64Mi

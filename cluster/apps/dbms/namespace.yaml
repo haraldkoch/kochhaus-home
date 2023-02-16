@@ -5,3 +5,4 @@ metadata:
   name: dbms
   labels:
     goldilocks.fairwinds.com/enabled: "true"
+    kustomize.toolkit.fluxcd.io/prune: disabled

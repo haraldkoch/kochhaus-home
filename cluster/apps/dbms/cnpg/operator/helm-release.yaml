@@ -25,13 +25,10 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
     config:
       data:
         INHERITED_ANNOTATIONS: kyverno.io/ignore
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: cnpg-controller-manager-config
     resources:
       requests:
         cpu: 15m
