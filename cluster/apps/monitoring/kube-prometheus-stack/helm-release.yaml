@@ -206,8 +206,8 @@ spec:
           requests:
             cpu: 150m
             memory: 2000Mi
-          limits:
-            memory: 7000Mi
+          # limits:
+          #   memory: 7000Mi
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
