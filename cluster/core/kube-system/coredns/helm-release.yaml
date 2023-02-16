@@ -25,31 +25,20 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
     image:
       repository: coredns/coredns
       tag: 1.10.1
-
     fullnameOverride: coredns
-
     replicaCount: 3
-
     service:
       clusterIP: 10.43.0.10
       annotations:
         fix.coredns.template: "fnord"
-
     serviceAccount:
       create: true
-
-    prometheus:
-      service:
-        enabled: true
-
     podAnnotations:
       configmap.reloader.stakater.com/reload: "coredns"
-
     servers:
       - zones:
           - zone: .
@@ -84,7 +73,6 @@ spec:
           - name: loop
           - name: reload
           - name: loadbalance
-
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -92,13 +80,11 @@ spec:
             - matchExpressions:
                 - key: node-role.kubernetes.io/control-plane
                   operator: Exists
-
     tolerations:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
       - key: node-role.kubernetes.io/master
         operator: Exists
-
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
