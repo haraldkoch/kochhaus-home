@@ -65,6 +65,10 @@ spec:
             target_matchers:
               - severity = "warning"
             equal: ["alertname", "namespace"]
+      service:
+        externalTrafficPolicy: Local
+        # not supported - I'll need to use a patch to get it in
+        # ipFamilyPolicy: PreferDualStack
       ingress:
         enabled: true
         pathType: Prefix
