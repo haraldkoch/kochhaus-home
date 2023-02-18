@@ -8,7 +8,6 @@ resources:
   - homelab-dns
   - ingress-nginx
   - internal-dns
-  - k8s-gateway
   - opnsense-backup
   - smtp-relay
   - speedtest
