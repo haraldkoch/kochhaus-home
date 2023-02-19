@@ -39,7 +39,7 @@ spec:
       tag: 0.68.1
     envFrom:
       - secretRef:
-          name: *app
+          name: outline-secret
     command: ["/bin/sh", "-c", "yarn db:migrate --env=production-ssl-disabled && yarn start --env=production-ssl-disabled"]
     service:
       main:
