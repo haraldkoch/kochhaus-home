@@ -33,15 +33,9 @@ spec:
       repository: dpage/pgadmin4
     strategy:
       type: Recreate
-    existingSecret: pgadmin-secrets
     env:
       email: ${SECRET_ADMIN_EMAIL}
-      variables:
-        - name: password
-          valueFrom:
-            secretKeyRef:
-              name: pgadmin-secrets
-              key: password
+    existingSecret: pgadmin-secrets
     ingress:
       enabled: true
       ingressClassName: nginx
