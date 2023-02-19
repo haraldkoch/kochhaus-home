@@ -1,0 +1,8 @@
+---
+version: "3"
+
+tasks:
+  pgadmin-password:
+    desc: Retrieve the pgadmin dashboard password
+    cmds:
+      - kubectl -n dbms get secret pgadmin-secrets -o jsonpath='{.data.password}' | base64 --decode && echo
