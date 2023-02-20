@@ -29,22 +29,29 @@ spec:
     - name: cnpg
       namespace: dbms
   values:
+    initContainers:
+      init-db:
+        image: ghcr.io/onedr0p/postgres-initdb:14.6
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: miniflux-secret
+    controller:
+      replicas: 2
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
-      repository: docker.io/miniflux/miniflux
+      repository: ghcr.io/miniflux/miniflux
       tag: 2.0.42
     env:
+      BASE_URL: https://miniflux.${CLUSTER_DOMAIN}
       CREATE_ADMIN: "1"
-      DATABASE_URL:
-        valueFrom:
-          secretKeyRef:
-            name: miniflux-postgres-miniflux
-            key: POSTGRES_URL
       DEBUG: "1"
       LOG_DATE_TIME: "1"
       METRICS_ALLOWED_NETWORKS: "${NETWORK_K8S_POD_CIDR}"
       METRICS_COLLECTOR: "1"
       OAUTH2_CLIENT_ID: miniflux
-      OAUTH2_CLIENT_SECRET: "${SECRET_MINIFLUX_OAUTH_CLIENT_SECRET}"
       OAUTH2_USER_CREATION: "1"
       OAUTH2_OIDC_DISCOVERY_ENDPOINT: "https://auth.${CLUSTER_DOMAIN}"
       OAUTH2_PROVIDER: oidc
@@ -54,17 +61,26 @@ spec:
       RUN_MIGRATIONS: "1"
     envFrom:
       - secretRef:
-          name: *app
+          name: miniflux-secret
     service:
       main:
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: &port 8080
+    serviceMonitor:
+      main:
+        enabled: true
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: nginx
         annotations:
           external-dns.home.arpa/enabled: "true"
           hajimari.io/enable: "true"
@@ -92,8 +108,13 @@ spec:
       readiness: *probes
       startup:
         enabled: false
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *app
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: *app
     resources:
       requests:
         cpu: 10m
