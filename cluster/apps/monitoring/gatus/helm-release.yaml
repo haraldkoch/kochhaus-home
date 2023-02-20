@@ -26,6 +26,13 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    extraInitContainers:
+      - name: init-db
+        image: ghcr.io/haraldkoch/postgres-initdb:14.7
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: gatus-secret
     image:
       repository: ghcr.io/twin/gatus
       tag: v5.3.1
@@ -53,8 +60,8 @@ spec:
         memory: 100Mi
   valuesFrom:
     - kind: Secret
-      name: gatus-secret
+      name: gatus-config
     - kind: Secret
-      name: gatus-postgres-gatus
+      name: gatus-secret
       valuesKey: POSTGRES_URL
       targetPath: config.storage.path
