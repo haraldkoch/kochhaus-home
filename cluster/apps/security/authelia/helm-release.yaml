@@ -33,27 +33,51 @@ spec:
     - name: redis
       namespace: dbms
   values:
+    initContainers:
+      init-db:
+        image: ghcr.io/haraldkoch/postgres-initdb:14.6
+        imagePullPolicy: IfNotPresent
+        envFrom:
+          - secretRef:
+              name: authelia-secret
     controller:
-      replicas: 3
+      replicas: 2
       strategy: RollingUpdate
       annotations:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/authelia/authelia
-      tag: 4.37.5
+      # TODO Switch to Authelia release tag on next release
+      tag: master@sha256:aacae652e03e043739df8294f7a36170dca47a61c8698dc36fe78d2e64a9aba7
+    args: ["--config", "/config/configuration.yml", "--config.experimental.filters", "expand-env"]
     envFrom:
       - secretRef:
-          name: *app
+          name: authelia-secret
     enableServiceLinks: false
     service:
       main:
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
-            port: 80
+            port: &port 80
           metrics:
             enabled: true
             port: 8080
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /api/health
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
     serviceMonitor:
       main:
         enabled: true
@@ -71,7 +95,7 @@ spec:
           external-dns.home.arpa/enabled: "true"
           hajimari.io/appName: authelia
           hajimari.io/enable: "true"
-          hajimari.io/icon: shield-account
+          hajimari.io/icon: mdi:shield-account
           nginx.ingress.kubernetes.io/configuration-snippet: |
             add_header Cache-Control "no-store";
             add_header Pragma "no-cache";
@@ -94,7 +118,7 @@ spec:
       config:
         enabled: true
         type: configMap
-        name: *app
+        name: authelia
         subPath: configuration.yml
         mountPath: /config/configuration.yml
         readOnly: false

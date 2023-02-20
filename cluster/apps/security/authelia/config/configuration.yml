@@ -12,7 +12,7 @@ session:
           port: 26379
 
 access_control:
-  default_policy: one_factor
+  default_policy: two_factor
   networks:
     - name: internal
       networks: ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "${SECRET_HOMELAN_IPV4}"]
@@ -33,16 +33,9 @@ identity_providers:
       endpoints: ["authorization", "token", "revocation", "introspection"]
       allowed_origins_from_client_redirect_uris: true
     clients:
-      - id: gitea
-        secret: "${SECRET_GITEA_OAUTH_CLIENT_SECRET}"
-        public: false
-        authorization_policy: two_factor
-        scopes: ["openid", "profile", "groups", "email"]
-        redirect_uris: ["https://gitea.${CLUSTER_DOMAIN}/user/oauth2/authelia/callback"]
-        userinfo_signing_algorithm: none
       - id: grafana
         description: Grafana
-        secret: "${SECRET_GRAFANA_OAUTH_CLIENT_SECRET}"
+        secret: "${GRAFANA_OAUTH_CLIENT_SECRET}"
         public: false
         authorization_policy: two_factor
         pre_configured_consent_duration: 1y
@@ -51,7 +44,7 @@ identity_providers:
         userinfo_signing_algorithm: none
       - id: miniflux
         description: Miniflux
-        secret: "${SECRET_MINIFLUX_OAUTH_CLIENT_SECRET}"
+        secret: "${MINIFLUX_OAUTH_CLIENT_SECRET}"
         public: false
         authorization_policy: two_factor
         pre_configured_consent_duration: 1y
@@ -60,7 +53,7 @@ identity_providers:
         userinfo_signing_algorithm: none
       - id: outline
         description: Outline
-        secret: "${SECRET_OUTLINE_OAUTH_CLIENT_SECRET}"
+        secret: "${OUTLINE_OAUTH_CLIENT_SECRET}"
         public: false
         authorization_policy: two_factor
         pre_configured_consent_duration: 1y
@@ -69,7 +62,7 @@ identity_providers:
         userinfo_signing_algorithm: none
       - id: weave-gitops
         description: Weave GitOps
-        secret: "${SECRET_WEAVEGITOPS_OAUTH_CLIENT_SECRET}"
+        secret: "${WEAVEGITOPS_OAUTH_CLIENT_SECRET}"
         public: false
         authorization_policy: two_factor
         pre_configured_consent_duration: 1y
