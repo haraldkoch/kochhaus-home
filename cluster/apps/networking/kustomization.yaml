@@ -7,7 +7,6 @@ resources:
   - external-dns
   - homelab-dns
   - ingress-nginx
-  - internal-dns
   - opnsense-backup
   - smtp-relay
   - speedtest
