@@ -31,6 +31,13 @@ spec:
     nginx:
       enabled: true
     nextcloud:
+      extraInitContainers:
+        - name: init-db
+          image: ghcr.io/haraldkoch/postgres-initdb:14.7
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: nextcloud-secret
       datadir: /var/www/data
       extraEnv:
         - name: REDIS_HOST
@@ -39,7 +46,7 @@ spec:
           value: "6379"
       existingSecret:
         enabled: true
-        secretName: nextcloud
+        secretName: nextcloud-secret
       host: &host cloud.${CLUSTER_DOMAIN}
       mail:
         enabled: true
@@ -114,13 +121,13 @@ spec:
   valuesFrom:
     - targetPath: externalDatabase.user
       kind: Secret
-      name: nextcloud-postgres-nextcloud
-      valuesKey: LOGIN
+      name: nextcloud-secret
+      valuesKey: POSTGRES_USER
     - targetPath: externalDatabase.password
       kind: Secret
-      name: nextcloud-postgres-nextcloud
-      valuesKey: PASSWORD
+      name: nextcloud-secret
+      valuesKey: POSTGRES_PASS
     - targetPath: externalDatabase.database
       kind: Secret
-      name: nextcloud-postgres-nextcloud
-      valuesKey: DATABASE_NAME
+      name: nextcloud-secret
+      valuesKey: POSTGRES_DB
