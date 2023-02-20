@@ -6,7 +6,6 @@ resources:
   - cert-manager
   - cnpg
   - external-snapshotter
-  - kube-fledged
   - kyverno
   - prometheus-operator
   - system-upgrade-controller

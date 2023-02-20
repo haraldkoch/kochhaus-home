@@ -7,7 +7,6 @@ resources:
   - goldilocks
   - intel-gpu-exporter
   - intel-gpu-plugin
-  - kube-fledged
   - kured
   - node-feature-discovery
   - reloader
