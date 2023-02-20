@@ -6,7 +6,6 @@ resources:
   - emqx
   - excalidraw
   - hajimari
-  - miniflux
   - minio
   - nextcloud
   - node-red
