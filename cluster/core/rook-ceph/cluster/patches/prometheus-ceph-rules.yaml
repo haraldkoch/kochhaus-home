@@ -27,7 +27,7 @@
 
 # CephNodeInconsistentMTU
 - op: remove
-  path: /spec/groups/6/rules/4
+  path: /spec/groups/6/rules/5
 # # CephPoolGrowthWarning
 # - op: replace
 #   path: /spec/groups/7/rules/0/expr
@@ -38,3 +38,6 @@
 #   value: |
 #     (predict_linear(ceph_pool_percent_used[2d], 3600 * 24 * 5) * on(pool_id)
 #     group_right ceph_pool_metadata) >= 95"
+# PrometheusJobMissing is the only rule in the PrometheusServer section
+- op: remove
+  path: /spec/groups/9
