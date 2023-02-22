@@ -34,7 +34,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: docker.io/timberio/vector
-      tag: 0.27.0-debian
+      tag: 0.27.1-debian
     args: ["--config", "/etc/vector/vector.yaml"]
     env:
       PROCFS_ROOT: /host/proc
