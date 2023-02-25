@@ -35,7 +35,7 @@ spec:
     # on my RPi cluster the liveness probe is timing out before all of the startup lease gathering finishes. disable (for now)
     controller:
       driver:
-        image: docker.io/democraticcsi/democratic-csi:v1.7.7
+        image: docker.io/democraticcsi/democratic-csi:v1.8.0
       livenessProbe:
         enabled: false
 
@@ -55,7 +55,7 @@ spec:
 
     node:
       driver:
-        image: docker.io/democraticcsi/democratic-csi:v1.7.7
+        image: docker.io/democraticcsi/democratic-csi:v1.8.0
 
     storageClasses:
       - name: zfs-block
