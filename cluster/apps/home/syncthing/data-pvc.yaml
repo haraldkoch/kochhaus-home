@@ -14,6 +14,10 @@ spec:
   nfs:
     server: ${SECRET_BACKUP_SERVER}
     path: "/backup/data/k8s/syncthing"
+  mountOptions:
+    - nfsvers=4.2
+    - nconnect=8
+    - hard
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

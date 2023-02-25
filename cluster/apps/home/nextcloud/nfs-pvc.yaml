@@ -6,13 +6,17 @@ metadata:
 spec:
   capacity:
     storage: 1Mi
-  accessModes: ["ReadWriteMany"]
+  accessModes:
+    - ReadWriteMany
   storageClassName: nextcloud-nfs
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: "${SECRET_MEDIA_SERVER}"
     path: /backup/data/k8s/nextcloud
-  mountOptions: ["nfsvers=4.2", "nconnect=8", "hard", "noatime"]
+  mountOptions:
+    - nfsvers=4.2
+    - nconnect=8
+    - hard
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
