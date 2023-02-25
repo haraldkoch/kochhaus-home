@@ -17,7 +17,6 @@ spec:
     - nfsvers=4.2
     - nconnect=8
     - hard
-    - noatime
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

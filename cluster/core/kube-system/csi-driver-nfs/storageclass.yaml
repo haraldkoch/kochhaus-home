@@ -16,10 +16,5 @@ reclaimPolicy: Delete
 volumeBindingMode: Immediate
 mountOptions:
   - nfsvers=4.2
-  - tcp
-  - intr
+  - nconnect=8
   - hard
-  - noatime
-  - nodiratime
-  - rsize=1048576
-  - wsize=1048576
