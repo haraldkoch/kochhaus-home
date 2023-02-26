@@ -123,10 +123,12 @@ tasks:
   restore-volsync-job:
     internal: true
     cmds:
+      - kubectl annotate namespace {{.namespace}} volsync.backube/privileged-movers=true
       - envsubst < <(cat {{.destinationTemplate}}) | kubectl apply -f -
       - bash {{.waitForJobScript}} volsync-dst-{{.rsrc}}-{{.claim}}-{{.ts}} {{.namespace}}
       - kubectl -n {{.namespace}} wait job/volsync-dst-{{.rsrc}}-{{.claim}}-{{.ts}} --for condition=complete --timeout=120m
       - kubectl -n {{.namespace}} delete replicationdestination {{.rsrc}}-{{.claim}}-{{.ts}}
+      - kubectl annotate namespace {{.namespace}} volsync.backube/privileged-movers-
     env: *task-vars
 
   # Resume Flux ks and hr
