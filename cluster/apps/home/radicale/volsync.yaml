@@ -39,9 +39,9 @@ spec:
     volumeSnapshotClassName: csi-ceph-blockpool
     storageClassName: ceph-block
     moverSecurityContext:
-      runAsUser: 2999
-      runAsGroup: 2999
-      fsGroup: 2999
+      runAsUser: 1022
+      runAsGroup: 1022
+      fsGroup: 1022
     retain:
       daily: 10
       within: 3d

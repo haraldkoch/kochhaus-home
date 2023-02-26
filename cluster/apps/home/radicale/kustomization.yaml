@@ -5,7 +5,6 @@ namespace: home
 resources:
   - helm-release.yaml
   - externalsecret.yaml
-  - secret.sops.yaml
   - pvc.yaml
   - volsync.yaml
 commonLabels:
