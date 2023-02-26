@@ -49,8 +49,6 @@ spec:
         client-header-timeout: 120
         client-body-buffer-size: "100M"
         client-body-timeout: 120
-        custom-http-errors: |-
-          401,403,404,500,501,502,503,504
         enable-brotli: "true"
         enable-real-ip: "true"
         forwarded-for-header: "CF-Connecting-IP"
@@ -86,37 +84,6 @@ spec:
           memory: 250Mi
         limits:
           memory: 500Mi
-    defaultBackend:
-      enabled: true
-      image:
-        repository: ghcr.io/tarampampam/error-pages
-        tag: 2.21.0
-      replicaCount: 3
-      extraEnvs:
-        - name: TEMPLATE_NAME
-          value: lost-in-space
-        - name: SHOW_DETAILS
-          value: "false"
-      resources:
-        requests:
-          cpu: 15m
-          memory: 16Mi
-        limits:
-          memory: 32Mi
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: app.kubernetes.io/name
-                      operator: In
-                      values: ["ingress-nginx"]
-                    - key: app.kubernetes.io/component
-                      operator: In
-                      values: ["default-backend"]
-                topologyKey: kubernetes.io/hostname
   valuesFrom:
     # Cloudflare Networks
     # https://www.cloudflare.com/ips/
