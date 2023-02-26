@@ -31,6 +31,8 @@ spec:
       tag: v3.0.2
     env:
       TZ: "${TIMEZONE}"
+      NODE_RED_ENABLE_SAFE_MODE: "false"
+      NODE_RED_ENABLE_PROJECTS: "true"
     service:
       main:
         ports:
