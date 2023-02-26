@@ -32,12 +32,9 @@ spec:
       # should be globally unique for a given cluster
       name: "org.democratic-csi.nfs"
 
-    # on my RPi cluster the liveness probe is timing out before all of the startup lease gathering finishes. disable (for now)
     controller:
       driver:
-        image: docker.io/democraticcsi/democratic-csi:v1.8.1
-      livenessProbe:
-        enabled: false
+        image: ghcr.io/democratic-csi/democratic-csi:v1.8.1
 
       externalProvisioner:
         # copied from default values; overriding timeout from 90s to 180s
@@ -55,7 +52,7 @@ spec:
 
     node:
       driver:
-        image: docker.io/democraticcsi/democratic-csi:v1.8.1
+        image: ghcr.io/democratic-csi/democratic-csi:v1.8.1
 
     storageClasses:
       - name: zfs-nfs
