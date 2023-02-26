@@ -35,6 +35,8 @@ spec:
     installation:
       enabled: true
       # Configures Calico networking.
+      registry: quay.io
+      imagePath: calico
       calicoNetwork:
         # Note: The ipPools section cannot be modified post-install.
         ipPools:
