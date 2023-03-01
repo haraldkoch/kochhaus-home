@@ -141,7 +141,7 @@ spec:
       crashCollector:
         disable: false
       mgr:
-        count: 2
+        count: 1
       dashboard:
         enabled: true
         urlPrefix: /
