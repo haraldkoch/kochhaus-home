@@ -33,7 +33,7 @@ spec:
         reloader.stakater.com/auto: "true"
     initContainers:
       wait-for-repo:
-        image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:56b36221f42f7ae63daf420f7240979fc6748281419d715e8bb852e2081a167c
+        image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:ef097d7e42de9302bf69ba4b40ddd8ff030fbf4aafddd7d7ac89e566eb127d73
         command:
           - /bin/bash
           - -c
@@ -47,7 +47,7 @@ spec:
             mountPath: /snapshots
     image:
       repository: ghcr.io/haraldkoch/kopia
-      tag: 0.12.1@sha256:56b36221f42f7ae63daf420f7240979fc6748281419d715e8bb852e2081a167c
+      tag: 0.12.1@sha256:ef097d7e42de9302bf69ba4b40ddd8ff030fbf4aafddd7d7ac89e566eb127d73
     env:
       TZ: "${TIMEZONE}"
       KOPIA_PASSWORD: "none"
