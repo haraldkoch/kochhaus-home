@@ -1,0 +1,93 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: kochhaus-v15
+  namespace: dbms
+  annotations:
+    kyverno.io/ignore: "true"
+spec:
+
+  description: Postgresql cluster for KochHaus
+
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.2
+
+  instances: 3
+
+  # Example of rolling update strategy:
+  # - unsupervised: automated update of the primary once all
+  #                 replicas have been upgraded (default)
+  # - supervised: requires manual supervision to perform
+  #               the switchover of the primary
+  primaryUpdateStrategy: unsupervised
+
+  storage:
+    storageClass: ceph-block
+    size: 10Gi
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 640Mi
+
+  monitoring:
+    enablePodMonitor: true
+
+  backup:
+    retentionPolicy: 30d
+    barmanObjectStore:
+      destinationPath: s3://cnpg/v15/v1
+      endpointURL: http://${SECRET_BACKUP_SERVER}:9000
+      wal:
+        compression: bzip2
+      s3Credentials:
+        accessKeyId:
+          name: cnpg-backup
+          key: ACCESS_KEY_ID
+        secretAccessKey:
+          name: cnpg-backup
+          key: ACCESS_SECRET_KEY
+
+  # the recovery source here is taken from the externalClusters section below.
+  bootstrap:
+    initdb:
+      import:
+        type: monolith
+        databases:
+          - "*"
+        roles:
+          - "*"
+        source:
+          externalCluster: kochhaus-pg14
+
+  # normal restore from WALs
+  #  recovery:
+  #    source: kochhaus-s3
+
+  externalClusters:
+  #  - name: v15-s3-backup
+  #    barmanObjectStore:
+  #      destinationPath: s3://cnpg/v15/v1
+  #      endpointURL: http://${SECRET_BACKUP_SERVER}:9000
+  #      s3Credentials:
+  #        accessKeyId:
+  #          name: cnpg-backup
+  #          key: ACCESS_KEY_ID
+  #        secretAccessKey:
+  #          name: cnpg-backup
+  #          key: ACCESS_SECRET_KEY
+  #      wal:
+  #        compression: bzip2
+  #        maxParallel: 12
+    - name: kochhaus-pg14
+      connectionParameters:
+        host: kochhaus-ro.dbms
+        user: postgres
+        dbname: postgres
+        sslmode: require
+      password:
+        name: kochhaus-superuser
+        key: password

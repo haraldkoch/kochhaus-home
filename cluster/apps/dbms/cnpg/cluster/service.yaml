@@ -19,5 +19,5 @@ spec:
       protocol: TCP
       targetPort: 5432
   selector:
-    postgresql: kochhaus
+    cnpg.io/cluster: kochhaus-v15
     role: primary

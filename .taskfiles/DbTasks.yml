@@ -6,3 +6,7 @@ tasks:
     desc: Retrieve the pgadmin dashboard password
     cmds:
       - kubectl -n dbms get secret pgadmin-secrets -o jsonpath='{.data.password}' | base64 --decode && echo
+  postgres-password:
+    desc: Retrieve the postgresql superuser password
+    cmds:
+      - kubectl -n dbms get secret kochhaus-v15-superuser -o jsonpath='{.data.password}' | base64 --decode && echo
