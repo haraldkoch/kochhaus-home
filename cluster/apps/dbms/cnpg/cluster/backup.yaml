@@ -7,4 +7,4 @@ metadata:
 spec:
   schedule: "@daily"
   cluster:
-    name: kochhaus
+    name: kochhaus-v15

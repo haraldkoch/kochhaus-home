@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - backup.yaml
   - kochhaus-v14.yaml
+  - kochhaus-v15.yaml
   - prometheusrule.yaml
   - secret.sops.yaml
   - service.yaml
