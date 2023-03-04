@@ -4,10 +4,8 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - descheduler
-  - goldilocks
   - intel-gpu-exporter
   - intel-gpu-plugin
   - kured
   - node-feature-discovery
   - reloader
-  - vpa
