@@ -23,14 +23,14 @@ spec:
 
       containers:
         - name: postgres
-          image: ghcr.io/cloudnative-pg/postgresql:14.7
+          image: ghcr.io/cloudnative-pg/postgresql:15.2
           command: ["/bin/sh"]
           args:
             - "-c"
             - "gunzip < /backup/kochhaus-cluster.dump.gz | pg_restore -U $PGUSER -f -"
           env:
             - name: PGHOST
-              value: kochhaus-rw.dbms
+              value: kochhaus-v15-rw.dbms
             - name: PGPORT
               value: "5432"
             - name: PGUSER
@@ -38,7 +38,7 @@ spec:
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: kochhaus-superuser
+                  name: kochhaus-v15-superuser
                   key: password
             - name: TZ
               value: ${TIMEZONE}

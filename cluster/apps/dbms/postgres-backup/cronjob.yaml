@@ -26,19 +26,19 @@ spec:
                 - '/backup.sh'
               env:
                 - name: POSTGRES_HOST
-                  value: kochhaus-ro.dbms.svc.cluster.local
+                  value: kochhaus-v15-ro.dbms.svc.cluster.local
                 - name: POSTGRES_USER
                   valueFrom:
                     secretKeyRef:
-                      name: kochhaus-superuser
+                      name: kochhaus-v15-superuser
                       key: username
                 - name: POSTGRES_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: kochhaus-superuser
+                      name: kochhaus-v15-superuser
                       key: password
                 - name: POSTGRES_DB
-                  value: 'authelia,gatus,miniflux,outline'
+                  value: 'authelia,gatus,grafana,immich,miniflux,nextcloud,outline'
               volumeMounts:
                 - name: nas-backups
                   mountPath: /backups
