@@ -38,10 +38,10 @@ spec:
     resources:
       requests:
         cpu: 15m
-        memory: 16Mi
+        memory: 20Mi
       limits:
         cpu: 30m
-        memory: 32Mi
+        memory: 40Mi
     extraEnvVars:
       - name: TZ
         value: ${TIMEZONE}
