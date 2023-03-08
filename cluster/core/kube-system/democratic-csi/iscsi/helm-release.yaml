@@ -35,10 +35,12 @@ spec:
     controller:
       driver:
         image: ghcr.io/democratic-csi/democratic-csi:v1.8.1
-      livenessProbe:
-        enabled: false
+
+      externalAttacher:
+        image: registry.k8s.io/sig-storage/csi-attacher:v4.1.0
 
       externalProvisioner:
+        image: registry.k8s.io/sig-storage/csi-provisioner:v3.4.0
         # copied from default values; overriding timeout from 90s to 180s
         args:
           - --v=5
@@ -49,12 +51,21 @@ spec:
           - --extra-create-metadata
           - --csi-address=/csi-data/csi.sock
 
+      externalResizer:
+        image: registry.k8s.io/sig-storage/csi-resizer:v1.7.0
+
+      externalSnapshotter:
+        image: registry.k8s.io/sig-storage/csi-snapshotter:v6.2.1
+
       podAnnotations:
         secret.reloader.stakater.com/reload: zfs-iscsi-secret
 
     node:
       driver:
         image: ghcr.io/democratic-csi/democratic-csi:v1.8.1
+
+      driverRegistrar:
+        image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.5.1
 
     storageClasses:
       - name: zfs-block
