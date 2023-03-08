@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: csi-driver-nfs
-      version: v4.1.0
+      version: v4.2.0
       sourceRef:
         kind: HelmRepository
         name: csi-driver-nfs
@@ -27,4 +27,24 @@ spec:
     keepHistory: false
 
   values:
-    runOnControlPlane: true
+    controller:
+      runOnControlPlane: true
+    node:
+      tolerations: []
+
+  # runOnControlPlane: true sets the nodeSelector to
+  # node-role.kubernetes.io/control-plane: "" - which does not match the
+  # actual value of "true".
+  postRenderers:
+    - kustomize:
+        patchesStrategicMerge:
+          - apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: csi-nfs-controller
+              namespace: kube-system
+            spec:
+              template:
+                spec:
+                  nodeSelector:
+                    node-role.kubernetes.io/control-plane: "true"
