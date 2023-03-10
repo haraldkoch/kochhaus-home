@@ -10,6 +10,7 @@ resources:
   - downloads
   - flux-system
   - home
+  - joomla
   - kube-system
   - media
   - monitoring

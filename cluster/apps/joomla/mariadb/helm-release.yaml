@@ -1,0 +1,92 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mariadb
+  namespace: joomla
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.3.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    image:
+      repository: ghcr.io/linuxserver/mariadb
+      tag: 10.5.17
+    env:
+      TZ: ${TIMEZONE}
+      PUID: "1000"
+      PGID: "1000"
+      MYSQL_LOG_CONSOLE: "false"
+    envFrom:
+      - secretRef:
+          name: mariadb-secret
+    service:
+      main:
+        ipFamilyPolicy: PreferDualStack
+        ports:
+          http:
+            enabled: false
+          mysql:
+            enabled: true
+            port: 3306
+    probes:
+      liveness:
+        enabled: true
+        custom: true
+        spec:
+          exec:
+            command:
+              - /scripts/check.sh
+          failureThreshold: 3
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+      readiness:
+        enabled: true
+        custom: true
+        spec:
+          exec:
+            command:
+              - /scripts/check.sh
+          failureThreshold: 3
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+      startup:
+        enabled: false
+    persistence:
+      config:
+        enabled: true
+        existingClaim: mariadb-data-v1
+        mountPath: /config
+      check:
+        enabled: true
+        type: configMap
+        name: mariadb-check
+        mountPath: /scripts
+        readOnly: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        memory: 192Mi
