@@ -5,8 +5,8 @@ metadata:
   name: rtr-data-v1
   namespace: joomla
   labels:
-    app.kubernetes.io/name: &name joomla
-    app.kubernetes.io/instance: rtr
+    app.kubernetes.io/name: &name rtr
+    app.kubernetes.io/instance: *name
     app.kubernetes.io/part-of: joomla
     snapshot.home.arpa/enabled: "true"
 spec:
