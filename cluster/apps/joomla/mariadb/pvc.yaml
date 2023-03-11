@@ -5,8 +5,8 @@ metadata:
   name: mariadb-data-v1
   namespace: joomla
   labels:
-    app.kubernetes.io/name: &name joomla
-    app.kubernetes.io/instance: mariadb
+    app.kubernetes.io/name: &name mariadb
+    app.kubernetes.io/instance: *name
     app.kubernetes.io/part-of: joomla
     snapshot.home.arpa/enabled: "true"
 spec:
