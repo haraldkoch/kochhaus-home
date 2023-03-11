@@ -31,7 +31,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: ghcr.io/haraldkoch/kubernetes-schemas-web
-      tag: latest@sha256:fb57a7637f4b9c58d28a218d19e6ec0d4f92dc549011f2f3f09f72d9acc90ea3
+      tag: latest@sha256:b42127d97b1504cea74697039fcd822711109b2e0e274828daf94eec44ed0e31
     service:
       main:
         ports:
