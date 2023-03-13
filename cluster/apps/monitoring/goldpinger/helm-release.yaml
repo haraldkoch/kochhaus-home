@@ -30,8 +30,6 @@ spec:
     tolerations:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
-      - key: node-role.kubernetes.io/master
-        operator: Exists
     service:
       type: ClusterIP
       port: 80
@@ -50,7 +48,6 @@ spec:
       tls:
         - hosts:
             - *host
-
     resources:
       requests:
         cpu: 15m
