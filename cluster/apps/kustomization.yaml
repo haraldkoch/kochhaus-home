@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - actions-runner-system
   - backup
+  - calico-system
   - ci
   - default
   - dbms
