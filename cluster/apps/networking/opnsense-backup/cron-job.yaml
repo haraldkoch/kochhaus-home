@@ -18,7 +18,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: *app
-              image: ghcr.io/haraldkoch/kubernetes-kubectl:1.26.2@sha256:567fa9e93343ebf458661124f475931657bd39fa75d34d74514c410a8f84242f
+              image: ghcr.io/haraldkoch/kubernetes-kubectl:1.26.3@sha256:6f84c73bdc080fa3d557de31f27324e74e177094e43f3efabee1c6157d2442a8
               env:
                 - name: OPNSENSE_URL
                   value: "https://gw.${PRIVATE_STATIC_DOMAIN}"
