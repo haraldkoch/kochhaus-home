@@ -123,6 +123,10 @@ spec:
           - action: replace
             sourceLabels: ["node"]
             targetLabel: instance
+          - action: drop
+            regex: (apiserver|etcd)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
     kube-state-metrics:
       metricLabelsAllowlist: ["persistentvolumeclaims=[*]"]
       prometheus:
@@ -136,9 +140,21 @@ spec:
               targetLabel: kubernetes_node
     kubeApiServer:
       enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: drop
+            regex: (apiserver|etcd)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
     kubeControllerManager:
       enabled: true
       endpoints: ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+      serviceMonitor:
+        metricRelabelings:
+          - action: drop
+            regex: (apiserver|etcd)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
     # the default selector is "k8s-app: kube-dns" which is [redacted].
     coreDns:
       enabled: true
@@ -149,9 +165,21 @@ spec:
     kubeScheduler:
       enabled: true
       endpoints: ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+      serviceMonitor:
+        metricRelabelings:
+          - action: drop
+            regex: (apiserver|etcd)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
     kubeProxy:
       enabled: true
       endpoints: ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
+      serviceMonitor:
+        metricRelabelings:
+          - action: drop
+            regex: (apiserver|etcd)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
     kubeEtcd:
       enabled: true
       endpoints: ["${K3SJ_IPV4_ADDRESS}", "${K3SM_IPV4_ADDRESS}", "${K3ST_IPV4_ADDRESS}"]
@@ -159,6 +187,12 @@ spec:
         enabled: true
         port: 2381
         targetPort: 2381
+      serviceMonitor:
+        metricRelabelings:
+          - action: drop
+            regex: etcd_request_duration_seconds_bucket
+            sourceLabels:
+              - __name__
     nodeExporter:
       enabled: false
     prometheus:
