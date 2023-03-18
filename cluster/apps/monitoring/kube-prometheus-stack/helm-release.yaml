@@ -194,7 +194,7 @@ spec:
             sourceLabels:
               - __name__
     nodeExporter:
-      enabled: false
+      enabled: true
     prometheus:
       ingress:
         enabled: true
