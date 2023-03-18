@@ -1,0 +1,37 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: smartctl-exporter.extra
+  namespace: monitoring
+spec:
+  groups:
+    - name: smartctl-exporter.extra
+      rules:
+        - alert: SmartDeviceHighTemperature
+          annotations:
+            summary: >-
+              Mounted drive {{ $labels.device }} on device {{ $labels.instance }}
+              high temperature.
+            description: >-
+              Mounted drive {{ $labels.device }} on device {{ $labels.instance }}
+              has a temperature of {{ $value }} which is higher than 55°C
+          expr: |
+            smartctl_device_temperature > 55
+          for: 15m
+          labels:
+            severity: critical
+        - alert: SmartDeviceTestFailed
+          annotations:
+            summary: >-
+              Mounted drive {{ $labels.device }} on device {{ $labels.instance }}
+              did not pass its SMART test
+          expr: |
+            (
+              smartctl_device_smart_status != 1
+            or
+              smartctl_device_status != 1
+            )
+          for: 15m
+          labels:
+            severity: critical
