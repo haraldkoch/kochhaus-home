@@ -34,7 +34,7 @@ spec:
     service:
       ipFamilyPolicy: preferDualStack
     metrics:
-      create: true
+      create: false
     nodeSelector:
       node.home.arpa/physical: "true"
     resources:
