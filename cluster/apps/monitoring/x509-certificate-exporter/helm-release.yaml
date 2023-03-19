@@ -26,6 +26,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    prometheusRules:
+      warningDaysLeft: 14
+      criticalDaysleft: 7
     hostPathsExporter:
       daemonSets:
         cp:
