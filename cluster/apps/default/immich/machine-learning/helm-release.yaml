@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: immich-machine-learning
+  name: &app immich-machine-learning
   namespace: default
 spec:
   interval: 15m
@@ -29,11 +29,13 @@ spec:
     - name: immich-server
   values:
     controller:
+      replicas: 2
+      strategy: RollingUpdate
       annotations:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/immich-app/immich-machine-learning
-      tag: v1.51.0
+      tag: v1.51.1
     envFrom:
       - secretRef:
           name: immich-secret
@@ -52,12 +54,19 @@ spec:
       cache:
         enabled: true
         type: emptyDir
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: *app
     resources:
       requests:
         cpu: 100m
         memory: 250Mi
-      # limits:
-      #   memory: 1000Mi
+      limits:
+        memory: 1000Mi
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
