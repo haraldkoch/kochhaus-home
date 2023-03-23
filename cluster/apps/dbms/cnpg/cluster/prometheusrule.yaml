@@ -68,7 +68,7 @@ spec:
         - alert: PGNoRecentBackups
           annotations:
             summmary: Checks for a recent backup
-            description: Job {{ $labels.job }} has not completed in {{ humanizeDuration($value) }}.
+            description: Job {{ $labels.job }} has not completed in {{ humanizeDuration $value }}.
           expr: |-
             time() -
             max without (instance,pod) (cnpg_collector_last_available_backup_timestamp)
