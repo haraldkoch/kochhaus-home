@@ -124,7 +124,11 @@ spec:
             sourceLabels: ["node"]
             targetLabel: instance
           - action: drop
-            regex: (apiserver|etcd)_request(|_sli|_slo)_duration_seconds_bucket
+            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
+          - action: drop
+            regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
             sourceLabels:
               - __name__
     kube-state-metrics:
@@ -143,7 +147,11 @@ spec:
       serviceMonitor:
         metricRelabelings:
           - action: drop
-            regex: (apiserver|etcd)_request(|_sli|_slo)_duration_seconds_bucket
+            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
+          - action: drop
+            regex: apiserver_response_sizes_bucket
             sourceLabels:
               - __name__
     kubeControllerManager:
@@ -152,7 +160,11 @@ spec:
       serviceMonitor:
         metricRelabelings:
           - action: drop
-            regex: (apiserver|etcd)_request(|_sli|_slo)_duration_seconds_bucket
+            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
+          - action: drop
+            regex: apiserver_response_sizes_bucket
             sourceLabels:
               - __name__
     # the default selector is "k8s-app: kube-dns" which is [redacted].
@@ -168,7 +180,11 @@ spec:
       serviceMonitor:
         metricRelabelings:
           - action: drop
-            regex: (apiserver|etcd)_request(|_sli|_slo)_duration_seconds_bucket
+            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
+          - action: drop
+            regex: apiserver_response_sizes_bucket
             sourceLabels:
               - __name__
     kubeProxy:
@@ -177,7 +193,11 @@ spec:
       serviceMonitor:
         metricRelabelings:
           - action: drop
-            regex: (apiserver|etcd)_request(|_sli|_slo)_duration_seconds_bucket
+            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+            sourceLabels:
+              - __name__
+          - action: drop
+            regex: apiserver_response_sizes_bucket
             sourceLabels:
               - __name__
     kubeEtcd:
