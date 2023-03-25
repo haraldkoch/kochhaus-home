@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: hajimari-config-v4
-  namespace: home
+  namespace: default
   labels:
     app.kubernetes.io/part-of: hajimari
 spec:
