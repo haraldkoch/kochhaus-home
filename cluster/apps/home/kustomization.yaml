@@ -4,8 +4,6 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - emqx
-  - excalidraw
-  - hajimari
   - minio
   - nextcloud
   - node-red
