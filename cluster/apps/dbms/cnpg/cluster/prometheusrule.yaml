@@ -69,8 +69,8 @@ spec:
           annotations:
             summmary: Checks for a recent backup
             description: Job {{ $labels.job }} has not completed in {{ humanizeDuration $value }}.
+          # 36h
           expr: |-
-            time() -
-            max without (instance,pod) (cnpg_collector_last_available_backup_timestamp)
+            time() - max without (instance,pod) (cnpg_collector_last_available_backup_timestamp) > 129600
           labels:
             severity: warning
