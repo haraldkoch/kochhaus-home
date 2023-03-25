@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: &app radicale
-  namespace: home
+  namespace: default
 spec:
   interval: 15m
   chart:
@@ -71,7 +71,7 @@ spec:
 
       data:
         enabled: true
-        existingClaim: radicale-data-v1
+        existingClaim: radicale-data-v2
         mountPath: /data
 
       auth:
