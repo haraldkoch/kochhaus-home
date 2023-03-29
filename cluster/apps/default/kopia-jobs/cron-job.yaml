@@ -19,7 +19,7 @@ spec:
           restartPolicy: OnFailure
           initContainers:
             - name: wait-for-repo
-              image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:9326aaf46c2ff0821bf63c56342f34b4dff17b8f98a9cc45eb345fa73e0734f5
+              image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:156e391b374ba1b34a45148d27e78d827a7fcd467001570c9b18e8b579bc1d86
               command:
                 - /bin/bash
                 - -c
@@ -33,7 +33,7 @@ spec:
                   mountPath: /snapshots
           containers:
             - name: maintenance
-              image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:9326aaf46c2ff0821bf63c56342f34b4dff17b8f98a9cc45eb345fa73e0734f5
+              image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:156e391b374ba1b34a45148d27e78d827a7fcd467001570c9b18e8b579bc1d86
               env:
                 - name: TZ
                   value: "${TIMEZONE}"
@@ -82,7 +82,7 @@ spec:
           restartPolicy: OnFailure
           initContainers:
             - name: wait-for-repo
-              image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:9326aaf46c2ff0821bf63c56342f34b4dff17b8f98a9cc45eb345fa73e0734f5
+              image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:156e391b374ba1b34a45148d27e78d827a7fcd467001570c9b18e8b579bc1d86
               command:
                 - /bin/bash
                 - -c
@@ -96,7 +96,7 @@ spec:
                   mountPath: /snapshots
           containers:
             - name: sync
-              image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:9326aaf46c2ff0821bf63c56342f34b4dff17b8f98a9cc45eb345fa73e0734f5
+              image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:156e391b374ba1b34a45148d27e78d827a7fcd467001570c9b18e8b579bc1d86
               env:
                 - name: TZ
                   value: "${TIMEZONE}"
