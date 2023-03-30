@@ -37,6 +37,7 @@ spec:
     hajimari:
       # displays all discovered apps
       defaultEnable: false
+      showAppGroups: true
       # namespaces to discover applications
       namespaceSelector:
         matchNames:
@@ -44,6 +45,7 @@ spec:
           - dbms
           - default
           - downloads
+          - flux-system
           - home
           - media
           - monitoring
