@@ -1,0 +1,32 @@
+---
+- search:
+    provider: [google, duckduckgo]
+    focus: false
+    target: _blank
+- greeting:
+    text_size: xl
+    text: "Greetings Citizen!"
+- kubernetes:
+    cluster:
+      cpu: true
+      label: cluster
+      memory: true
+      show: true
+      showLabel: true
+    nodes:
+      cpu: true
+      memory: true
+      show: false
+      showLabel: true
+- openmeteo:
+    label: Home
+    latitude: ${LATITUDE}
+    longitude: ${LONGITUDE}
+    units: metric
+    cache: 5
+- datetime:
+    text_size: xl
+    format:
+      dateStyle: long
+      timeStyle: short
+      hourCycle: h23

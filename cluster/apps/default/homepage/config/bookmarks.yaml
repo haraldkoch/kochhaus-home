@@ -1,0 +1,27 @@
+---
+- Cloud-Access:
+    - Linode:
+        - icon: linode.png
+          href: https://cloud.linode.com/
+    - Cloudflare:
+        - icon: cloudflare.png
+          href: https://www.cloudflare.com/
+- Communitcate:
+    - Discord:
+        - href: 'https://discord.com/app'
+    - Gmail:
+        - href: 'http://gmail.com'
+    - Google Calendar:
+        - href: 'https://calendar.google.com'
+    - Outlook:
+        - href: 'https://outlook.com'
+- Media:
+    - YouTube:
+        - href: 'https://youtube.com/feed/subscriptions'
+    - Spotify:
+        - href: 'http://open.spotify.com'
+- Git:
+    - k8s-at-home:
+        - href: 'https://nanne.dev/k8s-at-home-search/'
+    - home-cluster:
+        - href: 'https://github.com/haraldkoch/kochhaus-home'

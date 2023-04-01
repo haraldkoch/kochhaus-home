@@ -1,0 +1,32 @@
+---
+title: Dashboard
+theme: dark
+color: slate
+headerStyle: clean
+layout:
+  Media:
+    style: row
+    columns: 4
+    icon: mdi-play-circle
+  Infrastructure:
+    style: row
+    columns: 4
+    icon: mdi-harddisk
+  Home:
+    style: row
+    columns: 4
+    icon: mdi-home-analytics
+  Monitoring:
+    style: row
+    columns: 4
+    icon: mdi-chart-line
+  Downloads:
+    style: row
+    columns: 4
+    icon: mdi-download-circle
+  Services & Apps:
+    style: row
+    columns: 4
+  Cloud:
+    style: row
+    columns: 4
