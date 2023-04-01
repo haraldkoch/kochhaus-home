@@ -1,0 +1,66 @@
+---
+- Infrastructure:
+    - Router:
+        href: https://192.168.20.1
+        icon: avmfritzbox.png
+        description: WAN Connection
+        widget:
+          type: opnsense
+          url: https://192.168.20.1
+          username: ${ROUTER_API_KEY}
+          password: ${ROUTER_API_SECRET}
+    - Rook:
+        href: https://rook.${CLUSTER_DOMAIN}
+        icon: rook.png
+        description: Cluster Storage
+- Monitoring:
+    - healthchecks:
+        href: https://healthchecks.io
+        icon: healthchecks.png
+        description: Service Monitoring
+    - Grafana:
+        href: https://grafana.${CLUSTER_DOMAIN}
+        icon: grafana.png
+        description: Metric Monitoring
+    - Alertmanager:
+        href: https://alertmanager.${CLUSTER_DOMAIN}
+        icon: alertmanager.png
+        description: Metric Altering
+    - Prometheus:
+        href: https://prometheus.${CLUSTER_DOMAIN}
+        icon: prometheus.png
+        description: Metric Database
+- Services & Apps:
+    - Plex:
+        href: https://app.plex.tv
+        icon: plex.png
+        description: Mediaserver
+        widget:
+          type: tautulli
+          url: http://tautulli.media
+          key: ${PLEX_TOKEN}
+    - 1Password:
+        href: https://my.1password.com
+        icon: 1password.png
+        description: Passwords
+    - HomeAssistant:
+        href: https://hass.${CLUSTER_DOMAIN}
+        icon: home-assistant-circle.png
+        description: Home Assistant
+- Cloud:
+    - Mail:
+        href: https://mail.${SECRET_INTERNAL_DOMAIN}
+        icon: roundcube.png
+        description: Webmail
+    - RSS:
+        href: https://miniflux.${CLUSTER_DOMAIN}
+        icon: miniflux.png
+        description: RSS Aggregator
+    - Nextcloud:
+        href: https://cloud.${CLUSTER_DOMAIN}
+        icon: nextcloud.png
+        description: Cloud Storage
+    - Wiki:
+        href: https://docs.${CLUSTER_DOMAIN}
+        icon: wikijs.png
+        description: Documentation

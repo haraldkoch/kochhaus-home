@@ -5,6 +5,7 @@ resources:
   - namespace.yaml
   - excalidraw
   - hajimari
+  - homepage
   - immich
   - kopia-jobs
   - kopia-web
