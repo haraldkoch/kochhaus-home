@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: syncthing/syncthing
-      tag: 1.23.3
+      tag: 1.23.4
     service:
       main:
         ipFamilyPolicy: PreferDualStack
