@@ -230,7 +230,6 @@ spec:
       enabled: true
       ingressClassName: nginx
       annotations:
-        external-dns.home.arpa/enabled: "true"
         hajimari.io/appName: "grafana"
         hajimari.io/enable: "true"
         hajimari.io/icon: simple-icons:grafana

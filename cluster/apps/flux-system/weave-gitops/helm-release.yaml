@@ -38,7 +38,6 @@ spec:
       enabled: true
       className: nginx
       annotations:
-        external-dns.home.arpa/enabled: "true"
         hajimari.io/enable: "true"
         hajimari.io/appName: "GitOps Dashboard"
         hajimari.io/icon: mdi:sawtooth-wave
