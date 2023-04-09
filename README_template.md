@@ -502,7 +502,7 @@ The benefits of a public repository include:
   6.  Update `cluster/flux/flux-system/flux-cluster.yaml`:
       ```yaml
       ---
-      apiVersion: source.toolkit.fluxcd.io/v1beta2
+      apiVersion: source.toolkit.fluxcd.io/v1
       kind: GitRepository
       metadata:
         name: flux-cluster
