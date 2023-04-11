@@ -26,6 +26,15 @@
       "automergeType": "branch",
       "requiredStatusChecks": null,
       "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "description": "Auto merge Pre-Commit Hooks",
+      "matchManagers": ["pre-commit"],
+      "matchDatasources": ["github-tags"],
+      "automerge": true,
+      "automergeType": "branch",
+      "requiredStatusChecks": null,
+      "matchUpdateTypes": ["minor", "patch"]
     }
   ]
 }
