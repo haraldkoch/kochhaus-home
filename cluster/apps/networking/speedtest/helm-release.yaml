@@ -56,6 +56,17 @@ spec:
         tls:
           - hosts:
               - *host
+    persistence:
+      config:
+        enabled: false
+      init:
+        enabled: true
+        mountPath: /custom-cont-init.d
+        type: custom
+        volumeSpec:
+          configMap:
+            name: config-initializer
+            defaultMode: 0777
     resources:
       requests:
         cpu: 50m
