@@ -63,7 +63,7 @@ spec:
     txtPrefix: "homelab+"
     txtOwnerId: "homelab"
 
-    logLevel: debug
+    logLevel: info
 
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
