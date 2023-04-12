@@ -26,6 +26,11 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      repository: docker.io/samip537/external-dns
+      tag: v1.2.0
+      pullPolicy: IfNotPresent
+
     nameOverride: *app
     provider: rfc2136
 
