@@ -37,8 +37,9 @@ spec:
         fix.coredns.template: "fnord"
     serviceAccount:
       create: true
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: "coredns"
+    deployment:
+      annotations:
+        reloader.stakater.com/auto: "true"
     servers:
       - zones:
           - zone: .
