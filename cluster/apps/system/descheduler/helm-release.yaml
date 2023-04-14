@@ -25,17 +25,11 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
     # CronJob or Deployment
     kind: CronJob
-
     schedule: "*/5 * * * *"
     deschedulingInterval: 5m
-
-    podAnnotations:
-      botkube.io/disable: "true"
-
     deschedulerPolicy:
       strategies:
         RemoveDuplicates:
@@ -69,17 +63,3 @@ spec:
                 cpu: 75
                 memory: 75
                 pods: 50
-
-  # I do not need this yet, but keeping it for future use.
-  postRenderers:
-    - kustomize:
-        patchesJson6902:
-          - target:
-              kind: CronJob
-              name: descheduler
-            patch:
-              - op: add
-                path: /spec/jobTemplate/metadata
-                value:
-                  annotations:
-                    botkube.io/disable: "true"
