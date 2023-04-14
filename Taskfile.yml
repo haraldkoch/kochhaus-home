@@ -20,7 +20,7 @@ includes:
   debug: .taskfiles/DebugTasks.yml
   precommit: .taskfiles/PreCommitTasks.yml
   rook: .taskfiles/RookTasks.yml
-  snapshot: .taskfiles/SnapshotTasks.yml
+  snapshot: .taskfiles/Snapshot/Tasks.yml
   terraform: .taskfiles/TerraformTasks.yml
   sops: .taskfiles/SopsTasks.yml
   vs: .taskfiles/VolSync/Tasks.yml

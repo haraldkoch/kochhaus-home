@@ -12,10 +12,11 @@ x-preconditions: &preconditions
     msg: "Claim '{{.CLAIM}}' in namespace '{{.NAMESPACE}}' not found"
     sh: kubectl get pvc -n {{.NAMESPACE}} {{.CLAIM}}
   - &has-restore-job-file
-    msg: "File '{{.PROJECT_DIR}}/hack/restore-job.yaml' not found"
-    sh: "test -f {{.PROJECT_DIR}}/hack/restore-job.yaml"
+    msg: "File '{{.restoreTemplate}}' not found"
+    sh: "test -f {{.restoreTemplate}}"
 
 x-vars: &vars
+  restoreTemplate: "{{.ROOT_DIR}}/.taskfiles/Snapshot/RestoreJob.tmpl.yaml"
   NAMESPACE:
     sh: kubectl get deployment,statefulset -A | awk '/{{.APP}}\s/{print $1}'
   NAME:
@@ -26,7 +27,7 @@ x-vars: &vars
 tasks:
 
   list:
-    desc: List all existing snapshots for an app and claim (task snapshot:list APP=plex CLAIM=plex [KOPIA_NAMESPACE=<namespace>])
+    desc: List all existing snapshots for an app and claim (task snapshot:list APP=kopia CLAIM=kopia [KOPIA_NAMESPACE=<namespace>])
     cmds:
       - kubectl -n {{.KOPIA_NAMESPACE | default "default"}} exec -it deployment/kopia -c kopia -- kopia snapshot list /data/{{.NAMESPACE}}/{{.APP}}/{{.CLAIM}} {{.CLI_ARGS}}
     vars: *vars
@@ -36,7 +37,7 @@ tasks:
           deployment/kopia in namespace/{{.KOPIA_NAMESPACE | default "default"}} not found
 
   create:
-    desc: Create a snapshot job for an app and claim (task snapshot:create APP=plex CLAIM=plex [TIMEOUT=<timeout>])
+    desc: Create a snapshot job for an app and claim (task snapshot:create APP=kopia CLAIM=kopia [TIMEOUT=<timeout>])
     cmds:
       - |
         kubectl -n {{.NAMESPACE}} create job --from=cronjob/{{.APP}}-{{.CLAIM}}-snapshot {{.APP}}-{{.CLAIM}}-snapshot-{{.TS}} --dry-run=client --output yaml \
@@ -50,12 +51,12 @@ tasks:
     preconditions: *preconditions
 
   restore:
-    desc: Create a restore job for an app and claim (task snapshot:restore APP=plex CLAIM=plex [SNAPSHOT=(latest|<snapshot-id>) KOPIA_NAMESPACE=<namespace> TIMEOUT=<timeout>])
+    desc: Create a restore job for an app and claim (task snapshot:restore APP=kopia CLAIM=kopia [SNAPSHOT=(latest|<snapshot-id>) KOPIA_NAMESPACE=<namespace> TIMEOUT=<timeout>])
     cmds:
       - flux -n {{.NAMESPACE}} suspend helmrelease {{.APP}}
       - kubectl -n {{.NAMESPACE}} scale {{.NAME}} --replicas 0
       - kubectl -n {{.NAMESPACE}} wait pod --for delete --selector="app.kubernetes.io/name={{.APP}}" --timeout=2m
-      - envsubst < <(cat ./hack/restore-job.yaml) | kubectl apply -f -
+      - envsubst < <(cat {{.restoreTemplate}}) | kubectl apply -f -
       - sleep 2
       - kubectl -n {{.NAMESPACE}} wait job --for condition=complete {{.APP}}-{{.CLAIM}}-restore --timeout={{.TIMEOUT | default "60m"}}
       - flux -n {{.NAMESPACE}} resume helmrelease {{.APP}}
