@@ -53,6 +53,7 @@ spec:
 
   # the recovery source here is taken from the externalClusters section below.
   # bootstrap:
+  #   # upgrade or recover from another running instance
   #   initdb:
   #     import:
   #       type: monolith
@@ -63,9 +64,9 @@ spec:
   #       source:
   #         externalCluster: kochhaus-pg14
 
-  # normal restore from WALs
-  #   recovery:
-  #     source: kochhaus-s3
+  # normal restore from backup + WALs
+  #  recovery:
+  #   source: v15-s3-backup
 
   externalClusters: []
   #  - name: v15-s3-backup
