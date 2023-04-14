@@ -27,8 +27,8 @@ spec:
     keepHistory: false
   values:
     image:
-      repository: docker.io/samip537/external-dns
-      tag: v1.2.0
+      repository: registry.samipsolutions.fi/library/external-dns
+      tag: v9.0.0
       pullPolicy: IfNotPresent
 
     nameOverride: *app
