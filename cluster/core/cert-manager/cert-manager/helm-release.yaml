@@ -58,8 +58,6 @@ spec:
     tolerations:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
-      - key: node-role.kubernetes.io/master
-        operator: Exists
 
     cainjector:
       enabled: true
@@ -81,8 +79,6 @@ spec:
       tolerations:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
-        - key: node-role.kubernetes.io/master
-          operator: Exists
 
     webhook:
       enabled: true
@@ -103,6 +99,4 @@ spec:
                     operator: Exists
       tolerations:
         - key: node-role.kubernetes.io/control-plane
-          operator: Exists
-        - key: node-role.kubernetes.io/master
           operator: Exists
