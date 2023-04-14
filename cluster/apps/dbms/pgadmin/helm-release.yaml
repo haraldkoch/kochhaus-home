@@ -28,9 +28,7 @@ spec:
   dependsOn:
     - name: cnpg
   values:
-    image:
-      registry: docker.io
-      repository: dpage/pgadmin4
+    nameOverride: pgadmin
     strategy:
       type: Recreate
     env:
@@ -44,13 +42,15 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: simple-icons:postgresql
       hosts:
-        - host: &host "pgadmin.${CLUSTER_DOMAIN}"
+        - host: &host pgadmin.${CLUSTER_DOMAIN}
           paths:
             - path: /
               pathType: Prefix
       tls:
         - hosts:
             - *host
+    networkPolicy:
+      enabled: false
     persistentVolume:
       enabled: true
       storageClass: ceph-block
