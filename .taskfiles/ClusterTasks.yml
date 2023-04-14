@@ -3,6 +3,17 @@ version: "3"
 
 tasks:
 
+  kubeconfig:
+    desc: Download kubeconfig from a remote k3s master node
+    vars:
+      MASTER_USERNAME: '{{.MASTER_USERNAME | default "root"}}'
+      MASTER_HOST: '{{.MASTER_HOST | default "192.168.20.19"}}'
+      KUBERNETES_API: '{{.KUBERNETES_API | default "192.168.20.1"}}'
+    cmds:
+      - rsync --verbose --progress --partial {{.MASTER_USERNAME}}@{{.MASTER_HOST}}:/etc/rancher/k3s/k3s.yaml "${KUBECONFIG}"
+      - sed -i -e 's/127.0.0.1/{{.KUBERNETES_API}}/g' "${KUBECONFIG}"
+      - chmod go-r "${KUBECONFIG}"
+
   verify:
     desc: Verify flux meets the prerequisites
     cmds:
