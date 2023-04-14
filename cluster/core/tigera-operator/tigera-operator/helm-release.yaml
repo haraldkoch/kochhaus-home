@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: calico
         namespace: flux-system
-
   maxHistory: 3
   install:
     createNamespace: true
@@ -29,6 +28,13 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    resources:
+      requests:
+        cpu: 15m
+        memory: 164M
+      limits:
+        cpu: 30m
+        memory: 196M
     # Configures general installation parameters for Calico. Schema is based
     # on the operator.tigera.io/Installation API documented
     # here: https://projectcalico.docs.tigera.io/reference/installation/api#operator.tigera.io/v1.InstallationSpec
