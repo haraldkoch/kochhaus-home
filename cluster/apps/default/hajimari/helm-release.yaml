@@ -25,7 +25,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
     image:
       repository: ghcr.io/toboshii/hajimari
@@ -40,18 +39,7 @@ spec:
       showAppGroups: true
       # namespaces to discover applications
       namespaceSelector:
-        matchNames:
-          - ci
-          - dbms
-          - default
-          - downloads
-          - flux-system
-          - home
-          - media
-          - monitoring
-          - networking
-          - rook-ceph
-          - tekton-pipelines
+        any: true
       name: Citizen
       title: Hajimari
       alwaysTargetBlank: true
@@ -121,7 +109,7 @@ spec:
     resources:
       requests:
         cpu: 15m
-        memory: 64M
+        memory: 64Mi
       limits:
         cpu: 100m
-        memory: 64M
+        memory: 128Mi
