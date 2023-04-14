@@ -18,7 +18,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: *app
-              image: ghcr.io/haraldkoch/kubernetes-kubectl:1.27.0@sha256:791fa6ad50c1958e0a041d65462344a421fd4dd5da8a2b6aa3c93924d2cf7e96
+              image: ghcr.io/haraldkoch/kubernetes-kubectl:1.27.1@sha256:542cc2d659c44589d71d6ea003d4c8d7ad3b6894828c25f60fe759199f30f76e
               envFrom:
                 - secretRef:
                     name: *app
