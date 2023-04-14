@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    crds:
+      create: false
     config:
       data:
         INHERITED_ANNOTATIONS: kyverno.io/ignore
