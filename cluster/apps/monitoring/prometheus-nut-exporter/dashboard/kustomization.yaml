@@ -6,6 +6,9 @@ configMapGenerator:
   - name: prometheus-nut-exporter-dashboard
     files:
       - prometheus-nut-exporter.json
+  - name: ups-aggregate-dashboard
+    files:
+      - ups-aggregate.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
