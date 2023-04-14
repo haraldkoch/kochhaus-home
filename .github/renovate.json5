@@ -52,17 +52,6 @@
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
     },
-
-    // regexManager to read and process kube-fledged imagecache
-    {
-      "fileMatch": [
-        "cluster/apps/system/kube-fledged/imagecache.yaml"
-      ],
-      matchStrings: [
-        "- (?<depName>.*?):(?<currentValue>.*?)\n"
-      ],
-      datasourceTemplate: "docker"
-    },
     {
       "description": "Process various other dependencies",
       "fileMatch": [
