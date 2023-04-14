@@ -42,8 +42,9 @@ spec:
     service:
       main:
         type: LoadBalancer
-        externalIPs: ["${SVC_SMTP_RELAY_ADDR_V4}"]
+        externalIPs: ["${SVC_SMTP_RELAY_ADDR_V4}", "${SVC_SMTP_RELAY_ADDR_V6}"]
         externalTrafficPolicy: Local
+        ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: smtp.${CLUSTER_DOMAIN}
         ports:
