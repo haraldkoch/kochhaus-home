@@ -128,3 +128,38 @@ spec:
     matchLabels:
       app.kubernetes.io/instance: tplink-plug-exporter
       app.kubernetes.io/name: tplink-plug-exporter
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/instance: cpap
+    app.kubernetes.io/name: tplink-plug-exporter
+    prometheus: kube-prometheus
+  name: tplink-plug-exporter-cpap
+  namespace: monitoring
+spec:
+  endpoints:
+    - interval: 30s
+      metricRelabelings:
+        - action: replace
+          replacement: cpap
+          sourceLabels:
+            - instance
+          targetLabel: instance
+      params:
+        target:
+          - 192.168.30.65
+      path: /scrape
+      port: metrics
+      scheme: http
+      scrapeTimeout: 30s
+  jobLabel: tplink-plug-exporter
+  namespaceSelector:
+    matchNames:
+      - monitoring
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: tplink-plug-exporter
+      app.kubernetes.io/name: tplink-plug-exporter
