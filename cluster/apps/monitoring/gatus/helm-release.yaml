@@ -38,6 +38,8 @@ spec:
       tag: v5.3.2
     service:
       ipFamilyPolicy: PreferDualStack
+      # FIXME - this is to get rid of a "null" error during helmrelease reconciliation
+      portName: http
     ingress:
       enabled: true
       ingressClassName: nginx
