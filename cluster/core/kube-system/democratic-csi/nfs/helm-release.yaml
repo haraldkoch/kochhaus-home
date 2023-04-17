@@ -27,6 +27,17 @@ spec:
   uninstall:
     keepHistory: false
 
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: VolumeSnapshotClass
+              name: zfs-nfs
+            patch: |
+              - op: add
+                path: /metadata/annotations/helm.toolkit.fluxcd.io~1driftDetection
+                value: disabled
+
   values:
     csiDriver:
       # should be globally unique for a given cluster
@@ -95,3 +106,4 @@ spec:
     volumeSnapshotClasses:
       - name: zfs-nfs
         deletionPolicy: Retain
+        parameters: {}
