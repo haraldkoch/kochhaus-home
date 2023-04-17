@@ -1,0 +1,19 @@
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: volsync-backups
+  namespace: downloads
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: volsync
+  egress:
+    - to:
+        - ipBlock:
+            cidr: ${SECRET_HOMELAN_IPV4}
+        - ipBlock:
+            cidr: ${SECRET_HOMELAN_IPV6}
+  policyTypes:
+    - Ingress
+    - Egress
