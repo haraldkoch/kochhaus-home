@@ -8,7 +8,7 @@ spec:
   interval: 12h
   url: https://github.com/actions/actions-runner-controller
   ref:
-    tag: v0.27.2
+    tag: v0.27.3
   ignore: |
     # exclude all
     /*
