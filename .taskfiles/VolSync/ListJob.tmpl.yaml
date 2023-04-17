@@ -7,6 +7,10 @@ metadata:
 spec:
   ttlSecondsAfterFinished: 3600
   template:
+    metadata:
+      labels:
+        setGateway: "false"
+        app.kubernetes.io/name: volsync
     spec:
       automountServiceAccountToken: false
       restartPolicy: OnFailure
