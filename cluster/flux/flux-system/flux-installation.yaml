@@ -43,20 +43,19 @@ spec:
     - name: fluxcd/source-controller
       newName: ghcr.io/fluxcd/source-controller
   patches:
-    - target:
-        group: networking.k8s.io
-        version: v1
-        kind: NetworkPolicy
-      patch: |-
+    # REQUIRED: remove the flux-defined NetworkPolicy.
+    - patch: |-
         $patch: delete
         apiVersion: networking.k8s.io/v1
         kind: NetworkPolicy
         metadata:
           name: not-used
-    - target:
-        kind: Deployment
-        labelSelector: control-plane=controller
-      patch: |-
+      target:
+        group: networking.k8s.io
+        version: v1
+        kind: NetworkPolicy
+    # REQUIRED: allow flux components to run on the control-plane and increase resource limits.
+    - patch: |-
         apiVersion: apps/v1
         kind: Deployment
         metadata:
@@ -79,10 +78,12 @@ spec:
               tolerations:
               - key: node-role.kubernetes.io/control-plane
                 operator: Exists
-    - target:
+      target:
         kind: Deployment
-        name: "(kustomize-controller|helm-controller|source-controller)"
-      patch: |
+        labelSelector: control-plane=controller
+    # REQUIRED: Increase the number of reconciliations that can be performed in parallel and bump the resources limits
+    # https://fluxcd.io/flux/cheatsheets/bootstrap/#increase-the-number-of-workers
+    - patch: |
         - op: add
           path: /spec/template/spec/containers/0/args/-
           value: --concurrent=8
@@ -95,3 +96,33 @@ spec:
         - op: add
           path: /spec/template/spec/containers/0/args/-
           value: --requeue-dependency=5s
+      target:
+        kind: Deployment
+        name: "(kustomize-controller|helm-controller|source-controller)"
+    # REQUIRED: Enable drift detection for HelmReleases and set the log level to debug
+    # https://fluxcd.io/flux/components/helm/helmreleases/#drift-detection
+    - patch: |
+        - op: add
+          path: /spec/template/spec/containers/0/args/-
+          value: --feature-gates=DetectDrift=true,CorrectDrift=false
+        - op: add
+          path: /spec/template/spec/containers/0/args/-
+          value: --log-level=debug
+      target:
+        kind: Deployment
+        name: helm-controller
+    # REQUIRED: Enable Helm near OOM detection
+    # https://fluxcd.io/flux/cheatsheets/bootstrap/#enable-helm-near-oom-detection
+    - patch: |
+        - op: add
+          path: /spec/template/spec/containers/0/args/-
+          value: --feature-gates=OOMWatch=true
+        - op: add
+          path: /spec/template/spec/containers/0/args/-
+          value: --oom-watch-memory-threshold=95
+        - op: add
+          path: /spec/template/spec/containers/0/args/-
+          value: --oom-watch-interval=500ms
+      target:
+        kind: Deployment
+        name: helm-controller
