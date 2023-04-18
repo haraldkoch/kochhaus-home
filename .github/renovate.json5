@@ -1,11 +1,11 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
     "docker:enableMajor",
     ":disableRateLimiting",
     ":dependencyDashboard",
     ":semanticCommits",
-    ":enablePreCommit",
     ":automergeDigest",
     ":automergeBranch",
     "github>haraldkoch/kochhaus-home//.github/renovate/allowedVersions.json5",
@@ -16,13 +16,11 @@
     "github>haraldkoch/kochhaus-home//.github/renovate/semanticCommits.json5",
     "helpers:pinGitHubActionDigests"
   ],
-  "enabled": true,
-  "semanticCommits": "enabled",
-  "dependencyDashboard": true,
+  "platform": "github",
+  "onboarding": false,
+  "requireConfig": "optional",
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
-  "rebaseWhen": "conflicted",
-  "commitBodyTable": true,
   "ignorePaths": ["archive/**"],
   "pre-commit": {
     "enabled": true
@@ -53,7 +51,7 @@
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
     },
     {
-      "description": "Process various other dependencies",
+      "description": "Process custom dependencies",
       "fileMatch": [
         "provision/ansible/.+\\.ya?ml$",
         "cluster/.+\\.ya?ml$"
@@ -79,7 +77,7 @@
       "description": "Loose versioning for non-semver packages",
       "matchDatasources": ["docker"],
       "versioning": "loose",
-      "matchPackagePatterns": ["changedetection", "immich", "plex", "qbittorrent"]
+      "matchPackagePatterns": ["changedetection", "plex", "qbittorrent"]
     },
     {
       "description": "Use custom versioning for Minio",
