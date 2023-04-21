@@ -12,4 +12,5 @@ resources:
   - kubernetes-schemas
   - miniflux
   - outline
+  - paperless
   - radicale

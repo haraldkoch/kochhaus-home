@@ -1,0 +1,91 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: paperless
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.4.0
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+
+    image:
+      repository: ghcr.io/paperless-ngx/paperless-ngx
+      tag: 1.13.0
+
+    envFrom:
+      - secretRef:
+          name: paperless-secret
+      - configMapRef:
+          name: paperless-configmap
+
+    service:
+      main:
+        ports:
+          http:
+            port: 8000
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+          nginx.ingress.kubernetes.io/auth-url: https://auth.${CLUSTER_DOMAIN}/oauth2/auth?allowed_groups=paperless
+          nginx.ingress.kubernetes.io/auth-signin: https://auth.${CLUSTER_DOMAIN}/oauth2/start?rd=$scheme://$best_http_host$request_uri
+          nginx.ingress.kubernetes.io/auth-response-headers: "x-auth-request-email, x-auth-request-groups"
+        hosts:
+          - host: &host "paperless.${CLUSTER_DOMAIN}"
+            paths:
+              - path: /
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      nas-consume:
+        enabled: true
+        mountPath: /data/nas/consume
+        type: nfs
+        server: ${SECRET_MEDIA_SERVER}
+        path: /backup/data/k8s/paperless/incoming
+      nas-export:
+        enabled: true
+        mountPath: /data/nas/export
+        type: nfs
+        server: ${SECRET_MEDIA_SERVER}
+        path: /backup/data/k8s/paperless/export
+
+    securityContext:
+      runAsUser: 1022
+      runAsGroup: 1022
+      fsGroup: 1022
+      fsGroupChangePolicy: OnRootMismatch
+      runAsNonRoot: true
+
+    resources:
+      requests:
+        cpu: 8m
+        memory: 1812M
+      limits:
+        memory: 1812M
+
+    volumeClaimTemplates:
+      - name: data
+        mountPath: /data/local
+        accessMode: ReadWriteOnce
+        size: 15Gi
+        storageClass: ceph-block
