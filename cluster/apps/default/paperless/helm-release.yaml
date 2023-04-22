@@ -69,12 +69,11 @@ spec:
         server: ${SECRET_MEDIA_SERVER}
         path: /backup/data/k8s/paperless/export
 
-    securityContext:
-      runAsUser: 1022
-      runAsGroup: 1022
-      fsGroup: 1022
-      fsGroupChangePolicy: OnRootMismatch
-      runAsNonRoot: true
+    #securityContext:
+    #  runAsUser: 1022
+    #  runAsGroup: 1022
+    #  fsGroup: 1022
+    #  fsGroupChangePolicy: OnRootMismatch
 
     resources:
       requests:
