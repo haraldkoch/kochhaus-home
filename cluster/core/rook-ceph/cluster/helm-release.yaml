@@ -30,6 +30,10 @@ spec:
       namespace: rook-ceph
 
   values:
+    configOverride: |
+      [global]
+      bdev_enable_discard = true
+      bdev_async_discard = true
     monitoring:
       enabled: true
       # deploy manually so that we can patch the rules
