@@ -22,7 +22,7 @@ jobs:
           private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
 
       - name: Link Checker
-        uses: lycheeverse/lychee-action@0fcec0b45a1cc548fd8b6d9e859b1f8a2cc156ce # v1
+        uses: lycheeverse/lychee-action@97189f2c0a3c8b0cb0e704fd4e878af6e5e2b2c5 # v1
         id: lychee
         env:
           GITHUB_TOKEN: "${{ steps.generate-token.outputs.token }}"
