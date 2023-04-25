@@ -19,3 +19,15 @@ patchesStrategicMerge:
     kind: Namespace
     metadata:
       name: system-upgrade
+patches:
+  # change master to control-plane
+  - target:
+      kind: Deployment
+      name: system-upgrade-controller
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/affinity/nodeAffinity/requiredDuringSchedulingIgnoredDuringExecution/nodeSelectorTerms
+        value:
+          - matchExpressions:
+              - key: node-role.kubernetes.io/control-plane
+                operator: Exists
