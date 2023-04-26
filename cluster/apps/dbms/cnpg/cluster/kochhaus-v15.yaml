@@ -52,7 +52,7 @@ spec:
           key: ACCESS_SECRET_KEY
 
   # the recovery source here is taken from the externalClusters section below.
-  bootstrap:
+  # bootstrap:
   #   # upgrade or recover from another running instance
   #   initdb:
   #     import:
@@ -65,31 +65,31 @@ spec:
   #         externalCluster: kochhaus-pg14
 
   # normal restore from backup + WALs
-    recovery:
-      source: kochhaus-v15
+  #   recovery:
+  #     source: kochhaus-v15
 
-  externalClusters:
+  externalClusters: []
     # must be the name of the cluster instance that was backed up
-    - name: kochhaus-v15
-      barmanObjectStore:
-        destinationPath: s3://cnpg/v15/v1
-        endpointURL: http://${SECRET_BACKUP_SERVER}:9000
-        s3Credentials:
-          accessKeyId:
-            name: cnpg-backup
-            key: ACCESS_KEY_ID
-          secretAccessKey:
-            name: cnpg-backup
-            key: ACCESS_SECRET_KEY
-        wal:
-          compression: bzip2
-          maxParallel: 12
-  #  - name: kochhaus-pg14
-  #    connectionParameters:
-  #      host: kochhaus-ro.dbms
-  #      user: postgres
-  #      dbname: postgres
-  #      sslmode: require
-  #    password:
-  #      name: kochhaus-superuser
-  #      key: password
+    # - name: kochhaus-v15
+    #   barmanObjectStore:
+    #     destinationPath: s3://cnpg/v15/v1
+    #     endpointURL: http://${SECRET_BACKUP_SERVER}:9000
+    #     s3Credentials:
+    #       accessKeyId:
+    #         name: cnpg-backup
+    #         key: ACCESS_KEY_ID
+    #       secretAccessKey:
+    #         name: cnpg-backup
+    #         key: ACCESS_SECRET_KEY
+    #     wal:
+    #       compression: bzip2
+    #       maxParallel: 12
+    # - name: kochhaus-pg14
+    #   connectionParameters:
+    #     host: kochhaus-ro.dbms
+    #     user: postgres
+    #     dbname: postgres
+    #     sslmode: require
+    #   password:
+    #     name: kochhaus-superuser
+    #     key: password
