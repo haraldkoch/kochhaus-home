@@ -104,7 +104,7 @@ spec:
             requiredDuringSchedulingIgnoredDuringExecution:
               nodeSelectorTerms:
                 - matchExpressions:
-                    - key: ${CLUSTER_DOMAIN}/prometheus
+                    - key: prometheus.home.arpa/enabled
                       operator: In
                       values:
                         - "true"
@@ -262,7 +262,7 @@ spec:
             requiredDuringSchedulingIgnoredDuringExecution:
               nodeSelectorTerms:
                 - matchExpressions:
-                    - key: ${CLUSTER_DOMAIN}/prometheus
+                    - key: prometheus.home.arpa/enabled
                       operator: In
                       values:
                         - "true"
