@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -26,14 +26,28 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    initContainers:
+      01-init-geoip:
+        image: ghcr.io/maxmind/geoipupdate:v5.0.4
+        imagePullPolicy: IfNotPresent
+        env:
+          - { name: GEOIPUPDATE_EDITION_IDS, value: GeoLite2-City }
+          - { name: GEOIPUPDATE_FREQUENCY, value: "0" }
+          - { name: GEOIPUPDATE_VERBOSE, value: "true" }
+        envFrom:
+          - secretRef:
+              name: vector-geoipupdate
+        volumeMounts:
+          - { name: geoip, mountPath: /usr/share/GeoIP }
     controller:
       replicas: 2
       strategy: RollingUpdate
       annotations:
         reloader.stakater.com/auto: "true"
     image:
-      repository: docker.io/timberio/vector
-      tag: 0.29.1-debian
+      # https://github.com/vectordotdev/vector/issues/6715
+      repository: ghcr.io/onedr0p/vector
+      tag: 0.29.0-debian
     args: ["--config", "/etc/vector/vector.yaml"]
     service:
       main:
@@ -45,16 +59,16 @@ spec:
         ports:
           http:
             port: 8686
-          journald-logs:
+          journald:
             enabled: true
             port: 6000
-          kubernetes-logs:
+          kubernetes:
             enabled: true
             port: 6010
-          internet-logs:
+          internet:
             enabled: true
             port: 6020
-          opnsense-logs:
+          opnsense:
             enabled: true
             port: 5140
             protocol: UDP
@@ -72,7 +86,8 @@ spec:
         mountPath: /vector-data-dir
       geoip:
         enabled: true
-        existingClaim: vector-geoipupdate-config-v1
+        type: emptyDir
+        mountPath: /usr/share/GeoIP
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
