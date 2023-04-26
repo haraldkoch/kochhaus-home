@@ -66,10 +66,11 @@ spec:
 
   # normal restore from backup + WALs
     recovery:
-      source: v15-s3-backup
+      source: kochhaus-v15
 
   externalClusters:
-    - name: v15-s3-backup
+    # must be the name of the cluster instance that was backed up
+    - name: kochhaus-v15
       barmanObjectStore:
         destinationPath: s3://cnpg/v15/v1
         endpointURL: http://${SECRET_BACKUP_SERVER}:9000
