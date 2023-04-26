@@ -8,3 +8,4 @@ resources:
   - rook-ceph
   - security
   - tigera-operator
+  - volsync

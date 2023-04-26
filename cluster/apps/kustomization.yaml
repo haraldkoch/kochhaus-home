@@ -24,5 +24,4 @@ resources:
   - system-upgrade
   - tekton-pipelines
   - weather
-  - volsync
   - vpn
