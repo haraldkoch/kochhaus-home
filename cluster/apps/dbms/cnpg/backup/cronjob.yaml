@@ -33,7 +33,7 @@ spec:
               command: ["/bin/sh"]
               args:
                 - "-c"
-                - "pg_dumpall -U $PGUSER -F c | gzip > /backup/kochhaus-cluster.dump.gz"
+                - "pg_dumpall -U $PGUSER | gzip > /backup/kochhaus-cluster.dump.gz"
               env:
                 - name: PGHOST
                   value: kochhaus-v15-rw.dbms

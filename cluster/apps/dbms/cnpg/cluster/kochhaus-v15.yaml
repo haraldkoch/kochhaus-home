@@ -39,7 +39,7 @@ spec:
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
-      destinationPath: s3://cnpg/v15/v1
+      destinationPath: s3://cnpg/v15/v2
       endpointURL: http://${SECRET_BACKUP_SERVER}:9000
       wal:
         compression: bzip2
@@ -65,30 +65,31 @@ spec:
   #         externalCluster: kochhaus-pg14
 
   # normal restore from backup + WALs
-  #  recovery:
-  #   source: v15-s3-backup
+  #   recovery:
+  #     source: kochhaus-v15
 
   externalClusters: []
-  #  - name: v15-s3-backup
-  #    barmanObjectStore:
-  #      destinationPath: s3://cnpg/v15/v1
-  #      endpointURL: http://${SECRET_BACKUP_SERVER}:9000
-  #      s3Credentials:
-  #        accessKeyId:
-  #          name: cnpg-backup
-  #          key: ACCESS_KEY_ID
-  #        secretAccessKey:
-  #          name: cnpg-backup
-  #          key: ACCESS_SECRET_KEY
-  #      wal:
-  #        compression: bzip2
-  #        maxParallel: 12
-  #  - name: kochhaus-pg14
-  #    connectionParameters:
-  #      host: kochhaus-ro.dbms
-  #      user: postgres
-  #      dbname: postgres
-  #      sslmode: require
-  #    password:
-  #      name: kochhaus-superuser
-  #      key: password
+    # must be the name of the cluster instance that was backed up
+    # - name: kochhaus-v15
+    #   barmanObjectStore:
+    #     destinationPath: s3://cnpg/v15/v1
+    #     endpointURL: http://${SECRET_BACKUP_SERVER}:9000
+    #     s3Credentials:
+    #       accessKeyId:
+    #         name: cnpg-backup
+    #         key: ACCESS_KEY_ID
+    #       secretAccessKey:
+    #         name: cnpg-backup
+    #         key: ACCESS_SECRET_KEY
+    #     wal:
+    #       compression: bzip2
+    #       maxParallel: 12
+    # - name: kochhaus-pg14
+    #   connectionParameters:
+    #     host: kochhaus-ro.dbms
+    #     user: postgres
+    #     dbname: postgres
+    #     sslmode: require
+    #   password:
+    #     name: kochhaus-superuser
+    #     key: password
