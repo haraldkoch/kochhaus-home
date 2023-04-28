@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app kopia
+  name: kopia-sync
   namespace: default
 spec:
   interval: 15m
@@ -26,13 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    global:
-      nameOverride: *app
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
     initContainers:
-      wait-for-repo:
+      01-wait-for-repo:
         image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:156e391b374ba1b34a45148d27e78d827a7fcd467001570c9b18e8b579bc1d86
         command:
           - /bin/bash
@@ -43,54 +38,37 @@ spec:
                 sleep 1
             done
         volumeMounts:
-          - name: snapshots
-            mountPath: /snapshots
+          - { name: snapshots, mountPath: /snapshots }
+    controller:
+      type: cronjob
+      cronjob:
+        concurrencyPolicy: Forbid
+        schedule: "0 7,19 * * *"
+    restartPolicy: OnFailure
     image:
       repository: ghcr.io/haraldkoch/kopia
       tag: 0.12.1@sha256:156e391b374ba1b34a45148d27e78d827a7fcd467001570c9b18e8b579bc1d86
+    command:
+                - /bin/bash
+                - -c
+                - |
+                  printf "\e[1;32m%-6s\e[m\n" "[01/03] Connect to repo ..."      && kopia repo connect filesystem --path=/snapshots --override-hostname=cluster --override-username=root
+                  printf "\e[1;32m%-6s\e[m\n" "[02/03] Sync to remote ..."       && kopia repo sync-to from-config --file=/remote/repository.config --parallel 8 --delete
+                  printf "\e[1;32m%-6s\e[m\n" "[03/03] Disconnect from repo ..." && kopia repo disconnect
     env:
-      TZ: "${TIMEZONE}"
+      TZ: ${TIMEZONE}
+      KOPIA_CACHE_DIRECTORY: /snapshots/cache
+      KOPIA_LOG_DIR: /snapshots/logs
       KOPIA_PASSWORD: "none"
-    command: kopia
-    args:
-      - server
-      - --insecure
-      - --address
-      - 0.0.0.0:80
-      - --metrics-listen-addr
-      - 0.0.0.0:8080
-      - --without-password
     service:
       main:
-        ipFamilyPolicy: PreferDualStack
-        ports:
-          http:
-            port: 80
-          metrics:
-            enabled: true
-            port: 8080
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: nginx
-        hosts:
-          - host: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - *host
-    podSecurityContext:
-      supplementalGroups:
-        - 100
+        enabled: false
     persistence:
-      config:
+      remote-config:
         enabled: true
-        type: configMap
-        name: *app
-        subPath: repository.config
-        mountPath: /config/repository.config
+        type: secret
+        name: kopia-sync
+        mountPath: /remote
         readOnly: true
       snapshots:
         enabled: true
@@ -98,9 +76,3 @@ spec:
         server: ${SECRET_BACKUP_SERVER}
         path: /backup/data/k8s/kopia
         mountPath: /snapshots
-    resources:
-      requests:
-        cpu: 10m
-        memory: 100Mi
-      limits:
-        memory: 250Mi
