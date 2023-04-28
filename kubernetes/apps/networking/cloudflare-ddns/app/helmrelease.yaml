@@ -1,0 +1,53 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cloudflare-ddns
+  namespace: networking
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controller:
+      type: cronjob
+      cronjob:
+        concurrencyPolicy: Forbid
+        schedule: "@hourly"
+    restartPolicy: OnFailure
+    image:
+      repository: ghcr.io/haraldkoch/kubernetes-kubectl
+      tag: 1.27.1@sha256:542cc2d659c44589d71d6ea003d4c8d7ad3b6894828c25f60fe759199f30f76e
+    command: ["/bin/bash", "/app/cloudflare-ddns.sh"]
+    envFrom:
+      - secretRef:
+          name: cloudflare-ddns
+    service:
+      main:
+        enabled: false
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: cloudflare-ddns
+        subPath: cloudflare-ddns.sh
+        mountPath: /app/cloudflare-ddns.sh
+        defaultMode: 0775
+        readOnly: true
