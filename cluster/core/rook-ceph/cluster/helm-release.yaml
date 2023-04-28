@@ -52,6 +52,19 @@ spec:
           - hosts:
               - *host
     cephClusterSpec:
+      placement:
+        mon:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: node.home.arpa/physical
+                      operator: In
+                      values:
+                        - "true"
+          tolerations:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
       healthCheck:
         livenessProbe:
           mon:
