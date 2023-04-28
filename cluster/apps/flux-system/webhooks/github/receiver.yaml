@@ -12,6 +12,21 @@ spec:
   secretRef:
     name: github-webhook-secret
   resources:
+    # new kubernetes folder
+    - apiVersion: source.toolkit.fluxcd.io/v1
+      kind: GitRepository
+      name: home-kubernetes
+      namespace: flux-system
+    - apiVersion: kustomize.toolkit.fluxcd.io/v1
+      kind: Kustomization
+      name: cluster
+      namespace: flux-system
+    - apiVersion: kustomize.toolkit.fluxcd.io/v1
+      kind: Kustomization
+      name: cluster-apps
+      namespace: flux-system
+
+    # old cluster folder
     - apiVersion: source.toolkit.fluxcd.io/v1
       kind: GitRepository
       name: flux-cluster
@@ -35,11 +50,6 @@ spec:
     - apiVersion: kustomize.toolkit.fluxcd.io/v1
       kind: Kustomization
       name: flux-cluster
-      namespace: flux-system
-
-    - apiVersion: kustomize.toolkit.fluxcd.io/v1
-      kind: Kustomization
-      name: cluster
       namespace: flux-system
 
     - apiVersion: kustomize.toolkit.fluxcd.io/v1
