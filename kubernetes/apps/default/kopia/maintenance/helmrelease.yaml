@@ -1,0 +1,73 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kopia-maintenance
+  namespace: default
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    initContainers:
+      01-wait-for-repo:
+        image: ghcr.io/haraldkoch/kopia:0.12.1@sha256:156e391b374ba1b34a45148d27e78d827a7fcd467001570c9b18e8b579bc1d86
+        command:
+          - /bin/bash
+          - -c
+          - |-
+            until [ -f /snapshots/kopia.repository.f ]; do
+                printf "\e[1;32m%-6s\e[m\n" "Awaiting for the Kopia repo to become ready ..."
+                sleep 1
+            done
+        volumeMounts:
+          - { name: snapshots, mountPath: /snapshots }
+    controller:
+      type: cronjob
+      cronjob:
+        concurrencyPolicy: Forbid
+        schedule: "0 6 */3 * *"
+    restartPolicy: OnFailure
+    image:
+      repository: ghcr.io/haraldkoch/kopia
+      tag: 0.12.1@sha256:156e391b374ba1b34a45148d27e78d827a7fcd467001570c9b18e8b579bc1d86
+    command:
+      - /bin/bash
+      - -c
+      - |
+        printf "\e[1;32m%-6s\e[m\n" "[01/04] Connect to repo ..."       && kopia repo connect filesystem --path=/snapshots --override-hostname=cluster --override-username=root
+        printf "\e[1;32m%-6s\e[m\n" "[02/04] Set maintenance owner ..." && kopia maintenance set --owner=root@cluster
+        printf "\e[1;32m%-6s\e[m\n" "[03/04] Run maintenance ..."       && kopia maintenance run --full
+        printf "\e[1;32m%-6s\e[m\n" "[04/04] Disconnect from repo ..."  && kopia repo disconnect
+    env:
+      TZ: ${TIMEZONE}
+      KOPIA_CACHE_DIRECTORY: /snapshots/cache
+      KOPIA_LOG_DIR: /snapshots/logs
+      KOPIA_PASSWORD: "none"
+    service:
+      main:
+        enabled: false
+    persistence:
+      snapshots:
+        enabled: true
+        type: nfs
+        server: ${SECRET_BACKUP_SERVER}
+        path: /backup/data/k8s/kopia
+        mountPath: /snapshots

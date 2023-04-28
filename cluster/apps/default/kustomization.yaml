@@ -7,8 +7,6 @@ resources:
   - hajimari
   - homepage
   - immich
-  - kopia-jobs
-  - kopia-web
   - kubernetes-schemas
   - miniflux
   - outline
