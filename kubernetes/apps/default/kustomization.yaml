@@ -8,7 +8,7 @@ resources:
   # Flux-Kustomizations
   - ./kopia/ks.yaml
   #- ./changedetection/ks.yaml
-  #- ./hajimari/ks.yaml
+  - ./hajimari/ks.yaml
   #- ./immich/ks.yaml
   #- ./letsblockit/ks.yaml
   #- ./paperless/ks.yaml

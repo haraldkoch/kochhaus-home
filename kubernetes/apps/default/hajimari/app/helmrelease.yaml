@@ -26,13 +26,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: ghcr.io/toboshii/hajimari
-      tag: v0.3.1
-
-    env:
-      TZ: ${TIMEZONE}
-
     hajimari:
       # displays all discovered apps
       defaultEnable: false
@@ -90,8 +83,7 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "weather-sunset"
+          hajimari.io/enable: "false"
         hosts:
           - host: &host "hajimari.${CLUSTER_DOMAIN}"
             paths:
@@ -103,7 +95,7 @@ spec:
     persistence:
       data:
         enabled: true
-        existingClaim: hajimari-config-v4
+        type: emptyDir
     podAnnotations:
       configmap.reloader.stakater.com/reload: "hajimari-settings"
     resources:
