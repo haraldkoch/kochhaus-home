@@ -6,7 +6,6 @@ resources:
   - excalidraw
   - homepage
   - immich
-  - kubernetes-schemas
   - miniflux
   - outline
   - paperless

@@ -10,5 +10,6 @@ resources:
   #- ./changedetection/ks.yaml
   - ./hajimari/ks.yaml
   #- ./immich/ks.yaml
+  - ./kubernetes-schemas/ks.yaml
   #- ./letsblockit/ks.yaml
   #- ./paperless/ks.yaml
