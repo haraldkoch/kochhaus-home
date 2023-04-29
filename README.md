@@ -4,11 +4,8 @@
 
 > GitOps state for my cluster using flux v2
 
-[![k8s](https://img.shields.io/badge/k8s-v1.23.6%2Bk3s1-green?style=flat-square)](https://k8s.io/)
-[![GitHub last commit](https://img.shields.io/github/last-commit/haraldkoch/kochhaus-home?style=flat-square)](https://github.com/haraldkoch/kochhaus-home/main)
-[![Renovate](https://github.com/haraldkoch/kochhaus-home/actions/workflows/schedule-renovate.yaml/badge.svg)](https://github.com/haraldkoch/kochhaus-home/actions/workflows/schedule-renovate.yaml)
-[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-green?logo=pre-commit&logoColor=white&style=flat-square)](https://github.com/pre-commit/pre-commit)
-[![GitHub Super-Linter](https://github.com/haraldkoch/kochhaus-home/workflows/Lint/badge.svg)](https://github.com/marketplace/actions/super-linter)
+[![k8s](https://img.shields.io/badge/k8s-v1.27.1%2Bk3s1-green?style=flat-square)](https://k8s.io/)
+[![GitHub last commit](https://img.shields.io/github/last-commit/haraldkoch/kochhaus-home?style=flat-square)](https://github.com/haraldkoch/kochhaus-home)
 
 [K3S](https://k3s.io/) in a 7-node cluster running [Arch Linux](https://www.archlinux.org/).
 - Four Lenovo M900 Tinys
@@ -72,7 +69,7 @@ There's a full server list below.
 
 Yes, this is a lot of infrastructure and heavy lifting - the point is to experiment with Kubernetes and GitOps in a safe space.
 
-[![dexhorthy](assets/blog-on-kubernetes.png)](https://twitter.com/dexhorthy/status/856639005462417409)
+[![dexhorthy](assets/blog-on-kubernetes.png)](https://twitter.com/dexhorthy/)
 
 I have two longer-term goals:
 
