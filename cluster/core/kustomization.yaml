@@ -7,5 +7,4 @@ resources:
   - kyverno
   - rook-ceph
   - security
-  - tigera-operator
   - volsync
