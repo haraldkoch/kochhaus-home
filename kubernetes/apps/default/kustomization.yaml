@@ -13,3 +13,4 @@ resources:
   - ./kubernetes-schemas/ks.yaml
   #- ./letsblockit/ks.yaml
   - ./paperless/ks.yaml
+  - ./radicale/ks.yaml
