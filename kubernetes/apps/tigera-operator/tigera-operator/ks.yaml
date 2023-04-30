@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-tigera-operator
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/tigera-operator/tigera-operator/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: tigera-operator
+      namespace: tigera-operator
+  interval: 15m
+  retryInterval: 1m
+  timeout: 3m
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-tigera-operator-bgp
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-tigera-operator
+  path: ./kubernetes/apps/tigera-operator/tigera-operator/bgp
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  healthChecks:
+    - apiVersion: crd.projectcalico.org/v1
+      kind: BGPConfiguration
+      name: default
+    - apiVersion: crd.projectcalico.org/v1
+      kind: BGPPeer
+      name: ipv4
+    - apiVersion: crd.projectcalico.org/v1
+      kind: BGPPeer
+      name: ipv6
+  interval: 15m
+  retryInterval: 1m
+  timeout: 3m

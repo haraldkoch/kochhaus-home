@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: calico
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     crds: CreateReplace
@@ -28,27 +29,21 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    resources:
-      requests:
-        cpu: 15m
-        memory: 164M
-      limits:
-        cpu: 30m
-        memory: 196M
     # Configures general installation parameters for Calico. Schema is based
     # on the operator.tigera.io/Installation API documented
     # here: https://projectcalico.docs.tigera.io/reference/installation/api#operator.tigera.io/v1.InstallationSpec
     installation:
       enabled: true
-      # Configures Calico networking.
       registry: quay.io
       imagePath: calico
       calicoNetwork:
+        bgp: Enabled
+        hostPorts: Disabled
         # Note: The ipPools section cannot be modified post-install.
         ipPools:
           - blockSize: 26
             cidr: ${NETWORK_K8S_POD_CIDR}
-            encapsulation: VXLANCrossSubnet
+            encapsulation: None
             natOutgoing: Enabled
             nodeSelector: all()
           - blockSize: 116
@@ -61,3 +56,10 @@ spec:
             - ${NETWORK_K8S_HOST_CIDR}
       nodeMetricsPort: 9091
       typhaMetricsPort: 9093
+    resources:
+      requests:
+        cpu: 15m
+        memory: 164M
+      limits:
+        cpu: 500m
+        memory: 196M
