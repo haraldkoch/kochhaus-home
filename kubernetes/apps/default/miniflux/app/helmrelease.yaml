@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -25,12 +26,9 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: cnpg
-      namespace: dbms
   values:
     initContainers:
-      init-db:
+      01-init-db:
         image: ghcr.io/haraldkoch/postgres-initdb:15.2
         imagePullPolicy: IfNotPresent
         envFrom:
@@ -68,15 +66,9 @@ spec:
         ports:
           http:
             port: &port 8080
-    serviceMonitor:
-      main:
-        enabled: true
-        endpoints:
-          - port: http
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 10s
+    # serviceMonitor:
+    #   main:
+    #     enabled: true
     ingress:
       main:
         enabled: true

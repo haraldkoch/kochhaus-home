@@ -14,5 +14,6 @@ resources:
   - ./kopia/ks.yaml
   - ./kubernetes-schemas/ks.yaml
   #- ./letsblockit/ks.yaml
+  - ./miniflux/ks.yaml
   - ./paperless/ks.yaml
   - ./radicale/ks.yaml
