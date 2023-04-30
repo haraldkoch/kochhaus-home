@@ -19,7 +19,6 @@ resources:
   - security
   - static
   - system
-  - system-upgrade
   - tekton-pipelines
   - weather
   - vpn
