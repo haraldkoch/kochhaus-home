@@ -3,17 +3,17 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: default
 resources:
-  - helm-release.yaml
-  - externalsecret.yaml
-  - pvc.yaml
-  - volsync.yaml
+  - ./helmrelease.yaml
+  - ./externalsecret.yaml
+  - ./pvc.yaml
+  - ./volsync.yaml
 commonLabels:
   app.kubernetes.io/name: radicale
   app.kubernetes.io/instance: radicale
 configMapGenerator:
   - name: radicale
     files:
-      - config/config.cfg
+      - ./config/config.cfg
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
