@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/actions.summerwind.dev/runnerdeployment_v1alpha1.json
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
 metadata:
@@ -7,17 +8,12 @@ metadata:
 spec:
   template:
     spec:
-      image: ghcr.io/actions-runner-controller/actions-runner-controller/actions-runner-dind:ubuntu-22.04@sha256:addcb40ddbd5ab8874deb476b2691f1b655c60b34cd4d6179ad6cf0961944d4e
-      imagePullPolicy: Always
+      image: ghcr.io/actions/actions-runner-controller/actions-runner-dind:v2.299.1-ubuntu-22.04
+      imagePullPolicy: IfNotPresent
       dockerdWithinRunnerContainer: true
       ephemeral: true
       repository: haraldkoch/kochhaus-home
       labels: ["self-hosted"]
-      nodeSelector:
-        node-role.kubernetes.io/worker: "true"
-      securityContext:
-        supplementalGroups:
-          - 65542
       volumeMounts:
         - name: cache-volume
           mountPath: /cache
@@ -26,6 +22,7 @@ spec:
           persistentVolumeClaim:
             claimName: actions-runner-controller-cache
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/actions.summerwind.dev/horizontalrunnerautoscaler_v1alpha1.json
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: HorizontalRunnerAutoscaler
 metadata:
@@ -36,11 +33,9 @@ spec:
     name: home-ops
   scaleUpTriggers:
     - githubEvent:
-        checkRun:
-          types: ["created"]
-          status: "queued"
+        workflowJob: {}
       amount: 1
-      duration: "1m"
+      duration: 30m
   minReplicas: 1
   maxReplicas: 3
   metrics:
