@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -25,14 +26,9 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: cnpg
-      namespace: dbms
-    - name: redis
-      namespace: dbms
   values:
     initContainers:
-      init-db:
+      01-init-db:
         image: ghcr.io/haraldkoch/postgres-initdb:15.2
         imagePullPolicy: IfNotPresent
         envFrom:
@@ -41,6 +37,8 @@ spec:
     controller:
       replicas: 3
       strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
       repository: docker.io/outlinewiki/outline
       tag: 0.69.1
@@ -60,17 +58,15 @@ spec:
         ingressClassName: nginx
         annotations:
           hajimari.io/enable: "true"
-          hajimari.io/icon: "notebook-edit-outline"
+          hajimari.io/icon: mdi:notebook-edit-outline
         hosts:
-          - host: &host "docs.${CLUSTER_DOMAIN}"
+          - host: &host docs.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
               - *host
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *app
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
