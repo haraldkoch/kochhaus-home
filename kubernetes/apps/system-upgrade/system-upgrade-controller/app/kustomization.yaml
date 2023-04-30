@@ -1,18 +1,15 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - github.com/rancher/system-upgrade-controller?ref=v0.10.0
-  - plans
+  # renovate: datasource=docker image=rancher/system-upgrade-controller
+  - https://github.com/rancher/system-upgrade-controller/releases/download/v0.10.0/crd.yaml
+  - https://github.com/rancher/system-upgrade-controller?ref=v0.10.0
 images:
   - name: rancher/system-upgrade-controller
-    newName: docker.io/rancher/system-upgrade-controller
     newTag: v0.10.0
-commonLabels:
-  app.kubernetes.io/name: system-upgrade-controller
-  app.kubernetes.io/instance: system-upgrade-controller
 patchesStrategicMerge:
-  # Delete namespace resource
   - |
     $patch: delete
     apiVersion: v1
@@ -20,7 +17,7 @@ patchesStrategicMerge:
     metadata:
       name: system-upgrade
 patches:
-  # change master to control-plane
+  # change master to control-plane in nodeAffinity
   - target:
       kind: Deployment
       name: system-upgrade-controller
@@ -31,3 +28,8 @@ patches:
           - matchExpressions:
               - key: node-role.kubernetes.io/control-plane
                 operator: Exists
+labels:
+  - pairs:
+      app.kubernetes.io/name: system-upgrade-controller
+      app.kubernetes.io/instance: system-upgrade-controller
+    includeSelectors: true
