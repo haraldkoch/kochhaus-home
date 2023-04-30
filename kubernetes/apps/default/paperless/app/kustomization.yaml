@@ -6,4 +6,4 @@ namespace: default
 resources:
   - ./externalsecret.yaml
   - ./nfs-pvc.yaml
-  - ./helm-release.yaml
+  - ./helmrelease.yaml
