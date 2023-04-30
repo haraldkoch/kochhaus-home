@@ -1,8 +1,9 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app immich-microservices
+  name: &app immich-web
   namespace: default
 spec:
   interval: 15m
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -26,7 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   dependsOn:
-    - name: immich-typesense
+    - name: immich-server
   values:
     controller:
       replicas: 2
@@ -34,11 +35,11 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     image:
-      repository: ghcr.io/immich-app/immich-server
+      repository: ghcr.io/immich-app/immich-web
       tag: v1.54.1
     command: /bin/sh
     args:
-      - ./start-microservices.sh
+      - ./entrypoint.sh
     envFrom:
       - secretRef:
           name: immich-secret
@@ -46,7 +47,35 @@ spec:
           name: immich-configmap
     service:
       main:
-        enabled: false
+        ports:
+          http:
+            port: 3000
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          external-dns.home.arpa/enabled: "true"
+          hajimari.io/enable: "true"
+          hajimari.io/appName: Immich
+          hajimari.io/icon: heroicons:photo
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            rewrite /api/(.*) /$1 break;
+          nignx.ingress.kubernetes.io/force-ssl-redirect: "true"
+          nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        hosts:
+          - host: &host photos.${CLUSTER_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+              - path: /api
+                pathType: Prefix
+                service:
+                  name: immich-server
+                  port: 3001
+        tls:
+          - hosts:
+              - *host
     persistence:
       library:
         enabled: true

@@ -6,9 +6,8 @@ metadata:
 spec:
   storageClassName: immich-nfs
   capacity:
-    storage: 1Mi
-  accessModes:
-    - ReadWriteMany
+    storage: 1Mi # Size does not matter
+  accessModes: ["ReadWriteMany"]
   persistentVolumeReclaimPolicy: Retain
   nfs:
     server: ${SECRET_MEDIA_SERVER}
@@ -24,9 +23,8 @@ metadata:
   name: immich-nfs
   namespace: default
 spec:
-  accessModes:
-    - ReadWriteMany
+  accessModes: ["ReadWriteMany"]
   storageClassName: immich-nfs
   resources:
     requests:
-      storage: 1Mi
+      storage: 1Mi # Size does not matter
