@@ -6,7 +6,6 @@ resources:
   - backup
   - calico-system
   - ci
-  - default
   - dbms
   - downloads
   - flux-system
