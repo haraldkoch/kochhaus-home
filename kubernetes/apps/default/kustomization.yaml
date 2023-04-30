@@ -6,10 +6,11 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./kopia/ks.yaml
   #- ./changedetection/ks.yaml
+  - ./excalidraw/ks.yaml
   - ./hajimari/ks.yaml
   #- ./immich/ks.yaml
+  - ./kopia/ks.yaml
   - ./kubernetes-schemas/ks.yaml
   #- ./letsblockit/ks.yaml
   - ./paperless/ks.yaml
