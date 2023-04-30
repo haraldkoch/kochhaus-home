@@ -12,4 +12,4 @@ resources:
   #- ./immich/ks.yaml
   - ./kubernetes-schemas/ks.yaml
   #- ./letsblockit/ks.yaml
-  #- ./paperless/ks.yaml
+  - ./paperless/ks.yaml
