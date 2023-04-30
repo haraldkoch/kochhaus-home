@@ -9,6 +9,7 @@ resources:
   #- ./changedetection/ks.yaml
   - ./excalidraw/ks.yaml
   - ./hajimari/ks.yaml
+  - ./homepage/ks.yaml
   #- ./immich/ks.yaml
   - ./kopia/ks.yaml
   - ./kubernetes-schemas/ks.yaml
