@@ -6,9 +6,9 @@ metadata:
   name: cluster-apps-miniflux
   namespace: flux-system
 spec:
-  #dependsOn:
-  #  - name: cluster-apps-cloudnative-pg
-  #  - name: cluster-apps-external-secrets-stores
+  dependsOn:
+    # - name: cluster-apps-cloudnative-pg
+    - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/apps/default/miniflux/app
   prune: true
   sourceRef:

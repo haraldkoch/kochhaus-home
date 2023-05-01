@@ -6,10 +6,10 @@ metadata:
   name: cluster-apps-outline
   namespace: flux-system
 spec:
-  #dependsOn:
-  #  - name: cluster-apps-cloudnative-pg
-  #  - name: cluster-apps-external-secrets-stores
-  #  - name: cluster-apps-redis
+  dependsOn:
+    # - name: cluster-apps-cloudnative-pg
+    - name: cluster-apps-external-secrets-stores
+    # - name: cluster-apps-redis
   path: ./kubernetes/apps/default/outline/app
   prune: true
   sourceRef:

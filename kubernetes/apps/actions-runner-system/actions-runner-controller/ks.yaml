@@ -6,9 +6,9 @@ metadata:
   name: cluster-apps-actions-runner-controller
   namespace: flux-system
 spec:
-  #dependsOn:
-  #  - name: cluster-apps-external-secrets-stores
-  #  - name: cluster-apps-rook-ceph-cluster
+  dependsOn:
+    - name: cluster-apps-external-secrets-stores
+    # - name: cluster-apps-rook-ceph-cluster
   path: ./kubernetes/apps/actions-runner-system/actions-runner-controller/app
   prune: true
   sourceRef:

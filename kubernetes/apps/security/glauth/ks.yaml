@@ -6,8 +6,6 @@ metadata:
   name: cluster-apps-glauth
   namespace: flux-system
 spec:
-  #dependsOn:
-  #  - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/apps/security/glauth/app
   prune: true
   sourceRef:
