@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -29,9 +30,12 @@ spec:
     controller:
       replicas: 2
       strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
-      repository: docker.io/glauth/glauth
-      tag: v2.1.0
+      # https://github.com/glauth/glauth/issues/298
+      repository: ghcr.io/onedr0p/glauth
+      tag: v2.2.0-rc1
     command: ["/app/glauth", "-c", "/config"]
     service:
       main:
@@ -42,11 +46,14 @@ spec:
           ldap:
             enabled: true
             port: 389
+    # serviceMonitor:
+    #   main:
+    #     enabled: true
     podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: OnRootMismatch
     persistence:
       config:
         enabled: true
@@ -59,8 +66,13 @@ spec:
             path: groups.toml
           - key: users.toml
             path: users.toml
-    podAnnotations:
-      secret.reloader.stakater.com/reload: *app
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: *app
     resources:
       requests:
         cpu: 5m
