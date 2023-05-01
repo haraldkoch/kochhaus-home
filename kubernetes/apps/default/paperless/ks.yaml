@@ -6,9 +6,9 @@ metadata:
   name: cluster-apps-paperless
   namespace: flux-system
 spec:
-  #dependsOn:
-  #  - name: cluster-apps-cloudnative-pg
-  #  - name: cluster-apps-external-secrets-stores
+  dependsOn:
+    # - name: cluster-apps-cloudnative-pg
+    - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/apps/default/paperless/app
   prune: true
   sourceRef:
