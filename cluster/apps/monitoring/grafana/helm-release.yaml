@@ -227,7 +227,6 @@ spec:
       ingressClassName: nginx
       annotations:
         hajimari.io/appName: "grafana"
-        hajimari.io/enable: "true"
         hajimari.io/icon: simple-icons:grafana
       hosts:
         - &host grafana.${CLUSTER_DOMAIN}

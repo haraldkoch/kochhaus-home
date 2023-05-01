@@ -39,7 +39,6 @@ spec:
       ingressClassName: nginx
       annotations:
         hajimari.io/appName: "Postgres Admin"
-        hajimari.io/enable: "true"
         hajimari.io/icon: simple-icons:postgresql
       hosts:
         - host: &host pgadmin.${CLUSTER_DOMAIN}

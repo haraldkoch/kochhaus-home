@@ -30,15 +30,13 @@ spec:
     env:
       TZ: ${TIMEZONE}
     hajimari:
-      # displays all discovered apps
-      defaultEnable: false
-      showAppGroups: true
-      # namespaces to discover applications
+      title: Apps
+      darkTheme: espresso
+      alwaysTargetBlank: true
+      defaultEnable: true
       namespaceSelector:
         any: true
       name: Citizen
-      title: Hajimari
-      alwaysTargetBlank: true
       defaultSearchProvider: DuckDuckGo
       customApps:
         - group: Home
@@ -95,16 +93,13 @@ spec:
         tls:
           - hosts:
               - *host
+    podAnnotations:
+      configmap.reloader.stakater.com/reload: "hajimari-settings"
     persistence:
       data:
         enabled: true
         type: emptyDir
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: "hajimari-settings"
     resources:
       requests:
-        cpu: 15m
-        memory: 64Mi
-      limits:
         cpu: 100m
-        memory: 128Mi
+        memory: 128M

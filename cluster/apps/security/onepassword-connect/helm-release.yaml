@@ -56,6 +56,8 @@ spec:
       main:
         enabled: true
         ingressClassName: "nginx"
+        annotations:
+          hajimari.io/enable: "false"
         hosts:
           - host: &host "1pwconnect.${CLUSTER_DOMAIN}"
             paths:
