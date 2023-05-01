@@ -15,7 +15,6 @@ resources:
   - networking
   - remote
   - rook-ceph
-  - security
   - static
   - system
   - tekton-pipelines

@@ -6,5 +6,4 @@ resources:
   - kube-system
   - kyverno
   - rook-ceph
-  - security
   - volsync
