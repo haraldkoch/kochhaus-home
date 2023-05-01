@@ -49,7 +49,6 @@ spec:
         ingressClassName: "nginx"
         annotations:
           hajimari.io/appName: "Ride To Remeber"
-          hajimari.io/enable: "true"
         hosts:
           - host: &host "ridetoremember.${CLUSTER_DOMAIN}"
             paths:

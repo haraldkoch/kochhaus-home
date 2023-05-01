@@ -75,7 +75,6 @@ spec:
         ingressClassName: nginx
         annotations:
           hajimari.io/appName: "Alert Manager"
-          hajimari.io/enable: "true"
           hajimari.io/icon: mdi:alert-decagram-outline
         hosts:
           - &host alertmanager.${CLUSTER_DOMAIN}
@@ -212,7 +211,6 @@ spec:
         ingressClassName: nginx
         annotations:
           hajimari.io/appName: Prometheus
-          hajimari.io/enable: "true"
           hajimari.io/icon: simple-icons:prometheus
         pathType: Prefix
         hosts:

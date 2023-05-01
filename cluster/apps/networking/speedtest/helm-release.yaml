@@ -46,7 +46,6 @@ spec:
         ingressClassName: nginx
         annotations:
           external-dns.home.arpa/enabled: "true"
-          hajimari.io/enable: "true"
           hajimari.io/icon: mdi:speedometer
         hosts:
           - host: &host speedtest.${CLUSTER_DOMAIN}

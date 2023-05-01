@@ -50,7 +50,6 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          hajimari.io/enable: "true"
           hajimari.io/icon: bell-cog
         hosts:
           - host: &host "apprise.${CLUSTER_DOMAIN}"

@@ -49,7 +49,6 @@ spec:
         enabled: true
         ingressClassName: nginx
         annotations:
-          hajimari.io/enable: "true"
           hajimari.io/icon: mdi:folder-arrow-up-down-outline
         hosts:
           - host: &host "sync-browser.${CLUSTER_DOMAIN}"

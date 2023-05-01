@@ -6,7 +6,6 @@ metadata:
   namespace: networking
   annotations:
     external-dns.home.arpa/enabled: "true"
-    hajimari.io/enable: "true"
     hajimari.io/icon: "home-assistant"
 spec:
   ingressClassName: nginx

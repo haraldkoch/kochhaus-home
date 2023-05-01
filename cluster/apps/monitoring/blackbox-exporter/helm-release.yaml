@@ -59,6 +59,8 @@ spec:
     ingress:
       enabled: true
       className: nginx
+      annotations:
+        hajimari.io/enable: "false"
       hosts:
         - host: &host blackbox.${CLUSTER_DOMAIN}
           paths:
