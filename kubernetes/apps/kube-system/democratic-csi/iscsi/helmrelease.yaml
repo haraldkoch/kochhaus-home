@@ -2,11 +2,11 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: democratic-csi
+  name: democratic-csi-block
   namespace: kube-system
 spec:
   interval: 15m
-  releaseName: zfs-nfs
+  releaseName: zfs-iscsi
   chart:
     spec:
       chart: democratic-csi
@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: democratic-csi
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -32,7 +32,7 @@ spec:
         patches:
           - target:
               kind: VolumeSnapshotClass
-              name: zfs-nfs
+              name: zfs-block
             patch: |
               - op: add
                 path: /metadata/annotations/helm.toolkit.fluxcd.io~1driftDetection
@@ -41,7 +41,7 @@ spec:
   values:
     csiDriver:
       # should be globally unique for a given cluster
-      name: "org.democratic-csi.nfs"
+      name: "org.democratic-csi.iscsi"
 
     controller:
       driver:
@@ -69,7 +69,7 @@ spec:
         image: registry.k8s.io/sig-storage/csi-snapshotter:v6.2.1
 
       podAnnotations:
-        secret.reloader.stakater.com/reload: zfs-nfs-secret
+        secret.reloader.stakater.com/reload: zfs-iscsi-secret
 
     node:
       driver:
@@ -79,18 +79,16 @@ spec:
         image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0
 
     storageClasses:
-      - name: zfs-nfs
+      - name: zfs-block
         defaultClass: false
         reclaimPolicy: Delete
         volumeBindingMode: Immediate
         allowVolumeExpansion: true
         parameters:
-          fsType: nfs
-          # csi.storage.k8s.io/fstype: nfs
+          fstype: ext4
+          # csi.storage.k8s.io/fstype: ext4
         mountOptions:
-          - nfsvers=4.2
-          - nconnect=8
-          - hard
+          - relatime
         secrets:
           provisioner-secret:
           controller-publish-secret:
@@ -99,11 +97,11 @@ spec:
           controller-expand-secret:
 
     driver:
-      existingConfigSecret: zfs-nfs-secret
+      existingConfigSecret: zfs-iscsi-secret
       config:
-        driver: zfs-generic-nfs
+        driver: zfs-generic-iscsi
 
     volumeSnapshotClasses:
-      - name: zfs-nfs
+      - name: zfs-block
         deletionPolicy: Retain
         parameters: {}
