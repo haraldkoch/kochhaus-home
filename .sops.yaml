@@ -1,19 +1,19 @@
 ---
 creation_rules:
-  - path_regex: cluster/.*\.sops\.ya?ml
+  - path_regex: (cluster|kubernetes)/.*\.sops\.ya?ml
     encrypted_regex: "^(data|stringData)$"
     key_groups:
       - age:
           - age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r
-  - path_regex: cluster/.*\.sops\.ini
+  - path_regex: (cluster|kubernetes)/.*\.sops\.ini
     key_groups:
       - age:
           - age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r
-  - path_regex: cluster/.*\.sops\.toml
+  - path_regex: (cluster|kubernetes)/.*\.sops\.toml
     key_groups:
       - age:
           - age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r
-  - path_regex: cluster/.*\.sops\.json
+  - path_regex: (cluster|kubernetes)/.*\.sops\.json
     key_groups:
       - age:
           - age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r
