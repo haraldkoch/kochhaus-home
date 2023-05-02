@@ -9,7 +9,6 @@ resources:
   - flux-system
   - home
   - joomla
-  - kube-system
   - media
   - monitoring
   - networking
