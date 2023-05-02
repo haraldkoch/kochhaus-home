@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: rook-ceph
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -25,15 +26,7 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: rook-ceph
-      namespace: rook-ceph
-
   values:
-    configOverride: |
-      [global]
-      bdev_enable_discard = true
-      bdev_async_discard = true
     monitoring:
       enabled: true
       # deploy manually so that we can patch the rules
@@ -45,12 +38,25 @@ spec:
           hajimari.io/appName: "Rook"
           hajimari.io/icon: mdi:chess-rook
         host:
-          name: &host "rook.${CLUSTER_DOMAIN}"
-          path: "/"
+          name: &host rook.${CLUSTER_DOMAIN}
+          path: /
         tls:
           - hosts:
               - *host
+    toolbox:
+      enabled: true
+    configOverride: |
+      [global]
+      bdev_enable_discard = true
+      bdev_async_discard = true
+      osd_class_update_on_start = false
     cephClusterSpec:
+      network:
+        provider: host
+        connections:
+          compression:
+            # TODO: Test out enabling this on next cluster rebuild
+            enabled: false
       placement:
         mon:
           nodeAffinity:
@@ -180,10 +186,6 @@ spec:
           - name: "k3s3"
             devices:
               - name: "/dev/disk/by-id/nvme-KXG50ZNV512G_TOSHIBA_X8UF60F1F6GS-part3"
-    cephBlockPoolsVolumeSnapshotClass:
-      enabled: true
-      name: csi-ceph-blockpool
-      isDefault: true
     cephBlockPools:
       - name: ceph-blockpool
         spec:
@@ -222,12 +224,12 @@ spec:
             activeCount: 1
             activeStandby: true
             resources:
-              limits:
-                cpu: 1000m
-                memory: 850M
               requests:
                 cpu: 100m
                 memory: 64M
+              limits:
+                cpu: 1000m
+                memory: 850M
         storageClass:
           enabled: true
           isDefault: false
