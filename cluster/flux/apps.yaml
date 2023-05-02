@@ -12,7 +12,9 @@ spec:
     kind: GitRepository
     name: flux-cluster
   dependsOn:
-    - name: core
+    - name: charts
+    - name: config
+    - name: crds
   decryption:
     provider: sops
     secretRef:
