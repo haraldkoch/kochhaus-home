@@ -1,0 +1,60 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-cert-manager
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/cert-manager/cert-manager/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+      kind: HelmRelease
+      name: cert-manager
+      namespace: cert-manager
+  interval: 15m
+  retryInterval: 1m
+  timeout: 3m
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-cert-manager-issuers
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-cert-manager
+    # - name: cluster-apps-external-secrets-stores
+  path: ./kubernetes/apps/cert-manager/cert-manager/issuers
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  wait: true
+  interval: 15m
+  retryInterval: 1m
+  timeout: 3m
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-cert-manager-dashboard
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-cert-manager
+  path: ./kubernetes/apps/cert-manager/cert-manager/dashboard
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  wait: true
+  interval: 15m
+  retryInterval: 1m
+  timeout: 3m

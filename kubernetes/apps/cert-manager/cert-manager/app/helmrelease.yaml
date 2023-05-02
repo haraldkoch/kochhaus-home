@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: jetstack
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -25,21 +26,21 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
-    installCRDs: false
+    installCRDs: true
     extraArgs:
       - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
       - --dns01-recursive-nameservers-only
-    replicaCount: 1
-    podDnsPolicy: "None"
+    podDnsPolicy: None
     podDnsConfig:
       nameservers:
         - "1.1.1.1"
         - "9.9.9.9"
     prometheus:
+      enabled: true
       servicemonitor:
         enabled: true
+        prometheusInstance: monitoring
     resources:
       requests:
         cpu: 15m
@@ -58,7 +59,6 @@ spec:
     tolerations:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
-
     cainjector:
       enabled: true
       resources:
@@ -79,7 +79,6 @@ spec:
       tolerations:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
-
     webhook:
       enabled: true
       resources:
