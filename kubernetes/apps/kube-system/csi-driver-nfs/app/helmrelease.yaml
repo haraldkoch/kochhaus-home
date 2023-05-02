@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: csi-driver-nfs
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -25,13 +26,11 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
     controller:
       runOnControlPlane: true
     node:
       tolerations: []
-
   # runOnControlPlane: true sets the nodeSelector to
   # node-role.kubernetes.io/control-plane: "" - which does not match the
   # actual value of "true".
