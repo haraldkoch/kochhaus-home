@@ -1,8 +1,10 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: rook-ceph
 resources:
-  - helm-release.yaml
+  - ./helmrelease.yaml
   - https://raw.githubusercontent.com/rook/rook/master/deploy/examples/monitoring/localrules.yaml
 # patch the default rook-ceph prometheus rules to reduce noise.
 # patch courtesy of https://github.com/ahgraber/homelab-gitops-k3s/
