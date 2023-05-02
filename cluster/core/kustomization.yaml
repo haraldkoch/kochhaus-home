@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - kube-system
   - kyverno
-  - volsync
+
