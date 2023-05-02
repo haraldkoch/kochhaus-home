@@ -7,4 +7,3 @@ resources:
   - csi-driver-nfs
   - democratic-csi
   - kube-vip
-  - local-path-provisioner
