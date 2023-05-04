@@ -13,7 +13,6 @@ resources:
   - monitoring
   - networking
   - remote
-  - rook-ceph
   - static
   - system
   - tekton-pipelines
