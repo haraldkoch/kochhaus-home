@@ -6,5 +6,3 @@ resources:
   - cnpg
   - pgadmin
   - postgres-backup
-  - redis
-  - redis-lb
