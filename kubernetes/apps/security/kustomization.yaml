@@ -7,5 +7,6 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./authelia/ks.yaml
+  - ./dmarc-report/ks.yaml
   - ./external-secrets/ks.yaml
   - ./glauth/ks.yaml
