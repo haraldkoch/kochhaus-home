@@ -14,5 +14,4 @@ resources:
   - remote
   - static
   - system
-  - weather
   - vpn
