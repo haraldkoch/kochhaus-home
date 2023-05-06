@@ -13,12 +13,13 @@ spec:
     - host: &host tekton.${CLUSTER_DOMAIN}
       http:
         paths:
-          - pathType: ImplementationSpecific
-            backend:
+          - backend:
               service:
                 name: tekton-dashboard
                 port:
-                  name: http
+                  number: 9097
+            path: /
+            pathType: Prefix
   tls:
     - hosts:
         - *host
