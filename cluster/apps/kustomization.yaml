@@ -11,7 +11,6 @@ resources:
   - joomla
   - media
   - monitoring
-  - remote
   - static
   - system
   - vpn

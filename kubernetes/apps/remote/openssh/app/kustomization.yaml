@@ -1,14 +1,15 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: remote
 resources:
-  - helm-release.yaml
-  - secret.sops.yaml
+  - ./helmrelease.yaml
+  - ./secret.sops.yaml
 configMapGenerator:
   - name: config-initializer
     files:
-      - 45-config
+      - ./45-config
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
