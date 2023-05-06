@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: ingress-nginx
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -25,16 +26,15 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  dependsOn:
-    - name: cert-manager
-      namespace: cert-manager
   values:
     controller:
-      replicaCount: 3
+      replicaCount: 2
       extraEnvs:
         - name: TZ
           value: "${TIMEZONE}"
       service:
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: ingress.${CLUSTER_DOMAIN}
         externalIPs:
           - ${SVC_NGINX_ADDR_V4}
           - ${SVC_NGINX_ADDR_V6}
@@ -46,28 +46,28 @@ spec:
       ingressClassResource:
         default: true
       config:
-        client-header-timeout: 120
-        client-body-buffer-size: "100M"
+        client-body-buffer-size: 100M
         client-body-timeout: 120
+        client-header-timeout: 120
         enable-brotli: "true"
         enable-real-ip: "true"
         forwarded-for-header: "CF-Connecting-IP"
-        hsts-max-age: "31449600"
-        keep-alive: 120
+        hsts-max-age: 31449600
         keep-alive-requests: 10000
-        proxy-body-size: "100M"
-        ssl-protocols: "TLSv1.3 TLSv1.2"
+        keep-alive: 120
+        proxy-body-size: 0
+        proxy-buffer-size: 16k
+        ssl-protocols: TLSv1.3 TLSv1.2
         use-forwarded-headers: "true"
       metrics:
         enabled: true
         serviceMonitor:
           enabled: true
-          namespace: default
+          namespace: networking
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: |-
-          networking/tls.${CLUSTER_DOMAIN/./-}
+        default-ssl-certificate: networking/tls.${CLUSTER_DOMAIN/./-}
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
@@ -80,7 +80,7 @@ spec:
         configmap.reloader.stakater.com/reload: "cloudflare-networks,ingress-nginx-controller"
       resources:
         requests:
-          cpu: 10m
+          cpu: 100m
           memory: 250Mi
         limits:
           memory: 500Mi

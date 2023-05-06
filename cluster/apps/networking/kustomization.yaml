@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - external-dns
   - homelab-dns
-  - ingress-nginx
   - opnsense-backup
   - smtp-relay
   - speedtest
