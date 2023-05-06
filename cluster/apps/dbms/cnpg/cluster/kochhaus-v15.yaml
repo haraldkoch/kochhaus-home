@@ -25,6 +25,10 @@ spec:
     storageClass: ceph-block
     size: 10Gi
 
+  affinity:
+    nodeSelector:
+      node.home.arpa/physical: "true"
+
   resources:
     requests:
       cpu: 100m
