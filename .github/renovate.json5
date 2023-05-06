@@ -22,9 +22,6 @@
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
   "ignorePaths": ["archive/**"],
-  "pre-commit": {
-    "enabled": true
-  },
   "timezone": "America/Toronto",
   "flux": {
     "fileMatch": ["cluster/.+\\.ya?ml$", "kubernetes/.+\\.ya?ml$"]
@@ -40,6 +37,16 @@
     ]
   },
   "regexManagers": [
+    {
+      "description": "Process Tekton dependencies",
+      "fileMatch": [
+        "kubernetes/.+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "depName=(?<depName>\\S+)?\n.*?(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "github-releases"
+    },
     {
       "description": "Process CRD dependencies",
       "fileMatch": ["cluster/crds/.+\\.ya?ml$"],
