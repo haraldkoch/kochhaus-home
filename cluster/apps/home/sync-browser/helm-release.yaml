@@ -29,7 +29,7 @@ spec:
   values:
     nameOverride: *app
     image:
-      repository: docker.io/filebrowser/filebrowser
+      repository: ghcr.io/haraldkoch/filebrowser
       tag: v2.23.0
     env:
       TZ: ${TIMEZONE}

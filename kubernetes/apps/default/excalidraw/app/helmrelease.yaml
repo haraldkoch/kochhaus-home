@@ -31,8 +31,8 @@ spec:
       replicas: 2
       strategy: RollingUpdate
     image:
-      repository: ghcr.io/onedr0p/excalidraw
-      tag: latest@sha256:86468573ae447c4e9a15167331aea5177d711fbeaabded0cfc356cafb849ffff
+      repository: ghcr.io/haraldkoch/excalidraw
+      tag: latest@sha256:81a260bbfed5e4295634477c2b480988b435329b7f5dacf95ac1df4e3ff143cb
     service:
       main:
         ipFamilyPolicy: PreferDualStack

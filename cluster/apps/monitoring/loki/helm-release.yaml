@@ -29,6 +29,10 @@ spec:
     global:
       dnsService: coredns
     loki:
+      image:
+        registry: ghcr.io
+        repository: haraldkoch/loki
+        tag: 2.8.2
       structuredConfig:
         auth_enabled: false
         server:

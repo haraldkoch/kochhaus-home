@@ -34,7 +34,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       # https://github.com/glauth/glauth/issues/298
-      repository: ghcr.io/onedr0p/glauth
+      repository: ghcr.io/haraldkoch/glauth
       tag: v2.2.0-rc1
     command: ["/app/glauth", "-c", "/config"]
     service:

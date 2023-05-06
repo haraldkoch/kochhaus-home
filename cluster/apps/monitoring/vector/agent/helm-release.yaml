@@ -33,7 +33,8 @@ spec:
       type: daemonset
       strategy: RollingUpdate
     image:
-      repository: docker.io/timberio/vector
+      # repository: docker.io/timberio/vector
+      repository: ghcr.io/haraldkoch/vector
       tag: 0.29.1-debian
     args: ["--config", "/etc/vector/vector.yaml"]
     env:
