@@ -13,3 +13,4 @@ resources:
   - ./smtp-relay/ks.yaml
   - ./speedtest/ks.yaml
   - ./web-static/ks.yaml
+  - ./whoami/ks.yaml
