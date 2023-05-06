@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: external-dns
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -27,13 +28,18 @@ spec:
     keepHistory: false
   values:
     image:
+      # this has the lastest ipv6 patches - use until they are merged
       repository: registry.samipsolutions.fi/library/external-dns
       tag: v9.0.0
       pullPolicy: IfNotPresent
-
     nameOverride: *app
     provider: rfc2136
-
+    env:
+      - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: *app
+            key: rfc2136_tsig_secret
     extraArgs:
       - --rfc2136-host=${PRIVATE_DNS_PRIMARY}
       - --rfc2136-port=53
@@ -42,35 +48,17 @@ spec:
       - --rfc2136-tsig-axfr
       - --rfc2136-tsig-keyname=externaldns
       - --rfc2136-tsig-secret-alg=hmac-sha256
-
-    env:
-      - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
-        valueFrom:
-          secretKeyRef:
-            name: *app
-            key: rfc2136_tsig_secret
-
     policy: sync
-
-    sources:
-      - service
-      - ingress
-
-    domainFilters:
-      - "${CLUSTER_DOMAIN}"
-
+    sources: ["ingress", "service"]
     # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
-    txtPrefix: "homelab+"
-    txtOwnerId: "homelab"
-
+    txtOwnerId: homelab
+    txtPrefix: homelab+
+    domainFilters: ["${CLUSTER_DOMAIN}"]
     logLevel: info
-
-    deploymentAnnotations:
-      reloader.stakater.com/auto: "true"
-
     serviceMonitor:
       enabled: true
-
+    podAnnotations:
+      secret.reloader.stakater.com/reload: external-dns-bind-secret
     resources:
       requests:
         cpu: 25m
@@ -78,7 +66,6 @@ spec:
       limits:
         cpu: 50m
         memory: 100Mi
-
     tolerations:
       - key: "node-role.kubernetes.io/control-plane"
         operator: "Exists"
