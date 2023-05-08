@@ -7,4 +7,5 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./pgadmin/ks.yaml
+  - ./postgres-backup/ks.yaml
   - ./redis/ks.yaml

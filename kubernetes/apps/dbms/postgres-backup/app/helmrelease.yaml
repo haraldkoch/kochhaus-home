@@ -1,0 +1,67 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: postgres-backup
+  namespace: dbms
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controller:
+      type: cronjob
+      cronjob:
+        concurrencyPolicy: Forbid
+        schedule: "0 17 * * *"
+    restartPolicy: OnFailure
+    image:
+      repository: docker.io/prodrigestivill/postgres-backup-local
+      tag: 15@sha256:b3905c58ab8c1fb7596e2f90f059c65d61c2a813232e6eca4a3f5ce019bfbd61
+    command:
+      - /backup.sh
+    env:
+      - { name: TZ, value: "${TIMEZONE}" }
+      - { name: POSTGRES_DB, value: 'authelia,gatus,grafana,immich,miniflux,nextcloud,outline' }
+      - { name: POSTGRES_HOST, value: kochhaus-v15-ro.dbms.svc.cluster.local }
+      - name: POSTGRES_USER
+        valueFrom:
+          secretKeyRef:
+            name: kochhaus-v15-superuser
+            key: username
+      - name: POSTGRES_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: kochhaus-v15-superuser
+            key: password
+    service:
+      main:
+        enabled: false
+    persistence:
+      nas:
+        enabled: true
+        type: nfs
+        server: ${SECRET_BACKUP_SERVER}
+        path: /backup/data/k8s/postgres
+        mountPath: /backups
+    podSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
