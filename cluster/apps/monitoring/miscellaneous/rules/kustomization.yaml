@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - dockerhub.yaml
   - nas.yaml
+  - oom.yaml
