@@ -10,7 +10,7 @@ spec:
     #- name: cluster-apps-cloudnative-pg
     - name: cluster-apps-glauth
     - name: cluster-apps-external-secrets-stores
-    #- name: cluster-apps-redis
+    - name: cluster-apps-redis
   path: ./kubernetes/apps/security/authelia/app
   prune: true
   sourceRef:
@@ -23,4 +23,4 @@ spec:
       namespace: security
   interval: 15m
   retryInterval: 1m
-  timeout: 3m
+  timeout: 30s
