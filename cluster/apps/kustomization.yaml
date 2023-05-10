@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - calico-system
   - ci
-  - dbms
   - downloads
   - flux-system
   - home
