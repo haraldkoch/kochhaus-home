@@ -43,6 +43,7 @@ spec:
       - { name: TZ, value: "${TIMEZONE}" }
       - { name: POSTGRES_DB, value: "authelia,gatus,grafana,immich,miniflux,nextcloud,outline" }
       - { name: POSTGRES_HOST, value: "kochhaus-v15-ro.dbms.svc.cluster.local" }
+      - { name: POSTGRES_PORT, value: 5432 }
       - name: POSTGRES_USER
         valueFrom:
           secretKeyRef:
