@@ -21,7 +21,7 @@ spec:
           serviceAccount: tekton-pipelinerun-cleaner
           containers:
             - name: kubectl
-              image: ghcr.io/haraldkoch/kubernetes-kubectl:1.27.1@sha256:4ee210cba8b549dad893835dd1a63e5005e013cde6b957bd06e4906084b7da9a
+              image: ghcr.io/haraldkoch/kubernetes-kubectl:1.27.1@sha256:ef22ecf0e3ab4063807479513dc71f7dcc9241d0a3603f4ea05808996c5af9f2
               env:
                 - name: NUM_TO_KEEP
                   value: "3"
