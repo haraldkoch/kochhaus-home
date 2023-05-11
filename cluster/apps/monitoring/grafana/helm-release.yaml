@@ -28,7 +28,7 @@ spec:
   values:
     image:
       repository: ghcr.io/haraldkoch/grafana
-      tag: 9.5.1
+      tag: 9.5.2
     extraInitContainers:
       - name: init-db
         image: ghcr.io/haraldkoch/postgres-initdb:15.2
