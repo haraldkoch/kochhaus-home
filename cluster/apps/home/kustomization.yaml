@@ -8,5 +8,3 @@ resources:
   - nextcloud
   - node-red
   - onedrive
-  - sync-browser
-  - syncthing

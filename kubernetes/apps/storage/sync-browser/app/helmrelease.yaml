@@ -1,8 +1,9 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app sync-browser
+  name: sync-browser
   namespace: home
 spec:
   interval: 15m
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -25,15 +26,15 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
-    nameOverride: *app
+    controller:
+      type: statefulset
     image:
+      # https://github.com/filebrowser/filebrowser/issues/1571
       repository: ghcr.io/haraldkoch/filebrowser
       tag: v2.23.0
     env:
       TZ: ${TIMEZONE}
-      FB_PORT: 8080
       FB_DATABASE: "/config/filebrowser.db"
       FB_ROOT: "/syncthing"
       FB_LOG: "stdout"
@@ -43,7 +44,22 @@ spec:
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
-            port: 8080
+            port: &port 80
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /health
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
     ingress:
       main:
         enabled: true
@@ -51,7 +67,7 @@ spec:
         annotations:
           hajimari.io/icon: mdi:folder-arrow-up-down-outline
         hosts:
-          - host: &host "sync-browser.${CLUSTER_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -63,33 +79,22 @@ spec:
       runAsGroup: 1000
       fsGroup: 1000
       fsGroupChangePolicy: "OnRootMismatch"
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: ceph-block
     persistence:
-      config:
-        enabled: true
-        existingClaim: sync-browser-config-v3
       syncthing:
         enabled: true
+        type: nfs
+        server: ${SECRET_BACKUP_SERVER}
+        path: /backup/data/k8s/syncthing
         mountPath: /syncthing
-        existingClaim: nfs-syncthing-pvc
     resources:
       requests:
-        cpu: 15m
-        memory: 64M
+        cpu: 10m
+        memory: 50Mi
       limits:
-        cpu: 100m
-        memory: 64M
-    # if we run on the same node as the main app, we can use ReadWriteOnce and block storage?
-    affinity:
-      podAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: app.kubernetes.io/instance
-                  operator: In
-                  values:
-                    - syncthing
-                - key: app.kubernetes.io/name
-                  operator: In
-                  values:
-                    - syncthing
-            topologyKey: kubernetes.io/hostname
+        memory: 500Mi
