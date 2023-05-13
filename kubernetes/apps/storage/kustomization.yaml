@@ -7,5 +7,6 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./minio/ks.yaml
+  - ./onedrive/ks.yaml
   - ./sync-browser/ks.yaml
   - ./syncthing/ks.yaml
