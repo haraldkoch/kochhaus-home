@@ -1,9 +1,10 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/external-secrets.io/externalsecret_v1beta1.json
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: nextcloud-restic
-  namespace: home
+  namespace: storage
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
@@ -22,11 +23,12 @@ spec:
     - extract:
         key: volsync-restic-template
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: nextcloud
-  namespace: home
+  namespace: storage
 spec:
   sourcePVC: nextcloud
   trigger:

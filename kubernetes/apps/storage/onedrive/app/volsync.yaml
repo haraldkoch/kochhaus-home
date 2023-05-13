@@ -4,7 +4,7 @@ apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: onedrive-restic
-  namespace: home
+  namespace: storage
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
@@ -28,7 +28,7 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: onedrive
-  namespace: home
+  namespace: storage
 spec:
   sourcePVC: onedrive-config-v4
   trigger:

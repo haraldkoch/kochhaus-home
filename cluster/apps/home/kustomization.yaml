@@ -4,5 +4,4 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - emqx
-  - nextcloud
   - node-red
