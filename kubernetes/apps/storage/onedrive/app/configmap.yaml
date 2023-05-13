@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: onedrive-settings
-  namespace: home
+  namespace: storage
   labels:
     app.kubernetes.io/name: onedrive
     app.kubernetes.io/instance: onedrive

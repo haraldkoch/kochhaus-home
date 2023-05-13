@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: &name nextcloud
-  namespace: home
+  namespace: storage
   labels:
     app.kubernetes.io/name: *name
     app.kubernetes.io/instance: *name

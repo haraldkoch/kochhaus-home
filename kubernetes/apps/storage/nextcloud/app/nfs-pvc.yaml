@@ -22,7 +22,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: nextcloud-nfs
-  namespace: home
+  namespace: storage
 spec:
   accessModes: ["ReadWriteMany"]
   storageClassName: nextcloud-nfs
