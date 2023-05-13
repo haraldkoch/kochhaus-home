@@ -29,7 +29,7 @@ spec:
   values:
     initContainers:
       01-init-db:
-        image: ghcr.io/haraldkoch/postgres-initdb:15.2
+        image: ghcr.io/haraldkoch/postgres-initdb:15.3
         env:
         envFrom:
           - secretRef:
