@@ -1,11 +1,12 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: ci
+namespace: cicd
 
 resources:
   # Git Clone - https://hub.tekton.dev/tekton/task/git-clone
-  - https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.8/git-clone.yaml
+  - https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-clone/0.9/git-clone.yaml
   # Git CLI - https://hub.tekton.dev/tekton/task/git-cli
   - https://raw.githubusercontent.com/tektoncd/catalog/main/task/git-cli/0.4/git-cli.yaml
   # Buildah - https://hub.tekton.dev/tekton/task/buildah
@@ -15,8 +16,7 @@ resources:
   # Curl - https://hub.tekton.dev/tekton/task/curl
   - https://raw.githubusercontent.com/tektoncd/catalog/main/task/curl/0.1/curl.yaml
 
-  - show-readme.yaml
-  - cleanup
+  - ./show-readme.yaml
 
 # patchesJSON6902:
 #   - target:
