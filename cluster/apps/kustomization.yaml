@@ -7,7 +7,6 @@ resources:
   - flux-system
   - home
   - joomla
-  - media
   - monitoring
   - static
   - system

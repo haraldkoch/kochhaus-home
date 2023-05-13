@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -31,12 +32,14 @@ spec:
       tag: 0.49.3
     env:
       TZ: "${TIMEZONE}"
+      ND_AUTHREQUESTLIMIT: 0
       ND_DATAFOLDER: /config
-      ND_ENABLEGRAVATAR: "true"
+      ND_ENABLEGRAVATAR: true
+      ND_ENABLESHARING: true
       ND_LOGLEVEL: info
       ND_MUSICFOLDER: /music
       ND_PORT: &port 80
-      ND_REVERSEPROXYUSERHEADER: "Remote-User"
+      ND_REVERSEPROXYUSERHEADER: Remote-User
       ND_REVERSEPROXYWHITELIST: "${NETWORK_K8S_POD_CIDR},${NETWORK_K8S_POD_CIDR_V6}"
       ND_SCANSCHEDULE: "@every 1h"
     envFrom:
@@ -47,10 +50,25 @@ spec:
         ports:
           http:
             port: *port
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /ping
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        ingressClassName: nginx
         annotations:
           auth.home.arpa/enabled: "true"
           external-dns.home.arpa/enabled: "true"
@@ -68,7 +86,7 @@ spec:
       runAsUser: 1022
       runAsGroup: 2000
       fsGroup: 2000
-      fsGroupChangePolicy: "OnRootMismatch"
+      fsGroupChangePolicy: OnRootMismatch
     persistence:
       config:
         enabled: true
@@ -76,7 +94,7 @@ spec:
       music:
         enabled: true
         type: nfs
-        server: "mnemosyne.${PRIVATE_STATIC_DOMAIN}"
+        server: "${SECRET_MEDIA_SERVER}"
         path: /media/music
         mountPath: /music
         readOnly: true

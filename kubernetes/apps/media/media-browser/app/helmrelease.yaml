@@ -1,8 +1,9 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app media-browser
+  name: media-browser
   namespace: media
 spec:
   interval: 15m
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -25,33 +26,48 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
-    nameOverride: *app
+    controller:
+      type: statefulset
     image:
+      # https://github.com/filebrowser/filebrowser/issues/1571
       repository: ghcr.io/haraldkoch/filebrowser
       tag: v2.23.0
     env:
       TZ: ${TIMEZONE}
-      FB_PORT: 8080
       FB_DATABASE: "/config/filebrowser.db"
       FB_ROOT: "/media"
       FB_LOG: "stdout"
-      FB_NOAUTH: "false"
+      FB_NOAUTH: "true"
     service:
       main:
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
-            port: 8080
+            port: &port 80
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /health
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
+      startup:
+        enabled: false
     ingress:
       main:
         enabled: true
         ingressClassName: nginx
         annotations:
-          hajimari.io/icon: mdi:multimedia
+          hajimari.io/icon: mdi:folder-play-outline
         hosts:
-          - host: &host "media-browser.${CLUSTER_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -63,18 +79,22 @@ spec:
       runAsGroup: 2000
       fsGroup: 2000
       fsGroupChangePolicy: "OnRootMismatch"
+    volumeClaimTemplates:
+      - name: config
+        mountPath: /config
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: ceph-block
     persistence:
-      config:
-        enabled: true
-        existingClaim: media-browser-config-v4
       media:
         enabled: true
-        existingClaim: media-nfs
+        type: nfs
+        server: ${SECRET_MEDIA_SERVER}
+        path: /media
         mountPath: /media
     resources:
       requests:
-        cpu: 15m
-        memory: 100Mi
+        cpu: 10m
+        memory: 50Mi
       limits:
-        cpu: 15m
-        memory: 100Mi
+        memory: 500Mi
