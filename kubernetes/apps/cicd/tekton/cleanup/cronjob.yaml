@@ -1,8 +1,9 @@
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: tekton-pipelinerun-cleaner
-  namespace: ci
+  namespace: cicd
   labels:
     app: tekton-pipelinerun-cleaner
     app.kubernetes.io/name: tekton-pipelinerun-cleaner
