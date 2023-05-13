@@ -39,7 +39,7 @@ spec:
     command: ["/bin/bash", "/app/opnsense-backup.sh"]
     env:
       OPNSENSE_URL: "https://gw.${PRIVATE_STATIC_DOMAIN}"
-      S3_URL: "http://minio.home.svc.cluster.local:9000"
+      S3_URL: "http://minio.storage.svc.cluster.local:9000"
     envFrom:
       - secretRef:
           name: *app
