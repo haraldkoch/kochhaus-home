@@ -9,7 +9,6 @@ resources:
   - gatus
   - goldpinger
   - grafana
-  - kube-prometheus-stack
   - network-ups-tools
   - prometheus-dnssec-exporter
   - prometheus-nut-exporter
