@@ -4,10 +4,6 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - alertmanager-discord-webhook
-  - apprise
-  - blackbox-exporter
-  - gatus
-  - goldpinger
   - network-ups-tools
   - prometheus-dnssec-exporter
   - prometheus-nut-exporter
