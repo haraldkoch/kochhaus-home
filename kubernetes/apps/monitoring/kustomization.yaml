@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # Pre Flux-Kustomizations
+  - namespace.yaml
+  # Flux-Kustomizations
+  #- alertmanager-discord-webhook/ks.yaml
+  #- apprise/ks.yaml
+  #- blackbox-exporter/ks.yaml
+  #- gatus/ks.yaml
+  #- goldpinger/ks.yaml
+  #- grafana/ks.yaml
+  #- kube-prometheus-stack/ks.yaml
+  #- loki/ks.yaml
+  #- miscellaneous/ks.yaml
+  #- network-ups-tools/ks.yaml
+  #- prometheus-dnssec-exporter/ks.yaml
+  #- prometheus-nut-exporter/ks.yaml
+  #- smartctl-exporter/ks.yaml
+  #- smokeping/ks.yaml
+  #- snmp-exporter/ks.yaml
+  #- speedtest-exporter/ks.yaml
+  #- sr505n-cache/ks.yaml
+  - thanos/ks.yaml
+  #- tplink-plug-exporter/ks.yaml
+  #- vector/ks.yaml
+  #- x509-certificate-exporter/ks.yaml
