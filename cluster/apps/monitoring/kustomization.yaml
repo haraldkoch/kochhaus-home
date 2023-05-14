@@ -10,7 +10,6 @@ resources:
   - goldpinger
   - grafana
   - kube-prometheus-stack
-  - loki
   - miscellaneous
   - network-ups-tools
   - prometheus-dnssec-exporter
