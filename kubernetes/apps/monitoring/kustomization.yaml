@@ -19,7 +19,7 @@ resources:
   #- prometheus-nut-exporter/ks.yaml
   - smartctl-exporter/ks.yaml
   #- smokeping/ks.yaml
-  #- snmp-exporter/ks.yaml
+  - snmp-exporter/ks.yaml
   #- speedtest-exporter/ks.yaml
   #- sr505n-cache/ks.yaml
   - thanos/ks.yaml

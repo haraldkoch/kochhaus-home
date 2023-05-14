@@ -1,8 +1,9 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app snmp-exporter-opnsense
+  name: &app snmp-exporter-sr505n
   namespace: monitoring
 spec:
   interval: 15m
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -25,7 +26,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-
   values:
     fullnameOverride: *app
     image:
@@ -51,14 +51,14 @@ spec:
     serviceMonitor:
       enabled: true
       namespace: monitoring
+      params:
+        - name: sr505n
+          module:
+            - sr505n_dsl
+          target: 192.168.1.1
       path: /snmp
-      # interval: 15s
-      scrapeTimeout: 10s
+      interval: 60s
+      scrapeTimeout: 55s
       relabelings:
         - sourceLabels: [__param_target]
           targetLabel: instance
-      params:
-        - name: gw
-          module:
-            - if_mib
-          target: ${PRIVATE_GATEWAY}
