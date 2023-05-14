@@ -11,7 +11,7 @@ resources:
   #- blackbox-exporter/ks.yaml
   #- gatus/ks.yaml
   #- goldpinger/ks.yaml
-  #- grafana/ks.yaml
+  - grafana/ks.yaml
   - kube-prometheus-stack/ks.yaml
   - loki/ks.yaml
   #- network-ups-tools/ks.yaml
