@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - calico-system
   - flux-system
-  - joomla
   - monitoring
   - static
   - system
