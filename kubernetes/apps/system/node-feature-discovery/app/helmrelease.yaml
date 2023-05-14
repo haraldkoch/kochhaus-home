@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,60 +15,28 @@ spec:
         kind: HelmRepository
         name: node-feature-discovery
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
+    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    crds: CreateReplace
     remediation:
       retries: 3
   uninstall:
     keepHistory: false
   values:
-    nodeFeatureRule:
-      createCRD: false
     worker:
-      annotations:
-        configmap.reloader.stakater.com/reload: node-feature-discovery-worker-conf
       config:
         core:
-          sources:
-            - custom
-            - pci
-            - usb
+          sources: ["custom", "pci", "usb"]
         sources:
           usb:
-            deviceClassWhitelist:
-              - "02"
-              - "03"
-              - "0a"
-              - "ef"
-              - "fe"
-              - "ff"
-            deviceLabelFields:
-              - class
-              - vendor
-              - device
-          custom:
-            - name: apcups
-              matchOn:
-                - usbId:
-                    class: ["03"]
-                    vendor: ["051d"]
-                    device: ["0002"]
-            - name: flirc
-              matchOn:
-                - usbId:
-                    class: ["03"]
-                    vendor: ["20a0"]
-                    device: ["0001"]
-            - name: intel-gpu
-              matchOn:
-                - pciId:
-                    class: ["0300"]
-                    vendor: ["8086"]
+            deviceClassWhitelist: ["02", "03", "0a", "ef", "fe", "ff"]
+            deviceLabelFields: ["class", "vendor", "device"]
       tolerations:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
