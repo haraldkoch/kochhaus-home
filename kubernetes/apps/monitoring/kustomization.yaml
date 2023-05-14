@@ -7,10 +7,10 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   #- ./alertmanager-discord-webhook/ks.yaml
-  #- ./apprise/ks.yaml
-  #- ./blackbox-exporter/ks.yaml
-  #- ./gatus/ks.yaml
-  #- ./goldpinger/ks.yaml
+  - ./apprise/ks.yaml
+  - ./blackbox-exporter/ks.yaml
+  - ./gatus/ks.yaml
+  - ./goldpinger/ks.yaml
   - ./grafana/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
