@@ -12,7 +12,6 @@ resources:
   - prometheus-dnssec-exporter
   - prometheus-nut-exporter
   - smokeping
-  - snmp-exporter
   - speedtest-exporter
   - sr505n-cache
   - tplink-plug-exporter
