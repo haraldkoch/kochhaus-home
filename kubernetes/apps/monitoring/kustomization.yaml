@@ -14,7 +14,6 @@ resources:
   #- grafana/ks.yaml
   #- kube-prometheus-stack/ks.yaml
   - loki/ks.yaml
-  #- miscellaneous/ks.yaml
   #- network-ups-tools/ks.yaml
   #- prometheus-dnssec-exporter/ks.yaml
   #- prometheus-nut-exporter/ks.yaml
@@ -27,3 +26,5 @@ resources:
   #- tplink-plug-exporter/ks.yaml
   #- vector/ks.yaml
   #- x509-certificate-exporter/ks.yaml
+  # Standard Resources
+  - ./miscellaneous
