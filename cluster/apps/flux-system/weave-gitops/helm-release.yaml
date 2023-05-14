@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: weave-gitops
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -29,11 +30,11 @@ spec:
     adminUser:
       create: true
       username: admin
-    oidcSecret:
-      create: true
-      clientID: weave-gitops
-      issuerURL: https://auth.${CLUSTER_DOMAIN}
-      redirectURL: https://gitops.${CLUSTER_DOMAIN}/oauth2/callback
+    # oidcSecret:
+    #   create: true
+    #   clientID: weave-gitops
+    #   issuerURL: https://auth.${CLUSTER_DOMAIN}
+    #   redirectURL: https://gitops.${CLUSTER_DOMAIN}/oauth2/callback
     ingress:
       enabled: true
       className: nginx
@@ -41,7 +42,7 @@ spec:
         hajimari.io/appName: "GitOps Dashboard"
         hajimari.io/icon: mdi:sawtooth-wave
       hosts:
-        - host: &host "gitops.${CLUSTER_DOMAIN}"
+        - host: &host gitops.${CLUSTER_DOMAIN}
           paths:
             - path: /
               pathType: Prefix
@@ -73,7 +74,7 @@ spec:
       name: weave-gitops-secret
       valuesKey: adminPassword
       targetPath: adminUser.passwordHash
-    - kind: Secret
-      name: weave-gitops-secret
-      valuesKey: WEAVEGITOPS_OAUTH_CLIENT_SECRET
-      targetPath: oidcSecret.clientSecret
+    # - kind: Secret
+    #   name: weave-gitops-secret
+    #   valuesKey: WEAVEGITOPS_OAUTH_CLIENT_SECRET
+    #   targetPath: oidcSecret.clientSecret
