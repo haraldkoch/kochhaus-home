@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,13 +15,15 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
+    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    crds: CreateReplace
     remediation:
       retries: 3
   uninstall:
@@ -29,6 +32,8 @@ spec:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       config:
+        global:
+          resolve_timeout: 5m
         receivers:
           - name: heartbeat
             webhook_configs:
@@ -123,7 +128,10 @@ spec:
             etcd:
               enabled: true
     kube-state-metrics:
-      metricLabelsAllowlist: ["persistentvolumeclaims=[*]"]
+      metricLabelsAllowlist:
+        - "pods=[*]"
+        - "deployments=[*]"
+        - "persistentvolumeclaims=[*]"
       prometheus:
         monitor:
           enabled: true
@@ -155,6 +163,7 @@ spec:
           - sourceLabels: ["__name__"]
             regex: "(aggregator_openapi|aggregator_unavailable|apiextensions_openapi|apiserver_admission|apiserver_audit|apiserver_cache|apiserver_cel|apiserver_client|apiserver_crd|apiserver_current|apiserver_envelope|apiserver_flowcontrol|apiserver_init|apiserver_kube|apiserver_longrunning|apiserver_request|apiserver_requested|apiserver_response|apiserver_selfrequest|apiserver_storage|apiserver_terminated|apiserver_tls|apiserver_watch|apiserver_webhooks|authenticated_user|authentication|disabled_metric|etcd_bookmark|etcd_lease|etcd_request|field_validation|get_token|go|grpc_client|hidden_metric|kube_apiserver|kubernetes_build|kubernetes_feature|node_authorizer|pod_security|process_cpu|process_max|process_open|process_resident|process_start|process_virtual|registered_metric|rest_client|scrape_duration|scrape_samples|scrape_series|serviceaccount_legacy|serviceaccount_stale|serviceaccount_valid|watch_cache|workqueue)_(.+)"
             action: keep
+          # Remove high cardinality metrics
           - sourceLabels: ["__name__"]
             regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
             action: drop
@@ -224,24 +233,20 @@ spec:
         enabled: true
       prometheusSpec:
         replicas: 1
-        replicaExternalLabelName: __replica__ # must match with thanos value `.query.replicaLabel[0]`
-        # Breaks any metric that has an existing "cluster" label on a metric
-        # externalLabels:
-        #   cluster: home # must match with thanos value `.ruler.clusterName`
+        replicaExternalLabelName: __replica__
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        enableAdminAPI: true
+        walCompression: true
         thanos:
           image: quay.io/thanos/thanos:v0.31.0
           objectStorageConfig:
             name: thanos-objstore-secret
             key: objstore.yml
-        podAntiAffinity: hard
-        ruleSelectorNilUsesHelmValues: false
-        serviceMonitorSelectorNilUsesHelmValues: false
-        podMonitorSelectorNilUsesHelmValues: false
-        probeSelectorNilUsesHelmValues: false
         retention: 2d
-        retentionSize: 6GB
-        enableAdminAPI: true
-        walCompression: true
+        retentionSize: 15GB
         storageSpec:
           volumeClaimTemplate:
             spec:
