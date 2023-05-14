@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -14,7 +15,7 @@ spec:
         kind: HelmRepository
         name: grafana
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -30,19 +31,13 @@ spec:
       repository: ghcr.io/haraldkoch/grafana
       tag: 9.5.2
     extraInitContainers:
-      - name: init-db
+      - name: 01-init-db
         image: ghcr.io/haraldkoch/postgres-initdb:15.3
         imagePullPolicy: IfNotPresent
         envFrom:
           - secretRef:
               name: grafana-secret
     replicas: 2
-    rbac:
-      pspEnabled: false
-    testFramework:
-      enabled: false
-    # admin:
-    #   existingSecret: grafana-secret
     env:
       GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.${CLUSTER_DOMAIN}/api/oidc/userinfo
       GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.${CLUSTER_DOMAIN}/api/oidc/authorization
@@ -50,9 +45,7 @@ spec:
       GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://auth.${CLUSTER_DOMAIN}/api/oidc/token
       GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
       GF_EXPLORE_ENABLED: true
-      GF_GRAFANA_NET_URL: https://grafana.net
-      GF_LOG_FILTERS: rendering:debug
-      GF_LOG_MODE: console
+      GF_FEATURE_TOGGLES_ENABLE: publicDashboards
       GF_PANELS_DISABLE_SANITIZE_HTML: true
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
       GF_SECURITY_ALLOW_EMBEDDING: true
@@ -63,31 +56,26 @@ spec:
     grafana.ini:
       analytics:
         check_for_updates: false
+        check_for_plugin_updates: false
         reporting_enabled: false
       auth:
-        signout_redirect_url: https://auth.${CLUSTER_DOMAIN}/logout
-        oauth_auto_login: false
+        oauth_auto_login: true
       auth.generic_oauth:
         enabled: true
         name: Authelia
-        client_id: # Set by env vars
-        client_secret: # Set by env vars secret
-        auth_url: # Set by env vars
-        token_url: # Set by env vars
-        api_url: # Set by env vars
-        scopes: "openid profile email groups"
+        icon: signin
+        scopes: openid profile email groups
         empty_scopes: false
         login_attribute_path: preferred_username
         groups_attribute_path: groups
         name_attribute_path: name
         use_pkce: true
       auth.generic_oauth.group_mapping:
+        org_id: 1
         role_attribute_path: |
           contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'people') && 'Viewer'
-        org_id: 1
       auth.basic:
         enabled: false
-        # disable_login_form: false
       auth.anonymous:
         enabled: true
         org_name: HomeOps
@@ -98,7 +86,7 @@ spec:
       dashboardproviders.yaml:
         apiVersion: 1
         providers:
-          - name: "default"
+          - name: default
             orgId: 1
             folder: ""
             type: file
@@ -118,16 +106,18 @@ spec:
           - name: Prometheus
             type: prometheus
             access: proxy
-            url: http://thanos-query.monitoring:9090
+            url: http://thanos-query-frontend.monitoring.svc.cluster.local:9090
             isDefault: true
           - name: Loki
             type: loki
             access: proxy
-            url: http://loki-gateway.monitoring:80
+            url: http://loki-gateway.monitoring.svc.cluster.local
+            jsonData:
+              maxLines: 250
           - name: Alertmanager
             type: alertmanager
             access: proxy
-            url: http://kube-prometheus-stack-alertmanager.monitoring:9093
+            url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
     dashboards:
@@ -140,12 +130,12 @@ spec:
         # Ref: https://grafana.com/grafana/dashboards/13502-minio-dashboard/
         minio:
           gnetId: 13502
-          revision: 10
+          revision: 21
           datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/1860-node-exporter-full/
         node-exporter-full:
           gnetId: 1860
-          revision: 29
+          revision: 30
           datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/763-redis-dashboard-for-prometheus-redis-exporter-1-x/
         redis:
@@ -169,6 +159,9 @@ spec:
         #  datasource: Prometheus
         #cert-manager:
         #  url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+        #  datasource: Prometheus
+        # external-secrets:
+        #  url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
         #  datasource: Prometheus
         #flux-cluster:
         #  url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
@@ -196,6 +189,9 @@ spec:
           datasource: Prometheus
         kubernetes-pods:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
+          datasource: Prometheus
+        miniflux:
+          url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
           datasource: Prometheus
     sidecar:
       dashboards:
@@ -245,6 +241,15 @@ spec:
         enabled: true
     persistence:
       enabled: false
+    testFramework:
+      enabled: false
+    topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app.kubernetes.io/name: grafana
     resources:
       requests:
         cpu: 100m
@@ -252,14 +257,3 @@ spec:
       limits:
         cpu: 500m
         memory: 512Mi
-    affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: app.kubernetes.io/name
-                    operator: In
-                    values: ["grafana"]
-              topologyKey: kubernetes.io/hostname
