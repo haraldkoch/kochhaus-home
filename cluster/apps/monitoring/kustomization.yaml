@@ -15,5 +15,4 @@ resources:
   - speedtest-exporter
   - sr505n-cache
   - tplink-plug-exporter
-  - vector
   - x509-certificate-exporter

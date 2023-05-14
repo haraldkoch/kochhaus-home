@@ -5,32 +5,31 @@ sources:
   journald_source:
     type: journald
     journal_directory: /var/log/journal
+
   kubernetes_source:
     type: kubernetes_logs
     pod_annotation_fields:
       container_image: container_image
       container_name: container_name
-      pod_annotations: pod_annotations
       pod_labels: pod_labels
       pod_name: pod_name
-  vector_metrics:
-    type: internal_metrics
+      pod_annotations: ""
+    namespace_annotation_fields:
+      namespace_labels: ""
+    node_annotation_fields:
+      node_labels: ""
 
 sinks:
   journald:
     type: vector
+    compression: true
     version: "2"
     address: vector-aggregator.monitoring.svc.cluster.local:6000
-    inputs:
-      - journald_source
+    inputs: ["journald_source"]
+
   kubernetes:
     type: vector
+    compression: true
     version: "2"
     address: vector-aggregator.monitoring.svc.cluster.local:6010
-    inputs:
-      - kubernetes_source
-  prometheus:
-    address: 0.0.0.0:9090
-    inputs:
-      - vector_metrics
-    type: prometheus_exporter
+    inputs: ["kubernetes_source"]
