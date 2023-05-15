@@ -1,17 +1,14 @@
 ---
-name: "Kubeconform (cluster)"
+name: "Kubeconform"
 
 on:
   workflow_dispatch:
-  push:
-    branches: ["main"]
-    paths: ["cluster/**"]
   pull_request:
     branches: ["main"]
-    paths: ["cluster/**"]
+    paths: ["kubernetes/**"]
 
 env:
-  KUBERNETES_DIR: ./cluster
+  KUBERNETES_DIR: ./kubernetes
   SCHEMA_DIR: /home/runner/.datree/crdSchemas
 
 jobs:

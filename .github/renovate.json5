@@ -24,14 +24,13 @@
   "ignorePaths": ["archive/**"],
   "timezone": "America/Toronto",
   "flux": {
-    "fileMatch": ["cluster/.+\\.ya?ml$", "kubernetes/.+\\.ya?ml$"]
+    "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
   "helm-values": {
-    "fileMatch": ["cluster/.+\\.ya?ml$", "kubernetes/.+\\.ya?ml$"]
+    "fileMatch": ["kubernetes/.+\\.ya?ml$"]
   },
   "kubernetes": {
     "fileMatch": [
-      "cluster/.+\\.ya?ml$",
       "kubernetes/.+\\.ya?ml$",
       "provision/ansible/.+\\.ya?ml.j2$"
     ]
@@ -48,28 +47,27 @@
       "datasourceTemplate": "github-releases"
     },
     {
-      "description": "Process CRD dependencies",
-      "fileMatch": ["cluster/crds/.+\\.ya?ml$"],
-      "matchStrings": [
-        // GitRepository where 'Git release/tag' matches 'Helm' version
-        "registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
-        // Kustomization where 'GitHub release artifact URL' matches 'Docker image' version
-        "datasource=(?<datasource>\\S+) image=(?<depName>\\S+)\n.*?-\\s(.*?)\/(?<currentValue>[^/]+)\/[^/]+\n"
-      ],
-      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}helm{{/if}}"
-    },
-    {
       "description": "Process custom dependencies",
       "fileMatch": [
-        "cluster/.+\\.ya?ml$",
-        "kubernetes/.+\\.ya?ml$",
         "provision/ansible/.+\\.ya?ml$"
+        "kubernetes/.+\\.ya?ml$",
       ],
       "matchStrings": [
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+    },
+    {
+      "description": "Process imageName values",
+      "fileMatch": [
+        "kubernetes/.+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "imageName: (?<depName>\\S+):(?<currentValue>.*\\-.*)"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "redhat"
     },
     {
       "description": "Process raw GitHub URLs",
