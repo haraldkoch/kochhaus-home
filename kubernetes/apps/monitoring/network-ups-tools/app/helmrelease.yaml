@@ -106,14 +106,9 @@ spec:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-                - key: feature.node.kubernetes.io/custom-apcups
+                - key: apc.feature.node.kubernetes.io/ups
                   operator: In
-                  values:
-                    - "true"
+                  values: ["true"]
     tolerations:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
-    #additionalContainers:
-    #  exporter:
-    #    name: exporter
-    #    image: ghcr.io/druggeri/nut_exporter:2.4.2
