@@ -10,55 +10,18 @@ env:
   KUBECONFIG: "{{.ROOT_DIR}}/provision/kubeconfig"
 
 includes:
-  ansible: .taskfiles/AnsibleTasks.yml
-  cluster: .taskfiles/ClusterTasks.yml
-  db: .taskfiles/DbTasks.yml
-  debug: .taskfiles/DebugTasks.yml
-  precommit: .taskfiles/PreCommitTasks.yml
-  rook: .taskfiles/RookTasks.yml
+  ansible: .taskfiles/Ansible/Tasks.yml
+  cluster: .taskfiles/Cluster/Tasks.yml
+  db: .taskfiles/Database/Tasks.yml
+  es: .taskfiles/ExternalSecrets/Tasks.yml
+  fx: .taskfiles/Flux/Tasks.yml
+  ku: .taskfiles/Kubernetes/Tasks.yml
+  rook: .taskfiles/Rook/Tasks.yml
   snapshot: .taskfiles/Snapshot/Tasks.yml
-  terraform: .taskfiles/TerraformTasks.yml
-  sops: .taskfiles/SopsTasks.yml
   vs: .taskfiles/VolSync/Tasks.yml
 
 tasks:
 
-  init:
-    desc: Initialize workstation dependencies with Brew
-    cmds:
-      - brew install {{.DEPS}} {{.CLI_ARGS}}
-    preconditions:
-      - sh: command -v brew
-        msg: |
-          Homebrew is not installed. Using MacOS, Linux or WSL?
-          Head over to https://brew.sh to get up and running.
-    vars:
-      DEPS: >-
-        age
-        ansible
-        direnv
-        fluxcd/tap/flux
-        go-task/tap/go-task
-        helm
-        ipcalc
-        jq
-        kubernetes-cli
-        kustomize
-        pre-commit
-        prettier
-        sops
-        stern
-        terraform
-        tflint
-        yamllint
-        yq
-
-  verify:
-    desc: Verify env settings
-    cmds:
-      - ./configure --verify
-
-  configure:
-    desc: Configure repository from env settings
-    cmds:
-      - ./configure
+  default:
+    silent: true
+    cmds: ["task -l"]

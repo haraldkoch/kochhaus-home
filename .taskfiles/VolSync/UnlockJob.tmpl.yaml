@@ -16,10 +16,8 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: unlock
-          image: docker.io/restic/restic:0.14.0
-          args:
-            - unlock
-            - --remove-all
+          image: docker.io/restic/restic:0.15.1
+          args: ["unlock", "--remove-all"]
           envFrom:
             - secretRef:
                 name: "${rsrc}-restic-secret"
