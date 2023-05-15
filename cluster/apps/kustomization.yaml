@@ -4,4 +4,3 @@ kind: Kustomization
 resources:
   - calico-system
   - flux-system
-  - monitoring
