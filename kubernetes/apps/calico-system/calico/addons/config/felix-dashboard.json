@@ -32,13 +32,8 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "Prometheus",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
+      "datasource": "calico-demo-prometheus",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
       "id": 6,
       "panels": [],
       "title": "Alerts and general info",
@@ -46,14 +41,9 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "description": "These metrics are part of general information related to your Calico implementation.",
-      "gridPos": {
-        "h": 4,
-        "w": 8,
-        "x": 0,
-        "y": 1
-      },
+      "gridPos": { "h": 4, "w": 8, "x": 0, "y": 1 },
       "id": 2,
       "links": [],
       "options": {
@@ -64,14 +54,8 @@
             "thresholds": {
               "mode": "absolute",
               "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
+                { "color": "green", "value": null },
+                { "color": "red", "value": 80 }
               ]
             }
           },
@@ -102,7 +86,7 @@
       "colorBackground": false,
       "colorValue": true,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -111,25 +95,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 8,
-        "y": 1
-      },
+      "gridPos": { "h": 4, "w": 3, "x": 8, "y": 1 },
       "id": 25,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -139,13 +112,7 @@
       "postfixFontSize": "200%",
       "prefix": "",
       "prefixFontSize": "200%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -170,13 +137,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "200%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -184,7 +145,7 @@
       "colorBackground": false,
       "colorValue": true,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -193,25 +154,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 11,
-        "y": 1
-      },
+      "gridPos": { "h": 4, "w": 3, "x": 11, "y": 1 },
       "id": 23,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -221,13 +171,7 @@
       "postfixFontSize": "200%",
       "prefix": "",
       "prefixFontSize": "200%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -252,13 +196,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "200%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -266,7 +204,7 @@
       "colorBackground": false,
       "colorValue": true,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -275,25 +213,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 14,
-        "y": 1
-      },
+      "gridPos": { "h": 4, "w": 3, "x": 14, "y": 1 },
       "id": 18,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -303,13 +230,7 @@
       "postfixFontSize": "200%",
       "prefix": "",
       "prefixFontSize": "200%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -334,13 +255,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "200%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -348,16 +263,11 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "description": "This graph shows you all the errors that Calico encounters, it is important to note occasional errors are acceptable. However, rise in the number of error or constant error counters means Calico is not working properly.",
       "fill": 1,
       "fillGradient": 0,
-      "gridPos": {
-        "h": 4,
-        "w": 7,
-        "x": 17,
-        "y": 1
-      },
+      "gridPos": { "h": 4, "w": 7, "x": 17, "y": 1 },
       "hiddenSeries": false,
       "id": 28,
       "legend": {
@@ -374,9 +284,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
-      "options": {
-        "dataLinks": []
-      },
+      "options": { "dataLinks": [] },
       "percentage": false,
       "pluginVersion": "6.7.2",
       "pointradius": 2,
@@ -418,11 +326,7 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Errors plot",
-      "tooltip": {
-        "shared": true,
-        "sort": 1,
-        "value_type": "individual"
-      },
+      "tooltip": { "shared": true, "sort": 1, "value_type": "individual" },
       "transparent": true,
       "type": "graph",
       "xaxis": {
@@ -450,20 +354,12 @@
           "show": true
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "yaxis": { "align": false, "alignLevel": null }
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "description": "More policies on Felix means more effort required by Calico to manage packets. ",
-      "gridPos": {
-        "h": 4,
-        "w": 8,
-        "x": 0,
-        "y": 5
-      },
+      "gridPos": { "h": 4, "w": 8, "x": 0, "y": 5 },
       "id": 20,
       "options": {
         "fieldOptions": {
@@ -473,14 +369,8 @@
             "thresholds": {
               "mode": "absolute",
               "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
+                { "color": "green", "value": null },
+                { "color": "red", "value": 80 }
               ]
             }
           },
@@ -511,7 +401,7 @@
       "colorBackground": false,
       "colorValue": true,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -520,25 +410,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 8,
-        "y": 5
-      },
+      "gridPos": { "h": 4, "w": 3, "x": 8, "y": 5 },
       "id": 29,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -548,13 +427,7 @@
       "postfixFontSize": "200%",
       "prefix": "",
       "prefixFontSize": "200%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -579,13 +452,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "200%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -593,7 +460,7 @@
       "colorBackground": false,
       "colorValue": true,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -602,25 +469,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 11,
-        "y": 5
-      },
+      "gridPos": { "h": 4, "w": 3, "x": 11, "y": 5 },
       "id": 26,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -630,13 +486,7 @@
       "postfixFontSize": "200%",
       "prefix": "",
       "prefixFontSize": "200%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -661,13 +511,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "200%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -675,7 +519,7 @@
       "colorBackground": false,
       "colorValue": true,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -684,25 +528,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 14,
-        "y": 5
-      },
+      "gridPos": { "h": 4, "w": 3, "x": 14, "y": 5 },
       "id": 24,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -712,13 +545,7 @@
       "postfixFontSize": "200%",
       "prefix": "",
       "prefixFontSize": "200%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -743,13 +570,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "200%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "avg"
     },
     {
@@ -757,15 +578,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "fill": 1,
       "fillGradient": 0,
-      "gridPos": {
-        "h": 4,
-        "w": 7,
-        "x": 17,
-        "y": 5
-      },
+      "gridPos": { "h": 4, "w": 7, "x": 17, "y": 5 },
       "hiddenSeries": false,
       "id": 31,
       "legend": {
@@ -780,9 +596,7 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
+      "options": { "dataLinks": [] },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -804,11 +618,7 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Felix dropped logs",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
+      "tooltip": { "shared": true, "sort": 0, "value_type": "individual" },
       "transparent": true,
       "type": "graph",
       "xaxis": {
@@ -836,20 +646,12 @@
           "show": true
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "yaxis": { "align": false, "alignLevel": null }
     },
     {
       "collapsed": false,
-      "datasource": "Prometheus",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 9
-      },
+      "datasource": "calico-demo-prometheus",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 9 },
       "id": 14,
       "panels": [],
       "title": "Dataplane",
@@ -860,16 +662,11 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "description": "Dataplane apply time can indicate how busy your Kubernetes instance is. This can slow down Calico performance",
       "fill": 2,
       "fillGradient": 4,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 0,
-        "y": 10
-      },
+      "gridPos": { "h": 7, "w": 8, "x": 0, "y": 10 },
       "hiddenSeries": false,
       "id": 16,
       "legend": {
@@ -884,9 +681,7 @@
       "lines": true,
       "linewidth": 2,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
+      "options": { "dataLinks": [] },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -911,11 +706,7 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Dataplane apply time quantile 0.5",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
+      "tooltip": { "shared": true, "sort": 0, "value_type": "individual" },
       "transparent": true,
       "type": "graph",
       "xaxis": {
@@ -943,25 +734,17 @@
           "show": true
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "yaxis": { "align": false, "alignLevel": null }
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "fill": 2,
       "fillGradient": 4,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 8,
-        "y": 10
-      },
+      "gridPos": { "h": 7, "w": 8, "x": 8, "y": 10 },
       "hiddenSeries": false,
       "id": 15,
       "legend": {
@@ -976,9 +759,7 @@
       "lines": true,
       "linewidth": 2,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
+      "options": { "dataLinks": [] },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -1000,11 +781,7 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Dataplane apply time quantile 0.9",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
+      "tooltip": { "shared": true, "sort": 0, "value_type": "individual" },
       "transparent": true,
       "type": "graph",
       "xaxis": {
@@ -1032,25 +809,17 @@
           "show": true
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "yaxis": { "align": false, "alignLevel": null }
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "fill": 2,
       "fillGradient": 4,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 16,
-        "y": 10
-      },
+      "gridPos": { "h": 7, "w": 8, "x": 16, "y": 10 },
       "hiddenSeries": false,
       "id": 12,
       "legend": {
@@ -1065,9 +834,7 @@
       "lines": true,
       "linewidth": 2,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
+      "options": { "dataLinks": [] },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -1089,11 +856,7 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Dataplane apply time quantile 0.99",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
+      "tooltip": { "shared": true, "sort": 0, "value_type": "individual" },
       "transparent": true,
       "type": "graph",
       "xaxis": {
@@ -1121,20 +884,12 @@
           "show": true
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "yaxis": { "align": false, "alignLevel": null }
     },
     {
       "collapsed": false,
       "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 17
-      },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 17 },
       "id": 35,
       "panels": [],
       "title": "Route table",
@@ -1145,15 +900,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "fill": 1,
       "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 0,
-        "y": 18
-      },
+      "gridPos": { "h": 7, "w": 8, "x": 0, "y": 18 },
       "hiddenSeries": false,
       "id": 33,
       "legend": {
@@ -1168,9 +918,7 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
+      "options": { "dataLinks": [] },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -1192,11 +940,7 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Felix route table list seconds quantile 0.5",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
+      "tooltip": { "shared": true, "sort": 0, "value_type": "individual" },
       "transparent": true,
       "type": "graph",
       "xaxis": {
@@ -1224,25 +968,17 @@
           "show": true
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "yaxis": { "align": false, "alignLevel": null }
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "fill": 1,
       "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 8,
-        "y": 18
-      },
+      "gridPos": { "h": 7, "w": 8, "x": 8, "y": 18 },
       "hiddenSeries": false,
       "id": 36,
       "legend": {
@@ -1257,9 +993,7 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
+      "options": { "dataLinks": [] },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -1281,11 +1015,7 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Felix route table list seconds quantile 0.9",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
+      "tooltip": { "shared": true, "sort": 0, "value_type": "individual" },
       "transparent": true,
       "type": "graph",
       "xaxis": {
@@ -1313,25 +1043,17 @@
           "show": true
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "yaxis": { "align": false, "alignLevel": null }
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "fill": 1,
       "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 16,
-        "y": 18
-      },
+      "gridPos": { "h": 7, "w": 8, "x": 16, "y": 18 },
       "hiddenSeries": false,
       "id": 37,
       "legend": {
@@ -1346,9 +1068,7 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
+      "options": { "dataLinks": [] },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -1370,11 +1090,7 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Felix route table list seconds quantile 0.99",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
+      "tooltip": { "shared": true, "sort": 0, "value_type": "individual" },
       "transparent": true,
       "type": "graph",
       "xaxis": {
@@ -1402,10 +1118,7 @@
           "show": true
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "yaxis": { "align": false, "alignLevel": null }
     }
   ],
   "refresh": false,
@@ -1421,13 +1134,8 @@
     "cluster monitoring",
     "policy monitoring"
   ],
-  "templating": {
-    "list": []
-  },
-  "time": {
-    "from": "now-6h",
-    "to": "now"
-  },
+  "templating": { "list": [] },
+  "time": { "from": "now-6h", "to": "now" },
   "timepicker": {
     "refresh_intervals": [
       "5s",
@@ -1445,8 +1153,6 @@
   "timezone": "",
   "title": "Felix Dashboard (Calico)",
   "uid": "calico-felix-dashboard",
-  "variables": {
-    "list": []
-  },
+  "variables": { "list": [] },
   "version": 1
 }
