@@ -1,0 +1,50 @@
+---
+version: "3"
+
+tasks:
+
+  verify:
+    desc: Verify flux meets the prerequisites
+    cmds:
+      - flux check --pre
+
+  install:
+    desc: Install Flux into your cluster
+    cmds:
+      - kubectl apply --kustomize {{.CLUSTER_DIR}}/bootstrap/
+      - cat {{.SOPS_AGE_KEY_FILE}} | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
+      - kubectl apply --kustomize {{.CLUSTER_DIR}}/flux/flux-system/
+      - task: reconcile
+    preconditions:
+      - sh: test -f {{.SOPS_AGE_KEY_FILE}}
+        msg: |
+          Age key file is not found. Did you forget to create it?
+    vars:
+      SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
+
+  reconcile:
+    desc: Force update Flux to pull in changes from your Git repository
+    cmds:
+      - flux reconcile -n flux-system source git flux-cluster
+      - flux reconcile -n flux-system kustomization flux-cluster
+
+  list-dockerhub:
+    desc: What dockerhub images are running in my cluster
+    cmds:
+      - kubectl get pods --all-namespaces -o=jsonpath="{range .items[*]}{'\n'}{range .spec.containers[*]}{.image}{'\n'}{end}{end}" | sort | uniq | grep -Ev 'quay|gcr|ghcr|ecr|us-docker|registry.k8s' | grep -Ev 'bitnami|rook|intel|grafana' |  sed -e 's/docker\.io\///g' | sort | uniq
+
+  delete-failed-pods:
+    desc: Deletes failed pods
+    cmds:
+      - kubectl delete pods --field-selector status.phase=Failed -A --ignore-not-found=true
+
+  delete-jobs:
+    desc: Delete all jobs
+    cmds:
+      - kubectl delete job -A --all
+
+  hr-restart:
+    desc: Restart all failed Helm Releases
+    cmds:
+      - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -l bash -c 'flux suspend hr $0 -n $1'
+      - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -l bash -c 'flux resume hr $0 -n $1'
