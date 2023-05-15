@@ -1,12 +1,13 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/monitoring.coreos.com/prometheusrule_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: flux-system
+  name: flux-rules
   namespace: flux-system
 spec:
   groups:
-    - name: GitOpsToolkit
+    - name: flux.rules
       rules:
         - alert: FluxComponentAbsent
           annotations:
@@ -17,11 +18,15 @@ spec:
           labels:
             severity: critical
         - alert: FluxReconciliationFailure
+          annotations:
+            summary: >-
+              {{ $labels.kind }} {{ $labels.namespace }}/{{ $labels.name }} reconciliation
+              has been failing for more than 15 minutes.
           expr: |
             max(gotk_reconcile_condition{status="False",type="Ready"}) by (namespace, name, kind)
-            + on(namespace, name, kind) (max(gotk_reconcile_condition{status="Deleted"}) by (namespace, name, kind)) * 2 == 1
-          for: 10m
+              +
+            on(namespace, name, kind) (max(gotk_reconcile_condition{status="Deleted"})
+              by (namespace, name, kind)) * 2 == 1
+          for: 15m
           labels:
-            severity: page
-          annotations:
-            summary: "{{ $labels.kind }} {{ $labels.namespace }}/{{ $labels.name }} reconciliation has been failing for more than ten minutes."
+            severity: critical

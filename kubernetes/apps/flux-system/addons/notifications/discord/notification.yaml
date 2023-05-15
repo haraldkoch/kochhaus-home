@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/notification.toolkit.fluxcd.io/provider_v1beta2.json
 apiVersion: notification.toolkit.fluxcd.io/v1beta2
 kind: Provider
 metadata:
@@ -11,6 +12,7 @@ spec:
   secretRef:
     name: discord-webhook-url
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/notification.toolkit.fluxcd.io/alert_v1beta2.json
 apiVersion: notification.toolkit.fluxcd.io/v1beta2
 kind: Alert
 metadata:
@@ -22,12 +24,19 @@ spec:
     name: discord
   eventSeverity: error
   eventSources:
+    - kind: GitRepository
+      name: "*"
     - kind: HelmRelease
+      name: "*"
+    - kind: HelmRepository
       name: "*"
     - kind: Kustomization
       name: "*"
-    - kind: GitRepository
+    - kind: OCIRepository
       name: "*"
   exclusionList:
+    - "error.*lookup github\\.com"
+    - "error.*lookup raw\\.githubusercontent\\.com"
+    - "dial.*tcp.*timeout"
     - "waiting.*socket"
   suspend: false

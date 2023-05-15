@@ -1,8 +1,9 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/notification.toolkit.fluxcd.io/receiver_v1.json
 apiVersion: notification.toolkit.fluxcd.io/v1
 kind: Receiver
 metadata:
-  name: github-receiver
+  name: home-ops
   namespace: flux-system
 spec:
   type: github
@@ -12,7 +13,6 @@ spec:
   secretRef:
     name: github-webhook-secret
   resources:
-    # new kubernetes folder
     - apiVersion: source.toolkit.fluxcd.io/v1
       kind: GitRepository
       name: home-kubernetes
@@ -39,35 +39,5 @@ spec:
 
     - apiVersion: kustomize.toolkit.fluxcd.io/v1
       kind: Kustomization
-      name: core
-      namespace: flux-system
-
-    - apiVersion: kustomize.toolkit.fluxcd.io/v1
-      kind: Kustomization
-      name: crds
-      namespace: flux-system
-
-    - apiVersion: kustomize.toolkit.fluxcd.io/v1
-      kind: Kustomization
       name: flux-cluster
-      namespace: flux-system
-
-    - apiVersion: kustomize.toolkit.fluxcd.io/v1
-      kind: Kustomization
-      name: external-snapshotter-crds
-      namespace: flux-system
-
-    - apiVersion: kustomize.toolkit.fluxcd.io/v1
-      kind: Kustomization
-      name: prometheus-operator-crds
-      namespace: flux-system
-
-    - apiVersion: kustomize.toolkit.fluxcd.io/v1
-      kind: Kustomization
-      name: kyverno-crds
-      namespace: flux-system
-
-    - apiVersion: kustomize.toolkit.fluxcd.io/v1
-      kind: Kustomization
-      name: traefik-crds
       namespace: flux-system
