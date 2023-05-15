@@ -13,7 +13,6 @@ spec:
     name: flux-cluster
   dependsOn:
     - name: config
-    - name: crds
   decryption:
     provider: sops
     secretRef:
