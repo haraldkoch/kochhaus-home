@@ -21,25 +21,15 @@
     {
       "collapsed": false,
       "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
       "id": 52,
       "panels": [],
       "title": "summaries",
       "type": "row"
     },
     {
-      "datasource": "Prometheus",
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 0,
-        "y": 1
-      },
+      "datasource": "calico-demo-prometheus",
+      "gridPos": { "h": 6, "w": 5, "x": 0, "y": 1 },
       "id": 48,
       "options": {
         "displayMode": "basic",
@@ -50,14 +40,8 @@
             "thresholds": {
               "mode": "absolute",
               "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
+                { "color": "green", "value": null },
+                { "color": "red", "value": 80 }
               ]
             }
           },
@@ -87,7 +71,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -96,25 +80,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 5,
-        "y": 1
-      },
+      "gridPos": { "h": 3, "w": 2, "x": 5, "y": 1 },
       "id": 50,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -123,13 +96,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -154,23 +121,12 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
-      "datasource": "Prometheus",
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 7,
-        "y": 1
-      },
+      "datasource": "calico-demo-prometheus",
+      "gridPos": { "h": 6, "w": 5, "x": 7, "y": 1 },
       "id": 20,
       "options": {
         "displayMode": "basic",
@@ -181,14 +137,8 @@
             "thresholds": {
               "mode": "absolute",
               "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
+                { "color": "green", "value": null },
+                { "color": "red", "value": 80 }
               ]
             }
           },
@@ -218,7 +168,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -227,25 +177,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 12,
-        "y": 1
-      },
+      "gridPos": { "h": 3, "w": 2, "x": 12, "y": 1 },
       "id": 22,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -254,13 +193,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -285,13 +218,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "avg"
     },
     {
@@ -299,7 +226,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -308,25 +235,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 14,
-        "y": 1
-      },
+      "gridPos": { "h": 3, "w": 3, "x": 14, "y": 1 },
       "id": 30,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -335,13 +251,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -366,13 +276,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -380,7 +284,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -389,25 +293,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 17,
-        "y": 1
-      },
+      "gridPos": { "h": 3, "w": 2, "x": 17, "y": 1 },
       "id": 54,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -416,13 +309,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -447,24 +334,13 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 19,
-        "y": 1
-      },
+      "datasource": "calico-demo-prometheus",
+      "gridPos": { "h": 6, "w": 5, "x": 19, "y": 1 },
       "id": 34,
       "links": [],
       "options": {
@@ -476,14 +352,8 @@
             "thresholds": {
               "mode": "absolute",
               "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
+                { "color": "green", "value": null },
+                { "color": "red", "value": 80 }
               ]
             }
           },
@@ -525,7 +395,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -534,25 +404,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 5,
-        "y": 4
-      },
+      "gridPos": { "h": 3, "w": 2, "x": 5, "y": 4 },
       "id": 46,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -562,13 +421,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -593,13 +446,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -607,7 +454,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -616,25 +463,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 12,
-        "y": 4
-      },
+      "gridPos": { "h": 3, "w": 3, "x": 12, "y": 4 },
       "id": 26,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -643,13 +479,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -674,13 +504,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -688,7 +512,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -697,25 +521,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 15,
-        "y": 4
-      },
+      "gridPos": { "h": 3, "w": 2, "x": 15, "y": 4 },
       "id": 32,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -724,13 +537,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -755,13 +562,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -769,7 +570,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -778,25 +579,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 17,
-        "y": 4
-      },
+      "gridPos": { "h": 3, "w": 2, "x": 17, "y": 4 },
       "id": 44,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -805,13 +595,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -836,37 +620,21 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
       "collapsed": false,
       "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 7
-      },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 7 },
       "id": 40,
       "panels": [],
       "title": "kvs and latency",
       "type": "row"
     },
     {
-      "datasource": "Prometheus",
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 0,
-        "y": 8
-      },
+      "datasource": "calico-demo-prometheus",
+      "gridPos": { "h": 6, "w": 5, "x": 0, "y": 8 },
       "id": 36,
       "options": {
         "displayMode": "basic",
@@ -877,14 +645,8 @@
             "thresholds": {
               "mode": "absolute",
               "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
+                { "color": "green", "value": null },
+                { "color": "red", "value": 80 }
               ]
             }
           },
@@ -914,7 +676,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -923,25 +685,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 5,
-        "y": 8
-      },
+      "gridPos": { "h": 3, "w": 2, "x": 5, "y": 8 },
       "id": 38,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -950,13 +701,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -981,13 +726,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -995,15 +734,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "fill": 1,
       "fillGradient": 0,
-      "gridPos": {
-        "h": 6,
-        "w": 11,
-        "x": 7,
-        "y": 8
-      },
+      "gridPos": { "h": 6, "w": 11, "x": 7, "y": 8 },
       "hiddenSeries": false,
       "id": 56,
       "legend": {
@@ -1018,9 +752,7 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
+      "options": { "dataLinks": [] },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -1042,11 +774,7 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "typha_ping_latency",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
+      "tooltip": { "shared": true, "sort": 0, "value_type": "individual" },
       "transparent": true,
       "type": "graph",
       "xaxis": {
@@ -1074,17 +802,14 @@
           "show": true
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "yaxis": { "align": false, "alignLevel": null }
     },
     {
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1093,25 +818,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 18,
-        "y": 8
-      },
+      "gridPos": { "h": 3, "w": 3, "x": 18, "y": 8 },
       "id": 66,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -1120,13 +834,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -1151,13 +859,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -1165,7 +867,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1174,25 +876,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 21,
-        "y": 8
-      },
+      "gridPos": { "h": 3, "w": 3, "x": 21, "y": 8 },
       "id": 64,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -1201,13 +892,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -1232,13 +917,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -1246,7 +925,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1255,25 +934,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 2,
-        "w": 2,
-        "x": 5,
-        "y": 11
-      },
+      "gridPos": { "h": 2, "w": 2, "x": 5, "y": 11 },
       "id": 42,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -1282,13 +950,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -1313,13 +975,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "avg"
     },
     {
@@ -1327,7 +983,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1336,25 +992,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 18,
-        "y": 11
-      },
+      "gridPos": { "h": 3, "w": 3, "x": 18, "y": 11 },
       "id": 60,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -1363,13 +1008,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -1394,13 +1033,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -1408,7 +1041,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1417,25 +1050,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 21,
-        "y": 11
-      },
+      "gridPos": { "h": 3, "w": 3, "x": 21, "y": 11 },
       "id": 58,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -1444,13 +1066,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -1475,37 +1091,21 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
       "collapsed": false,
       "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 14
-      },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 14 },
       "id": 24,
       "panels": [],
       "title": "General client info",
       "type": "row"
     },
     {
-      "datasource": "Prometheus",
-      "gridPos": {
-        "h": 6,
-        "w": 5,
-        "x": 0,
-        "y": 15
-      },
+      "datasource": "calico-demo-prometheus",
+      "gridPos": { "h": 6, "w": 5, "x": 0, "y": 15 },
       "id": 14,
       "options": {
         "displayMode": "basic",
@@ -1526,14 +1126,8 @@
             "thresholds": {
               "mode": "absolute",
               "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
+                { "color": "green", "value": null },
+                { "color": "red", "value": 80 }
               ]
             }
           },
@@ -1563,7 +1157,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1572,25 +1166,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 5,
-        "y": 15
-      },
+      "gridPos": { "h": 3, "w": 2, "x": 5, "y": 15 },
       "id": 18,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -1599,13 +1182,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -1630,13 +1207,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -1644,15 +1215,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "fill": 1,
       "fillGradient": 0,
-      "gridPos": {
-        "h": 6,
-        "w": 17,
-        "x": 7,
-        "y": 15
-      },
+      "gridPos": { "h": 6, "w": 17, "x": 7, "y": 15 },
       "hiddenSeries": false,
       "id": 28,
       "legend": {
@@ -1667,9 +1233,7 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
+      "options": { "dataLinks": [] },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -1691,11 +1255,7 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "typha_client_write_latency",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
+      "tooltip": { "shared": true, "sort": 0, "value_type": "individual" },
       "transparent": true,
       "type": "graph",
       "xaxis": {
@@ -1723,17 +1283,14 @@
           "show": true
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "yaxis": { "align": false, "alignLevel": null }
     },
     {
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -1742,25 +1299,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 5,
-        "y": 18
-      },
+      "gridPos": { "h": 3, "w": 2, "x": 5, "y": 18 },
       "id": 16,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -1770,13 +1316,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -1801,24 +1341,13 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
       "collapsed": false,
       "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 21
-      },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 21 },
       "id": 12,
       "panels": [],
       "title": "Breadcrumb",
@@ -1829,15 +1358,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "fill": 1,
       "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 11,
-        "x": 0,
-        "y": 22
-      },
+      "gridPos": { "h": 7, "w": 11, "x": 0, "y": 22 },
       "hiddenSeries": false,
       "id": 6,
       "legend": {
@@ -1852,9 +1376,7 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
+      "options": { "dataLinks": [] },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -1876,11 +1398,7 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Breadcrumb size",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
+      "tooltip": { "shared": true, "sort": 0, "value_type": "individual" },
       "transparent": true,
       "type": "graph",
       "xaxis": {
@@ -1908,25 +1426,17 @@
           "show": true
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "yaxis": { "align": false, "alignLevel": null }
     },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "fill": 1,
       "fillGradient": 0,
-      "gridPos": {
-        "h": 7,
-        "w": 10,
-        "x": 11,
-        "y": 22
-      },
+      "gridPos": { "h": 7, "w": 10, "x": 11, "y": 22 },
       "hiddenSeries": false,
       "id": 2,
       "legend": {
@@ -1941,9 +1451,7 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
+      "options": { "dataLinks": [] },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -1971,11 +1479,7 @@
       "timeRegions": [],
       "timeShift": null,
       "title": "Typha breadcrumb block and non block",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
+      "tooltip": { "shared": true, "sort": 0, "value_type": "individual" },
       "transparent": true,
       "type": "graph",
       "xaxis": {
@@ -2003,17 +1507,14 @@
           "show": true
         }
       ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "yaxis": { "align": false, "alignLevel": null }
     },
     {
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -2022,25 +1523,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 2,
-        "w": 3,
-        "x": 21,
-        "y": 22
-      },
+      "gridPos": { "h": 2, "w": 3, "x": 21, "y": 22 },
       "id": 4,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -2049,13 +1539,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -2080,13 +1564,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -2094,7 +1572,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -2103,25 +1581,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 2,
-        "w": 3,
-        "x": 21,
-        "y": 24
-      },
+      "gridPos": { "h": 2, "w": 3, "x": 21, "y": 24 },
       "id": 10,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -2130,13 +1597,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -2161,13 +1622,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     },
     {
@@ -2175,7 +1630,7 @@
       "colorBackground": false,
       "colorValue": false,
       "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
-      "datasource": "Prometheus",
+      "datasource": "calico-demo-prometheus",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -2184,25 +1639,14 @@
         "thresholdLabels": false,
         "thresholdMarkers": true
       },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 21,
-        "y": 26
-      },
+      "gridPos": { "h": 3, "w": 3, "x": 21, "y": 26 },
       "id": 8,
       "interval": null,
       "links": [],
       "mappingType": 1,
       "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
+        { "name": "value to text", "value": 1 },
+        { "name": "range to text", "value": 2 }
       ],
       "maxDataPoints": 100,
       "nullPointMode": "connected",
@@ -2211,13 +1655,7 @@
       "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
+      "rangeMaps": [{ "from": "null", "text": "N/A", "to": "null" }],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
         "full": false,
@@ -2242,13 +1680,7 @@
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
+      "valueMaps": [{ "op": "=", "text": "N/A", "value": "null" }],
       "valueName": "current"
     }
   ],
@@ -2256,19 +1688,12 @@
   "schemaVersion": 22,
   "style": "dark",
   "tags": [],
-  "templating": {
-    "list": []
-  },
-  "time": {
-    "from": "now-6h",
-    "to": "now"
-  },
+  "templating": { "list": [] },
+  "time": { "from": "now-6h", "to": "now" },
   "timepicker": {},
   "timezone": "",
   "title": "Typha Dashborad (Calico)",
   "uid": "calico-typha-dashboard",
-  "variables": {
-    "list": []
-  },
+  "variables": { "list": [] },
   "version": 10
 }
