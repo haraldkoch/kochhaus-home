@@ -1,0 +1,37 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: dnssec
+  namespace: monitoring
+spec:
+  groups:
+    - name: dnssec
+      rules:
+        - alert: DNSResolverFailure
+          expr: dnssec_zone_record_resolves < 1
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            description: DNS Resolution for target {{ $labels.zone }} is failing for resolver {{ $labels.resolver }}.
+            summary: A DNS resolver is failing.
+
+        - alert: DNSSECSignatureExpiration
+          expr: dnssec_zone_record_days_left < 10
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            description: The DNSSEC signature for the {{$labels.record}} in {{$labels.zone}} type {{$labels.type}}) expires in {{$value}} day(s)
+            summary: A DNSSec signature is expiring
+
+        - alert: DNSSECSignatureInvalid
+          expr: dnssec_zone_record_resolves == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            description: The DNSSEC signature for the {{$labels.record}} in {{$labels.zone}} type {{$labels.type}}) on resolver {{$labels.resolver}} is invalid
+            summary: A DNSSec signature is invalid

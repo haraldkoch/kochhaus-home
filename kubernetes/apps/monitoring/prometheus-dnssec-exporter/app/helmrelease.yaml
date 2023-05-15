@@ -1,0 +1,114 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app prometheus-dnssec-exporter
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    nameOverride: *app
+    image:
+      repository: ghcr.io/haraldkoch/prometheus-dnssec-exporter
+      tag: 0.5.1
+      pullPolicy: IfNotPresent
+    args:
+      - /app/prometheus-dnssec-exporter
+      - --config
+      - /config/dnssec-checks
+      - --resolvers
+      - "8.8.8.8:53,1.1.1.1:53,${PRIVATE_DNS_PRIMARY}:53,${PRIVATE_DNS_SECONDARY}:53,${PRIVATE_GATEWAY}:53"
+    env:
+      TZ: ${TIMEZONE}
+    service:
+      main:
+        ports:
+          http:
+            enabled: false
+          metrics:
+            enabled: true
+            protocol: TCP
+            port: 9204
+        type: LoadBalancer
+        externalIPs:
+          - ${SVC_EXPORTERS_ADDR_V4}
+          - ${SVC_EXPORTERS_ADDR_V6}
+        externalTrafficPolicy: Cluster
+        ipFamilyPolicy: PreferDualStack
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: exporters.${CLUSTER_DOMAIN}
+    configMaps:
+      config:
+        enabled: false
+    persistence:
+      config:
+        enabled: true
+        type: secret
+        name: prometheus-dnssec-secret
+        mountPath: /config/dnssec-checks
+        subPath: dnssec-checks
+    ingress:
+      main:
+        enabled: false
+    podAnnotations:
+      secret.reloader.stakater.com/reload: prometheus-dnssec-secret
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 100m
+        memory: 100Mi
+    metrics:
+      enabled: true
+      serviceMonitor:
+        interval: 1m
+        scrapeTimeout: 30s
+        labels: {}
+      prometheusRule:
+        enabled: true
+        labels: {}
+        rules:
+          - alert: DNSSECSignatureExpiration
+            expr: dnssec_zone_record_days_left{service="{{ template "prometheus-dnssec-exporter.fullname" . }}"} < 10
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              description: |
+                 The DNSSEC signature for the {{ "{{ $labels.record }}" }} in {{ "{{ $labels.zone }}" }}
+                 type {{ "{{ $labels.type }}" }} expires in {{ "{{ $value }}" }} day(s)
+              summary: |
+                The DNSSEC signature for the {{ "{{ $labels.record }}" }} in {{ "{{ $labels.zone }}" }} is expiring
+          - alert: DNSSECSignatureInvalid
+            expr: dnssec_zone_record_resolves{service="{{ template "prometheus-dnssec-exporter.fullname" . }}"} == 0
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              description: |
+                The DNSSEC signature for the {{ "{{ $labels.record }}" }} in {{ "{{ $labels.zone }}" }}
+                type {{ "{{ $labels.type }}" }} on resolver {{ "{{ $labels.resolver }}" }} is invalid
+              sumary: |
+                The DNSSEC signature for the {{ "{{ $labels.record }}" }} in {{ "{{ $labels.zone }}" }}
+                on resolver {{ "{{ $labels.resolver }}" }} is invalid
