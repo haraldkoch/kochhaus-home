@@ -4,7 +4,7 @@ name: "HelmRelease Diff"
 on:
   pull_request:
     branches: ["main"]
-    paths: ["cluster/**/helm-release.yaml", "kubernetes/**/helmrelease.yaml"]
+    paths: ["kubernetes/**/helmrelease.yaml"]
 
 env:
   BOT_USERNAME: "Doug Piranha [bot]"
@@ -35,7 +35,6 @@ jobs:
         with:
           json: true
           files: |
-            cluster/**/helm-release.yaml
             kubernetes/**/helmrelease.yaml
 
       - id: set-matrix

@@ -15,8 +15,8 @@
       "matchManagers": ["github-actions"],
       "matchDatasources": ["github-tags"],
       "automerge": true,
-      "automergeType": "branch",
       "ignoreTests": true,
+      "automergeType": "branch",
       "matchUpdateTypes": ["minor", "patch"]
     },
     {
@@ -24,8 +24,8 @@
       "matchManagers": ["pre-commit"],
       "matchDatasources": ["github-tags"],
       "automerge": true,
-      "automergeType": "branch",
       "ignoreTests": true,
+      "automergeType": "branch",
       "matchUpdateTypes": ["minor", "patch"]
     }
   ]
