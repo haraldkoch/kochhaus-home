@@ -7,27 +7,15 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    # - name: cluster-apps-cloudnative-pg
+    - name: cluster-apps-cloudnative-pg
     - name: cluster-apps-external-secrets-stores
-    # - name: cluster-apps-redis
+    - name: cluster-apps-redis
   path: ./kubernetes/apps/default/immich/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: immich-microservices
-      namespace: default
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: immich-server
-      namespace: default
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: immich-web
-      namespace: default
+  wait: true
   interval: 15m
   retryInterval: 1m
   timeout: 5m
