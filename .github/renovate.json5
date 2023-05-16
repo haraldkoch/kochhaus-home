@@ -49,8 +49,8 @@
     {
       "description": "Process custom dependencies",
       "fileMatch": [
-        "provision/ansible/.+\\.ya?ml$"
-        "kubernetes/.+\\.ya?ml$",
+        "provision/ansible/.+\\.ya?ml$",
+        "kubernetes/.+\\.ya?ml$"
       ],
       "matchStrings": [
         "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
