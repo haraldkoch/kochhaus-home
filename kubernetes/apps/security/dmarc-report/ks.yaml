@@ -12,13 +12,9 @@ spec:
     kind: GitRepository
     name: home-kubernetes
   dependsOn:
-    #- name: cluster-apps-cloudnative-pg
+    - name: cluster-apps-cloudnative-pg
     - name: cluster-apps-external-secrets-stores
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-      kind: HelmRelease
-      name: dmarc-report
-      namespace: security
+  wait: true
   interval: 15m
   retryInterval: 1m
   timeout: 3m
