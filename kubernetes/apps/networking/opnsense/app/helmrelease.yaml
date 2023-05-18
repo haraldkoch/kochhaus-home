@@ -35,7 +35,7 @@ spec:
     restartPolicy: OnFailure
     image:
       repository: ghcr.io/haraldkoch/kubernetes-kubectl
-      tag: 1.27.1@sha256:ef22ecf0e3ab4063807479513dc71f7dcc9241d0a3603f4ea05808996c5af9f2
+      tag: 1.27.2@sha256:60b8bcb593f6d7224a558ae4e115e828180cba5e66dc5289677893cf6fbe08f8
     command: ["/bin/bash", "/app/opnsense-backup.sh"]
     env:
       OPNSENSE_URL: "https://gw.${PRIVATE_STATIC_DOMAIN}"
