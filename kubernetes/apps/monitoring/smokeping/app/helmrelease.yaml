@@ -32,7 +32,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/linuxserver/smokeping
-      tag: 2.7.3
+      tag: 2.8.2
     env:
       TZ: ${TIMEZONE}
     persistence:
