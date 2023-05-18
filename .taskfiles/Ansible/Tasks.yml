@@ -23,6 +23,7 @@ tasks:
     desc: Install / Upgrade Ansible galaxy deps
     dir: provision/ansible
     cmds:
+      - pip3 install --user --requirement requirements.txt
       - ansible-galaxy install -r requirements.yml --roles-path ~/.ansible/roles --force
       - ansible-galaxy collection install -r requirements.yml --collections-path ~/.ansible/collections --force
 
@@ -64,13 +65,19 @@ tasks:
     cmds:
       - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --one-line -a 'uptime'
 
-  reboot:
+  rollout-reboot:
+    desc: Rollout a reboot across all the k8s nodes
+    dir: provision/ansible
+    cmds:
+      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-rollout-reboot.yml
+
+  force-reboot:
     desc: Reboot all the k8s nodes
     dir: provision/ansible
     cmds:
       - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-reboot.yml
 
-  poweroff:
+  force-poweroff:
     desc: Shutdown all the k8s nodes
     dir: provision/ansible
     cmds:
