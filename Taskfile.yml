@@ -2,12 +2,15 @@
 version: "3"
 
 vars:
-  CLUSTER_DIR: "{{.ROOT_DIR}}/kubernetes"
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
   PROVISION_DIR: "{{.ROOT_DIR}}/provision"
   ANSIBLE_DIR: "{{.ROOT_DIR}}/provision/ansible"
 
+dotenv: [".config.env"]
+
 env:
   KUBECONFIG: "{{.ROOT_DIR}}/provision/kubeconfig"
+  SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
 
 includes:
   ansible: .taskfiles/Ansible/Tasks.yml
