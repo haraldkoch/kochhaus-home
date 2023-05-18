@@ -7,7 +7,7 @@ resources:
   - ./namespace.yaml
   - ./external-services
   # Flux-Kustomizations
-  - ./cloudflare-ddns/ks.yaml
+  - ./cloudflared/ks.yaml
   - ./external-dns/ks.yaml
   - ./homelab-dns/ks.yaml
   - ./ingress-nginx/ks.yaml
