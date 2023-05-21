@@ -128,10 +128,10 @@ spec:
           revision: 4
           datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/13502-minio-dashboard/
-        minio:
-          gnetId: 13502
-          revision: 21
-          datasource: Prometheus
+        #minio:
+        #  gnetId: 13502
+        #  revision: 22
+        #  datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/1860-node-exporter-full/
         node-exporter-full:
           gnetId: 1860
@@ -142,36 +142,39 @@ spec:
           gnetId: 763
           revision: 4
           datasource: Prometheus
+        # grafana folder Rook Ceph
         # Ref: https://grafana.com/grafana/dashboards/5342-ceph-pools/
-        #ceph-pools:
-        #  gnetId: 5342
-        #  revision: 9
-        #  datasource: Prometheus
+        ceph-pools:
+          gnetId: 5342
+          revision: 9
+          datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/5336-ceph-osd-single/
-        #ceph-osd:
-        #  gnetId: 5336
-        #  revision: 9
-        #  datasource: Prometheus
+        ceph-osd:
+          gnetId: 5336
+          revision: 9
+          datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/2842-ceph-cluster/
-        #ceph-cluster:
-        #  gnetId: 2842
-        #  revision: 16
-        #  datasource: Prometheus
-        #cert-manager:
-        #  url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
-        #  datasource: Prometheus
-        # external-secrets:
-        #  url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
-        #  datasource: Prometheus
-        #flux-cluster:
-        #  url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
-        #  datasource: Prometheus
-        #flux-control-plane:
-        #  url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/control-plane.json
-        #  datasource: Prometheus
-        #flux-logs:
-        #  url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/logs.json
-        #  datasource: Prometheus
+        ceph-cluster:
+          gnetId: 2842
+          revision: 16
+          datasource: Prometheus
+        # grafana folder Certificates
+        cert-manager:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+          datasource: Prometheus
+        external-secrets:
+          url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
+          datasource: Prometheus
+        # grafana folder Flux
+        flux-cluster:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
+          datasource: Prometheus
+        flux-control-plane:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/control-plane.json
+          datasource: Prometheus
+        flux-logs:
+          url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/logs.json
+          datasource: Prometheus
         kubernetes-api-server:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
           datasource: Prometheus
