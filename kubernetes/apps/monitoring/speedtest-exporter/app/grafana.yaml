@@ -5,7 +5,7 @@ metadata:
   name: speedtest-exporter-dashboard
   namespace: monitoring
   annotations:
-    grafana_folder: "Network"
+    grafana_folder: "Home"
   labels:
     grafana_dashboard: "true"
 data:

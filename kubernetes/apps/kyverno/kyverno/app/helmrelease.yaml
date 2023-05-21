@@ -32,6 +32,8 @@ spec:
     replicaCount: 3
     grafana:
       enabled: true
+      annotations:
+        grafana_folder: Infrastructure
     serviceMonitor:
       enabled: true
       interval: 1m
