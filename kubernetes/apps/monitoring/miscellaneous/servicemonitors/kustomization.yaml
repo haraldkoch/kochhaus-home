@@ -1,9 +1,0 @@
----
-# yaml-language-server: $schema=https://json.schemastore.org/kustomization
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - nas-node-exporter.yaml
-  - nas-smartctl-exporter.yaml
-  - opnsense-haproxy.yaml
-  - opnsense-node-exporter.yaml
