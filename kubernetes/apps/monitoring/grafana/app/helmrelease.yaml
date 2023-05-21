@@ -94,6 +94,30 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/default
+          - name: applications
+            orgId: 1
+            folder: "Applications"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/applications
+          - name: home
+            orgId: 1
+            folder: "Home"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/home
+          - name: infrastructure
+            orgId: 1
+            folder: "Infrastructure"
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/infrastructure
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -121,18 +145,26 @@ spec:
             jsonData:
               implementation: prometheus
     dashboards:
-      default:
-        # Ref: https://grafana.com/grafana/dashboards/7845-zfs/
-        zfs:
-          gnetId: 7845
-          revision: 4
+      applications:
+        miniflux:
+          url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
           datasource: Prometheus
+      home:
         # Ref: https://grafana.com/grafana/dashboards/13502-minio-dashboard/
         #minio:
         #  gnetId: 13502
         #  revision: 22
         #  datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/1860-node-exporter-full/
+        # Ref: https://grafana.com/grafana/dashboards/7845-zfs/
+        zfs:
+          gnetId: 7845
+          revision: 4
+          datasource: Prometheus
+      infrastructure:
+        cert-manager:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+          datasource: Prometheus
         node-exporter-full:
           gnetId: 1860
           revision: 30
@@ -158,10 +190,6 @@ spec:
           gnetId: 2842
           revision: 16
           datasource: Prometheus
-        # grafana folder Certificates
-        cert-manager:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
-          datasource: Prometheus
         external-secrets:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
           datasource: Prometheus
@@ -175,6 +203,7 @@ spec:
         flux-logs:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/logs.json
           datasource: Prometheus
+      default:
         kubernetes-api-server:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
           datasource: Prometheus
@@ -192,9 +221,6 @@ spec:
           datasource: Prometheus
         kubernetes-pods:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
-          datasource: Prometheus
-        miniflux:
-          url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
           datasource: Prometheus
     sidecar:
       dashboards:

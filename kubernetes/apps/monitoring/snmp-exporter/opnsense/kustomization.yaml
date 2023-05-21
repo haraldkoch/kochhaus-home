@@ -14,6 +14,6 @@ generatorOptions:
   disableNameSuffixHash: true
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
-    grafana_folder: "Network"
+    grafana_folder: "Home"
   labels:
     grafana_dashboard: "true"
