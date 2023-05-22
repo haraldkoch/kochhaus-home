@@ -15,6 +15,7 @@ spec:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
+  timeout: 10m
   maxHistory: 2
   install:
     createNamespace: true
@@ -30,8 +31,8 @@ spec:
     - name: immich-server
   values:
     controller:
-      replicas: 2
-      strategy: RollingUpdate
+      replicas: 1
+      strategy: Recreate
       annotations:
         configmap.reloader.stakater.com/reload: &configmap immich-configmap
         secret.reloader.stakater.com/reload: &secret immich-secret
@@ -55,7 +56,15 @@ spec:
         mountPath: /usr/src/app/upload
       cache:
         enabled: true
-        type: emptyDir
+        existingClaim: immich-machine-learning-cache
+    # this is necessary for the downloads to complete
+    startupProbe:
+      enabled: true
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 30
+      successThreshold: 1
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
