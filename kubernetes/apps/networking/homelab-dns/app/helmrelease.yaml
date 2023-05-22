@@ -30,8 +30,8 @@ spec:
     image:
       # this has the lastest ipv6 patches - use until they are merged
       repository: registry.samipsolutions.fi/library/external-dns
-      tag: v9.0.0
-      pullPolicy: IfNotPresent
+      tag: v10.0.0-1-g0ed31684
+    pullPolicy: IfNotPresent
     nameOverride: *app
     provider: rfc2136
     env:
