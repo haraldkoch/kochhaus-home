@@ -37,7 +37,7 @@ spec:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/actions/actions-runner-controller/actions-runner-dind:v2.299.1-ubuntu-22.04
+            image: ghcr.io/haraldkoch/github-actions-runner:rolling@sha256:dfcf7cc4e6911dd9db8c84baf2ea24ad203b1464f5b732342ede34820f852903
   valuesFrom:
     - kind: Secret
       name: actions-runner-controller-auth-secret
