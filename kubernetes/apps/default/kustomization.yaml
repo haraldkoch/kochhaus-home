@@ -16,4 +16,3 @@ resources:
   - ./miniflux/ks.yaml
   - ./outline/ks.yaml
   - ./paperless/ks.yaml
-  - ./radicale/ks.yaml
