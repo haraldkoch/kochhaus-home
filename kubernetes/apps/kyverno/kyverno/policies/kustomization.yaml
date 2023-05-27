@@ -9,4 +9,3 @@ resources:
   - ./apply-ingress-whitelist-annotations.yaml
   - ./apply-volsync-annotations.yaml
   - ./remove-cpu-limits.yaml
-  - ./snapshot-cronjob-controller.yaml

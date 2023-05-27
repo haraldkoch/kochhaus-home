@@ -8,7 +8,6 @@ metadata:
     app.kubernetes.io/name: &name rtr
     app.kubernetes.io/instance: *name
     app.kubernetes.io/part-of: joomla
-    snapshot.home.arpa/enabled: "true"
 spec:
   accessModes:
     - ReadWriteOnce
