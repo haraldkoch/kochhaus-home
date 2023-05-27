@@ -20,7 +20,6 @@ includes:
   fx: .taskfiles/Flux/Tasks.yml
   ku: .taskfiles/Kubernetes/Tasks.yml
   rook: .taskfiles/Rook/Tasks.yml
-  snapshot: .taskfiles/Snapshot/Tasks.yml
   vs: .taskfiles/VolSync/Tasks.yml
 
 tasks:

@@ -7,7 +7,6 @@ metadata:
   labels:
     app.kubernetes.io/name: &name navidrome
     app.kubernetes.io/instance: *name
-    snapshot.home.arpa/enabled: "true"
 spec:
   accessModes:
     - ReadWriteOnce
