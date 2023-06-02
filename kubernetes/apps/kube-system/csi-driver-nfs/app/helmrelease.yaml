@@ -27,6 +27,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    externalSnapshotter:
+      enabled: false
     controller:
       runOnControlPlane: true
     node:
