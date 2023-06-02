@@ -11,7 +11,6 @@ metadata:
       the `auth.home.arpa/enabled` annotation is `true` it
       applies the nginx auth annotations for use with Authelia.
 spec:
-  mutateExistingOnPolicyUpdate: true
   generateExistingOnPolicyUpdate: true
   rules:
     - name: auth
