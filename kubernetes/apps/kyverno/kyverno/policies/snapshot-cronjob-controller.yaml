@@ -12,7 +12,6 @@ metadata:
         - snapshot.home.arpa/enabled
 spec:
   generateExistingOnPolicyUpdate: true
-  mutateExistingOnPolicyUpdate: true
   rules:
     - name: create-snapshot-cronjob
       match:
