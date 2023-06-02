@@ -29,18 +29,25 @@ spec:
   values:
     crds:
       install: true
-    replicaCount: 3
+    updateStrategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 1
     grafana:
       enabled: true
       annotations:
         grafana_folder: Infrastructure
-    serviceMonitor:
-      enabled: true
-      interval: 1m
     backgroundController:
       serviceMonitor:
         enabled: true
         interval: 1m
+      rbac:
+        clusterRole:
+          extraResources:
+            - apiGroups:
+                - ""
+              resources:
+                - pods
     cleanupController:
       serviceMonitor:
         enabled: true
@@ -49,25 +56,40 @@ spec:
       serviceMonitor:
         enabled: true
         interval: 1m
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-          - matchExpressions:
-              - key: node-role.kubernetes.io/control-plane
-                operator: Exists
-    tolerations:
-      - key: node-role.kubernetes.io/control-plane
-        operator: Exists
-    topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/instance: kyverno
-    resources:
-      requests:
-        cpu: 500m
-        memory: 384Mi
-      limits:
-        memory: 512Mi
+    admissionController:
+      replicas: 3
+
+      rbac:
+        clusterRole:
+          extraResources:
+            - apiGroups:
+                - ""
+              resources:
+                - pods
+              verbs:
+                - create
+                - update
+                - delete
+
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: node-role.kubernetes.io/control-plane
+                  operator: Exists
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/instance: kyverno
+      resources:
+        requests:
+          cpu: 500m
+          memory: 384Mi
+        limits:
+          memory: 512Mi
