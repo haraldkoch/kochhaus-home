@@ -6,7 +6,8 @@ metadata:
   name: redis
   namespace: dbms
 spec:
-  interval: 15m
+  interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: redis
@@ -30,12 +31,20 @@ spec:
     auth:
       enabled: false
       sentinel: false
+    master:
+      persistence:
+        enabled: false
+    replica:
+      persistence:
+        enabled: false
     sentinel:
       enabled: true
       masterSet: redis-master
       getMasterTimeout: 10
       startupProbe:
         failureThreshold: 2
+      persistence:
+        enabled: false
       resources:
         requests:
           cpu: 15m
