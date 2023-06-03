@@ -1,9 +1,10 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: dbms
 resources:
-  - backup.yaml
-  - kochhaus-v15.yaml
-  - prometheusrule.yaml
-  - secret.sops.yaml
-  - service.yaml
+  - ./kochhaus-v15.yaml
+  - ./scheduledbackup.yaml
+  - ./prometheusrule.yaml
+  - ./service.yaml

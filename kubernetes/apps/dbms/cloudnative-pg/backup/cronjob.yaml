@@ -44,7 +44,7 @@ spec:
                 - name: PGPASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: kochhaus-v15-superuser
+                      name: cloudnative-pg-secret
                       key: password
                 - name: TZ
                   value: ${TIMEZONE}

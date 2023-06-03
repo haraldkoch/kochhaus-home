@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/postgresql.cnpg.io/scheduledbackup_v1.json
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
@@ -6,5 +7,7 @@ metadata:
   namespace: dbms
 spec:
   schedule: "@daily"
+  immediate: true
+  backupOwnerReference: self
   cluster:
     name: kochhaus-v15
