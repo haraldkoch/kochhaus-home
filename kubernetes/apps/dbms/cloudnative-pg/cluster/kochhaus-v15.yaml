@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/postgresql.cnpg.io/cluster_v1.json
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
@@ -14,16 +15,14 @@ spec:
 
   instances: 3
 
-  # Example of rolling update strategy:
-  # - unsupervised: automated update of the primary once all
-  #                 replicas have been upgraded (default)
-  # - supervised: requires manual supervision to perform
-  #               the switchover of the primary
   primaryUpdateStrategy: unsupervised
 
   storage:
-    storageClass: ceph-block
     size: 10Gi
+    storageClass: ceph-block
+
+  superuserSecret:
+    name: cloudnative-pg-secret
 
   affinity:
     nodeSelector:
@@ -37,6 +36,11 @@ spec:
       cpu: 500m
       memory: 640Mi
 
+  postgresql:
+    parameters:
+      max_connections: "600"
+      shared_buffers: 512MB
+
   monitoring:
     enablePodMonitor: true
 
@@ -47,13 +51,14 @@ spec:
       endpointURL: http://${SECRET_BACKUP_SERVER}:9000
       wal:
         compression: bzip2
+        maxParallel: 8
       s3Credentials:
         accessKeyId:
-          name: cnpg-backup
-          key: ACCESS_KEY_ID
+          name: cloudnative-pg-secret
+          key: aws-access-key-id
         secretAccessKey:
-          name: cnpg-backup
-          key: ACCESS_SECRET_KEY
+          name: cloudnative-pg-secret
+          key: aws-secret-access-key
 
   # the recovery source here is taken from the externalClusters section below.
   # bootstrap:
@@ -80,11 +85,11 @@ spec:
     #     endpointURL: http://${SECRET_BACKUP_SERVER}:9000
     #     s3Credentials:
     #       accessKeyId:
-    #         name: cnpg-backup
-    #         key: ACCESS_KEY_ID
+    #         name: cloudnative-pg-secret
+    #         key: aws-access-key-id
     #       secretAccessKey:
-    #         name: cnpg-backup
-    #         key: ACCESS_SECRET_KEY
+    #         name: cloudnative-pg-secret
+    #         key: aws-secret-access-key
     #     wal:
     #       compression: bzip2
     #       maxParallel: 12
@@ -95,5 +100,5 @@ spec:
     #     dbname: postgres
     #     sslmode: require
     #   password:
-    #     name: kochhaus-superuser
+    #     name: cloudnative-pg-secret
     #     key: password
