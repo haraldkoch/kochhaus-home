@@ -30,7 +30,7 @@ spec:
     nameOverride: *app
     image:
       repository: joseluisq/static-web-server
-      tag: 2.17.0-alpine
+      tag: 2.18.0-alpine
     controller:
       replicas: 1
     env:
