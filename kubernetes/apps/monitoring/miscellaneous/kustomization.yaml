@@ -5,14 +5,3 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - rules
-configMapGenerator:
-  - name: opnsense-dashboard
-    files:
-      - opnsense-dashboard.json=dashboards/opnsense.json
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
-    grafana_folder: Home
-  labels:
-    grafana_dashboard: "true"
