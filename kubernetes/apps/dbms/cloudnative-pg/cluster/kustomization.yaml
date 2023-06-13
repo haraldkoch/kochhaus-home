@@ -6,5 +6,6 @@ namespace: dbms
 resources:
   - ./kochhaus-v15.yaml
   - ./scheduledbackup.yaml
+  - ./dashboard.yaml
   - ./prometheusrule.yaml
   - ./service.yaml
