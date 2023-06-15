@@ -82,12 +82,12 @@ spec:
                     # Stagger jobs to run randomly within X seconds to avoid bringing down all apps at once
                     initContainers:
                       - name: wait
-                        image: ghcr.io/haraldkoch/kopia:0.13.0@sha256:08673f35ca9944961f365ef89cb475395107b5e91f5ae1ea882091ef69c6c16e
+                        image: ghcr.io/haraldkoch/kopia:0.13.0@sha256:72e165e9de313d3bde76bd07fb5b66c719a92b4eaa670c82941b639735a3ef71
                         command: ["/scripts/sleep.sh"]
                         args: ["1", "900"]
                     containers:
                       - name: snapshot
-                        image: ghcr.io/haraldkoch/kopia:0.13.0@sha256:08673f35ca9944961f365ef89cb475395107b5e91f5ae1ea882091ef69c6c16e
+                        image: ghcr.io/haraldkoch/kopia:0.13.0@sha256:72e165e9de313d3bde76bd07fb5b66c719a92b4eaa670c82941b639735a3ef71
                         env:
                           - name: KOPIA_CACHE_DIRECTORY
                             value: /snapshots/{{ namespace }}/{{ appName }}/{{ claimName }}/cache
