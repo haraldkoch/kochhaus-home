@@ -6,7 +6,7 @@ metadata:
   name: &app kubernetes-schemas
   namespace: default
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -31,8 +31,8 @@ spec:
       replicas: 2
       strategy: RollingUpdate
     image:
-      repository: ghcr.io/haraldkoch/kubernetes-schemas-web
-      tag: latest@sha256:b2cc3108ae77f5b288aaa58e20928954d6894d81d9fe3f2a650c63d10f17cfb1
+      repository: ghcr.io/haraldkoch/kubernetes-schemas
+      tag: latest@sha256:493c8c233df3a737c54530826681b9c703362d0fa21e4ebef0904ab404ec9249
     service:
       main:
         ports:
