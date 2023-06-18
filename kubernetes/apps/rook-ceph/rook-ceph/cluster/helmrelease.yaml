@@ -163,8 +163,6 @@ spec:
             memory: "100Mi"
       crashCollector:
         disable: false
-      mgr:
-        count: 1
       dashboard:
         enabled: true
         urlPrefix: /
