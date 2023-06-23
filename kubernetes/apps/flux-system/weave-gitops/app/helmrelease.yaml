@@ -6,7 +6,7 @@ metadata:
   name: weave-gitops
   namespace: flux-system
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: weave-gitops
@@ -29,6 +29,7 @@ spec:
   values:
     adminUser:
       create: true
+      createSecret: false
       username: admin
     # oidcSecret:
     #   create: true
@@ -69,11 +70,7 @@ spec:
       limits:
         cpu: 200m
         memory: 192Mi
-  valuesFrom:
-    - kind: Secret
-      name: weave-gitops-secret
-      valuesKey: adminPassword
-      targetPath: adminUser.passwordHash
+  # valuesFrom:
     # - kind: Secret
     #   name: weave-gitops-secret
     #   valuesKey: WEAVEGITOPS_OAUTH_CLIENT_SECRET
