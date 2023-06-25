@@ -6,7 +6,7 @@ metadata:
   name: &app miniflux
   namespace: default
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -29,9 +29,9 @@ spec:
   values:
     initContainers:
       01-init-db:
-        image: ghcr.io/haraldkoch/postgres-initdb:15.3
+        image: ghcr.io/haraldkoch/postgres-init:15.3
         imagePullPolicy: IfNotPresent
-        envFrom:
+        envFrom: &envFrom
           - secretRef:
               name: miniflux-secret
     controller:
@@ -57,18 +57,16 @@ spec:
       POLLING_SCHEDULER: entry_frequency
       POLLING_FREQUENCY: "15"
       RUN_MIGRATIONS: "1"
-    envFrom:
-      - secretRef:
-          name: miniflux-secret
+    envFrom: *envFrom
     service:
       main:
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: &port 8080
-    # serviceMonitor:
-    #   main:
-    #     enabled: true
+    serviceMonitor:
+      main:
+        enabled: true
     ingress:
       main:
         enabled: true
