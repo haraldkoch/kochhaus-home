@@ -6,10 +6,10 @@ metadata:
   name: actions-runner-controller
   namespace: actions-runner-system
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
-      chart: actions-runner-controller-charts/gha-runner-scale-set-controller
+      chart: gha-runner-scale-set-controller
       version: 0.4.0
       sourceRef:
         kind: HelmRepository
