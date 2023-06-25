@@ -6,7 +6,7 @@ metadata:
   name: &app outline
   namespace: default
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template
@@ -29,9 +29,9 @@ spec:
   values:
     initContainers:
       01-init-db:
-        image: ghcr.io/haraldkoch/postgres-initdb:15.3
+        image: ghcr.io/haraldkoch/postgres-init:15.3
         imagePullPolicy: IfNotPresent
-        envFrom:
+        envFrom: &envFrom
           - secretRef:
               name: outline-secret
     controller:
@@ -42,9 +42,7 @@ spec:
     image:
       repository: docker.io/outlinewiki/outline
       tag: 0.69.2
-    envFrom:
-      - secretRef:
-          name: outline-secret
+    envFrom: *envFrom
     command: ["/bin/sh", "-c", "yarn db:migrate --env=production-ssl-disabled && yarn start --env=production-ssl-disabled"]
     service:
       main:
