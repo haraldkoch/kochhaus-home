@@ -36,7 +36,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
----
+# ---
 # yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 #apiVersion: kustomize.toolkit.fluxcd.io/v1
 #kind: Kustomization
@@ -51,7 +51,7 @@ spec:
 #  sourceRef:
 #    kind: GitRepository
 #    name: home-kubernetes
-#  wait: true
+#  wait: false # no flux ks dependents
 #  interval: 30m
 #  retryInterval: 1m
 #  timeout: 5m
