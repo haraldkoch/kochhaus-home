@@ -10,3 +10,4 @@ resources:
   - ./dmarc-report/ks.yaml
   - ./external-secrets/ks.yaml
   - ./glauth/ks.yaml
+  - ./lldap/ks.yaml
