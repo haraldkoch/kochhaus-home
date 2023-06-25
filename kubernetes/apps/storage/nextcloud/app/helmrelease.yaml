@@ -69,6 +69,12 @@ spec:
       enabled: true
       type: postgresql
       host: kochhaus-v15-rw.dbms.svc.cluster.local.
+      database: nextcloud
+      existingSecret:
+        enabled: true
+        secretName: nextcloud-secret
+        usernameKey: POSTGRES_USER
+        passwordKey: POSTGRES_PASS
     ingress:
       enabled: true
       className: nginx
@@ -122,16 +128,3 @@ spec:
       timeoutSeconds: 5
       failureThreshold: 30
       successThreshold: 1
-  valuesFrom:
-    - targetPath: externalDatabase.user
-      kind: Secret
-      name: nextcloud-secret
-      valuesKey: POSTGRES_USER
-    - targetPath: externalDatabase.password
-      kind: Secret
-      name: nextcloud-secret
-      valuesKey: POSTGRES_PASS
-    - targetPath: externalDatabase.database
-      kind: Secret
-      name: nextcloud-secret
-      valuesKey: POSTGRES_DB
