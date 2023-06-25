@@ -27,37 +27,32 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: ghcr.io/haraldkoch/grafana
-      tag: 9.5.3
     extraInitContainers:
       - name: 01-init-db
         image: ghcr.io/haraldkoch/postgres-init:15.3
         imagePullPolicy: IfNotPresent
         envFrom:
           - secretRef:
-              name: grafana-secret
+              name: &secret grafana-secret
     replicas: 2
     env:
       GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.${CLUSTER_DOMAIN}/api/oidc/userinfo
       GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.${CLUSTER_DOMAIN}/api/oidc/authorization
       GF_AUTH_GENERIC_OAUTH_CLIENT_ID: grafana
       GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://auth.${CLUSTER_DOMAIN}/api/oidc/token
+      GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH: "contains(groups[*], 'grafana-admins') && 'Admin' || 'Viewer'"
       GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
       GF_EXPLORE_ENABLED: true
       GF_FEATURE_TOGGLES_ENABLE: publicDashboards
-      GF_PANELS_DISABLE_SANITIZE_HTML: true
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
-      GF_SECURITY_ALLOW_EMBEDDING: true
       GF_SECURITY_COOKIE_SAMESITE: grafana
       GF_SERVER_ROOT_URL: https://grafana.${CLUSTER_DOMAIN}
     envFromSecrets:
-      - name: grafana-secret
+      - name: *secret
     grafana.ini:
       analytics:
         check_for_updates: false
         check_for_plugin_updates: false
-        reporting_enabled: false
       auth:
         oauth_auto_login: true
       auth.generic_oauth:
