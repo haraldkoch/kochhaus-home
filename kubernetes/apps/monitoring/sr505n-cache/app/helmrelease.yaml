@@ -6,7 +6,7 @@ metadata:
   name: &app sr505n-cache
   namespace: monitoring
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: app-template

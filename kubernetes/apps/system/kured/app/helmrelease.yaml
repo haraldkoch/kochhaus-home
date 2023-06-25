@@ -6,7 +6,7 @@ metadata:
   name: kured
   namespace: system
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: kured
