@@ -6,7 +6,7 @@ metadata:
   name: grafana
   namespace: monitoring
 spec:
-  interval: 15m
+  interval: 30m
   chart:
     spec:
       chart: grafana
@@ -32,7 +32,7 @@ spec:
       tag: 9.5.3
     extraInitContainers:
       - name: 01-init-db
-        image: ghcr.io/haraldkoch/postgres-initdb:15.3
+        image: ghcr.io/haraldkoch/postgres-init:15.3
         imagePullPolicy: IfNotPresent
         envFrom:
           - secretRef:
