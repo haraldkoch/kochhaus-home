@@ -7,14 +7,14 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-cloudnative-pg
+    - name: cluster-apps-cloudnative-pg-cluster
     - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/apps/default/miniflux/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  wait: true
+  wait: false # no flux ks dependents
   interval: 30m
   retryInterval: 1m
   timeout: 5m
