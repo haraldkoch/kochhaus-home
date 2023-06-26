@@ -7,7 +7,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app.kubernetes.io/name: volsync
+      app.kubernetes.io/created-by: volsync
   egress:
     - to:
         - ipBlock:
