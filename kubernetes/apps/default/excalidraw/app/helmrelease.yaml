@@ -32,7 +32,7 @@ spec:
       strategy: RollingUpdate
     image:
       repository: ghcr.io/haraldkoch/excalidraw
-      tag: latest@sha256:d4159741dd685a4023a40c672c38e870975570156438685b0e67b65bf24d8715
+      tag: latest@sha256:eb06168cb856eb70b030d2acb07c023f1edec27147c3b6aeedcd0edd5b5e15f0
     service:
       main:
         ipFamilyPolicy: PreferDualStack
