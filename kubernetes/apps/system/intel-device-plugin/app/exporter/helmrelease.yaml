@@ -26,6 +26,9 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: intel-device-plugin-gpu
+      namespace: system
   values:
     controller:
       type: daemonset
@@ -55,9 +58,9 @@ spec:
       intel.feature.node.kubernetes.io/gpu: "true"
     resources:
       requests:
-        gpu.intel.com/i915: 1
+        gpu.intel.com/i915_monitoring: 1
         cpu: 100m
         memory: 100Mi
       limits:
-        gpu.intel.com/i915: 1
+        gpu.intel.com/i915_monitoring: 1
         memory: 500Mi
