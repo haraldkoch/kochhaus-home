@@ -29,10 +29,6 @@ spec:
   values:
     crds:
       install: true
-    updateStrategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxSurge: 1
     grafana:
       enabled: true
       annotations:
@@ -40,7 +36,6 @@ spec:
     backgroundController:
       serviceMonitor:
         enabled: true
-        interval: 1m
       rbac:
         clusterRole:
           extraResources:
@@ -51,14 +46,13 @@ spec:
     cleanupController:
       serviceMonitor:
         enabled: true
-        interval: 1m
     reportsController:
       serviceMonitor:
         enabled: true
-        interval: 1m
     admissionController:
       replicas: 3
-
+      serviceMonitor:
+        enabled: true
       rbac:
         clusterRole:
           extraResources:
@@ -87,6 +81,7 @@ spec:
           labelSelector:
             matchLabels:
               app.kubernetes.io/instance: kyverno
+              app.kubernetes.io/component: kyverno
       resources:
         requests:
           cpu: 500m
