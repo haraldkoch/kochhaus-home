@@ -25,6 +25,9 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: intel-device-plugin-operator
+      namespace: system
   values:
     name: intel-gpu-plugin
     sharedDevNum: 3
