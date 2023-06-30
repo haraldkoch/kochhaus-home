@@ -53,13 +53,16 @@
         "kubernetes/.+\\.ya?ml$"
       ],
       "matchStrings": [
-        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
+        // Example: `k3s_release_version: "v1.27.3+k3s1"`
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n",
+        // Example: `- https://github.com/rancher/system-upgrade-controller/releases/download/v0.11.0/crd.yaml`
+        "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?-\\s(.*?)\/(?<currentValue>[^/]+)\/[^/]+\n"
       ],
       "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     },
     {
-      "description": "Process imageName values",
+      "description": "Process CloudnativePG Postgresql version",
       "fileMatch": [
         "kubernetes/.+\\.ya?ml$"
       ],
@@ -71,7 +74,7 @@
     },
     {
       "description": "Process raw GitHub URLs",
-      "fileMatch": ["cluster/.+\\.ya?ml$", "kubernetes/.+\\.ya?ml$"],
+      "fileMatch": ["kubernetes/.+\\.ya?ml$"],
       "matchStrings": [
         "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
       ],

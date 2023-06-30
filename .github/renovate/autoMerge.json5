@@ -2,25 +2,26 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "packageRules": [
     {
-      "description": "Auto merge GitHub Actions",
-      "matchManagers": ["github-actions"],
+      "description": "Auto merge Pre-Commit Hooks",
+      "matchManagers": ["pre-commit"],
+      "matchDatasources": ["github-tags"],
       "automerge": true,
-      "automergeType": "branch",
       "ignoreTests": true,
-      "matchUpdateTypes": ["minor", "patch", "digest"]
+      "automergeType": "branch",
+      "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "description": "Auto merge container digests",
       "matchDatasources": ["docker"],
       "automerge": true,
-      "automergeType": "branch",
       "ignoreTests": true,
+      "automergeType": "branch",
       "matchUpdateTypes": ["digest"],
       "matchPackagePatterns": ["ghcr.io/onedr0p", "ghcr.io/haraldkoch"]
     },
     {
-      "description": "Auto merge Pre-Commit Hooks",
-      "matchManagers": ["pre-commit"],
+      "description": "Auto merge GitHub Actions",
+      "matchManagers": ["github-actions"],
       "matchDatasources": ["github-tags"],
       "automerge": true,
       "ignoreTests": true,
