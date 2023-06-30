@@ -6,6 +6,7 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
+  - ./jellyfin/ks.yaml
   - ./media-browser/ks.yaml
   - ./navidrome/ks.yaml
   - ./tautulli/ks.yaml
