@@ -9,11 +9,11 @@ spec:
   interval: 30m
   chart:
     spec:
-      chart: gatus
-      version: 3.3.5
+      chart: app-template
+      version: 1.5.1
       sourceRef:
         kind: HelmRepository
-        name: minicloudlabs
+        name: bjw-s
         namespace: flux-system
   maxHistory: 2
   install:
@@ -27,43 +27,101 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    extraInitContainers:
-      - name: init-db
+    initContainers:
+      01-init-db:
         image: ghcr.io/haraldkoch/postgres-init:15.3
         imagePullPolicy: IfNotPresent
-        envFrom:
+        envFrom: &envFrom
           - secretRef:
               name: gatus-secret
+      02-config-sync:
+        image: ghcr.io/kiwigrid/k8s-sidecar:1.24.4
+        imagePullPolicy: IfNotPresent
+        # FIXME: figure out how to avoid duplicating this list in sidecars
+        env:
+          - { name: FOLDER, value: /config }
+          - { name: LABEL, value: gatus.io/enabled }
+          - { name: NAMESPACE, value: ALL }
+          - { name: RESOURCE, value: both }
+          - { name: UNIQUE_FILENAMES, value: "true" }
+          - { name: METHOD, value: LIST }
+        volumeMounts: &k8sSidecarVols
+          - { name: config, mountPath: /config }
+    controller:
+      annotations:
+        reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/twin/gatus
       tag: v5.4.0
+    env:
+      TZ: ${TIMEZONE}
+      GATUS_CONFIG_PATH: /config
+      CUSTOM_WEB_PORT: &port 80
+      CLUSTER_DOMAIN: ${CLUSTER_DOMAIN}
+    envFrom: *envFrom
     service:
-      ipFamilyPolicy: PreferDualStack
-      # FIXME - this is to get rid of a "null" error during helmrelease reconciliation
-      portName: http
-    ingress:
-      enabled: true
-      ingressClassName: nginx
-      annotations:
-        hajimari.io/icon: mdi:eye
-      hosts:
-        - &host gatus.${CLUSTER_DOMAIN}
-      tls:
-        - hosts:
-            - *host
+      main:
+        ipFamilyPolicy: PreferDualStack
+        ports:
+          http:
+            port: *port
     serviceMonitor:
-      enabled: true
+      main:
+        enabled: true
+        endpoints:
+          - port: http
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          hajimari.io/icon: mdi:eye
+        hosts:
+          - host: &host status.${CLUSTER_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    serviceAccount:
+      create: true
+      name: gatus
+    podSecurityContext:
+      runAsUser: 1022
+      runAsGroup: 1022
+      fsGroup: 1022
+      fsGroupChangePolicy: OnRootMismatch
+    persistence:
+      config:
+        enabled: true
+        type: emptyDir
+      config-file:
+        enabled: true
+        type: configMap
+        name: gatus-configmap
+        mountPath: /config/config.yaml
+        subPath: config.yaml
+        readOnly: true
     resources:
       requests:
-        cpu: 15m
+        cpu: 100m
         memory: 100Mi
       limits:
-        cpu: 15m
-        memory: 100Mi
-  valuesFrom:
-    - kind: Secret
-      name: gatus-config
-    - kind: Secret
-      name: gatus-secret
-      valuesKey: POSTGRES_URL
-      targetPath: config.storage.path
+        memory: 500Mi
+    sidecars:
+      config-sync:
+        image: ghcr.io/kiwigrid/k8s-sidecar:1.24.4
+        imagePullPolicy: IfNotPresent
+        env:
+          - { name: FOLDER, value: /config }
+          - { name: LABEL, value: gatus.io/enabled }
+          - { name: NAMESPACE, value: ALL }
+          - { name: RESOURCE, value: both }
+          - { name: UNIQUE_FILENAMES, value: "true" }
+          - { name: METHOD, value: WATCH }
+        volumeMounts: *k8sSidecarVols
