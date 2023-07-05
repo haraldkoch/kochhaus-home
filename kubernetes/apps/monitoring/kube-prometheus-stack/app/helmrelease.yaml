@@ -45,12 +45,43 @@ spec:
             webhook_configs:
               - url: "http://alertmanager-discord:9094"
                 send_resolved: true
+          - name: pushover
+            pushover_configs:
+              - url_title: View in Alertmanager
+                token: "${SECRET_ALERTMANAGER_PUSHOVER_TOKEN}"
+                user_key: "${SECRET_ALERTMANAGER_PUSHOVER_USER_KEY}"
+                send_resolved: true
+                html: true
+                sound: gamelan
+                priority: |-
+                  {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
+                title: |-
+                  {{ .CommonLabels.alertname }} [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]
+                message: |-
+                  {{- range .Alerts }}
+                    {{- if ne .Annotations.description "" }}
+                      {{ .Annotations.description }}
+                    {{- else if ne .Annotations.summary "" }}
+                      {{ .Annotations.summary }}
+                    {{- else if ne .Annotations.message "" }}
+                      {{ .Annotations.message }}
+                    {{- else }}
+                      Alert description not available
+                    {{- end }}
+                    {{- if gt (len .Labels.SortedPairs) 0 }}
+                      <small>
+                      {{- range .Labels.SortedPairs }}
+                        <b>{{ .Name }}:</b> {{ .Value }}
+                      {{- end }}
+                      </small>
+                    {{- end }}
+                  {{- end }}
         route:
           group_by: ["alertname", "job"]
           group_wait: 30s
           group_interval: 5m
           repeat_interval: 6h
-          receiver: discord
+          receiver: pushover
           routes:
             - receiver: heartbeat
               group_wait: 0s
@@ -61,7 +92,7 @@ spec:
             - receiver: "null" # quote
               matchers:
                 - alertname =~ "InfoInhibitor"
-            - receiver: discord
+            - receiver: pushover
               matchers:
                 - severity = "critical"
               continue: true
@@ -256,6 +287,9 @@ spec:
                 requests:
                   storage: 20Gi
         additionalScrapeConfigs:
+          - job_name: gatus
+            static_configs:
+              - targets: ["status.${CLUSTER_DOMAIN}"]
           - job_name: haproxy
             static_configs:
               - targets: ["gw.${PRIVATE_STATIC_DOMAIN}:8404"]
