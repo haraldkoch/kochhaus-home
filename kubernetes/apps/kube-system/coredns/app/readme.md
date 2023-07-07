@@ -8,7 +8,7 @@ cluster has no DNS servers and cannot bootstrap flux!
 This command will bootstrap coredns into the cluster, using the same settings
 as the ones flux will eventually apply.
 
-    yq .spec.values kubernetes/appskube-system/coredns/app/helmrelease.yaml \
+    yq .spec.values kubernetes/apps/kube-system/coredns/app/helmrelease.yaml \
       | helm template -n kube-system coredns coredns/coredns -f - \
       | kubectl -n kube-system apply -f -
 
