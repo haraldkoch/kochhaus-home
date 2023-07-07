@@ -43,6 +43,10 @@ spec:
                 - ""
               resources:
                 - pods
+              verbs:
+                - create
+                - update
+                - delete
     cleanupController:
       serviceMonitor:
         enabled: true
