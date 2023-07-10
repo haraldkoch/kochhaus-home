@@ -27,6 +27,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      repository: ghcr.io/haraldkoch/grafana
+      tag: 10.0.1
     extraInitContainers:
       - name: 01-init-db
         image: ghcr.io/haraldkoch/postgres-init:15.3
