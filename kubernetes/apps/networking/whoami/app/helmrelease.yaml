@@ -32,7 +32,7 @@ spec:
       replicas: 2
     image:
       repository: docker.io/traefik/whoami
-      tag: v1.10.0
+      tag: v1.10.1
     service:
       main:
         ipFamilyPolicy: PreferDualStack
