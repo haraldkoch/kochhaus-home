@@ -30,7 +30,7 @@ spec:
     configuration:
       startTime: "7:00"
       endTime: "12:00"
-      period: "15m"
+      period: "10m"
       timeZone: ${TIMEZONE}
     service:
       ipFamilyPolicy: preferDualStack
