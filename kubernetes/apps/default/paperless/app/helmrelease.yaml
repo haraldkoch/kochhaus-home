@@ -108,5 +108,5 @@ spec:
         image: public.ecr.aws/docker/library/redis:7.0.12
         imagePullPolicy: IfNotPresent
       tika:
-        image: ghcr.io/paperless-ngx/tika:2.7.0-full
+        image: ghcr.io/paperless-ngx/tika:2.8.0-full
         imagePullPolicy: IfNotPresent
