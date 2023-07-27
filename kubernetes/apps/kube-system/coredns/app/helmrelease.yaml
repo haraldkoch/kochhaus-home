@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: coredns
         namespace: flux-system
-  maxHistory: 3
+  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -26,15 +26,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: coredns/coredns
-      tag: 1.10.1
     fullnameOverride: coredns
     replicaCount: 3
     service:
       clusterIP: 10.43.0.10
-      annotations:
-        fix.coredns.template: "fnord"
     serviceAccount:
       create: true
     deployment:
@@ -59,12 +54,6 @@ spec:
               pods insecure
               fallthrough in-addr.arpa ip6.arpa
               ttl 30
-          # - name: hosts
-          #   parameters: /etc/coredns/NodeHosts
-          #   configBlock: |-
-          #     ttl 60
-          #     reload 15s
-          #     fallthrough
           - name: prometheus
             parameters: 0.0.0.0:9153
           - name: forward
@@ -82,8 +71,11 @@ spec:
                 - key: node-role.kubernetes.io/control-plane
                   operator: Exists
     tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
+        effect: NoSchedule
     topologySpreadConstraints:
       - maxSkew: 1
         topologyKey: kubernetes.io/hostname
