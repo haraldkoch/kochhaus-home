@@ -16,8 +16,8 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: wipe
-          image: ghcr.io/haraldkoch/alpine:3.17.3@sha256:f70e5374e77da21eb08ee92a9c3a250753922d75a8af1c1d321cf89aeab06357 
-          command: ["/bin/bash", "-c", "cd /config; find . -delete"]
+          image: public.ecr.aws/docker/library/busybox:latest
+          command: ["/bin/sh", "-c", "cd /config; find . -delete"]
           volumeMounts:
             - name: config
               mountPath: /config
