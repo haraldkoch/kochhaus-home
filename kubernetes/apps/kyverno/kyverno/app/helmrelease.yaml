@@ -45,7 +45,10 @@ spec:
               verbs:
                 - create
                 - update
+                - patch
                 - delete
+                - get
+                - list
     cleanupController:
       serviceMonitor:
         enabled: true
@@ -67,7 +70,6 @@ spec:
                 - create
                 - update
                 - delete
-
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
