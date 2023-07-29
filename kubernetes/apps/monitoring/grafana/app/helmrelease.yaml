@@ -55,8 +55,10 @@ spec:
       analytics:
         check_for_updates: false
         check_for_plugin_updates: false
+        reporting_enabled: false
       auth:
         oauth_auto_login: true
+        oauth_allow_insecure_email_lookup: true
       auth.generic_oauth:
         enabled: true
         name: Authelia
@@ -78,6 +80,8 @@ spec:
         org_name: HomeOps
         org_id: 1
         org_role: Viewer
+      news:
+        news_feed_enabled: false
     defaultDashboardsTimezone: ${TIMEZONE}
     dashboardProviders:
       dashboardproviders.yaml:
@@ -119,24 +123,28 @@ spec:
       datasources.yaml:
         apiVersion: 1
         deleteDatasources:
-          - name: Loki
-            orgId: 1
-          - name: Alertmanager
-            orgId: 1
+          - { name: Alertmanager, orgId: 1 }
+          - { name: Loki, orgId: 1 }
+          - { name: Prometheus, orgId: 1 }
         datasources:
           - name: Prometheus
             type: prometheus
+            uid: prometheus
             access: proxy
             url: http://thanos-query-frontend.monitoring.svc.cluster.local:9090
+            jsonData:
+              prometheusType: Thanos
             isDefault: true
           - name: Loki
             type: loki
+            uid: loki
             access: proxy
             url: http://loki-gateway.monitoring.svc.cluster.local
             jsonData:
               maxLines: 250
           - name: Alertmanager
             type: alertmanager
+            uid: alertmanager
             access: proxy
             url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093
             jsonData:
@@ -147,45 +155,48 @@ spec:
           url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
           datasource: Prometheus
       home:
-        # Ref: https://grafana.com/grafana/dashboards/13502-minio-dashboard/
-        #minio:
-        #  gnetId: 13502
-        #  revision: 22
-        #  datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/7845-zfs/
         zfs:
-          gnetId: 7845
+          gnetId: 7845 # https://grafana.com/grafana/dashboards/7845?tab=revisions
           revision: 4
           datasource: Prometheus
       infrastructure:
         cert-manager:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
           datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/1860-node-exporter-full/
+        cloudflared:
+          gnetId: 17457 # https://grafana.com/grafana/dashboards/17457?tab=revisions
+          revision: 6
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        external-dns:
+          gnetId: 15038 # https://grafana.com/grafana/dashboards/15038?tab=revisions
+          revision: 1
+          datasource: Prometheus
+        minio:
+          gnetId: 13502 # https://grafana.com/grafana/dashboards/13502?tab=revisions
+          revision: 23
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         node-exporter-full:
-          gnetId: 1860
-          revision: 30
+          gnetId: 1860 # https://grafana.com/grafana/dashboards/1860?tab=revisions
+          revision: 31
           datasource: Prometheus
         # Ref: https://grafana.com/grafana/dashboards/763-redis-dashboard-for-prometheus-redis-exporter-1-x/
         redis:
-          gnetId: 763
-          revision: 4
+          gnetId: 763 # https://grafana.com/grafana/dashboards/763?tab=revisions
+          revision: 5
           datasource: Prometheus
-        # grafana folder Rook Ceph
-        # Ref: https://grafana.com/grafana/dashboards/5342-ceph-pools/
-        ceph-pools:
-          gnetId: 5342
-          revision: 9
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/5336-ceph-osd-single/
-        ceph-osd:
-          gnetId: 5336
-          revision: 9
-          datasource: Prometheus
-        # Ref: https://grafana.com/grafana/dashboards/2842-ceph-cluster/
         ceph-cluster:
-          gnetId: 2842
-          revision: 16
+          gnetId: 2842 # https://grafana.com/grafana/dashboards/2842?tab=revisions
+          revision: 17
+          datasource: Prometheus
+        ceph-osd:
+          gnetId: 5336 # https://grafana.com/grafana/dashboards/5336?tab=revisions
+          revision: 9
+          datasource: Prometheus
+        ceph-pools:
+          gnetId: 5342 # https://grafana.com/grafana/dashboards/5342?tab=revisions
+          revision: 9
           datasource: Prometheus
         external-secrets:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
