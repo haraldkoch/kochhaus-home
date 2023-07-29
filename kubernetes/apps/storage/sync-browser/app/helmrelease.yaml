@@ -31,7 +31,7 @@ spec:
     image:
       # https://github.com/filebrowser/filebrowser/issues/1571
       repository: ghcr.io/haraldkoch/filebrowser
-      tag: v2.23.0
+      tag: v2.24.0
     env:
       TZ: ${TIMEZONE}
       FB_DATABASE: "/config/filebrowser.db"
