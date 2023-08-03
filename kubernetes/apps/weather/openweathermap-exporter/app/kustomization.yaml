@@ -5,3 +5,14 @@ kind: Kustomization
 namespace: weather
 resources:
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: openweathermap-dashboard
+    files:
+      - openweathermap.json=./openweathermap.json
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    grafana_folder: Home
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+  labels:
+    grafana_dashboard: "true"
