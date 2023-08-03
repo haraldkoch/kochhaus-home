@@ -53,10 +53,11 @@ spec:
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "exporters.${CLUSTER_DOMAIN}"
-    metrics:
-      enabled: true
-      prometheusRule:
+    serviceMonitor:
+      main:
         enabled: true
+        endpoints:
+          - port: metrics
     resources:
       requests:
         cpu: 15m
