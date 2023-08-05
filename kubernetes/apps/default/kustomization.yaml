@@ -15,3 +15,4 @@ resources:
   - ./miniflux/ks.yaml
   - ./outline/ks.yaml
   - ./paperless/ks.yaml
+  - ./vikunja/ks.yaml
