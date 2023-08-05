@@ -1,0 +1,154 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app vikunja
+  namespace: default
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    initContainers:
+      01-init-db:
+        image: ghcr.io/haraldkoch/postgres-init:15.3
+        imagePullPolicy: IfNotPresent
+        envFrom: &envFrom
+          - secretRef:
+              name: *app
+    controller:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+    image:
+      repository: caddy
+      tag: 2.6.4-alpine
+      pullPolicy: IfNotPresent
+    sidecars:
+      frontend:
+        image: vikunja/frontend:0.21.0@sha256:fdd4582979beee4a6bef2d4d8e3744809b82ab2e198d708a829d7189a0ad9882
+        resources:
+          requests:
+            cpu: 10m
+            memory: 26Mi
+          limits:
+            memory: 28Mi
+      api:
+        image: vikunja/api:0.21.0@sha256:e541ef5599d08f50a24e8de1fd8136f9d0a7ef514916fac6d6bf8ac6c7c16712
+        env:
+          - name: VIKUNJA_SERVICE_TIMEZONE
+            value: ${TIMEZONE}
+          - name: VIKUNJA_DATABASE_TYPE
+            value: "postgres"
+          - name: VIKUNJA_SERVICE_FRONTENDURL
+            value: https://tasks.${CLUSTER_DOMAIN}
+          - name: VIKUNJA_MAILER_FROMEMAIL
+            value: tasks@${CLUSTER_DOMAIN}
+          - name: VIKUNJA_MAILER_ENABLED
+            value: "true"
+          - name: VIKUNJA_MAILER_HOST
+            value: smtp-relay.networking.svc.cluster.local
+          - name: VIKUNJA_MAILER_PORT
+            value: "25"
+          - name: &envjwt VIKUNJA_SERVICE_JWT
+            valueFrom:
+              secretKeyRef:
+                name: *app
+                key: *envjwt
+          - name: &envdbuser VIKUNJA_DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                name: *app
+                key: *envdbuser
+          - name: &envdbpass VIKUNJA_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: *app
+                key: *envdbpass
+          - name: &envdbhost VIKUNJA_DATABASE_HOST
+            valueFrom:
+              secretKeyRef:
+                name: *app
+                key: *envdbhost
+          - name: &envdbdb VIKUNJA_DATABASE_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: *app
+                key: *envdbdb
+        resources:
+          requests:
+            cpu: 15m
+            memory: 24Mi
+          limits:
+            memory: 300Mi
+        volumeMounts:
+          - name: files
+            mountPath: /app/vikunja/files
+          - name: config
+            mountPath: /app/vikunja/config.yml
+            subPath: config.yml
+            readOnly: true
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+          hajimari.io/icon: mdi:format-list-checks
+        hosts:
+          - host: &host "tasks.${CLUSTER_DOMAIN}"
+            paths:
+              - path: /
+        tls:
+          - hosts:
+              - *host
+    volumeClaimTemplates:
+      - name: files
+        mountPath: /app/vikunja/files
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: ceph-block
+    persistence:
+      config:
+        enabled: true
+        type: custom
+        readOnly: true
+        mountPath: "-"
+        volumeSpec:
+          configMap:
+            name: vikunja
+      caddy-config:
+        enabled: "true"
+        mountPath: /etc/caddy/Caddyfile
+        subPath: Caddyfile
+        type: "custom"
+        volumeSpec:
+          configMap:
+            name: vikunja
+    resources:
+      requests:
+        cpu: 15m
+        memory: 22Mi
+      limits:
+        memory: 60Mi

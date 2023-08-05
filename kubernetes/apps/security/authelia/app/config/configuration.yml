@@ -78,3 +78,11 @@ identity_providers:
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://gitops.${CLUSTER_DOMAIN}/oauth2/callback"]
         userinfo_signing_alg: none
+      - id: vikunja
+        description: Vikunja Task Manager
+        secret: "${VIKUNJA_OAUTH_CLIENT_SECRET}"
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        scopes: ["openid", "profile", "groups", "email"]
+        redirect_uris: ["https://tasks.${CLUSTER_DOMAIN}/auth/openid"]
