@@ -86,3 +86,4 @@ identity_providers:
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "email"]
         redirect_uris: ["https://tasks.${CLUSTER_DOMAIN}/auth/openid/authelia"]
+        userinfo_signing_alg: none
