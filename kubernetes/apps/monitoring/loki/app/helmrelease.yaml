@@ -33,7 +33,7 @@ spec:
       image:
         registry: ghcr.io
         repository: haraldkoch/loki
-        tag: 2.8.3
+        tag: 2.8.4
       structuredConfig:
         auth_enabled: false
         server:
