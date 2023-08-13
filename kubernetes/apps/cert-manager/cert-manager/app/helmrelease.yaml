@@ -26,6 +26,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    replicaCount: 2
     installCRDs: true
     extraArgs:
       - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
@@ -58,15 +59,15 @@ spec:
     tolerations:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
-    cainjector:
-      enabled: true
+    webhook:
+      replicaCount: 2
       resources:
         requests:
           cpu: 15m
-          memory: 200M
+          memory: 32M
         limits:
           cpu: 15m
-          memory: 400M
+          memory: 32M
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -78,15 +79,15 @@ spec:
       tolerations:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
-    webhook:
-      enabled: true
+    cainjector:
+      replicaCount: 2
       resources:
         requests:
           cpu: 15m
-          memory: 32M
+          memory: 200M
         limits:
           cpu: 15m
-          memory: 32M
+          memory: 400M
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
