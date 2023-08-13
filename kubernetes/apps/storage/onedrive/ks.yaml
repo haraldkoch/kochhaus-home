@@ -8,7 +8,6 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-volsync
-    - name: cluster-apps-rook-ceph-cluster
   path: ./kubernetes/apps/storage/onedrive/app
   prune: true
   sourceRef:
