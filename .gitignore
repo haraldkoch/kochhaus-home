@@ -9,6 +9,7 @@ kubeconfig.yaml
 # gitguardian
 .cache_ggshield
 .config.env
+.decrypted~*
 *.agekey
 *.pub
 *.key
