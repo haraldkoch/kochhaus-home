@@ -30,6 +30,8 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: mariadb
+      namespace: joomla
   values:
     image:
       repository: joomla
