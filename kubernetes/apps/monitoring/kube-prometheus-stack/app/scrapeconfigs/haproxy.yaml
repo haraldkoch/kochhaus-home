@@ -1,0 +1,12 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: haproxy
+  namespace: monitoring
+spec:
+  staticConfigs:
+    - targets:
+        - gw.${PRIVATE_STATIC_DOMAIN}:8404
+  metricsPath: /metrics
