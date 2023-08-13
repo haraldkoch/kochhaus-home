@@ -26,6 +26,11 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: local-path-provisioner
+      namespace: kube-system
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   values:
     global:
       dnsService: coredns
@@ -108,6 +113,8 @@ spec:
           reporting_enabled: false
     gateway:
       replicas: 2
+      image:
+        registry: ghcr.io
       ingress:
         enabled: true
         ingressClassName: nginx
@@ -181,10 +188,7 @@ spec:
     monitoring:
       dashboards:
         annotations:
-          kustomize.toolkit.fluxcd.io/substitute: disabled
           grafana_folder: Loki
-        labels:
-          grafana_dashboard: "true"
       serviceMonitor:
         enabled: false
         metricsInstance:
