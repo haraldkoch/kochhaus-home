@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: pikvm
+  namespace: monitoring
+spec:
+  staticConfigs:
+    - targets:
+        - pikvm1.${PRIVATE_DYNAMIC_DOMAIN}
+        - pikvm2.${PRIVATE_DYNAMIC_DOMAIN}
+  metricsPath: /api/export/prometheus/metrics
