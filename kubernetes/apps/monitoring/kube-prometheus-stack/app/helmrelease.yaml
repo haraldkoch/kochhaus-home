@@ -36,76 +36,6 @@ spec:
       enabled: true
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
-      config:
-        global:
-          resolve_timeout: 5m
-        receivers:
-          - name: heartbeat
-            webhook_configs:
-              - url: "https://hc-ping.com/${SECRET_ALERTMANAGER_HEALTHCHECKS_TOKEN}"
-                send_resolved: true
-          - name: "null" # quote
-          - name: discord
-            webhook_configs:
-              - url: "http://alertmanager-discord:9094"
-                send_resolved: true
-          - name: pushover
-            pushover_configs:
-              - url_title: View in Alertmanager
-                token: "${SECRET_ALERTMANAGER_PUSHOVER_TOKEN}"
-                user_key: "${SECRET_ALERTMANAGER_PUSHOVER_USER_KEY}"
-                send_resolved: true
-                html: true
-                sound: gamelan
-                priority: |-
-                  {{ if eq .Status "firing" }}1{{ else }}0{{ end }}
-                title: |-
-                  {{ .CommonLabels.alertname }} [{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}]
-                message: |-
-                  {{- range .Alerts }}
-                    {{- if ne .Annotations.description "" }}
-                      {{ .Annotations.description }}
-                    {{- else if ne .Annotations.summary "" }}
-                      {{ .Annotations.summary }}
-                    {{- else if ne .Annotations.message "" }}
-                      {{ .Annotations.message }}
-                    {{- else }}
-                      Alert description not available
-                    {{- end }}
-                    {{- if gt (len .Labels.SortedPairs) 0 }}
-                      <small>
-                      {{- range .Labels.SortedPairs }}
-                        <b>{{ .Name }}:</b> {{ .Value }}
-                      {{- end }}
-                      </small>
-                    {{- end }}
-                  {{- end }}
-        route:
-          group_by: ["alertname", "job"]
-          group_wait: 30s
-          group_interval: 5m
-          repeat_interval: 6h
-          receiver: pushover
-          routes:
-            - receiver: heartbeat
-              group_wait: 0s
-              group_interval: 5m
-              repeat_interval: 1h
-              matchers:
-                - alertname =~ "Watchdog"
-            - receiver: "null" # quote
-              matchers:
-                - alertname =~ "InfoInhibitor"
-            - receiver: pushover
-              matchers:
-                - severity = "critical"
-              continue: true
-        inhibit_rules:
-          - source_matchers:
-              - severity = "critical"
-            target_matchers:
-              - severity = "warning"
-            equal: ["alertname", "namespace"]
       service:
         externalTrafficPolicy: Local
         # not supported - I'll need to use a patch to get it in
@@ -124,7 +54,8 @@ spec:
               - *host
       alertmanagerSpec:
         replicas: 2
-        podAffinity: hard
+        useExistingSecret: true
+        configSecret: alertmanager-secret
         storage:
           volumeClaimTemplate:
             spec:
@@ -188,9 +119,14 @@ spec:
           - action: replace
             sourceLabels: ["node"]
             targetLabel: instance
+          # Drop high cardinality labels
+          - action: labeldrop
+            regex: (uid)
+          - action: labeldrop
+            regex: (id|name)
           - action: drop
             sourceLabels: ["__name__"]
-            regex: rest_client_request_duration_seconds_bucket
+            regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
     kubeApiServer:
       enabled: true
       serviceMonitor:
@@ -220,7 +156,7 @@ spec:
             regex: "(apiserver_audit|apiserver_client|apiserver_delegated|apiserver_envelope|apiserver_storage|apiserver_webhooks|attachdetach_controller|authenticated_user|authentication|cronjob_controller|disabled_metric|endpoint_slice|ephemeral_volume|garbagecollector_controller|get_token|go|hidden_metric|job_controller|kubernetes_build|kubernetes_feature|leader_election|node_collector|node_ipam|process_cpu|process_max|process_open|process_resident|process_start|process_virtual|pv_collector|registered_metric|replicaset_controller|rest_client|retroactive_storageclass|root_ca|running_managed|scrape_duration|scrape_samples|scrape_series|service_controller|storage_count|storage_operation|ttl_after|volume_operation|workqueue)_(.+)"
           - action: drop
             sourceLabels: ["__name__"]
-            regex: rest_client_request_duration_seconds_bucket
+            regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
     kubeEtcd:
       enabled: true
       endpoints: *cp
@@ -230,9 +166,9 @@ spec:
         targetPort: 2381
       serviceMonitor:
         metricRelabelings:
-          - sourceLabels: ["__name__"]
-            regex: etcd_request_duration_seconds_bucket
-            action: drop
+          - action: drop
+            sourceLabels: ["__name__"]
+            regex: (etcd_request_duration_seconds_bucket|etcd_request_duration_seconds_sum|etcd_request_duration_seconds_count)
     kubeScheduler:
       enabled: true
       endpoints: *cp
@@ -244,7 +180,7 @@ spec:
             regex: "(apiserver_audit|apiserver_client|apiserver_delegated|apiserver_envelope|apiserver_storage|apiserver_webhooks|authenticated_user|authentication|disabled_metric|go|hidden_metric|kubernetes_build|kubernetes_feature|leader_election|process_cpu|process_max|process_open|process_resident|process_start|process_virtual|registered_metric|rest_client|scheduler|scrape_duration|scrape_samples|scrape_series|workqueue)_(.+)"
           - action: drop
             sourceLabels: ["__name__"]
-            regex: rest_client_request_duration_seconds_bucket
+            regex: (rest_client_request_duration_seconds_bucket|rest_client_request_duration_seconds_sum|rest_client_request_duration_seconds_count)
     kubeProxy:
       enabled: false
     prometheus:
