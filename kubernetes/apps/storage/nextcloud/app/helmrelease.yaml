@@ -36,7 +36,7 @@ spec:
     nextcloud:
       extraInitContainers:
         - name: init-db
-          image: ghcr.io/haraldkoch/postgres-init:15.3
+          image: ghcr.io/haraldkoch/postgres-init:15.4
           imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:
