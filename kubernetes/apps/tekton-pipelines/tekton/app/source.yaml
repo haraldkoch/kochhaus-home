@@ -14,7 +14,7 @@ spec:
   ignore: |
     /*
     # renovate: depName=tektoncd/pipeline
-    !/pipeline/previous/v0.50.1/release.yaml
+    !/pipeline/previous/v0.51.0/release.yaml
     # renovate: depName=tektoncd/dashboard
     !/dashboard/previous/v0.38.0/release-full.yaml
     # renovate: depName=tektoncd/triggers
