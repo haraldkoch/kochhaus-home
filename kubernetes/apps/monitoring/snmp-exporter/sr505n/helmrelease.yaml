@@ -39,7 +39,10 @@ spec:
         readOnly: true
         defaultMode: 420
     service:
-      ipFamilyPolicy: PreferDualStack
+      ipDualStack:
+        enabled: true
+        ipFamilies: ["IPv6", "IPv4"]
+        ipFamilyPolicy: PreferDualStack
     resources:
       requests:
         cpu: 50m
