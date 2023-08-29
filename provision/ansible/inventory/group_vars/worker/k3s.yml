@@ -6,5 +6,6 @@
 k3s_control_node: false
 
 # (dict) k3s settings for all worker nodes
+# NOTE: this entire dict is overriden in host_vars
 k3s_agent:
   node-ip: "{{ ansible_host }}"
