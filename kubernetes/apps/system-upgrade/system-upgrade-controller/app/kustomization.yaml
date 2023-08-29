@@ -8,7 +8,7 @@ resources:
   - https://github.com/rancher/system-upgrade-controller?ref=v0.13.1
 images:
   - name: rancher/system-upgrade-controller
-    newTag: v0.13.0
+    newTag: v0.13.1
 patchesStrategicMerge:
   - |
     $patch: delete
