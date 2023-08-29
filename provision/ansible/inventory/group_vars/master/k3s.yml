@@ -38,6 +38,9 @@ k3s_server:
   service-cidr: "10.43.0.0/16,fdd5:aa8:9535:43::/108"
   node-taint:
     - "node-role.kubernetes.io/control-plane:NoSchedule"
+  kubelet-arg:
+    - "image-gc-high-threshold=74"
+    - "image-gc-low-threshold=70"
   kube-controller-manager-arg:
     - node-cidr-mask-size-ipv6=112
     # Required to monitor kube-controller-manager with kube-prometheus-stack
