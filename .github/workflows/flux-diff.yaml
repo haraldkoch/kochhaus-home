@@ -4,7 +4,7 @@ name: "Flux Diff"
 on:
   pull_request:
     branches: ["main"]
-    paths: ["**.yaml"]
+    paths: ["kubernetes/**.yaml"]
 
 jobs:
   flux-diff:
@@ -25,9 +25,10 @@ jobs:
           private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
 
       - name: Diff Resources
-        uses: allenporter/flux-local/action/diff@main
+        uses: allenporter/flux-local/action/diff@efbe055c6dc2a63d1102db582632d2aa03696664 # 3.1.1
         id: diff
         with:
+          sources: home-kubernetes
           path: "${{ matrix.path }}"
           resource: "${{ matrix.resource }}"
 
