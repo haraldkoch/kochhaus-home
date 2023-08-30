@@ -9,14 +9,18 @@ resources:
 images:
   - name: rancher/system-upgrade-controller
     newTag: v0.13.1
-patchesStrategicMerge:
-  - |
-    $patch: delete
-    apiVersion: v1
-    kind: Namespace
-    metadata:
-      name: system-upgrade
+labels:
+  - includeSelectors: true
+    pairs:
+      app.kubernetes.io/instance: system-upgrade-controller
+      app.kubernetes.io/name: system-upgrade-controller
 patches:
+  - patch: |
+      $patch: delete
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: system-upgrade
   # change master to control-plane in nodeAffinity
   - target:
       kind: Deployment
@@ -28,8 +32,3 @@ patches:
           - matchExpressions:
               - key: node-role.kubernetes.io/control-plane
                 operator: Exists
-labels:
-  - pairs:
-      app.kubernetes.io/name: system-upgrade-controller
-      app.kubernetes.io/instance: system-upgrade-controller
-    includeSelectors: true
