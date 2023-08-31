@@ -87,9 +87,10 @@ spec:
             matchLabels:
               app.kubernetes.io/instance: kyverno
               app.kubernetes.io/component: kyverno
-      resources:
-        requests:
-          cpu: 500m
-          memory: 384Mi
-        limits:
-          memory: 512Mi
+      container:
+        resources:
+          requests:
+            cpu: 500m
+            memory: 384Mi
+          limits:
+            memory: 512Mi
