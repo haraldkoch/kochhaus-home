@@ -29,7 +29,7 @@ spec:
     image:
       registry: ghcr.io
       repository: haraldkoch/x509-certificate-exporter
-      tag: 3.9.0
+      tag: 3.10.0
     prometheusRules:
       warningDaysLeft: 14
       criticalDaysleft: 7
