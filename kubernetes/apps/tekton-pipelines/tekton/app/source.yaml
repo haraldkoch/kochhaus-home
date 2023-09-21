@@ -14,7 +14,7 @@ spec:
   ignore: |
     /*
     # renovate: depName=tektoncd/pipeline
-    !/pipeline/previous/v0.51.0/release.yaml
+    !/pipeline/previous/v0.52.0/release.yaml
     # renovate: depName=tektoncd/dashboard
     !/dashboard/previous/v0.39.0/release-full.yaml
     # renovate: depName=tektoncd/triggers
@@ -22,7 +22,7 @@ spec:
     # renovate: depName=tektoncd/triggers
     !/triggers/previous/v0.25.0/interceptors.yaml
     # renovate: depName=tektoncd/chains
-    !/chains/previous/v0.17.0/release.yaml
+    !/chains/previous/v0.18.0/release.yaml
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
