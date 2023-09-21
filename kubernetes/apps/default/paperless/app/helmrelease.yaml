@@ -99,7 +99,7 @@ spec:
         memory: 5000Mi
     sidecars:
       gotenburg:
-        image: thecodingmachine/gotenberg:7.9.1
+        image: thecodingmachine/gotenberg:7.9.2
         imagePullPolicy: IfNotPresent
         env:
           - { name: DISABLE_GOOGLE_CHROME, value: "1" }
