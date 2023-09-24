@@ -42,7 +42,7 @@ spec:
         insecure: true
     queryFrontend:
       enabled: true
-      replicaCount: 3
+      replicaCount: 2
       ingress:
         enabled: true
         ingressClassName: nginx
@@ -55,36 +55,36 @@ spec:
               - *host
     query:
       enabled: true
-      replicaCount: 3
+      replicaCount: 2
       replicaLabel: ["__replica__"]
       dnsDiscovery:
         sidecarsService: kube-prometheus-stack-thanos-discovery
         sidecarsNamespace: monitoring
     bucketweb:
       enabled: true
-      replicaCount: 3
+      replicaCount: 2
     compactor:
       enabled: true
       extraFlags:
         - --compact.concurrency=4
         - --delete-delay=30m
-      retentionResolutionRaw: 14d
-      retentionResolution5m: 14d
-      retentionResolution1h: 14d
+      retentionResolutionRaw: 30d
+      retentionResolution5m: 60d
+      retentionResolution1h: 90d
       persistence:
         enabled: true
         storageClass: local-path
         size: 20Gi
     storegateway:
       enabled: true
-      replicaCount: 3
+      replicaCount: 2
       persistence:
         enabled: true
         storageClass: local-path
         size: 20Gi
     ruler:
       enabled: true
-      replicaCount: 3
+      replicaCount: 2
       replicaLabel: __replica__
       alertmanagers: ["http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093"]
       extraFlags: ["--web.prefix-header=X-Forwarded-Prefix"]
