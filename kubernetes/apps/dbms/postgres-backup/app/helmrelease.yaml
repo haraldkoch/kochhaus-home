@@ -34,7 +34,7 @@ spec:
     restartPolicy: OnFailure
     image:
       repository: docker.io/prodrigestivill/postgres-backup-local
-      tag: 15@sha256:b3905c58ab8c1fb7596e2f90f059c65d61c2a813232e6eca4a3f5ce019bfbd61
+      tag: 15@sha256:7f12039af361b71c987ad06b5c0a9dca67bad92f10bffa5012a614311363eebb
     command:
       - /bin/bash
       - -x
