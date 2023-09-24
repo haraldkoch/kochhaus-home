@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    controllerServiceAccount:
+      name: actions-runner-controller-gha-rs-controller
     runnerScaleSetName: arc-runner-set-kochhaus-home
     githubConfigUrl: https://github.com/haraldkoch/kochhaus-home
     minRunners: 1
