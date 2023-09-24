@@ -1,3 +1,4 @@
+---
 groups:
   #
   # SMART Failures
@@ -12,7 +13,9 @@ groups:
           severity: critical
           category: logs
         annotations:
-          summary: "SMART has reported failures on host {{ $labels.hostname }}"
+          hostname: "{{ $labels.hostname }}"
+          summary: "{{ $labels.hostname }} has reported SMART failures"
+
   #
   # zigbee2mqtt
   #
@@ -26,7 +29,9 @@ groups:
           severity: critical
           category: logs
         annotations:
-          summary: "Zigbee2mqtt is unable to reach MQTT"
+          app: "{{ $labels.app }}"
+          summary: "{{ $labels.app }} is unable to reach mqtt"
+
   #
   # zwavejs2mqtt
   #
@@ -40,7 +45,9 @@ groups:
           severity: critical
           category: logs
         annotations:
-          summary: "Zwavejs2mqtt is unable to reach MQTT"
+          app: "{{ $labels.app }}"
+          summary: "{{ $labels.app }} is unable to reach MQTT"
+
   #
   # frigate
   #
@@ -54,7 +61,9 @@ groups:
           severity: critical
           category: logs
         annotations:
-          summary: "Frigate is unable to reach MQTT"
+          app: "{{ $labels.app }}"
+          summary: "{{ $labels.app }} is unable to reach MQTT"
+
   #
   # *arr
   #
@@ -68,7 +77,9 @@ groups:
           severity: critical
           category: logs
         annotations:
+          app: "{{ $labels.app }}"
           summary: "{{ $labels.app }} is experiencing locked database issues"
+
       - alert: ArrDatabaseIsMalformed
         expr: |
           sum by (app) (count_over_time({app=~".*arr"} |~ "(?i)database disk image is malformed"[2m])) > 0
@@ -77,7 +88,58 @@ groups:
           severity: critical
           category: logs
         annotations:
+          app: "{{ $labels.app }}"
           summary: "{{ $labels.app }} is experiencing malformed database disk image issues"
+
+      - alert: ArrFailedToAddTorrent
+        expr: |
+          avg by (app, message) (count_over_time({app=~".*arr"} |~ "(?i)Couldn't add report to download queue" | json [30m])) > 0
+        for: 2m
+        labels:
+          severity: warning
+          category: logs
+        annotations:
+          app: "{{ $labels.app }}"
+          summary: "{{ $labels.message }}"
+
+      - alert: ArrNetworkIsUnhealthy
+        expr: |
+          sum by (app) (count_over_time({app="autobrr"} |~ "(?i)network unhealthy"[15m])) > 0
+        for: 2m
+        labels:
+          severity: warning
+          category: logs
+        annotations:
+          app: "{{ $labels.app }}"
+          summary: "{{ $labels.app }} has a unhealthy network"
+
+      - alert: ArrJobRaisedException
+        expr: |
+          sum by (app) (count_over_time({app="bazarr"} |~ "(?i)Job(.+)Update(.+)from(.+)raised an exception"[1h])) > 0
+        for: 2m
+        labels:
+          severity: warning
+          category: logs
+        annotations:
+          app: "{{ $labels.app }}"
+          summary: "{{ $labels.app }} is raising job exceptions"
+
+  #
+  # plex
+  #
+  - name: plex
+    rules:
+      - alert: PlexDatabaseIsBusy
+        expr: |
+          sum by (app) (count_over_time({app="plex"} |~ "(?i)retry busy DB"[2m])) > 0
+        for: 2m
+        labels:
+          severity: critical
+          category: logs
+        annotations:
+          app: "{{ $labels.app }}"
+          summary: "{{ $labels.app }} is experiencing database issues"
+
   #
   # home-assistant
   #
@@ -91,7 +153,9 @@ groups:
           severity: critical
           category: logs
         annotations:
-          summary: "Home Assistant is unable to connect to postgresql"
+          app: "{{ $labels.app }}"
+          summary: "{{ $labels.app }} is unable to connect to postgresql"
+
   #
   # valetudo
   #
@@ -105,7 +169,9 @@ groups:
           severity: critical
           category: logs
         annotations:
-          summary: "Valetudo is unable to connect to mqtt"
+          hostname: "{{ $labels.hostname }}"
+          summary: "{{ $labels.hostname }} is unable to connect to mqtt"
+
   #
   # node-red
   #
@@ -119,4 +185,5 @@ groups:
           severity: critical
           category: logs
         annotations:
-          summary: "Node-Red is unable to connect to Home Assistant"
+          app: "{{ $labels.app }}"
+          summary: "{{ $labels.app }} is unable to connect to home assistant"
