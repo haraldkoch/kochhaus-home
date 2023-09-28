@@ -34,8 +34,8 @@ receivers:
         url: "https://hc-ping.com/{{ .HEALTHCHECKS_TOKEN }}"
   - name: "null"
   - name: discord
-    webhook_configs:
-      - url: "http://alertmanager-discord:9094"
+    discord_configs:
+      - webhook_url: "{{ .DISCORD_WEBHOOK_ALERTMANAGER }}"
         send_resolved: true
   - name: pushover
     pushover_configs:
