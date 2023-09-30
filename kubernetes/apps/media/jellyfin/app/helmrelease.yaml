@@ -39,12 +39,17 @@ spec:
       repository: ghcr.io/onedr0p/jellyfin
       tag: 10.8.11@sha256:02904ff44d66c9a549c1dbf7e5bb03f6185272786f871d5718da22ca9a0e600e
     env:
+      DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
+      JELLYFIN_FFmpeg__probesize: 50000000
+      JELLYFIN_FFmpeg__analyzeduration: 50000000
+      JELLYFIN_PublishedServerUrl: &loadBalancerIP ${SVC_JELLYFIN_ADDR_V4}
       TZ: ${TIMEZONE}
     service:
       main:
         type: LoadBalancer
-        externalIPs: ["${SVC_JELLYFIN_ADDR_V4}"]
-        externalTrafficPolicy: Local
+        externalIPs:
+          - *loadBalancerIP
+        externalTrafficPolicy: Cluster
         ports:
           http:
             port: &port 8096
