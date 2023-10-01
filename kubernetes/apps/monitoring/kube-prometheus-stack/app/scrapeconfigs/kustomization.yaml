@@ -6,6 +6,7 @@ namespace: monitoring
 resources:
   - ./gatus.yaml
   - ./haproxy.yaml
+  - ./jezebel.yaml
   - ./mnemosyne.yaml
   - ./node-exporter.yaml
   # - ./pikvm.yaml
