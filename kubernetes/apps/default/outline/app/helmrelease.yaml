@@ -40,7 +40,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: docker.io/outlinewiki/outline
-      tag: 0.71.0
+      tag: 0.72.0
     envFrom: *envFrom
     command: ["/bin/sh", "-c", "yarn db:migrate --env=production-ssl-disabled && yarn start --env=production-ssl-disabled"]
     service:
