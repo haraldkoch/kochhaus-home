@@ -37,7 +37,7 @@ spec:
       type: statefulset
     image:
       repository: ghcr.io/onedr0p/jellyfin
-      tag: 10.8.11@sha256:18afced0486212be536e7bf61c2ca788a062537b583f6198d8e7908146dcba18
+      tag: 10.8.11@sha256:2ca67983b5b872f09ff46ae1d6974bc2c2a3882f2fbbd68b00fe295f95df43fd
     env:
       DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
       JELLYFIN_FFmpeg__probesize: 50000000
