@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,38 +26,69 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: quay.io/minio/minio
-      tag: RELEASE.2023-10-07T15-07-38Z
-    env:
-      TZ: "${TIMEZONE}"
-      MINIO_UPDATE: "off"
-      MINIO_PROMETHEUS_URL: http://kube-prometheus-stack-prometheus.monitoring:9090
-      MINIO_PROMETHEUS_JOB_ID: minio
-      MINIO_BROWSER_REDIRECT_URL: https://minio.${CLUSTER_DOMAIN}
-      MINIO_SERVER_URL: https://s3.${CLUSTER_DOMAIN}
-      MINIO_API_CORS_ALLOW_ORIGIN: https://minio.${CLUSTER_DOMAIN},https://s3.${CLUSTER_DOMAIN}
-      # MINIO_IDENTITY_OPENID_CONFIG_URL: "https://auth.${CLUSTER_DOMAIN}/.well-known/openid-configuration"
-      # MINIO_IDENTITY_OPENID_CLIENT_ID: minio
-      # MINIO_IDENTITY_OPENID_CLIENT_SECRET: "${SECRET_MINIO_OAUTH_CLIENT_SECRET}"
-      # MINIO_IDENTITY_OPENID_SCOPES: "openid,profile,email,groups"
-      # MINIO_IDENTITY_OPENID_REDIRECT_URI: "https://minio.${CLUSTER_DOMAIN}/oauth_callback"
-    envFrom:
-      - secretRef:
-          name: *app
-    args: ["server", "/data", "--console-address", ":9001"]
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: quay.io/minio/minio
+              tag: RELEASE.2023-10-07T15-07-38Z
+            env:
+              TZ: "${TIMEZONE}"
+              MINIO_UPDATE: "off"
+              MINIO_PROMETHEUS_URL: http://kube-prometheus-stack-prometheus.monitoring:9090
+              MINIO_PROMETHEUS_JOB_ID: minio
+              MINIO_BROWSER_REDIRECT_URL: https://minio.${CLUSTER_DOMAIN}
+              MINIO_SERVER_URL: https://s3.${CLUSTER_DOMAIN}
+              MINIO_API_CORS_ALLOW_ORIGIN: https://minio.${CLUSTER_DOMAIN},https://s3.${CLUSTER_DOMAIN}
+              # MINIO_IDENTITY_OPENID_CONFIG_URL: "https://auth.${CLUSTER_DOMAIN}/.well-known/openid-configuration"
+              # MINIO_IDENTITY_OPENID_CLIENT_ID: minio
+              # MINIO_IDENTITY_OPENID_CLIENT_SECRET: "${SECRET_MINIO_OAUTH_CLIENT_SECRET}"
+              # MINIO_IDENTITY_OPENID_SCOPES: "openid,profile,email,groups"
+              # MINIO_IDENTITY_OPENID_REDIRECT_URI: "https://minio.${CLUSTER_DOMAIN}/oauth_callback"
+            envFrom:
+              - secretRef:
+                  name: *app
+            args: ["server", "/data", "--console-address", ":9001"]
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /minio/health/live
+                    port: &api-port 9000
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            resources:
+              requests:
+                memory: 100Mi
+                cpu: 100m
+              limits:
+                memory: 750Mi
+        pod:
+          securityContext:
+            runAsUser: 103
+            runAsGroup: 103
+            fsGroup: 103
+            fsGroupChangePolicy: OnRootMismatch
+
     service:
       main:
         enabled: true
         ports:
           http:
-            port: &console-port 9001
+            port: 9001
           api:
             enabled: true
-            port: &api-port 9000
+            port: *api-port
     serviceMonitor:
       main:
         enabled: true
@@ -70,40 +101,25 @@ spec:
             bearerTokenSecret:
               name: minio-prometheus
               key: token
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /minio/health/live
-            port: *api-port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           hajimari.io/icon: mdi:pail
         hosts:
           - host: &console-host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
                 service:
-                  port: *console-port
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *console-host
       s3:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           hajimari.io/enable: "false"
           nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
@@ -115,17 +131,12 @@ spec:
           - host: &api-host s3.${CLUSTER_DOMAIN}
             paths:
               - path: /
-                pathType: Prefix
                 service:
-                  port: *api-port
+                  name: main
+                  port: api
         tls:
           - hosts:
               - *api-host
-    podSecurityContext:
-      runAsUser: 103
-      runAsGroup: 103
-      fsGroup: 103
-      fsGroupChangePolicy: OnRootMismatch
     persistence:
       data:
         enabled: true
@@ -133,9 +144,3 @@ spec:
         server: ${SECRET_BACKUP_SERVER}
         path: /tank/minio/k8s
         mountPath: /data
-    resources:
-      requests:
-        memory: 100Mi
-        cpu: 100m
-      limits:
-        memory: 750Mi
