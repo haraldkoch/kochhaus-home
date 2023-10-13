@@ -26,8 +26,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controllerServiceAccount:
-      name: actions-runner-controller-gha-rs-controller
     runnerScaleSetName: arc-runner-set-kochhaus-home
     githubConfigUrl: https://github.com/haraldkoch/kochhaus-home
     minRunners: 1
@@ -39,6 +37,9 @@ spec:
         containers:
           - name: runner
             image: ghcr.io/haraldkoch/github-actions-runner:rolling@sha256:ffe581f365b2ecc6b9a4dd7a4f7892e9a8c47dad0ef90da34a6f1068b4532ebf
+    controllerServiceAccount:
+      name: actions-runner-controller-gha-rs-controller
+      namespace: actions-runner-system
   valuesFrom:
     - kind: Secret
       name: actions-runner-controller-auth-secret
