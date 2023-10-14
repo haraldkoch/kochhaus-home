@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,9 +26,20 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: syncthing/syncthing
-      tag: 1.25.0
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: syncthing/syncthing
+              tag: 1.25.0
+            resources:
+              requests:
+                cpu: 15m
+                memory: 64M
+              limits:
+                cpu: 100m
+                memory: 128M
     service:
       main:
         ipFamilyPolicy: PreferDualStack
@@ -36,6 +47,7 @@ spec:
           http:
             port: 8384
       listen:
+        controller: main
         type: LoadBalancer
         externalIPs:
           - ${SVC_SYNCTHING_ADDR_V4}
@@ -49,6 +61,7 @@ spec:
             protocol: TCP
             targetPort: 22000
       discovery:
+        controller: main
         type: LoadBalancer
         externalIPs:
           - ${SVC_SYNCTHING_ADDR_V4}
@@ -64,14 +77,16 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           hajimari.io/icon: "cloud"
         hosts:
           - host: &host syncthing.${CLUSTER_DOMAIN}
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
@@ -81,11 +96,5 @@ spec:
         type: nfs
         server: ${SECRET_BACKUP_SERVER}
         path: /backup/data/k8s/syncthing
-        mountPath: /var/syncthing
-    resources:
-      requests:
-        cpu: 15m
-        memory: 64M
-      limits:
-        cpu: 100m
-        memory: 128M
+        globalMounts:
+          - path: /var/syncthing
