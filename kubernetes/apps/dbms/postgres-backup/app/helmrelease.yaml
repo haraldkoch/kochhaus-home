@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,45 +26,49 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: cronjob
-      cronjob:
-        concurrencyPolicy: Forbid
-        schedule: "0 17 * * *"
-    restartPolicy: OnFailure
-    image:
-      repository: docker.io/prodrigestivill/postgres-backup-local
-      tag: 15@sha256:7f12039af361b71c987ad06b5c0a9dca67bad92f10bffa5012a614311363eebb
-    command:
-      - /bin/bash
-      - -x
-      - /backup.sh
-    env:
-      - { name: TZ, value: "${TIMEZONE}" }
-      - { name: POSTGRES_DB, value: "authelia,gatus,grafana,immich,miniflux,nextcloud,outline" }
-      - { name: POSTGRES_HOST, value: "kochhaus-v15-ro.dbms.svc.cluster.local" }
-      - { name: POSTGRES_PORT, value: 5432 }
-      - name: POSTGRES_USER
-        valueFrom:
-          secretKeyRef:
-            name: cloudnative-pg-secret
-            key: username
-      - name: POSTGRES_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: cloudnative-pg-secret
-            key: password
-    service:
+    controllers:
       main:
-        enabled: false
+        type: cronjob
+        cronjob:
+          concurrencyPolicy: Forbid
+          schedule: "0 17 * * *"
+        pod:
+          restartPolicy: OnFailure
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+        containers:
+          main:
+            image:
+              repository: docker.io/prodrigestivill/postgres-backup-local
+              tag: 15@sha256:7f12039af361b71c987ad06b5c0a9dca67bad92f10bffa5012a614311363eebb
+            command:
+              - /bin/bash
+              - -x
+              - /backup.sh
+            env:
+              - { name: TZ, value: "${TIMEZONE}" }
+              - { name: POSTGRES_DB, value: "authelia,gatus,grafana,immich,miniflux,nextcloud,outline" }
+              - { name: POSTGRES_HOST, value: "kochhaus-v15-ro.dbms.svc.cluster.local" }
+              - { name: POSTGRES_PORT, value: 5432 }
+              - name: POSTGRES_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: cloudnative-pg-secret
+                    key: username
+              - name: POSTGRES_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: cloudnative-pg-secret
+                    key: password
     persistence:
       nas:
-        enabled: true
         type: nfs
         server: ${SECRET_BACKUP_SERVER}
         path: /backup/data/k8s/postgres
-        mountPath: /backups
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
+        globalMounts:
+          - path: /backups
+    service:
+      main:
+        enabled: false
