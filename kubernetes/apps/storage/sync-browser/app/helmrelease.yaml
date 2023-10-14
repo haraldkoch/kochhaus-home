@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,74 +26,79 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-    image:
-      # https://github.com/filebrowser/filebrowser/issues/1571
-      repository: ghcr.io/haraldkoch/filebrowser
-      tag: v2.25.0
-    env:
-      TZ: ${TIMEZONE}
-      FB_DATABASE: "/config/filebrowser.db"
-      FB_ROOT: "/syncthing"
-      FB_LOG: "stdout"
-      FB_NOAUTH: "true"
+    controllers:
+      main:
+        type: statefulset
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+        containers:
+          main:
+            image:
+              # https://github.com/filebrowser/filebrowser/issues/1571
+              repository: ghcr.io/haraldkoch/filebrowser
+              tag: v2.25.0
+            env:
+              TZ: ${TIMEZONE}
+              FB_DATABASE: "/config/filebrowser.db"
+              FB_ROOT: "/syncthing"
+              FB_LOG: "stdout"
+              FB_NOAUTH: "true"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 80
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 500Mi
     service:
       main:
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
-            port: &port 80
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /health
             port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           hajimari.io/icon: mdi:folder-arrow-up-down-outline
         hosts:
           - host: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: ceph-block
     persistence:
       syncthing:
         enabled: true
         type: nfs
         server: ${SECRET_BACKUP_SERVER}
         path: /backup/data/k8s/syncthing
-        mountPath: /syncthing
-    resources:
-      requests:
-        cpu: 10m
-        memory: 50Mi
-      limits:
-        memory: 500Mi
