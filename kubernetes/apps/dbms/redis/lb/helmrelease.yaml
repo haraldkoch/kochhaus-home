@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,14 +26,23 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      replicas: 2
-      strategy: RollingUpdate
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: haproxy
-      tag: "2.8"
+    controllers:
+      main:
+        replicas: 2
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            runAsUser: 99
+            runAsGroup: 99
+            fsGroup: 99
+            fsGroupChangePolicy: "OnRootMismatch"
+        containers:
+          main:
+            image:
+              repository: haproxy
+              tag: "2.8"
     service:
       main:
         enabled: true
@@ -56,7 +65,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           hajimari.io/appName: "Redis Load Balancer"
           hajimari.io/icon: simple-icons:redis
@@ -64,20 +73,18 @@ spec:
           - host: "redis-ui.${CLUSTER_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
-    podSecurityContext:
-      runAsUser: 99
-      runAsGroup: 99
-      fsGroup: 99
-      fsGroupChangePolicy: "OnRootMismatch"
+                service:
+                  name: main
+                  port: http
     persistence:
       config:
         enabled: true
         type: configMap
         name: redis-haproxy-config
-        mountPath: /usr/local/etc/haproxy/haproxy.cfg
-        subPath: haproxy.cfg
-        readOnly: true
+        globalMounts:
+          - path: /usr/local/etc/haproxy/haproxy.cfg
+            subPath: haproxy.cfg
+            readOnly: true
     serviceMonitor:
       main:
         enabled: true
