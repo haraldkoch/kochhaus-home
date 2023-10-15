@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,31 +26,35 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: cronjob
-      cronjob:
-        concurrencyPolicy: Forbid
-        schedule: "@daily"
-    restartPolicy: OnFailure
-    image:
-      repository: ghcr.io/haraldkoch/kubernetes-kubectl
-      tag: 1.28.2@sha256:d53518a64baf7de0bb78ffc7ef3cd11a3bdb07f9143096998b2924d91877fbaf
-    command: ["/bin/bash", "/app/opnsense-backup.sh"]
-    env:
-      OPNSENSE_URL: "https://gw.${PRIVATE_STATIC_DOMAIN}"
-      S3_URL: "http://minio.storage.svc.cluster.local:9000"
-    envFrom:
-      - secretRef:
-          name: *app
+    controllers:
+      main:
+        type: cronjob
+        cronjob:
+          concurrencyPolicy: Forbid
+          schedule: "@daily"
+        pod:
+          restartPolicy: OnFailure
+        containers:
+          main:
+            image:
+              repository: ghcr.io/haraldkoch/kubernetes-kubectl
+              tag: 1.28.2@sha256:d53518a64baf7de0bb78ffc7ef3cd11a3bdb07f9143096998b2924d91877fbaf
+            command: ["/bin/bash", "/app/opnsense-backup.sh"]
+            env:
+              OPNSENSE_URL: "https://gw.${PRIVATE_STATIC_DOMAIN}"
+              S3_URL: "http://minio.storage.svc.cluster.local:9000"
+            envFrom:
+              - secretRef:
+                  name: *app
     service:
       main:
         enabled: false
     persistence:
-      config:
-        enabled: true
+      script:
         type: configMap
         name: *app
-        subPath: opnsense-backup.sh
-        mountPath: /app/opnsense-backup.sh
-        defaultMode: 0775
-        readOnly: true
+        globalMounts:
+          - path: /app/opnsense-backup.sh
+            subPath: opnsense-backup.sh
+            defaultMode: 0775
+            readOnly: true
