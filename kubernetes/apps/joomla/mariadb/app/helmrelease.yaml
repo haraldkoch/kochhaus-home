@@ -10,19 +10,17 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
   maxHistory: 2
   install:
-    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
-    crds: CreateReplace
     remediation:
       retries: 3
   uninstall:
@@ -31,19 +29,59 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
-    podLabels:
-      app.kubernetes.io/part-of: joomla
-    image:
-      repository: ghcr.io/linuxserver/mariadb
-      tag: 10.11.5
-    env:
-      TZ: ${TIMEZONE}
-      PUID: "1000"
-      PGID: "1000"
-      MYSQL_LOG_CONSOLE: "false"
-    envFrom:
-      - secretRef:
-          name: mariadb-secret
+    controllers:
+      main:
+        pod:
+          labels:
+            app.kubernetes.io/part-of: joomla
+        containers:
+          main:
+            image:
+              repository: ghcr.io/linuxserver/mariadb
+              tag: 10.11.5
+            env:
+              TZ: ${TIMEZONE}
+              PUID: "1000"
+              PGID: "1000"
+              MYSQL_LOG_CONSOLE: "false"
+            envFrom:
+              - secretRef:
+                  name: mariadb-secret
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - /bin/bash
+                      - /scripts/check.sh
+                  failureThreshold: 3
+                  initialDelaySeconds: 120
+                  periodSeconds: 10
+                  successThreshold: 1
+                  timeoutSeconds: 1
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - /bin/bash
+                      - /scripts/check.sh
+                  failureThreshold: 3
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
+                  successThreshold: 1
+                  timeoutSeconds: 1
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
     service:
       main:
         ipFamilyPolicy: PreferDualStack
@@ -53,49 +91,10 @@ spec:
           mysql:
             enabled: true
             port: 3306
-    probes:
-      liveness:
-        enabled: true
-        custom: true
-        spec:
-          exec:
-            command:
-              - /bin/bash
-              - /scripts/check.sh
-          failureThreshold: 3
-          initialDelaySeconds: 120
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 1
-      readiness:
-        enabled: true
-        custom: true
-        spec:
-          exec:
-            command:
-              - /bin/bash
-              - /scripts/check.sh
-          failureThreshold: 3
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 1
-      startup:
-        enabled: false
     persistence:
       config:
         enabled: true
         existingClaim: mariadb-data-v1
-        mountPath: /config
-      check:
-        enabled: true
+      scripts:
         type: configMap
         name: mariadb-check
-        mountPath: /scripts
-        readOnly: true
-    resources:
-      requests:
-        cpu: 100m
-        memory: 256Mi
-      limits:
-        memory: 512Mi
