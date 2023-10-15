@@ -10,19 +10,17 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
   maxHistory: 2
   install:
-    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
-    crds: CreateReplace
     remediation:
       retries: 3
   uninstall:
@@ -33,33 +31,39 @@ spec:
     - name: mariadb
       namespace: joomla
   values:
-    image:
-      repository: joomla
-      tag: 3.10.12
-    env:
-      TZ: ${TIMEZONE}
-    envFrom:
-      - secretRef:
-          name: rtr-secret
+    controllers:
+      main:
+        containers:
+          # FIXME: HTTP probes - find a Joomla health URL
+          # FIXME: resource limits
+          main:
+            image:
+              repository: joomla
+              tag: 3.10.12
+            env:
+              TZ: ${TIMEZONE}
+            envFrom:
+              - secretRef:
+                  name: rtr-secret
     service:
       main:
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
-            port: &port 80
+            port: 80
     ingress:
       main:
         enabled: true
-        ingressClassName: "nginx"
+        className: "nginx"
         annotations:
           hajimari.io/appName: "Ride To Remeber"
         hosts:
           - host: &host "ridetoremember.${CLUSTER_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
                 service:
-                  port: *port
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
@@ -67,4 +71,5 @@ spec:
       config:
         enabled: true
         existingClaim: rtr-data-v1
-        mountPath: /var/www/html
+        globalMounts:
+          - path: /var/www/html
