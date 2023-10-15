@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app whoami
+  name: whoami
   namespace: networking
 spec:
   interval: 30m
@@ -26,12 +26,21 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    nameOverride: *app
-    controller:
-      replicas: 2
-    image:
-      repository: docker.io/traefik/whoami
-      tag: v1.10.1
+    controllers:
+      main:
+        replicas: 2
+        containers:
+          main:
+            image:
+              repository: docker.io/traefik/whoami
+              tag: v1.10.1
+            resources:
+              requests:
+                cpu: 10m
+                memory: 16Mi
+              limits:
+                cpu: 100m
+                memory: 32Mi
     service:
       main:
         ipFamilyPolicy: PreferDualStack
@@ -41,7 +50,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           auth.home.arpa/enabled: "true"
           external-dns.home.arpa/enabled: "true"
@@ -51,14 +60,9 @@ spec:
           - host: &host whoami.${CLUSTER_DOMAIN}
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-    resources:
-      requests:
-        cpu: 10m
-        memory: 16Mi
-      limits:
-        cpu: 100m
-        memory: 32Mi
