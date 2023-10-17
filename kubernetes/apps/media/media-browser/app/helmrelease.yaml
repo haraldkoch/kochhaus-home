@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -29,74 +29,78 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
-    controller:
-      type: statefulset
-    image:
-      # https://github.com/filebrowser/filebrowser/issues/1571
-      repository: ghcr.io/haraldkoch/filebrowser
-      tag: v2.25.0
-    env:
-      TZ: ${TIMEZONE}
-      FB_DATABASE: "/config/filebrowser.db"
-      FB_ROOT: "/media"
-      FB_LOG: "stdout"
-      FB_NOAUTH: "true"
+    controllers:
+      main:
+        type: statefulset
+        containers:
+          main:
+            image:
+              # https://github.com/filebrowser/filebrowser/issues/1571
+              repository: ghcr.io/haraldkoch/filebrowser
+              tag: v2.25.0
+            env:
+              TZ: ${TIMEZONE}
+              FB_DATABASE: "/config/filebrowser.db"
+              FB_ROOT: "/media"
+              FB_LOG: "stdout"
+              FB_NOAUTH: "true"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 80
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 500Mi
+        pod:
+          securityContext:
+            runAsUser: 2000
+            runAsGroup: 2000
+            fsGroup: 2000
+            fsGroupChangePolicy: "OnRootMismatch"
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
     service:
       main:
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
-            port: &port 80
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /health
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
+            port: 80
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           hajimari.io/icon: mdi:folder-play-outline
         hosts:
           - host: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
-    securityContext:
-      runAsUser: 2000
-      runAsGroup: 2000
-      fsGroup: 2000
-      fsGroupChangePolicy: "OnRootMismatch"
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: ceph-block
     persistence:
       media:
-        enabled: true
         type: nfs
         server: ${SECRET_MEDIA_SERVER}
         path: /media
-        mountPath: /media
-    resources:
-      requests:
-        cpu: 10m
-        memory: 50Mi
-      limits:
-        memory: 500Mi
