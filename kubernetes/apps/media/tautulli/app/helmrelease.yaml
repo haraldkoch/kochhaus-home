@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -29,11 +29,28 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
-    image:
-      repository: ghcr.io/onedr0p/tautulli
-      tag: 2.13.1@sha256:525209414d149214584819313b0ec7507a3259dfa5f8d618692c34b54f172db9
-    env:
-      TZ: ${TIMEZONE}
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/tautulli
+              tag: 2.13.1@sha256:525209414d149214584819313b0ec7507a3259dfa5f8d618692c34b54f172db9
+            env:
+              TZ: ${TIMEZONE}
+            resources:
+              requests:
+                cpu: 20m
+                memory: 150Mi
+              limits:
+                cpu: 100m
+                memory: 300Mi
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
     service:
       main:
         # tautulli container does not support IPv6
@@ -44,41 +61,26 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           hajimari.io/icon: mdi:chart-bar
         hosts:
           - host: "tautulli.${CLUSTER_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - "tautulli.${CLUSTER_DOMAIN}"
-
     persistence:
       config:
         enabled: true
         existingClaim: tautulli-config-v5
       backup:
-        enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: "${SECRET_BACKUP_SERVER}"
-            path: /backup/data/k8s/tautulli
-        mountPath: /config/backups
-        readOnly: false
-    podSecurityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: OnRootMismatch
-
-    resources:
-      requests:
-        cpu: 20m
-        memory: 150Mi
-      limits:
-        cpu: 100m
-        memory: 300Mi
+        type: nfs
+        server: "${SECRET_BACKUP_SERVER}"
+        path: /backup/data/k8s/tautulli
+        globalMounts:
+          - path: /config/backups
