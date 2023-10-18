@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,46 +26,49 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        configmap.reloader.stakater.com/reload: &configMap immich-configmap
-        secret.reloader.stakater.com/reload: &secret immich-secret
-    image:
-      repository: docker.io/typesense/typesense
-      tag: 0.25.1
-    envFrom:
-      - configMapRef:
-          name: *configMap
-      - secretRef:
-          name: *secret
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          configmap.reloader.stakater.com/reload: &configMap immich-configmap
+          secret.reloader.stakater.com/reload: &secret immich-secret
+        containers:
+          main:
+            image:
+              repository: docker.io/typesense/typesense
+              tag: 0.25.1
+            envFrom:
+              - configMapRef:
+                  name: *configMap
+              - secretRef:
+                  name: *secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 8108
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 100m
+                memory: 250Mi
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
     service:
       main:
         ports:
           http:
-            port: &port 8108
-    probes:
-      liveness: &probes
-        enabled: true
-        custom: true
-        spec:
-          httpGet:
-            path: /health
-            port: *port
-          initialDelaySeconds: 0
-          periodSeconds: 10
-          timeoutSeconds: 1
-          failureThreshold: 3
-      readiness: *probes
-      startup:
-        enabled: false
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: ceph-block
-    resources:
-      requests:
-        cpu: 100m
-        memory: 250Mi
+            port: 8108
