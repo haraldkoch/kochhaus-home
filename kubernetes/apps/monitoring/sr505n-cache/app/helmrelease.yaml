@@ -3,14 +3,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app sr505n-cache
+  name: sr505n-cache
   namespace: monitoring
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,15 +26,48 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    nameOverride: *app
-    image:
-      repository: joseluisq/static-web-server
-      tag: 2.23.0-alpine
-    controller:
-      replicas: 1
-    env:
-      SERVER_PORT: 80
-      SERVER_ROOT: /config
+    controllers:
+      main:
+        replicas: 1
+        pod:
+          enableServiceLinks: false
+        containers:
+          main:
+            image:
+              repository: joseluisq/static-web-server
+              tag: 2.23.0-alpine
+            env:
+              SERVER_PORT: 80
+              SERVER_ROOT: /config
+            resources:
+              requests:
+                cpu: 10m
+                memory: 24Mi
+              limits:
+                cpu: 100m
+                memory: 48Mi
+          poller:
+            name: poller
+            image:
+              repository: ghcr.io/haraldkoch/ubuntu
+              tag: jammy-20230126@sha256:f221896468eb3ca6932bfbee7bdbf7a12bda412ff3530418c150375ab3294591
+            args:
+              - /bin/bash
+              - -c
+              - |-
+                while true ; do
+                  printf "\e[1;32m%-6s\e[m\n" "Fetching metrics ..."
+                  curl -s 'http://snmp-exporter-sr505n:9116/snmp?module=sr505n_dsl&target=192.168.1.1' | sponge /config/sr505n.prom
+                  printf "\e[1;32m%-6s\e[m\n" "Fetch complete."
+                  sleep 300
+                done
+            resources:
+              requests:
+                cpu: 10m
+                memory: 16Mi
+              limits:
+                cpu: 100m
+                memory: 32Mi
     service:
       main:
         ipFamilyPolicy: PreferDualStack
@@ -44,14 +77,16 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           hajimari.io/enable: "false"
         hosts:
           - host: &host "sr505n.${CLUSTER_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
@@ -59,27 +94,3 @@ spec:
       config:
         enabled: true
         type: emptyDir
-    resources:
-      requests:
-        cpu: 10m
-        memory: 50Mi
-      limits:
-        cpu: 100m
-        memory: 100Mi
-    sidecars:
-      poller:
-        name: poller
-        image: ghcr.io/haraldkoch/ubuntu:jammy-20230126@sha256:f221896468eb3ca6932bfbee7bdbf7a12bda412ff3530418c150375ab3294591
-        args:
-          - /bin/bash
-          - -c
-          - |-
-            while true ; do
-              printf "\e[1;32m%-6s\e[m\n" "Fetching metrics ..."
-              curl -s 'http://snmp-exporter-sr505n:9116/snmp?module=sr505n_dsl&target=192.168.1.1' | sponge /config/sr505n.prom
-              printf "\e[1;32m%-6s\e[m\n" "Fetch complete."
-              sleep 300
-            done
-        volumeMounts:
-          - name: config
-            mountPath: /config
