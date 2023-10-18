@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -32,56 +32,46 @@ spec:
     - name: redis
       namespace: dbms
   values:
-    controller:
-      replicas: 1
-      strategy: Recreate
-      annotations:
-        configmap.reloader.stakater.com/reload: &configMap immich-configmap
-        secret.reloader.stakater.com/reload: &secret immich-secret
-    image:
-      repository: ghcr.io/immich-app/immich-machine-learning
-      tag: v1.82.0
-    envFrom:
-      - configMapRef:
-          name: *configMap
-      - secretRef:
-          name: *secret
-    service:
+    controllers:
       main:
-        ports:
-          http:
-            port: &port 3003
-    persistence:
-      library:
-        enabled: true
-        existingClaim: immich-nfs
-        mountPath: /usr/src/app/upload
-      cache:
-        enabled: true
-        existingClaim: immich-machine-learning-cache
-    # this is necessary for the downloads to complete
-    probes:
-      startup:
-        custom: true
-        spec:
-          initialDelaySeconds: 30
-          periodSeconds: 10
-          timeoutSeconds: 5
-          failureThreshold: 30
-          successThreshold: 1
-          tcpSocket:
-            port: *port
-    topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/name: *app
-    resources:
-      requests:
-        cpu: 100m
-        memory: 250Mi
+        replicas: 1
+        strategy: Recreate
+        annotations:
+          configmap.reloader.stakater.com/reload: &configMap immich-configmap
+          secret.reloader.stakater.com/reload: &secret immich-secret
+        containers:
+          main:
+            image:
+              repository: ghcr.io/immich-app/immich-machine-learning
+              tag: v1.82.0
+            envFrom:
+              - configMapRef:
+                  name: *configMap
+              - secretRef:
+                  name: *secret
+            probes:
+              startup:
+                custom: true
+                spec:
+                  initialDelaySeconds: 30
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 30
+                  successThreshold: 1
+                  tcpSocket:
+                    port: 3003
+            resources:
+              requests:
+                cpu: 100m
+                memory: 250Mi
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -91,3 +81,16 @@ spec:
                   operator: In
                   values:
                     - "true"
+    service:
+      main:
+        ports:
+          http:
+            port: 3003
+    persistence:
+      library:
+        existingClaim: immich-nfs
+        globalMounts:
+          - path: /usr/src/app/upload
+      # this is necessary for the downloads to complete
+      cache:
+        existingClaim: immich-machine-learning-cache
