@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,42 +26,66 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    initContainers:
-      01-init-db:
-        image: ghcr.io/haraldkoch/postgres-init:15.4
-        imagePullPolicy: IfNotPresent
-        envFrom: &envFrom
-          - secretRef:
-              name: paperless-secret
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/paperless-ngx/paperless-ngx
-      tag: 1.17.4
-    env:
-      PAPERLESS_CONSUMER_POLLING: 60
-      PAPERLESS_CONSUMER_RECURSIVE: "true"
-      PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
-      PAPERLESS_CONSUMPTION_DIR: /library/consume
-      PAPERLESS_DATA_DIR: /library/data
-      PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
-      PAPERLESS_EXPORT_DIR: /library/export
-      PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: HTTP_REMOTE_USER
-      PAPERLESS_MEDIA_ROOT: /library/media
-      PAPERLESS_OCR_LANGUAGE: eng
-      PAPERLESS_PORT: &port 80
-      PAPERLESS_REDIS: redis://localhost:6379
-      PAPERLESS_TASK_WORKERS: 2
-      PAPERLESS_TIKA_ENABLED: 1
-      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://localhost:3000
-      PAPERLESS_TIKA_ENDPOINT: http://localhost:9998
-      PAPERLESS_TIME_ZONE: ${TIMEZONE}
-      PAPERLESS_URL: https://paperless.${CLUSTER_DOMAIN}
-      USERMAP_UID: 1022
-      USERMAP_GID: 1022
-    envFrom: *envFrom
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/haraldkoch/postgres-init
+              tag: 15.4
+            envFrom: &envFrom
+              - secretRef:
+                  name: paperless-secret
+        containers:
+          main:
+            image:
+              repository: ghcr.io/paperless-ngx/paperless-ngx
+              tag: 1.17.4
+            env:
+              PAPERLESS_CONSUMER_POLLING: 60
+              PAPERLESS_CONSUMER_RECURSIVE: "true"
+              PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: "true"
+              PAPERLESS_CONSUMPTION_DIR: /library/consume
+              PAPERLESS_DATA_DIR: /library/data
+              PAPERLESS_ENABLE_HTTP_REMOTE_USER: "true"
+              PAPERLESS_EXPORT_DIR: /library/export
+              PAPERLESS_HTTP_REMOTE_USER_HEADER_NAME: HTTP_REMOTE_USER
+              PAPERLESS_MEDIA_ROOT: /library/media
+              PAPERLESS_OCR_LANGUAGE: eng
+              PAPERLESS_PORT: &port 80
+              PAPERLESS_REDIS: redis://localhost:6379
+              PAPERLESS_TASK_WORKERS: 2
+              PAPERLESS_TIKA_ENABLED: 1
+              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://localhost:3000
+              PAPERLESS_TIKA_ENDPOINT: http://localhost:9998
+              PAPERLESS_TIME_ZONE: ${TIMEZONE}
+              PAPERLESS_URL: https://paperless.${CLUSTER_DOMAIN}
+              USERMAP_UID: 1022
+              USERMAP_GID: 1022
+            envFrom: *envFrom
+            resources:
+              requests:
+                cpu: 100m
+                memory: 1000Mi
+              limits:
+                memory: 5000Mi
+          gotenburg:
+            image:
+              repository: thecodingmachine/gotenberg
+              tag: 7.9.2
+            env:
+              - { name: DISABLE_GOOGLE_CHROME, value: "1" }
+          redis:
+            image:
+              repository: public.ecr.aws/docker/library/redis
+              tag: 7.2.1
+          tika:
+            image:
+              repository: ghcr.io/paperless-ngx/tika
+              tag: 2.9.0-full
     service:
       main:
         ports:
@@ -70,7 +94,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        className: nginx
         annotations:
           hajimari.io/icon: mdi:file-multiple
           nginx.ingress.kubernetes.io/auth-method: GET
@@ -83,6 +107,9 @@ spec:
           - host: &host "paperless.${CLUSTER_DOMAIN}"
             paths:
               - path: /
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
@@ -90,22 +117,5 @@ spec:
       library:
         enabled: true
         existingClaim: paperless-nfs
-        mountPath: /library
-    resources:
-      requests:
-        cpu: 100m
-        memory: 1000Mi
-      limits:
-        memory: 5000Mi
-    sidecars:
-      gotenburg:
-        image: thecodingmachine/gotenberg:7.9.2
-        imagePullPolicy: IfNotPresent
-        env:
-          - { name: DISABLE_GOOGLE_CHROME, value: "1" }
-      redis:
-        image: public.ecr.aws/docker/library/redis:7.2.1
-        imagePullPolicy: IfNotPresent
-      tika:
-        image: ghcr.io/paperless-ngx/tika:2.9.0-full
-        imagePullPolicy: IfNotPresent
+        globalMounts:
+          - path: /library
