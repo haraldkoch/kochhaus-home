@@ -39,7 +39,7 @@ spec:
           main:
             image:
               repository: joomla
-              tag: 3.10.12
+              tag: 5.0.0
             env:
               TZ: ${TIMEZONE}
             envFrom:
