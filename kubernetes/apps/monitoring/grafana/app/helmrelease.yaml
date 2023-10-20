@@ -31,8 +31,7 @@ spec:
       tag: 10.1.5
     extraInitContainers:
       - name: 01-init-db
-        image: ghcr.io/haraldkoch/postgres-init:15.4
-        imagePullPolicy: IfNotPresent
+        image: ghcr.io/haraldkoch/postgres-init:15.4@sha256:3cf3da8b51b6804493f2adbc1f8d49fee9764c5159b84014a4c0618da094ebe2
         envFrom:
           - secretRef:
               name: &secret grafana-secret
