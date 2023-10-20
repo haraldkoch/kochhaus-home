@@ -33,7 +33,6 @@ spec:
             image:
               repository: ghcr.io/haraldkoch/prometheus-dnssec-exporter
               tag: 0.6.0
-              pullPolicy: IfNotPresent
             args:
               - /app/prometheus-dnssec-exporter
               - --config

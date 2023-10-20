@@ -45,7 +45,6 @@ spec:
             image:
               repository: ghcr.io/szinn/dmarc-report
               tag: 1.4.1@sha256:3bdb6549f9f577ec75034a415d13beb77fec9e296428d1a1e88c955be4f20592
-              pullPolicy: IfNotPresent
             env:
               TZ: ${TIMEZONE}
               REPORT_DB_TYPE: pgsql
