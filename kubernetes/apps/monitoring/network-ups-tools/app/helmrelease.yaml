@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,13 +26,32 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      repository: ghcr.io/jr0dd/network-ups-tools
-      tag: v2.8.0@sha256:8878ab0f9420801f110ba1f173c97ad056cd9a6f56b181e1b39add1d91dc9626
-    controller:
-      strategy: RollingUpdate
-    env:
-      TZ: "${TIMEZONE}"
+    controllers:
+      main:
+        strategy: RollingUpdate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/jr0dd/network-ups-tools
+              tag: v2.8.0@sha256:8878ab0f9420801f110ba1f173c97ad056cd9a6f56b181e1b39add1d91dc9626
+            env:
+              TZ: "${TIMEZONE}"
+            securityContext:
+              privileged: true
+        pod:
+          annotations:
+            configmap.reloader.stakater.com/reload: network-ups-tools-config
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: apc.feature.node.kubernetes.io/ups
+                        operator: In
+                        values: ["true"]
+          tolerations:
+            - key: node-role.kubernetes.io/control-plane
+              operator: Exists
     service:
       main:
         ports:
@@ -54,21 +73,20 @@ spec:
             enabled: true
             port: 9199
             protocol: TCP
-    securityContext:
-      privileged: true
     persistence:
       config:
         enabled: true
         type: configMap
-        name: &config network-ups-tools-config
-        mountPath: /etc/nut
-        defaultMode: 256
+        name: network-ups-tools-config
+        defaultMode: 0400
+        globalMounts:
+          - path: /etc/nut
       ups:
-        enabled: true
         type: hostPath
         hostPath: /dev/bus/usb/002/001
-        mountPath: /dev/bus/usb/001/001
-        readOnly: false
+        globalMounts:
+          - path: /dev/bus/usb/001/001
+            readOnly: false
     configMaps:
       config:
         enabled: true
@@ -98,16 +116,3 @@ spec:
             POLLFREQ 15
             POLLFREQALERT 5
             HOSTSYNC 15
-    podAnnotations:
-      configmap.reloader.stakater.com/reload: *config
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: apc.feature.node.kubernetes.io/ups
-                  operator: In
-                  values: ["true"]
-    tolerations:
-      - key: node-role.kubernetes.io/control-plane
-        operator: Exists
