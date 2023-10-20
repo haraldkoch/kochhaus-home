@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -27,29 +27,46 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    initContainers:
-      01-init-geoip:
-        image: ghcr.io/maxmind/geoipupdate:v6.0.0
-        imagePullPolicy: IfNotPresent
-        env:
-          - { name: GEOIPUPDATE_EDITION_IDS, value: GeoLite2-City }
-          - { name: GEOIPUPDATE_FREQUENCY, value: "0" }
-          - { name: GEOIPUPDATE_VERBOSE, value: "true" }
-        envFrom:
-          - secretRef:
-              name: vector-geoipupdate
-        volumeMounts:
-          - { name: geoip, mountPath: /usr/share/GeoIP }
-    controller:
-      replicas: 2
-      strategy: RollingUpdate
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      # https://github.com/vectordotdev/vector/issues/6715
-      repository: ghcr.io/haraldkoch/vector
-      tag: 0.33.0-debian
-    args: ["--config", "/etc/vector/vector.yaml"]
+    controllers:
+      main:
+        replicas: 2
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-geoip:
+            image:
+              repository: ghcr.io/maxmind/geoipupdate
+              tag: v6.0.0
+            env:
+              - { name: GEOIPUPDATE_EDITION_IDS, value: GeoLite2-City }
+              - { name: GEOIPUPDATE_FREQUENCY, value: "0" }
+              - { name: GEOIPUPDATE_VERBOSE, value: "true" }
+            envFrom:
+              - secretRef:
+                  name: vector-geoipupdate
+        containers:
+          main:
+            image:
+              # https://github.com/vectordotdev/vector/issues/6715
+              repository: ghcr.io/haraldkoch/vector
+              tag: 0.33.0-debian
+            args: ["--config", "/etc/vector/vector.yaml"]
+            resources:
+              requests:
+                cpu: 100m
+                memory: 384Mi
+              limits:
+                memory: 1024Mi
+        pod:
+          enableServiceLinks: false
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
     service:
       main:
         type: LoadBalancer
@@ -78,27 +95,19 @@ spec:
         enabled: true
         type: configMap
         name: vector-aggregator-configmap # overriden by kustomizeconfig
-        subPath: vector.yaml
-        mountPath: /etc/vector/vector.yaml
-        readOnly: true
+        advancedMounts:
+          main:
+            main:
+              - path: /etc/vector/vector.yaml
+                subPath: vector.yaml
+                readOnly: true
       data:
-        enabled: true
         type: emptyDir
-        mountPath: /vector-data-dir
+        advancedMounts:
+          main:
+            main:
+              - path: /vector-data-dir
       geoip:
-        enabled: true
         type: emptyDir
-        mountPath: /usr/share/GeoIP
-    topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/name: *app
-    resources:
-      requests:
-        cpu: 100m
-        memory: 384Mi
-      limits:
-        memory: 1024Mi
+        globalMounts:
+          - path: /usr/share/GeoIP
