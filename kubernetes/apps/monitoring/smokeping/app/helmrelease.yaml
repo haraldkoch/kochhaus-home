@@ -57,7 +57,7 @@ spec:
                 memory: 128Mi
               limits:
                 cpu: 50m
-                memory: 128Mi
+                memory: 192Mi
         pod:
           enableServiceLinks: false
           securityContext:
