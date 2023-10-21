@@ -13,7 +13,7 @@ spec:
           expr: dnssec_zone_record_resolves < 1
           for: 1m
           labels:
-            severity: critical
+            severity: warning
           annotations:
             description: DNS Resolution for target {{ $labels.zone }} is failing for resolver {{ $labels.resolver }}.
             summary: A DNS resolver is failing.
@@ -22,7 +22,7 @@ spec:
           expr: dnssec_zone_record_days_left < 10
           for: 5m
           labels:
-            severity: critical
+            severity: warning
           annotations:
             description: The DNSSEC signature for the {{$labels.record}} in {{$labels.zone}} type {{$labels.type}}) expires in {{$value}} day(s)
             summary: A DNSSec signature is expiring
@@ -31,7 +31,7 @@ spec:
           expr: dnssec_zone_record_resolves == 0
           for: 5m
           labels:
-            severity: critical
+            severity: warning
           annotations:
             description: The DNSSEC signature for the {{$labels.record}} in {{$labels.zone}} type {{$labels.type}}) on resolver {{$labels.resolver}} is invalid
             summary: A DNSSec signature is invalid
