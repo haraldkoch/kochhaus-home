@@ -49,6 +49,9 @@ spec:
       bdev_enable_discard = true
       bdev_async_discard = true
       osd_class_update_on_start = false
+
+      [mon]
+      mon_data_avail_warn = 20
     cephClusterSpec:
       network:
         provider: host
