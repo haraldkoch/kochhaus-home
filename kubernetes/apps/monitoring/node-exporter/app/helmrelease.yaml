@@ -43,3 +43,10 @@ spec:
             regex: /var/lib/kubelet/pods.+
     rbac:
       pspEnabled: false
+    resources:
+      requests:
+        cpu: 50m
+        memory: 32Mi
+      limits:
+        cpu: 250m
+        memory: 64Mi
