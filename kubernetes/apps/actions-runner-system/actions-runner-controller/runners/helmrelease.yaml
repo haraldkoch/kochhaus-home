@@ -36,7 +36,7 @@ spec:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/haraldkoch/github-actions-runner:rolling@sha256:ffe581f365b2ecc6b9a4dd7a4f7892e9a8c47dad0ef90da34a6f1068b4532ebf
+            image: ghcr.io/haraldkoch/github-actions-runner:rolling@sha256:bddc35c3308084ff62ea31308388666d6fa42031264fbdbb6b7dfc5310446a97
     controllerServiceAccount:
       name: actions-runner-controller-gha-rs-controller
       namespace: actions-runner-system
