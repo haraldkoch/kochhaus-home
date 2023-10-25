@@ -1,0 +1,87 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app pg-kochhaus-backup
+  namespace: dbms
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.0.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        type: cronjob
+        cronjob:
+          concurrencyPolicy: Forbid
+          schedule: "59 * * * *"
+        pod:
+          enableServiceLinks: false
+          restartPolicy: OnFailure
+          securityContext:
+            fsGroup: 1022
+            runAsGroup: 1022
+            runAsUser: 1022
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: kubernetes.io/arch
+                        operator: In
+                        values:
+                          - "amd64"
+        containers:
+          main:
+            image:
+              # same image as the postgres cluster
+              repository: ghcr.io/cloudnative-pg/postgresql
+              tag: 15.4
+            env:
+              PGHOST: kochhaus-v15-rw.dbms
+              PGPORT: "5432"
+              PGUSER: postgres
+              PGPASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: cloudnative-pg-secret
+                    key: password
+              TZ: ${TIMEZONE}
+            command:
+              - "/bin/sh"
+            args:
+              - "-c"
+              - "pg_dumpall -U $PGUSER | gzip > /backup/kochhaus-cluster.dump.gz"
+
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                cpu: 250m
+                memory: 512Mi
+    service:
+      main:
+        enabled: false
+    persistence:
+      backup:
+        type: nfs
+        server: ${SECRET_BACKUP_SERVER}
+        path: /backup/data/k8s/postgres
