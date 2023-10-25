@@ -5,4 +5,4 @@ kind: Kustomization
 namespace: cicd
 resources:
   - ./rbac.yaml
-  - ./cronjob.yaml
+  - ./helmrelease.yaml
