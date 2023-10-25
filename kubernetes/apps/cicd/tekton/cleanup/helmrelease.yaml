@@ -1,0 +1,70 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app tekton-pipelinerun-cleaner
+  namespace: cicd
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.0.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    serviceAccount:
+      name: *app
+      labels:
+        app.kubernetes.io/part-of: tekton
+    controllers:
+      main:
+        type: cronjob
+        cronjob:
+          concurrencyPolicy: Forbid
+          schedule: "*/15 * * * *"
+        pod:
+          enableServiceLinks: false
+          restartPolicy: OnFailure
+        containers:
+          main:
+            image:
+              repository: ghcr.io/haraldkoch/kubernetes-kubectl
+              tag: 1.28.3@sha256:014a6c349b02f5530df2f14f02fbdef2596746504502af4f14b4699f5c6ac8a6
+            env:
+              NUM_TO_KEEP: "3"
+            command:
+              - /bin/bash
+              - -c
+              - >
+                while read -r PIPELINE; do
+                  while read -r PIPELINE_TO_REMOVE; do
+                    test -n "${PIPELINE_TO_REMOVE}" || continue;
+                    kubectl delete ${PIPELINE_TO_REMOVE} \
+                        && echo "$(date -Is) PipelineRun ${PIPELINE_TO_REMOVE} deleted." \
+                        || echo "$(date -Is) Unable to delete PipelineRun ${PIPELINE_TO_REMOVE}.";
+                  done < <(kubectl get pipelinerun -l tekton.dev/pipeline=${PIPELINE} --sort-by=.metadata.creationTimestamp -o name | head -n -${NUM_TO_KEEP});
+                done < <(kubectl get pipelinerun -o go-template='{{range .items}}{{index .metadata.labels "tekton.dev/pipeline"}}{{"\n"}}{{end}}' | uniq);
+            resources:
+              requests:
+                cpu: 50m
+                memory: 32Mi
+              limits:
+                cpu: 100m
+                memory: 64Mi
+    service:
+      main:
+        enabled: false
