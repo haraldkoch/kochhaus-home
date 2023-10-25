@@ -17,9 +17,9 @@ spec:
             path: /backup/data/k8s/postgres
 
       securityContext:
-        fsGroup: 1000
-        runAsGroup: 1000
-        runAsUser: 1000
+        fsGroup: 1022
+        runAsGroup: 1022
+        runAsUser: 1022
 
       containers:
         - name: postgres
