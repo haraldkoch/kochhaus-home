@@ -137,8 +137,6 @@ spec:
           memory: 64Mi
     read:
       replicas: 2
-      persistence:
-        storageClass: ceph-block
       extraVolumeMounts:
         - name: rules
           mountPath: /rules
@@ -155,7 +153,7 @@ spec:
     write:
       replicas: 2
       persistence:
-        storageClass: ceph-block
+        storageClass: local-path
       resources:
         requests:
           cpu: 50m
@@ -175,7 +173,7 @@ spec:
     backend:
       replicas: 2
       persistence:
-        storageClass: ceph-block
+        storageClass: local-path
       extraVolumeMounts:
         - name: rules
           mountPath: /rules/fake
