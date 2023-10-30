@@ -8,4 +8,5 @@ resources:
   - ./apply-ingress-external-dns-annotations.yaml
   - ./apply-ingress-whitelist-annotations.yaml
   - ./apply-volsync-annotations.yaml
+  - ./deny-ingress-implementationspecific.yaml
   - ./remove-cpu-limits.yaml

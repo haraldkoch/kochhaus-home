@@ -1,0 +1,34 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: deny-ingress-implentationspecific
+  annotations:
+    policies.kyverno.io/category: Other
+    policies.kyverno.io/subject: Ingress
+    policies.kyverno.io/minversion: 1.4.3
+    policies.kyverno.io/description: >-
+      An Ingress with a pathType of ImplementationSpecific does not perform as
+      much validation, and CVE-2022-4886 demonstrates that this leads to
+      security issues. This policy denies an Ingress with this pathType.
+spec:
+  validationFailureAction: Enforce
+  background: false
+  rules:
+    - name: check-ingress-pathtype
+      match:
+        any:
+          - resources:
+              kinds: ["Ingress"]
+      validate:
+        message: "Only Ingress pathType of Exact or Prefix are allowed."
+        foreach:
+          - list: request.object.spec.rules
+            foreach:
+              - list: "element.http.paths"
+                deny:
+                  conditions:
+                    all:
+                      - key: "{{ element.pathType }}"
+                        operator: Equals
+                        value: "ImplementationSpecific"

@@ -57,6 +57,7 @@ spec:
         proxy-body-size: 0
         proxy-buffer-size: 16k
         ssl-protocols: TLSv1.3 TLSv1.2
+        strict-validate-path-type: "true"
       metrics:
         enabled: true
         serviceMonitor:
@@ -66,6 +67,7 @@ spec:
             any: true
       extraArgs:
         default-ssl-certificate: networking/tls.${CLUSTER_DOMAIN/./-}
+        enable-annotation-validation: true
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
