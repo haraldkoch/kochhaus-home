@@ -93,7 +93,7 @@ identity_providers:
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://grafana.${CLUSTER_DOMAIN}/login/generic_oauth"]
-        userinfo_signing_algorithm: none
+        userinfo_signed_response_alg: none
       - id: immich
         description: Immich
         secret: "${IMMICH_OAUTH_CLIENT_SECRET}"
@@ -102,7 +102,7 @@ identity_providers:
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "email"]
         redirect_uris: ["https://photos.${CLUSTER_DOMAIN}/auth/login", "app.immich:/"]
-        userinfo_signing_algorithm: none
+        userinfo_signed_response_alg: none
       - id: miniflux
         description: Miniflux
         secret: "${MINIFLUX_OAUTH_CLIENT_SECRET}"
@@ -111,7 +111,7 @@ identity_providers:
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://miniflux.${CLUSTER_DOMAIN}/oauth2/oidc/callback"]
-        userinfo_signing_algorithm: none
+        userinfo_signed_response_alg: none
       - id: outline
         description: Outline
         secret: "${OUTLINE_OAUTH_CLIENT_SECRET}"
@@ -120,7 +120,7 @@ identity_providers:
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "email"]
         redirect_uris: ["https://docs.${CLUSTER_DOMAIN}/auth/oidc.callback"]
-        userinfo_signing_algorithm: none
+        userinfo_signed_response_alg: none
       - id: weave-gitops
         description: Weave GitOps
         secret: "${WEAVEGITOPS_OAUTH_CLIENT_SECRET}"
@@ -129,4 +129,4 @@ identity_providers:
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://gitops.${CLUSTER_DOMAIN}/oauth2/callback"]
-        userinfo_signing_algorithm: none
+        userinfo_signed_response_alg: none
