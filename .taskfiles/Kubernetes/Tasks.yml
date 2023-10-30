@@ -19,7 +19,7 @@ tasks:
     cmds:
       - |
         mkdir -p {{.CLUSTER_DIR}}/schemas
-        flux pull artifact oci://ghcr.io/onedr0p/kubernetes-schemas-oci:latest \
+        flux pull artifact oci://ghcr.io/haraldkoch/kubernetes-schemas-oci:latest \
             --output={{.CLUSTER_DIR}}/schemas
 
   list-dockerhub:
