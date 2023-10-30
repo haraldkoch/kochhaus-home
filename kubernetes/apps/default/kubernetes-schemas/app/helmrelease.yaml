@@ -38,10 +38,10 @@ spec:
               pullPolicy: IfNotPresent
             resources:
               requests:
-                cpu: 10m
-                memory: 50Mi
+                cpu: 5m
+                memory: 10M
               limits:
-                memory: 100Mi
+                memory: 64M
         pod:
           topologySpreadConstraints:
             - maxSkew: 1
