@@ -37,7 +37,7 @@ spec:
     copyMethod: Snapshot
     pruneIntervalDays: 10
     repository: nextcloud-restic-secret
-    cacheCapacity: 2Gi
+    cacheCapacity: 8Gi
     volumeSnapshotClassName: csi-ceph-blockpool
     storageClassName: ceph-block
     moverSecurityContext:
