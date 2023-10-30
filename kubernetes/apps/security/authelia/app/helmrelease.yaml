@@ -50,42 +50,14 @@ spec:
             image:
               repository: ghcr.io/authelia/authelia
               tag: master@sha256:0095d320b980deddebd3d6be2d77c85254fa1bf08624922a5a5c982a4df04991
-            args: ["--config", "/config/configuration.yml", "--config.experimental.filters", "expand-env"]
             env:
-              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_ADDITIONAL_GROUPS_DN: ou=groups
-              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_ADDITIONAL_USERS_DN: ou=people
-              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_BASE_DN: dc=home,dc=arpa
-              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_ATTRIBUTES_DISPLAY_NAME: displayName
-              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_GROUPS_FILTER: (member={dn})
-              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_ATTRIBUTES_GROUP_NAME: cn
-              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_IMPLEMENTATION: custom
-              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_ATTRIBUTES_MAIL: mail
-              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_START_TLS: "false"
-              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_TIMEOUT: 5s
-              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_ADDRESS: ldap://lldap.security.svc.cluster.local:389
-              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_USER: uid=authelia,ou=people,dc=home,dc=arpa
-              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_ATTRIBUTES_USERNAME: uid
-              AUTHELIA_AUTHENTICATION_BACKEND_LDAP_USERS_FILTER: (&({username_attribute}={input})(objectClass=person))
-              AUTHELIA_AUTHENTICATION_BACKEND_PASSWORD_RESET_DISABLE: "true"
-              AUTHELIA_AUTHENTICATION_BACKEND_REFRESH_INTERVAL: 1m
-              AUTHELIA_DEFAULT_REDIRECTION_URL: https://auth.${CLUSTER_DOMAIN}
-              AUTHELIA_DUO_API_DISABLE: "true"
-              AUTHELIA_LOG_LEVEL: info
-              AUTHELIA_NOTIFIER_DISABLE_STARTUP_CHECK: "true"
-              AUTHELIA_NOTIFIER_SMTP_DISABLE_REQUIRE_TLS: "false"
-              AUTHELIA_NOTIFIER_SMTP_ADDRESS: smtp://smtp.${CLUSTER_DOMAIN}:25
-              AUTHELIA_NOTIFIER_SMTP_SENDER: "Authelia <authelia@${CLUSTER_DOMAIN}>"
-              AUTHELIA_SERVER_DISABLE_HEALTHCHECK: "true"
               AUTHELIA_SERVER_ADDRESS: tcp://:80
-              AUTHELIA_SESSION_DOMAIN: ${CLUSTER_DOMAIN}
-              AUTHELIA_SESSION_NAME: authelia-home
-              AUTHELIA_SESSION_REDIS_DATABASE_INDEX: 14
-              AUTHELIA_SESSION_REDIS_HOST: redis.dbms.svc.cluster.local
+              AUTHELIA_SERVER_DISABLE_HEALTHCHECK: "true"
               AUTHELIA_TELEMETRY_METRICS_ADDRESS: tcp://0.0.0.0:8080
               AUTHELIA_TELEMETRY_METRICS_ENABLED: "true"
               AUTHELIA_THEME: dark
-              AUTHELIA_TOTP_ISSUER: authelia.com
-              AUTHELIA_WEBAUTHN_DISABLE: "true"
+              X_AUTHELIA_CONFIG: /config/configuration.yaml
+              X_AUTHELIA_CONFIG_FILTERS: expand-env
               # needed for configuration.yaml substitutions
               CLUSTER_DOMAIN: "${CLUSTER_DOMAIN}"
               SECRET_HOMELAN_IPV4: "${SECRET_HOMELAN_IPV4}"
@@ -107,10 +79,10 @@ spec:
                 enabled: false
             resources:
               requests:
-                cpu: 5m
-                memory: 10Mi
+                cpu: 10m
+                memory: 32Mi
               limits:
-                memory: 100Mi
+                memory: 128Mi
         pod:
           enableServiceLinks: false
           securityContext:
@@ -132,7 +104,6 @@ spec:
           http:
             port: *port
           metrics:
-            enabled: true
             port: 8080
     serviceMonitor:
       main:
@@ -157,7 +128,7 @@ spec:
             add_header X-Frame-Options "SAMEORIGIN";
             add_header X-XSS-Protection "1; mode=block";
         hosts:
-          - host: &host "auth.${CLUSTER_DOMAIN}"
+          - host: &host auth.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
@@ -171,9 +142,7 @@ spec:
         enabled: true
         type: configMap
         name: authelia
-        subPath: configuration.yml
-        advancedMounts:
-          main:
-            main:
-              - path: /config/configuration.yml
-                readOnly: false
+        globalMounts:
+          - path: /config/configuration.yaml
+            subPath: configuration.yaml
+            readOnly: true
