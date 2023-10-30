@@ -3,40 +3,27 @@
 apiVersion: notification.toolkit.fluxcd.io/v1beta2
 kind: Provider
 metadata:
-  name: discord
+  name: github
   namespace: flux-system
 spec:
-  type: discord
-  username: flux
-  channel: flux
+  type: github
+  address: https://github.com/haraldkoch/kochhaus-home
+  interval: 10m
   secretRef:
-    name: discord-webhook-url
+    name: github-token-secret
 ---
 # yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/alert-notification-v1beta2.json
 apiVersion: notification.toolkit.fluxcd.io/v1beta2
 kind: Alert
 metadata:
-  name: discord
+  name: github
   namespace: flux-system
 spec:
-  summary: "KochHaus"
   providerRef:
-    name: discord
-  eventSeverity: error
+    name: github
+  eventSeverity: info
   eventSources:
-    - kind: GitRepository
+    - kind: Kustomization
       name: "*"
     - kind: HelmRelease
       name: "*"
-    - kind: HelmRepository
-      name: "*"
-    - kind: Kustomization
-      name: "*"
-    - kind: OCIRepository
-      name: "*"
-  exclusionList:
-    - "error.*lookup github\\.com"
-    - "error.*lookup raw\\.githubusercontent\\.com"
-    - "dial.*tcp.*timeout"
-    - "waiting.*socket"
-  suspend: false
