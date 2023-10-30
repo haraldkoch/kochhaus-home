@@ -163,6 +163,15 @@ spec:
         limits:
           cpu: 500m
           memory: 1Gi
+      affinity: |
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node.home.arpa/physical
+                    operator: In
+                    values:
+                      - "true"
     backend:
       replicas: 2
       persistence:
@@ -185,6 +194,15 @@ spec:
         limits:
           cpu: 500m
           memory: 512Mi
+      affinity: |
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node.home.arpa/physical
+                    operator: In
+                    values:
+                      - "true"
     monitoring:
       dashboards:
         annotations:
