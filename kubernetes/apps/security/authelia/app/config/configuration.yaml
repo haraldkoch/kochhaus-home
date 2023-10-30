@@ -1,7 +1,42 @@
 # yaml-language-server: $schema=https://gist.githubusercontent.com/james-d-elliott/756de37a4398b3445072a60d674905c6/raw/ce90833b1ce145cb701184557dd964fa7546f19a/jsonschema.json
 ---
+authentication_backend:
+  password_reset:
+    disable: true
+  refresh_interval: 1m
+  ldap:
+    address: ldap://lldap.security.svc.cluster.local:389
+    implementation: custom
+    timeout: 5s
+    start_tls: false
+    base_dn: dc=home,dc=arpa
+    additional_users_dn: ou=people
+    users_filter: (&({username_attribute}={input})(objectClass=person))
+    additional_groups_dn: ou=groups
+    groups_filter: (member={dn})
+    group_search_mode: filter
+    user: uid=authelia,ou=people,dc=home,dc=arpa
+    password: password
+    attributes:
+      username: uid
+      display_name: displayName
+      mail: mail
+      member_of: memberOf
+      group_name: cn
+
 session:
+  same_site: lax
+  inactivity: 5m
+  expiration: 1h
+  remember_me: 1M
+  cookies:
+    - name: authelia-home
+      domain: ${CLUSTER_DOMAIN}
+      authelia_url: https://auth.${CLUSTER_DOMAIN}
+      default_redirection_url: https://${CLUSTER_DOMAIN}
   redis:
+    host: redis.dbms.svc.cluster.local
+    database_index: 14
     high_availability:
       sentinel_name: redis-master
       nodes:
@@ -11,6 +46,23 @@ session:
           port: 26379
         - host: redis-node-2.redis-headless.dbms.svc.cluster.local
           port: 26379
+
+notifier:
+  disable_startup_check: true
+  smtp:
+    address: smtp://smtp.${CLUSTER_DOMAIN}:25
+    sender: Authelia <authelia@${CLUSTER_DOMAIN}>
+    disable_require_tls: false
+
+totp:
+  disable: false
+  issuer: authelia.com
+
+webauthn:
+  disable: true
+
+duo_api:
+  disable: true
 
 access_control:
   default_policy: two_factor
@@ -77,13 +129,4 @@ identity_providers:
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://gitops.${CLUSTER_DOMAIN}/oauth2/callback"]
-        userinfo_signing_algorithm: none
-      - id: vikunja
-        description: Vikunja Task Manager
-        secret: "${VIKUNJA_OAUTH_CLIENT_SECRET}"
-        public: false
-        authorization_policy: two_factor
-        pre_configured_consent_duration: 1y
-        scopes: ["openid", "profile", "email"]
-        redirect_uris: ["https://tasks.${CLUSTER_DOMAIN}/auth/openid/authelia"]
         userinfo_signing_algorithm: none
