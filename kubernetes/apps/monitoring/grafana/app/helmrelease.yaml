@@ -36,9 +36,8 @@ spec:
           registry: ghcr.io
           repository: haraldkoch/postgres-init
           tag: 15.4@sha256:3cf3da8b51b6804493f2adbc1f8d49fee9764c5159b84014a4c0618da094ebe2
-        envFrom:
-          - secretRef:
-              name: &secret grafana-secret
+        envFromSecrets:
+          - name: &secret grafana-secret
     replicas: 2
     env:
       GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.${CLUSTER_DOMAIN}/api/oidc/userinfo
