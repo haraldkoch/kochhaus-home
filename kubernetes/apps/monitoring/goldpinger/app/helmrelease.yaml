@@ -42,7 +42,7 @@ spec:
         - host: &host goldpinger.${CLUSTER_DOMAIN}
           paths:
             - path: /
-              pathType: ImplementationSpecific
+              pathType: Prefix
       tls:
         - hosts:
             - *host
