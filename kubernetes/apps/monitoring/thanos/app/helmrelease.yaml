@@ -49,6 +49,7 @@ spec:
         annotations:
           hajimari.io/enable: "false"
         hostname: &host thanos-query.${CLUSTER_DOMAIN}
+        pathType: Prefix
         tls: true
         extraTls:
           - hosts:

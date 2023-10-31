@@ -63,7 +63,7 @@ spec:
         - host: &host blackbox.${CLUSTER_DOMAIN}
           paths:
             - path: /
-              pathType: ImplementationSpecific
+              pathType: Prefix
       tls:
         - hosts:
             - *host
