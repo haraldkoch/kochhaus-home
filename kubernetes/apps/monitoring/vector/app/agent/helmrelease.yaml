@@ -39,7 +39,7 @@ spec:
               # https://github.com/vectordotdev/vector/issues/6715
               # repository: docker.io/timberio/vector
               repository: ghcr.io/haraldkoch/vector
-              tag: 0.33.0-debian
+              tag: 0.33.1-debian
             args: ["--config", "/etc/vector/vector.yaml"]
             env:
               PROCFS_ROOT: /host/proc
