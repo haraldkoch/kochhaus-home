@@ -106,15 +106,15 @@ The Git repository contains the following directories under `cluster` and are or
 
 ## 💻 Nodes
 
-| Node          | Hostname | CPU                 |  RAM | Storage   | Function             | Operating System |
-|---------------|----------|---------------------|------|-----------|----------------------|------------------|
-| Lenovo M900q tiny | k3st | 4 Intel i5-6500T    |  8GB | 128GB SSD  | control-plane        | Arch Linux      |
-| libvirtd VM       | k3sj | 4 AMD Ryzen 5 1600T |  4GB | 128GB HDD  | control-plane        | Arch Linux      |
-| libvirtd VM       | k3sm | 2 AMD Athlon 3000G  |  4GB | 128GB HDD  | control-plane        | Arch Linux      |
-| Lenovo M910q tiny | k3s0 | 4 Intel i5-6500T    | 16GB | 512GB NVMe | worker, ceph storage | Arch Linux      |
-| libvirtd VM       | k3s1 | 6 AMD Ryzen 5 1600T | 16GB | 256GB HDD  | worker, ceph storage | Arch Linux      |
-| Lenovo M900q tiny | k3s2 | 4 Intel i5-6500T    | 16GB | 512GB SSD  | worker, ceph storage | Arch Linux      |
-| Lenovo M910q tiny | k3s3 | 4 Intel i5-6500T    | 16GB | 512GB NVMe | worker, ceph storage | Arch Linux      |
+| Node                | Hostname | CPU             |  RAM | Storage   | Function             | Operating System |
+|---------------------|----------|-----------------|------|-----------|----------------------|------------------|
+| HP EliteDesk 800 G2 | k3sj | 4 Intel i5-6500T    | 16GB | 240GB SSD  | control-plane        | Arch Linux      |
+| HP EliteDesk 800 G2 | k3sm | 4 Intel i5-6500T    | 16GB | 240GB SSD  | control-plane        | Arch Linux      |
+| HP EliteDesk 800 G2 | k3st | 4 Intel i5-6500T    | 16GB | 240GB SSD  | control-plane        | Arch Linux      |
+| Lenovo M910q tiny   | k3s0 | 4 Intel i5-6500T    | 16GB | 512GB NVMe | worker, ceph storage | Arch Linux      |
+| libvirtd VM         | k3s1 | 6 AMD Ryzen 5 1600T | 16GB | 256GB HDD  | worker, ceph storage | Arch Linux      |
+| Lenovo M900q tiny   | k3s2 | 4 Intel i5-6500T    | 16GB | 512GB SSD  | worker, ceph storage | Arch Linux      |
+| Lenovo M910q tiny   | k3s3 | 4 Intel i5-6500T    | 16GB | 512GB NVMe | worker, ceph storage | Arch Linux      |
 
 ---
 
