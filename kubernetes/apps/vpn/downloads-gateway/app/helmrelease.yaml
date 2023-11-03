@@ -39,7 +39,18 @@ spec:
                   annotations:
                     configmap.reloader.stakater.com/reload: "downloads-gateway-pod-gateway"
                     secret.reloader.stakater.com/reload: "downloads-gateway-vpnconfig"
-
+              - op: replace
+                path: /spec/template/spec/dnsPolicy
+                value: "None"
+              - op: add
+                path: /spec/template/spec/dnsConfig
+                value:
+                  nameservers:
+                    - 10.43.0.10
+                  searches: ["default.svc.cluster.local", "svc.cluster.local", "cluster.local", "kochhaus.lan"]
+                  options:
+                    - name: ndots
+                      value: "5"
   values:
     image:
       repository: ghcr.io/k8s-at-home/pod-gateway
