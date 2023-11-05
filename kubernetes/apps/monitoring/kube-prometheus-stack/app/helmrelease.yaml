@@ -223,13 +223,6 @@ spec:
           memory: 256Mi
         limits:
           memory: 384Mi
-    # the default selector is "k8s-app: kube-dns" which is [redacted].
-    coreDns:
-      enabled: true
-      service:
-        selector:
-          app.kubernetes.io/name: coredns
-          app.kubernetes.io/instance: coredns
     grafana:
       enabled: false
       forceDeployDashboards: true

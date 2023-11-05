@@ -32,8 +32,6 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
-    global:
-      dnsService: coredns
     loki:
       image:
         registry: ghcr.io
