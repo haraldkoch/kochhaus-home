@@ -35,15 +35,14 @@ spec:
         containers:
           main:
             image:
-              # https://github.com/filebrowser/filebrowser/issues/1571
-              repository: ghcr.io/haraldkoch/filebrowser
+              repository: docker.io/filebrowser/filebrowser
               tag: v2.26.0
             env:
               TZ: ${TIMEZONE}
-              FB_DATABASE: "/config/filebrowser.db"
-              FB_ROOT: "/syncthing"
-              FB_LOG: "stdout"
-              FB_NOAUTH: "true"
+              FB_DATABASE: /config/filebrowser.db
+              FB_ROOT: /syncthing
+              FB_LOG: stdout
+              FB_NOAUTH: true
             probes:
               liveness: &probes
                 enabled: true
