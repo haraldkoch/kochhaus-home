@@ -21,11 +21,11 @@
   description: >-
     Changes made in the terraform directory
 # Renovate
-- name: renovate/ansible
-  color: "ffc300"
 - name: renovate/container
   color: "ffc300"
 - name: renovate/github-action
+  color: "ffc300"
+- name: renovate/grafana-dashboard
   color: "ffc300"
 - name: renovate/github-release
   color: "ffc300"
