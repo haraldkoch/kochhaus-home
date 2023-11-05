@@ -28,8 +28,6 @@ spec:
   dependsOn:
     - name: local-path-provisioner
       namespace: kube-system
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   values:
     crds:
       create: true
