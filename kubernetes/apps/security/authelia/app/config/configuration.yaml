@@ -30,7 +30,7 @@ session:
   expiration: 1h
   remember_me: 1M
   cookies:
-    - name: authelia-home
+    - name: kochhaus_session
       domain: ${CLUSTER_DOMAIN}
       authelia_url: https://auth.${CLUSTER_DOMAIN}
       default_redirection_url: https://${CLUSTER_DOMAIN}
