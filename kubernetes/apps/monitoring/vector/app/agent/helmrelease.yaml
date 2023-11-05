@@ -33,12 +33,12 @@ spec:
       main:
         type: daemonset
         strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
-              # https://github.com/vectordotdev/vector/issues/6715
-              # repository: docker.io/timberio/vector
-              repository: ghcr.io/haraldkoch/vector
+              repository: docker.io/timberio/vector
               tag: 0.33.1-debian
             args: ["--config", "/etc/vector/vector.yaml"]
             env:
@@ -98,19 +98,27 @@ spec:
         type: hostPath
         hostPath: /var/log
         hostPathType: Directory
-        readOnly: true
+        globalMounts:
+          - path: /var/log
+            readOnly: true
       var-lib:
         type: hostPath
         hostPath: /var/lib
         hostPathType: Directory
-        readOnly: true
+        globalMounts:
+          - path: /var/lib
+            readOnly: true
       procfs:
         type: hostPath
         hostPath: /proc
         hostPathType: Directory
-        readOnly: true
+        globalMounts:
+          - path: /host/proc
+            readOnly: true
       sysfs:
         type: hostPath
         hostPath: /sys
         hostPathType: Directory
-        readOnly: true
+        globalMounts:
+          - path: /host/sys
+            readOnly: true
