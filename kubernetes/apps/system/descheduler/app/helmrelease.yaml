@@ -26,31 +26,55 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    # CronJob or Deployment
-    kind: CronJob
+    kind: Deployment
     schedule: "*/5 * * * *"
-    deschedulingInterval: 5m
     deschedulerPolicy:
       strategies:
+        RemovePodsHavingTooManyRestarts:
+          enabled: true
+          params:
+            podsHavingTooManyRestarts:
+              podRestartThreshold: 5
+              includingInitContainers: true
+        RemovePodsViolatingTopologySpreadConstraint:
+          enabled: true
+          params:
+            includeSoftConstraints: true
+        PodLifeTime:
+          enabled: true
+          params:
+            podLifeTime:
+              states:
+                - Pending
+                - PodInitializing
+                - ContainerCreating
+              maxPodLifeTimeSeconds: 3600
+        RemoveFailedPods:
+          enabled: true
+          params:
+            failedPods:
+              reasons:
+                - NodeShutdown
+                - ImagePullBackOff
+                - CreateContainerConfigError
+              includingInitContainers: true
+              excludeOwnerKinds:
+                - Job
+              minPodLifetimeSeconds: 3600
         RemoveDuplicates:
+          enabled: true
+        RemovePodsViolatingNodeTaints:
           enabled: true
         RemovePodsViolatingNodeAffinity:
           enabled: true
           params:
             nodeAffinityType:
               - requiredDuringSchedulingIgnoredDuringExecution
-        RemovePodsViolatingTopologySpreadConstraint:
-          enabled: true
-          params:
-            includeSoftConstraints: true
         RemovePodsViolatingInterPodAntiAffinity:
           enabled: true
-          params:
-            nodeFit: true
         LowNodeUtilization:
           enabled: true
           params:
-            nodeFit: true
             namespaces:
               exclude:
                 - "remote"
