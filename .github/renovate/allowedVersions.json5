@@ -5,6 +5,11 @@
       "matchDatasources": ["docker"],
       "matchPackagePatterns": ["joomla"],
       "allowedVersions": "<4"
+    },
+    {
+      "matchDatasources": ["docker"],
+      "matchPackagePatterns": ["postgresql"],
+      "allowedVersions": "<16"
     }
   ]
 }
