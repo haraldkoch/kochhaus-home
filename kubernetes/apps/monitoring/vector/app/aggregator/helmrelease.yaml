@@ -39,17 +39,16 @@ spec:
               repository: ghcr.io/maxmind/geoipupdate
               tag: v6.0.0
             env:
-              - { name: GEOIPUPDATE_EDITION_IDS, value: GeoLite2-City }
-              - { name: GEOIPUPDATE_FREQUENCY, value: "0" }
-              - { name: GEOIPUPDATE_VERBOSE, value: "true" }
+              GEOIPUPDATE_EDITION_IDS: GeoLite2-City
+              GEOIPUPDATE_FREQUENCY: "0"
+              GEOIPUPDATE_VERBOSE: "true"
             envFrom:
               - secretRef:
                   name: vector-geoipupdate
         containers:
           main:
             image:
-              # https://github.com/vectordotdev/vector/issues/6715
-              repository: ghcr.io/haraldkoch/vector
+              repository: docker.io/timberio/vector
               tag: 0.33.1-debian
             args: ["--config", "/etc/vector/vector.yaml"]
             resources:
@@ -69,6 +68,7 @@ spec:
                   app.kubernetes.io/name: *app
     service:
       main:
+        controller: main
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "vector.${CLUSTER_DOMAIN}"
@@ -78,16 +78,12 @@ spec:
           http:
             port: 8686
           journald:
-            enabled: true
             port: 6000
           kubernetes:
-            enabled: true
             port: 6010
           internet:
-            enabled: true
             port: 6020
           opnsense:
-            enabled: true
             port: 5140
             protocol: UDP
     persistence:
