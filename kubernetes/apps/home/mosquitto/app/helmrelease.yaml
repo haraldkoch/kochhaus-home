@@ -34,20 +34,6 @@ spec:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
-        statefulset:
-          volumeClaimTemplates:
-            - name: data
-              accessMode: ReadWriteOnce
-              size: 512Mi
-              storageClass: ceph-block
-              globalMounts:
-                - path: /data
-        pod:
-          securityContext:
-            runAsUser: 1022
-            runAsGroup: 1022
-            fsGroup: 1022
-            fsGroupChangePolicy: OnRootMismatch
         initContainers:
           init-config:
             image:
@@ -63,9 +49,23 @@ spec:
             resources:
               requests:
                 cpu: 5m
-                memory: 10Mi
+                memory: 4Mi
               limits:
-                memory: 10Mi
+                memory: 16Mi
+        pod:
+          securityContext:
+            runAsUser: 1022
+            runAsGroup: 1022
+            fsGroup: 1022
+            fsGroupChangePolicy: OnRootMismatch
+        statefulset:
+          volumeClaimTemplates:
+            - name: data
+              accessMode: ReadWriteOnce
+              size: 512Mi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /data
     service:
       main:
         type: LoadBalancer
