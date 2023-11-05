@@ -33,10 +33,6 @@ spec:
       namespace: rook-ceph
   values:
     loki:
-      image:
-        registry: ghcr.io
-        repository: haraldkoch/loki
-        tag: 2.9.2
       structuredConfig:
         auth_enabled: false
         server:
