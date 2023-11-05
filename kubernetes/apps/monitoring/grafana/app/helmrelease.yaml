@@ -119,6 +119,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/infrastructure
+          - name: kubernetes
+            orgId: 1
+            folder: Kubernetes
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/kubernetes
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -161,18 +169,12 @@ spec:
           revision: 4
           datasource: Prometheus
       infrastructure:
-        cert-manager:
-          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
-          datasource: Prometheus
         cloudflared:
           # renovate: depName="Cloudflare Tunnels (cloudflared)"
           gnetId: 17457
           revision: 6
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
-        cloudnative-pg:
-          url: https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/grafana-dashboard.json
-          datasource: Prometheus
         external-dns:
           # renovate: depName="External-dns"
           gnetId: 15038
@@ -194,6 +196,15 @@ spec:
           gnetId: 763
           revision: 5
           datasource: Prometheus
+        cloudnative-pg:
+          url: https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/grafana-dashboard.json
+          datasource: Prometheus
+        cert-manager:
+          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+          datasource: Prometheus
+        external-secrets:
+          url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
+          datasource: Prometheus
         ceph-cluster:
           # renovate: depName="Ceph Cluster"
           gnetId: 2842
@@ -209,9 +220,6 @@ spec:
           gnetId: 5342
           revision: 9
           datasource: Prometheus
-        external-secrets:
-          url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
-          datasource: Prometheus
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/cluster.json
           datasource: Prometheus
@@ -221,7 +229,7 @@ spec:
         flux-logs:
           url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/monitoring-config/dashboards/logs.json
           datasource: Prometheus
-      default:
+      kubernetes:
         kubernetes-api-server:
           # renovate: depName="Kubernetes / System / API Server"
           gnetId: 15761
