@@ -35,15 +35,14 @@ spec:
         containers:
           main:
             image:
-              # https://github.com/filebrowser/filebrowser/issues/1571
-              repository: ghcr.io/haraldkoch/filebrowser
+              repository: docker.io/filebrowser/filebrowser
               tag: v2.26.0
             env:
               TZ: ${TIMEZONE}
-              FB_DATABASE: "/config/filebrowser.db"
-              FB_ROOT: "/media"
-              FB_LOG: "stdout"
-              FB_NOAUTH: "true"
+              FB_DATABASE: /config/filebrowser.db
+              FB_ROOT: /media
+              FB_LOG: stdout
+              FB_NOAUTH: true
             probes:
               liveness: &probes
                 enabled: true
@@ -62,9 +61,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 50Mi
+                memory: 64Mi
               limits:
-                memory: 500Mi
+                memory: 512Mi
         pod:
           securityContext:
             runAsUser: 2000
@@ -101,6 +100,4 @@ spec:
               - *host
     persistence:
       media:
-        type: nfs
-        server: ${SECRET_MEDIA_SERVER}
-        path: /media
+        existingClaim: media-nfs
