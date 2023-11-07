@@ -1,0 +1,168 @@
+---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app omada-controller
+  namespace: networking
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.0.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        type: statefulset
+        containers:
+          main:
+            image:
+              repository: mbentley/omada-controller
+              tag: 5.12@sha256:3d4bdfba40038f017d7e9eea6e6a424ba0b522c9d95b6de054e5309a4fde8ba3
+            env:
+              TZ: ${TIMEZONE}
+              MANAGE_HTTP_PORT: "8088"
+              MANAGE_HTTPS_PORT: "8043"
+              PORTAL_HTTP_PORT: "8888"
+              PORTAL_HTTPS_PORT: "8843"
+              SHOW_SERVER_LOGS: "true"
+              SHOW_MONGODB_LOGS: "true"
+            resources:
+              requests:
+                cpu: 1
+                memory: 1200Mi
+              limits:
+                memory: 2000Mi
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /opt/tplink/EAPController/data
+              accessMode: ReadWriteOnce
+              size: 10Gi
+              storageClass: ceph-block
+            - name: work
+              mountPath: /opt/tplink/EAPController/work
+              accessMode: ReadWriteOnce
+              size: 10Gi
+              storageClass: ceph-block
+            - name: logs
+              mountPath: /opt/tplink/EAPController/logs
+              accessMode: ReadWriteOnce
+              size: 10Gi
+              storageClass: ceph-block
+    service:
+      main:
+        enabled: true
+        ports:
+          http:
+            enabled: true
+            port: 8043
+            targetPort: 8043
+            protocol: TCP
+      controller:
+        enabled: true
+        type: LoadBalancer
+        externalIPs:
+          - ${SVC_OMADA_ADDR_V4}
+          - ${SVC_OMADA_ADDR_V6}
+        externalTrafficPolicy: Local
+        ipFamilies: [IPv4, IPv6]
+        ipFamilyPolicy: PreferDualStack
+        controller: main
+        ports:
+          mgmt-8088-tcp:
+            enabled: true
+            port: 8088
+            targetPort: 8088
+            protocol: TCP
+          # mgmt-8043-tcp:
+          #   enabled: true
+          #   port: 8043
+          #   protocol: TCP
+          #   targetPort: 8043
+          portal-8843-tcp:
+            enabled: true
+            port: 8843
+            protocol: TCP
+            targetPort: 8843
+          eap-discovery:
+            enabled: true
+            port: 29810
+            protocol: UDP
+            targetPort: 29810
+          old-eap-mgmt:
+            enabled: true
+            port: 29811
+            protocol: TCP
+            targetPort: 29811
+          old-eap-adopt:
+            enabled: true
+            port: 29812
+            protocol: TCP
+            targetPort: 29812
+          old-eap-upgrade:
+            enabled: true
+            port: 29813
+            protocol: TCP
+            targetPort: 29813
+          eap-adopt:
+            enabled: true
+            port: 29814
+            protocol: TCP
+            targetPort: 29814
+          init-check:
+            enabled: true
+            port: 27001
+            protocol: UDP
+            targetPort: 27001
+          old-init-info:
+            enabled: true
+            port: 27002
+            protocol: TCP
+            targetPort: 27002
+          old-db-access:
+            enabled: true
+            port: 27017
+            protocol: TCP
+            targetPort: 27017
+          db-access:
+            enabled: true
+            port: 27217
+            protocol: TCP
+            targetPort: 27217
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "nginx"
+        annotations:
+          hajimari.io/icon: "router-wireless-settings"
+          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+          nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
+          nginx.ingress.kubernetes.io/use-regex: "true"
+          nginx.ingress.kubernetes.io/upstream-vhost: "omada.${CLUSTER_DOMAIN}:8043"
+          nginx.ingress.kubernetes.io/proxy-redirect-from: "~https://(.+):8043/(.+)/login$"
+          nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$1/$2/login"
+        hosts:
+          - host: &host omada.${CLUSTER_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  name: main
+        tls:
+          - hosts:
+              - *host
