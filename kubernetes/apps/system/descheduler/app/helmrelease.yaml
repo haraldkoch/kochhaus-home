@@ -28,6 +28,8 @@ spec:
   values:
     kind: Deployment
     schedule: "*/5 * * * *"
+    cmdOptions:
+      v: 4
     deschedulerPolicy:
       strategies:
         RemovePodsHavingTooManyRestarts:
