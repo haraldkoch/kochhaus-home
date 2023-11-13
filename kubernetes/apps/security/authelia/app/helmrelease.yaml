@@ -49,7 +49,7 @@ spec:
           main:
             image:
               repository: ghcr.io/authelia/authelia
-              tag: v4.38.0-beta3@sha256:65514df9f86b60325e447df599cf695b6bc5be39c2c9cc2cab644577633c1312
+              tag: v4.38.0-beta3@sha256:1b69a1e20cfbf245823fbaed2f931e2b0d8e0a04fd6436ef77450edee9f7810e
             env:
               AUTHELIA_SERVER_ADDRESS: tcp://:80
               AUTHELIA_SERVER_DISABLE_HEALTHCHECK: "true"
