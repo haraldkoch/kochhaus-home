@@ -12,5 +12,6 @@ resources:
   - ./kubernetes-schemas/ks.yaml
   #- ./letsblockit/ks.yaml
   - ./miniflux/ks.yaml
+  - ./populator-test/ks.yaml
   - ./outline/ks.yaml
   - ./paperless/ks.yaml
