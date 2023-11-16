@@ -78,7 +78,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: tautulli-config-v5
+        existingClaim: tautulli-config-v6
       backup:
         type: nfs
         server: "${SECRET_BACKUP_SERVER}"
