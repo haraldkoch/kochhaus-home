@@ -116,7 +116,7 @@ spec:
             - *host
     persistence:
       enabled: true
-      existingClaim: nextcloud
+      existingClaim: nextcloud-config-v2
       nextcloudData:
         enabled: true
         existingClaim: nextcloud-nfs
