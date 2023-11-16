@@ -63,15 +63,6 @@ spec:
           securityContext:
             fsGroup: 101
             fsGroupChangePolicy: "OnRootMismatch"
-    persistence:
-      config:
-        enabled: true
-        existingClaim: smokeping-config-v1
-      data:
-        existingClaim: smokeping-data-v4
-      kochhaus:
-        type: secret
-        name: smokeping
     service:
       main:
         ports:
@@ -93,3 +84,12 @@ spec:
         tls:
           - hosts:
               - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: smokeping-config-v1
+      data:
+        existingClaim: smokeping-data-v5
+      kochhaus:
+        type: secret
+        name: smokeping

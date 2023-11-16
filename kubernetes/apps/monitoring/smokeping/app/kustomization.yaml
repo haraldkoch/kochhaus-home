@@ -6,6 +6,5 @@ namespace: monitoring
 resources:
   - ./helmrelease.yaml
   - ./config-pvc.yaml
-  - ./data-pvc.yaml
   - ./secret.sops.yaml
   - ./volsync.yaml
