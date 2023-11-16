@@ -35,7 +35,7 @@ spec:
             order: 1
             image:
               repository: ghcr.io/haraldkoch/postgres-init
-              tag: 15.4@sha256:285e215cc360aa02cb054242ca4b4db02c9f1dd6453e194050bd7284d1c6d896
+              tag: 15.5@sha256:7dd0de5e0e6017fa26164756e104f704c1f88e306e345a6abf12e1a4d974e1cf
             envFrom: &envFrom
               - secretRef:
                   name: gatus-secret
