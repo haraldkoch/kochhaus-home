@@ -10,7 +10,7 @@ spec:
     kind: ClusterSecretStore
     name: onepassword-connect
   target:
-    name: omada-restic-secret
+    name: omada-restic
     creationPolicy: Owner
     template:
       engineVersion: v2
@@ -36,7 +36,7 @@ spec:
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
-    repository: omada-restic-secret
+    repository: omada-restic
     cacheCapacity: 8Gi
     cacheStorageClassName: local-path
     volumeSnapshotClassName: csi-ceph-blockpool

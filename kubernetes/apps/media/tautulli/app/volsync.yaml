@@ -10,7 +10,7 @@ spec:
     kind: ClusterSecretStore
     name: onepassword-connect
   target:
-    name: tautulli-restic-secret
+    name: tautulli-restic
     creationPolicy: Owner
     template:
       engineVersion: v2
@@ -36,7 +36,7 @@ spec:
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 7
-    repository: tautulli-restic-secret
+    repository: tautulli-restic
     cacheCapacity: 8Gi
     cacheStorageClassName: local-path
     volumeSnapshotClassName: csi-ceph-blockpool
