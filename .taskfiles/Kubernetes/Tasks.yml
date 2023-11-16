@@ -38,46 +38,43 @@ tasks:
       - kubectl delete job -A --all
 
   mount:
-    desc: Mount a PersistentVolumeClaim to a pod temporarily
+    desc: Mount a PersistentVolumeClaim to a temporary pod
     interactive: true
     vars:
       claim: '{{ or .claim (fail "PersistentVolumeClaim `claim` is required") }}'
       namespace: '{{.namespace | default "default"}}'
-    cmds:
-      - |
-        kubectl run -n {{.namespace}} debug-{{.claim}} -i --tty --rm --image=null --privileged --overrides='
-          {
-            "apiVersion": "v1",
-            "spec": {
-              "containers": [
-                {
-                  "name": "debug",
-                  "image": "ghcr.io/haraldkoch/alpine:rolling",
-                  "command": [
-                    "/bin/bash"
-                  ],
-                  "stdin": true,
-                  "stdinOnce": true,
-                  "tty": true,
-                  "volumeMounts": [
-                    {
-                      "name": "config",
-                      "mountPath": "/data/config"
-                    }
-                  ]
-                }
-              ],
-              "volumes": [
-                {
-                  "name": "config",
-                  "persistentVolumeClaim": {
-                    "claimName": "{{.claim}}"
+    cmd: |
+      kubectl run -n {{.namespace}} debug-{{.claim}} -i --tty --rm --image=null --privileged --overrides='
+        {
+          "apiVersion": "v1",
+          "spec": {
+            "containers": [
+              {
+                "name": "debug",
+                "image": "ghcr.io/haraldkoch/alpine:rolling",
+                "command": ["/bin/bash"],
+                "stdin": true,
+                "stdinOnce": true,
+                "tty": true,
+                "volumeMounts": [
+                  {
+                    "name": "config",
+                    "mountPath": "/config"
                   }
+                ]
+              }
+            ],
+            "volumes": [
+              {
+                "name": "config",
+                "persistentVolumeClaim": {
+                  "claimName": "{{.claim}}"
                 }
-              ],
-              "restartPolicy": "Never"
-            }
-          }'
+              }
+            ],
+            "restartPolicy": "Never"
+          }
+        }'
     preconditions:
       - kubectl -n {{.namespace}} get pvc {{.claim}}
 

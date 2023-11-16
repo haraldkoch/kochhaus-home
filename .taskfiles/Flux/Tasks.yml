@@ -1,7 +1,25 @@
 ---
 version: "3"
 
+vars:
+  CLUSTER_DIR: "{{.ROOT_DIR}}/kubernetes"
+  CLUSTER_SECRETS_FILE: "{{.CLUSTER_DIR}}/flux/vars/cluster-secrets.sops.env"
+  CLUSTER_SETTINGS_FILE: "{{.CLUSTER_DIR}}/flux/vars/cluster-settings.env"
+
 tasks:
+
+  flux-apply:
+    desc: Apply a resource path that contains Flux substitution variables
+    dotenv: ['{{.CLUSTER_SETTINGS_FILE}}']
+    vars:
+      ks: '{{ or .ks (fail "Missing path (`ks` var)") }}'
+    cmd: |
+      sops exec-env {{.CLUSTER_SECRETS_FILE}} \
+        "kustomize build --load-restrictor=LoadRestrictionsNone {{.ks}} | \
+          envsubst | kubectl apply --server-side --field-manager=kustomize-controller -f -"
+    preconditions:
+      - sh: test -f {{.CLUSTER_SECRETS_FILE}}
+      - sh: test -f {{.CLUSTER_SETTINGS_FILE}}
 
   gr-sync:
     desc: Sync Flux GitRepositories
