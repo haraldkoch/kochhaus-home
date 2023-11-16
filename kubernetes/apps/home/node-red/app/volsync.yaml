@@ -23,6 +23,47 @@ spec:
     - extract:
         key: volsync-restic-template
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: node-red-config-v2
+  namespace: home
+  labels:
+    app.kubernetes.io/name: &name node-red
+    app.kubernetes.io/instance: *name
+spec:
+  accessModes: ["ReadWriteOnce"]
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: node-red-bootstrap
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ceph-block
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/volsync.backube/replicationdestination_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: node-red-bootstrap
+  namespace: home
+  annotations:
+    kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: node-red-restic
+    copyMethod: Snapshot
+    volumeSnapshotClassName: csi-ceph-blockpool
+    cacheStorageClassName: local-path
+    cacheAccessModes: ["ReadWriteOnce"]
+    cacheCapacity: 8Gi
+    storageClassName: ceph-block
+    accessModes: ["ReadWriteOnce"]
+    capacity: 1Gi # must match the PersistentVolumeClaim `.resources.requests.storage` size above
+---
 # yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
@@ -30,17 +71,19 @@ metadata:
   name: node-red
   namespace: home
 spec:
-  sourcePVC: node-red-config-v1
+  sourcePVC: node-red-config-v2
   trigger:
     schedule: "0 7 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
     repository: node-red-restic
+    volumeSnapshotClassName: csi-ceph-blockpool
     cacheCapacity: 8Gi
     cacheStorageClassName: local-path
-    volumeSnapshotClassName: csi-ceph-blockpool
+    cacheAccessModes: ["ReadWriteOnce"]
     storageClassName: ceph-block
+    accessModes: ["ReadWriteOnce"]
     moverSecurityContext:
       runAsUser: 568
       runAsGroup: 568
