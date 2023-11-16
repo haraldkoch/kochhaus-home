@@ -23,6 +23,48 @@ spec:
     - extract:
         key: volsync-restic-template
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tautulli-config-v6
+  namespace: media
+  labels:
+    app.kubernetes.io/name: &name tautulli
+    app.kubernetes.io/instance: *name
+    app.kubernetes.io/part-of: *name
+spec:
+  accessModes: ["ReadWriteOnce"]
+  dataSourceRef:
+    kind: ReplicationDestination
+    apiGroup: volsync.backube
+    name: tautulli-bootstrap
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: ceph-block
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/volsync.backube/replicationdestination_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: tautulli-bootstrap
+  namespace: media
+  annotations:
+    kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: tautulli-restic
+    copyMethod: Snapshot
+    volumeSnapshotClassName: csi-ceph-blockpool
+    cacheStorageClassName: local-path
+    cacheAccessModes: ["ReadWriteOnce"]
+    cacheCapacity: 8Gi
+    storageClassName: ceph-block
+    accessModes: ["ReadWriteOnce"]
+    capacity: 2Gi # must match the PersistentVolumeClaim `.resources.requests.storage` size above
+---
 # yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
@@ -30,17 +72,19 @@ metadata:
   name: tautulli
   namespace: media
 spec:
-  sourcePVC: tautulli-config-v5
+  sourcePVC: tautulli-config-v6
   trigger:
     schedule: "0 7 * * *"
   restic:
     copyMethod: Snapshot
-    pruneIntervalDays: 7
+    pruneIntervalDays: 10
     repository: tautulli-restic
+    volumeSnapshotClassName: csi-ceph-blockpool
     cacheCapacity: 8Gi
     cacheStorageClassName: local-path
-    volumeSnapshotClassName: csi-ceph-blockpool
+    cacheAccessModes: ["ReadWriteOnce"]
     storageClassName: ceph-block
+    accessModes: ["ReadWriteOnce"]
     moverSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000
