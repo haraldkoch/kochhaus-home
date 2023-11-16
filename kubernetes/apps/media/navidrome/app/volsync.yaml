@@ -10,7 +10,7 @@ spec:
     kind: ClusterSecretStore
     name: onepassword-connect
   target:
-    name: navidrome-restic-secret
+    name: navidrome-restic
     creationPolicy: Owner
     template:
       engineVersion: v2
@@ -36,7 +36,7 @@ spec:
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
-    repository: navidrome-restic-secret
+    repository: navidrome-restic
     cacheCapacity: 8Gi
     cacheStorageClassName: local-path
     volumeSnapshotClassName: csi-ceph-blockpool
