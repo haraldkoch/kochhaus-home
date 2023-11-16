@@ -39,7 +39,7 @@ spec:
           main:
             image:
               repository: joseluisq/static-web-server
-              tag: 2.16.0-alpine
+              tag: 2.24.1-alpine
             env:
               TZ: ${TIMEZONE}
               SERVER_PORT: 80
