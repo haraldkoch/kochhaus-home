@@ -34,7 +34,7 @@ spec:
           copy-config:
             image:
               repository: ghcr.io/haraldkoch/kubernetes-kubectl
-              tag: 1.28.3@sha256:e39e56f7bf8dad1e5609e4d072ac736274372a2d306ca6967af22f653d76ef2f
+              tag: 1.28.4@sha256:0cae1dba8dd0fcb485198b8bdb90383560db88b809f8d2285a2ec15027f4f93b
             command:
               - /bin/sh
               - -c
