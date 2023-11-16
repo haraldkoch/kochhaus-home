@@ -52,7 +52,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: onedrive-config-v4
+        existingClaim: onedrive-config-v5
         globalMounts:
           - path: /onedrive/conf
       data:
