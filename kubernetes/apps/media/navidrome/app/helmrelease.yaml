@@ -105,7 +105,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: navidrome-config-v1
+        existingClaim: navidrome-config-v2
       music:
         type: nfs
         server: "${SECRET_MEDIA_SERVER}"
