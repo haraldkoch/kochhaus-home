@@ -10,7 +10,7 @@ spec:
     metadata:
       labels:
         setGateway: "false"
-        app.kubernetes.io/name: volsync
+        app.kubernetes.io/created-by: volsync
     spec:
       automountServiceAccountToken: false
       restartPolicy: OnFailure
