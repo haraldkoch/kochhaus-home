@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: dbms
 resources:
   - ./kochhaus-v15.yaml
+  - ./kochhaus-v16.yaml
   - ./scheduledbackup.yaml
   - ./prometheusrule.yaml
   - ./service.yaml
