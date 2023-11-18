@@ -30,7 +30,7 @@ spec:
             - "gunzip < /backup/kochhaus-cluster.dump.gz | pg_restore -U $PGUSER -f -"
           env:
             - name: PGHOST
-              value: kochhaus-v15-rw.dbms
+              value: postgres-rw.dbms
             - name: PGPORT
               value: "5432"
             - name: PGUSER

@@ -69,7 +69,7 @@ spec:
     externalDatabase:
       enabled: true
       type: postgresql
-      host: kochhaus-v15-rw.dbms.svc.cluster.local.
+      host: postgres-rw.dbms.svc.cluster.local.
       database: nextcloud
       existingSecret:
         enabled: true

@@ -55,7 +55,7 @@ spec:
               repository: ghcr.io/cloudnative-pg/postgresql
               tag: 15.5
             env:
-              PGHOST: kochhaus-v15-rw.dbms
+              PGHOST: postgres-rw.dbms
               PGPORT: "5432"
               PGUSER: postgres
               PGPASSWORD:
