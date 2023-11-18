@@ -3,7 +3,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: daily-backup
+  name: daily-backup-v15
   namespace: dbms
 spec:
   schedule: "@daily"
