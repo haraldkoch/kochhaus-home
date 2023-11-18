@@ -74,8 +74,8 @@ spec:
       existingSecret:
         enabled: true
         secretName: nextcloud-secret
-        usernameKey: POSTGRES_USER
-        passwordKey: POSTGRES_PASS
+        usernameKey: INIT_POSTGRES_USER
+        passwordKey: INIT_POSTGRES_PASS
     ingress:
       enabled: true
       className: nginx
