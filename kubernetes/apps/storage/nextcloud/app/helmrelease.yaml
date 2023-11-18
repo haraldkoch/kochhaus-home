@@ -124,7 +124,7 @@ spec:
     # this seems to be required for nextcloud initialization which takes a long time
     startupProbe:
       enabled: true
-      initialDelaySeconds: 30
+      initialDelaySeconds: 10
       periodSeconds: 10
       timeoutSeconds: 5
       failureThreshold: 30
