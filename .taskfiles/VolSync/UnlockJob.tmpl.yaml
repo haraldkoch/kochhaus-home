@@ -20,4 +20,4 @@ spec:
           args: ["unlock", "--remove-all"]
           envFrom:
             - secretRef:
-                name: "${rsrc}-restic"
+                name: "${rsrc}-volsync"
