@@ -6,6 +6,7 @@ metadata:
   name: populator-test
   namespace: flux-system
 spec:
+  targetNamespace: default
   dependsOn:
     - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/apps/default/populator-test/app
@@ -17,3 +18,10 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: populator-test
+      CLAIM: populator-test-data
+      VOLSYNC_CAPACITY: 2Gi
+      VOLSYNC_UID: "65533"
+      VOLSYNC_GID: "65533"
