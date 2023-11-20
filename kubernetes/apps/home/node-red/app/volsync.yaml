@@ -3,14 +3,14 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: &name node-red-restic
+  name: &name node-red-volsync
   namespace: home
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
     name: onepassword-connect
   target:
-    name: node-red-restic
+    name: node-red-volsync
     creationPolicy: Owner
     template:
       engineVersion: v2
@@ -54,7 +54,7 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: node-red-restic
+    repository: node-red-volsync
     copyMethod: Snapshot
     volumeSnapshotClassName: csi-ceph-blockpool
     cacheStorageClassName: local-path
@@ -81,7 +81,7 @@ spec:
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
-    repository: node-red-restic
+    repository: node-red-volsync
     volumeSnapshotClassName: csi-ceph-blockpool
     cacheCapacity: 8Gi
     cacheStorageClassName: local-path
