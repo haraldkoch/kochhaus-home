@@ -3,14 +3,14 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: smokeping-restic
+  name: smokeping-volsync
   namespace: monitoring
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
     name: onepassword-connect
   target:
-    name: smokeping-restic
+    name: smokeping-volsync
     creationPolicy: Owner
     template:
       engineVersion: v2
@@ -55,7 +55,7 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: smokeping-restic
+    repository: smokeping-volsync
     copyMethod: Snapshot
     volumeSnapshotClassName: csi-ceph-blockpool
     cacheStorageClassName: local-path
@@ -82,7 +82,7 @@ spec:
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
-    repository: smokeping-restic
+    repository: smokeping-volsync
     volumeSnapshotClassName: csi-ceph-blockpool
     cacheCapacity: 8Gi
     cacheStorageClassName: local-path

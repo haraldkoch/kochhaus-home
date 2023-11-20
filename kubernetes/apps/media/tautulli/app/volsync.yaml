@@ -3,14 +3,14 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: tautulli-restic
+  name: tautulli-volsync
   namespace: media
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
     name: onepassword-connect
   target:
-    name: tautulli-restic
+    name: tautulli-volsync
     creationPolicy: Owner
     template:
       engineVersion: v2
@@ -55,7 +55,7 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: tautulli-restic
+    repository: tautulli-volsync
     copyMethod: Snapshot
     volumeSnapshotClassName: csi-ceph-blockpool
     cacheStorageClassName: local-path
@@ -82,7 +82,7 @@ spec:
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
-    repository: tautulli-restic
+    repository: tautulli-volsync
     volumeSnapshotClassName: csi-ceph-blockpool
     cacheCapacity: 8Gi
     cacheStorageClassName: local-path

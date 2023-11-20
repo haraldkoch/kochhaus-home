@@ -3,14 +3,14 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: omada-restic
+  name: omada-volsync
   namespace: networking
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
     name: onepassword-connect
   target:
-    name: omada-restic
+    name: omada-volsync
     creationPolicy: Owner
     template:
       engineVersion: v2
@@ -51,7 +51,7 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: omada-restic
+    repository: omada-volsync
     copyMethod: Snapshot
     volumeSnapshotClassName: csi-ceph-blockpool
     cacheStorageClassName: local-path
@@ -78,7 +78,7 @@ spec:
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
-    repository: omada-restic
+    repository: omada-volsync
     volumeSnapshotClassName: csi-ceph-blockpool
     cacheCapacity: 8Gi
     cacheStorageClassName: local-path
