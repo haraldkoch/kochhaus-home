@@ -60,6 +60,10 @@ spec:
     storageClassName: ceph-block
     accessModes: ["ReadWriteOnce"]
     capacity: 10Gi # must match the PersistentVolumeClaim `.resources.requests.storage` size above
+    moverSecurityContext:
+      runAsUser: 508
+      runAsGroup: 508
+      fsGroup: 508
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
