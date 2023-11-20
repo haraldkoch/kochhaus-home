@@ -36,7 +36,7 @@ spec:
             image:
               # https://hub.docker.com/r/caronc/apprise
               repository: docker.io/caronc/apprise
-              tag: v0.9.5
+              tag: 0.9.6
             env:
               TZ: "${TIMEZONE}"
         statefulset:
