@@ -30,7 +30,7 @@ spec:
     image:
       registry: docker.io
       repository: dpage/pgadmin4
-      tag: "7.8"
+      tag: "8.0"
       pullPolicy: IfNotPresent
     strategy:
       type: Recreate
