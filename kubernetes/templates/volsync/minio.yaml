@@ -33,7 +33,7 @@ spec:
     schedule: "0 * * * *"
   restic:
     copyMethod: Snapshot
-    pruneIntervalDays: 10
+    pruneIntervalDays: 7
     repository: "${APP}-volsync"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-8Gi}"
@@ -47,7 +47,7 @@ spec:
       fsGroup: "${VOLSYNC_GID:-568}"
     retain:
       hourly: 24
-      daily: 10
+      daily: 7
       weekly: 5
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/volsync.backube/replicationdestination_v1alpha1.json
