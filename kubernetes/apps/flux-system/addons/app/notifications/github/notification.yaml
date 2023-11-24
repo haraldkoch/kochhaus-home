@@ -4,7 +4,6 @@ apiVersion: notification.toolkit.fluxcd.io/v1beta2
 kind: Provider
 metadata:
   name: github
-  namespace: flux-system
 spec:
   type: github
   address: https://github.com/haraldkoch/kochhaus-home
@@ -17,7 +16,6 @@ apiVersion: notification.toolkit.fluxcd.io/v1beta2
 kind: Alert
 metadata:
   name: github
-  namespace: flux-system
 spec:
   providerRef:
     name: github

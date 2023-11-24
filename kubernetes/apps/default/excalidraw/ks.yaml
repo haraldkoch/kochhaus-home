@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-excalidraw
   namespace: flux-system
 spec:
+  targetNamespace: default
   path: ./kubernetes/apps/default/excalidraw/app
   prune: true
   sourceRef:

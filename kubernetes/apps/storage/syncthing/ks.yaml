@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-syncthing
   namespace: flux-system
 spec:
+  targetNamespace: storage
   path: ./kubernetes/apps/storage/syncthing/app
   prune: true
   sourceRef:

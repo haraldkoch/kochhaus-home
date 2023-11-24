@@ -6,6 +6,7 @@ metadata:
   name: weather-openweathermap-exporter
   namespace: flux-system
 spec:
+  targetNamespace: weather
   path: ./kubernetes/apps/weather/openweathermap-exporter/app
   prune: true
   sourceRef:

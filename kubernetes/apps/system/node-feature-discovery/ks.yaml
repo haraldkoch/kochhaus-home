@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-node-feature-discovery
   namespace: flux-system
 spec:
+  targetNamespace: system
   path: ./kubernetes/apps/system/node-feature-discovery/app
   prune: true
   sourceRef:
@@ -23,6 +24,7 @@ metadata:
   name: cluster-apps-node-feature-rules
   namespace: flux-system
 spec:
+  targetNamespace: system
   dependsOn:
     - name: cluster-apps-node-feature-discovery
   path: ./kubernetes/apps/system/node-feature-discovery/rules

@@ -4,7 +4,6 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
   name: kochhaus-v16
-  namespace: dbms
   annotations:
     kyverno.io/ignore: "true"
 spec:

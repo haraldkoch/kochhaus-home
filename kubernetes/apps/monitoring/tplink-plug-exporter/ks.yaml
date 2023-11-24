@@ -6,6 +6,7 @@ metadata:
   name: monitoring-tplink-plug-exporter
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   dependsOn:
     - name: cluster-apps-kube-prometheus-stack
   path: ./kubernetes/apps/monitoring/tplink-plug-exporter/app

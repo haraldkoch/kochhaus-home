@@ -6,6 +6,7 @@ metadata:
   name: networking-whoami
   namespace: flux-system
 spec:
+  targetNamespace: networking
   path: ./kubernetes/apps/networking/whoami/app
   prune: true
   sourceRef:

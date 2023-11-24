@@ -6,6 +6,7 @@ metadata:
   name: networking-homelab-dns
   namespace: flux-system
 spec:
+  targetNamespace: networking
   path: ./kubernetes/apps/networking/homelab-dns/app
   prune: true
   sourceRef:

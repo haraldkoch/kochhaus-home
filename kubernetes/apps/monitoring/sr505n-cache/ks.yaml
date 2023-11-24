@@ -6,6 +6,7 @@ metadata:
   name: monitoring-sr505n-cache
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/apps/monitoring/sr505n-cache/app
   prune: true
   sourceRef:

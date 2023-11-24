@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-volsync
   namespace: flux-system
 spec:
+  targetNamespace: volsync
   path: ./kubernetes/apps/volsync/volsync/app
   prune: true
   sourceRef:

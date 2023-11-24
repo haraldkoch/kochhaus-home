@@ -3,7 +3,6 @@ kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
   name: linode-backups
-  namespace: downloads
 spec:
   podSelector:
     matchLabels:
@@ -15,5 +14,4 @@ spec:
         - ipBlock:
             cidr: ${SECRET_HOMELAN_IPV6}
   policyTypes:
-    - Ingress
     - Egress

@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-kube-prometheus-stack
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   dependsOn:
     - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/apps/monitoring/kube-prometheus-stack/app

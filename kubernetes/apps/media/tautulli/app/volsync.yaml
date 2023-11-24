@@ -4,7 +4,6 @@ apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: tautulli-volsync
-  namespace: media
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
@@ -27,7 +26,6 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: tautulli-config-v6
-  namespace: media
   labels:
     app.kubernetes.io/name: &name tautulli
     app.kubernetes.io/instance: *name
@@ -48,7 +46,6 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
   name: tautulli-bootstrap
-  namespace: media
   annotations:
     kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
 spec:
@@ -74,7 +71,6 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: tautulli
-  namespace: media
 spec:
   sourcePVC: tautulli-config-v6
   trigger:

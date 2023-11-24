@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-flux-addons
   namespace: flux-system
 spec:
+  targetNamespace: flux-system
   dependsOn:
     - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/apps/flux-system/addons/app

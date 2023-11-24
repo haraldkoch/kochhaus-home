@@ -6,6 +6,7 @@ metadata:
   name: monitoring-x509-certificate-exporter
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/apps/monitoring/x509-certificate-exporter/app
   prune: true
   sourceRef:

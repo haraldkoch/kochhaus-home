@@ -6,6 +6,7 @@ metadata:
   name: networking-web-static
   namespace: flux-system
 spec:
+  targetNamespace: networking
   path: ./kubernetes/apps/networking/web-static/app
   prune: true
   sourceRef:

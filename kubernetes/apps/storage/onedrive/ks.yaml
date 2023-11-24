@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-onedrive
   namespace: flux-system
 spec:
+  targetNamespace: storage
   dependsOn:
     - name: cluster-apps-volsync
   path: ./kubernetes/apps/storage/onedrive/app

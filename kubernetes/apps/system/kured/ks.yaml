@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-kured
   namespace: flux-system
 spec:
+  targetNamespace: system
   path: ./kubernetes/apps/system/kured/app
   prune: true
   sourceRef:

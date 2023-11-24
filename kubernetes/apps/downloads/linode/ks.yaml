@@ -6,6 +6,7 @@ metadata:
   name: downloads-linode
   namespace: flux-system
 spec:
+  targetNamespace: downloads
   path: ./kubernetes/apps/downloads/linode/app
   prune: true
   sourceRef:

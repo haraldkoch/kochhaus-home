@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-media-browser
   namespace: flux-system
 spec:
+  targetNamespace: media
   path: ./kubernetes/apps/media/media-browser/app
   prune: true
   sourceRef:

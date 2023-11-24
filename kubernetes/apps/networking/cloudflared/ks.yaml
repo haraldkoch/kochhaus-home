@@ -8,6 +8,7 @@ metadata:
   labels:
     substitution.flux.home.arpa/enabled: "true"
 spec:
+  targetNamespace: networking
   dependsOn:
     - name: cluster-apps-external-secrets-stores
   path: ./kubernetes/apps/networking/cloudflared/app

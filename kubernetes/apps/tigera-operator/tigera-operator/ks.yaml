@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-tigera-operator
   namespace: flux-system
 spec:
+  targetNamespace: tigera-operator
   path: ./kubernetes/apps/tigera-operator/tigera-operator/app
   prune: true
   sourceRef:
@@ -23,6 +24,7 @@ metadata:
   name: cluster-apps-tigera-operator-bgp
   namespace: flux-system
 spec:
+  targetNamespace: tigera-operator
   dependsOn:
     - name: cluster-apps-tigera-operator
   path: ./kubernetes/apps/tigera-operator/tigera-operator/bgp

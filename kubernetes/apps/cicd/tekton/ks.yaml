@@ -6,6 +6,7 @@ metadata:
   name: cicd-tekton-tasks
   namespace: flux-system
 spec:
+  targetNamespace: cicd
   dependsOn:
     - name: cluster-apps-tekton
   path: ./kubernetes/apps/cicd/tekton/tasks
@@ -25,6 +26,7 @@ metadata:
   name: cicd-tekton-cleanup
   namespace: flux-system
 spec:
+  targetNamespace: cicd
   dependsOn:
     - name: cluster-apps-tekton
   path: ./kubernetes/apps/cicd/tekton/cleanup

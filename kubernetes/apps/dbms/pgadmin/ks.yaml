@@ -6,6 +6,7 @@ metadata:
   name: dbms-pgadmin
   namespace: flux-system
 spec:
+  targetNamespace: dbms
   dependsOn:
     - name: cluster-apps-cloudnative-pg
   path: ./kubernetes/apps/dbms/pgadmin/app

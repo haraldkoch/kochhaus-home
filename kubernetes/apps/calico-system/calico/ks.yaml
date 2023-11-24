@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-calico-addons
   namespace: flux-system
 spec:
+  targetNamespace: calico-system
   path: ./kubernetes/apps/calico-system/calico/addons
   prune: true
   sourceRef:

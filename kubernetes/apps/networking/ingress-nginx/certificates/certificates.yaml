@@ -3,7 +3,6 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: "${SECRET_INTERNAL_DOMAIN/./-}"
-  namespace: networking
 spec:
   secretName: "tls.${SECRET_INTERNAL_DOMAIN/./-}"
   issuerRef:
@@ -18,7 +17,6 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: "${CLUSTER_DOMAIN/./-}"
-  namespace: networking
 spec:
   secretName: "tls.${CLUSTER_DOMAIN/./-}"
   issuerRef:
