@@ -6,6 +6,7 @@ metadata:
   name: networking-omada-controller
   namespace: flux-system
 spec:
+  targetNamespace: networking
   path: ./kubernetes/apps/networking/omada-controller/app
   prune: true
   sourceRef:

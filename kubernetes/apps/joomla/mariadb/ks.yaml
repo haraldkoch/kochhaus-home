@@ -6,6 +6,7 @@ metadata:
   name: joomla-mariadb
   namespace: flux-system
 spec:
+  targetNamespace: joomla
   dependsOn:
     - name: cluster-apps-external-secrets-stores
     - name: cluster-apps-volsync

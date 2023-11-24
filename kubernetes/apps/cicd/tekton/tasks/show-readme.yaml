@@ -3,7 +3,6 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: show-readme
-  namespace: cicd
 spec:
   description: Read and display README file.
   workspaces:

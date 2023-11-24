@@ -4,7 +4,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: &app sr505n-cache
-  namespace: monitoring
   labels:
     app.kubernetes.io/component: metrics
     app.kubernetes.io/part-of: *app

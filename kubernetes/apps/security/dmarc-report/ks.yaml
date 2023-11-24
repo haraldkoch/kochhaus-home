@@ -6,6 +6,7 @@ metadata:
   name: security-dmarc-report
   namespace: flux-system
 spec:
+  targetNamespace: security
   path: ./kubernetes/apps/security/dmarc-report/app
   prune: true
   sourceRef:

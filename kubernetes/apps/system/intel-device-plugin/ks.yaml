@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-intel-device-plugin
   namespace: flux-system
 spec:
+  targetNamespace: system
   path: ./kubernetes/apps/system/intel-device-plugin/app
   prune: true
   sourceRef:
@@ -23,6 +24,7 @@ metadata:
   name: cluster-apps-intel-device-plugin-gpu
   namespace: flux-system
 spec:
+  targetNamespace: system
   path: ./kubernetes/apps/system/intel-device-plugin/gpu
   prune: true
   sourceRef:
@@ -40,6 +42,7 @@ metadata:
   name: cluster-apps-intel-device-plugin-exporter
   namespace: flux-system
 spec:
+  targetNamespace: system
   path: ./kubernetes/apps/system/intel-device-plugin/exporter
   prune: true
   sourceRef:

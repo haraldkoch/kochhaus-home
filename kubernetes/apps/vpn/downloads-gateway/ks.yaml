@@ -6,6 +6,7 @@ metadata:
   name: vpn-downloads-gateway
   namespace: flux-system
 spec:
+  targetNamespace: vpn
   path: ./kubernetes/apps/vpn/downloads-gateway/app
   prune: true
   sourceRef:

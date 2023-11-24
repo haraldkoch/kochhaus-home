@@ -2,7 +2,6 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: tekton-pipelinerun-cleaner
-  namespace: cicd
   labels:
     app: tekton-pipelinerun-cleaner
     app.kubernetes.io/name: tekton-pipelinerun-cleaner
@@ -13,7 +12,6 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: tekton-pipelinerun-cleaner
-  namespace: cicd
   labels:
     app: tekton-pipelinerun-cleaner
     app.kubernetes.io/name: tekton-pipelinerun-cleaner
@@ -34,7 +32,6 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: tekton-pipelinerun-cleaner
-  namespace: cicd
   labels:
     app: tekton-pipelinerun-cleaner
     app.kubernetes.io/name: tekton-pipelinerun-cleaner

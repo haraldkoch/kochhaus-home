@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-snmp-exporter-opnsense
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/apps/monitoring/snmp-exporter/opnsense
   prune: true
   sourceRef:
@@ -23,6 +24,7 @@ metadata:
   name: cluster-apps-snmp-exporter-sr505n
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/apps/monitoring/snmp-exporter/sr505n
   prune: true
   sourceRef:

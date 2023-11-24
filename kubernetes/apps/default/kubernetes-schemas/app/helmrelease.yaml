@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: &app kubernetes-schemas
-  namespace: default
 spec:
   interval: 30m
   chart:
@@ -35,7 +34,6 @@ spec:
             image:
               repository: ghcr.io/haraldkoch/kubernetes-schemas
               tag: latest@sha256:bca15ce26852f0d6d2bda1526190db82d1c5406e46d00de6246825eac9e1ae27
-              pullPolicy: IfNotPresent
             resources:
               requests:
                 cpu: 5m

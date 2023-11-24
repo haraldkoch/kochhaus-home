@@ -6,6 +6,7 @@ metadata:
   name: monitoring-goldpinger
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/apps/monitoring/goldpinger/app
   prune: true
   sourceRef:

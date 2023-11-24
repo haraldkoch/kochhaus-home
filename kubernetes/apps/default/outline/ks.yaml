@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-outline
   namespace: flux-system
 spec:
+  targetNamespace: default
   dependsOn:
     - name: cluster-apps-cloudnative-pg
     - name: cluster-apps-external-secrets-stores

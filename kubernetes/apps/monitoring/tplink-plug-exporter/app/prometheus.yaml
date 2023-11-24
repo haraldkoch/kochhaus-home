@@ -4,7 +4,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: tplink-plug-exporter
-  namespace: monitoring
 spec:
   groups:
     - name: tplink-plugexporter.rules
@@ -20,7 +19,6 @@ metadata:
     app.kubernetes.io/name: tplink-plug-exporter
     prometheus: kube-prometheus
   name: tplink-plug-exporter-k8s
-  namespace: monitoring
 spec:
   endpoints:
     - interval: 30s
@@ -61,7 +59,6 @@ metadata:
     app.kubernetes.io/name: tplink-plug-exporter
     prometheus: kube-prometheus
   name: tplink-plug-exporter-internet
-  namespace: monitoring
 spec:
   endpoints:
     - interval: 30s
@@ -102,7 +99,6 @@ metadata:
     app.kubernetes.io/name: tplink-plug-exporter
     prometheus: kube-prometheus
   name: tplink-plug-exporter-servers
-  namespace: monitoring
 spec:
   endpoints:
     - interval: 30s
@@ -143,7 +139,6 @@ metadata:
     app.kubernetes.io/name: tplink-plug-exporter
     prometheus: kube-prometheus
   name: tplink-plug-exporter-cpap
-  namespace: monitoring
 spec:
   endpoints:
     - interval: 30s

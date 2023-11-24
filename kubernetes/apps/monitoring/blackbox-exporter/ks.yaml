@@ -6,6 +6,7 @@ metadata:
   name: monitoring-blackbox-exporter
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/apps/monitoring/blackbox-exporter/app
   prune: true
   sourceRef:

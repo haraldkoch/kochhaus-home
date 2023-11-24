@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-nextcloud
   namespace: flux-system
 spec:
+  targetNamespace: storage
   dependsOn:
     - name: cluster-apps-external-secrets-stores
     - name: cluster-apps-volsync

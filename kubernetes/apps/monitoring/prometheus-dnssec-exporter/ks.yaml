@@ -6,6 +6,7 @@ metadata:
   name: monitoring-prometheus-dnssec-exporter
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/apps/monitoring/prometheus-dnssec-exporter/app
   prune: true
   sourceRef:

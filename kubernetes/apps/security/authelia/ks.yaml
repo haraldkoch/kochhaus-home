@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-authelia
   namespace: flux-system
 spec:
+  targetNamespace: security
   dependsOn:
     - name: cluster-apps-cloudnative-pg-cluster
     - name: cluster-apps-external-secrets-stores

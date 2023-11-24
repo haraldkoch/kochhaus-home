@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-navidrome
   namespace: flux-system
 spec:
+  targetNamespace: media
   dependsOn:
     - name: cluster-apps-volsync
   path: ./kubernetes/apps/media/navidrome/app

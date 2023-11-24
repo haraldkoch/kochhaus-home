@@ -6,6 +6,7 @@ metadata:
   name: remote-openssh
   namespace: flux-system
 spec:
+  targetNamespace: remote
   path: ./kubernetes/apps/remote/openssh/app
   prune: true
   sourceRef:

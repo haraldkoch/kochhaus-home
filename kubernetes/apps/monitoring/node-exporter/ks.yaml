@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-node-exporter
   namespace: flux-system
 spec:
+  targetNamespace: monitoring
   path: ./kubernetes/apps/monitoring/node-exporter/app
   prune: true
   sourceRef:

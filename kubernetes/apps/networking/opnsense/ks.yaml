@@ -6,6 +6,7 @@ metadata:
   name: networking-opnsense
   namespace: flux-system
 spec:
+  targetNamespace: networking
   path: ./kubernetes/apps/networking/opnsense/app
   prune: true
   sourceRef:

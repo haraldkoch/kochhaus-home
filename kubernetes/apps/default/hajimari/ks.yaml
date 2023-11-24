@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-hajimari
   namespace: flux-system
 spec:
+  targetNamespace: default
   path: ./kubernetes/apps/default/hajimari/app
   prune: true
   sourceRef:

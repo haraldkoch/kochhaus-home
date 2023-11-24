@@ -4,7 +4,6 @@ apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: navidrome-volsync
-  namespace: media
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
@@ -27,7 +26,6 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: navidrome-config-v2
-  namespace: media
   labels:
     app.kubernetes.io/name: &name navidrome
     app.kubernetes.io/instance: *name
@@ -47,7 +45,6 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
   name: navidrome-bootstrap
-  namespace: media
   annotations:
     kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
 spec:
@@ -73,7 +70,6 @@ apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
   name: navidrome
-  namespace: media
 spec:
   sourcePVC: navidrome-config-v2
   trigger:

@@ -6,6 +6,7 @@ metadata:
   name: cluster-apps-postgres-backup
   namespace: flux-system
 spec:
+  targetNamespace: dbms
   path: ./kubernetes/apps/dbms/postgres-backup/app
   prune: true
   sourceRef:
