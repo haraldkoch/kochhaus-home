@@ -3,12 +3,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-sync-browser
+  name: &app sync-browser
   namespace: flux-system
 spec:
   targetNamespace: storage
   dependsOn:
-    - name: cluster-apps-syncthing
+    - name: syncthing
   path: ./kubernetes/apps/storage/sync-browser/app
   prune: false
   sourceRef:

@@ -3,11 +3,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: downloads-linode
+  name: &app linode-backup
   namespace: flux-system
 spec:
   targetNamespace: downloads
-  path: ./kubernetes/apps/downloads/linode/app
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  path: ./kubernetes/apps/downloads/linode-backup/app
   prune: false
   sourceRef:
     kind: GitRepository

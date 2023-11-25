@@ -7,4 +7,4 @@ resources:
   - ./namespace.yaml
   - ./policy.yaml
   # Flux-Kustomizations
-  - ./linode/ks.yaml
+  - ./linode-backup/ks.yaml
