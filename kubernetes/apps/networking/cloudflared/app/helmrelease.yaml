@@ -43,7 +43,8 @@ spec:
               NO_AUTOUPDATE: "true"
               TUNNEL_CRED_FILE: /etc/cloudflared/creds/credentials.json
               TUNNEL_METRICS: 0.0.0.0:8080
-              TUNNEL_TRANSPORT_PROTOCOL: auto
+              TUNNEL_TRANSPORT_PROTOCOL: quic
+              TUNNEL_POST_QUANTUM: true
             args:
               - tunnel
               - --config
@@ -57,7 +58,7 @@ spec:
                 spec:
                   httpGet:
                     path: /ready
-                    port: 8080
+                    port: &port 8080
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -83,16 +84,10 @@ spec:
       main:
         ports:
           http:
-            port: 8080
+            port: *port
     serviceMonitor:
       main:
         enabled: true
-        endpoints:
-          - port: http
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 30s
     persistence:
       config:
         enabled: true
