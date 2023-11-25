@@ -74,14 +74,14 @@ spec:
       persistence:
         enabled: true
         storageClass: local-path
-        size: 20Gi
+        size: 10Gi
     storegateway:
       enabled: true
       replicaCount: 2
       persistence:
         enabled: true
         storageClass: local-path
-        size: 20Gi
+        size: 10Gi
     ruler:
       enabled: true
       replicaCount: 2
@@ -102,7 +102,7 @@ spec:
       persistence:
         enabled: true
         storageClass: local-path
-        size: 20Gi
+        size: 10Gi
     metrics:
       enabled: true
       serviceMonitor:
