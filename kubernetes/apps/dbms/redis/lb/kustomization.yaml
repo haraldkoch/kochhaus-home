@@ -7,7 +7,7 @@ resources:
 configMapGenerator:
   - name: redis-haproxy-config
     files:
-      - haproxy.cfg=haproxy.data
+      - haproxy.cfg=./config/haproxy.cfg
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
