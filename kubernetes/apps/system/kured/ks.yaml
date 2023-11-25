@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: system
   path: ./kubernetes/apps/system/kured/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

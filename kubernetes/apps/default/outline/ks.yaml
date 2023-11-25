@@ -12,7 +12,7 @@ spec:
     - name: cluster-apps-external-secrets-stores
     - name: cluster-apps-redis
   path: ./kubernetes/apps/default/outline/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: system
   path: ./kubernetes/apps/system/intel-device-plugin/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -26,7 +26,7 @@ metadata:
 spec:
   targetNamespace: system
   path: ./kubernetes/apps/system/intel-device-plugin/gpu
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -44,7 +44,7 @@ metadata:
 spec:
   targetNamespace: system
   path: ./kubernetes/apps/system/intel-device-plugin/exporter
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

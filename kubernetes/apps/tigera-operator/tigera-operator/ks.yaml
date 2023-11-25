@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: tigera-operator
   path: ./kubernetes/apps/tigera-operator/tigera-operator/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -28,7 +28,7 @@ spec:
   dependsOn:
     - name: cluster-apps-tigera-operator
   path: ./kubernetes/apps/tigera-operator/tigera-operator/bgp
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

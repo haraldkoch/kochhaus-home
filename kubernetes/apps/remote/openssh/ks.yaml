@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: remote
   path: ./kubernetes/apps/remote/openssh/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

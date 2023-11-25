@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: security
   path: ./kubernetes/apps/security/external-secrets/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -28,7 +28,7 @@ spec:
   dependsOn:
     - name: cluster-apps-external-secrets
   path: ./kubernetes/apps/security/external-secrets/stores
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

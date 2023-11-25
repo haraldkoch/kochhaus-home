@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: monitoring
   path: ./kubernetes/apps/monitoring/network-ups-tools/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -28,7 +28,7 @@ spec:
   dependsOn:
     - name: monitoring-network-ups-tools
   path: ./kubernetes/apps/monitoring/network-ups-tools/exporter
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

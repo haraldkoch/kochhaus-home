@@ -10,7 +10,7 @@ metadata:
 spec:
   targetNamespace: kube-system
   path: ./kubernetes/apps/kube-system/local-path-provisioner/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

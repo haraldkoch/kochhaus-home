@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: calico-system
   path: ./kubernetes/apps/calico-system/calico/addons
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
