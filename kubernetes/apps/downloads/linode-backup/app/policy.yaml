@@ -2,7 +2,7 @@
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: linode-backups
+  name: linode-backup
 spec:
   podSelector:
     matchLabels:

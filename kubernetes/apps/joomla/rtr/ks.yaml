@@ -3,13 +3,16 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: joomla-rtr
+  name: &app joomla-rtr
   namespace: flux-system
 spec:
   targetNamespace: joomla
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   dependsOn:
-    - name: cluster-apps-external-secrets-stores
-    - name: cluster-apps-volsync
+    - name: external-secrets-stores
+    - name: volsync
   path: ./kubernetes/apps/joomla/rtr/app
   prune: false
   sourceRef:

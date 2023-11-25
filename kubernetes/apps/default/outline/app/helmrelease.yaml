@@ -24,6 +24,9 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: redis
+      namespace: dbms
   values:
     controllers:
       main:

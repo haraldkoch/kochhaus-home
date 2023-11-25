@@ -3,12 +3,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cicd-tekton-tasks
+  name: &app tekton-tasks
   namespace: flux-system
 spec:
   targetNamespace: cicd
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   dependsOn:
-    - name: cluster-apps-tekton
+    - name: tekton
   path: ./kubernetes/apps/cicd/tekton/tasks
   prune: false
   sourceRef:
@@ -23,12 +26,15 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cicd-tekton-cleanup
+  name: &app tekton-cleanup
   namespace: flux-system
 spec:
   targetNamespace: cicd
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   dependsOn:
-    - name: cluster-apps-tekton
+    - name: tekton
   path: ./kubernetes/apps/cicd/tekton/cleanup
   prune: false
   sourceRef:

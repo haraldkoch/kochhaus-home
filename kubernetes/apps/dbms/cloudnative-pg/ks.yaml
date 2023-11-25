@@ -3,10 +3,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-cloudnative-pg
+  name: &app cloudnative-pg
   namespace: flux-system
 spec:
   targetNamespace: dbms
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   path: ./kubernetes/apps/dbms/cloudnative-pg/app
   prune: false
   sourceRef:
@@ -21,13 +24,16 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-cloudnative-pg-cluster
+  name: &app cloudnative-pg-cluster
   namespace: flux-system
 spec:
   targetNamespace: dbms
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   dependsOn:
-    - name: cluster-apps-cloudnative-pg
-    - name: cluster-apps-external-secrets-stores
+    - name: cloudnative-pg
+    - name: external-secrets-stores
   path: ./kubernetes/apps/dbms/cloudnative-pg/cluster
   prune: false
   sourceRef:
@@ -42,12 +48,15 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-cloudnative-pg-backup
+  name: &app cloudnative-pg-backup
   namespace: flux-system
 spec:
   targetNamespace: dbms
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   dependsOn:
-    - name: cluster-apps-cloudnative-pg
+    - name: cloudnative-pg-cluster
   path: ./kubernetes/apps/dbms/cloudnative-pg/backup
   prune: false
   sourceRef:
