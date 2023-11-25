@@ -5,15 +5,7 @@ creation_rules:
     key_groups:
       - age:
           - age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r
-  - path_regex: kubernetes/.*\.sops\.ini
-    key_groups:
-      - age:
-          - age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r
-  - path_regex: kubernetes/.*\.sops\.toml
-    key_groups:
-      - age:
-          - age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r
-  - path_regex: kubernetes/.*\.sops\.json
+  - path_regex: kubernetes/.*\.sops\.(env|ini|json|toml)
     key_groups:
       - age:
           - age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r
