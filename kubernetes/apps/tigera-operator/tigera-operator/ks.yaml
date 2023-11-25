@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/apps/tigera-operator/tigera-operator/app
-  prune: false
+  prune: false # never should be deleted
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -34,7 +34,7 @@ spec:
   dependsOn:
     - name: tigera-operator
   path: ./kubernetes/apps/tigera-operator/tigera-operator/bgp
-  prune: false
+  prune: false # never should be deleted
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: tekton
   path: ./kubernetes/apps/cicd/tekton/tasks
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -36,7 +36,7 @@ spec:
   dependsOn:
     - name: tekton
   path: ./kubernetes/apps/cicd/tekton/cleanup
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
