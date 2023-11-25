@@ -3,16 +3,14 @@
 apiVersion: nfd.k8s-sigs.io/v1alpha1
 kind: NodeFeatureRule
 metadata:
-  name: flirc-device
+  name: zigbee-device
 spec:
   rules:
-    - # Flirc IR Receiver
-      name: flirc
+    - # SONOFF Zigbee 3.0 USB Dongle Plus V2
+      name: zigbee.sonoff
       labels:
-        feature.node.kubernetes.io/flirc: "true"
+        zigbee.feature.node.kubernetes.io/sonoff: "true"
       matchFeatures:
         - feature: usb.device
           matchExpressions:
-            class: { op: In, value: ["03"] }
-            vendor: { op: In, value: ["20a0"] }
-            device: { op: In, value: ["0001"] }
+            vendor: { op: In, value: ["10c4", "1a86", "ea60"] }

@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - ./apcups-device.yaml
   - ./flirc-device.yaml
+  - ./zigbee-device.yaml
