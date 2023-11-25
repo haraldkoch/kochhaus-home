@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: rook-ceph
   path: ./kubernetes/apps/rook-ceph/rook-ceph/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -28,7 +28,7 @@ spec:
   dependsOn:
     - name: cluster-apps-rook-ceph
   path: ./kubernetes/apps/rook-ceph/rook-ceph/cluster
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

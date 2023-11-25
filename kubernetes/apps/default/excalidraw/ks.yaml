@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: default
   path: ./kubernetes/apps/default/excalidraw/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

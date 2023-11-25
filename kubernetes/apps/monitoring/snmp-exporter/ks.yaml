@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: monitoring
   path: ./kubernetes/apps/monitoring/snmp-exporter/opnsense
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -26,7 +26,7 @@ metadata:
 spec:
   targetNamespace: monitoring
   path: ./kubernetes/apps/monitoring/snmp-exporter/sr505n
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

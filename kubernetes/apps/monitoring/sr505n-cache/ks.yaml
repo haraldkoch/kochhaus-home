@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: monitoring
   path: ./kubernetes/apps/monitoring/sr505n-cache/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

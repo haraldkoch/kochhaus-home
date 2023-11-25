@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: weather
   path: ./kubernetes/apps/weather/openweathermap-exporter/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

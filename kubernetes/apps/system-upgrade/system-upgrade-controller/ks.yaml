@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: system-upgrade
   path: ./kubernetes/apps/system-upgrade/system-upgrade-controller/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -28,7 +28,7 @@ spec:
   dependsOn:
     - name: cluster-apps-system-upgrade-controller
   path: ./kubernetes/apps/system-upgrade/system-upgrade-controller/plans
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: security
   path: ./kubernetes/apps/security/dmarc-report/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

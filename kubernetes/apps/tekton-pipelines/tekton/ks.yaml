@@ -8,7 +8,7 @@ metadata:
 spec:
   targetNamespace: tekton-pipelines
   path: ./kubernetes/apps/tekton-pipelines/tekton/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

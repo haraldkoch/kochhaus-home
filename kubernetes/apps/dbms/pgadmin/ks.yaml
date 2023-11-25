@@ -10,7 +10,7 @@ spec:
   dependsOn:
     - name: cluster-apps-cloudnative-pg
   path: ./kubernetes/apps/dbms/pgadmin/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
