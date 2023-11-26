@@ -66,6 +66,8 @@ spec:
         ipFamilyPolicy: PreferDualStack
         controller: main
         ports:
+          # # Docs: https://www.tp-link.com/us/support/faq/3281/
+          # Management Ports
           mgmt-8088-tcp:
             enabled: true
             port: 8088
@@ -81,31 +83,42 @@ spec:
             port: 8843
             protocol: TCP
             targetPort: 8843
-          eap-discovery:
+          # Device Discovery, Adoption, Management, and Upgrade
+          eap-v5-discovery:
             enabled: true
             port: 29810
             protocol: UDP
             targetPort: 29810
-          old-eap-mgmt:
-            enabled: true
-            port: 29811
-            protocol: TCP
-            targetPort: 29811
-          old-eap-adopt:
-            enabled: true
-            port: 29812
-            protocol: TCP
-            targetPort: 29812
-          old-eap-upgrade:
-            enabled: true
-            port: 29813
-            protocol: TCP
-            targetPort: 29813
-          eap-adopt:
+          eap-v5-manage:
             enabled: true
             port: 29814
             protocol: TCP
             targetPort: 29814
+          eap-v5-device-info:
+            enabled: true
+            port: 29815
+            protocol: TCP
+            targetPort: 29815
+          eap-v5-remote-control:
+            enabled: true
+            port: 29816
+            protocol: TCP
+            targetPort: 29816
+          eap-v4-discovery1:
+            enabled: true
+            port: 29811
+            protocol: TCP
+            targetPort: 29811
+          eap-v4-discovery2:
+            enabled: true
+            port: 29812
+            protocol: TCP
+            targetPort: 29812
+          eap-v4-upgrade:
+            enabled: true
+            port: 29813
+            protocol: TCP
+            targetPort: 29813
           init-check:
             enabled: true
             port: 27001
@@ -148,9 +161,8 @@ spec:
           - hosts:
               - *host
     persistence:
-      config:
-        enabled: true
-        existingClaim: omada-config
+      data:
+        existingClaim: omada-data
         globalMounts:
           - path: /opt/tplink/EAPController/data
       work:
