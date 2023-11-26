@@ -29,6 +29,8 @@ spec:
       main:
         replicas: 2
         strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
@@ -71,7 +73,7 @@ spec:
         enabled: false
       init:
         type: configMap
-        name: config-initializer
+        name: speedtest-init
         globalMounts:
           - path: /custom-cont-init.d
             defaultMode: 0777
