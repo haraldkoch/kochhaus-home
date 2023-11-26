@@ -25,7 +25,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: omada-config
+  name: omada-data
 spec:
   accessModes: ["ReadWriteOnce"]
   dataSourceRef:
@@ -68,7 +68,7 @@ kind: ReplicationSource
 metadata:
   name: omada
 spec:
-  sourcePVC: omada-config
+  sourcePVC: omada-data
   trigger:
     schedule: "0 7 * * *"
   restic:
