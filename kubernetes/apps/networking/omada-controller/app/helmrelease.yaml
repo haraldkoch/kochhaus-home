@@ -151,6 +151,8 @@ spec:
       config:
         enabled: true
         existingClaim: omada-config
+        globalMounts:
+          - path: /opt/tplink/EAPController/data
       work:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
@@ -163,3 +165,11 @@ spec:
         size: 10Gi
         globalMounts:
           - path: /opt/tplink/EAPController/logs
+      backup:
+        enabled: true
+        type: nfs
+        server: "${SECRET_BACKUP_SERVER}"
+        path: /backup/data/k8s/omada
+        globalMounts:
+          - path: /opt/tplink/EAPController/data/autobackup
+        readOnly: false
