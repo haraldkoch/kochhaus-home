@@ -60,10 +60,11 @@ spec:
         type: LoadBalancer
         externalIPs:
           - ${SVC_OMADA_ADDR_V4}
-          - ${SVC_OMADA_ADDR_V6}
+          # - ${SVC_OMADA_ADDR_V6}
         externalTrafficPolicy: Local
-        ipFamilies: [IPv4, IPv6]
-        ipFamilyPolicy: PreferDualStack
+        # ipFamilies: [IPv4, IPv6]
+        # ipFamilyPolicy: PreferDualStack
+        ipFamilyPolicy: SingleStack
         controller: main
         ports:
           # # Docs: https://www.tp-link.com/us/support/faq/3281/
@@ -73,11 +74,11 @@ spec:
             port: 8088
             targetPort: 8088
             protocol: TCP
-          # mgmt-8043-tcp:
-          #   enabled: true
-          #   port: 8043
-          #   protocol: TCP
-          #   targetPort: 8043
+          mgmt-8043-tcp:
+            enabled: true
+            port: 8043
+            protocol: TCP
+            targetPort: 8043
           portal-8843-tcp:
             enabled: true
             port: 8843
