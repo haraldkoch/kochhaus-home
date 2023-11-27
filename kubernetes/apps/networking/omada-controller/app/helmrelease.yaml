@@ -163,7 +163,7 @@ spec:
               - *host
     persistence:
       data:
-        existingClaim: omada-data
+        existingClaim: omada-data-v2
         globalMounts:
           - path: /opt/tplink/EAPController/data
       work:
