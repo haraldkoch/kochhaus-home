@@ -19,3 +19,10 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
+      CLAIM: omada-data-v2
+      VOLSYNC_CAPACITY: 10Gi
+      VOLSYNC_UID: "508"
+      VOLSYNC_GID: "508"
