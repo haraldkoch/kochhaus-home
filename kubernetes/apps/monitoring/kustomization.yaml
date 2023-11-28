@@ -14,6 +14,7 @@ resources:
   - ./kube-prometheus-stack/ks.yaml
   - ./kube-state-metrics/ks.yaml
   - ./loki/ks.yaml
+  - ./mqtt-exporter/ks.yaml
   - ./network-ups-tools/ks.yaml
   - ./node-exporter/ks.yaml
   - ./dnssec-exporter/ks.yaml
