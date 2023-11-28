@@ -1,0 +1,75 @@
+---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app mqtt-exporter
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.3.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: docker.io/kpetrem/mqtt-exporter
+              tag: latest@sha256:fbff8472a18239297e699955b43695f714e4fa6fdd7a36875a65375e2dfa8e67
+            env:
+              TZ: "${TIMEZONE}"
+              # LOG_LEVEL: DEBUG
+              # LOG_MQTT_MESSAGE: "true"
+              MQTT_ADDRESS: mosquitto.home
+              MQTT_TOPIC: "zigbee2mqtt/#"
+              MQTT_V5_PROTOCOL: "true"
+              PROMETHEUS_PORT: 8080
+              # PROMETHEUS_PREFIX: "mqtt_"
+              ZIGBEE2MQTT_AVAILABILITY: "True"
+            envFrom:
+              secretRef:
+                name: mqtt-exporter
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 200Mi
+    service:
+      main:
+        ports:
+          http:
+            enabled: false
+          metrics:
+            enabled: true
+            protocol: HTTP
+            port: 3321
+        type: LoadBalancer
+        externalIPs:
+          - ${SVC_EXPORTERS_ADDR_V4}
+          - ${SVC_EXPORTERS_ADDR_V6}
+        externalTrafficPolicy: Cluster
+        ipFamilyPolicy: PreferDualStack
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "exporters.${CLUSTER_DOMAIN}"
+    # serviceMonitor:
+    #   main:
+    #     enabled: true
+    #     endpoints:
+    #       - port: metrics
