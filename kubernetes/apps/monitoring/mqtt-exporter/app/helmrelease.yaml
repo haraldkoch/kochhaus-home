@@ -39,7 +39,7 @@ spec:
               MQTT_ADDRESS: mosquitto.home
               MQTT_TOPIC: "zigbee2mqtt/#"
               MQTT_V5_PROTOCOL: "true"
-              PROMETHEUS_PORT: 8080
+              PROMETHEUS_PORT: &port 3321
               # PROMETHEUS_PREFIX: "mqtt_"
               ZIGBEE2MQTT_AVAILABILITY: "True"
             envFrom:
@@ -59,7 +59,7 @@ spec:
           metrics:
             enabled: true
             protocol: HTTP
-            port: 3321
+            port: *port
         type: LoadBalancer
         externalIPs:
           - ${SVC_EXPORTERS_ADDR_V4}
