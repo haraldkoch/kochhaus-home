@@ -58,7 +58,7 @@ tasks:
       - sh: test -f {{.unlockJobTemplate}}
 
   # To run backup jobs in parallel for all replicationsources:
-  #  - kubectl get replicationsources --all-namespaces --no-headers | awk '{print $2, $1}' | xargs --max-procs=4 -l bash -c 'task volsync:snapshot rsrc=$0 ns=$1'
+  #  - kubectl get replicationsources --all-namespaces --no-headers | awk '{print $2, $1}' | xargs --max-procs=4 -l bash -c 'task vs:snapshot rsrc=$0 ns=$1'
   #
   snapshot:
     desc: Trigger a Restic ReplicationSource snapshot (ex. task vs:snapshot rsrc=plex [ns=default])
@@ -79,7 +79,7 @@ tasks:
         msg: "ReplicationSource '{{.rsrc}}' not found in namespace '{{.ns}}'"
 
   # To run restore jobs in parallel for all replicationdestinations:
-  #   - kubectl get replicationsources --all-namespaces --no-headers | awk '{print $2, $1}' | xargs --max-procs=2 -l bash -c 'task volsync:restore rsrc=$0 ns=$1'
+  #   - kubectl get replicationsources --all-namespaces --no-headers | awk '{print $2, $1}' | xargs --max-procs=2 -l bash -c 'task vs:restore rsrc=$0 ns=$1'
   #
   restore:
     desc: Trigger a Restic ReplicationSource restore (ex. task vs:restore rsrc=plex [ns=default] [previous=n])
