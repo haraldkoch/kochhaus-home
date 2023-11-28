@@ -25,7 +25,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    nameOverride: *app
     controllers:
       main:
         containers:
