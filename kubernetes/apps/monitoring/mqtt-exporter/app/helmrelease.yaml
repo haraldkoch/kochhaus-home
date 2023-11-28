@@ -43,8 +43,8 @@ spec:
               # PROMETHEUS_PREFIX: "mqtt_"
               ZIGBEE2MQTT_AVAILABILITY: "True"
             envFrom:
-              secretRef:
-                name: mqtt-exporter
+              - secretRef:
+                  name: mqtt-exporter
             resources:
               requests:
                 cpu: 10m
