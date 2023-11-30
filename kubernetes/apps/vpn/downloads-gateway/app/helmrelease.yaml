@@ -158,6 +158,8 @@ spec:
     service:
       main:
         controller: main
+        type: ClusterIP
+        clusterIP: None
         ports:
           http:
             protocol: UDP
