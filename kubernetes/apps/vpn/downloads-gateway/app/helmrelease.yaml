@@ -49,6 +49,10 @@ spec:
               capabilities:
                 add:
                   - NET_ADMIN
+            ports:
+              - name: http
+                containerPort: 4789
+                protocol: UDP
           netshoot:
             image:
               repository: ghcr.io/nicolaka/netshoot
@@ -120,6 +124,10 @@ spec:
               - --sidecarImagePullPol=IfNotPresent
               - --sidecarCmd=/bin/client_sidecar.sh
               - --sidecarMountPoint=/config
+            ports:
+              - name: http
+                containerPort: 8080
+                protocol: TCP
             probes:
               readiness: &probe
                 enabled: true
@@ -154,14 +162,14 @@ spec:
           http:
             protocol: UDP
             port: 4789
-            targetPort: 4789
+            targetPort: http
       pod-gateway-webhook:
         controller: gateway
         ports:
           http:
             protocol: TCP
             port: 8080
-            targetPort: 8080
+            targetPort: http
     persistence:
       config:
         enabled: true
