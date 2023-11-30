@@ -100,7 +100,7 @@ spec:
               tag: v3.6.0
             args:
               - --webhook-listen-address=:8080
-              - --gateway=downloads-gateway-pod-gateway.vpn.svc.cluster.local
+              - --gateway=downloads-gateway.vpn.svc.cluster.local
               - --DNS=172.16.0.1
               - --configmapName=downloads-gateway-pod-gateway
               - --setGatewayLabel=setGateway
