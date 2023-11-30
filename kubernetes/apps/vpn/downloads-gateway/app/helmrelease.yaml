@@ -8,11 +8,11 @@ spec:
   interval: 30m
   chart:
     spec:
-      chart: pod-gateway
-      version: 5.6.2
+      chart: app-template
+      version: 2.2.0
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home
+        name: bjw-s
         namespace: flux-system
   maxHistory: 2
   install:
@@ -24,102 +24,167 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  postRenderers:
-    - kustomize:
-        patchesJson6902:
-          - target:
-              kind: Deployment
-              name: downloads-gateway-pod-gateway
-              namespace: vpn
-            patch:
-              - op: add
-                path: /spec/template/metadata
-                value:
-                  annotations:
-                    configmap.reloader.stakater.com/reload: "downloads-gateway-pod-gateway"
-                    secret.reloader.stakater.com/reload: "downloads-gateway-vpnconfig"
-              - op: replace
-                path: /spec/template/spec/dnsPolicy
-                value: "None"
-              - op: add
-                path: /spec/template/spec/dnsConfig
-                value:
-                  nameservers:
-                    - 10.43.0.10
-                  searches: ["default.svc.cluster.local", "svc.cluster.local", "cluster.local", "kochhaus.lan"]
-                  options:
-                    - name: ndots
-                      value: "5"
   values:
-    image:
-      repository: ghcr.io/k8s-at-home/pod-gateway
-      tag: v1.7.0
-
-    routed_namespaces:
-      - downloads
-
-    settings:
-      VPN_INTERFACE: tun0
-      VPN_BLOCK_OTHER_TRAFFIC: true
-      VPN_TRAFFIC_PORT: "${DOWNLOADS_VPN_PORT}"
-      # NOT_ROUTED_TO_GATEWAY_CIDRS: "${NETWORK_K8S_POD_CIDR} ${NETWORK_K8S_SERVICE_CIDR} ${NETWORK_K8S_POD_CIDR_V6} ${NETWORK_K8S_SERVICE_CIDR_V6}"
-      # VPN_LOCAL_CIDRS: "${NETWORK_K8S_POD_CIDR} ${NETWORK_K8S_SERVICE_CIDR} ${NETWORK_K8S_POD_CIDR_V6} ${NETWORK_K8S_SERVICE_CIDR_V6}"
-      NOT_ROUTED_TO_GATEWAY_CIDRS: "172.16.0.0/12 ${NETWORK_K8S_POD_CIDR} ${NETWORK_K8S_SERVICE_CIDR} ${NETWORK_K8S_HOST_CIDR} ${NETWORK_VPN_GATEWAY}"
-      VPN_LOCAL_CIDRS: "172.16.0.0/12 ${NETWORK_K8S_POD_CIDR} ${NETWORK_K8S_SERVICE_CIDR} ${NETWORK_K8S_HOST_CIDR}"
-
-    webhook:
-      image:
-        repository: ghcr.io/k8s-at-home/gateway-admision-controller
-        tag: v3.6.0
-
-      gatewayDefault: true
-      gatewayLabel: setGateway
-      gatewayAnnotation: setGateway
-
-    addons:
-      netshoot:
+    controllers:
+      main:
+        initContainers:
+          routes:
+            image:
+              repository: ghcr.io/k8s-at-home/pod-gateway
+              tag: v1.7.0
+            command:
+              - /bin/gateway_init.sh
+            securityContext:
+              privileged: true
+        containers:
+          main:
+            enabled: false
+          downloads-gateway-pod-gateway:
+            image:
+              repository: ghcr.io/k8s-at-home/pod-gateway
+              tag: v1.7.0
+            command:
+              - /bin/gateway_sidecar.sh
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+          netshoot:
+            image:
+              repository: ghcr.io/nicolaka/netshoot
+              tag: v0.7
+            command:
+              - /bin/sh
+              - -c
+              - sleep infinity
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+          openvpn:
+            image:
+              repository: dperson/openvpn-client
+              tag: latest
+            env:
+              TZ: ${TIMEZONE}
+              IPTABLES_BACKEND: legacy
+              KILLSWITCH: "false"
+            envFrom:
+              - secretRef:
+                  name: downloads-gateway-vpnconfig
+            resources:
+              requests:
+                cpu: 15m
+                memory: 64Mi
+              limits:
+                memory: 128Mi
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
+                  - SYS_MODULE
+        pod:
+          dnsPolicy: None
+          dnsConfig:
+            nameservers:
+              - 10.43.0.10
+            searches: ["default.svc.cluster.local", "svc.cluster.local", "cluster.local", "kochhaus.lan"]
+            options:
+              - name: ndots
+                value: "5"
+      webhook:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/k8s-at-home/gateway-admision-controller
+              tag: v3.6.0
+            args:
+              - --webhook-listen-address=:8080
+              - --gateway=downloads-gateway-pod-gateway.vpn.svc.cluster.local
+              - --DNS=172.16.0.1
+              - --configmapName=downloads-gateway-pod-gateway
+              - --setGatewayLabel=setGateway
+              - --setGatewayAnnotation=setGateway
+              - --setGatewayDefault
+              # Static
+              - --tls-cert-file-path=/tls/tls.crt
+              - --tls-key-file-path=/tls/tls.key
+              - --DNSPolicy=None
+              # Init container
+              - --initImage=ghcr.io/k8s-at-home/pod-gateway:v1.7.0
+              - --initImagePullPol=IfNotPresent
+              - --initCmd=/bin/client_init.sh
+              - --initMountPoint=/config
+              # Sidecar container
+              - --sidecarImage=ghcr.io/k8s-at-home/pod-gateway:v1.7.0
+              - --sidecarImagePullPol=IfNotPresent
+              - --sidecarCmd=/bin/client_sidecar.sh
+              - --sidecarMountPoint=/config
+            probes:
+              readiness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /wh/health
+                    port: 8080
+                    scheme: HTTPS
+                  initialDelaySeconds: 1
+                  timeoutSeconds: 10
+                  periodSeconds: 10
+                  successThreshold: 1
+                  failureThreshold: 5
+              liveness: *probe
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /wh/health
+                    port: 8080
+                    scheme: HTTPS
+                  timeoutSeconds: 1
+                  periodSeconds: 1
+                  successThreshold: 1
+                  failureThreshold: 30
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            protocol: UDP
+            port: 4789
+            targetPort: 4789
+      pod-gateway-webhook:
+        controller: gateway
+        ports:
+          http:
+            protocol: TCP
+            port: 8080
+            targetPort: 8080
+    persistence:
+      config:
         enabled: true
-
-      vpn:
-        enabled: true
-        type: openvpn
-
-        env:
-          TZ: ${TIMEZONE}
-          # I think these two are only used by wireguard
-          IPTABLES_BACKEND: legacy
-          KILLSWITCH: "false"
-
-        openvpn:
-          authSecret: downloads-gateway-vpnconfig
-        configFileSecret: downloads-gateway-vpnconfig
-
-        resources:
-          requests:
-            cpu: 15m
-            memory: 64Mi
-          limits:
-            memory: 128Mi
-
-        # livenessProbe:
-        #   exec:
-        #     command:
-        #       - sh
-        #       - -c
-        #       - if [ $(curl -s https://am.i.mullvad.net/country) = '${VPN_COUNTRY}' ]; then exit 0; else exit $?; fi
-        #   initialDelaySeconds: 30
-        #   periodSeconds: 60
-        #   failureThreshold: 1
-
-        networkPolicy:
-          enabled: true
-
-          egress:
-            - to:
-                - ipBlock:
-                    cidr: 0.0.0.0/0
-              ports:
-                - port: ${DOWNLOADS_VPN_PORT}
-                  protocol: UDP
-            - to:
-                - namespaceSelector: {}
+        type: configMap
+        name: downloads-gateway-pod-gateway
+        advancedMounts:
+          main:
+            routes:
+              - path: /config
+            downloads-gateway-pod-gateway:
+              - path: /config
+      vpnconfig:
+        type: secret
+        name: downloads-gateway-vpnconfig
+        advancedMounts:
+          main:
+            openvpn:
+              - path: /vpn/vpn.conf
+                subPath: vpnConfigfile
+      certificates:
+        type: secret
+        name: downloads-gateway-pod-gateway-webhook-tls
+        advancedMounts:
+          webhook:
+            main:
+              - path: /tls

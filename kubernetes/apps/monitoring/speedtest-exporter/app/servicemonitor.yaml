@@ -1,0 +1,19 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: speedtest-exporter
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: speedtest-exporter
+    app.kubernetes.io/instance: speedtest-exporter
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: speedtest-exporter
+      app.kubernetes.io/instance: speedtest-exporter
+  endpoints:
+    - port: metrics
+      interval: 60m
+      scrapeTimeout: 1m
+      path: /metrics
