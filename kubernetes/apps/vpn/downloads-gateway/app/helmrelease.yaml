@@ -164,7 +164,7 @@ spec:
             port: 4789
             targetPort: http
       pod-gateway-webhook:
-        controller: gateway
+        controller: webhook
         ports:
           http:
             protocol: TCP
