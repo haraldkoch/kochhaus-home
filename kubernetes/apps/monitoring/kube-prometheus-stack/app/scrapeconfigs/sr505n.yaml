@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: snmp_dsl
+  namespace: monitoring
+spec:
+  metricsPath: /sr505n.prom
+  scrapeInterval: 30s
+  staticConfigs:
+    - targets:
+        - sr505n-cache
+  relabelings:
+    - targetLabel: instance
+      replacement: 192.168.1.1
