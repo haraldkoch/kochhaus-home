@@ -79,9 +79,11 @@ tasks:
       - kubectl -n {{.namespace}} get pvc {{.claim}}
 
   network:
-    desc: Create a netshoot container for debugging
+    desc: Create a netshoot container for debugging (args ns=default)
+    vars:
+      ns: '{{.ns | default "default"}}'
     cmds:
-      - kubectl run netshoot --rm -i --tty --image ghcr.io/nicolaka/netshoot:latest {{.CLI_ARGS}}
+      - kubectl run -n {{.ns}} netshoot --rm -i --tty --image ghcr.io/nicolaka/netshoot:latest {{.CLI_ARGS}}
 
   node:
     desc: |-
