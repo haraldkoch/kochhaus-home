@@ -18,7 +18,7 @@ spec:
             summary: A DNS resolver is failing.
 
         - alert: DNSSECSignatureExpiration
-          expr: dnssec_zone_record_days_left < 10
+          expr: dnssec_zone_record_days_left < 5
           for: 5m
           labels:
             severity: warning
