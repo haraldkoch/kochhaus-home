@@ -2,15 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "packageRules": [
     {
-      "description": "Auto merge Pre-Commit Hooks",
-      "matchManagers": ["pre-commit"],
-      "matchDatasources": ["github-tags"],
-      "automerge": true,
-      "ignoreTests": true,
-      "automergeType": "branch",
-      "matchUpdateTypes": ["minor", "patch"]
-    },
-    {
       "description": "Auto merge container digests",
       "matchDatasources": ["docker"],
       "automerge": true,
