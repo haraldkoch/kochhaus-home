@@ -1,1 +1,1 @@
-SUBSYSTEM=="usb", "ATTRS{idVendor}=="{{ zigbee_vendor_id }}", ATTRS{idProduct}=="{{ zigbee_product_id }}", ATTRS{serial}=="{{ zigbee_serial }}", OWNER="{{ zigbee_uid }}", GROUP="{{ zigbee_gid }}"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="{{ zigbee_vendor_id }}", ATTRS{idProduct}=="{{ zigbee_product_id }}", OWNER="{{ zigbee_uid }}", GROUP="{{ zigbee_gid }}"
