@@ -27,4 +27,4 @@ tasks:
 
   default:
     silent: true
-    cmds: ["task -l"]
+    cmd: task -l
