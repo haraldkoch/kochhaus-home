@@ -135,22 +135,22 @@ kind: ServiceMonitor
 metadata:
   labels:
     app.kubernetes.io/component: metrics
-    app.kubernetes.io/instance: cpap
+    app.kubernetes.io/instance: spare
     app.kubernetes.io/name: tplink-plug-exporter
     prometheus: kube-prometheus
-  name: tplink-plug-exporter-cpap
+  name: tplink-plug-exporter-spare
 spec:
   endpoints:
     - interval: 30s
       metricRelabelings:
         - action: replace
-          replacement: cpap
+          replacement: spare
           sourceLabels:
             - instance
           targetLabel: instance
       params:
         target:
-          - 192.168.30.65
+          - 192.168.30.135
       path: /scrape
       port: metrics
       scheme: http
