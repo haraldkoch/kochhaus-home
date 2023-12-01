@@ -5,6 +5,8 @@ kind: Kustomization
 metadata:
   name: &app tekton-tasks
   namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/disabled: "true"
 spec:
   targetNamespace: cicd
   commonMetadata:
@@ -28,6 +30,8 @@ kind: Kustomization
 metadata:
   name: &app tekton-cleanup
   namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/disabled: "true"
 spec:
   targetNamespace: cicd
   commonMetadata:
