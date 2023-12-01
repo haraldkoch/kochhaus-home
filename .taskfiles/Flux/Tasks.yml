@@ -8,18 +8,20 @@ vars:
 
 tasks:
 
-  flux-apply:
-    desc: Apply a resource path that contains Flux substitution variables
-    dotenv: ['{{.CLUSTER_SETTINGS_FILE}}']
+  apply:
+    desc: Apply a Kustomization resource path for a cluster
+    summary: task {{.TASK}} [ks=apps/default/plex/app]
+    dotenv: ['{{.KUBERNETES_DIR}}/flux/vars/cluster-settings.env']
+    cmd: |
+      sops exec-env {{.KUBERNETES_DIR}}/flux/vars/cluster-secrets.sops.env \
+        "kustomize build --load-restrictor=LoadRestrictionsNone {{.KUBERNETES_DIR}}/{{.ks}} | \
+          envsubst | kubectl apply --server-side --field-manager=kustomize-controller -f -"
     vars:
       ks: '{{ or .ks (fail "Missing path (`ks` var)") }}'
-    cmd: |
-      sops exec-env {{.CLUSTER_SECRETS_FILE}} \
-        "kustomize build --load-restrictor=LoadRestrictionsNone {{.ks}} | \
-          envsubst | kubectl apply --server-side --field-manager=kustomize-controller -f -"
     preconditions:
-      - sh: test -f {{.CLUSTER_SECRETS_FILE}}
-      - sh: test -f {{.CLUSTER_SETTINGS_FILE}}
+      - { msg: "Kustomization path not found", sh: "test -d {{.KUBERNETES_DIR}}/{{.ks}}" }
+      - { msg: "Cluster settings not found", sh: "test -f {{.KUBERNETES_DIR}}/flux/vars/cluster-settings.env" }
+      - { msg: "Cluster secrets not found", sh: "test -f {{.KUBERNETES_DIR}}/flux/vars/cluster-secrets.sops.env" }
 
   gr-sync:
     desc: Sync Flux GitRepositories
