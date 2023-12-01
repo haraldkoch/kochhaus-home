@@ -56,7 +56,7 @@ spec:
           netshoot:
             image:
               repository: ghcr.io/nicolaka/netshoot
-              tag: v0.7
+              tag: v0.11
             command:
               - /bin/sh
               - -c
