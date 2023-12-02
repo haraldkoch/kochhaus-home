@@ -33,6 +33,16 @@
       "separateMinorPatch": true
     },
     {
+      "description": "System Upgrade Controller Group",
+      "groupName": "System-Upgrade",
+      "matchPackagePatterns": ["system-upgrade-controller"],
+      "matchDatasources": ["docker", "github-releases"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
       "description": "Tekton Group",
       "groupName": "Tekton",
       "matchPackagePatterns": ["tektoncd"],
