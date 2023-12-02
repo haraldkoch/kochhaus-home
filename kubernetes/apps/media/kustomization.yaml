@@ -7,5 +7,4 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./media-browser/ks.yaml
-  - ./navidrome/ks.yaml
   - ./tautulli/ks.yaml
