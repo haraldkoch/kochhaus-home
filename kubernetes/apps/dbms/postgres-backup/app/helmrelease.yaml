@@ -64,7 +64,7 @@ spec:
     persistence:
       nas:
         type: nfs
-        server: ${SECRET_BACKUP_SERVER}
+        server: ${SECRET_BACKUP_SERVER:=fnord}
         path: /backup/data/k8s/postgres
         globalMounts:
           - path: /backups

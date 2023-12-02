@@ -93,7 +93,7 @@ spec:
       data:
         enabled: true
         type: nfs
-        server: ${SECRET_BACKUP_SERVER}
+        server: ${SECRET_BACKUP_SERVER:=fnord}
         path: /backup/data/k8s/syncthing
         globalMounts:
           - path: /var/syncthing

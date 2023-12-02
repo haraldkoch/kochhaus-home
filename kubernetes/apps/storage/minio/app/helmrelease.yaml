@@ -140,6 +140,6 @@ spec:
       data:
         enabled: true
         type: nfs
-        server: ${SECRET_BACKUP_SERVER}
+        server: ${SECRET_BACKUP_SERVER:=fnord}
         path: /tank/minio/k8s
         mountPath: /data
