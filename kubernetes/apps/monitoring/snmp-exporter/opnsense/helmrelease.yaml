@@ -39,9 +39,9 @@ spec:
         defaultMode: 420
     service:
       ipDualStack:
-        enabled: true
-        ipFamilies: ["IPv6", "IPv4"]
-        ipFamilyPolicy: PreferDualStack
+        enabled: false
+        #ipFamilies: ["IPv6", "IPv4"]
+        #ipFamilyPolicy: PreferDualStack
     resources:
       requests:
         cpu: 50m
