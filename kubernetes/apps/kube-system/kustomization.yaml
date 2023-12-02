@@ -12,3 +12,4 @@ resources:
   - ./local-path-provisioner/ks.yaml
   - ./metrics-server/ks.yaml
   - ./snapshot-controller/ks.yaml
+  - ./system-upgrade-controller/ks.yaml
