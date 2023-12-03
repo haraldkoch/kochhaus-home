@@ -55,10 +55,10 @@ spec:
     resources:
       requests:
         cpu: 25m
-        memory: 50Mi
+        memory: 96Mi
       limits:
         cpu: 50m
-        memory: 100Mi
+        memory: 192Mi
     tolerations:
       - key: "node-role.kubernetes.io/control-plane"
         operator: "Exists"
