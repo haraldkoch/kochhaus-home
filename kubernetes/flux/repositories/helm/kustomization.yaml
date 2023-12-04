@@ -26,7 +26,6 @@ resources:
   - ./intel.yaml
   - ./jameswynn.yaml
   - ./jetstack.yaml
-  - ./k8s-at-home.yaml
   - ./kube-fledged.yaml
   - ./kured.yaml
   - ./kyverno.yaml
