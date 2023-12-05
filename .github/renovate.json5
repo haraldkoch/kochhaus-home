@@ -9,6 +9,7 @@
     ":semanticCommits",
     ":automergeDigest",
     ":automergeBranch",
+    ":timezone(America/Toronto)",
     "github>haraldkoch/kochhaus-home//.github/renovate/allowedVersions.json5",
     "github>haraldkoch/kochhaus-home//.github/renovate/autoMerge.json5",
     "github>haraldkoch/kochhaus-home//.github/renovate/commitMessage.json5",
@@ -20,7 +21,6 @@
     "github>haraldkoch/kochhaus-home//.github/renovate/semanticCommits.json5",
     "helpers:pinGitHubActionDigests"
   ],
-  "platform": "github",
   "onboarding": false,
   "requireConfig": "optional",
   "dependencyDashboardTitle": "Renovate Dashboard",
@@ -34,7 +34,6 @@
   "osvVulnerabilityAlerts": true,
   "dependencyDashboardOSVVulnerabilitySummary": "all",
   "ignorePaths": ["**/archive/**"],
-  "timezone": "America/Toronto",
   "flux": {
     "fileMatch": [
       "(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"
