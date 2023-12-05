@@ -31,7 +31,7 @@ spec:
           routes:
             image:
               repository: ghcr.io/angelnu/pod-gateway
-              tag: v1.9.0
+              tag: v1.10.0
             command:
               - /bin/gateway_init.sh
             securityContext:
@@ -42,7 +42,7 @@ spec:
           downloads-gateway-pod-gateway:
             image:
               repository: ghcr.io/angelnu/pod-gateway
-              tag: v1.9.0
+              tag: v1.10.0
             command:
               - /bin/gateway_sidecar.sh
             securityContext:
