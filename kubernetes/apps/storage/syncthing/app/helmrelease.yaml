@@ -31,7 +31,7 @@ spec:
           main:
             image:
               repository: syncthing/syncthing
-              tag: 1.26.1
+              tag: 1.27.0
             resources:
               requests:
                 cpu: 15m
