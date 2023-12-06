@@ -47,6 +47,7 @@ spec:
                 cpu: 100m
                 memory: 100Mi
         pod:
+          enableServiceLinks: false
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
@@ -70,14 +71,10 @@ spec:
               - path: /
                 service:
                   name: main
-                  port: http
         tls:
           - hosts:
               - *host
     persistence:
-      config:
-        enabled: true
+      public:
         type: secret
         name: *app
-        globalMounts:
-          - path: /public

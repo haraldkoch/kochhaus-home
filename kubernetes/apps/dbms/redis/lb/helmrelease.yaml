@@ -31,17 +31,18 @@ spec:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: haproxy
+              tag: "2.8"
         pod:
+          enableServiceLinks: false
           securityContext:
             runAsUser: 99
             runAsGroup: 99
             fsGroup: 99
             fsGroupChangePolicy: "OnRootMismatch"
-        containers:
-          main:
-            image:
-              repository: haproxy
-              tag: "2.9"
     service:
       main:
         enabled: true
