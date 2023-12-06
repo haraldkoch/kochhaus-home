@@ -41,7 +41,7 @@ spec:
           main:
             image:
               repository: haproxy
-              tag: "2.8"
+              tag: "2.9"
     service:
       main:
         enabled: true
