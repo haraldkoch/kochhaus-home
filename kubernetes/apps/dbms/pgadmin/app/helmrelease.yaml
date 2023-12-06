@@ -26,11 +26,6 @@ spec:
     keepHistory: false
   values:
     nameOverride: pgadmin
-    image:
-      registry: docker.io
-      repository: dpage/pgadmin4
-      tag: "8.0"
-      pullPolicy: IfNotPresent
     strategy:
       type: Recreate
     env:
