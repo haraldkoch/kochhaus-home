@@ -25,10 +25,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    externalSnapshotter:
-      enabled: false
     controller:
       runOnControlPlane: true
+    externalSnapshotter:
+      enabled: false
     node:
       tolerations: []
   # runOnControlPlane: true sets the nodeSelector to

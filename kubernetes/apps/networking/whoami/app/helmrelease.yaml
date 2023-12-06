@@ -40,6 +40,16 @@ spec:
               limits:
                 cpu: 100m
                 memory: 32Mi
+        pod:
+          enableServiceLinks: false
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+
     service:
       main:
         ipFamilyPolicy: PreferDualStack
@@ -61,7 +71,6 @@ spec:
               - path: /
                 service:
                   name: main
-                  port: http
         tls:
           - hosts:
               - *host

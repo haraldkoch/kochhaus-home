@@ -65,9 +65,9 @@ spec:
             - /var/lib/rancher/k3s/server/tls/request-header-ca.crt
             - /var/lib/rancher/k3s/server/tls/server-ca.crt
             - /var/lib/rancher/k3s/server/tls/serving-kube-apiserver.crt
-          # rancher k3s includes the ca cert in the user cert in kubeconfig, which generates a parsing warning
-          # watchKubeconfFiles:
-          #   - /etc/rancher/k3s/k3s.yaml
+            # rancher k3s includes the ca cert in the user cert in kubeconfig, which generates a parsing warning
+            # watchKubeconfFiles:
+            #   - /etc/rancher/k3s/k3s.yaml
         workers:
           watchFiles:
             - /var/lib/rancher/k3s/agent/client-ca.crt
