@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: haproxy
-              tag: "2.8"
+              tag: "2.9"
         pod:
           enableServiceLinks: false
           securityContext:
