@@ -57,7 +57,7 @@ spec:
       data:
         enabled: true
         type: nfs
-        server: ${SECRET_BACKUP_SERVER:fnord}
+        server: ${SECRET_BACKUP_SERVER:=fnord}
         path: /backup/data/k8s/onedrive-backup
         globalMounts:
           - path: /onedrive/data
