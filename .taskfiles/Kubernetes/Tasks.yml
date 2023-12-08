@@ -82,8 +82,8 @@ tasks:
     desc: Create a netshoot container for debugging (args ns=default)
     vars:
       ns: '{{.ns | default "default"}}'
-    cmds:
-      - kubectl run -n {{.ns}} netshoot --rm -i --tty --image ghcr.io/nicolaka/netshoot:latest {{.CLI_ARGS}}
+    cmd: |
+      kubectl run -n {{.ns}} netshoot --rm -i --tty --image ghcr.io/nicolaka/netshoot:latest {{.CLI_ARGS}}
 
   node:
     desc: |-
