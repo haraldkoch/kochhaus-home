@@ -76,7 +76,7 @@ spec:
               app.kubernetes.io/name: ingress-nginx
               app.kubernetes.io/component: controller
       podAnnotations:
-        configmap.reloader.stakater.com/reload: "cloudflare-networks,ingress-nginx-controller"
+        configmap.reloader.stakater.com/reload: ingress-nginx-controller
       resources:
         requests:
           cpu: 100m
