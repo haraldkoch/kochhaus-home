@@ -34,7 +34,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/haraldkoch/postgres-init
-              tag: 15.5@sha256:8f464a74b6262a28838f22e06d06a6a6c33c942b36a987a256cb52c05209aa00
+              tag: 15.5@sha256:88aefff184b724e6c0a5b40607cf3e335c22385f24585b7e68edbbf75d777ae0
             envFrom: &envFrom
               - secretRef:
                   name: paperless-secret
