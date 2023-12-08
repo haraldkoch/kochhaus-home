@@ -27,6 +27,8 @@ spec:
   values:
     controllers:
       main:
+        annotations:
+          reloader.stakater.com/auto: "true"
         initContainers:
           routes:
             image:
@@ -97,6 +99,8 @@ spec:
               - name: ndots
                 value: "5"
       webhook:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           main:
             image:
