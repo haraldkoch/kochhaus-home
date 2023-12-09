@@ -32,8 +32,6 @@ spec:
         - name: TZ
           value: "${TIMEZONE}"
       service:
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: ingress.${CLUSTER_DOMAIN}
         externalIPs:
           - ${SVC_NGINX_ADDR_V4}
           - ${SVC_NGINX_ADDR_V6}
