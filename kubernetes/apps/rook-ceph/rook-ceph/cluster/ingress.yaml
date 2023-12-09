@@ -6,7 +6,7 @@ metadata:
     hajimari.io/enabled: "false"
   name: rook-ceph-objectstore
 spec:
-  ingressClassName: nginx
+  ingressClassName: internal
   rules:
     - host: &host objects.${CLUSTER_DOMAIN}
       http:

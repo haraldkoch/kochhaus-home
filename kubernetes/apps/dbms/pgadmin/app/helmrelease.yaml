@@ -33,7 +33,7 @@ spec:
     existingSecret: pgadmin-secrets
     ingress:
       enabled: true
-      ingressClassName: nginx
+      ingressClassName: internal
       annotations:
         hajimari.io/appName: "Postgres Admin"
         hajimari.io/icon: simple-icons:postgresql

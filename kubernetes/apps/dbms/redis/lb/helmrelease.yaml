@@ -65,7 +65,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: nginx
+        className: internal
         annotations:
           hajimari.io/appName: "Redis Load Balancer"
           hajimari.io/icon: simple-icons:redis

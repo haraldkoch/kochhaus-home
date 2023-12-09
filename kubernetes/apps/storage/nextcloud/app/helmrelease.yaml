@@ -77,9 +77,9 @@ spec:
         passwordKey: INIT_POSTGRES_PASS
     ingress:
       enabled: true
-      className: nginx
+      className: external
       annotations:
-        external-dns.home.arpa/enabled: "true"
+        external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
         hajimari.io/icon: mdi:dropbox
         nginx.ingress.kubernetes.io/proxy-body-size: "10G"
         nginx.ingress.kubernetes.io/proxy-buffering: "off"

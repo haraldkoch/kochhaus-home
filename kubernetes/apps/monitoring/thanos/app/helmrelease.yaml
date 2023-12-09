@@ -44,7 +44,7 @@ spec:
       replicaCount: 2
       ingress:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: internal
         annotations:
           hajimari.io/enable: "false"
         hostname: &host thanos-query.${CLUSTER_DOMAIN}

@@ -341,7 +341,7 @@ spec:
       ipFamilyPolicy: PreferDualStack
     ingress:
       enabled: true
-      ingressClassName: nginx
+      ingressClassName: internal
       annotations:
         hajimari.io/appName: "grafana"
         hajimari.io/icon: simple-icons:grafana
