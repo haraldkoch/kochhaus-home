@@ -87,10 +87,19 @@ spec:
         enabled: true
         className: nginx
         annotations:
-          auth.home.arpa/enabled: "true"
           external-dns.home.arpa/enabled: "true"
           hajimari.io/appName: "Navidrome"
           hajimari.io/icon: mdi:music
+          # Proxied Auth
+          nginx.ingress.kubernetes.io/auth-method: GET
+          nginx.ingress.kubernetes.io/auth-response-headers: |-
+            Remote-User,Remote-Name,Remote-Groups,Remote-Email
+          nginx.ingress.kubernetes.io/auth-signin: |-
+            https://auth.${CLUSTER_DOMAIN}?rm=$request_method
+          nginx.ingress.kubernetes.io/auth-snippet: |
+            proxy_set_header X-Forwarded-Method $request_method;
+          nginx.ingress.kubernetes.io/auth-url: |-
+            http://authelia.security.svc.cluster.local/api/verify
         hosts:
           - host: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:
