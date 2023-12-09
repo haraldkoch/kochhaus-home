@@ -10,7 +10,7 @@ resources:
   - ./cloudflared/ks.yaml
   - ./external-dns/ks.yaml
   - ./homelab-dns/ks.yaml
-  - ./ingress-nginx/ks.yaml
+  - ./nginx/ks.yaml
   - ./omada-controller/ks.yaml
   - ./opnsense/ks.yaml
   - ./smtp-relay/ks.yaml
