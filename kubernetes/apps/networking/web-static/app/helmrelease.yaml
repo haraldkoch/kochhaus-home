@@ -64,7 +64,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: nginx
+        className: internal
         hosts:
           - host: &host "home.${CLUSTER_DOMAIN}"
             paths:

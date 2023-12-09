@@ -22,12 +22,12 @@ metadata:
   name: &app arch
   namespace: networking
   annotations:
-    external-dns.home.arpa/enabled: "true"
+    external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
 spec:
-  ingressClassName: nginx
+  ingressClassName: external
   rules:
     - host: &host arch.${CLUSTER_DOMAIN}
       http:

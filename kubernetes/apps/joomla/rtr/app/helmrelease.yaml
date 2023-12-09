@@ -53,7 +53,7 @@ spec:
     ingress:
       main:
         enabled: true
-        className: "nginx"
+        className: internal
         annotations:
           hajimari.io/appName: "Ride To Remeber"
         hosts:

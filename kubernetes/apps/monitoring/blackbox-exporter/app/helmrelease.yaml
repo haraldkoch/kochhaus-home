@@ -55,7 +55,7 @@ spec:
       ipFamilyPolicy: PreferDualStack
     ingress:
       enabled: true
-      className: nginx
+      className: internal
       annotations:
         hajimari.io/enable: "false"
       hosts:
