@@ -14,6 +14,12 @@
       "matchPackagePatterns": ["k3s"]
     },
     {
+      "description": "Custom versioning for miniflux",
+      "matchDatasources": ["docker"],
+      "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-(?<compatibility>)$",
+      "matchPackagePatterns": ["miniflux"]
+    },
+    {
       "description": "Custom versioning for minio",
       "matchDatasources": ["docker"],
       "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$",
