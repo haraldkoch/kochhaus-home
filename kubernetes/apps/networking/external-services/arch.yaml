@@ -22,7 +22,7 @@ metadata:
   name: &app arch
   namespace: networking
   annotations:
-    external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
+    external-dns.alpha.kubernetes.io/target: ingress.${CLUSTER_DOMAIN}
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app

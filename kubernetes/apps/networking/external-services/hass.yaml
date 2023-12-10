@@ -22,7 +22,7 @@ metadata:
   name: &app hass
   namespace: networking
   annotations:
-    external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
+    external-dns.alpha.kubernetes.io/target: ingress.${CLUSTER_DOMAIN}
     hajimari.io/icon: "home-assistant"
   labels:
     app.kubernetes.io/name: *app
