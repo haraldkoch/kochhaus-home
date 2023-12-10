@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/apps/rook-ceph/rook-ceph/app
-  prune: false
+  prune: false # never should be deleted
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -34,7 +34,7 @@ spec:
   dependsOn:
     - name: rook-ceph
   path: ./kubernetes/apps/rook-ceph/rook-ceph/cluster
-  prune: false
+  prune: false # never should be deleted
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
