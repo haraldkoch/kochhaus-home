@@ -37,7 +37,7 @@ spec:
         containers:
           main:
             image:
-              repository: docker.io/timberio/vector
+              repository: ghcr.io/haraldkoch/vector
               tag: 0.34.1-debian
             args: ["--config", "/etc/vector/vector.yaml"]
             env:
