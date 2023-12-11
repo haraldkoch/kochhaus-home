@@ -34,7 +34,7 @@ spec:
         containers:
           main:
             image:
-              repository: docker.io/filebrowser/filebrowser
+              repository: ghcr.io/haraldkoch/filebrowser
               tag: v2.26.0
             env:
               TZ: ${TIMEZONE}
