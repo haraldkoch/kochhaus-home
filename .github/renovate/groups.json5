@@ -73,6 +73,17 @@
         "commitMessageTopic": "{{{groupName}}} group"
       },
       "separateMinorPatch": false
+    },
+    {
+      "description": "x509-certificate-exporter image and chart",
+      "groupName": "X509 Certificate Exporter",
+      "matchPackagePatterns": ["x509-certificate-exporter"],
+      "matchDatasources": ["docker", "github-releases", "helm"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": false
     }
   ]
 }
