@@ -2,20 +2,13 @@
 originRequest:
   http2Origin: true
 
-# The `ingress` block tells cloudflared which local service to route incoming
-# requests to. For more about ingress rules, see
-# https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/ingress
-#
-# Remember, these rules route traffic from cloudflared to a local service. To route traffic
-# from the internet to cloudflared, run `cloudflared tunnel route dns <tunnel> <hostname>`.
-# E.g. `cloudflared tunnel route dns example-tunnel tunnel.example.com`.
 ingress:
-  - hostname: ${CLUSTER_DOMAIN}
+  - hostname: kochhaus.dev
     service: https://nginx-external-controller.networking.svc.cluster.local:443
     originRequest:
-      originServerName: ingress.${CLUSTER_DOMAIN}
-  - hostname: "*.${CLUSTER_DOMAIN}"
+      originServerName: external.kochhaus.dev
+  - hostname: "*.kochhaus.dev"
     service: https://nginx-external-controller.networking.svc.cluster.local:443
     originRequest:
-      originServerName: ingress.${CLUSTER_DOMAIN}
+      originServerName: external.kochhaus.dev
   - service: http_status:404
