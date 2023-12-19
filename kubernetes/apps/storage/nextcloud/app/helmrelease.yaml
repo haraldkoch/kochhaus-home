@@ -48,7 +48,7 @@ spec:
       existingSecret:
         enabled: true
         secretName: nextcloud-secret
-      host: &host cloud.${CLUSTER_DOMAIN}
+      host: &host cloud.kochhaus.dev
       mail:
         enabled: true
         fromAddress: admin
@@ -79,7 +79,7 @@ spec:
       enabled: true
       className: external
       annotations:
-        external-dns.alpha.kubernetes.io/target: ingress.${CLUSTER_DOMAIN}
+        external-dns.alpha.kubernetes.io/target: external.kochhaus.dev
         hajimari.io/icon: mdi:dropbox
         nginx.ingress.kubernetes.io/proxy-body-size: "10G"
         nginx.ingress.kubernetes.io/proxy-buffering: "off"

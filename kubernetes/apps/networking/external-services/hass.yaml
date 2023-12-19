@@ -22,7 +22,7 @@ metadata:
   name: &app hass
   namespace: networking
   annotations:
-    external-dns.alpha.kubernetes.io/target: ingress.${CLUSTER_DOMAIN}
+    external-dns.alpha.kubernetes.io/target: external.kochhaus.dev
     hajimari.io/icon: "home-assistant"
   labels:
     app.kubernetes.io/name: *app
@@ -30,7 +30,7 @@ metadata:
 spec:
   ingressClassName: external
   rules:
-    - host: &host ha.${CLUSTER_DOMAIN}
+    - host: &host ha.kochhaus.dev
       http:
         paths:
           - path: /

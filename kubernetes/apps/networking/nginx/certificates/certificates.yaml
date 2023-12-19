@@ -16,13 +16,13 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${CLUSTER_DOMAIN/./-}"
+  name: "kochhaus-dev"
 spec:
-  secretName: "tls.${CLUSTER_DOMAIN/./-}"
+  secretName: "tls.kochhaus-dev"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: "${CLUSTER_DOMAIN}"
+  commonName: "kochhaus.dev"
   dnsNames:
-    - "${CLUSTER_DOMAIN}"
-    - "*.${CLUSTER_DOMAIN}"
+    - "kochhaus.dev"
+    - "*.kochhaus.dev"
