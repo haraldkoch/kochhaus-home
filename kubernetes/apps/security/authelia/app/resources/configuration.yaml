@@ -69,15 +69,7 @@ access_control:
   networks:
     - name: internal
       networks: ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "${SECRET_HOMELAN_IPV4}"]
-  rules:
-    - domain: ["grafana.${CLUSTER_DOMAIN}"]
-      policy: bypass
-    - domain: ["navidrome.${CLUSTER_DOMAIN}"]
-      resources: ["^/ping.*$", "^/rest.*$"]
-      policy: bypass
-    - domain: ["navidrome.${CLUSTER_DOMAIN}"]
-      resources: ["^/metrics.*$"]
-      policy: deny
+  rules: []
 
 identity_providers:
   oidc:
@@ -93,15 +85,6 @@ identity_providers:
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://grafana.${CLUSTER_DOMAIN}/login/generic_oauth"]
-        userinfo_signed_response_alg: none
-      - id: immich
-        description: Immich
-        secret: "${IMMICH_OAUTH_CLIENT_SECRET}"
-        public: false
-        authorization_policy: two_factor
-        pre_configured_consent_duration: 1y
-        scopes: ["openid", "profile", "email"]
-        redirect_uris: ["https://photos.${CLUSTER_DOMAIN}/auth/login", "app.immich:/"]
         userinfo_signed_response_alg: none
       - id: miniflux
         description: Miniflux
@@ -120,13 +103,4 @@ identity_providers:
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "email"]
         redirect_uris: ["https://docs.${CLUSTER_DOMAIN}/auth/oidc.callback"]
-        userinfo_signed_response_alg: none
-      - id: weave-gitops
-        description: Weave GitOps
-        secret: "${WEAVEGITOPS_OAUTH_CLIENT_SECRET}"
-        public: false
-        authorization_policy: two_factor
-        pre_configured_consent_duration: 1y
-        scopes: ["openid", "profile", "groups", "email"]
-        redirect_uris: ["https://gitops.${CLUSTER_DOMAIN}/oauth2/callback"]
         userinfo_signed_response_alg: none
