@@ -58,10 +58,10 @@ spec:
         enabled: true
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: ingress.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.kochhaus.dev
           hajimari.io/icon: mdi:code-json
         hosts:
-          - host: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+          - host: &host "{{ .Release.Name }}.kochhaus.dev"
             paths:
               - path: /
                 service:

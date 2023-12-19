@@ -121,7 +121,7 @@ spec:
         enabled: true
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: ingress.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/target: external.kochhaus.dev
           hajimari.io/appName: authelia
           hajimari.io/icon: mdi:shield-account
           nginx.ingress.kubernetes.io/configuration-snippet: |
@@ -130,7 +130,7 @@ spec:
             add_header X-Frame-Options "SAMEORIGIN";
             add_header X-XSS-Protection "1; mode=block";
         hosts:
-          - host: &host auth.${CLUSTER_DOMAIN}
+          - host: &host auth.kochhaus.dev
             paths:
               - path: /
                 service:

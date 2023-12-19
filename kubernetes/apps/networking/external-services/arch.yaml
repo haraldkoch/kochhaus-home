@@ -22,14 +22,14 @@ metadata:
   name: &app arch
   namespace: networking
   annotations:
-    external-dns.alpha.kubernetes.io/target: ingress.${CLUSTER_DOMAIN}
+    external-dns.alpha.kubernetes.io/target: external.kochhaus.dev
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
 spec:
   ingressClassName: external
   rules:
-    - host: &host arch.${CLUSTER_DOMAIN}
+    - host: &host arch.kochhaus.dev
       http:
         paths:
           - path: /

@@ -33,7 +33,7 @@ spec:
           value: "${TIMEZONE}"
       service:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: ingress.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: external.kochhaus.dev
         externalIPs:
           - ${SVC_NGINX_EXT_ADDR_V4}
           - ${SVC_NGINX_EXT_ADDR_V6}
@@ -84,7 +84,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: networking/tls.${CLUSTER_DOMAIN/./-}
+        default-ssl-certificate: networking/tls.kochhaus-dev
         enable-annotation-validation: true
       topologySpreadConstraints:
         - maxSkew: 1

@@ -47,7 +47,7 @@ spec:
     sources: ["crd", "ingress"]
     txtOwnerId: homelab
     txtPrefix: k8s.
-    domainFilters: ["${CLUSTER_DOMAIN}"]
+    domainFilters: ["kochhaus.dev"]
     logLevel: info
     serviceMonitor:
       enabled: true
