@@ -10,16 +10,16 @@ metrics:
     query: round(avg(instance:node_cpu_utilisation:rate5m{}) * 100, 0.1)
     suffix: "%"
     colors:
-      - { color: "green", min: 0, max: 35 }
-      - { color: "orange", min: 36, max: 75 }
+      - { color: "green", min: 0, max: 60 }
+      - { color: "orange", min: 60, max: 75 }
       - { color: "red", min: 76, max: 9999 }
 
   - name: cluster_memory_usage
     query: round(sum(node_memory_MemTotal_bytes{} - node_memory_MemAvailable_bytes{}) / sum(node_memory_MemTotal_bytes{}) * 100, 0.1)
     suffix: "%"
     colors:
-      - { color: green, min: 0, max: 35 }
-      - { color: orange, min: 36, max: 75 }
+      - { color: green, min: 0, max: 60 }
+      - { color: orange, min: 60, max: 75 }
       - { color: red, min: 76, max: 9999 }
 
   - name: cluster_power_usage
