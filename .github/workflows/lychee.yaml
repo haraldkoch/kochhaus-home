@@ -8,7 +8,7 @@ on:
     - cron: "0 0 * * *"
 
 env:
-  WORKFLOW_ISSUE_NUMBER: 464
+  WORKFLOW_ISSUE_NUMBER: 3565
 
 jobs:
   lychee:
