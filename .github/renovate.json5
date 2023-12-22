@@ -3,10 +3,8 @@
   "extends": [
     "config:recommended",
     "docker:enableMajor",
-    "helpers:pinGitHubActionDigests",
     "replacements:k8s-registry-move",
     ":automergeBranch",
-    ":automergeDigest",
     ":disableRateLimiting",
     ":dependencyDashboard",
     ":semanticCommits",
@@ -25,10 +23,14 @@
   "onboarding": false,
   "requireConfig": "optional",
   "dependencyDashboardTitle": "Renovate Dashboard",
-  "suppressNotifications": ["prIgnoreNotification"],
+  "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
+  "rebaseWhen": "conflicted",
+  "assigneesFromCodeOwners": true,
+  "reviewersFromCodeOwners": true,
   "ignorePaths": [
     "**/*.sops.*",
-    "**/archive/**"
+    "**/.archive/**",
+    "**/resources/**"
   ],
   "flux": {
     "fileMatch": [
