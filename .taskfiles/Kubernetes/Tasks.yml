@@ -27,6 +27,11 @@ tasks:
     cmds:
       - kubectl get pods --all-namespaces -o=jsonpath="{range .items[*]}{'\n'}{range .spec.containers[*]}{.image}{'\n'}{end}{end}" | sort | uniq | grep -Ev 'quay|gcr|ghcr|ecr|us-docker|registry.k8s' | grep -Ev 'bitnami|rook|intel|grafana' |  sed -e 's/docker\.io\///g' | sort | uniq
 
+  taints:
+    desc: show node taints
+    cmd: |
+      kubectl get nodes -o custom-columns=NAME:.metadata.name,TAINTS:.spec.taints --no-headers
+
   delete-failed-pods:
     desc: Deletes failed pods
     cmds:
