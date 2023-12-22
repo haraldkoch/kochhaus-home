@@ -77,7 +77,7 @@ spec:
         image: ghcr.io/democratic-csi/democratic-csi:v1.8.3
 
       driverRegistrar:
-        image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0
+        image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.9.2
 
     storageClasses:
       - name: zfs-block
