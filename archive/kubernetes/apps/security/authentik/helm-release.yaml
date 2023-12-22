@@ -25,7 +25,7 @@ spec:
   values:
     image:
       repository: ghcr.io/goauthentik/server
-      tag: 2022.8.2
+      tag: 2022.12.3
 
     affinity:
       nodeAffinity:
