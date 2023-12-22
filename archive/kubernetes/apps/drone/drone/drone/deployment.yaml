@@ -34,7 +34,7 @@ spec:
         - name: server
           securityContext:
             {}
-          image: "drone/drone:2.12.1"
+          image: "drone/drone:2.21.0"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
