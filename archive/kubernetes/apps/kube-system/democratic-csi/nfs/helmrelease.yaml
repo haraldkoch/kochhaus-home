@@ -46,7 +46,7 @@ spec:
 
     controller:
       driver:
-        image: ghcr.io/democratic-csi/democratic-csi:v1.8.3
+        image: ghcr.io/democratic-csi/democratic-csi:v1.8.4
 
       externalAttacher:
         image: registry.k8s.io/sig-storage/csi-attacher:v4.3.0
@@ -74,7 +74,7 @@ spec:
 
     node:
       driver:
-        image: ghcr.io/democratic-csi/democratic-csi:v1.8.3
+        image: ghcr.io/democratic-csi/democratic-csi:v1.8.4
 
       driverRegistrar:
         image: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.8.0
