@@ -64,7 +64,7 @@ spec:
           - --csi-address=/csi-data/csi.sock
 
       externalResizer:
-        image: registry.k8s.io/sig-storage/csi-resizer:v1.8.0
+        image: registry.k8s.io/sig-storage/csi-resizer:v1.9.2
 
       externalSnapshotter:
         image: registry.k8s.io/sig-storage/csi-snapshotter:v6.2.1
