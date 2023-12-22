@@ -52,7 +52,7 @@ spec:
                 secretKeyRef:
                   name: bookstack
                   key: mariadb_password
-          image: ghcr.io/linuxserver/mariadb:10.5.17
+          image: ghcr.io/linuxserver/mariadb:10.11.5
           imagePullPolicy: IfNotPresent
           livenessProbe:
             exec:
