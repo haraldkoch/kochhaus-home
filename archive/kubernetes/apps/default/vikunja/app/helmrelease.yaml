@@ -39,7 +39,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: caddy
-      tag: 2.7.4-alpine
+      tag: 2.7.6-alpine
       pullPolicy: IfNotPresent
     sidecars:
       frontend:
