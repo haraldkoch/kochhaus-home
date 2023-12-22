@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: mail
-      version: 3.5.1
+      version: v4.0.2
       sourceRef:
         kind: HelmRepository
         name: bokysan
