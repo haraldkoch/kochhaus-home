@@ -67,7 +67,7 @@ spec:
         image: registry.k8s.io/sig-storage/csi-resizer:v1.8.0
 
       externalSnapshotter:
-        image: registry.k8s.io/sig-storage/csi-snapshotter:v6.2.1
+        image: registry.k8s.io/sig-storage/csi-snapshotter:v6.3.2
 
       podAnnotations:
         secret.reloader.stakater.com/reload: zfs-nfs-secret
