@@ -16,7 +16,7 @@ resources:
   - ./kube-state-metrics/ks.yaml
   - ./loki/ks.yaml
   - ./mqtt-exporter/ks.yaml
-  #- ./network-ups-tools/ks.yaml
+  - ./network-ups-tools/ks.yaml
   - ./node-exporter/ks.yaml
   - ./dnssec-exporter/ks.yaml
   - ./smartctl-exporter/ks.yaml
