@@ -31,7 +31,7 @@ spec:
           main:
             image:
               repository: docker.io/kpetrem/mqtt-exporter
-              tag: latest@sha256:fbff8472a18239297e699955b43695f714e4fa6fdd7a36875a65375e2dfa8e67
+              tag: latest@sha256:0a5183278a427fb51b5335cfa0cc178b2f3bbfa9f393c21837c4a0a4c97fc5fa
             env:
               TZ: "${TIMEZONE}"
               # LOG_LEVEL: DEBUG
