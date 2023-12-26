@@ -6,7 +6,6 @@ on:
   workflow_dispatch:
   pull_request_target:
     branches: ["main"]
-    types: ["opened", "synchronize"]
 
 jobs:
   labeler:
@@ -26,5 +25,5 @@ jobs:
       - name: Labeler
         uses: actions/labeler@v5
         with:
-          configuration-path: .github/labeler.yaml
           repo-token: "${{ steps.app-token.outputs.token }}"
+          configuration-path: .github/labeler.yaml
