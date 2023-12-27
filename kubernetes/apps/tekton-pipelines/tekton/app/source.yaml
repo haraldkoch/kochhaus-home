@@ -31,7 +31,7 @@ metadata:
   name: tekton-source
   namespace: flux-system
 spec:
-  prune: true
+  prune: false
   wait: true
   sourceRef:
     kind: Bucket

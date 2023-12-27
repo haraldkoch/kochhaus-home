@@ -10,7 +10,7 @@ spec:
   dependsOn:
     - name: syncthing
   path: ./kubernetes/apps/storage/sync-browser/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
