@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: cert-manager
   path: ./kubernetes/main/apps/networking/smtp-relay/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

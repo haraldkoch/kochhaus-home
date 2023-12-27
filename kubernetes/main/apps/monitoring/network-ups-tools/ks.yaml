@@ -11,7 +11,7 @@
 #    labels:
 #      app.kubernetes.io/name: *app
 #  path: ./kubernetes/main/apps/monitoring/network-ups-tools/app
-#  prune: false
+#  prune: true
 #  sourceRef:
 #    kind: GitRepository
 #    name: home-kubernetes
@@ -32,7 +32,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/main/apps/monitoring/network-ups-tools/exporter
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
