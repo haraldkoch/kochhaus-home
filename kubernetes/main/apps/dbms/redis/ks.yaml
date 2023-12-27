@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/main/apps/dbms/redis/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -36,7 +36,7 @@ spec:
   dependsOn:
     - name: redis
   path: ./kubernetes/main/apps/dbms/redis/lb
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

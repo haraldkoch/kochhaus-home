@@ -14,7 +14,7 @@ spec:
     - name: external-secrets-stores
     - name: volsync
   path: ./kubernetes/main/apps/joomla/mariadb/app
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
