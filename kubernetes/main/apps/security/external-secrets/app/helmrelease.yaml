@@ -26,6 +26,7 @@ spec:
     keepHistory: false
   values:
     installCRDs: true
+    replicaCount: 2
     affinity: &affinity
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:

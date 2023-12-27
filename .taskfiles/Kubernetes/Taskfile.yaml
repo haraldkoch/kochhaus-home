@@ -1,0 +1,89 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+
+  list-dockerhub:
+    desc: What dockerhub images are running in my cluster
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    interactive: true
+    cmd: |
+      kubectl --context {{.cluster}} get pods --all-namespaces -o=jsonpath="{range .items[*]}{'\n'}{range .spec.containers[*]}{.image}{'\n'}{end}{end}" | sort | uniq | grep -Ev 'quay|gcr|ghcr|ecr|us-docker|registry.k8s' | grep -Ev 'bitnami|rook|intel|grafana' |  sed -e 's/docker\.io\///g' | sort | uniq
+    preconditions:
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+
+  taints:
+    desc: show node taints
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    interactive: true
+    cmd: |
+      kubectl --context {{.cluster}} get nodes -o custom-columns=NAME:.metadata.name,TAINTS:.spec.taints --no-headers
+    preconditions:
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+
+  mount:
+    desc: Mount a PersistentVolumeClaim to a temporary pod for a cluster
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+        ns: Namespace the PVC is in (default: default)
+        claim: PVC to mount (required)
+    interactive: true
+    cmd: |
+      kubectl --context {{.cluster}} run -n {{.ns}} debug-{{.claim}} -i --tty --rm --image=null --privileged --overrides='
+        {
+          "apiVersion": "v1",
+          "spec": {
+            "containers": [
+              {
+                "name": "debug",
+                "image": "ghcr.io/onedr0p/alpine:rolling",
+                "command": ["/bin/bash"],
+                "stdin": true,
+                "stdinOnce": true,
+                "tty": true,
+                "volumeMounts": [
+                  {
+                    "name": "config",
+                    "mountPath": "/config"
+                  }
+                ]
+              }
+            ],
+            "volumes": [
+              {
+                "name": "config",
+                "persistentVolumeClaim": {
+                  "claimName": "{{.claim}}"
+                }
+              }
+            ],
+            "restartPolicy": "Never"
+          }
+        }'
+    vars:
+      ns: '{{.ns | default "default"}}'
+      claim: '{{ or .claim (fail "Argument (claim) is required") }}'
+    preconditions:
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+      - { msg: "PVC not found",                  sh: "kubectl --context {{.cluster}} -n {{.ns}} get persistentvolumeclaim {{.claim}}" }
+
+  network:
+    desc: Create a netshoot container for a cluster
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+        ns: Namespace the PVC is in (default: default)
+    interactive: true
+    cmd: |
+      kubectl --context {{.cluster}} run -n {{.ns}} netshoot --rm -i --tty --image ghcr.io/nicolaka/netshoot:latest {{.CLI_ARGS}}
+    vars:
+      ns: '{{.ns | default "default"}}'
+    preconditions:
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+  
