@@ -14,7 +14,7 @@ spec:
     - name: external-secrets-stores
     - name: volsync
   path: ./kubernetes/apps/joomla/rtr/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
