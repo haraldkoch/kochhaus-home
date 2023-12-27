@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app sync-browser
+  namespace: flux-system
+spec:
+  targetNamespace: storage
+  dependsOn:
+    - name: syncthing
+  path: ./kubernetes/main/apps/storage/sync-browser/app
+  prune: false
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  wait: false
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
