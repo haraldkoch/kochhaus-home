@@ -2,6 +2,9 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
+# TODO: Clean up `--context` usage
+# https://github.com/go-task/task/issues/1038
+
 vars:
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
   PROVISION_DIR: "{{.ROOT_DIR}}/provision"
@@ -10,18 +13,19 @@ vars:
 dotenv: [".config.env"]
 
 env:
-  KUBECONFIG: "{{.ROOT_DIR}}/provision/kubeconfig"
+  KUBECONFIG: "{{.KUBERNETES_DIR}}/kubernetes/main/kubeconfig:{{.KUBERNETES_DIR}}/kubernetes/registry/kubeconfig"
   SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
 
 includes:
-  ansible: .taskfiles/Ansible/Tasks.yml
-  cluster: .taskfiles/Cluster/Tasks.yml
-  db: .taskfiles/Database/Tasks.yml
-  es: .taskfiles/ExternalSecrets/Tasks.yml
-  fx: .taskfiles/Flux/Tasks.yml
-  ku: .taskfiles/Kubernetes/Tasks.yml
-  rook: .taskfiles/Rook/Tasks.yml
-  vs: .taskfiles/VolSync/Tasks.yml
+  ansible: .taskfiles/Ansible/Taskfile.yaml
+  cluster: .taskfiles/Cluster/Taskfile.yaml
+  db: .taskfiles/Database/Taskfile.yaml
+  es: .taskfiles/ExternalSecrets/Taskfile.yaml
+  fx: .taskfiles/Flux/Taskfile.yaml
+  ku: .taskfiles/Kubernetes/Taskfile.yaml
+  rook: .taskfiles/Rook/Taskfile.yaml
+  sops: .taskfiles/Sops/Taskfile.yaml
+  vs: .taskfiles/VolSync/Taskfile.yaml
 
 tasks:
 

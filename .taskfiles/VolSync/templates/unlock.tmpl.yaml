@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "unlock-${rsrc}-${ts}"
+  name: "unlock-${app}-${ts}"
   namespace: "${ns}"
 spec:
   ttlSecondsAfterFinished: 3600
@@ -20,4 +20,4 @@ spec:
           args: ["unlock", "--remove-all"]
           envFrom:
             - secretRef:
-                name: "${rsrc}-volsync"
+                name: "${app}-volsync"

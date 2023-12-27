@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: external
   rules:
-    - host: &host "flux-receiver.kochhaus.dev"
+    - host: &host flux-receiver.kochhaus.dev
       http:
         paths:
           - path: /hook/
