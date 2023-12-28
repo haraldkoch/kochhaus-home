@@ -1,7 +1,6 @@
 ---
-- hosts:
-    - master
-    - worker
+- name: Cluster Nuke
+  hosts: all
   become: true
   gather_facts: true
   any_errors_fatal: true
@@ -9,7 +8,7 @@
     - name: nuke
       prompt: |-
         Are you sure you want to nuke this cluster?
-        Type YES I WANT TO DESTROY THIS CLUSTER to proceed
+        Type 'YES I WANT TO DESTROY THIS CLUSTER' to proceed
       default: "n"
       private: false
   pre_tasks:
@@ -22,7 +21,7 @@
       ansible.builtin.pause:
         seconds: 5
   tasks:
-    - name: Uninstall k3s
+    - name: Uninstall Kubernetes
       ansible.builtin.include_role:
         name: xanmanning.k3s
         public: true

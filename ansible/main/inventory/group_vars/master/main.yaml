@@ -1,0 +1,45 @@
+---
+# https://rancher.com/docs/k3s/latest/en/installation/install-options/server-config/
+# https://github.com/PyratLabs/ansible-role-k3s
+
+k3s_control_node: true
+k3s_server:
+  node-ip: "{{ ansible_host }}"
+  tls-san:
+    # kube-vip
+    - "{{ kube_vip_addr }}"
+    # haproxy
+    - 192.168.20.1
+  docker: false
+  flannel-backend: "none"             # This needs to be in quotes
+  disable:
+    - coredns                         # Disable coredns                 - replaced with Coredns Helm Chart
+    - flannel                         # Disable flannel                 - replaced with Tigera Operator Helm Chart
+    - local-storage                   # Disable local-path-provisioner  - installed with Flux
+    - metrics-server                  # Disable metrics-server          - installed with Flux
+    - servicelb                       # Disable servicelb               - replaced with MetalLB Helm Chart
+    - traefik                         # Disable traefik                 - replaced with ingress-nginx and installed with Flux
+  disable-network-policy: true
+  disable-cloud-controller: true
+  write-kubeconfig-mode: "644"
+  cluster-cidr: "{{ cluster_cidr }}"
+  service-cidr: "{{ service_cidr }}"
+  etcd-expose-metrics: true           # Required to monitor etcd with kube-prometheus-stack
+  node-taint:
+    - "node-role.kubernetes.io/control-plane:NoSchedule"
+  kubelet-arg:
+    - "image-gc-high-threshold=74"
+    - "image-gc-low-threshold=70"
+  kube-controller-manager-arg:
+    - node-cidr-mask-size-ipv6=112
+    - "bind-address=0.0.0.0"          # Required to monitor kube-controller-manager with kube-prometheus-stack
+  kube-proxy-arg:
+    - "metrics-bind-address=0.0.0.0"  # Required to monitor kube-proxy with kube-prometheus-stack
+  kube-scheduler-arg:
+    - "bind-address=0.0.0.0"          # Required to monitor kube-scheduler with kube-prometheus-stack
+  kube-apiserver-arg:
+    - "anonymous-auth=true"           # Required for HAProxy health-checks
+  # allow running etcd on slower CPUs and disks
+  etcd-arg:
+    - "election-timeout=5000"
+    - "heartbeat-interval=250"

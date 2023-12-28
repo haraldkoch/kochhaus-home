@@ -8,17 +8,18 @@ timezone: "America/Toronto"
 
 packages:
   - gptfdisk
-  - lvm2
-  - nfs-utils
-  - open-iscsi
-  - parted
-  - thin-provisioning-tools
   - hdparm
   - htop
   - intel-gpu-tools
+  - iptables-nft
   - ipvsadm
   - lm_sensors
-  - vi
+  - lvm2
+  - neofetch
+  - nfs-utils
   - nvme-cli
+  - open-iscsi
+  - parted
   - socat
-  - iptables-nft
+  - thin-provisioning-tools
+  - vi
