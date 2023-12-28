@@ -1,0 +1,26 @@
+---
+- name: Enable Containerd shutdown hook
+  when: containerd_shutdown_hook == "enabled"
+  block:
+    - name: Containerd shutdown hook | Create systemd unit
+      ansible.builtin.copy:
+        src: files/containerd-hack.service
+        dest: /etc/systemd/system/containerd-hack.service
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Containerd shutdown hook | enable the service
+      ansible.builtin.systemd:
+        name: containerd-hack.service
+        enabled: true
+        daemon_reload: true
+        masked: false
+- name: Disable Containerd shutdown hook
+  when: containerd_shutdown_hook == "disabled"
+  block:
+    - name: Containerd shutdown hook | Mask the systemd service
+      ansible.builtin.systemd:
+        name: containerd-hack.service
+        enabled: false
+        masked: true
