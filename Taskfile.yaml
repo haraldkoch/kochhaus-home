@@ -8,7 +8,7 @@ version: "3"
 vars:
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
   PROVISION_DIR: "{{.ROOT_DIR}}/provision"
-  ANSIBLE_DIR: "{{.ROOT_DIR}}/provision/ansible"
+  ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
 
 dotenv: [".config.env"]
 

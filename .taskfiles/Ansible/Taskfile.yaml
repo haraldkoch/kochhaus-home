@@ -1,84 +1,112 @@
 ---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
-env:
-  ANSIBLE_CONFIG: "{{.ROOT_DIR}}/ansible.cfg"
-
 vars:
-  ANSIBLE_PLAYBOOK_DIR: "{{.ANSIBLE_DIR}}/playbooks"
-  ANSIBLE_INVENTORY_DIR: "{{.ANSIBLE_DIR}}/inventory"
+  PYTHON_BIN: python3
+
+env:
+  PATH: "{{.ROOT_DIR}}/.venv/bin:$PATH"
+  VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
+  ANSIBLE_COLLECTIONS_PATH: "{{.ROOT_DIR}}/.venv/galaxy"
+  ANSIBLE_ROLES_PATH: "{{.ROOT_DIR}}/.venv/galaxy/ansible_roles"
+  ANSIBLE_VARS_ENABLED: "host_group_vars,community.sops.sops"
+  # K8S_AUTH_KUBECONFIG: "{{.ROOT_DIR}}/kubeconfig"
 
 tasks:
 
   deps:
-    desc: Install/Upgrade Ansible deps
-    dir: '{{.ANSIBLE_DIR}}'
+    desc: Set up Ansible dependencies for the environment
     cmds:
-      - ansible-galaxy install -r requirements.yml --roles-path ~/.ansible/roles --force
-      - ansible-galaxy collection install -r requirements.yml --collections-path ~/.ansible/collections --force
-    preconditions:
-      - test -f "{{.ANSIBLE_DIR}}/requirements.yml"
+      - task: .venv
 
-  init:
-    desc: Install / Upgrade Ansible galaxy deps
-    dir: provision/ansible
-    cmds:
-      - pip3 install --user --requirement requirements.txt
-      - ansible-galaxy install -r requirements.yml --roles-path ~/.ansible/roles --force
-      - ansible-galaxy collection install -r requirements.yml --collections-path ~/.ansible/collections --force
+  run:
+    desc: Run an Ansible playbook for configuring a cluster
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+        playbook: Playbook to run (required)
+    prompt: Run Ansible playbook '{{.playbook}}' against the '{{.cluster}}' cluster... continue?
+    deps: ["deps"]
+    cmd: |
+      .venv/bin/ansible-playbook \
+        --inventory {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml \
+        {{.ANSIBLE_DIR}}/{{.cluster}}/playbooks/{{.playbook}}.yaml {{.CLI_ARGS}}
+    preconditions:
+      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
+      - { msg: "Argument (playbook) is required", sh: "test -n {{.playbook}}" }
+      - { msg: "Venv not found",                  sh: "test -d {{.ROOT_DIR}}/.venv" }
+      - { msg: "Inventory not found",             sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml" }
+      - { msg: "Playbook not found",              sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/playbooks/{{.playbook}}.yaml" }
+
 
   list:
     desc: List all the hosts
-    dir: provision/ansible
-    cmds:
-      - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --list-hosts
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    cmd: |
+      ansible all --inventory {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml --list-hosts
+    preconditions:
+      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
+      - { msg: "Venv not found",                  sh: "test -d {{.ROOT_DIR}}/.venv" }
+      - { msg: "Inventory not found",             sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml" }
 
   prepare:
     desc: Prepare all the k8s nodes for running k3s
-    dir: provision/ansible
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
     cmds:
-      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-prepare.yml
+      - task: run
+        vars:
+          cluster: "{{.cluster}}"
+          playbook: "cluster-prepare.yaml"
 
   install:
     desc: Install Kubernetes on the nodes
-    dir: provision/ansible
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
     cmds:
-      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-installation.yml
+      - task: run
+        vars:
+          cluster: "{{.cluster}}"
+          playbook: "cluster-installation.yaml"
 
   nuke:
     desc: Uninstall Kubernetes on the nodes
-    dir: provision/ansible
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
     interactive: true
     cmds:
-      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-nuke.yml
-      - task: reboot
+      - task: run
+        vars:
+          cluster: "{{.cluster}}"
+          playbook: "cluster-nuke.yaml"
 
   ping:
     desc: Ping all the hosts
-    dir: provision/ansible
-    cmds:
-      - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --one-line -m 'ping'
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    cmd: |
+      ansible all --inventory {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml --one-line -m 'ping'
+    preconditions:
+      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
+      - { msg: "Venv not found",                  sh: "test -d {{.ROOT_DIR}}/.venv" }
+      - { msg: "Inventory not found",             sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml" }
 
-  uptime:
-    desc: Uptime of all the hosts
-    dir: provision/ansible
+  .venv:
+    internal: true
     cmds:
-      - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --one-line -a 'uptime'
-
-  rollout-reboot:
-    desc: Rollout a reboot across all the k8s nodes
-    dir: provision/ansible
-    cmds:
-      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-rollout-reboot.yml
-
-  force-reboot:
-    desc: Reboot all the k8s nodes
-    dir: provision/ansible
-    cmds:
-      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/cluster-reboot.yml
-
-  force-poweroff:
-    desc: Shutdown all the k8s nodes
-    dir: provision/ansible
-    cmds:
-      - ansible kubernetes -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml -a '/usr/bin/systemctl poweroff' --become
+      - true && {{.PYTHON_BIN}} -m venv {{.ROOT_DIR}}/.venv
+      - .venv/bin/python3 -m pip install --upgrade pip setuptools wheel
+      - .venv/bin/python3 -m pip install --upgrade --requirement {{.ANSIBLE_DIR}}/requirements.txt
+      - .venv/bin/ansible-galaxy install --role-file "{{.ANSIBLE_DIR}}/requirements.yaml" --force
+    sources:
+      - "{{.ANSIBLE_DIR}}/requirements.txt"
+      - "{{.ANSIBLE_DIR}}/requirements.yaml"
+    generates:
+      - "{{.ROOT_DIR}}/.venv/pyvenv.cfg"
