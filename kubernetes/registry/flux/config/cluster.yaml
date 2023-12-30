@@ -9,7 +9,7 @@ spec:
   interval: 30m
   ref:
     branch: main
-  url: "https://github.com/haraldkoch/kochhaus-homelab.git"
+  url: https://github.com/haraldkoch/kochhaus-home
   ignore: |
     # exclude all
     /*
