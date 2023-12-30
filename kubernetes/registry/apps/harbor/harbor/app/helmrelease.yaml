@@ -1,0 +1,77 @@
+---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: harbor
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: harbor
+      version: 1.13.1
+      sourceRef:
+        kind: HelmRepository
+        name: harbor
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    expose:
+      type: loadBalancer
+      tls:
+        certSource: secret
+        secret:
+          secretName: tls.harbor
+      loadBalancer:
+        name: harbor
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "harbor.${SECRET_DOMAIN}"
+          io.cilium/lb-ipam-ips: "192.168.20.67"
+    externalURL: https://harbor.${SECRET_DOMAIN}
+    ipFamily:
+      ipv6:
+        enabled: false
+    persistence:
+      enabled: true
+      persistentVolumeClaim:
+        registry:
+          existingClaim: harbor-registry-v1
+          storageClass: local-hostpath
+          subPath: registry
+        chartmuseum:
+          existingClaim: harbor-registry-v1
+          storageClass: local-hostpath
+          subPath: chartmuseum
+
+#      imageChartStorage:
+#        type: s3
+#        s3:
+#          bucket: kubernetes-registry
+#          accesskey: ${AWS_SECRET_KEY_ID}
+#          secretkey: ${AWS_SECRET_KEY}
+#          regionendpoint: https://${SECRET_BACKUP_SERVER}
+#          rootdirectory: /prod
+
+#    # our CSI does not support ReadWriteMany so we must use Recreate on pods
+#    updateStrategy:
+#      type: Recreate
+
+    harborAdminPassword: "${SECRET_HARBOR_ADMIN_PASSWORD}"
+    # The secret key used for encryption. Must be a string of 16 chars.
+    secretKey: "${SECRET_HARBOR_ENCRPYTION_KEY}"
+
+    notary:
+      enabled: false
+
+    nginx:
+      podAnnotations:
+        secret.reloader.stakater.com/reload: tls.harbor

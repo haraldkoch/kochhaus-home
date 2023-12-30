@@ -1,0 +1,46 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: &name pg-harbor-restore
+spec:
+  ttlSecondsAfterFinished: 86400
+  template:
+    spec:
+      automountServiceAccountToken: true
+      restartPolicy: OnFailure
+      volumes:
+        - name: backup
+          persistentVolumeClaim:
+            claimName: harbor-pg-backup-v1
+      containers:
+        - name: postgres
+          image: docker.io/goharbor/harbor-db:v2.9.1
+          command: ["/bin/sh"]
+          args:
+            - "-c"
+            - "cat /backup/harbor.pgdump | psql -U postgres"
+          env:
+            - name: PGHOST
+              value: harbor-database
+            - name: PGPORT
+              value: "5432"
+            - name: PGUSER
+              value: postgres
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: harbor-database
+                  key: POSTGRES_PASSWORD
+            - name: TZ
+              value: ${CONFIG_TIMEZONE}
+          volumeMounts:
+            - name: backup
+              mountPath: /backup
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "1"
+            limits:
+              memory: "512Mi"
+              cpu: "1"
