@@ -5,25 +5,22 @@ k3s_registries:
     mirrors:
         docker.io:
             endpoint:
-                - ENC[AES256_GCM,data:MBRl7NgVCsG0/H7wcJtTKxtXtNloR0UHgq2cpMiR9DutDyIiUesmoA==,iv:lXj9uRipEpf8cu+x58ogsWkVX+oohX5uxst/PjxJZpo=,tag:y4VPxS5eBNrDHPbZBgZl8g==,type:str]
-        k8s.gcr.io:
-            endpoint:
-                - ENC[AES256_GCM,data:FnkDY/Y+uMmNWr7TNqEbr2KiGQBPXb6YcB6TpVKbV6h7R7MEpXIXqZg=,iv:cuFsuWuXQNPTcmB2CGJwT3edl+6/ueN4vbbbJ0019Sc=,tag:L7Ft5p8KZbUwmlRRlkYepw==,type:str]
-        quay.io:
-            endpoint:
-                - ENC[AES256_GCM,data:XYpyuc9YKkdqhjQfYOoFx8fEBrBo1/0wStGdTZBDVqLhPO23lGg=,iv:Edd+xm3T4oaFKtwsb0pL5qcf7OvFpghVng63ZRnghF4=,tag:ooBADqfkdscDv195J5J6Mg==,type:str]
+                - ENC[AES256_GCM,data:O+AXGnUHySsNtLiXXaTJKoyQLqhR9/lhHpwmi0G5cDGpQNgl/9uTdg==,iv:9BdnmipH/beWwUweKTqV4NqvaEingb4jaXZwju2Kdlo=,tag:oyKrW9E2UY1FDNeqgeotkw==,type:str]
         gcr.io:
             endpoint:
-                - ENC[AES256_GCM,data:gHDRLHLxBVaEBGLlMF4b7POCooumeY+Y0RVloPokXepvg/g33g==,iv:f5mMvH0GjEG2ZR1skKxu5atcPeFTHNi7YZ+QbZTF2Kk=,tag:pygIym/FX2e1if1cp3Qm6A==,type:str]
+                - ENC[AES256_GCM,data:M2EFWKsaLZQ9KjmzaUaXhItz9Sfu/3P42Umwi5va9KHkK3EMjg==,iv:Ayr+zuAFiDsCohrJXbNYYg6slppybFHtXlzW/llayvA=,tag:IXStFG4gt7RIWyK1NP7yWw==,type:str]
         ghcr.io:
             endpoint:
-                - ENC[AES256_GCM,data:/xVUUB6MGue7Tz5+z27gCSiNY5PRaojOT5ERnCq+4bTUNF4RLxw=,iv:wjLTn8hiSKrVhkRodylyh9uvXVBq1BspzT7lzTlDJhI=,tag:RmdXB/7pZcFgF2kQdhF5Tw==,type:str]
+                - ENC[AES256_GCM,data:HVNzZRSp8JKiRue42NaY4bj2y6mtXpgfZdGxtuWR5vmxGROevg4=,iv:R0pWR5HTTRttV7wpiz+5n/BG2vsONxNm+vq0+8MR9e8=,tag:m/TC2ZPvFUxR2hgHkgDHmg==,type:str]
         public.ecr.aws:
             endpoint:
-                - ENC[AES256_GCM,data:7NPMG4Nh/roVS1CHyjJST1lRN2CsqgxDqTMOyJIKFqzlS1IeSQRCpp8Hqywp,iv:FOp/ap5HSdcMYVrrgfFjPFA7h+fR+I1mHyevFqw3gzA=,tag:KAnIAEFfXHbfF8oyNpzayQ==,type:str]
+                - ENC[AES256_GCM,data:nbkA3CAdjsNW/lYYBTxM5M6eQa1uySd6OJH/KR/nOx65Di7Jk++yRzqiJPdX,iv:IPkvO/C+dY7p71/V8tOvHK+DnePLgzE6QfScf62Hl0w=,tag:Mi2ZPMPptrsbQ0WYLGmwfw==,type:str]
+        quay.io:
+            endpoint:
+                - ENC[AES256_GCM,data:tYFdKtg26Lj8au3W9dif9/JpFE8l277e3e9Wv4uphv1qI/0hRHE=,iv:IAKuQpM5G/IimAchqcyFeZhDiqGbzLzO/YB8qEFhjd4=,tag:aZ3O9OUJhMW1/HLCAUZ8Fg==,type:str]
         registry.k8s.io:
             endpoint:
-                - ENC[AES256_GCM,data:vIuMxJmiHkazoQ+wN95vadU19WJVS8nyYD7zsGrk3NSjqGt53peyOnWO3CzMyA==,iv:vpRElQs0c7vYnnWz8YS0ob80RhfqQ70hNejlaBfz0nM=,tag:pSwz4I2dSn+rs360+qivZg==,type:str]
+                - ENC[AES256_GCM,data:iMiWDLE+RZ70KYQetQM1+fXd+go4kaKiM5s4tq/hV5yxjbKzhvT3bFZewW2DHA==,iv:FNjI74cQJX/iIqGhqKRCLXSJiGMnporlta4EJgzEI6k=,tag:1YmQHCW212ggp81wR9YRbw==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -39,8 +36,8 @@ sops:
             cDNobGg5d3NZdG9NaEFtNGhLQlZ0RUkKnGVbSJrhc60f+7Q6ERVpyiv5wi0yji55
             vAMzNXg1FegMg66I7ssBx7g8+6XGNQZDAhYbYADW1R43skzP1Pa/zA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-08-28T18:16:24Z"
-    mac: ENC[AES256_GCM,data:DzthQibOjaax8yDgZ0MEDXw+TplYmL6K6l7gvlic6GsDGrz6ynfNOqlbnbggRJyHm93Ti7DCsXviqUPDwZpCEYE38qjULV72xHZ0i84Un+rnJyh+6Q0q3T0WyPSjO8IxogR9D4QOEUqd90SmM+oHQbpa6V9aEK/zse2unW1BL8M=,iv:jPhvkKtosyya25x4nbGafW3grI/JQhnMj83dd2FQnJk=,tag:mupks7kV3XQOcbdVvNmDKw==,type:str]
+    lastmodified: "2023-12-30T20:35:40Z"
+    mac: ENC[AES256_GCM,data:mohmmQ1Q+u1zNI9sIyHutHU+J4dTxKHD9rWIE6rAvQoWzTpd7TiYC3vpc2O9qTkewcx7tuuhFhyqyqRZQDwYPSGMzra3JQIDwHWkIBRzoEyhZL42f7oeLvo/vDAvnNKSskpoiolbbDVgpuQ2O5/n/H0FOWPOHjVVrQHfZKmEUn4=,iv:o77iOsUsW05X2IPlW/fKfeIkOnb/DSgxHjd1CyTQE6I=,tag:0EsFvKMhsQXQ7URYNF+5WQ==,type:str]
     pgp: []
     unencrypted_regex: ^(kind)$
-    version: 3.7.3
+    version: 3.8.1
