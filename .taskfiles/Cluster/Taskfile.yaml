@@ -13,7 +13,7 @@ tasks:
         cluster: Cluster to run command against (required)
     cmd: flux --context {{.cluster}} check --pre
     preconditions:
-      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
 
   install:
     desc: Install Flux into your cluster
@@ -21,13 +21,13 @@ tasks:
       Args:
         cluster: Cluster to run command against (required)
     cmds:
-      - kubectl --context {{.cluster}} apply --kustomize {{.KUBERNETES_DIR}}/bootstrap
+      - kubectl --context {{.cluster}} apply --kustomize {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap
       - cat {{.SOPS_AGE_KEY_FILE}} | kubectl --context {{.cluster}} -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
-      - sops --decrypt {{.KUBERNETES_DIR}}/flux/vars/cluster-secrets.sops.yaml | kubectl --context {{.cluster}} apply -f -
-      - kubectl --context {{.cluster}} apply -f {{.KUBERNETES_DIR}}/flux/vars/cluster-settings.yaml
-      - kubectl --context {{.cluster}} apply --kustomize {{.KUBERNETES_DIR}}/flux/config
+      - sops --decrypt {{.KUBERNETES_DIR}}/{{.cluster}}/flux/vars/cluster-secrets.sops.yaml | kubectl --context {{.cluster}} apply -f -
+      - kubectl --context {{.cluster}} apply -f {{.KUBERNETES_DIR}}/{{.cluster}}/flux/vars/cluster-settings.yaml
+      - kubectl --context {{.cluster}} apply --kustomize {{.KUBERNETES_DIR}}/{{.cluster}}/flux/config
     preconditions:
-      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
       - sh: test -f {{.SOPS_AGE_KEY_FILE}}
         msg: |
           Age key file is not found. Did you forget to create it?
@@ -41,7 +41,7 @@ tasks:
         cluster: Cluster to run command against (required)
     cmd: flux --context {{.cluster}} reconcile -n flux-system kustomization cluster --with-source
     preconditions:
-      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
 
   list-dockerhub:
     desc: What dockerhub images are running in my cluster
@@ -51,7 +51,7 @@ tasks:
     cmds:
       - kubectl --context {{.cluster}} get pods --all-namespaces -o=jsonpath="{range .items[*]}{'\n'}{range .spec.containers[*]}{.image}{'\n'}{end}{end}" | sort | uniq | grep -Ev 'quay|gcr|ghcr|ecr|us-docker|registry.k8s' | grep -Ev 'bitnami|rook|intel|grafana' |  sed -e 's/docker\.io\///g' | sort | uniq
     preconditions:
-      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
 
   delete-failed-pods:
     desc: Deletes failed pods
@@ -61,7 +61,7 @@ tasks:
     cmds:
       - kubectl --context {{.cluster}} delete pods --field-selector status.phase=Failed -A --ignore-not-found=true
     preconditions:
-      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
 
   delete-jobs:
     desc: Delete all jobs
@@ -71,7 +71,7 @@ tasks:
     cmds:
       - kubectl --context {{.cluster}} delete job -A --all
     preconditions:
-      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
 
   hr-restart:
     desc: Restart all failed Helm Releases
@@ -82,7 +82,7 @@ tasks:
       - kubectl --context {{.cluster}} get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -L1 bash -c 'flux --context {{.cluster}} suspend hr $0 -n $1'
       - kubectl --context {{.cluster}} get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -L1 bash -c 'flux --context {{.cluster}} resume hr $0 -n $1'
     preconditions:
-      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
 
   wait-pod-pending:
     aliases: [waitp]
@@ -151,4 +151,4 @@ tasks:
           NAME: 'jobs/{{.CLIENT_NAME}}'
           NS: '{{.CLIENT_NS}}'
     preconditions:
-      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
