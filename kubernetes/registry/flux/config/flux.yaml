@@ -71,15 +71,6 @@ spec:
       target:
         kind: Deployment
         name: (kustomize-controller|helm-controller|source-controller)
-    # Enable drift detection for HelmReleases
-    # https://fluxcd.io/flux/components/helm/helmreleases/#drift-detection
-    - patch: |
-        - op: add
-          path: /spec/template/spec/containers/0/args/-
-          value: --feature-gates=DetectDrift=true,CorrectDrift=false
-      target:
-        kind: Deployment
-        name: helm-controller
     # Enable Helm near OOM detection
     # https://fluxcd.io/flux/cheatsheets/bootstrap/#enable-helm-near-oom-detection
     - patch: |
