@@ -1,0 +1,8 @@
+---
+kubernetes:
+  children:
+    master:
+      hosts:
+        harbor:
+          ansible_user: ansible
+          ansible_host: 192.168.20.65
