@@ -9,4 +9,4 @@ resources:
   - ./local-path-provisioner/ks.yaml
   - ./metrics-server/ks.yaml
   - ./reloader/ks.yaml
-  - ./system-upgrade-controller/hs.yaml
+  - ./system-upgrade-controller/ks.yaml
