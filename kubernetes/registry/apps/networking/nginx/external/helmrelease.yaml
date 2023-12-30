@@ -79,7 +79,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: "networking/${SECRET_DOMAIN/./-}-staging-tls"
+        default-ssl-certificate: "networking/${SECRET_DOMAIN/./-}-production-tls"
         enable-annotation-validation: true
       topologySpreadConstraints:
         - maxSkew: 1
