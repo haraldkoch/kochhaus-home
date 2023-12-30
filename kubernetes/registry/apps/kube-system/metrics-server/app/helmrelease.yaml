@@ -30,6 +30,11 @@ spec:
       - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
       - --kubelet-use-node-status-port
       - --metric-resolution=15s
+    service:
+      # These labels allow k8s to find the metrics service
+      labels:
+        kubernetes.io/cluster-service: "true"
+        kubernetes.io/name: "Metrics-server"
     metrics:
       enabled: true
     serviceMonitor:
