@@ -8,18 +8,26 @@ tasks:
 
   verify:
     desc: Verify flux meets the prerequisites
-    cmds:
-      - flux check --pre
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    cmd: flux --context {{.cluster}} check --pre
+    preconditions:
+      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
 
   install:
     desc: Install Flux into your cluster
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
     cmds:
-      - kubectl apply --kustomize {{.KUBERNETES_DIR}}/bootstrap
-      - cat {{.SOPS_AGE_KEY_FILE}} | kubectl -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
-      - sops --decrypt {{.KUBERNETES_DIR}}/flux/vars/cluster-secrets.sops.yaml | kubectl apply -f -
-      - kubectl apply -f {{.KUBERNETES_DIR}}/flux/vars/cluster-settings.yaml
-      - kubectl apply --kustomize {{.KUBERNETES_DIR}}/flux/config
+      - kubectl --context {{.cluster}} apply --kustomize {{.KUBERNETES_DIR}}/bootstrap
+      - cat {{.SOPS_AGE_KEY_FILE}} | kubectl --context {{.cluster}} -n flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin
+      - sops --decrypt {{.KUBERNETES_DIR}}/flux/vars/cluster-secrets.sops.yaml | kubectl --context {{.cluster}} apply -f -
+      - kubectl --context {{.cluster}} apply -f {{.KUBERNETES_DIR}}/flux/vars/cluster-settings.yaml
+      - kubectl --context {{.cluster}} apply --kustomize {{.KUBERNETES_DIR}}/flux/config
     preconditions:
+      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
       - sh: test -f {{.SOPS_AGE_KEY_FILE}}
         msg: |
           Age key file is not found. Did you forget to create it?
@@ -28,63 +36,89 @@ tasks:
 
   reconcile:
     desc: Force update Flux to pull in changes from your Git repository
-    cmds:
-      - flux reconcile -n flux-system source git home-kubernetes
-      - flux reconcile -n flux-system kustomization cluster
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    cmd: flux --context {{.cluster}} reconcile -n flux-system kustomization cluster --with-source
+    preconditions:
+      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
 
   list-dockerhub:
     desc: What dockerhub images are running in my cluster
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
     cmds:
-      - kubectl get pods --all-namespaces -o=jsonpath="{range .items[*]}{'\n'}{range .spec.containers[*]}{.image}{'\n'}{end}{end}" | sort | uniq | grep -Ev 'quay|gcr|ghcr|ecr|us-docker|registry.k8s' | grep -Ev 'bitnami|rook|intel|grafana' |  sed -e 's/docker\.io\///g' | sort | uniq
+      - kubectl --context {{.cluster}} get pods --all-namespaces -o=jsonpath="{range .items[*]}{'\n'}{range .spec.containers[*]}{.image}{'\n'}{end}{end}" | sort | uniq | grep -Ev 'quay|gcr|ghcr|ecr|us-docker|registry.k8s' | grep -Ev 'bitnami|rook|intel|grafana' |  sed -e 's/docker\.io\///g' | sort | uniq
+    preconditions:
+      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
 
   delete-failed-pods:
     desc: Deletes failed pods
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
     cmds:
-      - kubectl delete pods --field-selector status.phase=Failed -A --ignore-not-found=true
+      - kubectl --context {{.cluster}} delete pods --field-selector status.phase=Failed -A --ignore-not-found=true
+    preconditions:
+      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
 
   delete-jobs:
     desc: Delete all jobs
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
     cmds:
-      - kubectl delete job -A --all
+      - kubectl --context {{.cluster}} delete job -A --all
+    preconditions:
+      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
 
   hr-restart:
     desc: Restart all failed Helm Releases
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
     cmds:
-      - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -l bash -c 'flux suspend hr $0 -n $1'
-      - kubectl get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -l bash -c 'flux resume hr $0 -n $1'
+      - kubectl --context {{.cluster}} get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -L1 bash -c 'flux --context {{.cluster}} suspend hr $0 -n $1'
+      - kubectl --context {{.cluster}} get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -L1 bash -c 'flux --context {{.cluster}} resume hr $0 -n $1'
+    preconditions:
+      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
 
   wait-pod-pending:
     aliases: [waitp]
     internal: true
     desc: Wait for a job's pod to change its status to pending
     vars:
+      CLUSTER: '{{ or .CLUSTER (fail "Missing `CLUSTER` environment variable!") }}'
       NAME: '{{ or .NAME (fail "Missing `NAME` environment variable!") }}'
       NS: '{{ .NS | default "default" }}'
     cmds:
-      - until [[ $(kubectl -n "{{.NS}}" get pod "{{.NAME}}" -o jsonpath='{.items[*].status.phase}') == "Pending" ]]; do sleep 1; done
+      - until [[ $(kubectl --context {{.CLUSTER}} -n "{{.NS}}" get pod "{{.NAME}}" -o jsonpath='{.items[*].status.phase}') == "Pending" ]]; do sleep 1; done
 
   wait-pod-running:
     aliases: [waitp]
     internal: true
     desc: Wait for a job's pod to change its status to pending
     vars:
+      CLUSTER: '{{ or .CLUSTER (fail "Missing `CLUSTER` environment variable!") }}'
       NAME: '{{ or .NAME (fail "Missing `NAME` environment variable!") }}'
       NS: '{{ .NS | default "default" }}'
     cmds:
-      - until [[ $(kubectl -n "{{.NS}}" get pod "{{.NAME}}" -o jsonpath='{.items[*].status.phase}') == "Running" ]]; do sleep 1; done
+      - until [[ $(kubectl --context {{.CLUSTER}} -n "{{.NS}}" get pod "{{.NAME}}" -o jsonpath='{.items[*].status.phase}') == "Running" ]]; do sleep 1; done
 
   wait-finish:
     internal: true
     desc: Wait for a job's pod to change its status to pending
     vars:
+      CLUSTER: '{{ or .CLUSTER (fail "Missing `CLUSTER` environment variable!") }}'
       NAME: '{{ or .NAME (fail "Missing `NAME` environment variable!") }}'
       NS: '{{ .NS | default "default" }}'
       # TYPE: '{{ .TYPE | default "job" }}'
       # WAIT_ARGS: '{{.WAIT_ARGS | default "echo \"{{.NAME}} is still running, logs:\" && kubectl -n {{.NS}} logs {{.NAME}} --since 2s -f;"}}'
     cmds:
       - |-
-        until kubectl -n {{.NS}} wait {{.NAME}} --for condition=complete --timeout=2s; do
-          echo "{{.NAME}} is still running, logs:" && kubectl -n {{.NS}} logs {{.NAME}} --since 2s -f || true;
+        until kubectl --context {{.CLUSTER}} -n {{.NS}} wait {{.NAME}} --for condition=complete --timeout=2s; do
+          echo "{{.NAME}} is still running, logs:" && kubectl --context {{.CLUSTER}} -n {{.NS}} logs {{.NAME}} --since 2s -f || true;
         done
 
   iperf2:
@@ -95,6 +129,7 @@ tasks:
       SERVER_NS: &iperf2-server-ns '{{ .SERVER_NS | default "default" }}'
       CLIENT_NAME: &iperf2-client-name 'iperf2-client-{{- .TIMENOW -}}'
       CLIENT_NS: &iperf2-client-ns '{{ .CLIENT_NS | default "default" }}'
+      CLUSTER: '{{ .cluster }}'
       CLUSTER_DOMAIN: '{{ .CLUSTER_DOMAIN | default "cluster.local" }}'
       SERVER_PORT: '{{ .SERVER_PORT | default "5001" }}'
       SERVER_NODE: '{{ or .SERVER_NODE (fail "Missing `SERVER_NODE` environment variable!") }}'
@@ -103,15 +138,17 @@ tasks:
       CLIENT_ARGS: '{{ .CLIENT_ARGS | default "" }}'
     env: *iperf2-vars
     cmds:
-      - cat ./ServerJob.tmpl.yaml | envsubst | kubectl apply -f -
-      - defer: cat ./ServerJob.tmpl.yaml | envsubst | kubectl delete -f -
+      - cat ./ServerJob.tmpl.yaml | envsubst | kubectl --context {{.cluster}} apply -f -
+      - defer: cat ./ServerJob.tmpl.yaml | envsubst | kubectl --context {{.cluster}} delete -f -
       - task: wait-pod-running
         vars:
           NAME: '-l job-name={{.SERVER_NAME}}'
           NS: '{{.SERVER_NS}}'
-      - cat ./ClientJob.tmpl.yaml | envsubst | kubectl apply -f -
-      - defer: cat ./ClientJob.tmpl.yaml | envsubst | kubectl delete -f -
+      - cat ./ClientJob.tmpl.yaml | envsubst | kubectl --context {{.cluster}} apply -f -
+      - defer: cat ./ClientJob.tmpl.yaml | envsubst | kubectl --context {{.cluster}} delete -f -
       - task: wait-finish
         vars:
           NAME: 'jobs/{{.CLIENT_NAME}}'
           NS: '{{.CLIENT_NS}}'
+    preconditions:
+      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
