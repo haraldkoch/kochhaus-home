@@ -61,7 +61,7 @@ tasks:
       - task: run
         vars:
           cluster: "{{.cluster}}"
-          playbook: "cluster-prepare.yaml"
+          playbook: "cluster-prepare"
 
   install:
     desc: Install Kubernetes on the nodes
@@ -72,7 +72,7 @@ tasks:
       - task: run
         vars:
           cluster: "{{.cluster}}"
-          playbook: "cluster-installation.yaml"
+          playbook: "cluster-installation"
 
   nuke:
     desc: Uninstall Kubernetes on the nodes
@@ -84,7 +84,7 @@ tasks:
       - task: run
         vars:
           cluster: "{{.cluster}}"
-          playbook: "cluster-nuke.yaml"
+          playbook: "cluster-nuke"
 
   reboot:
     desc: Reboot all the k8s nodes
@@ -96,7 +96,7 @@ tasks:
       - task: run
         vars:
           cluster: "{{.cluster}}"
-          playbook: "cluster-reboot.yaml"
+          playbook: "cluster-reboot"
 
   ping:
     desc: Ping all the hosts
