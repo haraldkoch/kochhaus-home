@@ -86,6 +86,18 @@ tasks:
           cluster: "{{.cluster}}"
           playbook: "cluster-nuke.yaml"
 
+  reboot:
+    desc: Reboot all the k8s nodes
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    interactive: true
+    cmds:
+      - task: run
+        vars:
+          cluster: "{{.cluster}}"
+          playbook: "cluster-reboot.yaml"
+
   ping:
     desc: Ping all the hosts
     summary: |
