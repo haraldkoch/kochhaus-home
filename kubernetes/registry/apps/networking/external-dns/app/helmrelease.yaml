@@ -40,9 +40,10 @@ spec:
       - --crd-source-kind=DNSEndpoint
     policy: sync
     sources: ["crd", "ingress"]
+    txtOwnerId: registry
     txtPrefix: k8s.
-    txtOwnerId: default
     domainFilters: ["${SECRET_DOMAIN}"]
+    logLevel: info
     serviceMonitor:
       enabled: true
     podAnnotations:
