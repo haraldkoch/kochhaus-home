@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "description": "Separate PRs for main cluster",
+      "matchFileNames": [
+        "**/kubernetes/main/**",
+        "**/ansible/main/**"
+      ],
+      "additionalBranchPrefix": "main-"
+    },
+    {
+      "description": "Separate PRs for registry cluster",
+      "matchFileNames": [
+        "**/kubernetes/registry/**",
+        "**/ansible/registry/**"
+      ],
+      "additionalBranchPrefix": "registry-"
+    }
+  ]
+}
