@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app external-dns
+  name: &app external-dns-bind
 spec:
   interval: 30m
   chart:
@@ -25,21 +25,25 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    fullnameOverride: *app
-    provider: cloudflare
+    nameOverride: *app
+    provider: rfc2136
     env:
-      - name: CF_API_TOKEN
+      - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
         valueFrom:
           secretKeyRef:
-            name: external-dns-secret
-            key: api-token
+            name: external-dns-bind-secret
+            key: rfc2136_tsig_secret
     extraArgs:
-      - --ingress-class=external
-      - --cloudflare-proxied
-      - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
-      - --crd-source-kind=DNSEndpoint
+      - --rfc2136-host=${PRIVATE_DNS_PRIMARY}
+      - --rfc2136-port=53
+      - --rfc2136-zone=${SECRET_DOMAIN}
+      - --rfc2136-min-ttl=0s
+      - --rfc2136-tsig-axfr
+      - --rfc2136-tsig-keyname=externaldns
+      - --rfc2136-tsig-secret-alg=hmac-sha256
     policy: sync
-    sources: ["crd", "ingress"]
+    sources: ["ingress", "service"]
+    # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
     txtOwnerId: registry
     txtPrefix: k8s.
     domainFilters: ["${SECRET_DOMAIN}"]
@@ -47,4 +51,4 @@ spec:
     serviceMonitor:
       enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-secret
+      secret.reloader.stakater.com/reload: external-dns-bind-secret
