@@ -12,6 +12,7 @@
     ":timezone(America/Toronto)",
     "github>haraldkoch/kochhaus-home//.github/renovate/allowedVersions.json5",
     "github>haraldkoch/kochhaus-home//.github/renovate/autoMerge.json5",
+    "github>haraldkoch/kochhaus-home//.github/renovate/clusters.json5",
     "github>haraldkoch/kochhaus-home//.github/renovate/commitMessage.json5",
     "github>haraldkoch/kochhaus-home//.github/renovate/customManagers.json5",
     "github>haraldkoch/kochhaus-home//.github/renovate/grafanaDashboards.json5",

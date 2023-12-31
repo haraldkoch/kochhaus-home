@@ -17,3 +17,14 @@ area/taskfile:
   - changed-files:
       - any-glob-to-any-file: .taskfiles/**/*
       - any-glob-to-any-file: Taskfile*
+# Cluster
+cluster/main:
+  - changed-files:
+      - any-glob-to-any-file: ansible/main/**/*
+      - any-glob-to-any-file: kubernetes/main/**/*
+      - any-glob-to-any-file: terraform/main/**/*
+cluster/registry:
+  - changed-files:
+      - any-glob-to-any-file: ansible/registry/**/*
+      - any-glob-to-any-file: kubernetes/registry/**/*
+      - any-glob-to-any-file: terraform/registry/**/*
