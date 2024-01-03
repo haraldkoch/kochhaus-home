@@ -28,8 +28,31 @@ spec:
   dependsOn:
     - name: local-path-provisioner
       namespace: kube-system
+    - name: redis
+      namespace: dbms
     - name: rook-ceph-cluster
       namespace: rook-ceph
+  valuesFrom:
+    - targetPath: objstoreConfig.config.bucket
+      kind: ConfigMap
+      name: thanos-bucket-v2
+      valuesKey: BUCKET_NAME
+    - targetPath: objstoreConfig.config.endpoint
+      kind: ConfigMap
+      name: thanos-bucket-v2
+      valuesKey: BUCKET_HOST
+    - targetPath: objstoreConfig.config.region
+      kind: ConfigMap
+      name: thanos-bucket-v2
+      valuesKey: BUCKET_REGION
+    - targetPath: objstoreConfig.config.access_key
+      kind: Secret
+      name: thanos-bucket-v2
+      valuesKey: AWS_ACCESS_KEY_ID
+    - targetPath: objstoreConfig.config.secret_key
+      kind: Secret
+      name: thanos-bucket-v2
+      valuesKey: AWS_SECRET_ACCESS_KEY
   values:
     image:
       registry: quay.io
@@ -42,6 +65,15 @@ spec:
     queryFrontend:
       enabled: true
       replicaCount: 2
+      config: &config |-
+        type: REDIS
+        config:
+          addr: >-
+            redis-node-0.redis-headless.database.svc.cluster.local:26379,
+            redis-node-1.redis-headless.database.svc.cluster.local:26379,
+            redis-node-2.redis-headless.database.svc.cluster.local:26379
+          db: 13
+          master_name: redis-master
       ingress:
         enabled: true
         ingressClassName: internal
@@ -68,9 +100,9 @@ spec:
       extraFlags:
         - --compact.concurrency=4
         - --delete-delay=30m
-      retentionResolutionRaw: 30d
-      retentionResolution5m: 60d
-      retentionResolution1h: 90d
+      retentionResolutionRaw: 14d
+      retentionResolution5m: 30d
+      retentionResolution1h: 60d
       persistence:
         enabled: true
         storageClass: local-path
@@ -78,6 +110,7 @@ spec:
     storegateway:
       enabled: true
       replicaCount: 2
+      config: *config
       persistence:
         enabled: true
         storageClass: local-path
@@ -107,24 +140,3 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
-  valuesFrom:
-    - targetPath: objstoreConfig.config.bucket
-      kind: ConfigMap
-      name: thanos-bucket-v2
-      valuesKey: BUCKET_NAME
-    - targetPath: objstoreConfig.config.endpoint
-      kind: ConfigMap
-      name: thanos-bucket-v2
-      valuesKey: BUCKET_HOST
-    - targetPath: objstoreConfig.config.region
-      kind: ConfigMap
-      name: thanos-bucket-v2
-      valuesKey: BUCKET_REGION
-    - targetPath: objstoreConfig.config.access_key
-      kind: Secret
-      name: thanos-bucket-v2
-      valuesKey: AWS_ACCESS_KEY_ID
-    - targetPath: objstoreConfig.config.secret_key
-      kind: Secret
-      name: thanos-bucket-v2
-      valuesKey: AWS_SECRET_ACCESS_KEY
