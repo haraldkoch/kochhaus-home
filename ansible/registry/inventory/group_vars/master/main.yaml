@@ -31,3 +31,6 @@ k3s_server:
     - "bind-address=0.0.0.0"          # Required to monitor kube-scheduler with kube-prometheus-stack
   kube-apiserver-arg:
     - "anonymous-auth=true"           # Required for HAProxy health-checks
+  kubelet-arg:
+    - "image-gc-high-threshold=74"
+    - "image-gc-low-threshold=70"
