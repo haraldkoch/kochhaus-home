@@ -225,6 +225,8 @@ spec:
           memory: 256Mi
         limits:
           memory: 384Mi
+    kubeStateMetrics:
+      enabled: true
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -235,80 +237,18 @@ spec:
               enabled: true
     nodeExporter:
       enabled: false
-    kubeStateMetrics:
-      enabled: false
   postRenderers:
     - kustomize:
-        patchesJson6902:
+        patches:
           - target:
+              version: v1
               kind: ConfigMap
-              name: kube-prometheus-stack-alertmanager-overview
-              namespace: monitoring
-            patch:
-              - op: add
-                path: /metadata/annotations
-                value:
-                  grafana_folder: Prometheus
-          - target:
+              labelSelector: grafana_dashboard in (1)
+            patch: |-
+              apiVersion: v1
               kind: ConfigMap
-              name: kube-prometheus-stack-k8s-coredns
-              namespace: monitoring
-            patch:
-              - op: add
-                path: /metadata/annotations
-                value:
-                  grafana_folder: Infrastructure
-          - target:
-              kind: ConfigMap
-              name: kube-prometheus-stack-grafana-overview
-              namespace: monitoring
-            patch:
-              - op: add
-                path: /metadata/annotations
-                value:
-                  grafana_folder: Prometheus
-          - target:
-              kind: ConfigMap
-              name: kube-prometheus-stack-node-cluster-rsrc-use
-              namespace: monitoring
-            patch:
-              - op: add
-                path: /metadata/annotations
-                value:
-                  grafana_folder: Prometheus
-          - target:
-              kind: ConfigMap
-              name: kube-prometheus-stack-node-rsrc-use
-              namespace: monitoring
-            patch:
-              - op: add
-                path: /metadata/annotations
-                value:
-                  grafana_folder: Prometheus
-          - target:
-              kind: ConfigMap
-              name: kube-prometheus-stack-nodes
-              namespace: monitoring
-            patch:
-              - op: add
-                path: /metadata/annotations
-                value:
-                  grafana_folder: Prometheus
-          - target:
-              kind: ConfigMap
-              name: kube-prometheus-stack-nodes-darwin
-              namespace: monitoring
-            patch:
-              - op: add
-                path: /metadata/annotations
-                value:
-                  grafana_folder: Prometheus
-          - target:
-              kind: ConfigMap
-              name: kube-prometheus-stack-prometheus
-              namespace: monitoring
-            patch:
-              - op: add
-                path: /metadata/annotations
-                value:
+              metadata:
+                name: not-used
+                namespace: not-used
+                annotations:
                   grafana_folder: Prometheus
