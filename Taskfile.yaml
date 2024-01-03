@@ -6,11 +6,8 @@ version: "3"
 # https://github.com/go-task/task/issues/1038
 
 vars:
-  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
-  PROVISION_DIR: "{{.ROOT_DIR}}/provision"
   ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
-
-dotenv: [".config.env"]
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
 
 env:
   KUBECONFIG: "{{.KUBERNETES_DIR}}/kubernetes/main/kubeconfig:{{.KUBERNETES_DIR}}/kubernetes/registry/kubeconfig"
