@@ -69,9 +69,9 @@ spec:
         type: REDIS
         config:
           addr: >-
-            redis-node-0.redis-headless.database.svc.cluster.local:26379,
-            redis-node-1.redis-headless.database.svc.cluster.local:26379,
-            redis-node-2.redis-headless.database.svc.cluster.local:26379
+            redis-node-0.redis-headless.dbms.svc.cluster.local:26379,
+            redis-node-1.redis-headless.dbms.svc.cluster.local:26379,
+            redis-node-2.redis-headless.dbms.svc.cluster.local:26379
           db: 13
           master_name: redis-master
       ingress:
@@ -105,7 +105,7 @@ spec:
       retentionResolution1h: 60d
       persistence:
         enabled: true
-        storageClass: local-path
+        storageClass: local-hostpath
         size: 10Gi
     storegateway:
       enabled: true
@@ -113,7 +113,7 @@ spec:
       config: *config
       persistence:
         enabled: true
-        storageClass: local-path
+        storageClass: local-hostpath
         size: 10Gi
     ruler:
       enabled: true
@@ -134,7 +134,7 @@ spec:
                   severity: critical
       persistence:
         enabled: true
-        storageClass: local-path
+        storageClass: local-hostpath
         size: 10Gi
     metrics:
       enabled: true
