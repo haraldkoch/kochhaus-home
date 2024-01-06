@@ -21,3 +21,10 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
+      CLAIM: onedrive-config-v5
+      VOLSYNC_CAPACITY: 128Mi
+      VOLSYNC_UID: "1000"
+      VOLSYNC_GID: "1000"
