@@ -146,7 +146,7 @@ spec:
     write:
       replicas: 2
       persistence:
-        storageClass: local-path
+        storageClass: local-hostpath
       resources:
         requests:
           cpu: 50m
@@ -166,7 +166,7 @@ spec:
     backend:
       replicas: 2
       persistence:
-        storageClass: local-path
+        storageClass: local-hostpath
       extraVolumeMounts:
         - name: rules
           mountPath: /rules/fake
