@@ -22,3 +22,10 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
+  postBuild:
+    substitute:
+      APP: *app
+      CLAIM: nextcloud-config-v2
+      VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_UID: "1022"
+      VOLSYNC_GID: "1022"
