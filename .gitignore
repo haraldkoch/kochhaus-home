@@ -3,8 +3,8 @@ Thumbs.db
 .private/
 .venv/
 .task/
-.cache_ggshield
-.config.env
+.terraform
+*.tfvars
 .decrypted~*
 *.secret.env
 *.secret.yaml
