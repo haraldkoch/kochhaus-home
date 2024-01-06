@@ -30,7 +30,7 @@
   "reviewersFromCodeOwners": true,
   "ignorePaths": [
     "**/*.sops.*",
-    "**/archive/**",
+    "**/.archive/**",
     "**/resources/**"
   ],
   "flux": {
