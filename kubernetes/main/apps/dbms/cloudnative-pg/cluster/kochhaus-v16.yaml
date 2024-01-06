@@ -18,7 +18,7 @@ spec:
 
   storage:
     size: 10Gi
-    storageClass: local-path
+    storageClass: local-hostpath
 
   enableSuperuserAccess: true
   superuserSecret:
