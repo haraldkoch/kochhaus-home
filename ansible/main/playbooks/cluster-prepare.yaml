@@ -8,8 +8,6 @@
     - name: Pausing for 2 seconds...
       ansible.builtin.pause:
         seconds: 2
-    - name: Populate service facts
-      service_facts:
   tasks:
     - name: Locale
       block:
@@ -19,7 +17,7 @@
 
     - name: Packages
       block:
-        - name: Packages | Install
+        - name: Packages | Install common packages
           ansible.builtin.package:
             name: "{{ packages | default([]) }}"
             state: present

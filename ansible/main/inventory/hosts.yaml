@@ -7,11 +7,32 @@ kubernetes:
     master:
       hosts:
         k3sj:
+          ansible_host: 192.168.20.17
+          k3s_agent:
+              node-ip: 192.168.20.17,fdd5:aa8:9535:20::17
         k3sm:
+          ansible_host: 192.168.20.18
+          k3s_agent:
+              node-ip: 192.168.20.18,fdd5:aa8:9535:20::18
         k3st:
+          ansible_host: 192.168.20.19
+          k3s_agent:
+              node-ip: 192.168.20.19,fdd5:aa8:9535:20::19
     worker:
       hosts:
         k3s0:
+          ansible_host: 192.168.20.21
+          k3s_agent:
+              node-ip: 192.168.20.21,fdd5:aa8:9535:20::21
         k3s1:
+          ansible_host: 192.168.20.22
+          k3s_agent:
+              node-ip: 192.168.20.22,fdd5:aa8:9535:20::22
         k3s2:
+          ansible_host: 192.168.20.23
+          k3s_agent:
+              node-ip: 192.168.20.23,fdd5:aa8:9535:20::23
         k3s3:
+          ansible_host: 192.168.20.24
+          k3s_agent:
+              node-ip: 192.168.20.24,fdd5:aa8:9535:20::24

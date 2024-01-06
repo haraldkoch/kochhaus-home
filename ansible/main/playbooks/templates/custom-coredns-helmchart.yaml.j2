@@ -14,11 +14,11 @@ spec:
   bootstrap: true
   valuesContent: |-
     fullnameOverride: coredns
-    replicaCount: 1
+    replicaCount: 2
     k8sAppLabelOverride: kube-dns
     service:
       name: kube-dns
-      clusterIP: "{{ coredns_addr }}"
+      clusterIP: {{ k3s_server['service-cidr'] | ansible.utils.nthhost(10) }}
     serviceAccount:
       create: true
     deployment:

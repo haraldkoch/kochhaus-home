@@ -1,10 +1,6 @@
 ---
-# (string) Timezone for the servers
-# timezone: "America/New_York"
-timezone: "America/Toronto"
-
-# (list) Additional ssh public keys to add to the nodes
-# ssh_authorized_keys:
+github_username: haraldkoch
+timezone: America/Toronto
 
 packages:
   - gptfdisk

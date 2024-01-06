@@ -1,0 +1,20 @@
+---
+# renovate: datasource=github-releases depName=k3s-io/k3s
+k3s_release_version: "v1.29.0+k3s1"
+k3s_install_hard_links: true
+k3s_become: true
+k3s_etcd_datastore: true
+k3s_registration_address: 192.168.20.16
+# /var/lib/rancher/k3s/server/manifests
+k3s_server_manifests_urls:
+  # Kube-vip RBAC
+  - url: https://raw.githubusercontent.com/kube-vip/kube-vip/main/docs/manifests/rbac.yaml
+    filename: kube-vip-rbac.yaml
+  # Tigera Operator for Calico CNI
+  - url: https://docs.projectcalico.org/archive/v3.24/manifests/tigera-operator.yaml
+    filename: tigera-operator.yaml
+# /var/lib/rancher/k3s/server/manifests
+k3s_server_manifests_templates:
+  - calico-installation.yaml.j2
+  - custom-coredns-helmchart.yaml.j2
+  - kube-vip-daemonset.yaml.j2
