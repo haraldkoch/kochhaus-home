@@ -6,4 +6,4 @@ resources:
   - ./nfs-pvc.yaml
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./volsync.yaml
+  - ../../../../templates/volsync
