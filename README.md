@@ -5,10 +5,14 @@
 
 _... automated via [Flux](https://fluxcd.io), [Renovate](https://github.com/renovatebot/renovate) and [GitHub Actions](https://github.com/features/actions)_ 🐟
 
-[![Kubernetes](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fgithub.com%2Fharaldkoch%2Fkochhaus-home%2Fraw%2Fmain%2Fkubernetes%2Fapps%2Fkube-system%2Fsystem-upgrade-controller%2Fplans%2Fserver.yaml&query=%24.spec.version&style=for-the-badge&logo=kubernetes&logoColor=white&label=%20)](https://k3s.io/)&nbsp;&nbsp;
+</div>
+
+<div align="center">
+
+[![Discord](https://img.shields.io/discord/673534664354430999?style=for-the-badge&label&logo=discord&logoColor=white&color=blue)](https://discord.gg/home-operations)&nbsp;&nbsp;
+[![Kubernetes](https://img.shields.io/badge/dynamic/yaml?url=https%3A%2F%2Fgithub.com%2Fharaldkoch%2Fkochhaus-home%2Fraw%2Fmain%2Fkubernetes%2Fmain%2Fapps%2Fkube-system%2Fsystem-upgrade-controller%2Fplans%2Fserver.yaml&query=%24.spec.version&style=for-the-badge&logo=kubernetes&logoColor=white&label=%20)](https://k3s.io/)&nbsp;&nbsp;
 [![Renovate](https://img.shields.io/github/actions/workflow/status/haraldkoch/kochhaus-home/renovate.yaml?branch=main&label=&logo=renovatebot&style=for-the-badge&color=blue)](https://github.com/haraldkoch/kochhaus-home/actions/workflows/renovate.yaml)
 
-[K3S](https://k3s.io/) in a 7-node cluster running [Arch Linux](https://www.archlinux.org/).
 </div>
 
 <div align="center">
@@ -23,111 +27,145 @@ _... automated via [Flux](https://fluxcd.io), [Renovate](https://github.com/reno
 
 </div>
 
-## Off-cluster support
+---
 
-- [registry](https://goharbor.io) - I have a separate host running Kubernetes and an instance of the Harbor container registry, configured as a pull-through cache.
-- [named](https://www.isc.org/bind/) - primary home DNS running on a pair of (redundant) Raspberry Pi 3s.
-- [blocky](https://github.com/0xERR0R/blocky) - lightweight ad-blocking DNS resolver - this has replaced an older Pi-Hole. Thinking of checking out NextDNS.
+## Overview
 
-## Cluster components
+This is a monorepository for my home Kubernetes clusters.
+I try to adhere to Infrastructure as Code (IaC) and GitOps practices using tools like [Ansible](https://www.ansible.com/), [Terraform](https://www.terraform.io/), [Kubernetes](https://kubernetes.io/), [Flux](https://github.com/fluxcd/flux2), [Renovate](https://github.com/renovatebot/renovate), and [GitHub Actions](https://github.com/features/actions).
 
-- [Flux 2](https://github.com/fluxcd/flux2) - GitOps manager that configures the cluster entirely from this GitHub repository.
-- [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/) - Encrypts secrets which is safe to store - even to a public repository.
+The purpose here is to learn Kubernetes, while practicing GitOps. I have two longer-term goals:
 
-### Networking
+1. migrate many of the services that I currently run on Linode to my HomeLab.
+2. Build a small Raspberry Pi cluster at home to run a infrastructure, with the intent of being able to run critical components from a UPS during power outages.
 
-- [calico](https://www.tigera.io/project-calico/) - container networking with IPv6 support and policy enforcement.
-- [cert-manager](https://cert-manager.io/docs/) - Configured to create TLS certs for all ingress services automatically using LetsEncrypt.
-- [external-dns](https://github.com/kubernetes-sigs/external-dns) - monitors service and ingress resources, and automatically generates DNS updates for them. This lets me maintain DNS mappings and LetsEncrypt certificates without a cloudflare account or domain.
-- [metallb](https://metallb.universe.tf/) - Kubernetes Load Balancer that runs on Kubernetes.
-- [nginx ingress](https://github.com/kubernetes/ingress-nginx) - Ingress controller. I used to use Traefik, but it it much more challenging to configure correctly.
+---
 
-### Storage
+## ⛵ Kubernetes
 
-- [democratic-csi](https://github.com/democratic-csi/democratic-csi) - creates Persistent Volumes on a ZFS server as separate datasets, and exports them via NFS or iSCSI to the Kubernetes cluter.
-- [nfs-subdir-external-provisioner](https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner) - creates Persistent Volumes on a pre-existing NFS mount.
-- [rook-ceph](https://rook.io/) - on-cluster (hyperconverged) storage - eventually this will all be on SSDs attached to the cluster nodes for low power usage.
+There is a template over at [onedr0p/flux-cluster-template](https://github.com/onedr0p/flux-cluster-template) if you want to try and follow along with some of the practices I use here.
 
-### infrastructure
+### Installation
 
-- [descheduler](https://github.com/kubernetes-sigs/descheduler) - analyzes the cluster looking for overloaded or under-utilized nodes, as well as pods violating affinity rules, and evicts them so that they will be rescheduled "correctly".
-- [kube-fledged](https://github.com/senthilrch/kube-fledged) - caches critical images locally on each node for reliability during an Internet outage.
-- [kured](https://github.com/weaveworks/kured) - The Kubernetes Reboot Daemon.
-- [prometheus](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) - metrics, monitoring, and alerting.
-- [reloader](https://github.com/stakater/Reloader) - reloads pods when a configMap and/or Secret changes - something that Flux 2 does not manage itself.
-- [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller) - Automatically upgrade the K3S kubernetes instance.
-- [cloudnative-pg](https://cloudnative-pg.io/) - build and manage a postgresql cluster with HA and backups from a custom resource.
-- [ext-postgres-operator](https://github.com/movetokube/postgres-operator) - create databases and users in an existing postgres cluster.
-- [authentik](https://goauthentik.io/) - integrated authentication and user management.
-- [volsync]() - data backup and restore. In a GitOps environment I don't need to backup the Kubernetes resources the way Velero and K10 do, and those tools are hard to manage. VolSync backs up my data.
-- And more!
+My cluster is built using [k3s](https://k3s.io/), provisioned on bare-metal Arch Linux using the [Ansible](https://www.ansible.com/) galaxy role [ansible-role-k3s](https://github.com/PyratLabs/ansible-role-k3s). This is a hyper-converged cluster, workloads and block storage are sharing the same available resources on my nodes. I also have a separate NAS server with ZFS for NFS/SMB shares, bulk file storage and backups.
 
-## Home Infrastructure
+### Core Components
 
-- [hajimari](https://github.com/toboshii/hajimari): a pretty start page with Kubernetes autodiscovery.
-- [openweathermap-exporter](https://github.com/blackrez/openweathermap_exporter): a Prometheus exporter for Openweather.
+- [actions-runner-controller](https://github.com/actions/actions-runner-controller): self-hosted Github runners
+- [calico](https://www.tigera.io/project-calico/): container networking with IPv6 support and policy enforcement.
+- [cert-manager](https://cert-manager.io/docs/): Configured to create TLS certs for all ingress services automatically using LetsEncrypt.
+- [external-dns](https://github.com/kubernetes-sigs/external-dns): monitors service and ingress resources, and automatically generates DNS updates for them. This lets me maintain DNS mappings and LetsEncrypt certificates without a cloudflare account or domain.
+- [external-secrets](https://github.com/external-secrets/external-secrets/): managed Kubernetes secrets using [1Password](https://1password.com/).
+- [ingress-nginx](https://github.com/kubernetes/ingress-nginx/): ingress controller for Kubernetes using NGINX as a reverse proxy and load balancer
+- [rook-ceph](https://rook.io/): Cloud native distributed block storage for Kubernetes
+- [sops](https://toolkit.fluxcd.io/guides/mozilla-sops/): managed secrets for Kubernetes, Ansible, and Terraform which are committed to Git
+- [volsync](https://github.com/backube/volsync): backup and recovery of persistent volume claims
 
-## Applications
+### GitOps
 
-- [outline](https://www.getoutline.com/) - full featured documentation platform.
-- [tautulli](https://github.com/Tautulli/Tautulli) - Plex usage monitoring application.
-- [onedrive](https://github.com/abraunegg/onedrive) - syncs my OneDrive folder from Microsoft, as a local backup.
-- [syncthing](https://syncthing.net/) - simple, peer-to-peer file synch app replacing Dropbox or NextCloud.
-- [actions-runner](https://github.com/actions-runner-controller/actions-runner-controller) - Run GitHub Actions at home!
-- [tekton](https://tekton.dev/) - simple CI/CD tooling.
-- [nextcloud](https://nextcloud.com/) - Finally - moving applications from Linode to my homelab.
+[Flux](https://github.com/fluxcd/flux2) watches the clusters in my [kubernetes](./kubernetes/) folder (see Directories below) and makes the changes to my clusters based on the state of my Git repository.
+
+The way Flux works for me here is it will recursively search the `kubernetes/${cluster}/apps` folder until it finds the most top level `kustomization.yaml` per directory and then apply all the resources listed in it. That aforementioned `kustomization.yaml` will generally only have a namespace resource and one or many Flux kustomizations. Those Flux kustomizations will generally have a `HelmRelease` or other resources related to the application underneath it which will be applied.
+
+[Renovate](https://github.com/renovatebot/renovate) watches my **entire** repository looking for dependency updates, when they are found a PR is automatically created. When some PRs are merged Flux applies the changes to my cluster.
+
+### Wow
 
 Yes, this is a lot of infrastructure and heavy lifting - the point is to experiment with Kubernetes and GitOps in a safe space.
 
 [![dexhorthy](assets/blog-on-kubernetes.png)](https://twitter.com/dexhorthy/)
 
-I have two longer-term goals:
+### Directories
 
-1. migrate many of the apps that I currently run on Linode to my HomeLab.
-2. Build a small Raspberry Pi cluster at home to run a lot of infrastructure, with the intent of being able to run off a small UPS during power outages.
-
----
-
-## Repository structure
-
-The Git repository contains the following directories under `cluster` and are ordered below by how Flux will apply them.
+This Git repository contains the following directories under [Kubernetes](./kubernetes/).
 
 ```sh
-📁 cluster      # k8s cluster defined as code
-├─📁 flux       # flux, gitops operator, loaded before everything
-├─📁 crds       # custom resources, loaded before 📁 core and 📁 apps
-├─📁 charts     # helm repos, loaded before 📁 core and 📁 apps
-├─📁 config     # cluster config, loaded before 📁 core and 📁 apps
-├─📁 core       # crucial apps, namespaced dir tree, loaded before 📁 apps
-└─📁 apps       # regular apps, namespaced dir tree, loaded last
+📁 kubernetes
+├── 📁 main            # main cluster
+│   ├── 📁 apps           # applications
+│   ├── 📁 bootstrap      # bootstrap procedures
+│   ├── 📁 flux           # core flux configuration
+│   └── 📁 templates      # re-useable components
+└── 📁 registry        # registry cluster (running harbor)
+    ├── 📁 apps           # applications
+    ├── 📁 bootstrap      # bootstrap procedures
+    └── 📁 flux           # core flux configuration
 ```
 
 ---
 
-## Automation
+## ☁️ Cloud Dependencies
 
-- [Flux 2](https://github.com/fluxcd/flux2) - GitOps automation for Kubernetes.
-- Rancher [System Upgrade Controller](https://github.com/rancher/system-upgrade-controller) to apply updates to k3s.
-- [Renovate](https://github.com/renovatebot/renovate) with the help of the [k8s-at-home/renovate-helm-releases](https://github.com/k8s-at-home/renovate-helm-releases) Github action keeps my application charts and container images up-to-date.
-- [Github Actions](https://docs.github.com/en/actions) automatically runs renovate.
-- Many, many kubernetes operators
+While most of my infrastructure and workloads are self-hosted I do rely upon the cloud for certain key parts of my setup. This saves me from having to worry about two things. (1) Dealing with chicken/egg scenarios and (2) services I critically need whether my cluster is online or not.
 
----
+The alternative solution to these two problems would be to host a Kubernetes cluster in the cloud and deploy applications like [HCVault](https://www.vaultproject.io/), [Vaultwarden](https://github.com/dani-garcia/vaultwarden), [ntfy](https://ntfy.sh/), and [Gatus](https://gatus.io/). However, maintaining another cluster and monitoring another group of workloads is a lot more time and effort than I am willing to put in.
 
-## 💻 Nodes
-
-| Node                | Hostname | CPU             |  RAM | Storage   | Function             | Operating System |
-|---------------------|----------|-----------------|------|-----------|----------------------|------------------|
-| HP EliteDesk 800 G2 | k3sj | 4 Intel i5-6500T    | 16GB | 240GB SSD  | control-plane        | Arch Linux      |
-| HP EliteDesk 800 G2 | k3sm | 4 Intel i5-6500T    | 16GB | 240GB SSD  | control-plane        | Arch Linux      |
-| HP EliteDesk 800 G2 | k3st | 4 Intel i5-6500T    | 16GB | 240GB SSD  | control-plane        | Arch Linux      |
-| Lenovo M910q tiny   | k3s0 | 4 Intel i5-6500T    | 16GB | 512GB NVMe | worker, ceph storage | Arch Linux      |
-| libvirtd VM         | k3s1 | 6 AMD Ryzen 5 1600T | 16GB | 256GB HDD  | worker, ceph storage | Arch Linux      |
-| Lenovo M900q tiny   | k3s2 | 4 Intel i5-6500T    | 16GB | 512GB SSD  | worker, ceph storage | Arch Linux      |
-| Lenovo M910q tiny   | k3s3 | 4 Intel i5-6500T    | 16GB | 512GB NVMe | worker, ceph storage | Arch Linux      |
+| Service                                         | Use                                                               | Cost           |
+|-------------------------------------------------|-------------------------------------------------------------------|----------------|
+| [1Password](https://1password.com/)             | Secrets with [External Secrets](https://external-secrets.io/)     | ~$60/yr        |
+| [Cloudflare](https://www.cloudflare.com/)       | Domain and S3                                                     | Free           |
+| [GitHub](https://github.com/)                   | Hosting this repository and continuous integration/deployments    | Free           |
+| [Linode](https://linode.com/)                   | servers hosting my email and public web                           | Free           |
+| [Pushover](https://pushover.net/)               | Kubernetes Alerts and application notifications                   | $5 OTP         |
+| [healthchecks.io](https://healthchecks.io)      | Monitoring internet connectivity and Prometheus status            | Free           |
+|                                                 |                                                                   | Total: ~$5/mo  |
 
 ---
 
-## Community
+## 🌐 DNS
 
-This cluster in inspired by the work of others shared at [awesome-home-kubernetes](https://github.com/k8s-at-home/awesome-home-kubernetes).
+### Home DNS
+
+On a pair of Raspberry Pi 3s, I have [Bind9](https://github.com/isc-projects/bind9) and [blocky](https://github.com/0xERR0R/blocky) deployed. In my cluster `external-dns` is deployed with the `RFC2136` provider which syncs DNS records to `bind9`. `blocky` is used by non-servers as ad-blocking and caching proxy, using `bind9` for local lookups.
+
+### Public DNS
+
+Outside the `external-dns` instance mentioned above another instance is deployed in my cluster and configured to sync DNS records to [Cloudflare](https://www.cloudflare.com/). The only ingress this `external-dns` instance looks at to gather DNS records to put in `Cloudflare` are ones that have an ingress class name of `external` and contain an ingress annotation `external-dns.alpha.kubernetes.io/target`.
+
+---
+
+## 🔧 Hardware
+
+### Main Kubernetes Cluster
+
+| Node                | CPU               |  RAM | Storage    | Function             | OS         |
+|---------------------|-------------------|------|------------|----------------------|------------|
+| HP EliteDesk 800 G2 | Intel i5-6500T    | 16GB | 240GB SSD  | control-plane        | Arch Linux |
+| HP EliteDesk 800 G2 | Intel i5-6500T    | 16GB | 240GB SSD  | control-plane        | Arch Linux |
+| HP EliteDesk 800 G2 | Intel i5-6500T    | 16GB | 240GB SSD  | control-plane        | Arch Linux |
+| Lenovo M910q tiny   | Intel i5-6500T    | 16GB | 512GB NVMe | worker, ceph storage | Arch Linux |
+| libvirtd VM         | AMD Ryzen 5 1600T | 16GB | 256GB HDD  | worker, ceph storage | Arch Linux |
+| Lenovo M900q tiny   | Intel i5-6500T    | 16GB | 512GB SSD  | worker, ceph storage | Arch Linux |
+| Lenovo M910q tiny   | Intel i5-6500T    | 16GB | 512GB NVMe | worker, ceph storage | Arch Linux |
+
+### Registry Kubernetes Cluster
+
+| Node        | CPU               | RAM | Storage   | Function            | OS         |
+|-------------|-------------------|-----|-----------|---------------------|------------|
+| libvirtd VM | AMD Ryzen 5 1600T | 8GB | 128GB HDD | single-node cluster | Arch Linux |
+
+### Infrastructure Kubernetes Cluster (coming soon)
+
+| Node           | CPU        | RAM | Storage   | Function      | OS     |
+|----------------|------------|-----|-----------|---------------|--------|
+| Raspberry Pi 4 | Cortex A72 | 4GB | 240GB SSD | control-plane | Debian |
+| Raspberry Pi 4 | Cortex A72 | 8GB | 240GB SSD | control-plane | Debian |
+| Raspberry Pi 4 | Cortex A72 | 8GB | 240GB SSD | control-plane | Debian |
+
+---
+
+## ⭐ Stargazers
+
+<div align="center">
+
+[![Star History Chart](https://api.star-history.com/svg?repos=haraldkoch/kochhaus-home&type=Date)](https://star-history.com/#haraldkoch/kochhaus-home&Date)
+
+</div>
+
+---
+
+## 🤝 Thanks
+
+Big shout out to original [flux-cluster-template](https://github.com/onedr0p/flux-cluster-template), and the [Home Operations](https://discord.gg/home-operations) Discord community.
+
+Be sure to check out [kubesearch.dev](https://kubesearch.dev/) for ideas on how to deploy applications or get ideas on what you may deploy.
