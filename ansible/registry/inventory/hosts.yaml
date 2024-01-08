@@ -1,8 +1,12 @@
 ---
 kubernetes:
+  vars:
+    ansible_user: ansible
+    ansible_python_interpreter: /usr/bin/python
   children:
     master:
       hosts:
         harbor:
-          ansible_user: ansible
           ansible_host: 192.168.20.65
+          k3s_agent:
+            node-ip: 192.168.20.65

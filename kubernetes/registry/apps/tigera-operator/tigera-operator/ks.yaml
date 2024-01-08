@@ -3,19 +3,19 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cilium
+  name: &app tigera-operator
   namespace: flux-system
 spec:
-  targetNamespace: kube-system
+  targetNamespace: tigera-operator
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/registry/apps/kube-system/cilium/app
+  path: ./kubernetes/registry/apps/tigera-operator/tigera-operator/app
   prune: false # never should be deleted
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  wait: false
+  wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m

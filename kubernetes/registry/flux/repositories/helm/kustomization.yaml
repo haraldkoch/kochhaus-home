@@ -6,7 +6,7 @@ resources:
   - ./backube.yaml
   - ./bitnami.yaml
   - ./bjw-s.yaml
-  - ./cilium.yaml
+  - ./calico.yaml
   - ./coredns.yaml
   - ./csi-driver-nfs.yaml
   - ./democratic-csi.yaml
@@ -18,6 +18,7 @@ resources:
   - ./jetstack.yaml
   - ./k8s-gateway.yaml
   - ./kubernetes-dashboard.yaml
+  - ./metallb.yaml
   - ./metrics-server.yaml
   - ./piraeus.yaml
   - ./prometheus-community.yaml
