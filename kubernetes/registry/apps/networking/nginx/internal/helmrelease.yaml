@@ -25,13 +25,16 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: metallb
+      namespace: networking
   values:
     fullnameOverride: nginx-internal
     controller:
       replicaCount: 1
       service:
         annotations:
-          io.cilium/lb-ipam-ips: "192.168.20.69"
+          metallb.universe.tf/loadBalancerIPs: "192.168.20.68"
         externalTrafficPolicy: Cluster
       ingressClassResource:
         name: internal

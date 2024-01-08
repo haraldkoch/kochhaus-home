@@ -1,36 +1,35 @@
 ---
-# https://rancher.com/docs/k3s/latest/en/installation/install-options/server-config/
-# https://github.com/PyratLabs/ansible-role-k3s
-
 k3s_control_node: true
 k3s_server:
-  node-ip: "{{ ansible_host }}"
-  tls-san:
-    - "{{ kube_vip_addr }}"
-  docker: false
-  flannel-backend: "none"             # This needs to be in quotes
+  cluster-cidr: "10.42.0.0/16"
   disable:
     - coredns                         # Disable coredns                 - replaced with Coredns Helm Chart
-    - flannel                         # Disable flannel                 - replaced with Cilium Helm Chart
+    - flannel                         # Disable flannel                 - replaced with Tigera Operator Helm Chart
     - local-storage                   # Disable local-path-provisioner  - replaced with democratic-csi
     - metrics-server                  # Disable metrics-server          - installed with Flux
-    - servicelb                       # Disable servicelb               - replaced with Cilium Helm Chart
+    - servicelb                       # Disable servicelb               - replaced with MetalLB Helm Chart
     - traefik                         # Disable traefik                 - replaced with ingress-nginx and installed with Flux
-  disable-network-policy: true
   disable-cloud-controller: true
-  disable-kube-proxy: true            # Cilium uses eBPF
-  write-kubeconfig-mode: "644"
-  pause-image: registry.k8s.io/pause:3.9
-  secrets-encryption: true
-  cluster-cidr: "{{ cluster_cidr }}"
-  service-cidr: "{{ service_cidr }}"
+  disable-helm-controller: false
+  disable-network-policy: true
+  docker: false
+  etcd-disable-snapshots: true
   etcd-expose-metrics: true           # Required to monitor etcd with kube-prometheus-stack
-  kube-controller-manager-arg:
-    - "bind-address=0.0.0.0"          # Required to monitor kube-controller-manager with kube-prometheus-stack
-  kube-scheduler-arg:
-    - "bind-address=0.0.0.0"          # Required to monitor kube-scheduler with kube-prometheus-stack
+  flannel-backend: "none"             # This needs to be in quotes
+  https-listen-port: 6443
   kube-apiserver-arg:
     - "anonymous-auth=true"           # Required for HAProxy health-checks
+  kube-controller-manager-arg:
+    - "bind-address=0.0.0.0"          # Required to monitor kube-controller-manager with kube-prometheus-stack
+  kube-proxy-arg:
+    - "metrics-bind-address=0.0.0.0"  # Required to monitor kube-proxy with kube-prometheus-stack
+  kube-scheduler-arg:
+    - "bind-address=0.0.0.0"          # Required to monitor kube-scheduler with kube-prometheus-stack
   kubelet-arg:
     - "image-gc-high-threshold=74"
     - "image-gc-low-threshold=70"
+  pause-image: registry.k8s.io/pause:3.9
+  service-cidr: "10.43.0.0/16"
+  tls-san:
+    - "{{ k3s_registration_address }}"
+  write-kubeconfig-mode: "0644"

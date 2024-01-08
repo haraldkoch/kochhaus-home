@@ -24,6 +24,9 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: metallb
+      namespace: networking
   values:
     expose:
       type: loadBalancer
@@ -35,7 +38,6 @@ spec:
         name: harbor
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "harbor.${SECRET_DOMAIN}"
-          io.cilium/lb-ipam-ips: "192.168.20.67"
     externalURL: https://harbor.${SECRET_DOMAIN}
     ipFamily:
       ipv6:
@@ -55,6 +57,9 @@ spec:
           jobLog:
             storageClass: local-hostpath
         database:
+          type: internal
+          internal:
+            password: ${HARBOR_POSTGRES_PASSWORD}
           storageClass: local-hostpath
         redis:
           storageClass: local-hostpath

@@ -1,0 +1,58 @@
+---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: tigera-operator
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: tigera-operator
+      version: v3.27.0
+      sourceRef:
+        kind: HelmRepository
+        name: calico
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    # Configures general installation parameters for Calico. Schema is based
+    # on the operator.tigera.io/Installation API documented
+    # here: https://projectcalico.docs.tigera.io/reference/installation/api#operator.tigera.io/v1.InstallationSpec
+    installation:
+      enabled: true
+      registry: quay.io
+      imagePath: calico
+      calicoNetwork:
+        bgp: Enabled
+        hostPorts: Disabled
+        # Note: The ipPools section cannot be modified post-install.
+        ipPools:
+          - blockSize: 26
+            cidr: ${CLUSTER_CIDR}
+            encapsulation: None
+            natOutgoing: Enabled
+            nodeSelector: all()
+        nodeAddressAutodetectionV4:
+          cidrs:
+            - ${NODE_CIDR}
+      nodeMetricsPort: 9091
+      typhaMetricsPort: 9093
+    resources:
+      requests:
+        cpu: 15m
+        memory: 164M
+      limits:
+        cpu: 500m
+        memory: 196M

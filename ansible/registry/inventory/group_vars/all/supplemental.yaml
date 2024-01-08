@@ -1,0 +1,23 @@
+---
+github_username: haraldkoch
+timezone: America/Toronto
+node_cidr: "192.168.20.0/24"
+
+packages:
+  - gptfdisk
+  - hdparm
+  - htop
+  - intel-gpu-tools
+  - iptables-nft
+  - ipvsadm
+  - lm_sensors
+  - lvm2
+  - neofetch
+  - nfs-utils
+  - nvme-cli
+  - open-iscsi
+  - parted
+  - python-kubernetes
+  - socat
+  - thin-provisioning-tools
+  - vi
