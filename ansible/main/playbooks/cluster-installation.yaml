@@ -47,10 +47,9 @@
         wait_sleep: 10
         wait_timeout: 360
       loop:
-        - { name: cilium, kind: HelmChart, namespace: kube-system }
+        - { name: tigera-operator, kind: HelmChart, namespace: tigera-operator }
         - { name: coredns, kind: HelmChart, namespace: kube-system }
-        - { name: policy, kind: CiliumL2AnnouncementPolicy }
-        - { name: pool, kind: CiliumLoadBalancerIPPool }
+        - { name: default, kind: Installation }
 
     - name: Coredns
       when: k3s_primary_control_node
