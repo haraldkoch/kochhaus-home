@@ -23,7 +23,7 @@ metrics:
       - { color: red, min: 76, max: 9999 }
 
   - name: cluster_power_usage
-    query: round((network_ups_tools_ups_load{server="nas"} * 0.01 * 900) + ignoring(server, instance) (network_ups_tools_ups_load{server="network"} * 0.01 * 600)) # NAS Load % * 900W + Network Load % * 600W
+    query: kasa_power_load{target="kp115-k8s"} + ignoring(alias, id, instance, pod, target) kasa_power_load{target="kp115-servers"}
     suffix: "W"
     colors:
       - { color: "green", min: 0, max: 600 }
