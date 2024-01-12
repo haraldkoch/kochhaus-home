@@ -66,7 +66,7 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host "home.${CLUSTER_DOMAIN}"
+          - host: &host "www.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 service:
