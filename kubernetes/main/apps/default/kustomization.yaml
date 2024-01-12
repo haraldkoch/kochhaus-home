@@ -10,6 +10,7 @@ resources:
   - ./atuin/ks.yaml
   - ./excalidraw/ks.yaml
   - ./hajimari/ks.yaml
+  - ./homepage/ks.yaml
   - ./kubernetes-schemas/ks.yaml
   #- ./letsblockit/ks.yaml
   - ./miniflux/ks.yaml

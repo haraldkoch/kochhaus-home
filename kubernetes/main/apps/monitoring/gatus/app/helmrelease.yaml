@@ -113,6 +113,10 @@ spec:
         className: internal
         annotations:
           hajimari.io/icon: mdi:eye
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Observability
+          gethomepage.dev/name: Gatus
+          gethomepage.dev/icon: gatus.png
         hosts:
           - host: &host status.${CLUSTER_DOMAIN}
             paths:

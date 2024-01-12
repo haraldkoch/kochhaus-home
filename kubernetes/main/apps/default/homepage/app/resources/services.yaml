@@ -1,0 +1,29 @@
+---
+- Home:
+    - HomeAssistant:
+        href: https://hass.${SECRET_INTERNAL_DOMAIN}
+        icon: home-assistant.png
+        description: Home Assistant
+        widget:
+          type: homeassistant
+          url: https://hass.${SECRET_INTERNAL_DOMAIN}
+          key: "{{HOMEPAGE_VAR_HASS_TOKEN}}"
+- Infrastructure:
+    - Cloudflared:
+        href: https://dash.cloudflare.com/
+        icon: cloudflare-zero-trust.png
+        description: Cloudflared Tunnel
+        widget:
+          type: cloudflared
+          accountid: {{HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID}}
+          tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
+          key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
+- Media:
+    - Plex:
+        href: https://app.plex.tv/desktop
+        icon: plex.png
+        description: Kochhaus Media Server
+        widget:
+          type: plex
+          url: http://${MEDIA_SERVER}:32400
+          key: {{HOMEPAGE_VAR_PLEX_TOKEN}}
