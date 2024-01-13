@@ -9,11 +9,11 @@ resources:
 configMapGenerator:
   - name: homepage-config
     files:
-      - bookmarks.yaml=./resources/bookmarks.yaml
+      - bookmarks.yaml=./resources/bookmarks.yaml.txt
       - docker.yaml=./resources/docker.yaml
       - kubernetes.yaml=./resources/kubernetes.yaml
-      - services.yaml=./resources/services.yaml
+      - services.yaml=./resources/services.yaml.txt
       - settings.yaml=./resources/settings.yaml
-      - widgets.yaml=./resources/widgets.yaml
+      - widgets.yaml=./resources/widgets.yaml.txt
 generatorOptions:
   disableNameSuffixHash: true
