@@ -6,13 +6,13 @@ metadata:
   name: &app nginx-certificates
   namespace: flux-system
 spec:
-  targetNamespace: networking
+  targetNamespace: network
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: cert-manager-issuers
-  path: ./kubernetes/registry/apps/networking/nginx/certificates
+  path: ./kubernetes/registry/apps/network/nginx/certificates
   prune: true
   sourceRef:
     kind: GitRepository
@@ -29,13 +29,13 @@ metadata:
   name: &app nginx-internal
   namespace: flux-system
 spec:
-  targetNamespace: networking
+  targetNamespace: network
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: nginx-certificates
-  path: ./kubernetes/registry/apps/networking/nginx/internal
+  path: ./kubernetes/registry/apps/network/nginx/internal
   prune: true
   sourceRef:
     kind: GitRepository
