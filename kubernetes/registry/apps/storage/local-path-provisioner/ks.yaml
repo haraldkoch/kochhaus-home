@@ -8,11 +8,11 @@ metadata:
   labels:
     substitution.flux.home.arpa/disabled: "true"
 spec:
-  targetNamespace: kube-system
+  targetNamespace: storage
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/registry/apps/kube-system/local-path-provisioner/app
+  path: ./kubernetes/registry/apps/storage/local-path-provisioner/app
   prune: true
   sourceRef:
     kind: GitRepository

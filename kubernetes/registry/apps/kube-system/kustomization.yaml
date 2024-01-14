@@ -5,5 +5,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./coredns/ks.yaml
-  - ./local-path-provisioner/ks.yaml
   - ./metrics-server/ks.yaml
