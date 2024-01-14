@@ -27,7 +27,7 @@ spec:
     keepHistory: false
   dependsOn:
     - name: metallb
-      namespace: networking
+      namespace: network
   values:
     fullnameOverride: nginx-internal
     controller:
