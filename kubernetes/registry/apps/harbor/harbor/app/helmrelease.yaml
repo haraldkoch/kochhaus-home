@@ -26,7 +26,7 @@ spec:
     keepHistory: false
   dependsOn:
     - name: metallb
-      namespace: networking
+      namespace: network
   values:
     expose:
       type: loadBalancer
