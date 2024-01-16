@@ -24,6 +24,9 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  dependsOn:
+    - name: cloudflared
+      namespace: network
   values:
     fullnameOverride: nginx-external
     controller:
@@ -84,7 +87,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: networking/tls.kochhaus-dev
+        default-ssl-certificate: network/tls.kochhaus-dev
         enable-annotation-validation: true
       topologySpreadConstraints:
         - maxSkew: 1
