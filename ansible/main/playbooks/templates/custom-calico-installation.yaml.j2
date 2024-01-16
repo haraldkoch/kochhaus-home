@@ -7,11 +7,15 @@ spec:
   registry: quay.io
   imagePath: calico
   calicoNetwork:
+    # https://projectcalico.docs.tigera.io/networking/ip-autodetection
+    nodeAddressAutodetectionV4:
+      cidrs:
+        - "{{ node_cidr }}"
     # Note: The ipPools section cannot be modified post-install.
     ipPools:
       - blockSize: 26
         cidr: 10.42.0.0/16
-        encapsulation: "VXLANCrossSubnet"
+        encapsulation: "None"
         natOutgoing: Enabled
         nodeSelector: all()
       - blockSize: 116
