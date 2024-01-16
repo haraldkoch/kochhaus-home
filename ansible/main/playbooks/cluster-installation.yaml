@@ -55,10 +55,6 @@
       when: k3s_primary_control_node
       ansible.builtin.include_tasks: tasks/coredns.yaml
 
-    - name: Cilium
-      when: k3s_primary_control_node
-      ansible.builtin.include_tasks: tasks/cilium.yaml
-
     - name: Cruft
       when: k3s_primary_control_node
       ansible.builtin.include_tasks: tasks/cruft.yaml
