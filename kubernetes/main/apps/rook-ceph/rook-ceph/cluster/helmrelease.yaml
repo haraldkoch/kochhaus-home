@@ -113,10 +113,10 @@ spec:
         mgr:
           limits:
             cpu: 500m
-            memory: 512Mi
+            memory: 640Mi
           requests:
             cpu: 50m
-            memory: 256Mi
+            memory: 320Mi
         mon:
           limits:
             cpu: 1000m
