@@ -35,10 +35,10 @@ spec:
             resources:
               requests:
                 cpu: 15m
-                memory: 64M
+                memory: 100M
               limits:
                 cpu: 100m
-                memory: 128M
+                memory: 200M
     service:
       main:
         ipFamilyPolicy: PreferDualStack
