@@ -37,7 +37,7 @@ spec:
           main:
             image:
               repository: ghcr.io/linuxserver/mariadb
-              tag: 10.11.5
+              tag: 10.11.6
             env:
               TZ: ${TIMEZONE}
               PUID: "1000"
