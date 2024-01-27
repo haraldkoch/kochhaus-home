@@ -35,7 +35,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/haraldkoch/postgres-init
-              tag: 16.1@sha256:0412b8a443c0c6c7e8f7463c789fb1fe8ec632c8b6a68ddfe55cfb15d822083d
+              tag: 16.1@sha256:1643b66cc670909b3363796f713570fa9a601b13bfd4b1243f231516520b83d9
             envFrom: &envFrom
               - secretRef:
                   name: speedtest-secret
