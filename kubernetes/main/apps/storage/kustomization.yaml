@@ -14,3 +14,4 @@ resources:
   - ./snapshot-controller/ks.yaml
   - ./sync-browser/ks.yaml
   - ./syncthing/ks.yaml
+  - ./volsync/ks.yaml
