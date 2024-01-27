@@ -6,11 +6,11 @@ metadata:
   name: &app kured
   namespace: flux-system
 spec:
-  targetNamespace: system
+  targetNamespace: tools
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/system/kured/app
+  path: ./kubernetes/main/apps/tools/kured/app
   prune: true
   sourceRef:
     kind: GitRepository
