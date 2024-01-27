@@ -29,6 +29,16 @@ spec:
       namespace: kube-system
   values:
     manageCRDs: true
+    image:
+      # https://github.com/backube/volsync/issues/828
+      repository: &image ghcr.io/onedr0p/volsync
+      tag: &tag 0.8.0
+    rclone:
+      repository: *image
+      tag: *tag
+    restic:
+      repository: *image
+      tag: *tag
     metrics:
       disableAuth: true
   postRenderers:
