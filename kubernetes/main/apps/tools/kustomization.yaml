@@ -7,5 +7,6 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./descheduler/ks.yaml
+  - ./kured/ks.yaml
   - ./reloader/ks.yaml
   - ./system-upgrade-controller/ks.yaml

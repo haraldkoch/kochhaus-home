@@ -7,5 +7,4 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./intel-device-plugin/ks.yaml
-  - ./kured/ks.yaml
   - ./node-feature-discovery/ks.yaml
