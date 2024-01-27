@@ -6,8 +6,11 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
+  - ./csi-driver-nfs/ks.yaml
+  - ./local-path-provisioner/ks.yaml
   - ./minio/ks.yaml
   - ./nextcloud/ks.yaml
   - ./onedrive/ks.yaml
+  - ./snapshot-controller/ks.yaml
   - ./sync-browser/ks.yaml
   - ./syncthing/ks.yaml

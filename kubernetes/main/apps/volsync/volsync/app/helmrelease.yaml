@@ -26,7 +26,7 @@ spec:
     keepHistory: false
   dependsOn:
     - name: snapshot-controller
-      namespace: kube-system
+      namespace: storage
   values:
     manageCRDs: true
     image:
