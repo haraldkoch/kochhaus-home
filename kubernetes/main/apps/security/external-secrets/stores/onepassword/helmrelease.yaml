@@ -27,12 +27,9 @@ spec:
   values:
     controllers:
       main:
+        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
-        pod:
-          securityContext:
-            runAsUser: 999
-            runAsGroup: 999
         containers:
           main:
             image:
@@ -40,9 +37,10 @@ spec:
               repository: ghcr.io/haraldkoch/onepassword-connect-api
               tag: 1.7.2
             env:
-              OP_BUS_PORT: "11220"
-              OP_BUS_PEERS: "localhost:11221"
-              OP_HTTP_PORT: &port 8080
+              XDG_DATA_HOME: &configDir /config
+              OP_BUS_PORT: 11220
+              OP_BUS_PEERS: localhost:11221
+              OP_HTTP_PORT: &apiPort 80
               OP_SESSION:
                 valueFrom:
                   secretKeyRef:
@@ -55,7 +53,7 @@ spec:
                 spec:
                   httpGet:
                     path: /heartbeat
-                    port: *port
+                    port: *apiPort
                   initialDelaySeconds: 15
                   periodSeconds: 30
                   failureThreshold: 3
@@ -65,13 +63,17 @@ spec:
                 spec:
                   httpGet:
                     path: /health
-                    port: *port
+                    port: *apiPort
                   initialDelaySeconds: 15
               startup:
                 enabled: false
-            resources:
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources: &resources
               requests:
-                cpu: 5m
+                cpu: 10m
                 memory: 10Mi
               limits:
                 memory: 100Mi
@@ -81,31 +83,49 @@ spec:
               repository: ghcr.io/haraldkoch/onepassword-sync
               tag: 1.7.2
             env:
-              - { name: OP_HTTP_PORT, value: &sport 8081 }
-              - { name: OP_BUS_PORT, value: "11221" }
-              - { name: OP_BUS_PEERS, value: "localhost:11220" }
-              - name: OP_SESSION
+              OP_HTTP_PORT: &syncPort 8081
+              OP_BUS_PORT: 11221
+              OP_BUS_PEERS: localhost:11220
+              OP_SESSION:
                 valueFrom:
                   secretKeyRef:
                     name: onepassword-connect-secret
                     key: onepassword-credentials.json
-            readinessProbe:
-              httpGet:
-                path: /health
-                port: *sport
-              initialDelaySeconds: 15
-            livenessProbe:
-              httpGet:
-                path: /heartbeat
-                port: *sport
-              failureThreshold: 3
-              periodSeconds: 30
-              initialDelaySeconds: 15
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /heartbeat
+                    port: *syncPort
+                  initialDelaySeconds: 15
+                  periodSeconds: 30
+                  failureThreshold: 3
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *syncPort
+                  initialDelaySeconds: 15
+              startup:
+                enabled: false
+              securityContext: *securityContext
+              resources: *resources
+        pod:
+          securityContext:
+            runAsUser: 999
+            runAsGroup: 999
+            runAsNonRoot: true
+            fsGroup: 999
+            fsGroupChangePolicy: OnRootMismatch
     service:
       main:
         ports:
           http:
-            port: *port
+            port: *apiPort
     ingress:
       main:
         enabled: true
@@ -123,7 +143,8 @@ spec:
           - hosts:
               - *host
     persistence:
-      shared:
+      config:
+        enabled: true
         type: emptyDir
         globalMounts:
-          - path: /home/opuser/.op/data
+          - path: *configDir
