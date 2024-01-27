@@ -3,14 +3,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app ntel-device-plugin
+  name: &app intel-device-plugin
   namespace: flux-system
 spec:
-  targetNamespace: system
+  targetNamespace: tools
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/system/intel-device-plugin/app
+  path: ./kubernetes/main/apps/tools/intel-device-plugin/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -27,11 +27,11 @@ metadata:
   name: &app intel-device-plugin-gpu
   namespace: flux-system
 spec:
-  targetNamespace: system
+  targetNamespace: tools
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/system/intel-device-plugin/gpu
+  path: ./kubernetes/main/apps/tools/intel-device-plugin/gpu
   prune: true
   sourceRef:
     kind: GitRepository
@@ -48,11 +48,11 @@ metadata:
   name: &app intel-device-plugin-exporter
   namespace: flux-system
 spec:
-  targetNamespace: system
+  targetNamespace: tools
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/system/intel-device-plugin/exporter
+  path: ./kubernetes/main/apps/tools/intel-device-plugin/exporter
   prune: true
   sourceRef:
     kind: GitRepository

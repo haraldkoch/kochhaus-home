@@ -26,7 +26,7 @@ spec:
     keepHistory: false
   dependsOn:
     - name: intel-device-plugin-gpu
-      namespace: system
+      namespace: tools
   values:
     controllers:
       main:
