@@ -11,5 +11,5 @@ spec:
     name: "${APP}-bootstrap"
   resources:
     requests:
-      storage: "${VOLSYNC_CAPACITY}"
+      storage: "${VOLSYNC_CAPACITY:-1Gi}"
   storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
