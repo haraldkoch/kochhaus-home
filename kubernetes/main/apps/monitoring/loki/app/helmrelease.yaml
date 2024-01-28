@@ -6,6 +6,7 @@ metadata:
   name: loki
 spec:
   interval: 30m
+  timeout: 10m
   chart:
     spec:
       chart: loki
