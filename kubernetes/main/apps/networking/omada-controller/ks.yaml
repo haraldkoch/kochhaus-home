@@ -22,7 +22,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      CLAIM: omada-data-v2
+      VOLSYNC_CLAIM: omada-data-v2
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_UID: "508"
       VOLSYNC_GID: "508"

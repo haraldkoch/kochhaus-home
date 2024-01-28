@@ -24,7 +24,7 @@ spec:
   postBuild:
     substitute:
       APP: populator-test
-      CLAIM: populator-test-data
+      VOLSYNC_CLAIM: populator-test-data
       VOLSYNC_CAPACITY: 2Gi
       VOLSYNC_UID: "65533"
       VOLSYNC_GID: "65533"

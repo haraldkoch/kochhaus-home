@@ -24,7 +24,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      CLAIM: tautulli-config-v6
+      VOLSYNC_CLAIM: tautulli-config-v6
       VOLSYNC_CAPACITY: 2Gi
       VOLSYNC_UID: "1000"
       VOLSYNC_GID: "1000"

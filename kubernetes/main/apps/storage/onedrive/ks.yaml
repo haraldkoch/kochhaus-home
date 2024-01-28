@@ -24,7 +24,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      CLAIM: onedrive-config-v5
+      VOLSYNC_CLAIM: onedrive-config-v5
       VOLSYNC_CAPACITY: 128Mi
       VOLSYNC_UID: "1000"
       VOLSYNC_GID: "1000"

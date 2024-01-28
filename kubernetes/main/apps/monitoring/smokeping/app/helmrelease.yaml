@@ -88,7 +88,7 @@ spec:
         enabled: true
         existingClaim: smokeping-config-v1
       data:
-        existingClaim: smokeping-data-v5
+        existingClaim: ${VOLSYNC_CLAIM}
       kochhaus:
         type: secret
         name: smokeping

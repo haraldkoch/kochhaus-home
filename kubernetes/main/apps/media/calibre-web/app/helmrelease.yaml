@@ -80,7 +80,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: ${CLAIM}
+        existingClaim: ${VOLSYNC_CLAIM}
       media:
         enabled: true
         existingClaim: media-nfs
