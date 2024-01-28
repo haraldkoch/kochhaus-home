@@ -25,7 +25,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      CLAIM: smokeping-data-v5
+      VOLSYNC_CLAIM: smokeping-data-v5
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_UID: "102"
       VOLSYNC_GID: "101"

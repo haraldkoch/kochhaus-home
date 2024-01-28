@@ -51,7 +51,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: onedrive-config-v5
+        existingClaim: ${VOLSYNC_CLAIM}
         globalMounts:
           - path: /onedrive/conf
       data:

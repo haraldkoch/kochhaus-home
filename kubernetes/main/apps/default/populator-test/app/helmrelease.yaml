@@ -85,4 +85,4 @@ spec:
     persistence:
       data:
         enabled: true
-        existingClaim: populator-test-data
+        existingClaim: ${VOLSYNC_CLAIM}

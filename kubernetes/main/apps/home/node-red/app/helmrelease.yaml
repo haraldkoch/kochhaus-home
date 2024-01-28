@@ -74,4 +74,4 @@ spec:
               - *host
     persistence:
       data:
-        existingClaim: node-red-config-v2
+        existingClaim: ${VOLSYNC_CLAIM}

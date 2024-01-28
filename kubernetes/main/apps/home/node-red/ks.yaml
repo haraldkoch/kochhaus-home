@@ -25,7 +25,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      CLAIM: node-red-config-v2
+      VOLSYNC_CLAIM: node-red-config-v2
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_UID: "568"
       VOLSYNC_GID: "568"
