@@ -12,6 +12,14 @@
     {
       "description": ["Separate PRs for storage cluster"],
       "matchFileNames": [
+        "**/kubernetes/network/**",
+        "**/ansible/network/**"
+      ],
+      "additionalBranchPrefix": "network-"
+    },
+    {
+      "description": ["Separate PRs for storage cluster"],
+      "matchFileNames": [
         "**/kubernetes/registry/**",
         "**/ansible/registry/**"
       ],

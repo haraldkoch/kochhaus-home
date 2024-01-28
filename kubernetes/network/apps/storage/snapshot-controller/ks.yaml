@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes//apps/storage/snapshot-controller/app
+  path: ./kubernetes/network/apps/storage/snapshot-controller/app
   prune: true
   sourceRef:
     kind: GitRepository
