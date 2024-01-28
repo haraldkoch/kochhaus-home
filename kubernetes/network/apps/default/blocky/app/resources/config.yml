@@ -1,0 +1,50 @@
+---
+blocking:
+  blackLists:
+    ads:
+    # via onedr0p
+    # - https://raw.githubusercontent.com/ookangzheng/dbl-oisd-nl/master/dbl.txt
+    # the oisd.nl team has their own source
+    - https://big.oisd.nl/domainswild
+    # trying to block iOS game ads
+    - https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Regular%20Hosts.txt
+  whiteLists:
+    ads:
+    - https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt
+    - https://raw.githubusercontent.com/haraldkoch/safelists/main/adlist.txt
+  clientGroupsBlock:
+    default:
+    - ads
+
+caching:
+  minTime: 15m
+  prefetching: true
+  prefetchExpires: 2h
+
+clientLookup:
+  upstream: tcp+udp:${PRIVATE_DNS_PRIMARY}
+
+conditional:
+  mapping:
+    ${SECRET_DOMAIN}: bind-secondary-dns.default.svc.cluster.local:53
+    home.arpa: bind-secondary-dns.default.svc.cluster.local:53
+
+log:
+  level: info
+
+ports:
+  dns: 53
+  http: 4000
+
+prometheus:
+  enable: true
+  path: /metrics
+
+upstreams:
+  groups:
+    default:
+      - 192.168.20.1
+      #- tcp-tls:one.one.one.one
+      #- tcp-tls:dns.quad9.net
+      #- https://cloudflare-dns.com/dns-query
+      #- https://dns.quad9.net/dns-query

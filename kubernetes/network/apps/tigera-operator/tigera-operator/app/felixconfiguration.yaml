@@ -1,0 +1,15 @@
+---
+apiVersion: crd.projectcalico.org/v1
+kind: FelixConfiguration
+metadata:
+  name: default
+  namespace: default
+spec:
+  # local changes
+  featureDetectOverride: ChecksumOffloadBroken=true
+  iptablesBackend: NFT
+  # defaults
+  bpfLogLevel: ""
+  healthPort: 9099
+  logSeverityScreen: Info
+  reportingInterval: 0s

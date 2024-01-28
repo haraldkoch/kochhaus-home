@@ -1,0 +1,119 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &app blocky
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.5.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        replicas: 2
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/0xerr0r/blocky
+              tag: v0.23@sha256:450d193393c0dceb108d1cd80a5580ab9d851127c924c1ae89361d32161ae528
+            env:
+              TZ: ${TIMEZONE}
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - /app/blocky
+                      - healthcheck
+                  initialDelaySeconds: 15
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+    ingress:
+      main:
+        enabled: true
+        className: internal
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: blocky-config
+        globalMounts:
+          - path: /app/config.yml
+            subPath: config.yml
+            readOnly: true
+    service:
+      main:
+        ports:
+          http:
+            port: 4000
+      dns:
+        controller: main
+        type: LoadBalancer
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: dns.${SECRET_DOMAIN}
+        externalIPs: ["${BLOCKY_ADDR}", "${BLOCKY_ADDR_V6}"]
+        externalTrafficPolicy: Local
+        ipFamilyPolicy: PreferDualStack
+        ipFamilies: [IPv4, IPv6]
+        ports:
+          dns-tcp:
+            enabled: true
+            port: 53
+            protocol: TCP
+          dns-udp:
+            enabled: true
+            port: 53
+            protocol: UDP
+    serviceMonitor:
+      main:
+        enabled: true

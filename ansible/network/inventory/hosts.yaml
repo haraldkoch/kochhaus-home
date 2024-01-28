@@ -1,0 +1,18 @@
+---
+kubernetes:
+  vars:
+    ansible_user: chk
+  children:
+    master:
+      hosts:
+        p0:
+          ansible_host: 192.168.20.33
+          node-ip: 192.168.20.33,fdd5:aa8:9535:20::33
+    worker:
+      hosts:
+        p1:
+          ansible_host: 192.168.20.34
+          node-ip: 192.168.20.34,fdd5:aa8:9535:20::34
+        p2:
+          ansible_host: 192.168.20.35
+          node-ip: 192.168.20.35,fdd5:aa8:9535:20::35
