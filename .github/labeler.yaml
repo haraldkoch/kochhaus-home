@@ -23,6 +23,11 @@ cluster/main:
       - any-glob-to-any-file: ansible/main/**/*
       - any-glob-to-any-file: kubernetes/main/**/*
       - any-glob-to-any-file: terraform/main/**/*
+cluster/network:
+  - changed-files:
+      - any-glob-to-any-file: ansible/network/**/*
+      - any-glob-to-any-file: kubernetes/network/**/*
+      - any-glob-to-any-file: terraform/network/**/*
 cluster/registry:
   - changed-files:
       - any-glob-to-any-file: ansible/registry/**/*

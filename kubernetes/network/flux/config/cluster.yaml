@@ -9,7 +9,7 @@ spec:
   interval: 30m
   ref:
     branch: main
-  url: https://github.com/haraldkoch/kochhaus-network
+  url: https://github.com/haraldkoch/kochhaus-home
   ignore: |
     # exclude all
     /*

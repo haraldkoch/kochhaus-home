@@ -6,5 +6,5 @@ metadata:
   name: calico
   namespace: flux-system
 spec:
-  interval: 5m
+  interval: 1h
   url: https://projectcalico.docs.tigera.io/charts
