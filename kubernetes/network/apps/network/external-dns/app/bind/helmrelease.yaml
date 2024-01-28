@@ -1,0 +1,54 @@
+---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &app external-dns-bind
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: external-dns
+      version: 1.14.3
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    nameOverride: *app
+    provider: rfc2136
+    env:
+      - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: external-dns-bind-secret
+            key: rfc2136_tsig_secret
+    extraArgs:
+      - --rfc2136-host=${PRIVATE_DNS_PRIMARY}
+      - --rfc2136-port=53
+      - --rfc2136-zone=${SECRET_DOMAIN}
+      - --rfc2136-min-ttl=0s
+      - --rfc2136-tsig-axfr
+      - --rfc2136-tsig-keyname=externaldns
+      - --rfc2136-tsig-secret-alg=hmac-sha256
+    policy: sync
+    sources: ["ingress", "service"]
+    # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
+    txtOwnerId: network
+    txtPrefix: k8s.
+    domainFilters: ["${SECRET_DOMAIN}"]
+    logLevel: info
+    serviceMonitor:
+      enabled: true
+    podAnnotations:
+      secret.reloader.stakater.com/reload: external-dns-bind-secret

@@ -1,0 +1,7 @@
+---
+github_username: haraldkoch
+timezone: America/Toronto
+
+node_cidr: "192.168.20.0/24"
+coredns_addr: "10.44.0.10"
+coredns_addr_v6: "fdd5:aa8:9535:44::a"

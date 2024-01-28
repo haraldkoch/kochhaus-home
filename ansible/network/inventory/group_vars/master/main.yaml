@@ -1,0 +1,35 @@
+---
+k3s_control_node: true
+k3s_server:
+  cluster-cidr: 10.40.0.0/16,fdd5:aa8:9535:40::/60
+  disable:
+    - coredns                         # Disable coredns                 - replaced with Coredns Helm Chart
+    - flannel                         # Disable flannel                 - replaced with Tigera Operator Helm Chart
+    - local-storage                   # Disable local-path-provisioner  - replaced with democratic-csi
+    - metrics-server                  # Disable metrics-server          - installed with Flux
+    - servicelb                       # Disable servicelb               - replaced with MetalLB Helm Chart
+    - traefik                         # Disable traefik                 - replaced with ingress-nginx and installed with Flux
+  disable-cloud-controller: true
+  disable-network-policy: true
+  docker: false
+  etcd-expose-metrics: true           # Required to monitor etcd with kube-prometheus-stack
+  flannel-backend: "none"             # This needs to be in quotes
+  kube-apiserver-arg:
+    - "anonymous-auth=true"           # Required for HAProxy health-checks
+  kube-controller-manager-arg:
+    - "bind-address=0.0.0.0"          # Required to monitor kube-controller-manager with kube-prometheus-stack
+  kube-proxy-arg:
+    - "metrics-bind-address=0.0.0.0"  # Required to monitor kube-proxy with kube-prometheus-stack
+  kube-scheduler-arg:
+    - "bind-address=0.0.0.0"          # Required to monitor kube-scheduler with kube-prometheus-stack
+  kubelet-arg:
+    - "image-gc-high-threshold=74"
+    - "image-gc-low-threshold=70"
+  node-taint:
+    - "node-role.kubernetes.io/control-plane:NoSchedule"
+  pause-image: registry.k8s.io/pause:3.9
+  secrets-encryption: true
+  service-cidr: 10.44.0.0/16,fdd5:aa8:9535:44::/108
+  tls-san:
+    - "{{ k3s_registration_address }}"
+  write-kubeconfig-mode: "0644"

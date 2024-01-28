@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-settings
+  namespace: flux-system
+data:
+  TIMEZONE: "America/Toronto"
+
+  CLUSTER_CIDR: "10.40.0.0/16"
+  CLUSTER_CIDR_V6: "fdd5:aa8:9535:40::/60"
+  NODE_CIDR: "192.168.20.0/24"
+  NODE_CIDR_V6: "fdd5:aa8:9535:20::/64"
+  SERVICE_CIDR: "10.44.0.0/16"
+  SERVICE_CIDR_V6: "fdd5:aa8:9535:44::/112"
+
+  COREDNS_ADDR: "10.44.0.10"
+  COREDNS_ADDR_V6: "fdd5:aa8:9535:44::a"
+
+  KUBEAPI_ADDR: "192.168.20.32"
+  BLOCKY_ADDR: "192.168.22.53"
+  BLOCKY_ADDR_V6: "fdd5:aa8:9535:22::53"

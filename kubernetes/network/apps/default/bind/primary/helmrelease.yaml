@@ -1,0 +1,114 @@
+---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: &app bind-primary
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.5.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        replicas: 1
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          # FIXME: add named-exporter as a sidecar
+          main:
+            image:
+              repository: ubuntu/bind9
+              tag: 9.18-22.04_beta
+            env:
+              TZ: ${TIMEZONE}
+              BIND9_USER: bind
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - /usr/sbin/rndc
+                      - status
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 100m
+                memory: 128Mi
+              limits:
+                memory: 192Mi
+        pod:
+          securityContext:
+            fsGroup: 101
+            fsGroupChangePolicy: "OnRootMismatch"
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+    service:
+      main:
+        enabled: false
+      dns:
+        enabled: true
+        controller: main
+        externalIPs:
+          - 192.168.22.51
+          - fdd5:aa8:9535:22::51
+        externalTrafficPolicy: Cluster
+        ipFamilyPolicy: PreferDualStack
+        ipFamilies: [IPv4, IPv6]
+        ports:
+          dns-tcp:
+            enabled: true
+            protocol: TCP
+            port: 53
+          dns-udp:
+            enabled: true
+            protocol: UDP
+            port: 53
+    ingress:
+      main:
+        enabled: false
+    persistence:
+      config:
+        enabled: true
+        type: secret
+        name: bind-primary-config
+        globalMounts:
+          - path: /etc/bind/named.conf.local
+            subPath: named.conf
+            readOnly: true
+      cache:
+        enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 10Mi
+        globalMounts:
+          - path: /var/cache/bind
