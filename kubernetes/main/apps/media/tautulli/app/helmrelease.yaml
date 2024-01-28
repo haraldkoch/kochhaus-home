@@ -70,7 +70,7 @@ spec:
           gethomepage.dev/widget.url: http://tautulli.media:8181/plexpy
           gethomepage.dev/widget.key: "{{HOMEPAGE_VAR_TAUTULLI_TOKEN}}"
         hosts:
-          - host: "tautulli.${CLUSTER_DOMAIN}"
+          - host: &host tautulli.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
@@ -78,7 +78,7 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "tautulli.${CLUSTER_DOMAIN}"
+              - *host
     persistence:
       config:
         enabled: true
