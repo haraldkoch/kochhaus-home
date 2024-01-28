@@ -164,7 +164,7 @@ spec:
               - *host
     persistence:
       data:
-        existingClaim: omada-data-v2
+        existingClaim: ${VOLSYNC_CLAIM}
         globalMounts:
           - path: /opt/tplink/EAPController/data
       work:

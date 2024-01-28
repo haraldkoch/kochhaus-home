@@ -82,7 +82,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: tautulli-config-v6
+        existingClaim: ${VOLSYNC_CLAIM}
       backup:
         type: nfs
         server: "${SECRET_BACKUP_SERVER:=fnord}"
