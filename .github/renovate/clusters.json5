@@ -7,23 +7,26 @@
         "**/kubernetes/main/**",
         "**/ansible/main/**"
       ],
-      "additionalBranchPrefix": "main-"
+      "additionalBranchPrefix": "main-",
+      "commitMessageSuffix": " [main]"
     },
     {
-      "description": ["Separate PRs for storage cluster"],
+      "description": ["Separate PRs for network cluster"],
       "matchFileNames": [
         "**/kubernetes/network/**",
         "**/ansible/network/**"
       ],
-      "additionalBranchPrefix": "network-"
+      "additionalBranchPrefix": "network-",
+      "commitMessageSuffix": " [network]"
     },
     {
-      "description": ["Separate PRs for storage cluster"],
+      "description": ["Separate PRs for registry cluster"],
       "matchFileNames": [
         "**/kubernetes/registry/**",
         "**/ansible/registry/**"
       ],
-      "additionalBranchPrefix": "registry-"
+      "additionalBranchPrefix": "registry-",
+      "commitMessageSuffix": " [registry]"
     }
   ]
 }
