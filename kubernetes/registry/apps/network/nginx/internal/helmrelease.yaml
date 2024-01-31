@@ -74,11 +74,10 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: true
-          namespace: *namespace
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: "networking/${SECRET_DOMAIN/./-}-production-tls"
+        default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
         enable-annotation-validation: true
       topologySpreadConstraints:
         - maxSkew: 1
