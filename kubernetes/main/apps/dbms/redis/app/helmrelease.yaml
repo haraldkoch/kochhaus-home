@@ -31,6 +31,8 @@ spec:
     master:
       persistence:
         enabled: false
+    networkPolicy:
+      enabled: false
     replica:
       persistence:
         enabled: false
