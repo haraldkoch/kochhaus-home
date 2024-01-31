@@ -22,7 +22,7 @@ spec:
     # renovate: depName=tektoncd/triggers
     !/triggers/previous/v0.25.3/interceptors.yaml
     # renovate: depName=tektoncd/chains
-    !/chains/previous/v0.19.0/release.yaml
+    !/chains/previous/v0.20.0/release.yaml
 ---
 # yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
