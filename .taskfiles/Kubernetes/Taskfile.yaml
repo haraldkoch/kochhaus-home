@@ -12,8 +12,8 @@ tasks:
     interactive: true
     cmd: |
       kubectl --context {{.cluster}} get pods --all-namespaces -o=jsonpath="{range .items[*]}{'\n'}{range .spec.containers[*]}{.image}{'\n'}{end}{end}" | sort | uniq | grep -Ev 'quay|gcr|ghcr|ecr|us-docker|registry.k8s' | grep -Ev 'bitnami|rook|intel|grafana' |  sed -e 's/docker\.io\///g' | sort | uniq
-    preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+    requires:
+      vars: ["cluster"]
 
   taints:
     desc: show node taints
@@ -23,8 +23,8 @@ tasks:
     interactive: true
     cmd: |
       kubectl --context {{.cluster}} get nodes -o custom-columns=NAME:.metadata.name,TAINTS:.spec.taints --no-headers
-    preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+    requires:
+      vars: ["cluster"]
 
   mount:
     desc: Mount a PersistentVolumeClaim to a temporary pod for a cluster
@@ -66,11 +66,11 @@ tasks:
             "restartPolicy": "Never"
           }
         }'
+    requires:
+      vars: ["cluster", "claim"]
     vars:
       ns: '{{.ns | default "default"}}'
-      claim: '{{ or .claim (fail "Argument (claim) is required") }}'
     preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
       - { msg: "PVC not found", sh: "kubectl --context {{.cluster}} -n {{.ns}} get persistentvolumeclaim {{.claim}}" }
 
   network:
@@ -80,9 +80,9 @@ tasks:
         cluster: Cluster to run command against (required)
         ns: Namespace the PVC is in (default: default)
     interactive: true
+    requires:
+      vars: ["cluster"]
     cmd: |
       kubectl run --context {{.cluster}} -n {{.ns}} netshoot --rm -i --tty --image ghcr.io/nicolaka/netshoot:latest {{.CLI_ARGS}}
     vars:
       ns: '{{.ns | default "default"}}'
-    preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
