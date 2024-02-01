@@ -1,5 +1,5 @@
 ---
-# https://github.com/kevincoakley/ansible-role-k8s-rolling-update
+# Ref: https://github.com/kevincoakley/ansible-role-k8s-rolling-update
 - name: Cluster update rollout
   hosts: kubernetes
   become: true
@@ -60,7 +60,7 @@
           when: reboot_required.stat.exists
           ansible.builtin.reboot:
             msg: Rebooting node
-            post_reboot_delay: 60
+            post_reboot_delay: 120
             reboot_timeout: 3600
 
         - name: Uncordon

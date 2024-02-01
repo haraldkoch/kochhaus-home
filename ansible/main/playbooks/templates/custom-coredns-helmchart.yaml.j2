@@ -18,7 +18,14 @@ spec:
     k8sAppLabelOverride: kube-dns
     service:
       name: kube-dns
-      clusterIP: {{ k3s_server['service-cidr'] | ansible.utils.nthhost(10) }}
+      clusterIP: {{ coredns_addr }}
+      clusterIPs:
+      - {{ coredns_addr }}
+      - {{ coredns_addr_v6 }}
+      ipFamilies:
+      - IPv4
+      - IPv6
+      ipFamilyPolicy: PreferDualStack
     serviceAccount:
       create: true
     deployment:
