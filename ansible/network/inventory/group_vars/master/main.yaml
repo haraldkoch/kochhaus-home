@@ -8,7 +8,7 @@ k3s_server:
     - local-storage                   # Disable local-path-provisioner  - replaced with democratic-csi
     - metrics-server                  # Disable metrics-server          - installed with Flux
     - servicelb                       # Disable servicelb               - replaced with MetalLB Helm Chart
-    - traefik                         # Disable traefik                 - replaced with ingress-nginx and installed with Flux
+    - traefik                         # Disable traefik                 - replaced with ingress-nginx Helm Chart
   disable-cloud-controller: true
   disable-network-policy: true
   docker: false
