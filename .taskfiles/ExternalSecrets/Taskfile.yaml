@@ -14,12 +14,12 @@ tasks:
     cmd: kubectl annotate --context {{.cluster}} -n {{.ns}} externalsecret {{.secret}} force-sync=$(date +%s) --overwrite
     env:
       KUBECONFIG: "{{.KUBERNETES_DIR}}/{{.cluster}}/kubeconfig"
+    requires:
+      vars: ["cluster", "secret"]
     vars:
       ns: '{{.ns | default "default"}}'
-      secret: '{{ or .secret (fail "Argument (secret) is required") }}'
     preconditions:
       - { msg: "ExternalSecret not found", sh: "kubectl get --context {{.cluster}} -n {{.ns}} externalsecret {{.secret}}" }
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
 
   sync-all:
     desc: Sync all ExternalSecrets for a cluster
@@ -35,8 +35,8 @@ tasks:
           secret: '{{$a := split "|" .ITEM}}{{$a._1}}'
     env:
       KUBECONFIG: "{{.KUBERNETES_DIR}}/{{.cluster}}/kubeconfig"
+    requires:
+      vars: ["cluster"]
     vars:
       secrets:
         sh: kubectl get --context {{.cluster}} externalsecret --all-namespaces --no-headers -A | awk '{print $1 "|" $2}'
-    preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }

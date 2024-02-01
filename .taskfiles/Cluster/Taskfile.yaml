@@ -15,8 +15,8 @@ tasks:
       Args:
         cluster: Cluster to run command against (required)
     cmd: flux --context {{.cluster}} check --pre
-    preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+    requires:
+      vars: ["cluster"]
 
   install:
     desc: Install Flux into your cluster
@@ -35,11 +35,10 @@ tasks:
       - sops --decrypt {{.KUBERNETES_DIR}}/{{.cluster}}/flux/vars/cluster-secrets.sops.yaml | kubectl --context {{.cluster}} apply -f -
       - kubectl --context {{.cluster}} apply -f {{.KUBERNETES_DIR}}/{{.cluster}}/flux/vars/cluster-settings.yaml
       - kubectl --context {{.cluster}} apply --kustomize {{.KUBERNETES_DIR}}/{{.cluster}}/flux/config
+    requires:
+      vars: ["cluster"]
     preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
-      - sh: test -f {{.SOPS_AGE_KEY_FILE}}
-        msg: |
-          Age key file is not found. Did you forget to create it?
+      - { msg: "Age key file is not found. Did you forget to create it?", sh: "test -f {{.SOPS_AGE_KEY_FILE}}" }
     vars:
       SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
 
@@ -49,8 +48,8 @@ tasks:
       Args:
         cluster: Cluster to run command against (required)
     cmd: flux --context {{.cluster}} reconcile -n flux-system kustomization cluster --with-source
-    preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+    requires:
+      vars: ["cluster"]
 
   list-dockerhub:
     desc: What dockerhub images are running in my cluster
@@ -59,8 +58,8 @@ tasks:
         cluster: Cluster to run command against (required)
     cmds:
       - kubectl --context {{.cluster}} get pods --all-namespaces -o=jsonpath="{range .items[*]}{'\n'}{range .spec.containers[*]}{.image}{'\n'}{end}{end}" | sort | uniq | grep -Ev 'quay|gcr|ghcr|ecr|us-docker|registry.k8s' | grep -Ev 'bitnami|rook|intel|grafana' |  sed -e 's/docker\.io\///g' | sort | uniq
-    preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+    requires:
+      vars: ["cluster"]
 
   delete-failed-pods:
     desc: Deletes failed pods
@@ -69,8 +68,8 @@ tasks:
         cluster: Cluster to run command against (required)
     cmds:
       - kubectl --context {{.cluster}} delete pods --field-selector status.phase=Failed -A --ignore-not-found=true
-    preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+    requires:
+      vars: ["cluster"]
 
   delete-jobs:
     desc: Delete all jobs
@@ -79,8 +78,8 @@ tasks:
         cluster: Cluster to run command against (required)
     cmds:
       - kubectl --context {{.cluster}} delete job -A --all
-    preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+    requires:
+      vars: ["cluster"]
 
   hr-restart:
     desc: Restart all failed Helm Releases
@@ -90,8 +89,8 @@ tasks:
     cmds:
       - kubectl --context {{.cluster}} get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -L1 bash -c 'flux --context {{.cluster}} suspend hr $0 -n $1'
       - kubectl --context {{.cluster}} get hr --all-namespaces | grep False | awk '{print $2, $1}' | xargs -L1 bash -c 'flux --context {{.cluster}} resume hr $0 -n $1'
-    preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+    requires:
+      vars: ["cluster"]
 
   wait-pod-pending:
     aliases: [waitp]
@@ -159,5 +158,5 @@ tasks:
         vars:
           NAME: 'jobs/{{.CLIENT_NAME}}'
           NS: '{{.CLIENT_NS}}'
-    preconditions:
-      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+    requires:
+      vars: ["cluster"]

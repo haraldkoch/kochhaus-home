@@ -32,12 +32,12 @@ tasks:
       .venv/bin/ansible-playbook \
         --inventory {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml \
         {{.ANSIBLE_DIR}}/{{.cluster}}/playbooks/{{.playbook}}.yaml {{.CLI_ARGS}}
+    requires:
+      vars: ["cluster", "playbook"]
     preconditions:
-      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
-      - { msg: "Argument (playbook) is required", sh: "test -n {{.playbook}}" }
-      - { msg: "Venv not found",                  sh: "test -d {{.ROOT_DIR}}/.venv" }
-      - { msg: "Inventory not found",             sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml" }
-      - { msg: "Playbook not found",              sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/playbooks/{{.playbook}}.yaml" }
+      - { msg: "Venv not found", sh: "test -d {{.ROOT_DIR}}/.venv" }
+      - { msg: "Inventory not found", sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml" }
+      - { msg: "Playbook not found", sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/playbooks/{{.playbook}}.yaml" }
 
 
   list:
@@ -47,10 +47,12 @@ tasks:
         cluster: Cluster to run command against (required)
     cmd: |
       ansible all --inventory {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml --list-hosts
+    requires:
+      vars: ["cluster"]
     preconditions:
-      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
-      - { msg: "Venv not found",                  sh: "test -d {{.ROOT_DIR}}/.venv" }
-      - { msg: "Inventory not found",             sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml" }
+      - { msg: "Argument (cluster) is required", sh: "test -n {{.cluster}}" }
+      - { msg: "Venv not found", sh: "test -d {{.ROOT_DIR}}/.venv" }
+      - { msg: "Inventory not found", sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml" }
 
   prepare:
     desc: Prepare all the k8s nodes for running k3s
@@ -62,6 +64,8 @@ tasks:
         vars:
           cluster: "{{.cluster}}"
           playbook: "cluster-prepare"
+    requires:
+      vars: ["cluster"]
 
   install:
     desc: Install Kubernetes on the nodes
@@ -73,6 +77,8 @@ tasks:
         vars:
           cluster: "{{.cluster}}"
           playbook: "cluster-installation"
+    requires:
+      vars: ["cluster"]
 
   nuke:
     desc: Uninstall Kubernetes on the nodes
@@ -85,6 +91,8 @@ tasks:
         vars:
           cluster: "{{.cluster}}"
           playbook: "cluster-nuke"
+    requires:
+      vars: ["cluster"]
 
   reboot:
     desc: Reboot all the k8s nodes
@@ -97,6 +105,8 @@ tasks:
         vars:
           cluster: "{{.cluster}}"
           playbook: "cluster-reboot"
+    requires:
+      vars: ["cluster"]
 
   ping:
     desc: Ping all the hosts
@@ -105,10 +115,11 @@ tasks:
         cluster: Cluster to run command against (required)
     cmd: |
       ansible all --inventory {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml --one-line -m 'ping'
+    requires:
+      vars: ["cluster"]
     preconditions:
-      - { msg: "Argument (cluster) is required",  sh: "test -n {{.cluster}}" }
-      - { msg: "Venv not found",                  sh: "test -d {{.ROOT_DIR}}/.venv" }
-      - { msg: "Inventory not found",             sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml" }
+      - { msg: "Venv not found", sh: "test -d {{.ROOT_DIR}}/.venv" }
+      - { msg: "Inventory not found", sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml" }
 
   .venv:
     internal: true

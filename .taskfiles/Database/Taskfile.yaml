@@ -5,8 +5,8 @@ tasks:
   pgadmin-password:
     desc: Retrieve the pgadmin dashboard password
     cmds:
-      - kubectl -n dbms get secret pgadmin-secrets -o jsonpath='{.data.password}' | base64 --decode && echo
+      - kubectl get --context main -n dbms secret pgadmin-secrets -o jsonpath='{.data.password}' | base64 --decode && echo
   postgres-password:
     desc: Retrieve the postgresql superuser password
     cmds:
-      - kubectl -n dbms get secret cloudnative-pg-secret -o jsonpath='{.data.password}' | base64 --decode && echo
+      - kubectl get --context main -n dbms secret cloudnative-pg-secret -o jsonpath='{.data.password}' | base64 --decode && echo
