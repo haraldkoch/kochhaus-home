@@ -105,6 +105,11 @@ spec:
           - path: /etc/bind/named.conf.local
             subPath: named.conf
             readOnly: true
+      data:
+        enabled: true
+        existingClaim: bind-primary-data
+        globalMounts:
+          - path: /var/lib/bind
       cache:
         enabled: true
         type: persistentVolumeClaim
