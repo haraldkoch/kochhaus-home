@@ -27,7 +27,7 @@ k3s_server:
     - "image-gc-high-threshold=74"
     - "image-gc-low-threshold=70"
   pause-image: registry.k8s.io/pause:3.9
-  service-cidr: "10.43.0.0/16"
+  service-cidr: 10.43.0.0/16
   tls-san:
     - "{{ k3s_registration_address }}"
   write-kubeconfig-mode: "0644"

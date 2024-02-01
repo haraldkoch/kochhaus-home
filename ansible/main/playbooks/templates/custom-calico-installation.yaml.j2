@@ -14,12 +14,12 @@ spec:
     # Note: The ipPools section cannot be modified post-install.
     ipPools:
       - blockSize: 26
-        cidr: 10.42.0.0/16
+        cidr: "{{ k3s_server['cluster-cidr'].split(',')[0] }}"
         encapsulation: "None"
         natOutgoing: Enabled
         nodeSelector: all()
       - blockSize: 116
-        cidr: fdd5:aa8:9535:42::/108
+        cidr: "{{ k3s_server['cluster-cidr'].split(',')[1] }}"
         natOutgoing: Enabled
         nodeSelector: all()
   nodeMetricsPort: 9091

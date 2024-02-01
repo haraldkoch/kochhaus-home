@@ -17,9 +17,9 @@
         msg: Aborted nuking the cluster
       when: nuke != 'YES I WANT TO DESTROY THIS CLUSTER'
 
-    - name: Pausing for 2 seconds...
+    - name: Pausing for 5 seconds...
       ansible.builtin.pause:
-        seconds: 2
+        seconds: 5
   tasks:
     - name: Stop Kubernetes # noqa: ignore-errors
       ignore_errors: true
@@ -31,29 +31,22 @@
           vars:
             k3s_state: stopped
 
-    # https://github.com/k3s-io/docs/blob/main/docs/installation/network-options.md
+    # Ref: https://github.com/k3s-io/docs/blob/main/docs/installation/network-options.md
     - name: Networking
       block:
-        - name: Networking | Delete Cilium links
-          ansible.builtin.command:
-            cmd: "ip link delete {{ item }}"
-            removes: "/sys/class/net/{{ item }}"
-          loop: ["cilium_host", "cilium_net", "cilium_vxlan"]
-        - name: Networking | Flush iptables
-          ansible.builtin.iptables:
-            table: "{{ item }}"
-            flush: true
-          loop: ["filter", "nat", "mangle", "raw"]
-        - name: Networking | Flush ip6tables
-          ansible.builtin.iptables:
-            table: "{{ item }}"
-            flush: true
-            ip_version: ipv6
-          loop: ["filter", "nat", "mangle", "raw"]
-        - name: Networking | Delete CNI directory
+        - name: Gather list of CNI files
+          ansible.builtin.find:
+            paths: /etc/cni/net.d
+            patterns: "*"
+            hidden: true
+          register: directory_contents
+
+        - name: Delete CNI files
           ansible.builtin.file:
-            path: /etc/cni/net.d
+            path: "{{ item.path }}"
             state: absent
+          loop: "{{ directory_contents.files }}"
+
 
     - name: Check to see if k3s-killall.sh exits
       ansible.builtin.stat:
