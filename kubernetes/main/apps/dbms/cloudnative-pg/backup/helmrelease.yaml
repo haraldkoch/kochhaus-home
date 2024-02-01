@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app pg-kochhaus-backup
+  name: pg-kochhaus-backup
 spec:
   interval: 30m
   chart:
@@ -68,7 +68,6 @@ spec:
             args:
               - "-c"
               - "pg_dumpall -U $PGUSER | gzip > /backup/kochhaus-cluster.dump.gz"
-
             resources:
               requests:
                 cpu: 50m
