@@ -31,7 +31,7 @@ spec:
               kind: Ingress
             patch: |
               - op: remove
-                path: /spec/tls/[0]/secretName
+                path: /spec/tls/0/secretName
   values:
     monitoring:
       enabled: true
