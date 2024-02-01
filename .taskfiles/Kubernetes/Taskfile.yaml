@@ -86,3 +86,35 @@ tasks:
       kubectl run --context {{.cluster}} -n {{.ns}} netshoot --rm -i --tty --image ghcr.io/nicolaka/netshoot:latest {{.CLI_ARGS}}
     vars:
       ns: '{{.ns | default "default"}}'
+
+  iperf2:
+    desc: Start a iperf2 server on node SERVER_NODE, and iperf2 client on node CLIENT_NODE, to benchmark network performance.
+    dir: "{{.ROOT_DIR}}/.taskfiles/Cluster/iperf2"
+    vars: &iperf2-vars
+      SERVER_NAME: &iperf2-server-name 'iperf2-server-{{- .TIMENOW -}}'
+      SERVER_NS: &iperf2-server-ns '{{ .SERVER_NS | default "default" }}'
+      CLIENT_NAME: &iperf2-client-name 'iperf2-client-{{- .TIMENOW -}}'
+      CLIENT_NS: &iperf2-client-ns '{{ .CLIENT_NS | default "default" }}'
+      CLUSTER: '{{ .cluster }}'
+      CLUSTER_DOMAIN: '{{ .CLUSTER_DOMAIN | default "cluster.local" }}'
+      SERVER_PORT: '{{ .SERVER_PORT | default "5001" }}'
+      SERVER_NODE: '{{ or .SERVER_NODE (fail "Missing `SERVER_NODE` environment variable!") }}'
+      CLIENT_NODE: '{{ or .CLIENT_NODE (fail "Missing `CLIENT_NODE` environment variable!") }}'
+      SERVER_ARGS: '{{ .SERVER_ARGS | default "" }}'
+      CLIENT_ARGS: '{{ .CLIENT_ARGS | default "" }}'
+    env: *iperf2-vars
+    cmds:
+      - cat ./ServerJob.tmpl.yaml | envsubst | kubectl --context {{.cluster}} apply -f -
+      - defer: cat ./ServerJob.tmpl.yaml | envsubst | kubectl --context {{.cluster}} delete -f -
+      - task: wait-pod-running
+        vars:
+          NAME: '-l job-name={{.SERVER_NAME}}'
+          NS: '{{.SERVER_NS}}'
+      - cat ./ClientJob.tmpl.yaml | envsubst | kubectl --context {{.cluster}} apply -f -
+      - defer: cat ./ClientJob.tmpl.yaml | envsubst | kubectl --context {{.cluster}} delete -f -
+      - task: wait-finish
+        vars:
+          NAME: 'jobs/{{.CLIENT_NAME}}'
+          NS: '{{.CLIENT_NS}}'
+    requires:
+      vars: ["cluster"]

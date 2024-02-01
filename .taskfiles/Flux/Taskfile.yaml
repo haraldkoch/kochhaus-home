@@ -40,7 +40,7 @@ tasks:
     summary: |
       Args:
         cluster: Cluster to run command against (required)
-        path: Path to the Flux Kustomization resource (required)
+        path: Path to the Flux Kustomization resource (ks.yaml) (required)
         ns: Namespace the Flux Kustomization exists in (default: flux-system)
     cmd: |
       flux --context {{.cluster}} build ks $(basename {{.path}}) \
@@ -59,3 +59,12 @@ tasks:
         sh: flux --context {{.cluster}} --namespace {{.ns}} get kustomizations $(basename {{.path}}) 2>&1
     preconditions:
       - { msg: "Kustomization file not found", sh: "test -f {{.KUBERNETES_DIR}}/{{.cluster}}/apps/{{.path}}/ks.yaml" }
+
+  reconcile:
+    desc: Force update Flux to pull in changes from your Git repository
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    cmd: flux --context {{.cluster}} reconcile --namespace flux-system kustomization cluster --with-source
+    requires:
+      vars: ["cluster"]
