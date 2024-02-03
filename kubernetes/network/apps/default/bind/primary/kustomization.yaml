@@ -6,3 +6,11 @@ resources:
   - ./helmrelease.yaml
   - ./secret.sops.yaml
   - ../../../../templates/volsync
+configMapGenerator:
+  - name: sshd-initializer
+    files:
+      - 45-config=./resources/45-config.sh
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
