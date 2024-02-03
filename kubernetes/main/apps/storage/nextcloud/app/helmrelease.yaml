@@ -5,6 +5,7 @@ kind: HelmRelease
 metadata:
   name: nextcloud
 spec:
+  timeout: 15m
   interval: 30m
   chart:
     spec:
@@ -124,7 +125,7 @@ spec:
     startupProbe:
       enabled: true
       initialDelaySeconds: 10
-      periodSeconds: 10
+      periodSeconds: 20
       timeoutSeconds: 5
       failureThreshold: 30
       successThreshold: 1
