@@ -129,6 +129,9 @@ spec:
           - path: /etc/bind/named.conf.local
             subPath: named.conf
             readOnly: true
+          - path: /etc/bind/named.keys
+            subPath: named.keys
+            readOnly: true
       data:
         enabled: true
         existingClaim: bind-primary-data
