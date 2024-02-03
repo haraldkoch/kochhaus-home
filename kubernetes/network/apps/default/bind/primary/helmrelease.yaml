@@ -61,6 +61,23 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 192Mi
+          ssh:
+            image:
+              repository: ghcr.io/linuxserver/openssh-server
+              tag: version-8.6_p1-r3
+            env:
+              TZ: ${TIMEZONE}
+              PUBLIC_KEY_FILE: /sshd/authorized_keys
+              USER_NAME: "chk"
+              PUID: 101
+              PGID: 101
+            resources:
+              requests:
+                cpu: 25m
+                memory: 25Mi
+              limits:
+                cpu: 100m
+                memory: 100Mi
         pod:
           securityContext:
             fsGroup: 101
@@ -76,12 +93,14 @@ spec:
       main:
         enabled: false
       dns:
-        enabled: true
         controller: main
+        type: LoadBalancer
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: bind.${SECRET_DOMAIN}
         externalIPs:
           - 192.168.22.51
           - fdd5:aa8:9535:22::51
-        externalTrafficPolicy: Cluster
+        externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         ipFamilies: [IPv4, IPv6]
         ports:
@@ -93,6 +112,11 @@ spec:
             enabled: true
             protocol: UDP
             port: 53
+          ssh:
+            enabled: true
+            port: 22
+            protocol: TCP
+            targetPort: 2222
     ingress:
       main:
         enabled: false
@@ -117,3 +141,21 @@ spec:
         size: 10Mi
         globalMounts:
           - path: /var/cache/bind
+      ssh-init:
+        enabled: true
+        type: configMap
+        name: sshd-initializer
+        defaultMode: 0555
+        advancedMounts:
+          main:
+            ssh:
+              - path: /etc/cont-init.d/45-config
+                subPath: 45-config
+      sshd:
+        enabled: true
+        type: secret
+        name: sshd-config
+        advancedMounts:
+          main:
+            ssh:
+              - path: /sshd
