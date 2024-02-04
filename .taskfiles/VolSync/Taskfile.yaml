@@ -157,9 +157,9 @@ tasks:
       vars: ["cluster"]
     vars:
       dest:
-        sh: kubectl --context {{.cluster}} get pvc --all-namespaces --no-headers | grep "dst-dest" | awk '{print $1 "/" $2}'
+        sh: kubectl --context {{.cluster}} get pvc --all-namespaces --no-headers | grep "bootstrap-dest" | awk '{print $1 "/" $2}'
       cache:
-        sh: kubectl --context {{.cluster}} get pvc --all-namespaces --no-headers | grep "dst-cache" | awk '{print $1 "/" $2}'
+        sh: kubectl --context {{.cluster}} get pvc --all-namespaces --no-headers | grep "bootstrap-cache" | awk '{print $1 "/" $2}'
 
   # Suspend the Flux ks and hr
   .suspend:
