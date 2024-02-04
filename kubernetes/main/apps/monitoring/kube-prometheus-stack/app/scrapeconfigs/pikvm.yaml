@@ -8,6 +8,6 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - pikvm1.${PRIVATE_DYNAMIC_DOMAIN}
-        - pikvm2.${PRIVATE_DYNAMIC_DOMAIN}
+        - pikvm1.home.arpa
+        - pikvm2.home.arpa
   metricsPath: /api/export/prometheus/metrics
