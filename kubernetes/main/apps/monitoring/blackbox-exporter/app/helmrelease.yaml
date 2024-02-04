@@ -86,10 +86,10 @@ spec:
       targets:
         - module: icmp
           name: gw
-          url: gw
+          url: gw.${PRIVATE_STATIC_DOMAIN}
         - module: icmp
-          name: pikvm1
-          url: pikvm1
+          name: pikvm1.home.arpa
+          url: pikvm1.home.arpa
         - module: icmp
           name: pikvm2
           url: pikvm2

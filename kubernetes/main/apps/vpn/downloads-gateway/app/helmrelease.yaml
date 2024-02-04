@@ -94,7 +94,7 @@ spec:
           dnsConfig:
             nameservers:
               - 10.43.0.10
-            searches: ["default.svc.cluster.local", "svc.cluster.local", "cluster.local", "kochhaus.lan"]
+            searches: ["default.svc.cluster.local", "svc.cluster.local", "cluster.local"]
             options:
               - name: ndots
                 value: "5"
