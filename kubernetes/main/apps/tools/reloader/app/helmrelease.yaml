@@ -27,7 +27,7 @@ spec:
   values:
     fullnameOverride: reloader
     reloader:
-      reloadStrategy: annotations
+      readOnlyRootFileSystem: true
       deployment:
         resources:
           requests:
@@ -38,4 +38,4 @@ spec:
             memory: 132M
       podMonitor:
         enabled: true
-        namespace: system
+        namespace: "{{ .Release.Namespace }}"
