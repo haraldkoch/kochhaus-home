@@ -25,7 +25,6 @@
   "requireConfig": "optional",
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
-  "rebaseWhen": "conflicted",
   "ignorePaths": [
     "**/*.sops.*",
     "**/.archive/**",
