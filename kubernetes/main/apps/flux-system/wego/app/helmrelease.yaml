@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: weave-gitops
+  name: wego
 spec:
   interval: 30m
   chart:
@@ -12,9 +12,8 @@ spec:
       version: 4.0.36
       sourceRef:
         kind: HelmRepository
-        name: weave-gitops
+        name: weaveworks
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
       retries: 3
@@ -25,15 +24,11 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    fullnameOverride: wego
     adminUser:
       create: true
       createSecret: false
       username: admin
-    # oidcSecret:
-    #   create: true
-    #   clientID: weave-gitops
-    #   issuerURL: https://auth.${CLUSTER_DOMAIN}
-    #   redirectURL: https://gitops.${CLUSTER_DOMAIN}/oauth2/callback
     ingress:
       enabled: true
       className: internal
@@ -41,7 +36,7 @@ spec:
         hajimari.io/appName: "GitOps Dashboard"
         hajimari.io/icon: mdi:sawtooth-wave
       hosts:
-        - host: &host gitops.${CLUSTER_DOMAIN}
+        - host: &host wego.${CLUSTER_DOMAIN}
           paths:
             - path: /
               pathType: Prefix
@@ -54,13 +49,13 @@ spec:
       enabled: true
     rbac:
       create: true
-      impersonationResourceNames: ["admin"]
+      # impersonationResourceNames: ["admin"]
       additionalRules:
         - apiGroups: ["infra.contrib.fluxcd.io"]
           resources: ["terraforms"]
           verbs: ["get", "list", "patch"]
     podAnnotations:
-      secret.reloader.stakater.com/reload: weave-gitops-secret
+      secret.reloader.stakater.com/reload: cluster-user-auth,oidc-auth
     resources:
       requests:
         cpu: 100m
@@ -68,8 +63,3 @@ spec:
       limits:
         cpu: 200m
         memory: 192Mi
-  # valuesFrom:
-    # - kind: Secret
-    #   name: weave-gitops-secret
-    #   valuesKey: WEAVEGITOPS_OAUTH_CLIENT_SECRET
-    #   targetPath: oidcSecret.clientSecret
