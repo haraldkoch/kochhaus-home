@@ -3,7 +3,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./namespace.yaml
-  - ./coredns/ks.yaml
-  - ./kube-vip/ks.yaml
-  - ./metrics-server/ks.yaml
+  - ./rbac.yaml
+  - ./daemonset.yaml
+labels:
+  - pairs:
+      kustomize.toolkit.fluxcd.io/prune: disabled
