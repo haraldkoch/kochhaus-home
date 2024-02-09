@@ -14,7 +14,6 @@ spec:
         kind: HelmRepository
         name: calico
         namespace: flux-system
-  maxHistory: 2
   install:
     crds: CreateReplace
     remediation:
