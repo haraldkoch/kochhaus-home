@@ -29,8 +29,8 @@ spec:
         containers:
           main:
             image:
-              repository: docker.io/kpetrem/mqtt-exporter
-              tag: latest@sha256:e5b5a02fba296635d7c151f5c155f798e77ca2e2909992d458f9a492fbb2e02c
+              repository: ghcr.io/kpetremann/mqtt-exporter
+              tag: 1.4.1
             env:
               TZ: "${TIMEZONE}"
               # LOG_LEVEL: DEBUG
@@ -67,8 +67,8 @@ spec:
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "exporters.${CLUSTER_DOMAIN}"
-    # serviceMonitor:
-    #   main:
-    #     enabled: true
-    #     endpoints:
-    #       - port: metrics
+    serviceMonitor:
+      main:
+        enabled: true
+        endpoints:
+          - port: metrics
