@@ -1,14 +1,10 @@
 ---
 originRequest:
-  http2Origin: true
+  originServerName: external.kochhaus.dev
 
 ingress:
   - hostname: kochhaus.dev
     service: https://nginx-external-controller.network.svc.cluster.local:443
-    originRequest:
-      originServerName: external.kochhaus.dev
   - hostname: "*.kochhaus.dev"
     service: https://nginx-external-controller.network.svc.cluster.local:443
-    originRequest:
-      originServerName: external.kochhaus.dev
   - service: http_status:404
