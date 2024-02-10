@@ -5,6 +5,8 @@ kind: Kustomization
 metadata:
   name: &app cloudflared
   namespace: flux-system
+  labels:
+    substitution.flux.home.arpa/enabled: "true"
 spec:
   targetNamespace: network
   commonMetadata:
@@ -13,7 +15,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/main/apps/network/cloudflared/app
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
