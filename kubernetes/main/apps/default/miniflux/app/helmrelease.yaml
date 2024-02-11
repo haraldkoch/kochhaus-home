@@ -34,7 +34,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/haraldkoch/postgres-init
-              tag: 16.1@sha256:1643b66cc670909b3363796f713570fa9a601b13bfd4b1243f231516520b83d9
+              tag: 16.2@sha256:618f82576f2f77cc0316192715acf91ba969ec8e22171a14a69883a4c40c601b
             envFrom: &envFrom
               - secretRef:
                   name: miniflux-secret
