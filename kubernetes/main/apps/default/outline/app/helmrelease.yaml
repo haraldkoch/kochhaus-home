@@ -45,7 +45,7 @@ spec:
           main:
             image:
               repository: docker.io/outlinewiki/outline
-              tag: 0.74.0
+              tag: 0.75.0
             env:
               AWS_REGION: us-east-1
               AWS_S3_ACL: private
