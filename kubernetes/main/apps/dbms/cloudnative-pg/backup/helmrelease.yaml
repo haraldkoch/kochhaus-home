@@ -51,7 +51,7 @@ spec:
             image:
               # same image as the postgres cluster
               repository: ghcr.io/cloudnative-pg/postgresql
-              tag: 16.1
+              tag: 16.2
             env:
               PGHOST: postgres-rw.dbms
               PGPORT: "5432"
