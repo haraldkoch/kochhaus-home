@@ -21,8 +21,6 @@
     "github>haraldkoch/kochhaus-home//.github/renovate/packageRules.json5",
     "github>haraldkoch/kochhaus-home//.github/renovate/semanticCommits.json5",
   ],
-  "onboarding": false,
-  "requireConfig": "optional",
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
   "ignorePaths": [
