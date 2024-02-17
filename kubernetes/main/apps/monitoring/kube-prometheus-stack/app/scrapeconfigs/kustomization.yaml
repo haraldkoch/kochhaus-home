@@ -3,11 +3,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - ./externalsecret.yaml
   - ./gatus.yaml
   - ./haproxy.yaml
   - ./jezebel.yaml
   - ./mnemosyne.yaml
   - ./node-exporter.yaml
-  # - ./pikvm.yaml
+  - ./pikvm.yaml
   - ./wifi.yaml
   - ./wired.yaml

@@ -4,10 +4,18 @@ apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:
   name: pikvm
-  namespace: monitoring
 spec:
   staticConfigs:
     - targets:
         - pikvm1.home.arpa
         - pikvm2.home.arpa
   metricsPath: /api/export/prometheus/metrics
+  basicAuth:
+    username:
+      name: pikvm-auth
+      key: username
+    password:
+      name: pikvm-auth
+      key: password
+  tlsConfig:
+    insecureSkipVerify: true
