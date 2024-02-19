@@ -41,3 +41,4 @@ resources:
   - ./runix.yaml
   - ./stakater.yaml
   - ./vector.yaml
+  - ./xenitab.yaml
