@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
+  - ./notifications.yaml
   # Flux-Kustomizations
   - ./apprise/ks.yaml
   - ./blackbox-exporter/ks.yaml
