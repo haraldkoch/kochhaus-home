@@ -34,6 +34,8 @@
 
     - name: Kubeconfig
       ansible.builtin.include_tasks: tasks/kubeconfig.yaml
+      vars:
+        repository_base: "{{ lookup('ansible.builtin.pipe', 'git rev-parse --show-toplevel') }}"
 
     - name: Wait for custom manifests to rollout
       when:
@@ -65,10 +67,3 @@
       ansible.builtin.include_tasks: tasks/containerd_hook.yaml
       vars:
         containerd_shutdown_hook: enabled
-
-
-  handlers:
-    - name: Restart Kubernetes
-      ansible.builtin.systemd:
-        name: k3s
-        state: restarted
