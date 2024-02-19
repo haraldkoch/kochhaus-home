@@ -1,7 +1,7 @@
 ---
 k3s_control_node: true
 k3s_server:
-  cluster-cidr: 10.42.0.0/16
+  cluster-cidr: 10.42.0.0/16,fdd5:aa8:9535:42::/108
   disable:
     - coredns                         # Disable coredns                 - replaced with Coredns Helm Chart
     - flannel                         # Disable flannel                 - replaced with Tigera Operator Helm Chart
@@ -34,7 +34,7 @@ k3s_server:
   node-taint:
     - "node-role.kubernetes.io/control-plane:NoSchedule"
   pause-image: registry.k8s.io/pause:3.9
-  service-cidr: 10.43.0.0/16
+  service-cidr: 10.43.0.0/16,fdd5:aa8:9535:43::/108
   tls-san:
     # kube-vip
     - "{{ k3s_registration_address }}"
