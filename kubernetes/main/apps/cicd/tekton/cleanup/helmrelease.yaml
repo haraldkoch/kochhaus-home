@@ -41,7 +41,7 @@ spec:
           main:
             image:
               repository: ghcr.io/haraldkoch/kubernetes-kubectl
-              tag: 1.29.2@sha256:bd0d24f06b440b36c1510623e84507bea2875a85c64deaa7487b16a3fc1a0b30
+              tag: 1.29.2@sha256:97b4adbed4fe6457883a01d878b691df8e288b9add8a9133f7eac3aeb0826ac1
             env:
               NUM_TO_KEEP: "3"
             command:
