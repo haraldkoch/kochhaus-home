@@ -13,6 +13,7 @@ resources:
   - ./homepage/ks.yaml
   - ./kubernetes-schemas/ks.yaml
   #- ./letsblockit/ks.yaml
+  - ./memos/ks.yaml
   - ./miniflux/ks.yaml
   - ./outline/ks.yaml
   - ./populator-test/ks.yaml
