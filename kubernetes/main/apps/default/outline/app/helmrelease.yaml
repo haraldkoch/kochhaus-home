@@ -45,7 +45,7 @@ spec:
           main:
             image:
               repository: docker.io/outlinewiki/outline
-              tag: 0.75.1
+              tag: 0.75.2
             env:
               # temporary workaround?
               MAXIMUM_IMPORT_SIZE: 5120000
