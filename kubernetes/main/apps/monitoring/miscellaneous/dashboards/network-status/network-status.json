@@ -271,6 +271,7 @@
             }
           ]
         },
+        "interval": "30s",
         "links": [],
         "options": {
           "legend": {
@@ -297,7 +298,7 @@
             "exemplar": true,
             "expr": "max_over_time(probe_icmp_duration_seconds{instance='phaedra.cfrq.net',phase='rtt',job=~'.*ping-wired-6$'}[$__interval])",
             "format": "time_series",
-            "interval": "",
+            "interval": "30s",
             "intervalFactor": 2,
             "legendFormat": "{{job}} RTT",
             "range": true,
