@@ -137,44 +137,44 @@ spec:
     matchLabels:
       app.kubernetes.io/instance: prometheus-nut-exporter
       app.kubernetes.io/name: prometheus-nut-exporter
----
-# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/monitoring.coreos.com/servicemonitor_v1.json
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  labels:
-    app.kubernetes.io/component: metrics
-    app.kubernetes.io/instance: kubernetes
-    app.kubernetes.io/name: prometheus-nut-exporter
-    prometheus: kube-prometheus
-  name: prometheus-nut-exporter-kubernetes
-  namespace: monitoring
-spec:
-  endpoints:
-    - interval: 30s
-      metricRelabelings:
-        - action: replace
-          replacement: kubernetes
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: kubernetes
-          sourceLabels:
-            - server
-          targetLabel: server
-      params:
-        server:
-          - network-ups-tools
-      path: /ups_metrics
-      port: metrics
-      scheme: http
-      scrapeTimeout: 30s
-  jobLabel: prometheus-nut-exporter
-  namespaceSelector:
-    matchNames:
-      - monitoring
-  selector:
-    matchLabels:
-      app.kubernetes.io/instance: prometheus-nut-exporter
-      app.kubernetes.io/name: prometheus-nut-exporter
+#---
+## yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/monitoring.coreos.com/servicemonitor_v1.json
+#apiVersion: monitoring.coreos.com/v1
+#kind: ServiceMonitor
+#metadata:
+#  labels:
+#    app.kubernetes.io/component: metrics
+#    app.kubernetes.io/instance: kubernetes
+#    app.kubernetes.io/name: prometheus-nut-exporter
+#    prometheus: kube-prometheus
+#  name: prometheus-nut-exporter-kubernetes
+#  namespace: monitoring
+#spec:
+#  endpoints:
+#    - interval: 30s
+#      metricRelabelings:
+#        - action: replace
+#          replacement: kubernetes
+#          sourceLabels:
+#            - instance
+#          targetLabel: instance
+#        - action: replace
+#          replacement: kubernetes
+#          sourceLabels:
+#            - server
+#          targetLabel: server
+#      params:
+#        server:
+#          - network-ups-tools
+#      path: /ups_metrics
+#      port: metrics
+#      scheme: http
+#      scrapeTimeout: 30s
+#  jobLabel: prometheus-nut-exporter
+#  namespaceSelector:
+#    matchNames:
+#      - monitoring
+#  selector:
+#    matchLabels:
+#      app.kubernetes.io/instance: prometheus-nut-exporter
+#      app.kubernetes.io/name: prometheus-nut-exporter
