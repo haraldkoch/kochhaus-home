@@ -9,10 +9,10 @@ metadata:
     app.kubernetes.io/instance: *app
 spec:
   type: ExternalName
-  externalName: hass.${SECRET_INTERNAL_DOMAIN}
+  externalName: homeassistant.home.arpa
   ports:
     - name: http
-      port: &port 443
+      port: &port 8123
       protocol: TCP
       targetPort: *port
 ---
@@ -24,6 +24,7 @@ metadata:
   annotations:
     external-dns.alpha.kubernetes.io/target: external.kochhaus.dev
     hajimari.io/icon: "home-assistant"
+    # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
@@ -39,7 +40,7 @@ spec:
               service:
                 name: *app
                 port:
-                  number: 443
+                  number: 8123
   tls:
     - hosts:
         - *host
