@@ -32,7 +32,7 @@ spec:
           main:
             image:
               repository: ghcr.io/haraldkoch/kubernetes-schemas
-              tag: latest@sha256:17ae3e5226acb0420d773fa221fadfb4e4cd08215dcb7aa39195f68591944e30
+              tag: latest@sha256:ed9e8b77188778c5b066d860cd2240da8c76db11ce870701e6013be31ecae559
             resources:
               requests:
                 cpu: 5m
