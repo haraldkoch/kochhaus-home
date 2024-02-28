@@ -41,7 +41,7 @@ spec:
             order: 2
             image:
               repository: ghcr.io/kiwigrid/k8s-sidecar
-              tag: 1.25.6
+              tag: 1.26.0
             # FIXME: figure out how to avoid duplicating this list in sidecars
             env:
               - { name: FOLDER, value: /config }
@@ -70,7 +70,7 @@ spec:
           config-sync:
             image:
               repository: ghcr.io/kiwigrid/k8s-sidecar
-              tag: 1.25.6
+              tag: 1.26.0
             env:
               - { name: FOLDER, value: /config }
               - { name: LABEL, value: gatus.io/enabled }
