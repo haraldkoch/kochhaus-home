@@ -1,0 +1,138 @@
+---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: ocis
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 2.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: docker.io/owncloud/ocis
+              tag: 5.0.0-rc.5
+            command: [/bin/sh]
+            args: ["-c", "ocis init || true; ocis server"]
+            env:
+              OCIS_INSECURE: true
+              OCIS_URL: https://ocis.${CLUSTER_DOMAIN}
+              PROXY_TLS: false
+              DEMO_USERS: false
+              PROXY_HTTP_ADDR: 0.0.0.0:9200
+              OCIS_LOG_LEVEL: info
+              OCIS_LOG_COLOR: true
+              OCIS_LOG_PRETTY: true
+              PROXY_DEBUG_ADDR: 0.0.0.0:9205
+              STORAGE_USERS_OCIS_ROOT: /data
+              NOTIFICATIONS_SMTP_HOST: "${SMTP_RELAY}"
+              NOTIFICATIONS_SMTP_PORT: "${SMTP_RELAY_PORT}"
+              NOTIFICATIONS_SMTP_SENDER: "ocis@${CLUSTER_DOMAIN}"
+              NOTIFICATIONS_SMTP_INSECURE: true
+              # Authelia OIDC
+              WEB_OIDC_METADATA_URL: https://auth.${CLUSTER_DOMAIN}/.well-known/openid-configuration
+              OCIS_OIDC_ISSUER: https://auth.${CLUSTER_DOMAIN}
+              WEB_OIDC_CLIENT_ID: ocis
+              # Without this, I got the following errors in the ownCloud log:
+              # Authelia: failed to verify access token: token contains an invalid number of segments
+              # Authentik:  failed to verify access token: the JWT has an invalid kid: could not find kid in JWT header
+              PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD: none
+              PROXY_OIDC_REWRITE_WELLKNOWN: true
+              PROXY_AUTOPROVISION_ACCOUNTS: true
+              # Auto role assignment
+              # docs: https://doc.owncloud.com/ocis/next/deployment/services/s-list/proxy.html#automatic-role-assignments
+              PROXY_USER_OIDC_CLAIM: "preferred_username"
+              PROXY_ROLE_ASSIGNMENT_DRIVER: oidc
+              WEB_OIDC_SCOPE: "openid profile email groups"
+              PROXY_ROLE_ASSIGNMENT_OIDC_CLAIM: groups
+              # User must be in one of the following groups: ocisAdmin, ocisSpaceAdmin, ocisUser, ocisGuest
+              # if they aren't, they cannot login
+            envFrom:
+              - secretRef:
+                  name: ocis-secret
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+    service:
+      main:
+        ports:
+          http:
+            port: 9200
+          metrics:
+            port: 9205
+    serviceMonitor:
+      main:
+        enabled: true
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
+    ingress:
+      main:
+        enabled: true
+        className: internal
+        hosts:
+          - host: &host ocis.${CLUSTER_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+
+    persistence:
+      storage-users:
+        enabled: true
+        type: nfs
+        server: &nfsServer ${SECRET_BACKUP_SERVER:=fnord}
+        path: &nfsPath /backup/data/k8s/ocis
+        advancedMounts:
+          main:
+            main:
+              - path: /data
+                subPath: storage-users
+      config:
+        enabled: true
+        type: nfs
+        server: *nfsServer
+        path: *nfsPath
+        advancedMounts:
+          main:
+            main:
+              - path: /etc/ocis
+                subPath: config
+      data:
+        enabled: true
+        type: nfs
+        server: *nfsServer
+        path: *nfsPath
+        advancedMounts:
+          main:
+            main:
+              - path: /var/lib/ocis
+                subPath: data

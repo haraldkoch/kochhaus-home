@@ -11,6 +11,7 @@ resources:
   - ./local-path-provisioner/ks.yaml
   - ./minio/ks.yaml
   - ./nextcloud/ks.yaml
+  - ./ocis/ks.yaml
   - ./onedrive/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./sync-browser/ks.yaml

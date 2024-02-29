@@ -104,6 +104,15 @@ identity_providers:
         scopes: ["openid", "profile", "email"]
         redirect_uris: ["https://docs.${CLUSTER_DOMAIN}/auth/oidc.callback"]
         userinfo_signed_response_alg: none
+      - id: ocis
+        description: OwnCloud Infinite Scale
+        secret: "${OCIS_OAUTH_CLIENT_SECRET}"
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        scopes: ["openid", "profile", "email", "groups"]
+        redirect_uris: ["https://ocis.${CLUSTER_DOMAIN}/", "https://ocis.${CLUSTER_DOMAIN}/oidc-callback.html", "https://ocis.${CLUSTER_DOMAIN}/oidc-silent-redirect.html"]
+        userinfo_signed_response_alg: none
       - id: weave-gitops
         description: Weave GitOps
         secret: "${WEAVE_GITOPS_OAUTH_CLIENT_SECRET}"
