@@ -29,3 +29,9 @@ spec:
       containerdRegistryConfigPath: /var/lib/rancher/k3s/agent/etc/containerd/certs.d
     serviceMonitor:
       enabled: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        memory: 1Gi
