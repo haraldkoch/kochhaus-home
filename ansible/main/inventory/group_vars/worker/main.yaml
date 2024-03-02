@@ -2,6 +2,6 @@
 k3s_control_node: false
 k3s_agent:
   kubelet-arg:
-    - "image-gc-high-threshold=74"
-    - "image-gc-low-threshold=70"
+    - "image-gc-high-threshold=64"
+    - "image-gc-low-threshold=55"
   pause-image: registry.k8s.io/pause:3.9
