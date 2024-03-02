@@ -29,8 +29,8 @@ k3s_server:
   kube-scheduler-arg:
     - "bind-address=0.0.0.0"          # Required to monitor kube-scheduler with kube-prometheus-stack
   kubelet-arg:
-    - "image-gc-high-threshold=74"
-    - "image-gc-low-threshold=70"
+    - "image-gc-high-threshold=64"
+    - "image-gc-low-threshold=55"
   node-taint:
     - "node-role.kubernetes.io/control-plane:NoSchedule"
   pause-image: registry.k8s.io/pause:3.9
