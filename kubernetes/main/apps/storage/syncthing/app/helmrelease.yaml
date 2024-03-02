@@ -29,7 +29,7 @@ spec:
         containers:
           main:
             image:
-              repository: syncthing/syncthing
+              repository: ghcr.io/haraldkoch/syncthing
               tag: 1.27.3
             resources:
               requests:
@@ -38,6 +38,45 @@ spec:
               limits:
                 cpu: 100m
                 memory: 200M
+      browser:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/haraldkoch/filebrowser
+              tag: v2.27.0
+            env:
+              TZ: ${TIMEZONE}
+              FB_DATABASE: /config/filebrowser.db
+              FB_ROOT: /var/syncthing
+              FB_LOG: stdout
+              FB_NOAUTH: true
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 80
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 500Mi
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
     service:
       main:
         ipFamilyPolicy: PreferDualStack
@@ -72,6 +111,12 @@ spec:
             port: 21027
             protocol: UDP
             targetPort: 21027
+      browser:
+        controller: browser
+        ipFamilyPolicy: PreferDualStack
+        ports:
+          http:
+            port: 80
     ingress:
       main:
         enabled: true
@@ -88,7 +133,31 @@ spec:
         tls:
           - hosts:
               - *host
+      browser:
+        enabled: true
+        className: internal
+        annotations:
+          hajimari.io/icon: mdi:folder-arrow-up-down-outline
+        hosts:
+          - host: &host "sync.${CLUSTER_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: browser
+                  port: http
+        tls:
+          - hosts:
+              - *host
     persistence:
+      config:
+        enabled: true
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        advancedMounts:
+          browser:
+            main:
+              - path: /config
       data:
         enabled: true
         type: nfs
