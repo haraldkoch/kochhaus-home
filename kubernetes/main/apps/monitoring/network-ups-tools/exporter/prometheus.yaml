@@ -81,6 +81,8 @@ spec:
           sourceLabels:
             - server
           targetLabel: server
+        - action: labeldrop
+          regex: (pod)
       params:
         server:
           - castor
@@ -122,6 +124,8 @@ spec:
           sourceLabels:
             - server
           targetLabel: server
+        - action: labeldrop
+          regex: (pod)
       params:
         server:
           - pollux
@@ -163,6 +167,8 @@ spec:
 #          sourceLabels:
 #            - server
 #          targetLabel: server
+#        - action: labeldrop
+#          regex: (pod)
 #      params:
 #        server:
 #          - network-ups-tools
