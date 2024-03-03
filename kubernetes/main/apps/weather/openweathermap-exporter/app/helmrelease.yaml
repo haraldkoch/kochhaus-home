@@ -65,3 +65,9 @@ spec:
         enabled: true
         endpoints:
           - port: metrics
+            metricRelabelings:
+              - action: labeldrop
+                regex: (pod)
+              - action: replace
+                sourceLabels: ["service"]
+                targetLabel: instance
