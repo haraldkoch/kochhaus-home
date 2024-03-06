@@ -60,7 +60,7 @@ spec:
         enabled: true
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.kochhaus.dev
+          external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
           hajimari.io/appName: "Who Am I?"
           hajimari.io/icon: mdi:id-card-outline
           # Proxied Auth
@@ -74,7 +74,7 @@ spec:
           nginx.ingress.kubernetes.io/auth-url: |-
             http://authelia.security.svc.cluster.local/api/verify
         hosts:
-          - host: &host whoami.kochhaus.dev
+          - host: &host whoami.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
