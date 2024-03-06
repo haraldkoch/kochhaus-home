@@ -59,10 +59,10 @@ spec:
         enabled: true
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.kochhaus.dev
+          external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
           hajimari.io/icon: mdi:draw-pen
         hosts:
-          - host: &host draw.kochhaus.dev
+          - host: &host draw.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:

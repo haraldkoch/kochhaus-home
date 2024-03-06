@@ -22,7 +22,7 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: "kochhaus.dev"
+  commonName: "${CLUSTER_DOMAIN}"
   dnsNames:
-    - "kochhaus.dev"
-    - "*.kochhaus.dev"
+    - "${CLUSTER_DOMAIN}"
+    - "*.${CLUSTER_DOMAIN}"

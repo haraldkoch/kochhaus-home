@@ -1,10 +1,10 @@
 ---
 originRequest:
-  originServerName: external.kochhaus.dev
+  originServerName: external.${CLUSTER_DOMAIN}
 
 ingress:
-  - hostname: kochhaus.dev
+  - hostname: ${CLUSTER_DOMAIN}
     service: https://nginx-external-controller.network.svc.cluster.local:443
-  - hostname: "*.kochhaus.dev"
+  - hostname: "*.${CLUSTER_DOMAIN}"
     service: https://nginx-external-controller.network.svc.cluster.local:443
   - service: http_status:404

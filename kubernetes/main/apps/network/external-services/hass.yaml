@@ -22,7 +22,7 @@ metadata:
   name: &app hass
   namespace: network
   annotations:
-    external-dns.alpha.kubernetes.io/target: external.kochhaus.dev
+    external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
     hajimari.io/icon: "home-assistant"
     # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   labels:
@@ -31,7 +31,7 @@ metadata:
 spec:
   ingressClassName: external
   rules:
-    - host: &host ha.kochhaus.dev
+    - host: &host ha.${CLUSTER_DOMAIN}
       http:
         paths:
           - path: /

@@ -64,10 +64,10 @@ spec:
         enabled: true
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: external.kochhaus.dev
+          external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
           hajimari.io/icon: mdi:speedometer
         hosts:
-          - host: &host speedtest.kochhaus.dev
+          - host: &host speedtest.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:

@@ -30,7 +30,7 @@ spec:
               key: cloudflare-token
         selector:
           dnsZones:
-            - kochhaus.dev
+            - ${CLUSTER_DOMAIN}
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/cert-manager.io/clusterissuer_v1.json
 apiVersion: cert-manager.io/v1
@@ -63,4 +63,4 @@ spec:
               key: cloudflare-token
         selector:
           dnsZones:
-            - kochhaus.dev
+            - ${CLUSTER_DOMAIN}
