@@ -31,7 +31,7 @@ spec:
     image:
       # https://github.com/backube/volsync/issues/828
       repository: &image ghcr.io/onedr0p/volsync
-      tag: &tag 0.8.0
+      tag: &tag 0.8.1
     rclone:
       repository: *image
       tag: *tag
