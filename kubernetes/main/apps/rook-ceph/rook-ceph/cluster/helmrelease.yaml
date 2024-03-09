@@ -121,7 +121,7 @@ spec:
             cpu: 1000m
             memory: 1280Mi
           requests:
-            cpu: 100m
+            cpu: 50m
             memory: 256Mi
         osd:
           limits:
@@ -135,7 +135,7 @@ spec:
             cpu: 1000m
             memory: 400Mi
           requests:
-            cpu: 100m
+            cpu: 50m
             memory: 200Mi
         mgr-sidecar:
           limits:
@@ -238,7 +238,7 @@ spec:
     #         activeStandby: true
     #         resources:
     #           requests:
-    #             cpu: 100m
+    #             cpu: 50m
     #             memory: 64M
     #           limits:
     #             cpu: 1000m
