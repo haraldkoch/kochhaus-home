@@ -1,16 +1,15 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: apprise
 spec:
   interval: 30m
-  timeout: 15m
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -27,8 +26,6 @@ spec:
   values:
     controllers:
       main:
-        type: statefulset
-        replicas: 1
         containers:
           main:
             image:
@@ -37,14 +34,9 @@ spec:
               tag: 1.0.0
             env:
               TZ: "${TIMEZONE}"
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 10Mi
-              storageClass: ceph-block
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8000
@@ -59,7 +51,13 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: main
         tls:
           - hosts:
               - *host
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 10Mi
+        storageClass: ceph-block
