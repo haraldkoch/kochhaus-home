@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -77,10 +77,9 @@ spec:
             runAsGroup: 103
             fsGroup: 103
             fsGroupChangePolicy: OnRootMismatch
-
     service:
       main:
-        enabled: true
+        controller: main
         ports:
           http:
             port: 9001
@@ -89,7 +88,7 @@ spec:
             port: *api-port
     serviceMonitor:
       main:
-        enabled: true
+        serviceName: *app
         endpoints:
           - port: api
             scheme: http
@@ -110,7 +109,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: main
                   port: http
         tls:
           - hosts:
@@ -130,15 +129,13 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: main
                   port: api
         tls:
           - hosts:
               - *api-host
     persistence:
       data:
-        enabled: true
         type: nfs
         server: ${SECRET_BACKUP_SERVER:=fnord}
         path: /tank/minio/k8s
-        mountPath: /data
