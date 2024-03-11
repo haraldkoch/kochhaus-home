@@ -32,7 +32,6 @@ spec:
           schedule: "15 * * * *"
           failedJobsHistory: 2
         pod:
-          enableServiceLinks: false
           labels:
             setGateway: "false"
             network: linode
