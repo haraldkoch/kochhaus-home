@@ -26,6 +26,17 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    apiServer:
+      enabled: true
+      apiServerDeployment:
+        spec:
+          template:
+            spec:
+              containers:
+                - name: calico-apiserver
+                  resources:
+                    limits:
+                      memory: 300M
     # Configures general installation parameters for Calico. Schema is based
     # on the operator.tigera.io/Installation API documented
     # here: https://projectcalico.docs.tigera.io/reference/installation/api#operator.tigera.io/v1.InstallationSpec
