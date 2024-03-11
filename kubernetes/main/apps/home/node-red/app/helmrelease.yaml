@@ -44,6 +44,13 @@ spec:
               TZ: "${TIMEZONE}"
               NODE_RED_ENABLE_SAFE_MODE: "false"
               NODE_RED_ENABLE_PROJECTS: "true"
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 22m

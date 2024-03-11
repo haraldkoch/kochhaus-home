@@ -33,6 +33,13 @@ spec:
             image:
               repository: ghcr.io/haraldkoch/kubernetes-schemas
               tag: latest@sha256:676265826697f8ab1cf7a5e2ea082d55cd20ed41b130c1c714edea365ee7322b
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 5m

@@ -40,6 +40,13 @@ spec:
             envFrom:
               - secretRef:
                   name: homepage-secret
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 15m

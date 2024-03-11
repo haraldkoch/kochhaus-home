@@ -36,6 +36,13 @@ spec:
               tag: 2.13.4@sha256:d925cbb3ff9d8da8e926953d320137a5b3819f31d0ab3e06350ae995b442594f
             env:
               TZ: ${TIMEZONE}
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 50m
