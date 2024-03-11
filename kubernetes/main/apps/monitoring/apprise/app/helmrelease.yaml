@@ -34,6 +34,13 @@ spec:
               tag: 1.0.0
             env:
               TZ: "${TIMEZONE}"
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
     service:
       main:
         controller: main
