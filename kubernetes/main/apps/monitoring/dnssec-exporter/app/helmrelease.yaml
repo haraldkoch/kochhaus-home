@@ -39,6 +39,13 @@ spec:
               - "8.8.8.8:53,1.1.1.1:53,${PRIVATE_GATEWAY}:53"
             env:
               TZ: ${TIMEZONE}
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 50m

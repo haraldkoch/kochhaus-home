@@ -59,6 +59,13 @@ spec:
               CUSTOM_WEB_PORT: &port 80
               CLUSTER_DOMAIN: ${CLUSTER_DOMAIN}
             envFrom: *envFrom
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 50m
