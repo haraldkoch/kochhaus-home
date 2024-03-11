@@ -1,15 +1,15 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: intel-device-plugin-exporter
+  name: &app intel-device-plugin-exporter
 spec:
   interval: 30m
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -41,6 +41,13 @@ spec:
               tag: rolling@sha256:f324725adc5497510f204aec64d398dddddd15052ce234c3f700606bb3d91a99
             securityContext:
               privileged: true
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 gpu.intel.com/i915_monitoring: 1
@@ -51,18 +58,15 @@ spec:
                 memory: 500Mi
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8080
     serviceMonitor:
       main:
-        enabled: true
+        serviceName: *app
         endpoints:
           - port: http
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 10s
             relabelings:
               - sourceLabels: [__meta_kubernetes_pod_node_name]
                 targetLabel: node
