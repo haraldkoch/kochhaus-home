@@ -55,6 +55,13 @@ spec:
                   secretKeyRef:
                     name: memos-secret
                     key: POSTGRES_URL
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 25m

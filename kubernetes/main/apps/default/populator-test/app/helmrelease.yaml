@@ -42,6 +42,13 @@ spec:
               TZ: ${TIMEZONE}
               SERVER_PORT: 80
               SERVER_ROOT: /data/git/haraldkoch.git
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 50m

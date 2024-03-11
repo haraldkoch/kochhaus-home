@@ -38,6 +38,13 @@ spec:
               tag: 0.6.21@sha256:646e3f9c0158d57b3ffdf031d14d68e31a40f89be6bb63be7dd9ed84173ff043
             env:
               CACHE_DIR: /cache
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 5m

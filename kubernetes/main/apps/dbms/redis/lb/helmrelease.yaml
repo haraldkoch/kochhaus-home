@@ -35,8 +35,14 @@ spec:
             image:
               repository: haproxy
               tag: "2.9"
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
         pod:
-          enableServiceLinks: false
           securityContext:
             runAsUser: 99
             runAsGroup: 99

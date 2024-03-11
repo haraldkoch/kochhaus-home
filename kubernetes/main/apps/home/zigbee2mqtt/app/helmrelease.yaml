@@ -74,6 +74,13 @@ spec:
                   name: zigbee2mqtt-secret
             securityContext:
               privileged: true
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 10m
