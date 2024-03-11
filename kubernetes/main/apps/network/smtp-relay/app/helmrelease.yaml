@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -27,7 +27,7 @@ spec:
     controllers:
       main:
         # FIXME: convert to statefulset and persist smtp queues
-        replicas: 3
+        replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -41,6 +41,13 @@ spec:
               SMTP_DOMAIN: ${CLUSTER_DOMAIN}
               SMTP_SERVER: ${SECRET_SMTP_RELAY}
               SMTP_PORT: ${SECRET_SMTP_RELAY_PORT}
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 10m
@@ -57,6 +64,7 @@ spec:
                   app.kubernetes.io/name: *app
     service:
       main:
+        controller: main
         type: LoadBalancer
         externalIPs: ["${SVC_SMTP_RELAY_ADDR_V4}", "${SVC_SMTP_RELAY_ADDR_V6}"]
         externalTrafficPolicy: Local
@@ -64,23 +72,18 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: smtp.${CLUSTER_DOMAIN}
         ports:
-          http:
+          smtp:
             port: 25
+            primary: true
           metrics:
-            enabled: true
             port: 9749
     serviceMonitor:
       main:
-        enabled: true
+        serviceName: *app
         endpoints:
           - port: metrics
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 10s
     persistence:
       config:
-        enabled: true
         type: configMap
         name: smtp-relay-configmap
         globalMounts:
