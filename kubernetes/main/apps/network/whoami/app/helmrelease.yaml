@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -32,6 +32,13 @@ spec:
             image:
               repository: docker.io/traefik/whoami
               tag: v1.10.1
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 10m
@@ -40,7 +47,6 @@ spec:
                 cpu: 100m
                 memory: 32Mi
         pod:
-          enableServiceLinks: false
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
@@ -48,9 +54,9 @@ spec:
               labelSelector:
                 matchLabels:
                   app.kubernetes.io/name: *app
-
     service:
       main:
+        controller: main
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
@@ -78,7 +84,7 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: main
         tls:
           - hosts:
               - *host
