@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -36,6 +36,13 @@ spec:
               SERVER_PORT: "2112"
               OWM_LOCATION: Toronto,CA
               OWM_API_KEY: ${OPENWEATHERMAP_API_KEY}
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 15m
@@ -45,13 +52,13 @@ spec:
                 memory: 96Mi
     service:
       main:
+        controller: main
         ports:
-          http:
-            enabled: false
           metrics:
             enabled: true
             protocol: HTTP
             port: 2112
+            primary: true
         type: LoadBalancer
         externalIPs:
           - ${SVC_EXPORTERS_ADDR_V4}
@@ -62,7 +69,7 @@ spec:
           external-dns.alpha.kubernetes.io/hostname: "exporters.${CLUSTER_DOMAIN}"
     serviceMonitor:
       main:
-        enabled: true
+        serviceName: *app
         endpoints:
           - port: metrics
             metricRelabelings:
