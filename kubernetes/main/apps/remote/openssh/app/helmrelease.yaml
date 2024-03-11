@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -61,6 +61,13 @@ spec:
               TZ: ${TIMEZONE}
               PUBLIC_KEY_FILE: /sshd/authorized_keys
               USER_NAME: "chk"
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 25m
@@ -70,6 +77,7 @@ spec:
                 memory: 100Mi
     service:
       main:
+        controller: main
         type: LoadBalancer
         externalIPs:
           - ${SVC_REMOTE_ADDR_V4}
@@ -77,17 +85,13 @@ spec:
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         ports:
-          http:
-            enabled: false
           ssh:
-            enabled: true
             primary: true
             port: 22
             protocol: TCP
             targetPort: 2222
     persistence:
       init:
-        enabled: true
         type: configMap
         name: config-initializer
         defaultMode: 0777
@@ -95,6 +99,5 @@ spec:
           - path: /etc/cont-init.d/45-config
             subPath: 45-config
       sshd:
-        enabled: true
         type: secret
         name: sshd-config
