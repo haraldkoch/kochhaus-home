@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -38,8 +38,6 @@ spec:
             securityContext:
               privileged: true
         containers:
-          main:
-            enabled: false
           downloads-gateway-pod-gateway:
             image:
               repository: ghcr.io/angelnu/pod-gateway
@@ -107,7 +105,7 @@ spec:
               tag: v3.10.0
             args:
               - --webhook-listen-address=:8080
-              - --gateway=downloads-gateway.vpn.svc.cluster.local
+              - --gateway=downloads-gateway-main.vpn.svc.cluster.local
               - --DNS=172.16.0.1
               - --configmapName=downloads-gateway-pod-gateway
               - --setGatewayLabel=setGateway
@@ -177,7 +175,6 @@ spec:
             targetPort: http
     persistence:
       config:
-        enabled: true
         type: configMap
         name: downloads-gateway-pod-gateway
         advancedMounts:
