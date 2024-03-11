@@ -31,7 +31,6 @@ spec:
           concurrencyPolicy: Forbid
           schedule: "59 * * * *"
         pod:
-          enableServiceLinks: false
           restartPolicy: OnFailure
           securityContext:
             fsGroup: 1022
