@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -46,6 +46,13 @@ spec:
             env:
               TZ: ${TIMEZONE}
             envFrom: *envFrom
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
             resources:
               requests:
                 cpu: 50m
@@ -55,6 +62,7 @@ spec:
                 memory: 100Mi
     service:
       main:
+        controller: main
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
@@ -71,17 +79,14 @@ spec:
             paths:
               - path: /
                 service:
-                  name: main
-                  port: http
+                  identifier: main
         tls:
           - hosts:
               - *host
     persistence:
-      config:
-        enabled: false
       init:
         type: configMap
         name: speedtest-init
+        defaultMode: 0555
         globalMounts:
           - path: /custom-cont-init.d
-            defaultMode: 0777
