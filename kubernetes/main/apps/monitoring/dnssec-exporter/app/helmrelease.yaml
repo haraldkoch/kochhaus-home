@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -51,11 +51,9 @@ spec:
             secret.reloader.stakater.com/reload: dnssec-exporter-secret
     service:
       main:
+        controller: main
         ports:
-          http:
-            enabled: false
           metrics:
-            enabled: true
             protocol: TCP
             port: 9204
         type: LoadBalancer
@@ -66,12 +64,8 @@ spec:
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: exporters.${CLUSTER_DOMAIN}
-    ingress:
-      main:
-        enabled: false
     persistence:
       config:
-        enabled: true
         type: secret
         name: dnssec-exporter-secret
         globalMounts:
@@ -82,7 +76,4 @@ spec:
         enabled: true
         endpoints:
           - port: metrics
-            scheme: http
-            path: /metrics
-            interval: 1m
             scrapeTimeout: 30s
