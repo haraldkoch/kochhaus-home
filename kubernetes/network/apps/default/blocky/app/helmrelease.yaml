@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -8,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -68,31 +69,10 @@ spec:
               labelSelector:
                 matchLabels:
                   app.kubernetes.io/name: *app
-    ingress:
-      main:
-        enabled: true
-        className: internal
-        hosts:
-          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  name: main
-                  port: http
-        tls:
-          - hosts:
-              - *host
-    persistence:
-      config:
-        enabled: true
-        type: configMap
-        name: blocky-config
-        globalMounts:
-          - path: /app/config.yml
-            subPath: config.yml
-            readOnly: true
     service:
       main:
+        controller: main
+        primary: true
         ports:
           http:
             port: 4000
@@ -107,13 +87,33 @@ spec:
         ipFamilies: [IPv4, IPv6]
         ports:
           dns-tcp:
-            enabled: true
             port: 53
             protocol: TCP
           dns-udp:
-            enabled: true
             port: 53
             protocol: UDP
     serviceMonitor:
       main:
-        enabled: true
+        serviceName: *app
+        endpoints:
+          - port: http
+    ingress:
+      main:
+        className: internal
+        hosts:
+          - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: main
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        type: configMap
+        name: blocky-config
+        globalMounts:
+          - path: /app/config.yml
+            subPath: config.yml
+            readOnly: true

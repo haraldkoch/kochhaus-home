@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-3.0.1/charts/other/app-template/values.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -72,10 +72,7 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
-      main:
-        enabled: false
       dns:
-        enabled: true
         controller: main
         externalIPs:
           - 192.168.22.52
@@ -85,19 +82,13 @@ spec:
         ipFamilies: [IPv4, IPv6]
         ports:
           dns-tcp:
-            enabled: true
             protocol: TCP
             port: 53
           dns-udp:
-            enabled: true
             protocol: UDP
             port: 53
-    ingress:
-      main:
-        enabled: false
     persistence:
       config:
-        enabled: true
         type: secret
         name: bind-secondary-config
         globalMounts:
@@ -105,7 +96,6 @@ spec:
             subPath: named.conf
             readOnly: true
       cache:
-        enabled: true
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 10Mi
