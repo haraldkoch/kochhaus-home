@@ -30,7 +30,7 @@ spec:
           main:
             image:
               repository: ghcr.io/haraldkoch/openweathermap-exporter
-              tag: "0.2.7"
+              tag: "0.2.8"
             env:
               TZ: ${TIMEZONE}
               SERVER_PORT: "2112"
