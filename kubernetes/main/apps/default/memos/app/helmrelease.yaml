@@ -47,7 +47,7 @@ spec:
               repository: ghcr.io/usememos/memos
               tag: 0.20.1
             env:
-              TZ: "${TIMEZONE}"
+              TZ: "${TIMEZONE:=Etc/UTC}"
               MEMOS_PORT: "5230" # https://github.com/usememos/memos/issues/1782
               MEMOS_DRIVER: postgres
               MEMOS_DSN:

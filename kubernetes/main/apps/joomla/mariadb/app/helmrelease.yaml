@@ -38,7 +38,7 @@ spec:
               repository: ghcr.io/linuxserver/mariadb
               tag: 10.11.6
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${TIMEZONE:=Etc/UTC}
               PUID: "1000"
               PGID: "1000"
               MYSQL_LOG_CONSOLE: "false"

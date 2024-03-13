@@ -33,7 +33,7 @@ spec:
               repository: docker.io/caronc/apprise
               tag: 1.0.0
             env:
-              TZ: "${TIMEZONE}"
+              TZ: "${TIMEZONE:=Etc/UTC}"
             probes:
               liveness:
                 enabled: true

@@ -39,7 +39,7 @@ spec:
               repository: joseluisq/static-web-server
               tag: 2.28.0-alpine
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${TIMEZONE:=Etc/UTC}
               SERVER_PORT: 80
               SERVER_ROOT: /data/git/haraldkoch.git
             probes:

@@ -32,7 +32,7 @@ spec:
               repository: ghcr.io/kpetremann/mqtt-exporter
               tag: 1.4.1
             env:
-              TZ: "${TIMEZONE}"
+              TZ: "${TIMEZONE:=Etc/UTC}"
               # LOG_LEVEL: DEBUG
               # LOG_MQTT_MESSAGE: "true"
               MQTT_ADDRESS: mosquitto.home

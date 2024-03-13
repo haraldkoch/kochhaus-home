@@ -58,7 +58,7 @@ spec:
               repository: ghcr.io/linuxserver/openssh-server
               tag: version-8.6_p1-r3
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${TIMEZONE:=Etc/UTC}
               PUBLIC_KEY_FILE: /sshd/authorized_keys
               USER_NAME: "chk"
             probes:

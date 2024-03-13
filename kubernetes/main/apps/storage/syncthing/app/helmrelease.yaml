@@ -52,7 +52,7 @@ spec:
               repository: ghcr.io/haraldkoch/filebrowser
               tag: v2.27.0
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${TIMEZONE:=Etc/UTC}
               FB_DATABASE: /config/filebrowser.db
               FB_ROOT: /var/syncthing
               FB_LOG: stdout

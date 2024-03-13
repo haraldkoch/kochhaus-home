@@ -47,7 +47,7 @@ spec:
               repository: ghcr.io/linuxserver/smokeping
               tag: 2.8.2
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${TIMEZONE:=Etc/UTC}
             probes:
               liveness:
                 enabled: true

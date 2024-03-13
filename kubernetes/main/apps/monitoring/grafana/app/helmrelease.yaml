@@ -76,7 +76,7 @@ spec:
         org_role: Viewer
       news:
         news_feed_enabled: false
-    defaultDashboardsTimezone: ${TIMEZONE}
+    defaultDashboardsTimezone: ${TIMEZONE:=Etc/UTC}
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1

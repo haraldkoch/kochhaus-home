@@ -29,7 +29,7 @@ spec:
       replicaCount: 2
       extraEnvs:
         - name: TZ
-          value: "${TIMEZONE}"
+          value: "${TIMEZONE:=Etc/UTC}"
       service:
         externalIPs:
           - ${SVC_NGINX_ADDR_V4}

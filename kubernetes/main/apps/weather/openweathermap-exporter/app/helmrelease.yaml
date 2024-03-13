@@ -32,7 +32,7 @@ spec:
               repository: ghcr.io/haraldkoch/openweathermap-exporter
               tag: "0.2.8"
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${TIMEZONE:=Etc/UTC}
               SERVER_PORT: "2112"
               OWM_LOCATION: Toronto,CA
               OWM_API_KEY: ${OPENWEATHERMAP_API_KEY}

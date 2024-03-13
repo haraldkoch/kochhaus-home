@@ -36,7 +36,7 @@ spec:
               repository: ubuntu/bind9
               tag: 9.18-22.04_beta
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${TIMEZONE:=Etc/UTC}
               BIND9_USER: bind
             probes:
               liveness: &probes
