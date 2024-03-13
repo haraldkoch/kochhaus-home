@@ -58,7 +58,7 @@ spec:
       config:
         driver: local-hostpath
         local-hostpath:
-          shareBasePath: &storagePath "/var/lib/rancher/k3s/local-hostpath"
+          shareBasePath: &storagePath /var/lib/rancher/k3s/local-hostpath
           controllerBasePath: *storagePath
           dirPermissionsMode: "0770"
           dirPermissionsUser: 0
