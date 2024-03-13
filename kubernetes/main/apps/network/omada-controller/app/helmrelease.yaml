@@ -66,8 +66,8 @@ spec:
         controller: main
         type: LoadBalancer
         externalIPs:
-          - ${SVC_OMADA_ADDR_V4}
-          # - ${SVC_OMADA_ADDR_V6}
+          - ${SVC_OMADA_ADDR_V4:=10.0.0.1}
+          # - ${SVC_OMADA_ADDR_V6:=fe80::1}
         externalTrafficPolicy: Local
         # ipFamilies: [IPv4, IPv6]
         # ipFamilyPolicy: PreferDualStack
