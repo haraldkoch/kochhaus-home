@@ -25,7 +25,6 @@ spec:
     keepHistory: false
   values:
     installCRDs: true
-    replicaCount: 1
     serviceMonitor:
       enabled: true
       interval: 1m
