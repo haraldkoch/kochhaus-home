@@ -112,8 +112,8 @@ spec:
                   initialDelaySeconds: 15
               startup:
                 enabled: false
-              securityContext: *securityContext
-              resources: *resources
+            securityContext: *securityContext
+            resources: *resources
         pod:
           securityContext:
             runAsUser: 999
