@@ -36,7 +36,7 @@ spec:
               repository: ubuntu/bind9
               tag: 9.18-22.04_beta
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${TIMEZONE:=Etc/UTC}
               BIND9_USER: bind
             probes:
               liveness: &probes
@@ -65,7 +65,7 @@ spec:
               repository: ghcr.io/linuxserver/openssh-server
               tag: version-8.6_p1-r3
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${TIMEZONE:=Etc/UTC}
               PUBLIC_KEY_FILE: /sshd/authorized_keys
               USER_NAME: "chk"
               PUID: 101

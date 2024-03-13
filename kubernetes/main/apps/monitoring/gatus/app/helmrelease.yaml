@@ -54,7 +54,7 @@ spec:
               repository: ghcr.io/twin/gatus
               tag: v5.7.0
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${TIMEZONE:=Etc/UTC}
               GATUS_CONFIG_PATH: /config
               CUSTOM_WEB_PORT: &port 80
               CLUSTER_DOMAIN: ${CLUSTER_DOMAIN}

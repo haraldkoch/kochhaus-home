@@ -25,7 +25,7 @@ spec:
     keepHistory: false
   values:
     env:
-      TZ: ${TIMEZONE}
+      TZ: ${TIMEZONE:=Etc/UTC}
     hajimari:
       title: Apps
       darkTheme: espresso

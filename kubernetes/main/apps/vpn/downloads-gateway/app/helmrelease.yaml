@@ -69,7 +69,7 @@ spec:
               repository: dperson/openvpn-client
               tag: latest
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${TIMEZONE:=Etc/UTC}
               IPTABLES_BACKEND: legacy
               KILLSWITCH: "false"
             envFrom:

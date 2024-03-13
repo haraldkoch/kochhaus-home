@@ -28,7 +28,7 @@ spec:
       startTime: "7:00"
       endTime: "12:00"
       period: "10m"
-      timeZone: ${TIMEZONE}
+      timeZone: ${TIMEZONE:=Etc/UTC}
     service:
       ipFamilyPolicy: preferDualStack
     metrics:
@@ -44,7 +44,7 @@ spec:
         memory: 40Mi
     extraEnvVars:
       - name: TZ
-        value: ${TIMEZONE}
+        value: ${TIMEZONE:=Etc/UTC}
       - name: KURED_NOTIFY_URL
         valueFrom:
           secretKeyRef:

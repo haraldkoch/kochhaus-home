@@ -35,7 +35,7 @@ spec:
               repository: driveone/onedrive
               tag: 2.4.25
             env:
-              TZ: ${TIMEZONE}
+              TZ: ${TIMEZONE:=Etc/UTC}
               ONEDRIVE_DOWNLOADONLY: 1
               ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE}"
               ONEDRIVE_UID: 1000
