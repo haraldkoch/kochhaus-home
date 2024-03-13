@@ -37,7 +37,7 @@ spec:
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               ONEDRIVE_DOWNLOADONLY: 1
-              ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE}"
+              ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE:=fnord}"
               ONEDRIVE_UID: 1000
               ONEDRIVE_GID: 1000
             resources:

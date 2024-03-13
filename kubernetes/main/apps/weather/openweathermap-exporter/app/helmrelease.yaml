@@ -35,7 +35,7 @@ spec:
               TZ: ${TIMEZONE:=Etc/UTC}
               SERVER_PORT: "2112"
               OWM_LOCATION: Toronto,CA
-              OWM_API_KEY: ${OPENWEATHERMAP_API_KEY}
+              OWM_API_KEY: ${OPENWEATHERMAP_API_KEY:=fnord}
             probes:
               liveness:
                 enabled: true
