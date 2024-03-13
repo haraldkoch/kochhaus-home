@@ -44,9 +44,9 @@ spec:
               OCIS_LOG_PRETTY: true
               PROXY_DEBUG_ADDR: 0.0.0.0:9205
               STORAGE_USERS_OCIS_ROOT: /data
-              NOTIFICATIONS_SMTP_HOST: "${SMTP_RELAY}"
-              NOTIFICATIONS_SMTP_PORT: "${SMTP_RELAY_PORT}"
-              NOTIFICATIONS_SMTP_SENDER: "ocis@${CLUSTER_DOMAIN}"
+              NOTIFICATIONS_SMTP_HOST: "${SMTP_RELAY:=fnord}"
+              NOTIFICATIONS_SMTP_PORT: "${SMTP_RELAY_PORT:=fnord}"
+              NOTIFICATIONS_SMTP_SENDER: "ocis@${CLUSTER_DOMAIN:=fnord}"
               NOTIFICATIONS_SMTP_INSECURE: true
               # Authelia OIDC
               WEB_OIDC_METADATA_URL: https://auth.${CLUSTER_DOMAIN}/.well-known/openid-configuration

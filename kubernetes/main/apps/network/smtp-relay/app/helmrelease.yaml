@@ -38,9 +38,9 @@ spec:
               tag: 0.7.1
             env:
               DEBUG: "true"
-              SMTP_DOMAIN: ${CLUSTER_DOMAIN}
-              SMTP_SERVER: ${SECRET_SMTP_RELAY}
-              SMTP_PORT: ${SECRET_SMTP_RELAY_PORT}
+              SMTP_DOMAIN: ${CLUSTER_DOMAIN:=fnord}
+              SMTP_SERVER: ${SECRET_SMTP_RELAY:=fnord}
+              SMTP_PORT: ${SECRET_SMTP_RELAY_PORT:=fnord}
             probes:
               liveness:
                 enabled: true

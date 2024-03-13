@@ -57,8 +57,8 @@ spec:
               X_AUTHELIA_CONFIG: /config/configuration.yaml
               X_AUTHELIA_CONFIG_FILTERS: expand-env
               # needed for configuration.yaml substitutions
-              CLUSTER_DOMAIN: "${CLUSTER_DOMAIN}"
-              SECRET_HOMELAN_IPV4: "${SECRET_HOMELAN_IPV4}"
+              CLUSTER_DOMAIN: "${CLUSTER_DOMAIN:=fnord}"
+              SECRET_HOMELAN_IPV4: "${SECRET_HOMELAN_IPV4:=127.0.0.1}"
             envFrom: *envFrom
             probes:
               liveness: &probes
