@@ -10,7 +10,7 @@ spec:
 
   description: Postgresql cluster for KochHaus
 
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.2-8
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.2-9
 
   instances: 3
 
