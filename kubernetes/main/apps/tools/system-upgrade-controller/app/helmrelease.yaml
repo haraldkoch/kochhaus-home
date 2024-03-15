@@ -37,7 +37,7 @@ spec:
               SYSTEM_UPGRADE_JOB_ACTIVE_DEADLINE_SECONDS: 900
               SYSTEM_UPGRADE_JOB_BACKOFF_LIMIT: 99
               SYSTEM_UPGRADE_JOB_IMAGE_PULL_POLICY: IfNotPresent
-              SYSTEM_UPGRADE_JOB_KUBECTL_IMAGE: docker.io/rancher/kubectl:v1.29.2
+              SYSTEM_UPGRADE_JOB_KUBECTL_IMAGE: registry.k8s.io/kubectl:v1.29.3
               SYSTEM_UPGRADE_JOB_PRIVILEGED: true
               SYSTEM_UPGRADE_JOB_TTL_SECONDS_AFTER_FINISH: 900
               SYSTEM_UPGRADE_PLAN_POLLING_INTERVAL: 15m
@@ -76,26 +76,21 @@ spec:
     persistence:
       tmp:
         type: emptyDir
-        globalMounts:
-          - path: /tmp
       etc-ssl:
         type: hostPath
         hostPath: /etc/ssl
         hostPathType: DirectoryOrCreate
         globalMounts:
-          - path: /etc/ssl
-            readOnly: true
+          - readOnly: true
       etc-pki:
         type: hostPath
         hostPath: /etc/pki
         hostPathType: DirectoryOrCreate
         globalMounts:
-          - path: /etc/pki
-            readOnly: true
+          - readOnly: true
       etc-ca-certificates:
         type: hostPath
         hostPath: /etc/ca-certificates
         hostPathType: DirectoryOrCreate
         globalMounts:
-          - path: /etc/ca-certificates
-            readOnly: true
+          - readOnly: true
