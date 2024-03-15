@@ -51,7 +51,7 @@ spec:
           main:
             image:
               repository: ghcr.io/twin/gatus
-              tag: v5.7.0
+              tag: v5.8.0
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               GATUS_CONFIG_PATH: /config
