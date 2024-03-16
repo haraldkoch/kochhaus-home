@@ -27,6 +27,9 @@ spec:
       namespace: storage
   values:
     csi:
+      enableLiveness: true
+      serviceMonitor:
+        enabled: true
       csiRBDProvisionerResource: |
         - name : csi-provisioner
           resource:
