@@ -75,7 +75,6 @@ spec:
               - *host
     persistence:
       config:
-        enabled: true
         type: configMap
         name: homepage-config
         globalMounts:
