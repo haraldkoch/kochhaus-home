@@ -58,9 +58,7 @@ spec:
       network:
         provider: host
         connections:
-          compression:
-            # TODO: Test out enabling this on next cluster rebuild
-            enabled: false
+          requireMsgr2: true
       placement:
         mon:
           nodeAffinity:
@@ -170,7 +168,7 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
-        prometheusEndpoint: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
+        prometheusEndpoint: http://thanos-query-frontend.monitoring.svc.cluster.local:9090
       storage:
         useAllNodes: false
         useAllDevices: false
@@ -205,6 +203,7 @@ spec:
           isDefault: true
           reclaimPolicy: Delete
           allowVolumeExpansion: true
+          volumeBindingMode: Immediate
           mountOptions: ["discard"]
           parameters:
             imageFormat: "2"
@@ -243,6 +242,7 @@ spec:
     #           limits:
     #             cpu: 1000m
     #             memory: 850M
+    #         priorityClassName: system-cluster-critical
     #     storageClass:
     #       enabled: true
     #       isDefault: false
@@ -250,6 +250,7 @@ spec:
     #       pool: data0
     #       reclaimPolicy: Delete
     #       allowVolumeExpansion: true
+    #       volumeBindingMode: Immediate
     #       parameters:
     #         csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
     #         csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
@@ -285,6 +286,7 @@ spec:
               limits:
                 memory: 2Gi
             instances: 1
+            priorityClassName: system-cluster-critical
           healthCheck:
             bucket:
               interval: 60s
@@ -292,5 +294,15 @@ spec:
           enabled: true
           name: ceph-bucket
           reclaimPolicy: Delete
+          volumeBindingMode: Immediate
           parameters:
             region: us-east-1
+        ingress:
+          enabled: true
+          ingressClassName: internal
+          host:
+            name: &host objects.${CLUSTER_DOMAIN}
+            path: /
+          tls:
+            - hosts:
+                - *host
