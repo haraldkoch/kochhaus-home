@@ -33,6 +33,6 @@ spec:
         kubernetes.io/cluster-service: "true"
         kubernetes.io/name: "Metrics-server"
     metrics:
-      enabled: false
+      enabled: true
     serviceMonitor:
-      enabled: false
+      enabled: true
