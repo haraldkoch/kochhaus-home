@@ -105,7 +105,6 @@ spec:
             port: 80
     ingress:
       main:
-        enabled: true
         className: internal
         annotations:
           hajimari.io/icon: mdi:notebook-edit-outline
