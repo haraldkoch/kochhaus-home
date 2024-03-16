@@ -10,7 +10,6 @@ resources:
   # Flux-Kustomizations
   - ./cloudflared/ks.yaml
   - ./external-dns/ks.yaml
-  - ./homelab-dns/ks.yaml
   - ./nginx/ks.yaml
   - ./omada-controller/ks.yaml
   - ./opnsense/ks.yaml
