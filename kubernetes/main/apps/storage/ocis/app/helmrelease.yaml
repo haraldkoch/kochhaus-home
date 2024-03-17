@@ -24,15 +24,18 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      ocis:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: docker.io/owncloud/ocis
               tag: 5.0.0-rc.5
             command: [/bin/sh]
             args: ["-c", "ocis init || true; ocis server"]
             env:
+              TZ: ${TIMEZONE}
               OCIS_INSECURE: true
               OCIS_URL: https://ocis.${CLUSTER_DOMAIN}
               PROXY_TLS: false
@@ -63,8 +66,6 @@ spec:
               PROXY_ROLE_ASSIGNMENT_DRIVER: oidc
               WEB_OIDC_SCOPE: "openid profile email groups"
               PROXY_ROLE_ASSIGNMENT_OIDC_CLAIM: groups
-              # User must be in one of the following groups: ocisAdmin, ocisSpaceAdmin, ocisUser, ocisGuest
-              # if they aren't, they cannot login
             envFrom:
               - secretRef:
                   name: ocis-secret
@@ -81,8 +82,8 @@ spec:
             runAsGroup: 1000
             runAsNonRoot: true
     service:
-      main:
-        controller: main
+      app:
+        controller: ocis
         ports:
           http:
             port: 9200
@@ -90,20 +91,20 @@ spec:
           metrics:
             port: 9205
     serviceMonitor:
-      main:
+      app:
         serviceName: *app
         endpoints:
           - port: metrics
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         hosts:
           - host: &host ocis.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
           - hosts:
               - *host
@@ -115,17 +116,19 @@ spec:
         globalMounts:
           - path: /data
             subPath: storage-users
-      config:
+      data:
         type: nfs
         server: *nfsServer
         path: *nfsPath
         globalMounts:
           - path: /etc/ocis
             subPath: config
-      data:
-        type: nfs
-        server: *nfsServer
-        path: *nfsPath
-        globalMounts:
           - path: /var/lib/ocis
             subPath: data
+      config-proxy:
+        type: configMap
+        name: ocis-configmap
+        globalMounts:
+          - path: /etc/ocis/proxy.yaml
+            subPath: proxy.yaml
+            readOnly: true
