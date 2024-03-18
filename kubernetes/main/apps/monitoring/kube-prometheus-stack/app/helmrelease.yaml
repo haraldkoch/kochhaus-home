@@ -189,6 +189,10 @@ spec:
           - new-service-discovery-manager
         externalLabels:
           cluster: main
+        image:
+          registry: quay.io
+          repository: prometheus/prometheus
+          tag: v2.51.0-rc.0-dedupelabels
         thanos:
           image: quay.io/thanos/thanos:v0.34.1
           objectStorageConfig:
