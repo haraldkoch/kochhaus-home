@@ -39,6 +39,8 @@ spec:
           - action: drop
             sourceLabels: ["mountpoint"]
             regex: /var/lib/kubelet/pods.+
+          - action: labeldrop
+            regex: (pod)
     rbac:
       pspEnabled: false
     resources:

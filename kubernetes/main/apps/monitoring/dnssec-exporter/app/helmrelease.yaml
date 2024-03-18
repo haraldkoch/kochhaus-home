@@ -83,3 +83,9 @@ spec:
         endpoints:
           - port: metrics
             scrapeTimeout: 30s
+            metricRelabelings:
+              - action: labeldrop
+                regex: (pod)
+              - action: replace
+                sourceLabels: ["service"]
+                targetLabel: instance

@@ -32,5 +32,8 @@ spec:
       node.home.arpa/physical: "true"
     serviceMonitor:
       enabled: true
+      relabelings:
+        - action: labeldrop
+          regex: (pod)
     prometheusRules:
       enabled: false
