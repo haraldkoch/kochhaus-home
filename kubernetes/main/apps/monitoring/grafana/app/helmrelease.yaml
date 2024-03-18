@@ -341,6 +341,9 @@ spec:
       autoMount: true
     serviceMonitor:
       enabled: true
+      metricRelabelings:
+        - action: labeldrop
+          regex: (pod)
     service:
       ipFamilyPolicy: PreferDualStack
     ingress:

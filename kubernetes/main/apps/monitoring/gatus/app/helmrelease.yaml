@@ -106,6 +106,12 @@ spec:
         serviceName: *app
         endpoints:
           - port: http
+            metricRelabelings:
+              - action: labeldrop
+                regex: (pod)
+              - action: replace
+                sourceLabels: ["service"]
+                targetLabel: instance
     ingress:
       main:
         enabled: true
