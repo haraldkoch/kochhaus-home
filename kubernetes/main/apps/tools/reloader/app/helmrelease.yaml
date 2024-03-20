@@ -33,7 +33,7 @@ spec:
             memory: 110M
           limits:
             cpu: 100m
-            memory: 132M
+            memory: 160M
       podMonitor:
         enabled: true
         namespace: "{{ .Release.Namespace }}"
