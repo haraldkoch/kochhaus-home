@@ -21,13 +21,19 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.3.1"
+      "version": "10.4.0"
     },
     {
       "type": "datasource",
       "id": "prometheus",
       "name": "Prometheus",
       "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
     },
     {
       "type": "panel",
@@ -59,6 +65,88 @@
   "links": [],
   "liveNow": false,
   "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 17,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "mqtt_temperature",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "{{topic}}",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "All Temperatures",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "zigbee2mqtt_(.*)",
+            "renamePattern": "$1"
+          }
+        }
+      ],
+      "type": "stat"
+    },
     {
       "datasource": {
         "type": "prometheus",
@@ -116,8 +204,7 @@
               }
             ]
           },
-          "unit": "celsius",
-          "unitScale": true
+          "unit": "celsius"
         },
         "overrides": []
       },
@@ -125,7 +212,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 0
+        "y": 5
       },
       "id": 3,
       "options": {
@@ -227,8 +314,7 @@
               }
             ]
           },
-          "unit": "celsius",
-          "unitScale": true
+          "unit": "celsius"
         },
         "overrides": []
       },
@@ -236,7 +322,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 0
+        "y": 5
       },
       "id": 1,
       "options": {
@@ -342,8 +428,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -351,7 +436,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 13
       },
       "id": 4,
       "options": {
@@ -453,8 +538,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -462,7 +546,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 13
       },
       "id": 2,
       "options": {
@@ -573,8 +657,7 @@
               }
             ]
           },
-          "unit": "pressurehpa",
-          "unitScale": true
+          "unit": "pressurehpa"
         },
         "overrides": []
       },
@@ -582,7 +665,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 21
       },
       "id": 5,
       "options": {
@@ -655,8 +738,7 @@
               }
             ]
           },
-          "unit": "percent",
-          "unitScale": true
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -664,7 +746,7 @@
         "h": 4,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 29
       },
       "id": 16,
       "options": {
@@ -685,7 +767,7 @@
           "titleSize": 14
         }
       },
-      "pluginVersion": "10.3.1",
+      "pluginVersion": "10.4.0",
       "targets": [
         {
           "datasource": {
@@ -750,6 +832,6 @@
   "timezone": "",
   "title": "House Sensors",
   "uid": "f34c065d-33a8-415a-89f2-0bbfc0a6a4b6",
-  "version": 13,
+  "version": 81,
   "weekStart": ""
 }
