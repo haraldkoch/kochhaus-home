@@ -68,6 +68,17 @@
       "separateMinorPatch": false
     },
     {
+      "description": ["volsync image and chart"],
+      "groupName": "volsync",
+      "matchPackagePatterns": ["volsync"],
+      "matchDatasources": ["docker", "github-releases", "helm"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": false
+    },
+    {
       "description": ["x509-certificate-exporter image and chart"],
       "groupName": "X509 Certificate Exporter",
       "matchPackagePatterns": ["x509-certificate-exporter"],
