@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: volsync
-      version: 0.8.0
+      version: 0.9.0
       sourceRef:
         kind: HelmRepository
         name: backube
@@ -30,7 +30,7 @@ spec:
     # https://github.com/backube/volsync/issues/828
     image: &image
       repository: ghcr.io/onedr0p/volsync
-      tag: 0.8.0
+      tag: 0.9.0
     rclone:
       <<: *image
     restic:
