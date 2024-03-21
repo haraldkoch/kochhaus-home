@@ -2,10 +2,11 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: "Flux Kustomization Sync"
 
-#on:
+on:
 #  push:
 #    branches: ["main"]
 #    paths: ["kubernetes/network/**", "kubernetes/registry/**"]
+  workflow_dispatch:
 
 jobs:
   sync:
