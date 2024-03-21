@@ -16,7 +16,7 @@ spec:
     # renovate: depName=tektoncd/pipeline
     !/pipeline/previous/v0.58.0/release.yaml
     # renovate: depName=tektoncd/dashboard
-    !/dashboard/previous/v0.44.0/release-full.yaml
+    !/dashboard/previous/v0.45.0/release-full.yaml
     # renovate: depName=tektoncd/triggers
     !/triggers/previous/v0.26.1/release.yaml
     # renovate: depName=tektoncd/triggers
