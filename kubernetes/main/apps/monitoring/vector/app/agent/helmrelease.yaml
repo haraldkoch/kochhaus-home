@@ -20,23 +20,23 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   dependsOn:
     - name: vector-aggregator
+      namespace: monitoring
   values:
     controllers:
-      main:
+      vector-agent:
         type: daemonset
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/haraldkoch/vector
               tag: 0.36.1-debian
-            args: ["--config", "/etc/vector/vector.yaml"]
             env:
               PROCFS_ROOT: /host/proc
               SYSFS_ROOT: /host/sys
@@ -55,6 +55,7 @@ spec:
                   fieldRef:
                     apiVersion: v1
                     fieldPath: metadata.namespace
+            args: ["--config", "/etc/vector/vector.yaml"]
             resources:
               requests:
                 cpu: 50m
@@ -75,8 +76,9 @@ spec:
       name: vector-agent
     persistence:
       config:
+        enabled: true
         type: configMap
-        name: vector-agent-configmap # overriden by kustomizeconfig
+        name: vector-agent-configmap
         globalMounts:
           - path: /etc/vector/vector.yaml
             subPath: vector.yaml
@@ -85,20 +87,6 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /vector-data-dir
-      var-log:
-        type: hostPath
-        hostPath: /var/log
-        hostPathType: Directory
-        globalMounts:
-          - path: /var/log
-            readOnly: true
-      var-lib:
-        type: hostPath
-        hostPath: /var/lib
-        hostPathType: Directory
-        globalMounts:
-          - path: /var/lib
-            readOnly: true
       procfs:
         type: hostPath
         hostPath: /proc
@@ -113,3 +101,15 @@ spec:
         globalMounts:
           - path: /host/sys
             readOnly: true
+      var-lib:
+        type: hostPath
+        hostPath: /var/lib
+        hostPathType: Directory
+        globalMounts:
+          - readOnly: true
+      var-log:
+        type: hostPath
+        hostPath: /var/log
+        hostPathType: Directory
+        globalMounts:
+          - readOnly: true

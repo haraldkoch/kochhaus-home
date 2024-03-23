@@ -8,6 +8,4 @@ resources:
 configMapGenerator:
   - name: vector-aggregator-configmap
     files:
-      - vector.yaml=./config/vector.yaml
-configurations:
-  - ./patches/kustomizeconfig.yaml
+      - vector.yaml=./resources/vector.yaml
