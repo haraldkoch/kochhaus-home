@@ -93,7 +93,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/default
+              path: /var/lib/grafana/dashboards/default-folder
           - name: applications
             orgId: 1
             folder: "Applications"
@@ -101,7 +101,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/applications
+              path: /var/lib/grafana/dashboards/applications-folder
           - name: home
             orgId: 1
             folder: "Home"
@@ -109,7 +109,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/home
+              path: /var/lib/grafana/dashboards/home-folder
           - name: infrastructure
             orgId: 1
             folder: "Infrastructure"
@@ -117,7 +117,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/infrastructure
+              path: /var/lib/grafana/dashboards/infrastructure-folder
           - name: kubernetes
             orgId: 1
             folder: Kubernetes
@@ -125,7 +125,15 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/kubernetes
+              path: /var/lib/grafana/dashboards/kubernetes-folder
+          - name: nginx
+            orgId: 1
+            folder: Nginx
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/nginx-folder
           - name: prometheus
             orgId: 1
             folder: Prometheus
@@ -141,7 +149,7 @@ spec:
             disableDeletion: false
             editable: true
             options:
-              path: /var/lib/grafana/dashboards/thanos
+              path: /var/lib/grafana/dashboards/thanos-folder
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -296,6 +304,7 @@ spec:
           gnetId: 11454
           revision: 14
           datasource: Prometheus
+      nginx:
         nginx:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
           datasource: Prometheus

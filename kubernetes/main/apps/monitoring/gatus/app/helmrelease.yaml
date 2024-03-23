@@ -20,7 +20,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: uninstall
+      strategy: rollback
       retries: 3
   values:
     controllers:
@@ -131,6 +131,7 @@ spec:
               - path: /
                 service:
                   identifier: app
+                  port: http
         tls:
           - hosts: [*host]
     serviceAccount:

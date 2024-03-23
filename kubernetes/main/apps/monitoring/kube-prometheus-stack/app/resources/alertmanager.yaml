@@ -31,7 +31,7 @@ receivers:
   - name: heartbeat
     webhook_configs:
       - send_resolved: true
-        url: "https://hc-ping.com/{{ .HEALTHCHECKS_TOKEN }}"
+        url: "https://hc-ping.com/{{ .ALERTMANAGER_HEALTHCHECKS_TOKEN }}"
   - name: "null"
   - name: pushover
     pushover_configs:
@@ -63,6 +63,6 @@ receivers:
         title: >-
           {{ "{{" }} .CommonLabels.alertname {{ "}}" }}
           [{{ "{{" }} .Status | toUpper {{ "}}" }}{{ "{{" }} if eq .Status "firing" {{ "}}" }}:{{ "{{" }} .Alerts.Firing | len {{ "}}" }}{{ "{{" }} end {{ "}}" }}]
-        token: "{{ .PUSHOVER_TOKEN }}"
+        token: "{{ .ALERTMANAGER_PUSHOVER_TOKEN }}"
         url_title: View in Alertmanager
         user_key: "{{ .PUSHOVER_USER_KEY }}"
