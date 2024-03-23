@@ -27,15 +27,13 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: thanos
+      namespace: monitoring
   values:
     crds:
       enabled: true
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
-      service:
-        externalTrafficPolicy: Local
-        # not supported - I'll need to use a patch to get it in
-        # ipFamilyPolicy: PreferDualStack
       ingress:
         enabled: true
         pathType: Prefix
@@ -46,8 +44,7 @@ spec:
         hosts:
           - &host alertmanager.${CLUSTER_DOMAIN}
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
       alertmanagerSpec:
         replicas: 2
         useExistingSecret: true
@@ -167,8 +164,7 @@ spec:
         hosts:
           - &host prometheus.${CLUSTER_DOMAIN}
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
       thanosService:
         enabled: true
       thanosServiceMonitor:
@@ -184,23 +180,29 @@ spec:
         enableAdminAPI: true
         walCompression: true
         enableFeatures:
-          - auto-gomaxprocs
+          - auto-gomemlimit
           - memory-snapshot-on-shutdown
           - new-service-discovery-manager
-        externalLabels:
-          cluster: main
         image:
           registry: quay.io
           repository: prometheus/prometheus
-          tag: v2.51.0-rc.0-dedupelabels
+          tag: v2.51.0-dedupelabels
         thanos:
-          image: quay.io/thanos/thanos:v0.34.1
+          image: quay.io/thanos/thanos:${THANOS_VERSION}
+          version: "${THANOS_VERSION#v}"
           objectStorageConfig:
             existingSecret:
               name: thanos-objstore-secret
               key: objstore.yml
         retention: 2d
         retentionSize: 15GB
+        externalLabels:
+          cluster: main
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            memory: 1500Mi
         storageSpec:
           volumeClaimTemplate:
             spec:
@@ -208,12 +210,6 @@ spec:
               resources:
                 requests:
                   storage: 20Gi
-        resources:
-          requests:
-            cpu: 150m
-            memory: 2000Mi
-          # limits:
-          #   memory: 7000Mi
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -223,6 +219,8 @@ spec:
                       operator: In
                       values:
                         - "true"
+    nodeExporter:
+      enabled: false
     prometheusOperator:
       resources:
         requests:
@@ -232,6 +230,21 @@ spec:
           memory: 384Mi
     kubeStateMetrics:
       enabled: true
+    kube-state-metrics:
+      fullnameOverride: kube-state-metrics
+      metricLabelsAllowlist:
+        - pods=[*]
+        - deployments=[*]
+        - persistentvolumeclaims=[*]
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              targetLabel: kubernetes_node
     grafana:
       enabled: false
       forceDeployDashboards: true
@@ -242,5 +255,3 @@ spec:
           multicluster:
             etcd:
               enabled: true
-    nodeExporter:
-      enabled: false
