@@ -20,40 +20,38 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     controllers:
-      main:
+      kromgo:
         replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/kashalls/kromgo
               tag: 0.3.0@sha256:7fa9b72f306b0970a16667f97604b4f3ebac2bdd1de29132bf81d8e6072abaf2
             env:
               PROMETHEUS_URL: http://thanos-query-frontend.monitoring.svc.cluster.local:9090
               PORT: &port 80
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
             probes:
               liveness:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 5m
-                memory: 10M
+                cpu: 10m
+                memory: 10Mi
               limits:
-                memory: 64M
+                memory: 64Mi
         pod:
           securityContext:
             runAsUser: 568
@@ -67,14 +65,13 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
-      main:
-        controller: main
+      app:
+        controller: kromgo
         ports:
           http:
             port: *port
     ingress:
-      main:
-        enabled: true
+      app:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
@@ -83,10 +80,10 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       config-file:
         type: configMap
