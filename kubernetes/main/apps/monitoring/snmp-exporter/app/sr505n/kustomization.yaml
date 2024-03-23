@@ -4,10 +4,11 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./helmrelease.yaml
-  - ./dashboard
 configMapGenerator:
-  - name: snmp-exporter-opnsense
+  - name: snmp-exporter-sr505n
     files:
-      - snmp.yaml=./config/snmp.yaml
+      - snmp.yaml=./resources/snmp.yaml
 generatorOptions:
   disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
