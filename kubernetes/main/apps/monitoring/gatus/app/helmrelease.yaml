@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app gatus
+  name: gatus
 spec:
   interval: 30m
   chart:
@@ -20,90 +20,94 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     controllers:
-      main:
+      gatus:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
           init-db:
             image:
               repository: ghcr.io/haraldkoch/postgres-init
-              tag: 16.2@sha256:ae266069070fa8a35636e33e77cf2b6ca3d799f57b31e64c6a1dfa7704f4a06a
+              tag: 16
             envFrom: &envFrom
               - secretRef:
                   name: gatus-secret
-          initial-sync:
+          init-config:
+            dependsOn: init-db
             image:
               repository: ghcr.io/kiwigrid/k8s-sidecar
-              tag: 1.26.1
-            # FIXME: figure out how to avoid duplicating this list in sidecars
+              tag: 1.26.1@sha256:b8d5067137fec093cf48670dc3a1dbb38f9e734f3a6683015c2e89a45db5fd16
             env:
-              - { name: FOLDER, value: /config }
-              - { name: LABEL, value: gatus.io/enabled }
-              - { name: NAMESPACE, value: ALL }
-              - { name: RESOURCE, value: both }
-              - { name: UNIQUE_FILENAMES, value: "true" }
-              - { name: METHOD, value: LIST }
-        containers:
-          main:
-            image:
-              repository: ghcr.io/twin/gatus
-              tag: v5.8.0
-            env:
-              TZ: ${TIMEZONE:=Etc/UTC}
-              GATUS_CONFIG_PATH: /config
-              CUSTOM_WEB_PORT: &port 80
-              CLUSTER_DOMAIN: ${CLUSTER_DOMAIN}
-            envFrom: *envFrom
-            probes:
-              liveness:
-                enabled: true
-              readiness:
-                enabled: true
-              startup:
-                enabled: true
-            resources:
-              requests:
-                cpu: 50m
-                memory: 64Mi
-              limits:
-                memory: 128Mi
-          config-sync:
-            image:
-              repository: ghcr.io/kiwigrid/k8s-sidecar
-              tag: 1.26.1
-            env:
-              - { name: FOLDER, value: /config }
-              - { name: LABEL, value: gatus.io/enabled }
-              - { name: NAMESPACE, value: ALL }
-              - { name: RESOURCE, value: both }
-              - { name: UNIQUE_FILENAMES, value: "true" }
-              - { name: METHOD, value: WATCH }
+              FOLDER: /config
+              LABEL: gatus.io/enabled
+              NAMESPACE: ALL
+              RESOURCE: both
+              UNIQUE_FILENAMES: true
+              METHOD: WATCH
+            restartPolicy: Always
             resources:
               requests:
                 cpu: 50m
                 memory: 128Mi
               limits:
                 memory: 192Mi
+        containers:
+          app:
+            image:
+              repository: ghcr.io/twin/gatus
+              tag: v5.8.0@sha256:fecb4c38722df59f5e00ab4fcf2393d9b8dad9161db208d8d79386dc86da8a55
+            env:
+              TZ: ${TIMEZONE:=Etc/UTC}
+              GATUS_CONFIG_PATH: /config
+              GATUS_DELAY_START_SECONDS: 5
+              CUSTOM_WEB_PORT: &port 80
+            envFrom: *envFrom
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 50m
+                memory: 64Mi
+              limits:
+                memory: 128Mi
         pod:
+          dnsConfig:
+            options:
+              - { name: ndots, value: "1" }
           securityContext:
             runAsUser: 1022
             runAsGroup: 1022
+            runAsNonRoot: true
             fsGroup: 1022
             fsGroupChangePolicy: OnRootMismatch
     service:
-      main:
-        controller: main
+      app:
+        controller: gatus
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: *port
     serviceMonitor:
-      main:
-        serviceName: *app
+      app:
+        serviceName: gatus
         endpoints:
           - port: http
             metricRelabelings:
@@ -113,8 +117,7 @@ spec:
                 sourceLabels: ["service"]
                 targetLabel: instance
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         annotations:
           hajimari.io/icon: mdi:eye
@@ -127,10 +130,9 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     serviceAccount:
       create: true
       name: gatus
@@ -140,9 +142,7 @@ spec:
       config-file:
         type: configMap
         name: gatus-configmap
-        advancedMounts:
-          main:
-            main:
-              - path: /config/config.yaml
-                subPath: config.yaml
-                readOnly: true
+        globalMounts:
+          - path: /config/config.yaml
+            subPath: config.yaml
+            readOnly: true
