@@ -22,10 +22,15 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: kube-prometheus-stack
+      namespace: monitoring
+    - name: loki
+      namespace: monitoring
   values:
     extraInitContainers:
       - name: 01-init-db
-        image: ghcr.io/haraldkoch/postgres-init:16.2@sha256:ae266069070fa8a35636e33e77cf2b6ca3d799f57b31e64c6a1dfa7704f4a06a
+        image: ghcr.io/haraldkoch/postgres-init:16
         envFrom:
           - secretRef:
               name: &secret grafana-secret
@@ -40,6 +45,7 @@ spec:
       GF_EXPLORE_ENABLED: true
       GF_FEATURE_TOGGLES_ENABLE: publicDashboards
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
+      GF_SECURITY_ANGULAR_SUPPORT_ENABLED: true
       GF_SECURITY_COOKIE_SAMESITE: grafana
       GF_SERVER_ROOT_URL: https://grafana.${CLUSTER_DOMAIN}
     envFromSecrets:
@@ -120,6 +126,14 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/kubernetes
+          - name: prometheus
+            orgId: 1
+            folder: Prometheus
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/prometheus-folder
           - name: thanos
             orgId: 1
             folder: Thanos
@@ -143,6 +157,7 @@ spec:
             url: http://thanos-query-frontend.monitoring.svc.cluster.local:9090
             jsonData:
               prometheusType: Thanos
+              timeInterval: 1m
             isDefault: true
           - name: Loki
             type: loki
@@ -155,7 +170,7 @@ spec:
             type: alertmanager
             uid: alertmanager
             access: proxy
-            url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093
+            url: http://alertmanager-operated.monitoring.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
     dashboards:
@@ -196,7 +211,14 @@ spec:
           # renovate: depName="Redis Dashboard for Prometheus Redis Exporter 1.x"
           gnetId: 763
           revision: 6
-          datasource: Prometheus
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+        spegel:
+          # renovate: depName="Spegel"
+          gnetId: 18089
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         cloudnative-pg:
           url: https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/grafana-dashboard.json
           datasource: Prometheus
@@ -241,7 +263,7 @@ spec:
       kubernetes:
         kubernetes-api-server:
           # renovate: depName="Kubernetes / System / API Server"
-          gnetId: 16761
+          gnetId: 15761
           revision: 16
           datasource: Prometheus
         kubernetes-coredns:
@@ -279,6 +301,12 @@ spec:
           datasource: Prometheus
         nginx-request-handling-performance:
           url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
+          datasource: Prometheus
+      prometheus:
+        prometheus:
+          # renovate: depName="Prometheus"
+          gnetId: 19105
+          revision: 3
           datasource: Prometheus
       thanos:
         thanos-bucket-replicate:
@@ -336,9 +364,6 @@ spec:
       - natel-discrete-panel
       - pr0ps-trackmap-panel
       - vonage-status-panel
-    serviceAccount:
-      create: true
-      autoMount: true
     serviceMonitor:
       enabled: true
       metricRelabelings:
@@ -355,8 +380,7 @@ spec:
       hosts:
         - &host grafana.${CLUSTER_DOMAIN}
       tls:
-        - hosts:
-            - *host
+        - hosts: [*host]
     imageRenderer:
       enabled: true
       replicas: 2
