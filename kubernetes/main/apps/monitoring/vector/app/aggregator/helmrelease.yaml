@@ -20,11 +20,11 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     controllers:
-      main:
+      vector-aggregator:
         replicas: 2
         strategy: RollingUpdate
         annotations:
@@ -33,16 +33,16 @@ spec:
           init-geoip:
             image:
               repository: ghcr.io/maxmind/geoipupdate
-              tag: v6.1.0
+              tag: v6.1.0@sha256:cdd36d36c2e1d353a990a48e5a36d42ee75089d5d9064d80d36d90c147fd2606
             env:
               GEOIPUPDATE_EDITION_IDS: GeoLite2-City
               GEOIPUPDATE_FREQUENCY: "0"
               GEOIPUPDATE_VERBOSE: "true"
             envFrom:
               - secretRef:
-                  name: vector-geoipupdate
+                  name: vector-aggregator-secret
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/haraldkoch/vector
               tag: 0.36.1-debian
@@ -51,8 +51,6 @@ spec:
               liveness:
                 enabled: true
               readiness:
-                enabled: true
-              startup:
                 enabled: true
             resources:
               requests:
@@ -69,8 +67,8 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
-      main:
-        controller: main
+      app:
+        controller: vector-aggregator
         ipFamilyPolicy: PreferDualStack
         type: LoadBalancer
         annotations:
@@ -79,8 +77,8 @@ spec:
         externalTrafficPolicy: Local
         ports:
           http:
-            port: 8686
             primary: true
+            port: 8686
           journald:
             port: 6000
           kubernetes:
@@ -93,19 +91,15 @@ spec:
     persistence:
       config:
         type: configMap
-        name: vector-aggregator-configmap # overriden by kustomizeconfig
-        advancedMounts:
-          main:
-            main:
-              - path: /etc/vector/vector.yaml
-                subPath: vector.yaml
-                readOnly: true
+        name: vector-aggregator-configmap
+        globalMounts:
+          - path: /etc/vector/vector.yaml
+            subPath: vector.yaml
+            readOnly: true
       data:
         type: emptyDir
-        advancedMounts:
-          main:
-            main:
-              - path: /vector-data-dir
+        globalMounts:
+          - path: /vector-data-dir
       geoip:
         type: emptyDir
         globalMounts:
