@@ -75,12 +75,12 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: true
-          namespace: network
           namespaceSelector:
             any: true
       extraArgs:
         default-ssl-certificate: network/tls.${CLUSTER_DOMAIN/./-}
         enable-annotation-validation: true
+      terminationGracePeriodSeconds: 120
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
@@ -92,7 +92,7 @@ spec:
               app.kubernetes.io/component: controller
       resources:
         requests:
-          cpu: 50m
+          cpu: 100m
           memory: 250Mi
         limits:
           memory: 500Mi

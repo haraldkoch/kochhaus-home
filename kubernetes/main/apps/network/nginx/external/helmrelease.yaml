@@ -22,6 +22,11 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  valuesFrom:
+    - targetPath: controller.maxmindLicenseKey
+      kind: Secret
+      name: nginx-external-maxmind-secret
+      valuesKey: MAXMIND_LICENSE_KEY
   values:
     fullnameOverride: nginx-external
     controller:
@@ -78,12 +83,12 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: true
-          namespace: network
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: network/tls.kochhaus-dev
+        default-ssl-certificate: network/tls."${CLUSTER_DOMAIN/./-}"
         enable-annotation-validation: true
+      terminationGracePeriodSeconds: 120
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
@@ -95,14 +100,9 @@ spec:
               app.kubernetes.io/component: controller
       resources:
         requests:
-          cpu: 50m
+          cpu: 100m
           memory: 250Mi
         limits:
           memory: 500Mi
     defaultBackend:
       enabled: false
-  valuesFrom:
-    - targetPath: controller.maxmindLicenseKey
-      kind: Secret
-      name: nginx-external-maxmind-secret
-      valuesKey: MAXMIND_LICENSE_KEY
