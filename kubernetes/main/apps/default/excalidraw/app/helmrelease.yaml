@@ -24,11 +24,11 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      excalidraw:
         replicas: 2
         strategy: RollingUpdate
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/haraldkoch/excalidraw
               tag: latest@sha256:cb3779395c51500351affce38c1fc1e4121bff03e1ca704c3adb1bbdc748bbe0
@@ -37,8 +37,6 @@ spec:
               liveness:
                 enabled: true
               readiness:
-                enabled: true
-              startup:
                 enabled: true
             resources:
               requests:
@@ -55,15 +53,14 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
-      main:
-        controller: main
+      app:
+        controller: excalidraw
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 80
     ingress:
-      main:
-        enabled: true
+      app:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
@@ -73,7 +70,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]

@@ -27,13 +27,13 @@ spec:
       namespace: network
   values:
     controllers:
-      main:
+      cloudflared:
         replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: docker.io/cloudflare/cloudflared
               tag: 2024.3.0@sha256:8acfc9e4e65e0d1e26686177a3a0c4baa3b0330c0fc6adc899c2b673bc938e77
@@ -63,8 +63,6 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-              startup:
-                enabled: false
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -88,13 +86,13 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
-      main:
-        controller: main
+      app:
+        controller: cloudflared
         ports:
           http:
             port: *port
     serviceMonitor:
-      main:
+      app:
         serviceName: *app
         endpoints:
           - port: http

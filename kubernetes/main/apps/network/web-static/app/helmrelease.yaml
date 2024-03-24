@@ -24,13 +24,13 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      web-static:
         replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: joseluisq/static-web-server
               tag: 2.28.0-alpine
@@ -41,8 +41,6 @@ spec:
               liveness:
                 enabled: true
               readiness:
-                enabled: true
-              startup:
                 enabled: true
             resources:
               requests:
@@ -60,25 +58,24 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
-      main:
-        controller: main
+      app:
+        controller: web-static
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 80
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         hosts:
           - host: &host "www.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       public:
         type: secret

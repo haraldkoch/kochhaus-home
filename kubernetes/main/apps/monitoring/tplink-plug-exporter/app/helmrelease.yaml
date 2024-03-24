@@ -24,9 +24,9 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      tplink-plug-exporter:
         containers:
-          main:
+          app:
             image:
               repository: fffonion/tplink-plug-exporter
               tag: 0.4.0
@@ -37,8 +37,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
             resources:
               requests:
                 cpu: 50m
@@ -47,11 +45,10 @@ spec:
                 cpu: 100m
                 memory: 100Mi
     service:
-      main:
-        controller: main
+      app:
+        controller: tplink-plug-exporter
         ports:
           metrics:
-            enabled: true
             protocol: TCP
             port: 9233
         type: LoadBalancer

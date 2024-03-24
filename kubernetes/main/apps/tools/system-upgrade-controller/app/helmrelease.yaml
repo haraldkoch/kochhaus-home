@@ -24,10 +24,10 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      system-upgrade:
         strategy: RollingUpdate
         containers:
-          main:
+          app:
             image:
               repository: docker.io/rancher/system-upgrade-controller
               tag: v0.13.4

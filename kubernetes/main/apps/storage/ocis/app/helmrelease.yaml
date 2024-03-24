@@ -74,8 +74,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
         pod:
           securityContext:
             runAsUser: 1000
@@ -106,8 +104,7 @@ spec:
                   identifier: app
                   port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       storage-users:
         type: nfs

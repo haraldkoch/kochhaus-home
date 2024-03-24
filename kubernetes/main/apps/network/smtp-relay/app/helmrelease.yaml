@@ -24,14 +24,14 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      smtp-relay:
         # FIXME: convert to statefulset and persist smtp queues
         replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/foxcpp/maddy
               tag: 0.7.1
@@ -44,8 +44,6 @@ spec:
               liveness:
                 enabled: true
               readiness:
-                enabled: true
-              startup:
                 enabled: true
             resources:
               requests:
@@ -62,8 +60,8 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
-      main:
-        controller: main
+      app:
+        controller: smtp-relay
         type: LoadBalancer
         externalIPs: ["${SVC_SMTP_RELAY_ADDR_V4}", "${SVC_SMTP_RELAY_ADDR_V6}"]
         externalTrafficPolicy: Local
@@ -77,7 +75,7 @@ spec:
           metrics:
             port: 9749
     serviceMonitor:
-      main:
+      app:
         serviceName: *app
         endpoints:
           - port: metrics

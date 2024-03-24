@@ -27,7 +27,7 @@ spec:
       namespace: rook-ceph
   values:
     controllers:
-      main:
+      node-red:
         pod:
           securityContext:
             runAsUser: 568
@@ -35,7 +35,7 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: "OnRootMismatch"
         containers:
-          main:
+          app:
             image:
               repository: docker.io/nodered/node-red
               tag: 3.1.7
@@ -48,8 +48,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
             resources:
               requests:
                 cpu: 22m
@@ -57,15 +55,14 @@ spec:
               limits:
                 memory: 262M
     service:
-      main:
-        controller: main
+      app:
+        controller: node-red
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 1880
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         annotations:
           hajimari.io/icon: mdi:sitemap
@@ -74,10 +71,10 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       data:
         existingClaim: ${VOLSYNC_CLAIM}

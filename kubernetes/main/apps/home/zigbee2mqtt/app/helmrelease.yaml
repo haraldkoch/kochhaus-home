@@ -29,11 +29,11 @@ spec:
       namespace: rook-ceph
   values:
     controllers:
-      main:
+      zigbee2mqtt:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/koenkk/zigbee2mqtt
               tag: 1.36.0
@@ -78,8 +78,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
             resources:
               requests:
                 cpu: 10m
@@ -103,25 +101,24 @@ spec:
                         values:
                           - "true"
     service:
-      main:
-        controller: main
+      app:
+        controller: zigbee2mqtt
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: *port
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         hosts:
           - host: &host "zigbee.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       config:
         existingClaim: zigbee2mqtt
