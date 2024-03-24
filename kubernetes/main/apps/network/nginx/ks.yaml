@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: cert-manager-issuers
   path: ./kubernetes/main/apps/network/nginx/certificates
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -37,11 +37,11 @@ spec:
     - name: external-secrets-stores
     - name: nginx-certificates
   path: ./kubernetes/main/apps/network/nginx/external
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  wait: true
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
@@ -60,11 +60,11 @@ spec:
   dependsOn:
     - name: nginx-certificates
   path: ./kubernetes/main/apps/network/nginx/internal
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  wait: true
+  wait: false
   interval: 30m
   retryInterval: 1m
   timeout: 5m
