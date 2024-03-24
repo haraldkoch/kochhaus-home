@@ -86,7 +86,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: network/tls."${CLUSTER_DOMAIN/./-}"
+        default-ssl-certificate: network/tls.${CLUSTER_DOMAIN/./-}
         enable-annotation-validation: true
       terminationGracePeriodSeconds: 120
       topologySpreadConstraints:
