@@ -27,30 +27,24 @@ spec:
       enabled: false
       sentinel: false
     master:
+      resourcesPreset: nano
       persistence:
         enabled: false
-    networkPolicy:
-      enabled: false
     replica:
+      resourcesPreset: nano
       persistence:
         enabled: false
     sentinel:
       enabled: true
       masterSet: redis-master
-      getMasterTimeout: 10
-      startupProbe:
-        failureThreshold: 2
+      resourcesPreset: nano
       persistence:
         enabled: false
-      resources:
-        requests:
-          cpu: 15m
-          memory: 100Mi
-        limits:
-          cpu: 50m
-          memory: 200Mi
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
         interval: 1m
+      resourcesPreset: nano
+    networkPolicy:
+      enabled: false
