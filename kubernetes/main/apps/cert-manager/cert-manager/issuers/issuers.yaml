@@ -12,17 +12,6 @@ spec:
       name: letsencrypt-production
     solvers:
       - dns01:
-          rfc2136:
-            nameserver: "${SECRET_EXTERNAL_DNS_SERVER}"
-            tsigKeyName: externaldns
-            tsigAlgorithm: HMACSHA256
-            tsigSecretSecretRef:
-              name: cert-manager-secret
-              key: tsig-secret-key
-        selector:
-          dnsZones:
-            - ${SECRET_INTERNAL_DOMAIN}
-      - dns01:
           cloudflare:
             email: "${SECRET_CLOUDFLARE_EMAIL}"
             apiTokenSecretRef:
@@ -44,17 +33,6 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-staging
     solvers:
-      - dns01:
-          rfc2136:
-            nameserver: "${SECRET_EXTERNAL_DNS_SERVER}"
-            tsigKeyName: externaldns
-            tsigAlgorithm: HMACSHA256
-            tsigSecretSecretRef:
-              name: cert-manager-secret
-              key: tsig-secret-key
-        selector:
-          dnsZones:
-            - ${SECRET_INTERNAL_DOMAIN}
       - dns01:
           cloudflare:
             email: "${SECRET_CLOUDFLARE_EMAIL}"

@@ -1,24 +1,11 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/cert-manager.io/certificate_v1.json
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${SECRET_INTERNAL_DOMAIN/./-}"
+  name: "${CLUSTER_DOMAIN/./-}"
 spec:
-  secretName: "tls.${SECRET_INTERNAL_DOMAIN/./-}"
-  issuerRef:
-    name: letsencrypt-production
-    kind: ClusterIssuer
-  commonName: "${SECRET_INTERNAL_DOMAIN}"
-  dnsNames:
-    - "${SECRET_INTERNAL_DOMAIN}"
-    - "*.${SECRET_INTERNAL_DOMAIN}"
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: "kochhaus-dev"
-spec:
-  secretName: "tls.kochhaus-dev"
+  secretName: "tls.${CLUSTER_DOMAIN/./-}"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
