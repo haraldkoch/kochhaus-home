@@ -20,17 +20,17 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     controllers:
-      main:
+      homepage:
         replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/gethomepage/homepage
               tag: v0.8.10
@@ -44,8 +44,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
             resources:
               requests:
                 cpu: 15m
@@ -53,15 +51,14 @@ spec:
               limits:
                 memory: 2G
     service:
-      main:
-        controller: main
+      app:
+        controller: homepage
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 3000
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         hosts:
           - host: &host home.${CLUSTER_DOMAIN}
@@ -69,10 +66,12 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
+    serviceAccount:
+      create: true
     persistence:
       config:
         type: configMap
@@ -90,5 +89,3 @@ spec:
             path: /app/config/settings.yaml
           - subPath: widgets.yaml
             path: /app/config/widgets.yaml
-    serviceAccount:
-      create: true

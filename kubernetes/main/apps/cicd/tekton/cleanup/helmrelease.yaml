@@ -20,7 +20,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     serviceAccount:
@@ -28,7 +28,7 @@ spec:
       labels:
         app.kubernetes.io/part-of: tekton
     controllers:
-      main:
+      tekton-pipelinerun-cleaner:
         type: cronjob
         cronjob:
           concurrencyPolicy: Forbid
@@ -36,7 +36,7 @@ spec:
         pod:
           restartPolicy: OnFailure
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/haraldkoch/kubernetes-kubectl
               tag: 1.29.3@sha256:6bb23893cd3be5d6bc9b13961f270167c6ce31c30e735c77c18c337a6cc90e15

@@ -20,14 +20,14 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     controllers:
-      main:
+      sr505n-cache:
         replicas: 1
         containers:
-          main:
+          app:
             image:
               repository: joseluisq/static-web-server
               tag: 2.28.0-alpine
@@ -38,8 +38,6 @@ spec:
               liveness:
                 enabled: true
               readiness:
-                enabled: true
-              startup:
                 enabled: true
             resources:
               requests:
@@ -70,15 +68,14 @@ spec:
                 cpu: 100m
                 memory: 32Mi
     service:
-      main:
-        controller: main
+      app:
+        controller: sr505n-cache
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 80
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         annotations:
           hajimari.io/enable: "false"
@@ -87,10 +84,10 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       config:
         type: emptyDir

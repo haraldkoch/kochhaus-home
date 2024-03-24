@@ -20,13 +20,13 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     controllers:
-      main:
+      apprise:
         containers:
-          main:
+          app:
             image:
               # https://hub.docker.com/r/caronc/apprise
               repository: docker.io/caronc/apprise
@@ -38,17 +38,14 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
     service:
-      main:
-        controller: main
+      app:
+        controller: apprise
         ports:
           http:
             port: 8000
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         annotations:
           hajimari.io/icon: bell-cog
@@ -57,10 +54,10 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       config:
         type: persistentVolumeClaim

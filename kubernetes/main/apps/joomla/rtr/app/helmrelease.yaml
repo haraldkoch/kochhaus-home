@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: rtr
+  name: ridetoremember
 spec:
   interval: 30m
   chart:
@@ -29,11 +29,11 @@ spec:
       namespace: joomla
   values:
     controllers:
-      main:
+      ridetoremember:
         containers:
           # FIXME: HTTP probes - find a Joomla health URL
           # FIXME: resource limits
-          main:
+          app:
             image:
               repository: joomla
               tag: 3.10.12
@@ -43,15 +43,14 @@ spec:
               - secretRef:
                   name: rtr-secret
     service:
-      main:
-        controller: main
+      app:
+        controller: ridetoremember
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 80
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         annotations:
           hajimari.io/appName: "Ride To Remeber"
@@ -60,10 +59,10 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       data:
         existingClaim: rtr-data-v1

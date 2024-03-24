@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: prometheus-nut-exporter
+  name: nut-exporter
 spec:
   interval: 30m
   chart:
@@ -20,13 +20,13 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     controllers:
-      main:
+      nut-exporter:
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/druggeri/nut_exporter
               tag: "3.1.1"
@@ -40,8 +40,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
             resources:
               requests:
                 cpu: 50m
@@ -50,11 +48,10 @@ spec:
                 cpu: 100m
                 memory: 100Mi
     service:
-      main:
-        controller: main
+      app:
+        controller: nut-exporter
         ports:
           metrics:
-            enabled: true
             protocol: TCP
             port: 9199
         type: LoadBalancer
@@ -65,3 +62,8 @@ spec:
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "exporters.${CLUSTER_DOMAIN}"
+    serviceMonitor:
+      app:
+        serviceName: nut-exporter
+        endpoints:
+          - name: metrics

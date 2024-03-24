@@ -20,7 +20,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   dependsOn:
     - name: rook-ceph-cluster
@@ -29,7 +29,7 @@ spec:
       namespace: storage
   values:
     controllers:
-      main:
+      memos:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -41,7 +41,7 @@ spec:
               - secretRef:
                   name: memos-secret
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/usememos/memos
               tag: 0.21.0
@@ -59,8 +59,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
             resources:
               requests:
                 cpu: 25m
@@ -68,14 +66,14 @@ spec:
               limits:
                 memory: 105M
     service:
-      main:
-        controller: main
+      app:
+        controller: memos
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 5230
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         hosts:
@@ -83,13 +81,12 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       data:
-        enabled: true
         existingClaim: ${VOLSYNC_CLAIM}
         globalMounts:
           - path: /var/opt/memos

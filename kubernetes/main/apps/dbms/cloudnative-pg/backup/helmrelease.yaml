@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: pg-kochhaus-backup
+  name: cnpg-backup
 spec:
   interval: 30m
   chart:
@@ -20,11 +20,11 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     controllers:
-      main:
+      cnpg-backup:
         type: cronjob
         cronjob:
           concurrencyPolicy: Forbid
@@ -45,7 +45,7 @@ spec:
                         values:
                           - "amd64"
         containers:
-          main:
+          app:
             image:
               # same image as the postgres cluster
               repository: ghcr.io/cloudnative-pg/postgresql

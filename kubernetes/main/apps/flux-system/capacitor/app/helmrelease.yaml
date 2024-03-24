@@ -21,14 +21,14 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     controllers:
-      main:
+      capacitor:
         strategy: RollingUpdate
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/gimlet-io/capacitor
               tag: v0.3.3
@@ -45,23 +45,23 @@ spec:
               capabilities: {drop: ["ALL"]}
     serviceAccount:
       create: true
-      name: "capacitor"
+      name: capacitor
     service:
-      main:
-        controller: main
+      app:
+        controller: capacitor
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 9000
     ingress:
-      main:
+      app:
         className: internal
         hosts:
           - host: &host capacitor.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]

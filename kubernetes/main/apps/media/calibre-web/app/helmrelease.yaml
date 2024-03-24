@@ -20,18 +20,18 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
     controllers:
-      main:
+      calibre-web:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/bjw-s/calibre-web
               tag: 0.6.21@sha256:9aef000820ef1b25705f7c573e285f03b79a50777d95f90748029ceb853f7cf0
@@ -41,8 +41,6 @@ spec:
               liveness:
                 enabled: true
               readiness:
-                enabled: true
-              startup:
                 enabled: true
             resources:
               requests:
@@ -57,15 +55,14 @@ spec:
             fsGroup: 2000
             fsGroupChangePolicy: "OnRootMismatch"
     service:
-      main:
-        controller: main
+      app:
+        controller: calibre-web
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 8083
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         annotations:
           hajimari.io/icon: mdi:chart-bar
@@ -78,10 +75,10 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       cache:
         type: emptyDir
@@ -91,7 +88,5 @@ spec:
         existingClaim: ${VOLSYNC_CLAIM}
       media:
         existingClaim: media-nfs
-        advancedMounts:
-          main:
-            main:
-              - path: /media
+        globalMounts:
+          - path: /media

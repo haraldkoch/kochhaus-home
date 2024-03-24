@@ -20,13 +20,13 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     controllers:
-      main:
+      mqtt-exporter:
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/kpetremann/mqtt-exporter
               tag: 1.4.1
@@ -48,8 +48,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
             resources:
               requests:
                 cpu: 10m
@@ -57,11 +55,10 @@ spec:
               limits:
                 memory: 200Mi
     service:
-      main:
-        controller: main
+      app:
+        controller: mqtt-exporter
         ports:
           metrics:
-            enabled: true
             protocol: HTTP
             port: *port
         type: LoadBalancer
@@ -73,7 +70,7 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "exporters.${CLUSTER_DOMAIN}"
     serviceMonitor:
-      main:
+      app:
         serviceName: *app
         endpoints:
           - port: metrics
