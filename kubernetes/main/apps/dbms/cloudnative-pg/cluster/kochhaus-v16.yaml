@@ -7,50 +7,50 @@ metadata:
   annotations:
     kyverno.io/ignore: "true"
 spec:
-
-  description: Postgresql cluster for KochHaus
-
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.2-10
-
   instances: 3
-
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.2-10
   primaryUpdateStrategy: unsupervised
-
   storage:
     size: 10Gi
     storageClass: local-hostpath
-
-  enableSuperuserAccess: true
   superuserSecret:
     name: cloudnative-pg-secret
-
+  enableSuperuserAccess: true
+  postgresql:
+    parameters:
+      max_connections: "400"
+      shared_buffers: 256MB
   affinity:
     nodeSelector:
       node.home.arpa/physical: "true"
-
+  nodeMaintenanceWindow:
+    inProgress: false
+    reusePVC: true
   resources:
     requests:
       cpu: 50m
       memory: 256Mi
     limits:
       memory: 640Mi
-
-  postgresql:
-    parameters:
-      max_connections: "100"
-      shared_buffers: 128MB
-
   monitoring:
     enablePodMonitor: true
-
+    # Ref: https://github.com/cloudnative-pg/cloudnative-pg/issues/2501
+    podMonitorMetricRelabelings:
+      - { sourceLabels: ["cluster"], targetLabel: cnpg_cluster, action: replace }
+      - { regex: cluster, action: labeldrop }
   backup:
     retentionPolicy: 30d
-    barmanObjectStore:
-      destinationPath: s3://cnpg/v16/v1
-      endpointURL: http://${SECRET_BACKUP_SERVER}:9000
+    barmanObjectStore: &barmanObjectStore
+      data:
+        compression: bzip2
       wal:
         compression: bzip2
         maxParallel: 8
+      destinationPath: s3://cnpg/v16/
+      endpointURL: http://${SECRET_BACKUP_SERVER}:9000
+      # Note: serverName version needs to be inclemented
+      # when recovering from an existing cnpg cluster
+      serverName: &currentCluster kochhaus-v16-v1
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -58,40 +58,28 @@ spec:
         secretAccessKey:
           name: cloudnative-pg-secret
           key: aws-secret-access-key
+  # Note: previousCluster needs to be set to the name of the previous
+  # cluster when recovering from an existing cnpg cluster
+  bootstrap:
+    recovery:
+      source: &previousCluster kochhaus-v16-v1
+    # upgrade or recover from another running instance
+    # initdb:
+    #   import:
+    #     type: monolith
+    #     databases:
+    #       - "*"
+    #     roles:
+    #       - "*"
+    #     source:
+    #       externalCluster: kochhaus-pg15
 
-  # the recovery source here is taken from the externalClusters section below.
-  # bootstrap:
-  #   # upgrade or recover from another running instance
-  #   initdb:
-  #     import:
-  #       type: monolith
-  #       databases:
-  #         - "*"
-  #       roles:
-  #         - "*"
-  #       source:
-  #         externalCluster: kochhaus-pg15
-
-  # normal restore from backup + WALs
-  #   recovery:
-  #     source: kochhaus-v16
-
-  externalClusters: []
-    # must be the name of the cluster instance that was backed up
-    # - name: kochhaus-v16
-    #   barmanObjectStore:
-    #     destinationPath: s3://cnpg/v16/v1
-    #     endpointURL: http://${SECRET_BACKUP_SERVER}:9000
-    #     s3Credentials:
-    #       accessKeyId:
-    #         name: cloudnative-pg-secret
-    #         key: aws-access-key-id
-    #       secretAccessKey:
-    #         name: cloudnative-pg-secret
-    #         key: aws-secret-access-key
-    #     wal:
-    #       compression: bzip2
-    #       maxParallel: 12
+  # Note: externalClusters is needed when recovering from an existing cnpg cluster
+  externalClusters:
+    - name: *previousCluster
+      barmanObjectStore:
+        <<: *barmanObjectStore
+        serverName: *previousCluster
     # - name: kochhaus-pg15
     #   connectionParameters:
     #     host: kochhaus-v15-ro.dbms
