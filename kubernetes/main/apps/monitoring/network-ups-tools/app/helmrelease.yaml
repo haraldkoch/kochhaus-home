@@ -24,10 +24,10 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      network-ups-tools:
         strategy: RollingUpdate
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/jr0dd/network-ups-tools
               tag: v2.8.1@sha256:7999ff0ed6f4e31d64f8a6afc66dce26e147608c9d595f4f4fb7b4a6e442ae00
@@ -39,8 +39,6 @@ spec:
               liveness:
                 enabled: true
               readiness:
-                enabled: true
-              startup:
                 enabled: true
         pod:
           annotations:
@@ -57,8 +55,9 @@ spec:
             - key: node-role.kubernetes.io/control-plane
               operator: Exists
     service:
-      main:
-        controller: main
+      app:
+        controller: network-ups-tools
+        primary: true
         ports:
           http:
             port: 3493
@@ -72,14 +71,17 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "exporters.${CLUSTER_DOMAIN}"
       metrics:
-        controller: main
-        # I suppose we could collect the metrics for the exporter process here by enabling
-        enabled: false
+        controller: network-ups-tools
         ports:
           metrics:
             enabled: true
             port: 9199
             protocol: TCP
+    serviceMonitor:
+      app:
+        serviceName: network-ups-tools-metrics
+        endpoints:
+          - name: metrics
     persistence:
       config:
         type: configMap

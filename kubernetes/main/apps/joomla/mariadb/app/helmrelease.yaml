@@ -27,12 +27,12 @@ spec:
       namespace: rook-ceph
   values:
     controllers:
-      main:
+      mariadb:
         pod:
           labels:
             app.kubernetes.io/part-of: joomla
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/linuxserver/mariadb
               tag: 10.11.6
@@ -71,8 +71,6 @@ spec:
                   periodSeconds: 10
                   successThreshold: 1
                   timeoutSeconds: 1
-              startup:
-                enabled: false
             resources:
               requests:
                 cpu: 50m
@@ -80,12 +78,11 @@ spec:
               limits:
                 memory: 512Mi
     service:
-      main:
-        controller: main
+      app:
+        controller: mariadb
         ipFamilyPolicy: PreferDualStack
         ports:
           mysql:
-            enabled: true
             port: 3306
             primary: true
     persistence:

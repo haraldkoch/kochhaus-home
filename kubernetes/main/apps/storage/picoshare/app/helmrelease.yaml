@@ -27,11 +27,11 @@ spec:
       namespace: rook-ceph
   values:
     controllers:
-      main:
+      picoshare:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: docker.io/mtlynch/picoshare
               tag: 1.4.2
@@ -47,8 +47,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
             resources:
               requests:
                 cpu: 10m
@@ -56,15 +54,14 @@ spec:
               limits:
                 memory: 512Mi
     service:
-      main:
-        controller: main
+      app:
+        controller: picoshare
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 4001
     ingress:
-      main:
-        enabled: true
+      app:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
@@ -74,10 +71,10 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       data:
         type: persistentVolumeClaim

@@ -24,11 +24,11 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      kubernetes-schemas:
         replicas: 2
         strategy: RollingUpdate
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/haraldkoch/kubernetes-schemas
               tag: latest@sha256:90a40463e5ef7d718c4769f9e7fec44b6e30ff4608d0d39c0ff27142378afdca
@@ -36,8 +36,6 @@ spec:
               liveness:
                 enabled: true
               readiness:
-                enabled: true
-              startup:
                 enabled: true
             resources:
               requests:
@@ -54,14 +52,13 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
-      main:
-        controller: main
+      app:
+        controller: kubernetes-schemas
         ports:
           http:
             port: 8080
     ingress:
-      main:
-        enabled: true
+      app:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
@@ -71,7 +68,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]

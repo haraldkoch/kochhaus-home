@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      lldap:
         replicas: 2
         strategy: RollingUpdate
         annotations:
@@ -38,7 +38,7 @@ spec:
               - secretRef:
                   name: lldap-secret
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/lldap/lldap
               tag: v0.5.0
@@ -53,8 +53,6 @@ spec:
               liveness:
                 enabled: true
               readiness:
-                enabled: true
-              startup:
                 enabled: true
             resources:
               requests:
@@ -71,8 +69,8 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
-      main:
-        controller: main
+      app:
+        controller: lldap
         ports:
           http:
             port: *port
@@ -80,18 +78,17 @@ spec:
           ldap:
             port: *ldapPort
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         hosts:
           - host: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       data:
         type: emptyDir

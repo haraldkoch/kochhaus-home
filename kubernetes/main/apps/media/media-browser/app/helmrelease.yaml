@@ -27,10 +27,10 @@ spec:
       namespace: rook-ceph
   values:
     controllers:
-      main:
+      media-browser:
         type: statefulset
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/haraldkoch/filebrowser
               tag: v2.27.0
@@ -53,8 +53,6 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-              startup:
-                enabled: false
             resources:
               requests:
                 cpu: 10m
@@ -74,15 +72,14 @@ spec:
               size: 1Gi
               storageClass: ceph-block
     service:
-      main:
-        controller: main
+      app:
+        controller: media-browser
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 80
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         annotations:
           hajimari.io/icon: mdi:folder-play-outline
@@ -91,10 +88,10 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       media:
         existingClaim: media-nfs

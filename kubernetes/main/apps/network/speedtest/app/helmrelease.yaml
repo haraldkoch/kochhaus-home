@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      speedtest:
         replicas: 2
         strategy: RollingUpdate
         annotations:
@@ -38,7 +38,7 @@ spec:
               - secretRef:
                   name: speedtest-secret
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/linuxserver/librespeed
               tag: 5.3.0
@@ -50,8 +50,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
             resources:
               requests:
                 cpu: 50m
@@ -60,15 +58,14 @@ spec:
                 cpu: 1
                 memory: 100Mi
     service:
-      main:
-        controller: main
+      app:
+        controller: speedtest
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 80
     ingress:
-      main:
-        enabled: true
+      app:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
@@ -78,10 +75,10 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       init:
         type: configMap

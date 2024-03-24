@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      pod-gateway:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -37,7 +37,7 @@ spec:
             securityContext:
               privileged: true
         containers:
-          downloads-gateway-pod-gateway:
+          pod-gateway:
             image:
               repository: ghcr.io/angelnu/pod-gateway
               tag: v1.10.0
@@ -48,7 +48,7 @@ spec:
                 add:
                   - NET_ADMIN
             ports:
-              - name: http
+              - name: vxlan
                 containerPort: 4789
                 protocol: UDP
           netshoot:
@@ -94,17 +94,17 @@ spec:
             options:
               - name: ndots
                 value: "5"
-      webhook:
+      pod-gateway-webhook:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          webhook:
             image:
               repository: ghcr.io/angelnu/gateway-admision-controller
               tag: v3.10.0
             args:
               - --webhook-listen-address=:8080
-              - --gateway=downloads-gateway-main.vpn.svc.cluster.local
+              - --gateway=downloads-gateway-pod-gateway.vpn.svc.cluster.local
               - --DNS=172.16.0.1
               - --configmapName=downloads-gateway-pod-gateway
               - --setGatewayLabel=setGateway
@@ -156,17 +156,17 @@ spec:
                   successThreshold: 1
                   failureThreshold: 30
     service:
-      main:
-        controller: main
+      pod-gateway:
+        controller: pod-gateway
         type: ClusterIP
         clusterIP: None
         ports:
-          http:
+          vxlan:
             protocol: UDP
             port: 4789
-            targetPort: http
+            targetPort: vxlan
       pod-gateway-webhook:
-        controller: webhook
+        controller: pod-gateway-webhook
         ports:
           http:
             protocol: TCP
@@ -177,16 +177,16 @@ spec:
         type: configMap
         name: downloads-gateway-pod-gateway
         advancedMounts:
-          main:
+          pod-gateway:
             routes:
               - path: /config
-            downloads-gateway-pod-gateway:
+            pod-gateway:
               - path: /config
       vpnconfig:
         type: secret
         name: downloads-gateway-vpnconfig
         advancedMounts:
-          main:
+          pod-gateway:
             openvpn:
               - path: /vpn/vpn.conf
                 subPath: vpnConfigfile
@@ -194,6 +194,6 @@ spec:
         type: secret
         name: downloads-gateway-pod-gateway-webhook-tls
         advancedMounts:
-          webhook:
-            main:
+          pod-gateway-webhook:
+            webhook:
               - path: /tls

@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      dmarc-report:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -36,7 +36,7 @@ spec:
               - secretRef:
                   name: *app
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/szinn/dmarc-report
               tag: 1.4.5@sha256:26d14b7c66b7d0f4c084abccfe6ce3b0ba78e25ab8fca5bb19d8bd15b12eb68b
@@ -49,17 +49,14 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
     service:
-      main:
-        controller: main
+      app:
+        controller: dmarc-report
         ports:
           http:
             port: 80
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         annotations:
           hajimari.io/icon: mdi:email
@@ -68,10 +65,10 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       config:
         type: emptyDir

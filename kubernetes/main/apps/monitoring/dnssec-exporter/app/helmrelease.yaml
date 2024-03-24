@@ -24,9 +24,9 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      dnssec-exporter:
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/haraldkoch/prometheus-dnssec-exporter
               tag: 0.6.0
@@ -43,8 +43,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
             resources:
               requests:
                 cpu: 50m
@@ -56,8 +54,8 @@ spec:
           annotations:
             secret.reloader.stakater.com/reload: dnssec-exporter-secret
     service:
-      main:
-        controller: main
+      app:
+        controller: dnssec-exporter
         ports:
           metrics:
             protocol: TCP
@@ -70,15 +68,8 @@ spec:
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: exporters.${CLUSTER_DOMAIN}
-    persistence:
-      config:
-        type: secret
-        name: dnssec-exporter-secret
-        globalMounts:
-          - path: /config/dnssec-checks
-            subPath: dnssec-checks
     serviceMonitor:
-      main:
+      app:
         serviceName: *app
         endpoints:
           - port: metrics
@@ -89,3 +80,10 @@ spec:
               - action: replace
                 sourceLabels: ["service"]
                 targetLabel: instance
+    persistence:
+      config:
+        type: secret
+        name: dnssec-exporter-secret
+        globalMounts:
+          - path: /config/dnssec-checks
+            subPath: dnssec-checks

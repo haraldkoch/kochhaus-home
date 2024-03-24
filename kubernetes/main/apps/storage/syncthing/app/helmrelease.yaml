@@ -24,9 +24,9 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      syncthing:
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/haraldkoch/syncthing
               tag: 1.27.4
@@ -34,8 +34,6 @@ spec:
               liveness:
                 enabled: true
               readiness:
-                enabled: true
-              startup:
                 enabled: true
             resources:
               requests:
@@ -46,7 +44,7 @@ spec:
                 memory: 200M
       browser:
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/haraldkoch/filebrowser
               tag: v2.27.0
@@ -69,8 +67,6 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-              startup:
-                enabled: false
             resources:
               requests:
                 cpu: 10m
@@ -84,8 +80,8 @@ spec:
             fsGroup: 1000
             fsGroupChangePolicy: "OnRootMismatch"
     service:
-      main:
-        controller: main
+      app:
+        controller: syncthing
         ipFamilyPolicy: PreferDualStack
         primary: true
         ports:
@@ -93,7 +89,7 @@ spec:
             port: 8384
             primary: true
       listen:
-        controller: main
+        controller: syncthing
         type: LoadBalancer
         externalIPs:
           - ${SVC_SYNCTHING_ADDR_V4}
@@ -105,15 +101,6 @@ spec:
             port: 22000
             protocol: TCP
             targetPort: 22000
-      discovery:
-        controller: main
-        type: LoadBalancer
-        externalIPs:
-          - ${SVC_SYNCTHING_ADDR_V4}
-          - ${SVC_SYNCTHING_ADDR_V6}
-        externalTrafficPolicy: Local
-        ipFamilyPolicy: PreferDualStack
-        ports:
           discovery:
             enabled: true
             port: 21027
@@ -126,8 +113,7 @@ spec:
           http:
             port: 80
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         annotations:
           hajimari.io/icon: "cloud"
@@ -136,12 +122,11 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
       browser:
-        enabled: true
         className: internal
         annotations:
           hajimari.io/icon: mdi:folder-arrow-up-down-outline
@@ -153,8 +138,7 @@ spec:
                   identifier: browser
                   port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       config:
         type: persistentVolumeClaim
@@ -162,7 +146,7 @@ spec:
         size: 1Gi
         advancedMounts:
           browser:
-            main:
+            app:
               - path: /config
       data:
         enabled: true

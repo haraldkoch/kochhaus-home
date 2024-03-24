@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app intel-device-plugin-exporter
+  name: &app intel-gpu-exporter
 spec:
   interval: 30m
   chart:
@@ -27,14 +27,14 @@ spec:
       namespace: tools
   values:
     controllers:
-      main:
+      intel-gpu-exporter:
         type: daemonset
         strategy: RollingUpdate
         pod:
           nodeSelector:
             intel.feature.node.kubernetes.io/gpu: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/intel-gpu-exporter
               tag: rolling@sha256:f324725adc5497510f204aec64d398dddddd15052ce234c3f700606bb3d91a99
@@ -45,8 +45,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
             resources:
               requests:
                 gpu.intel.com/i915_monitoring: 1
@@ -56,13 +54,13 @@ spec:
                 gpu.intel.com/i915_monitoring: 1
                 memory: 500Mi
     service:
-      main:
-        controller: main
+      app:
+        controller: intel-gpu-exporter
         ports:
           http:
             port: 8080
     serviceMonitor:
-      main:
+      app:
         serviceName: *app
         endpoints:
           - port: http

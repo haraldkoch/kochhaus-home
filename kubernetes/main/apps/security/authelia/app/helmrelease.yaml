@@ -29,7 +29,7 @@ spec:
       namespace: dbms
   values:
     controllers:
-      main:
+      authelia:
         replicas: 2
         strategy: RollingUpdate
         annotations:
@@ -43,7 +43,7 @@ spec:
               - secretRef:
                   name: authelia-secret
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/authelia/authelia
               tag: v4.38.0-beta3@sha256:b48ae4d0ed9d1eee76efe382df60928bae550ec19e5663858dde6dc5f41cf285
@@ -72,8 +72,6 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-              startup:
-                enabled: false
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -97,8 +95,8 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
-      main:
-        controller: main
+      app:
+        controller: authelia
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
@@ -107,13 +105,12 @@ spec:
           metrics:
             port: 8080
     serviceMonitor:
-      main:
+      app:
         serviceName: *app
         endpoints:
           - port: metrics
     ingress:
-      main:
-        enabled: true
+      app:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
@@ -129,10 +126,10 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       config:
         type: configMap

@@ -24,12 +24,12 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      onepassword-connect:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               # repository: docker.io/1password/connect-api
               repository: ghcr.io/haraldkoch/onepassword-connect-api
@@ -63,8 +63,6 @@ spec:
                     path: /health
                     port: *apiPort
                   initialDelaySeconds: 15
-              startup:
-                enabled: false
             securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -109,8 +107,6 @@ spec:
                     path: /health
                     port: *syncPort
                   initialDelaySeconds: 15
-              startup:
-                enabled: false
             securityContext: *securityContext
             resources: *resources
         pod:
@@ -121,14 +117,13 @@ spec:
             fsGroup: 999
             fsGroupChangePolicy: OnRootMismatch
     service:
-      main:
-        controller: main
+      app:
+        controller: onepassword-connect
         ports:
           http:
             port: *apiPort
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         annotations:
           hajimari.io/enable: "false"
@@ -137,10 +132,10 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
-          - hosts:
-              - *host
+          - hosts: [*host]
     persistence:
       config:
         type: emptyDir

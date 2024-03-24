@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app redis-lb
+  name: redis-lb
 spec:
   interval: 30m
   chart:
@@ -24,13 +24,13 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      redis-lb:
         replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: haproxy
               tag: "2.9"
@@ -39,8 +39,6 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-              startup:
-                enabled: true
         pod:
           securityContext:
             runAsUser: 99
@@ -48,8 +46,8 @@ spec:
             fsGroup: 99
             fsGroupChangePolicy: "OnRootMismatch"
     service:
-      main:
-        controller: main
+      app:
+        controller: redis-lb
         type: LoadBalancer
         externalIPs: ["${SVC_REDIS_ADDR_V4}", "${SVC_REDIS_ADDR_V6}"]
         ipFamilyPolicy: PreferDualStack
@@ -68,8 +66,7 @@ spec:
             port: 26379
             targetPort: 26379
     ingress:
-      main:
-        enabled: true
+      app:
         className: internal
         annotations:
           hajimari.io/appName: "Redis Load Balancer"
@@ -79,7 +76,8 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
     persistence:
       config:
         type: configMap
@@ -89,7 +87,7 @@ spec:
             subPath: haproxy.cfg
             readOnly: true
     serviceMonitor:
-      main:
-        serviceName: *app
+      app:
+        serviceName: redis-lb
         endpoints:
           - port: http
