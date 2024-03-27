@@ -9,7 +9,6 @@ metadata:
     app.kubernetes.io/part-of: *app
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
-    prometheus: "kube-prometheus"
 spec:
   endpoints:
     - port: http
