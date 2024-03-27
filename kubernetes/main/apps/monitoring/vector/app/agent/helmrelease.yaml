@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: ghcr.io/haraldkoch/vector
-              tag: 0.36.1-debian
+              tag: 0.37.0-debian
             env:
               PROCFS_ROOT: /host/proc
               SYSFS_ROOT: /host/sys
