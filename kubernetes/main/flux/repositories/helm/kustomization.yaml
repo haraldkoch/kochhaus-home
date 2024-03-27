@@ -35,6 +35,7 @@ resources:
   - ./nfs-subdir-external-provisioner.yaml
   - ./node-feature-discovery.yaml
   - ./okgolove.yaml
+  - ./openebs.yaml
   - ./piraeus.yaml
   - ./prometheus-community.yaml
   - ./rook-ceph.yaml

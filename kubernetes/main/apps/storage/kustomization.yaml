@@ -13,6 +13,7 @@ resources:
   - ./nextcloud/ks.yaml
   - ./ocis/ks.yaml
   - ./onedrive/ks.yaml
+  - ./openebs/ks.yaml
   - ./picoshare/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./syncthing/ks.yaml
