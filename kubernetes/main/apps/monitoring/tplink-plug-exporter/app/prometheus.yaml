@@ -17,7 +17,6 @@ metadata:
     app.kubernetes.io/component: metrics
     app.kubernetes.io/instance: k8s
     app.kubernetes.io/name: tplink-plug-exporter
-    prometheus: kube-prometheus
   name: tplink-plug-exporter-k8s
 spec:
   endpoints:
@@ -57,7 +56,6 @@ metadata:
     app.kubernetes.io/component: metrics
     app.kubernetes.io/instance: internet
     app.kubernetes.io/name: tplink-plug-exporter
-    prometheus: kube-prometheus
   name: tplink-plug-exporter-internet
 spec:
   endpoints:
@@ -97,7 +95,6 @@ metadata:
     app.kubernetes.io/component: metrics
     app.kubernetes.io/instance: servers
     app.kubernetes.io/name: tplink-plug-exporter
-    prometheus: kube-prometheus
   name: tplink-plug-exporter-servers
 spec:
   endpoints:
@@ -137,7 +134,6 @@ metadata:
     app.kubernetes.io/component: metrics
     app.kubernetes.io/instance: spare
     app.kubernetes.io/name: tplink-plug-exporter
-    prometheus: kube-prometheus
   name: tplink-plug-exporter-spare
 spec:
   endpoints:
