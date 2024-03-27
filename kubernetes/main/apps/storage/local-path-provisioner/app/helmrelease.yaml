@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: democratic-csi
-      version: 0.14.5
+      version: 0.14.6
       sourceRef:
         name: democratic-csi
         kind: HelmRepository
@@ -75,4 +75,4 @@ spec:
             path: *storagePath
             type: DirectoryOrCreate
     csiProxy:
-      image: ghcr.io/democratic-csi/csi-grpc-proxy:v0.5.3
+      image: ghcr.io/democratic-csi/csi-grpc-proxy:v0.5.6
