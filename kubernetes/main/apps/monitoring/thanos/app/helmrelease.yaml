@@ -111,7 +111,7 @@ spec:
       retentionResolution1h: 60d
       persistence:
         enabled: true
-        storageClass: local-hostpath
+        storageClass: openebs-hostpath
         size: 10Gi
       networkPolicy:
         enabled: false
@@ -121,7 +121,7 @@ spec:
       config: *config
       persistence:
         enabled: true
-        storageClass: local-hostpath
+        storageClass: openebs-hostpath
         size: 10Gi
       networkPolicy:
         enabled: false
@@ -144,7 +144,7 @@ spec:
                   severity: critical
       persistence:
         enabled: true
-        storageClass: local-hostpath
+        storageClass: openebs-hostpath
         size: 10Gi
       networkPolicy:
         enabled: false
