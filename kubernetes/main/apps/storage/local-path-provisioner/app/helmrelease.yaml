@@ -74,3 +74,5 @@ spec:
           hostPath:
             path: *storagePath
             type: DirectoryOrCreate
+    csiProxy:
+      image: ghcr.io/democratic-csi/csi-grpc-proxy:v0.5.3
