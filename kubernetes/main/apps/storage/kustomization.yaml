@@ -8,7 +8,6 @@ resources:
   - ./notifications.yaml
   # Flux-Kustomizations
   - ./csi-driver-nfs/ks.yaml
-  - ./local-path-provisioner/ks.yaml
   - ./minio/ks.yaml
   - ./nextcloud/ks.yaml
   - ./ocis/ks.yaml
