@@ -24,7 +24,7 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: local-path-provisioner
+    - name: openebs
       namespace: storage
     - name: rook-ceph-cluster
       namespace: rook-ceph
@@ -169,7 +169,7 @@ spec:
     write:
       replicas: 2
       persistence:
-        storageClass: local-hostpath
+        storageClass: openebs-hostpath
       resources:
         requests:
           cpu: 50m
@@ -189,7 +189,7 @@ spec:
     backend:
       replicas: 2
       persistence:
-        storageClass: local-hostpath
+        storageClass: openebs-hostpath
       extraVolumeMounts:
         - name: rules
           mountPath: /rules/fake
