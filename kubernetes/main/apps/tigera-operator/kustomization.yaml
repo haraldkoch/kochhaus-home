@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ./notifications.yaml
   # Flux-Kustomizations
   # Before enabling read https://github.com/onedr0p/flux-cluster-template/issues/321
   - ./tigera-operator/ks.yaml

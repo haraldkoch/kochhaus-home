@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ./notifications.yaml
   - ./policy.yaml
   - ./vpnconfig.yaml
   # Flux-Kustomizations
