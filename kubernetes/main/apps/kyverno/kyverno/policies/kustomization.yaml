@@ -7,4 +7,3 @@ resources:
   - ./apply-volsync-annotations.yaml
   - ./deny-ingress-implementationspecific.yaml
   - ./remove-cpu-limits.yaml
-#  - ./restrict-calico-apiserver.yaml
