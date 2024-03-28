@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: arc-kochhaus-home
+  name: gha-runner-scale-set
 spec:
   interval: 30m
   chart:
@@ -22,21 +22,25 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: gha-runner-scale-set-controller
+      namespace: actions-runner-system
   valuesFrom:
-    - kind: Secret
+    - targetPath: githubConfigSecret.github_app_id
+      kind: Secret
       name: actions-runner-controller-auth-secret
       valuesKey: github_app_id
-      targetPath: githubConfigSecret.github_app_id
-    - kind: Secret
+    - targetPath: githubConfigSecret.github_app_installation_id
+      kind: Secret
       name: actions-runner-controller-auth-secret
       valuesKey: github_app_installation_id
-      targetPath: githubConfigSecret.github_app_installation_id
-    - kind: Secret
+    - targetPath: githubConfigSecret.github_app_private_key
+      kind: Secret
       name: actions-runner-controller-auth-secret
       valuesKey: github_app_private_key
-      targetPath: githubConfigSecret.github_app_private_key
   values:
-    runnerScaleSetName: arc-runner-set-kochhaus-home
+    nameOverride: gha-runner-scale-set
+    runnerScaleSetName: gha-runner-scale-set
     githubConfigUrl: https://github.com/haraldkoch/kochhaus-home
     minRunners: 1
     maxRunners: 3
@@ -49,5 +53,5 @@ spec:
             image: ghcr.io/haraldkoch/actions-runner:2.315.0@sha256:c890fc66f602ab0aeb88b3f388f76d5ad230e29428ecf2056df8393ff61151d8
             command: ["/home/runner/run.sh"]
     controllerServiceAccount:
-      name: actions-runner-controller-gha-rs-controller
+      name: gha-runner-scale-set-controller
       namespace: actions-runner-system
