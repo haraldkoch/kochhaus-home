@@ -45,7 +45,7 @@ spec:
           app:
             image:
               repository: ghcr.io/haraldkoch/vector
-              tag: 0.37.0-debian
+              tag: 0.36.1-debian
             args: ["--config", "/etc/vector/vector.yaml"]
             probes:
               liveness:
