@@ -27,6 +27,7 @@ spec:
       namespace: storage
   values:
     csi:
+      enableCephfsDriver: false
       enableLiveness: true
       serviceMonitor:
         enabled: true
