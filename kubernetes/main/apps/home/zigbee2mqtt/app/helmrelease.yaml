@@ -72,7 +72,9 @@ spec:
               - secretRef:
                   name: zigbee2mqtt-secret
             securityContext:
-              privileged: true
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             probes:
               liveness:
                 enabled: true
