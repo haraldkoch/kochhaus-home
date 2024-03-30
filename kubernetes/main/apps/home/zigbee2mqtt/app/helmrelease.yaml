@@ -85,21 +85,13 @@ spec:
               limits:
                 memory: 512Mi
         pod:
+          nodeSelector:
+            zigbee.feature.node.kubernetes.io/sonoff: "true"
           securityContext:
             runAsUser: 1022
             runAsGroup: 1022
             fsGroup: 1022
             fsGroupChangePolicy: OnRootMismatch
-          affinity:
-            nodeAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                  - matchExpressions:
-                        # Bus 001 Device 003: ID 1a86:55d4 QinHeng Electronics SONOFF Zigbee 3.0 USB Dongle Plus V2
-                      - key: feature.node.kubernetes.io/usb-02_1a86_55d4.present
-                        operator: In
-                        values:
-                          - "true"
     service:
       app:
         controller: zigbee2mqtt
