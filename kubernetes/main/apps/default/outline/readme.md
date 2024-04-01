@@ -5,19 +5,34 @@
 ### Redis Sentinel Configuration
 
 1. Create base64 encoded Redis configuation
+
     ```sh
-    echo -n '{"db":15,"sentinels":[{"host":"redis-node-0.redis-headless.default.svc.cluster.local","port":26379},{"host":"redis-node-1.redis-headless.default.svc.cluster.local","port":26379},{"host":"redis-node-2.redis-headless.default.svc.cluster.local","port":26379}],"name":"redis-master"}' \
+    echo -n '{"db":15,"sentinels":[{"host":"redis-node-0.redis-headless.dbms.svc.cluster.local","port":26379},{"host":"redis-node-1.redis-headless.dbms.svc.cluster.local","port":26379},{"host":"redis-node-2.redis-headless.dbms.svc.cluster.local","port":26379}],"name":"redis-master"}' \
         | base64 -w 0
     ```
 
+   for dragonfly:
+
+   ```sh
+   echo -n '{"db":15,"host":"dragonfly.dbms.svc.cluster.local","port":6379}' | base64 -w 0
+   ```
+
 2. Use this base64 encoded string in the Kubernetes secret
+
     ```yaml
     REDIS_URL: ioredis://eyJkYiI6MTUsInNlbnRpbmVscyI6W3siaG9zdCI6InJlZGlzLW5vZGUtMC5yZWRpcy1oZWFkbGVzcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwicG9ydCI6MjYzNzl9LHsiaG9zdCI6InJlZGlzLW5vZGUtMS5yZWRpcy1oZWFkbGVzcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwicG9ydCI6MjYzNzl9LHsiaG9zdCI6InJlZGlzLW5vZGUtMi5yZWRpcy1oZWFkbGVzcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwicG9ydCI6MjYzNzl9XSwibmFtZSI6InJlZGlzLW1hc3RlciJ9
+    ```
+
+    for dragonfly:
+
+    ```yaml
+    REDIS_URL: ioredis://eyJkYiI6MTUsImhvc3QiOiJkcmFnb25mbHkuZGJtcy5zdmMuY2x1c3Rlci5sb2NhbCIsInBvcnQiOjYzNzl9
     ```
 
 ## S3 Configuration
 
 1. Create `~/.mc/config.json`
+
     ```json
     {
         "version": "10",

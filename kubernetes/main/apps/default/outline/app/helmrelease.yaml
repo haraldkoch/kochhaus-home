@@ -67,6 +67,8 @@ spec:
               PGSSLMODE: disable
               PORT: 80
               REDIS_URL: ioredis://eyJkYiI6MTUsInNlbnRpbmVscyI6W3siaG9zdCI6InJlZGlzLW5vZGUtMC5yZWRpcy1oZWFkbGVzcy5kYm1zLnN2Yy5jbHVzdGVyLmxvY2FsIiwicG9ydCI6MjYzNzl9LHsiaG9zdCI6InJlZGlzLW5vZGUtMS5yZWRpcy1oZWFkbGVzcy5kYm1zLnN2Yy5jbHVzdGVyLmxvY2FsIiwicG9ydCI6MjYzNzl9LHsiaG9zdCI6InJlZGlzLW5vZGUtMi5yZWRpcy1oZWFkbGVzcy5kYm1zLnN2Yy5jbHVzdGVyLmxvY2FsIiwicG9ydCI6MjYzNzl9XSwibmFtZSI6InJlZGlzLW1hc3RlciJ9
+              # Dragonfly
+              # REDIS_URL: ioredis://eyJkYiI6MTUsImhvc3QiOiJkcmFnb25mbHkuZGJtcy5zdmMuY2x1c3Rlci5sb2NhbCIsInBvcnQiOjYzNzl9
               SMTP_HOST: smtp.${CLUSTER_DOMAIN}
               SMTP_PORT: 25
               SMTP_FROM_EMAIL: "outline@${CLUSTER_DOMAIN}"
