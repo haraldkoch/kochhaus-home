@@ -25,8 +25,6 @@ spec:
   dependsOn:
     - name: openebs
       namespace: storage
-    - name: redis
-      namespace: dbms
     - name: rook-ceph-cluster
       namespace: rook-ceph
   valuesFrom:
@@ -69,12 +67,8 @@ spec:
       config: &config |-
         type: REDIS
         config:
-          addr: >-
-            redis-node-0.redis-headless.dbms.svc.cluster.local:26379,
-            redis-node-1.redis-headless.dbms.svc.cluster.local:26379,
-            redis-node-2.redis-headless.dbms.svc.cluster.local:26379
-          db: 13
-          master_name: redis-master
+          addr: dragonfly.dbms.svc.cluster.local:6379
+          db: 1
       ingress:
         enabled: true
         ingressClassName: internal
