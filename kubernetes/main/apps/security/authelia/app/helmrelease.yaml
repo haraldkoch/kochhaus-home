@@ -25,8 +25,6 @@ spec:
   dependsOn:
     - name: lldap
       namespace: security
-    - name: redis
-      namespace: dbms
   values:
     controllers:
       authelia:
@@ -46,7 +44,7 @@ spec:
           app:
             image:
               repository: ghcr.io/authelia/authelia
-              tag: v4.38.0-beta3@sha256:b48ae4d0ed9d1eee76efe382df60928bae550ec19e5663858dde6dc5f41cf285
+              tag: 4.38.7@sha256:1bfa7206c144f8cd184743a7ed629f4a02d2dceb50e7260588373fe6de4cd959
             env:
               AUTHELIA_SERVER_ADDRESS: tcp://:80
               AUTHELIA_SERVER_DISABLE_HEALTHCHECK: "true"
@@ -106,7 +104,7 @@ spec:
             port: 8080
     serviceMonitor:
       app:
-        serviceName: *app
+        serviceName: authelia
         endpoints:
           - port: metrics
     ingress:
