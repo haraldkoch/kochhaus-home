@@ -33,5 +33,6 @@ resources:
   - ./rook-ceph.yaml
   - ./runix.yaml
   - ./stakater.yaml
+  - ./stevehipwell.yaml
   - ./vector.yaml
   - ./xenitab.yaml
