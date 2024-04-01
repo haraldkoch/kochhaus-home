@@ -47,14 +47,14 @@ spec:
               tag: 0.75.2
             env:
               # temporary workaround?
-              MAXIMUM_IMPORT_SIZE: 5120000
+              # MAXIMUM_IMPORT_SIZE: 5120000
               #
               AWS_REGION: us-east-1
               AWS_S3_ACL: private
               AWS_S3_FORCE_PATH_STYLE: "true"
               AWS_S3_UPLOAD_BUCKET_NAME: outline
               AWS_S3_UPLOAD_BUCKET_URL: "https://s3.${CLUSTER_DOMAIN}"
-              AWS_S3_UPLOAD_MAX_SIZE: "26214400"
+              FILE_STORAGE_UPLOAD_MAX_SIZE: "26214400"
               ENABLE_UPDATES: "false"
               FILE_STORAGE_IMPORT_MAX_SIZE: 5120000
               OIDC_AUTH_URI: "https://auth.${CLUSTER_DOMAIN}/api/oidc/authorization"
