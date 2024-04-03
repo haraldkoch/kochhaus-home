@@ -53,8 +53,8 @@ spec:
         fromAddress: admin
         domain: ${CLUSTER_DOMAIN}
         smtp:
-          host: ${SECRET_SMTP_RELAY}
-          port: ${SECRET_SMTP_RELAY_PORT}
+          host: smtp.${CLUSTER_DOMAIN}
+          port: 25
           authtype: NONE
           name: ""
           password: ""
