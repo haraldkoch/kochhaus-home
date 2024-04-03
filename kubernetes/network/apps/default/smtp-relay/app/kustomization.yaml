@@ -6,9 +6,9 @@ resources:
   - ./certificate.yaml
   - ./helmrelease.yaml
 configMapGenerator:
-  - name: smtp-relay-configmap
+  - name: smtp-relay
     files:
-      - ./maddy.conf
+      - maddy.conf=./resources/maddy.conf
 generatorOptions:
   disableNameSuffixHash: true
   annotations:

@@ -6,13 +6,13 @@ metadata:
   name: &app smtp-relay
   namespace: flux-system
 spec:
-  targetNamespace: network
+  targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: cert-manager
-  path: ./kubernetes/main/apps/network/smtp-relay/app
+  path: ./kubernetes/network/apps/default/smtp-relay/app
   prune: true
   sourceRef:
     kind: GitRepository

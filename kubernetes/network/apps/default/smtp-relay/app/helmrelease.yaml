@@ -25,8 +25,8 @@ spec:
   values:
     controllers:
       smtp-relay:
-        # FIXME: convert to statefulset and persist smtp queues
-        replicas: 2
+        # FIXME: convert to two replicas and statefulset
+        replicas: 1
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -37,9 +37,9 @@ spec:
               tag: 0.7.1
             env:
               DEBUG: "true"
-              SMTP_DOMAIN: ${CLUSTER_DOMAIN:=fnord}
-              SMTP_SERVER: ${SECRET_SMTP_RELAY:=fnord}
-              SMTP_PORT: ${SECRET_SMTP_RELAY_PORT:=fnord}
+              SMTP_DOMAIN: ${SECRET_DOMAIN:=fnord}
+              SMTP_SERVER: ${SMTP_SMARTHOST:=fnord}
+              SMTP_PORT: ${SMTP_SMARTHOST_PORT:=fnord}
             probes:
               liveness:
                 enabled: true
@@ -63,11 +63,11 @@ spec:
       app:
         controller: smtp-relay
         type: LoadBalancer
-        externalIPs: ["${SVC_SMTP_RELAY_ADDR_V4}", "${SVC_SMTP_RELAY_ADDR_V6}"]
+        externalIPs: ["${SMTP_RELAY_ADDR_V4}", "${SMTP_RELAY_ADDR_V6}"]
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: smtp.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: smtp.${SECRET_DOMAIN}
         ports:
           smtp:
             port: 25
@@ -82,17 +82,24 @@ spec:
     persistence:
       config:
         type: configMap
-        name: smtp-relay-configmap
+        name: smtp-relay
         globalMounts:
           - path: /data/maddy.conf
             subPath: maddy.conf
             readOnly: true
       data:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 512Mi
+        storageClass: longhorn
+        globalMounts:
+          - path: /var/lib/maddy
+      temp:
         type: emptyDir
         medium: Memory
-        sizeLimit: 1Gi
+        sizeLimit: 256Mi
         globalMounts:
-          - path: /dev/shm
+          - path: /run/maddy
       tls:
         type: secret
         name: tls.smtp-relay

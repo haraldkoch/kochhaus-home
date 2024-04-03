@@ -12,7 +12,6 @@ resources:
   - ./nginx/ks.yaml
   - ./omada-controller/ks.yaml
   - ./opnsense/ks.yaml
-  - ./smtp-relay/ks.yaml
   - ./speedtest/ks.yaml
   - ./web-static/ks.yaml
   - ./whoami/ks.yaml
