@@ -1,7 +1,7 @@
 ---
 k3s_control_node: true
 k3s_server:
-  cluster-cidr: 10.40.0.0/16,fdd5:aa8:9535:40::/60
+  cluster-cidr: 10.42.0.0/16,fdd5:aa8:9535:42::/108
   disable:
     - coredns                         # Disable coredns                 - replaced with Coredns Helm Chart
     - flannel                         # Disable flannel                 - replaced with Tigera Operator Helm Chart
@@ -18,6 +18,7 @@ k3s_server:
     - "anonymous-auth=true"           # Required for HAProxy health-checks
   kube-controller-manager-arg:
     - "bind-address=0.0.0.0"          # Required to monitor kube-controller-manager with kube-prometheus-stack
+    - node-cidr-mask-size-ipv6=112
   kube-proxy-arg:
     - "metrics-bind-address=0.0.0.0"  # Required to monitor kube-proxy with kube-prometheus-stack
   kube-scheduler-arg:
@@ -28,7 +29,7 @@ k3s_server:
   node-taint:
     - "node-role.kubernetes.io/control-plane:NoSchedule"
   pause-image: registry.k8s.io/pause:3.9
-  service-cidr: 10.44.0.0/16,fdd5:aa8:9535:44::/108
+  service-cidr: 10.43.0.0/16,fdd5:aa8:9535:43::/108
   tls-san:
     - "{{ k3s_registration_address }}"
   write-kubeconfig-mode: "0644"

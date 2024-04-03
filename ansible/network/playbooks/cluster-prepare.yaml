@@ -53,9 +53,12 @@
               127.0.0.1 localhost
               127.0.1.1 {{ inventory_hostname }}
               # The following lines are desirable for IPv6 capable hosts
-              ::1     localhost ip6-localhost ip6-loopback
+              ::1 ip6-localhost ip6-loopback
+              fe00::0 ip6-localnet
+              ff00::0 ip6-mcastprefix
               ff02::1 ip6-allnodes
               ff02::2 ip6-allrouters
+              ff02::3 ip6-allhosts
             dest: /etc/hosts
             mode: preserve
 
@@ -79,7 +82,7 @@
             dest: "/etc/modules-load.d/{{ item }}.conf"
             mode: "0644"
             content: "{{ item }}"
-          loop: ["br_netfilter", "ceph", "nbd", "overlay", "rbd"]
+          loop: ["br_netfilter", "ceph", "ip_vs", "ip_vs_rr", "nbd", "overlay", "rbd"]
           register: modules_status
         - name: System Configuration | Reload Kernel modules # noqa: no-changed-when no-handler
           when: modules_status.changed

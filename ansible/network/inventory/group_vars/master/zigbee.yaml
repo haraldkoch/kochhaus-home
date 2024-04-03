@@ -1,0 +1,9 @@
+---
+# These values are from udevadm info -a -n /dev/ttyACM0
+#
+# QinHeng Electronics SONOFF Zigbee 3.0 USB Dongle Plus V2
+zigbee_vendor_id: "1a86"
+zigbee_product_id: "55d4"
+#
+zigbee_uid: "1022"
+zigbee_gid: "1022"
