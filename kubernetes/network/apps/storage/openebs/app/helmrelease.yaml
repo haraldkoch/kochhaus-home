@@ -23,9 +23,22 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    ndm:
+      enabled: false
+    ndmOperator:
+      enabled: false
     localprovisioner:
+      enabled: true
+      deviceClass:
+        enabled: false
       hostpathClass:
         enabled: true
         name: openebs-hostpath
         isDefaultClass: false
-        basePath: "/var/openebs/local"
+        basePath: /var/lib/rancher/k3s/openebs-hostpath
+      resources:
+        requests:
+          cpu: 100m
+          memory: 32Mi
+        limits:
+          memory: 64Mi

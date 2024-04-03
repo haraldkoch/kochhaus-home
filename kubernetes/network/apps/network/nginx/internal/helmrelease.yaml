@@ -26,6 +26,9 @@ spec:
     fullnameOverride: nginx-internal
     controller:
       replicaCount: 1
+      extraEnvs:
+        - name: TZ
+          value: "${TIMEZONE:=Etc/UTC}"
       service:
         externalIPs:
           - 192.168.22.36
@@ -76,6 +79,7 @@ spec:
       extraArgs:
         default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
         enable-annotation-validation: true
+      terminationGracePeriodSeconds: 120
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
@@ -87,7 +91,7 @@ spec:
               app.kubernetes.io/component: controller
       resources:
         requests:
-          cpu: 10m
+          cpu: 100m
           memory: 250Mi
         limits:
           memory: 500Mi
