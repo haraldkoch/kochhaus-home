@@ -3,10 +3,10 @@
 name: "Flux Kustomization Sync"
 
 on:
-#  push:
-#    branches: ["main"]
+  push:
+    branches: ["main"]
 #    paths: ["kubernetes/network/**", "kubernetes/registry/**"]
-  workflow_dispatch:
+    paths: ["kubernetes/network/**"]
 
 jobs:
   sync:
