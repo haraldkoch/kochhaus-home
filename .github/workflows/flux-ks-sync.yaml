@@ -14,7 +14,8 @@ jobs:
     runs-on: ["gha-runner-scale-set"]
     strategy:
       matrix:
-        cluster: ["network", "registry"]
+#        cluster: ["network", "registry"]
+        cluster: ["network"]
     steps:
       - name: Generate Token
         uses: actions/create-github-app-token@v1
