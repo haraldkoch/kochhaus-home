@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: remote
-  labels:
+  annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
 ---
 # yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/provider-notification-v1beta3.json
