@@ -70,9 +70,9 @@ spec:
               - secretRef:
                   name: zigbee2mqtt-secret
             securityContext:
-              allowPrivilegeEscalation: false
+              # apparently required for the USB attached device, even with owner/group set correctly?
+              privileged: true
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
             probes:
               liveness:
                 enabled: true
