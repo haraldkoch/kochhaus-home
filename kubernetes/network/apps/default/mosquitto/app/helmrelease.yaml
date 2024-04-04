@@ -23,8 +23,8 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+    - name: longhorn
+      namespace: storage
   values:
     controllers:
       mosquitto:
@@ -64,10 +64,10 @@ spec:
         controller: mosquitto
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: mqtt.${CLUSTER_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: mqtt.${SECRET_DOMAIN}
         externalIPs:
-          - ${SVC_MOSQUITTO_ADDR_V4}
-          - ${SVC_MOSQUITTO_ADDR_V6}
+          - ${MOSQUITTO_ADDR_V4}
+          - ${MOSQUITTO_ADDR_V6}
         ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack
         ports:
@@ -87,7 +87,7 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 512Mi
-        storageClass: ceph-block
+        storageClass: longhorn
         advancedMounts:
           mosquitto:
             app:

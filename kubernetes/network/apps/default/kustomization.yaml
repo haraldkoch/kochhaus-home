@@ -6,4 +6,5 @@ resources:
   - ./namespace.yaml
   - ./bind/ks.yaml
   - ./blocky/ks.yaml
+  - ./mosquitto/ks.yaml
   - ./smtp-relay/ks.yaml

@@ -5,7 +5,9 @@ metadata:
   name: cluster-settings-user
   namespace: flux-system
 data:
-  BLOCKY_ADDR: 192.168.22.53
-  BLOCKY_ADDR_V6: fdd5:aa8:9535:22::53
   SMTP_RELAY_ADDR_V4: 192.168.22.25
   SMTP_RELAY_ADDR_V6: fdd5:aa8:9535:22::25
+  BLOCKY_ADDR: 192.168.22.53
+  BLOCKY_ADDR_V6: fdd5:aa8:9535:22::53
+  MOSQUITTO_ADDR_V4: 192.168.22.101
+  MOSQUITTO_ADDR_V6: fdd5:aa8:9535:22::101

@@ -6,13 +6,13 @@ metadata:
   name: &app mosquitto
   namespace: flux-system
 spec:
-  targetNamespace: home
+  targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
-  path: ./kubernetes/main/apps/home/mosquitto/app
+  path: ./kubernetes/network/apps/default/mosquitto/app
   prune: true
   sourceRef:
     kind: GitRepository

@@ -6,6 +6,5 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./mosquitto/ks.yaml
   - ./node-red/ks.yaml
   - ./zigbee2mqtt/ks.yaml
