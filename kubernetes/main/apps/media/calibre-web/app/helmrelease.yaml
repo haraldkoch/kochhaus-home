@@ -63,15 +63,16 @@ spec:
             port: 8083
     ingress:
       app:
-        className: internal
+        className: external
         annotations:
+          external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
           hajimari.io/icon: mdi:chart-bar
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: Media
           gethomepage.dev/name: Calibre
           gethomepage.dev/icon: calibre.png
         hosts:
-          - host: &host calibre-web.${CLUSTER_DOMAIN}
+          - host: &host ebooks.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
