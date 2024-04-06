@@ -27,6 +27,9 @@ spec:
       namespace: observability
   values:
     fullnameOverride: *app
+    image:
+      repository: ghcr.io/haraldkoch/smartctl_exporter
+      tag: 0.12.0@sha256:c3551428f911374a9db4565372d6740536fd3ae78283182fdd62369d5f9b2339
     config:
       devices:
         - /dev/nvme0n1
