@@ -26,23 +26,19 @@ spec:
     fullnameOverride: *app
     provider: rfc2136
     env:
-      - name: EXTERNAL_DNS_RFC2136_HOST
-        value: "${PRIVATE_DNS_PRIMARY}"
-      - name: EXTERNAL_DNS_RFC2136_PORT
-        value: "53"
-      - name: EXTERNAL_DNS_RFC2136_ZONE
-        value: "${CLUSTER_DOMAIN}"
-      - name: EXTERNAL_DNS_RFC2136_TSIG_AXFR
-        value: "true"
-      - name: EXTERNAL_DNS_RFC2136_TSIG_KEYNAME
-        value: externaldns
-      - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET_ALG
-        value: hmac-sha256
       - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
         valueFrom:
           secretKeyRef:
             name: &secret external-dns-bind-secret
             key: rfc2136_tsig_secret
+    extraArgs:
+      - --rfc2136-host=${PRIVATE_DNS_PRIMARY}
+      - --rfc2136-port=53
+      - --rfc2136-zone=${CLUSTER_DOMAIN}
+      - --rfc2136-min-ttl=0s
+      - --rfc2136-tsig-axfr
+      - --rfc2136-tsig-keyname=externaldns
+      - --rfc2136-tsig-secret-alg=hmac-sha256
     policy: sync
     sources: ["ingress", "service"]
     # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
