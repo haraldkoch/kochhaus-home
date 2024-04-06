@@ -128,7 +128,7 @@ spec:
         annotations:
           hajimari.io/enable: "false"
         hosts:
-          - host: &host "1pwconnect.${CLUSTER_DOMAIN}"
+          - host: &host "1pwconnect.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
