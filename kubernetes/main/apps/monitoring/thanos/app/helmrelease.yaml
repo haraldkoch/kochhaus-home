@@ -75,7 +75,7 @@ spec:
     query:
       replicas: 2
       extraArgs: ["--alert.query-url=https://thanos.${CLUSTER_DOMAIN}"]
-      # additionalStores: ["thanos-network.${CLUSTER_DOMAIN}:10901"]
+      additionalStores: ["thanos-network.${CLUSTER_DOMAIN}:10901"]
     queryFrontend:
       enabled: true
       replicas: 2
