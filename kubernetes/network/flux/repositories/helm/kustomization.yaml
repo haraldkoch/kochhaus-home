@@ -17,5 +17,6 @@ resources:
   - ./node-feature-discovery.yaml
   - ./openebs.yaml
   - ./piraeus.yaml
+  - ./prometheus-community.yaml
   - ./stakater.yaml
   - ./xenitab.yaml
