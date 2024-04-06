@@ -1,0 +1,73 @@
+acl homelab {
+    10.40.0.0/16;
+    ${HOMELAN_IPV4};
+    192.168.10.0/24;
+    192.168.20.0/22;
+    fdd5:aa8:9535:10::/64;
+    fdd5:aa8:9535:20::/60;
+};
+
+controls {
+        inet *          allow { homelab; }    keys { rndc-key; };
+        inet 127.0.0.1  allow { 127.0.0.1; }  keys { rndc-key; };
+        inet ::1        allow { ::1; }        keys { rndc-key; };
+};
+
+primaries homelab {
+    ${HOMELAN_DNS_PRIMARY_V4};
+    ${HOMELAN_DNS_PRIMARY_V6};
+};
+
+zone "home.arpa" IN {
+    type secondary;
+    file "home.arpa.zone";
+    primaries {
+        homelab;
+    };
+    allow-notify { homelab; };
+};
+
+zone "${SECRET_DOMAIN}" IN {
+    type secondary;
+    file "${SECRET_DOMAIN}.zone";
+    primaries {
+        homelab;
+    };
+    allow-notify { homelab; };
+};
+
+zone "20.168.192.in-addr.arpa" IN {
+    type secondary;
+    file "192.168.20.zone";
+    primaries {
+        homelab;
+    };
+    allow-notify { homelab; };
+};
+
+zone "21.168.192.in-addr.arpa" IN {
+    type secondary;
+    file "192.168.21.zone";
+    primaries {
+        homelab;
+    };
+    allow-notify { homelab; };
+};
+
+zone "22.168.192.in-addr.arpa" IN {
+    type secondary;
+    file "192.168.22.zone";
+    primaries {
+        homelab;
+    };
+    allow-notify { homelab; };
+};
+
+zone "5.3.5.9.8.a.a.0.5.d.d.f.ip6.arpa" IN {
+    type secondary;
+    file "fdd5:0aa8:9535::.zone";
+    primaries {
+        homelab;
+    };
+    allow-notify { homelab; };
+};

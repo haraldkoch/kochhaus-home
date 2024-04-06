@@ -10,7 +10,9 @@ configMapGenerator:
   - name: sshd-initializer
     files:
       - 45-config=./resources/45-config.sh
+  - name: bind-primary
+    files:
+      - named.conf=./resources/named.conf
+      - named.conf.cluster=./resources/named.conf.cluster
 generatorOptions:
   disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled

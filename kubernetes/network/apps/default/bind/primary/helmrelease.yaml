@@ -112,11 +112,21 @@ spec:
             targetPort: 2222
     persistence:
       config:
-        type: secret
-        name: bind-primary-config
+        type: configMap
+        name: bind-primary
         globalMounts:
           - path: /etc/bind/named.conf.local
             subPath: named.conf
+            readOnly: true
+          - path: /etc/bind/named.conf.cluster
+            subPath: named.conf.cluster
+            readOnly: true
+      secret:
+        type: secret
+        name: bind-primary-config
+        globalMounts:
+          - path: /etc/bind/named.conf.mirrors
+            subPath: named.conf.mirrors
             readOnly: true
           - path: /etc/bind/named.keys
             subPath: named.keys
