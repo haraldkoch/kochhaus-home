@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app external-dns-bind
+  name: &app external-dns-cloudflare
 spec:
   interval: 30m
   chart:
@@ -15,52 +15,46 @@ spec:
         name: external-dns
         namespace: flux-system
   install:
+    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    crds: CreateReplace
     remediation:
       strategy: rollback
       retries: 3
   values:
-    nameOverride: *app
-    provider: rfc2136
+    fullnameOverride: *app
+    provider: cloudflare
     env:
-      - name: EXTERNAL_DNS_RFC2136_HOST
-        value: "${PRIVATE_DNS_PRIMARY}"
-      - name: EXTERNAL_DNS_RFC2136_PORT
-        value: "53"
-      - name: EXTERNAL_DNS_RFC2136_ZONE
-        value: "${CLUSTER_DOMAIN}"
-      - name: EXTERNAL_DNS_RFC2136_TSIG_AXFR
-        value: "true"
-      - name: EXTERNAL_DNS_RFC2136_TSIG_KEYNAME
-        value: externaldns
-      - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET_ALG
-        value: hmac-sha256
-      - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
+      - name: CF_API_TOKEN
         valueFrom:
           secretKeyRef:
-            name: external-dns-bind-secret
-            key: rfc2136_tsig_secret
+            name: &secret external-dns-cloudflare-secret
+            key: api_token
+    extraArgs:
+      - --ingress-class=external
+      - --cloudflare-proxied
+      - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
+      - --crd-source-kind=DNSEndpoint
     policy: sync
-    sources: ["ingress", "service"]
-    # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
+    sources: ["crd", "ingress"]
     txtOwnerId: homelab
-    txtPrefix: homelab+
+    txtPrefix: k8s.
     domainFilters: ["${CLUSTER_DOMAIN}"]
     logLevel: info
     serviceMonitor:
       enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-bind-secret
+      secret.reloader.stakater.com/reload: *secret
     resources:
       requests:
         cpu: 25m
-        memory: 96Mi
+        memory: 50Mi
       limits:
         cpu: 50m
-        memory: 192Mi
+        memory: 100Mi
     tolerations:
       - key: "node-role.kubernetes.io/control-plane"
         operator: "Exists"

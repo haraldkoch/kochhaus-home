@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
-  name: &app external-dns-cloudflare
+  name: &app external-dns-bind
 spec:
   interval: 30m
   chart:
@@ -24,35 +24,43 @@ spec:
       retries: 3
   values:
     fullnameOverride: *app
-    provider: cloudflare
+    provider: rfc2136
     env:
-      - name: CF_API_TOKEN
+      - name: EXTERNAL_DNS_RFC2136_HOST
+        value: "${PRIVATE_DNS_PRIMARY}"
+      - name: EXTERNAL_DNS_RFC2136_PORT
+        value: "53"
+      - name: EXTERNAL_DNS_RFC2136_ZONE
+        value: "${CLUSTER_DOMAIN}"
+      - name: EXTERNAL_DNS_RFC2136_TSIG_AXFR
+        value: "true"
+      - name: EXTERNAL_DNS_RFC2136_TSIG_KEYNAME
+        value: externaldns
+      - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET_ALG
+        value: hmac-sha256
+      - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
         valueFrom:
           secretKeyRef:
-            name: external-dns-cloudflare-secret
-            key: api-token
-    extraArgs:
-      - --ingress-class=external
-      - --cloudflare-proxied
-      - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
-      - --crd-source-kind=DNSEndpoint
+            name: &secret external-dns-bind-secret
+            key: rfc2136_tsig_secret
     policy: sync
-    sources: ["crd", "ingress"]
+    sources: ["ingress", "service"]
+    # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
     txtOwnerId: homelab
-    txtPrefix: k8s.
+    txtPrefix: homelab+
     domainFilters: ["${CLUSTER_DOMAIN}"]
     logLevel: info
     serviceMonitor:
       enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-cloudflare-secret
+      secret.reloader.stakater.com/reload: *secret
     resources:
       requests:
         cpu: 25m
-        memory: 50Mi
+        memory: 96Mi
       limits:
         cpu: 50m
-        memory: 100Mi
+        memory: 192Mi
     tolerations:
       - key: "node-role.kubernetes.io/control-plane"
         operator: "Exists"
