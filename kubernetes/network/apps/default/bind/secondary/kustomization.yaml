@@ -5,3 +5,10 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./secret.sops.yaml
+configMapGenerator:
+  - name: bind-secondary
+    files:
+      - named.conf=./resources/named.conf
+      - named.conf.cluster=./resources/named.conf.cluster
+generatorOptions:
+  disableNameSuffixHash: true

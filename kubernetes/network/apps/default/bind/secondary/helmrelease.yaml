@@ -73,6 +73,9 @@ spec:
     service:
       dns:
         controller: main
+        type: LoadBalancer
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: bind-secondary.${SECRET_DOMAIN}
         externalIPs:
           - 192.168.22.52
           - fdd5:aa8:9535:22::52
@@ -88,11 +91,21 @@ spec:
             port: 53
     persistence:
       config:
-        type: secret
-        name: bind-secondary-config
+        type: configMap
+        name: bind-secondary
         globalMounts:
           - path: /etc/bind/named.conf.local
             subPath: named.conf
+            readOnly: true
+          - path: /etc/bind/named.conf.cluster
+            subPath: named.conf.cluster
+            readOnly: true
+      secret:
+        type: secret
+        name: bind-secondary-config
+        globalMounts:
+          - path: /etc/bind/named.conf.mirrors
+            subPath: named.conf.mirrors
             readOnly: true
       cache:
         type: persistentVolumeClaim

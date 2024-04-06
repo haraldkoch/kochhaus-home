@@ -7,12 +7,10 @@ acl homelab {
     fdd5:aa8:9535:20::/60;
 };
 
-controls {
-        inet *          allow { homelab; }    keys { rndc-key; };
-        inet 127.0.0.1  allow { 127.0.0.1; }  keys { rndc-key; };
-        inet ::1        allow { ::1; }        keys { rndc-key; };
+primaries kubernetes {
+    192.168.22.51;
+    fdd5:aa8:9535:22::51;
 };
-
 primaries homelab {
     ${HOMELAN_DNS_PRIMARY_V4};
     ${HOMELAN_DNS_PRIMARY_V6};
