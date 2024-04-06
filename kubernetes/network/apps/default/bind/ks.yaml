@@ -11,8 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-dns
-    - name: external-secrets-stores
+    - name: external-dns-bind
   path: ./kubernetes/network/apps/default/bind/primary
   prune: true
   sourceRef:
@@ -42,7 +41,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-dns
+    - name: external-dns-bind
   path: ./kubernetes/network/apps/default/bind/secondary
   prune: true
   sourceRef:

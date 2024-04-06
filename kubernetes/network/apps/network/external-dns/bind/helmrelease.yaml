@@ -23,13 +23,13 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    nameOverride: *app
+    fullnameOverride: *app
     provider: rfc2136
     env:
       - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
         valueFrom:
           secretKeyRef:
-            name: external-dns-bind-secret
+            name: &secret external-dns-bind-secret
             key: rfc2136_tsig_secret
     extraArgs:
       - --rfc2136-host=${PRIVATE_DNS_PRIMARY}
@@ -49,7 +49,7 @@ spec:
     serviceMonitor:
       enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-bind-secret
+      secret.reloader.stakater.com/reload: *secret
     resources:
       requests:
         cpu: 25m

@@ -15,10 +15,12 @@ spec:
         name: external-dns
         namespace: flux-system
   install:
+    crds: CreateReplace
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    crds: CreateReplace
     remediation:
       strategy: rollback
       retries: 3
@@ -29,8 +31,8 @@ spec:
       - name: CF_API_TOKEN
         valueFrom:
           secretKeyRef:
-            name: external-dns-cloudflare-secret
-            key: api-token
+            name: &secret external-dns-cloudflare-secret
+            key: api_token
     extraArgs:
       - --ingress-class=external
       - --cloudflare-proxied
@@ -41,10 +43,11 @@ spec:
     txtOwnerId: network
     txtPrefix: k8s.
     domainFilters: ["${SECRET_DOMAIN}"]
+    logLevel: info
     serviceMonitor:
       enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-cloudflare-secret
+      secret.reloader.stakater.com/reload: *secret
     resources:
       requests:
         cpu: 25m
