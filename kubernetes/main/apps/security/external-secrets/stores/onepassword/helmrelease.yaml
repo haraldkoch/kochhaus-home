@@ -20,7 +20,7 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     controllers:
@@ -29,7 +29,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          app:
+          api:
             image:
               # repository: docker.io/1password/connect-api
               repository: ghcr.io/haraldkoch/onepassword-connect-api
@@ -122,20 +122,6 @@ spec:
         ports:
           http:
             port: *apiPort
-    ingress:
-      app:
-        className: internal
-        annotations:
-          hajimari.io/enable: "false"
-        hosts:
-          - host: &host "1pwconnect.${CLUSTER_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-        tls:
-          - hosts: [*host]
     persistence:
       config:
         type: emptyDir
