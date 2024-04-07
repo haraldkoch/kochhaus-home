@@ -5,6 +5,7 @@ metadata:
   name: downloads
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
+  labels:
     routed-gateway: "true"
 ---
 # yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/provider-notification-v1beta3.json

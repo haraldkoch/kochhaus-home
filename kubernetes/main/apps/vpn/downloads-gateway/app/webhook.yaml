@@ -16,7 +16,7 @@ webhooks:
     rules:
       - apiGroups: [""]
         apiVersions: ["v1"]
-        operations: ["CREATE"]
+        operations: ["CREATE","UPDATE"]
         resources: ["pods"]
         scope: "Namespaced"
     clientConfig:
@@ -27,4 +27,4 @@ webhooks:
         port: 8080
     admissionReviewVersions: ["v1", "v1beta1"]
     sideEffects: None
-    timeoutSeconds: 5
+    timeoutSeconds: 10
