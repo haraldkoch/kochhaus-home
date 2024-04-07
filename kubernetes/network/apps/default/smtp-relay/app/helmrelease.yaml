@@ -27,7 +27,6 @@ spec:
       smtp-relay:
         # FIXME: convert to two replicas and statefulset
         replicas: 1
-        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
