@@ -28,7 +28,10 @@ spec:
     k8sAppLabelOverride: kube-dns
     service:
       name: kube-dns
-      clusterIP: 10.43.0.10
+      clusterIP: ${COREDNS_ADDR}
+      clusterIPs: ["${COREDNS_ADDR}", "${COREDNS_ADDR_V6}"]
+      ipFamilies: ["IPV4", "IPV6"]
+      ipFamilyPolicy: PreferDualStack
     serviceAccount:
       create: true
     deployment:
