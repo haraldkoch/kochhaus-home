@@ -74,3 +74,10 @@ spec:
             - /var/lib/rancher/k3s/agent/client-kube-proxy.crt
             - /var/lib/rancher/k3s/agent/server-ca.crt
             - /var/lib/rancher/k3s/agent/serving-kubelet.crt
+      resources:
+        requests:
+          cpu: 10m
+          memory: 30Mi
+        limits:
+          cpu: 100m
+          memory: 80Mi
