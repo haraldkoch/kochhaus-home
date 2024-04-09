@@ -47,6 +47,15 @@ spec:
               limits:
                 cpu: 15m
                 memory: 96Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+        pod:
+          securityContext:
+            runAsUser: 1022
+            runAsGroup: 1022
+            runAsNonRoot: true
     service:
       app:
         controller: openweathermap-exporter
