@@ -12,6 +12,7 @@ resources:
   - ./external-secrets.yaml
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
+  - ./kured.yaml
   - ./longhorn.yaml
   - ./metrics-server.yaml
   - ./node-feature-discovery.yaml
