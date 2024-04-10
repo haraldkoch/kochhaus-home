@@ -37,7 +37,6 @@ spec:
         cpu: 15m
         memory: 20Mi
       limits:
-        cpu: 30m
         memory: 40Mi
     extraEnvVars:
       - name: TZ
