@@ -1,0 +1,66 @@
+---
+apiVersion: crd.projectcalico.org/v1
+kind: BGPPeer
+metadata:
+  name: ipv4-rk0
+spec:
+  peerIP: 192.168.20.33
+  asNumber: 64512
+  keepOriginalNextHop: true
+  filters:
+    - drop-pod-network
+---
+apiVersion: crd.projectcalico.org/v1
+kind: BGPPeer
+metadata:
+  name: ipv6-rk0
+spec:
+  peerIP: fdd5:aa8:9535:20::33
+  asNumber: 64512
+  keepOriginalNextHop: true
+  filters:
+    - drop-pod-network
+---
+apiVersion: crd.projectcalico.org/v1
+kind: BGPPeer
+metadata:
+  name: ipv4-rk1
+spec:
+  peerIP: 192.168.20.34
+  asNumber: 64512
+  keepOriginalNextHop: true
+  filters:
+    - drop-pod-network
+---
+apiVersion: crd.projectcalico.org/v1
+kind: BGPPeer
+metadata:
+  name: ipv6-rk1
+spec:
+  peerIP: fdd5:aa8:9535:20::34
+  asNumber: 64512
+  keepOriginalNextHop: true
+  filters:
+    - drop-pod-network
+---
+apiVersion: crd.projectcalico.org/v1
+kind: BGPPeer
+metadata:
+  name: ipv4-rk2
+spec:
+  peerIP: 192.168.20.35
+  asNumber: 64512
+  keepOriginalNextHop: true
+  filters:
+    - drop-pod-network
+---
+apiVersion: crd.projectcalico.org/v1
+kind: BGPPeer
+metadata:
+  name: ipv6-rk2
+spec:
+  peerIP: fdd5:aa8:9535:20::35
+  asNumber: 64512
+  keepOriginalNextHop: true
+  filters:
+    - drop-pod-network
