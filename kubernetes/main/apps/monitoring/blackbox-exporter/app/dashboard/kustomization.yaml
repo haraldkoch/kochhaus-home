@@ -10,6 +10,6 @@ generatorOptions:
   disableNameSuffixHash: true
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
-    grafana_folder: "Infrastructure"
+    grafana_folder: Infrastructure
   labels:
     grafana_dashboard: "true"

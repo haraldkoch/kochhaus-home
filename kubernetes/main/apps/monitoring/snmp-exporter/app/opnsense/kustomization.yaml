@@ -10,7 +10,7 @@ configMapGenerator:
       - openwrt-interface-dashboard.json=./resources/dashboard.json
     options:
       annotations:
-        grafana_folder: "Home"
+        grafana_folder: Home
       labels:
         grafana_dashboard: "true"
   - name: snmp-exporter-opnsense
