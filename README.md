@@ -25,6 +25,13 @@ _... automated via [Flux](https://fluxcd.io), [Renovate](https://github.com/reno
 [![Memory-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.kochhaus.dev%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_memory_usage&style=flat-square&label=Memory)](https://github.com/kashalls/kromgo/)&nbsp;&nbsp;
 [![Power-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.kochhaus.dev%2Fquery%3Fformat%3Dendpoint%26metric%3Dcluster_power_usage&style=flat-square&label=Power)](https://github.com/kashalls/kromgo/)&nbsp;&nbsp;
 [![Alerts](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.kochhaus.dev%2Fquery%3Fformat%3Dendpoint%26metric%3Dprometheus_active_alerts&style=flat-square&label=Alerts)](https://github.com/kashalls/kromgo/)
+
+</div>
+
+<div align="center">
+
+[![volkswagen status](https://auchenberg.github.io/volkswagen/volkswargen_ci.svg?v=1)](https://github.com/auchenberg/volkswagen)
+
 </div>
 
 ---
