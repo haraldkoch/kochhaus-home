@@ -8,13 +8,8 @@ resources:
 configMapGenerator:
   - name: opnsense-backup
     files:
-      - ./opnsense-backup.sh
-  - name: opnsense-dashboard
-    files:
-      - opnsense-dashboard.json=./dashboard.json
+      - opnsense-backup.sh=./resources/opnsense-backup.sh
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
-  labels:
-    grafana_dashboard: "true"

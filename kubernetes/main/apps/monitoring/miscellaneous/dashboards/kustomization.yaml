@@ -5,3 +5,4 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - network-status
+  - opnsense
