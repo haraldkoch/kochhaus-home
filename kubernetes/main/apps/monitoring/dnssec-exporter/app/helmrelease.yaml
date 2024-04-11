@@ -43,6 +43,10 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 50m
@@ -53,6 +57,10 @@ spec:
         pod:
           annotations:
             secret.reloader.stakater.com/reload: dnssec-exporter-secret
+          securityContext:
+            runAsUser: 1022
+            runAsGroup: 1022
+            runAsNonRoot: true
     service:
       app:
         controller: dnssec-exporter

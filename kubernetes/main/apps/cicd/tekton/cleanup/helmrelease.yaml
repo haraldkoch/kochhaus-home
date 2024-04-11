@@ -35,6 +35,10 @@ spec:
           schedule: "*/15 * * * *"
         pod:
           restartPolicy: OnFailure
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1022
+            runAsGroup: 1022
         containers:
           app:
             image:
@@ -54,6 +58,10 @@ spec:
                         || echo "$(date -Is) Unable to delete PipelineRun ${PIPELINE_TO_REMOVE}.";
                   done < <(kubectl get pipelinerun -l tekton.dev/pipeline=${PIPELINE} --sort-by=.metadata.creationTimestamp -o name | head -n -${NUM_TO_KEEP});
                 done < <(kubectl get pipelinerun -o go-template='{{range .items}}{{index .metadata.labels "tekton.dev/pipeline"}}{{"\n"}}{{end}}' | uniq);
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 50m

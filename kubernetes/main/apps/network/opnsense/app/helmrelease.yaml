@@ -31,6 +31,10 @@ spec:
           schedule: "@daily"
         pod:
           restartPolicy: OnFailure
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
         containers:
           main:
             image:
@@ -43,6 +47,10 @@ spec:
             envFrom:
               - secretRef:
                   name: *app
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
     persistence:
       script:
         type: configMap
@@ -52,3 +60,5 @@ spec:
           - path: /app/opnsense-backup.sh
             subPath: opnsense-backup.sh
             readOnly: true
+      tmp:
+        type: emptyDir

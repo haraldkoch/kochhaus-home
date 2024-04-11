@@ -53,6 +53,10 @@ spec:
                 printf "\e[1;32m%-6s\e[m\n" "Running rsync ..."
                 /usr/bin/rsync -avSAHX --numeric-ids -e "/usr/bin/ssh -i /ssh/id_rsa -o GlobalKnownHostsFile=/ssh/known_hosts" ${SECRET_WEB_BACKUP_USER}@${SECRET_WEB_HOST}:/data/website-backups/ /backup/
                 printf "\e[1;32m%-6s\e[m\n" "rsync complete."
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 memory: 128Mi

@@ -37,6 +37,10 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 5m
@@ -44,6 +48,10 @@ spec:
               limits:
                 memory: 64M
         pod:
+          securityContext:
+            runAsNonRoot: true
+            runAsGroup: 101
+            runAsUser: 101
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
@@ -72,3 +80,6 @@ spec:
                   port: http
         tls:
           - hosts: [*host]
+    persistence:
+      tmp:
+        type: emptyDir
