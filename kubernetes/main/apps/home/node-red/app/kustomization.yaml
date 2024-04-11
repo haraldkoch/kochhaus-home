@@ -5,3 +5,12 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ../../../../templates/volsync
+configMapGenerator:
+  - name: node-red-loki-rules
+    files:
+      - node-red.yaml=./resources/lokirule.yaml
+    options:
+      labels:
+        loki_rule: "true"
+generatorOptions:
+  disableNameSuffixHash: true
