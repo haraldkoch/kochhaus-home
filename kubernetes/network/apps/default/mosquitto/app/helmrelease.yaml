@@ -36,7 +36,11 @@ spec:
               repository: public.ecr.aws/docker/library/eclipse-mosquitto
               tag: 2.0.18
             command: ["/bin/sh", "-c"]
-            args: ["cp /tmp/secret/* /mosquitto/external_config/ && chmod go-r /mosquitto/external_config/mosquitto_pwd && mosquitto_passwd -U /mosquitto/external_config/mosquitto_pwd"]
+            args:
+              - |
+                cp /tmp/secret/mosquitto_pwd /mosquitto/external_config/;
+                chmod 600 /mosquitto/external_config/mosquitto_pwd;
+                mosquitto_passwd -U /mosquitto/external_config/mosquitto_pwd;
         containers:
           app:
             image:
@@ -47,20 +51,24 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 5m
-                memory: 4Mi
+                cpu: 10m
               limits:
-                memory: 16Mi
+                memory: 64Mi
         pod:
           securityContext:
-            runAsUser: 1022
-            runAsGroup: 1022
-            fsGroup: 1022
+            runAsUser: 65534
+            runAsGroup: 65534
+            runAsNonRoot: true
+            fsGroup: 65534
             fsGroupChangePolicy: OnRootMismatch
     service:
-      mosquitto:
+      app:
         controller: mosquitto
         type: LoadBalancer
         annotations:
@@ -83,6 +91,7 @@ spec:
             app:
               - path: /mosquitto/config/mosquitto.conf
                 subPath: mosquitto.conf
+                readOnly: true
       data:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
@@ -98,7 +107,9 @@ spec:
         advancedMounts:
           mosquitto:
             init-config:
-              - path: /tmp/secret
+              - path: /tmp/secret/mosquitto_pwd
+                subPath: mosquitto_pwd
+                readOnly: true
       external-config:
         type: emptyDir
         globalMounts:
