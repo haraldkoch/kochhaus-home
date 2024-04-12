@@ -2,16 +2,18 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: "${app}-${ts}"
-  namespace: "${ns}"
+  name: ${job}
+  namespace: ${ns}
 spec:
   trigger:
     manual: restore-once
   restic:
-    repository: "${app}-volsync"
-    destinationPVC: "${claim}"
+    repository: ${app}-volsync
+    destinationPVC: ${claim}
     copyMethod: Direct
     storageClassName: ceph-block
+    # storageClassName: ceph-filesystem
+    # accessModes: ["ReadWriteMany"]
     # IMPORTANT NOTE:
     #   Set to the last X number of snapshots to restore from
     previous: ${previous}

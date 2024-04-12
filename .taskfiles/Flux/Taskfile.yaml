@@ -13,7 +13,7 @@ tasks:
     summary: |
       Args:
         cluster: Cluster to run command against (required)
-    prompt: Bootstrap Flux into the '{{.cluster}}' cluster... continue?
+    prompt: Bootstrap Flux into the '{{.cluster}}' cluster ... continue?
     cmds:
       # Install essential Prometheus Operator CRDs
       - kubectl --context {{.cluster}} apply --server-side --filename https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/{{.PROMETHEUS_OPERATOR_VERSION}}/example/prometheus-operator-crd/monitoring.coreos.com_podmonitors.yaml
@@ -42,7 +42,7 @@ tasks:
     summary: |
       Args:
         cluster: Cluster to run command against (required)
-        path: Path to the Flux Kustomization resource (ks.yaml) (required)
+        path: Path to the Flux Kustomization resource (required)
         ns: Namespace the Flux Kustomization exists in (default: flux-system)
     cmd: |
       flux --context {{.cluster}} build ks $(basename {{.path}}) \
@@ -60,7 +60,7 @@ tasks:
       ks:
         sh: flux --context {{.cluster}} --namespace {{.ns}} get kustomizations $(basename {{.path}}) 2>&1
     preconditions:
-      - { msg: "Kustomization file not found", sh: "test -f {{.KUBERNETES_DIR}}/{{.cluster}}/apps/{{.path}}/ks.yaml" }
+      - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/apps/{{.path}}/ks.yaml
 
   reconcile:
     desc: Force update Flux to pull in changes from your Git repository

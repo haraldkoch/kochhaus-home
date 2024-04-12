@@ -4,74 +4,40 @@ version: "3"
 
 tasks:
 
-  list-dockerhub:
-    desc: What dockerhub images are running in my cluster
+  browse-pvc:
+    desc: Browse PersistentVolumeClaims
     summary: |
       Args:
         cluster: Cluster to run command against (required)
+        ns: Namespace to browse PersistentVolumeClaims in (default: default)
+        claim: PersistentVolumeClaim to browse (required)
     interactive: true
-    cmd: |
-      kubectl --context {{.cluster}} get pods --all-namespaces -o=jsonpath="{range .items[*]}{'\n'}{range .spec.containers[*]}{.image}{'\n'}{end}{end}" | sort | uniq | grep -Ev 'quay|gcr|ghcr|ecr|us-docker|registry.k8s' | grep -Ev 'bitnami|rook|intel|grafana' |  sed -e 's/docker\.io\///g' | sort | uniq
-    requires:
-      vars: ["cluster"]
-
-  taints:
-    desc: show node taints
-    summary: |
-      Args:
-        cluster: Cluster to run command against (required)
-    interactive: true
-    cmd: |
-      kubectl --context {{.cluster}} get nodes -o custom-columns=NAME:.metadata.name,TAINTS:.spec.taints --no-headers
-    requires:
-      vars: ["cluster"]
-
-  mount:
-    desc: Mount a PersistentVolumeClaim to a temporary pod for a cluster
-    summary: |
-      Args:
-        cluster: Cluster to run command against (required)
-        ns: Namespace the PVC is in (default: default)
-        claim: PVC to mount (required)
-    interactive: true
-    cmd: |
-      kubectl --context {{.cluster}} run -n {{.ns}} debug-{{.claim}} -i --tty --rm --image=null --privileged --overrides='
-        {
-          "apiVersion": "v1",
-          "spec": {
-            "containers": [
-              {
-                "name": "debug",
-                "image": "ghcr.io/onedr0p/alpine:rolling",
-                "command": ["/bin/bash"],
-                "stdin": true,
-                "stdinOnce": true,
-                "tty": true,
-                "volumeMounts": [
-                  {
-                    "name": "config",
-                    "mountPath": "/config"
-                  }
-                ]
-              }
-            ],
-            "volumes": [
-              {
-                "name": "config",
-                "persistentVolumeClaim": {
-                  "claimName": "{{.claim}}"
-                }
-              }
-            ],
-            "restartPolicy": "Never"
-          }
-        }'
-    requires:
-      vars: ["cluster", "claim"]
+    cmd: kubectl browse-pvc --context {{.cluster}} --namespace {{.ns}} {{.claim}}
     vars:
       ns: '{{.ns | default "default"}}'
-    preconditions:
-      - { msg: "PVC not found", sh: "kubectl --context {{.cluster}} -n {{.ns}} get persistentvolumeclaim {{.claim}}" }
+    requires:
+      vars: ["cluster", "claim"]
+
+  drain:
+    desc: Drain a node
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+        node: Node to drain (required)
+    cmd: kubectl --context {{.cluster}} drain {{.node}} --ignore-daemonsets --delete-local-data --force
+    requires:
+      vars: ["cluster", "node"]
+
+  delete-failed-pods:
+    desc: Deletes pods with a fucked status
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    cmds:
+      - for: ["Evicted", "Failed", "Succeeded"]
+        cmd: kubectl --context {{.cluster}} delete pods --field-selector status.phase={{.ITEM}} -A --ignore-not-found=true
+    requires:
+      vars: ["cluster"]
 
   network:
     desc: Create a netshoot container for a cluster
@@ -88,34 +54,13 @@ tasks:
       ts: '{{now | date "150405"}}'
       ns: '{{.ns | default "default"}}'
 
-  iperf2:
-    desc: Start a iperf2 server on node SERVER_NODE, and iperf2 client on node CLIENT_NODE, to benchmark network performance.
-    dir: "{{.ROOT_DIR}}/.taskfiles/Cluster/iperf2"
-    vars: &iperf2-vars
-      SERVER_NAME: &iperf2-server-name 'iperf2-server-{{- .TIMENOW -}}'
-      SERVER_NS: &iperf2-server-ns '{{ .SERVER_NS | default "default" }}'
-      CLIENT_NAME: &iperf2-client-name 'iperf2-client-{{- .TIMENOW -}}'
-      CLIENT_NS: &iperf2-client-ns '{{ .CLIENT_NS | default "default" }}'
-      CLUSTER: '{{ .cluster }}'
-      CLUSTER_DOMAIN: '{{ .CLUSTER_DOMAIN | default "cluster.local" }}'
-      SERVER_PORT: '{{ .SERVER_PORT | default "5001" }}'
-      SERVER_NODE: '{{ or .SERVER_NODE (fail "Missing `SERVER_NODE` environment variable!") }}'
-      CLIENT_NODE: '{{ or .CLIENT_NODE (fail "Missing `CLIENT_NODE` environment variable!") }}'
-      SERVER_ARGS: '{{ .SERVER_ARGS | default "" }}'
-      CLIENT_ARGS: '{{ .CLIENT_ARGS | default "" }}'
-    env: *iperf2-vars
-    cmds:
-      - cat ./ServerJob.tmpl.yaml | envsubst | kubectl --context {{.cluster}} apply -f -
-      - defer: cat ./ServerJob.tmpl.yaml | envsubst | kubectl --context {{.cluster}} delete -f -
-      - task: wait-pod-running
-        vars:
-          NAME: '-l job-name={{.SERVER_NAME}}'
-          NS: '{{.SERVER_NS}}'
-      - cat ./ClientJob.tmpl.yaml | envsubst | kubectl --context {{.cluster}} apply -f -
-      - defer: cat ./ClientJob.tmpl.yaml | envsubst | kubectl --context {{.cluster}} delete -f -
-      - task: wait-finish
-        vars:
-          NAME: 'jobs/{{.CLIENT_NAME}}'
-          NS: '{{.CLIENT_NS}}'
+  list-dockerhub:
+    desc: What dockerhub images are running in my cluster
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    interactive: true
+    cmd: |
+      kubectl --context {{.cluster}} get pods --all-namespaces -o=jsonpath="{range .items[*]}{'\n'}{range .spec.containers[*]}{.image}{'\n'}{end}{end}" | sort | uniq | grep -Ev 'quay|gcr|ghcr|ecr|us-docker|registry.k8s' | grep -Ev 'bitnami|rook|intel|grafana' |  sed -e 's/docker\.io\///g' | sort | uniq
     requires:
       vars: ["cluster"]

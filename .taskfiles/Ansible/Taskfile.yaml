@@ -10,16 +10,22 @@ env:
   VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
   ANSIBLE_COLLECTIONS_PATH: "{{.ROOT_DIR}}/.venv/galaxy"
   ANSIBLE_ROLES_PATH: "{{.ROOT_DIR}}/.venv/galaxy/ansible_roles"
-  ANSIBLE_VARS_ENABLED: "host_group_vars,community.sops.sops"
+  ANSIBLE_VARS_ENABLED: "host_group_vars"
 
 tasks:
 
-  deps:
-    desc: Set up Ansible dependencies for the environment
+  venv:
+    desc: Set up Python virtual environment
     cmds:
-      - task: .venv
-        vars:
-          force: '{{.force | default "true"}}'
+      - true && {{.PYTHON_BIN}} -m venv {{.ROOT_DIR}}/.venv
+      - .venv/bin/python3 -m pip install --upgrade pip setuptools wheel
+      - .venv/bin/python3 -m pip install --upgrade --requirement {{.ANSIBLE_DIR}}/requirements.txt
+      - .venv/bin/ansible-galaxy install --role-file "{{.ANSIBLE_DIR}}/requirements.yaml" --force
+    sources:
+      - "{{.ANSIBLE_DIR}}/requirements.txt"
+      - "{{.ANSIBLE_DIR}}/requirements.yaml"
+    generates:
+      - "{{.ROOT_DIR}}/.venv/pyvenv.cfg"
 
   run:
     desc: Run an Ansible playbook for configuring a cluster
@@ -27,8 +33,8 @@ tasks:
       Args:
         cluster: Cluster to run command against (required)
         playbook: Playbook to run (required)
-    prompt: Run Ansible playbook '{{.playbook}}' against the '{{.cluster}}' cluster... continue?
-    deps: ["deps"]
+    prompt: Run Ansible playbook '{{.playbook}}' against the '{{.cluster}}' cluster ... continue?
+    deps: ["venv"]
     cmd: |
       .venv/bin/ansible-playbook \
         --inventory {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml \
@@ -36,14 +42,14 @@ tasks:
     requires:
       vars: ["cluster", "playbook"]
     preconditions:
-      - { msg: "Venv not found", sh: "test -d {{.ROOT_DIR}}/.venv" }
-      - { msg: "Inventory not found", sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml" }
-      - { msg: "Playbook not found", sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/playbooks/{{.playbook}}.yaml" }
+      - test -d {{.ROOT_DIR}}/.venv
+      - test -f {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml
+      - test -f {{.ANSIBLE_DIR}}/{{.cluster}}/playbooks/{{.playbook}}.yaml
 
 
   list:
     desc: List all the hosts
-    deps: ["deps"]
+    deps: ["venv"]
     summary: |
       Args:
         cluster: Cluster to run command against (required)
@@ -112,7 +118,7 @@ tasks:
 
   ping:
     desc: Ping all the hosts
-    deps: ["deps"]
+    deps: ["venv"]
     summary: |
       Args:
         cluster: Cluster to run command against (required)
@@ -125,17 +131,3 @@ tasks:
       - { msg: "Venv not found", sh: "test -d {{.ROOT_DIR}}/.venv" }
       - { msg: "Inventory not found", sh: "test -f {{.ANSIBLE_DIR}}/{{.cluster}}/inventory/hosts.yaml" }
 
-  .venv:
-    internal: true
-    cmds:
-      - true && {{.PYTHON_BIN}} -m venv {{.ROOT_DIR}}/.venv
-      - .venv/bin/python3 -m pip install --upgrade pip setuptools wheel
-      - .venv/bin/python3 -m pip install --upgrade --requirement {{.ANSIBLE_DIR}}/requirements.txt
-      - .venv/bin/ansible-galaxy install --role-file "{{.ANSIBLE_DIR}}/requirements.yaml" {{if eq .force "true"}}--force{{end}}
-    vars:
-      force: '{{.force | default "true"}}'
-    sources:
-      - "{{.ANSIBLE_DIR}}/requirements.txt"
-      - "{{.ANSIBLE_DIR}}/requirements.yaml"
-    generates:
-      - "{{.ROOT_DIR}}/.venv/pyvenv.cfg"
