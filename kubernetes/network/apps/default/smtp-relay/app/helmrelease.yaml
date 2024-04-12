@@ -59,6 +59,8 @@ spec:
           securityContext:
             runAsUser: 1022
             runAsGroup: 1022
+            fsGroup: 1022
+            fsGroupChangePolicy: OnRootMismatch
             runAsNonRoot: true
           topologySpreadConstraints:
             - maxSkew: 1
