@@ -45,7 +45,7 @@ spec:
             env:
               BASE_URL: https://miniflux.${CLUSTER_DOMAIN}
               CREATE_ADMIN: "1"
-              DEBUG: "1"
+              # DEBUG: "1"
               LOG_DATE_TIME: "1"
               METRICS_ALLOWED_NETWORKS: "${NETWORK_K8S_POD_CIDR}"
               METRICS_COLLECTOR: "1"
@@ -56,6 +56,7 @@ spec:
               OAUTH2_REDIRECT_URL: "https://miniflux.${CLUSTER_DOMAIN}/oauth2/oidc/callback"
               POLLING_SCHEDULER: entry_frequency
               POLLING_FREQUENCY: "15"
+              PORT: &port 80
               RUN_MIGRATIONS: "1"
             envFrom: *envFrom
             probes:
@@ -65,12 +66,16 @@ spec:
                 spec:
                   httpGet:
                     path: /healthcheck
-                    port: 8080
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
@@ -78,6 +83,10 @@ spec:
               limits:
                 memory: 256Mi
         pod:
+          securityContext:
+            runAsUser: 1022
+            runAsGroup: 1022
+            runAsNonRoot: true
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
@@ -91,10 +100,10 @@ spec:
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
-            port: 8080
+            port: *port
     serviceMonitor:
       app:
-        serviceName: *app
+        serviceName: miniflux
         endpoints:
           - port: http
     ingress:
