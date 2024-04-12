@@ -170,6 +170,9 @@ spec:
       thanosServiceMonitor:
         enabled: true
       prometheusSpec:
+        podMetadata:
+          annotations:
+            secret.reloader.stakater.com/reload: &secret thanos-objstore-config
         replicas: 1
         replicaExternalLabelName: __replica__
         ruleSelectorNilUsesHelmValues: false
@@ -192,7 +195,7 @@ spec:
           version: "${THANOS_VERSION#v}"
           objectStorageConfig:
             existingSecret:
-              name: thanos-objstore-config
+              name: *secret
               key: config
         retention: 2d
         retentionSize: 15GB
@@ -220,7 +223,20 @@ spec:
                       values:
                         - "true"
     nodeExporter:
-      enabled: false
+      enabled: true
+    prometheus-node-exporter:
+      fullnameOverride: node-exporter
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              targetLabel: kubernetes_node
+            - action: labeldrop
+              regex: (pod)
     prometheusOperator:
       resources:
         requests:
