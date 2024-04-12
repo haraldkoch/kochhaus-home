@@ -8,4 +8,5 @@ resources:
   # Flux-Kustomizations
   - ./coredns/ks.yaml
   - ./kube-vip/ks.yaml
+  - ./kubelet-csr-approver/ks.yaml
   - ./metrics-server/ks.yaml
