@@ -23,7 +23,6 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    replicaCount: 2
     installCRDs: true
     dns01RecursiveNameservers: 1.1.1.1:53,9.9.9.9:53
     dns01RecursiveNameserversOnly: true
@@ -55,7 +54,6 @@ spec:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
     webhook:
-      replicaCount: 2
       resources:
         requests:
           cpu: 15m
@@ -75,7 +73,6 @@ spec:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
     cainjector:
-      replicaCount: 2
       resources:
         requests:
           cpu: 15m
