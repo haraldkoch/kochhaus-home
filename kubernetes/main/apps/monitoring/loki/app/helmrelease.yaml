@@ -16,10 +16,12 @@ spec:
         name: grafana
         namespace: flux-system
   install:
+    crds: Skip
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    crds: Skip
     remediation:
       strategy: rollback
       retries: 3
@@ -156,12 +158,6 @@ spec:
           memory: 64Mi
     read:
       replicas: 2
-      extraVolumeMounts:
-        - name: rules
-          mountPath: /rules
-      extraVolumes:
-        - name: rules
-          emptyDir: {}
       resources:
         requests:
           cpu: 50m
