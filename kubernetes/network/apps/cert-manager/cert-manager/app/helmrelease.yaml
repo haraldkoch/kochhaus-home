@@ -42,3 +42,19 @@ spec:
       limits:
         cpu: 15m
         memory: 300M
+    webhook:
+      resources:
+        requests:
+          cpu: 15m
+          memory: 32M
+        limits:
+          cpu: 15m
+          memory: 32M
+    cainjector:
+      resources:
+        requests:
+          cpu: 15m
+          memory: 200M
+        limits:
+          cpu: 15m
+          memory: 400M
