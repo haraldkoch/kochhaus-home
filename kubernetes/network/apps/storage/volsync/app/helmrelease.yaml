@@ -28,7 +28,7 @@ spec:
   values:
     manageCRDs: true
     image: &image
-      repository: ghcr.io/onedr0p/volsync
+      repository: ghcr.io/haraldkoch/volsync
       tag: 0.9.1
     restic:
       <<: *image
