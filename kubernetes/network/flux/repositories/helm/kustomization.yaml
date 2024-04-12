@@ -8,6 +8,7 @@ resources:
   - ./calico.yaml
   - ./coredns.yaml
   - ./descheduler.yaml
+  - ./emqx.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
   - ./ingress-nginx.yaml
