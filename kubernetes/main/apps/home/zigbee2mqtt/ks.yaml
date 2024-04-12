@@ -12,7 +12,6 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
-    - name: volsync
   path: ./kubernetes/main/apps/home/zigbee2mqtt/app
   prune: true
   sourceRef:

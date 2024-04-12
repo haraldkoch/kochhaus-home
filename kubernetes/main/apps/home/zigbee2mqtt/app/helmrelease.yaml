@@ -23,8 +23,6 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: mosquitto
-      namespace: home
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync
