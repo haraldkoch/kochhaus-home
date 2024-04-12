@@ -23,6 +23,8 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
+    - name: authelia
+      namespace: security
     - name: kube-prometheus-stack
       namespace: monitoring
     - name: loki
@@ -40,7 +42,6 @@ spec:
       GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.${CLUSTER_DOMAIN}/api/oidc/authorization
       GF_AUTH_GENERIC_OAUTH_CLIENT_ID: grafana
       GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://auth.${CLUSTER_DOMAIN}/api/oidc/token
-      GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH: "contains(groups[*], 'grafana-admins') && 'Admin' || 'Viewer'"
       GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
       GF_EXPLORE_ENABLED: true
       GF_FEATURE_TOGGLES_ENABLE: publicDashboards
@@ -70,8 +71,7 @@ spec:
         use_pkce: true
       auth.generic_oauth.group_mapping:
         org_id: 1
-        role_attribute_path: |
-          contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'people') && 'Viewer'
+        role_attribute_path: contains(groups[*], 'grafana-admins') && 'Admin' || 'Viewer'
       auth.basic:
         enabled: false
       auth.anonymous:
@@ -102,6 +102,22 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/applications-folder
+          - name: ceph
+            orgId: 1
+            folder: Ceph
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/ceph-folder
+          - name: flux
+            orgId: 1
+            folder: Flux
+            type: file
+            disableDeletion: false
+            editable: true
+            options:
+              path: /var/lib/grafana/dashboards/flux-folder
           - name: home
             orgId: 1
             folder: "Home"
@@ -233,9 +249,6 @@ spec:
           revision: 1
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
-        cloudnative-pg:
-          url: https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/grafana-dashboard.json
-          datasource: Prometheus
         cert-manager:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
           datasource: Prometheus
@@ -248,6 +261,12 @@ spec:
         node-feature-discovery:
           url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
           datasource: Prometheus
+        x509-certificate-exporter:
+          # renovate: depName="Certificates Expiration (X509 Certificate Exporter)"
+          gnetId: 13922
+          revision: 3
+          datasource: Prometheus
+      ceph:
         ceph-cluster:
           # renovate: depName="Ceph Cluster"
           gnetId: 2842
@@ -263,6 +282,7 @@ spec:
           gnetId: 5342
           revision: 9
           datasource: Prometheus
+      flux:
         flux-cluster:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
           datasource: Prometheus
@@ -271,11 +291,6 @@ spec:
           datasource: Prometheus
         flux-logs:
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/logs.json
-          datasource: Prometheus
-        x509-certificate-exporter:
-          # renovate: depName="Certificates Expiration (X509 Certificate Exporter)"
-          gnetId: 13922
-          revision: 3
           datasource: Prometheus
       kubernetes:
         kubernetes-api-server:
@@ -358,7 +373,6 @@ spec:
       dashboards:
         enabled: true
         searchNamespace: ALL
-        labelValue: ""
         label: grafana_dashboard
         folderAnnotation: grafana_folder
         provider:
