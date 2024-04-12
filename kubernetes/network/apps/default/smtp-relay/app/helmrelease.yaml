@@ -77,11 +77,11 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: smtp.${SECRET_DOMAIN}
         ports:
-          smtp:
-            port: 25
-            primary: true
           metrics:
-            port: 9749
+            port: *metricsPort
+          smtp:
+            port: *port
+            primary: true
     serviceMonitor:
       app:
         serviceName: smtp-relay
