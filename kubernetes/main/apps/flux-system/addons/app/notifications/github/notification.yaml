@@ -7,7 +7,6 @@ metadata:
 spec:
   type: github
   address: https://github.com/haraldkoch/kochhaus-home
-  interval: 10m
   secretRef:
     name: github-token-secret
 ---
@@ -22,6 +21,4 @@ spec:
   eventSeverity: info
   eventSources:
     - kind: Kustomization
-      name: "*"
-    - kind: HelmRelease
       name: "*"
