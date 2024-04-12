@@ -93,7 +93,7 @@ spec:
             port: *port
     serviceMonitor:
       app:
-        serviceName: *app
+        serviceName: cloudflared
         endpoints:
           - port: http
     persistence:
