@@ -10,8 +10,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: volsync
   path: ./kubernetes/main/apps/media/tautulli/app
   prune: true
   sourceRef:

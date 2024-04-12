@@ -25,6 +25,8 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: volsync
+      namespace: storage
   values:
     controllers:
       tautulli:
@@ -38,10 +40,22 @@ spec:
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
-              readiness:
-                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /status
+                    port: &port 8181
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 50m
@@ -61,7 +75,7 @@ spec:
         ipFamilyPolicy: SingleStack
         ports:
           http:
-            port: 8181
+            port: *port
     ingress:
       app:
         className: internal
@@ -86,6 +100,10 @@ spec:
     persistence:
       config:
         existingClaim: ${VOLSYNC_CLAIM}
+      tmp:
+        type: emptyDir
+      add-ons:
+        type: emptyDir
       backup:
         type: nfs
         server: "${SECRET_BACKUP_SERVER:=fnord}"
