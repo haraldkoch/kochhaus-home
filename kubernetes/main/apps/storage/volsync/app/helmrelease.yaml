@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: volsync
-      version: 0.8.0
+      version: 0.9.1
       sourceRef:
         kind: HelmRepository
         name: backube
@@ -28,8 +28,8 @@ spec:
   values:
     manageCRDs: true
     image: &image
-      repository: ghcr.io/onedr0p/volsync
-      tag: 0.8.0
+      repository: ghcr.io/haraldkoch/volsync
+      tag: 0.9.1
     restic:
       <<: *image
     metrics:
