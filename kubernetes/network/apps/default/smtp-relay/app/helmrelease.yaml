@@ -35,15 +35,20 @@ spec:
               repository: ghcr.io/foxcpp/maddy
               tag: 0.7.1
             env:
-              DEBUG: "true"
-              SMTP_DOMAIN: ${SECRET_DOMAIN:=fnord}
-              SMTP_SERVER: ${SMTP_SMARTHOST:=fnord}
-              SMTP_PORT: ${SMTP_SMARTHOST_PORT:=fnord}
+              SMTP_RELAY_SMTP_PORT: &port 25
+              SMTP_RELAY_METRICS_PORT: &metricsPort 8080
+              SMTP_RELAY_HOSTNAME: ${SECRET_DOMAIN:=fnord}
+              SMTP_RELAY_SERVER: ${SMTP_SMARTHOST:=fnord}
+              SMTP_RELAY_SERVER_PORT: ${SMTP_SMARTHOST_PORT:=fnord}
             probes:
               liveness:
                 enabled: true
               readiness:
                 enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 10m
@@ -51,6 +56,10 @@ spec:
               limits:
                 memory: 128Mi
         pod:
+          securityContext:
+            runAsUser: 1022
+            runAsGroup: 1022
+            runAsNonRoot: true
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
@@ -75,7 +84,7 @@ spec:
             port: 9749
     serviceMonitor:
       app:
-        serviceName: *app
+        serviceName: smtp-relay
         endpoints:
           - port: metrics
     persistence:
