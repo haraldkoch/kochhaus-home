@@ -81,9 +81,9 @@ spec:
         ports:
           metrics:
             port: *metricsPort
+            primary: true
           smtp:
             port: *port
-            primary: true
     serviceMonitor:
       app:
         serviceName: smtp-relay
