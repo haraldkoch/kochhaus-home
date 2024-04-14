@@ -10,4 +10,3 @@ resources:
   - ./dragonfly/ks.yaml
   - ./pgadmin/ks.yaml
   - ./postgres-backup/ks.yaml
-  - ./redis/ks.yaml
