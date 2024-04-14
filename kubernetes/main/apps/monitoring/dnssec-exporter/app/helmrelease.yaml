@@ -69,10 +69,9 @@ spec:
             protocol: TCP
             port: 9204
         type: LoadBalancer
-        externalIPs:
-          - ${SVC_EXPORTERS_ADDR_V4}
-          - ${SVC_EXPORTERS_ADDR_V6}
-        externalTrafficPolicy: Cluster
+        externalIPs: ["${EXPORTERS_IPV4}", "${EXPORTERS_IPV6}"]
+        externalTrafficPolicy: Local
+        ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: exporters.${CLUSTER_DOMAIN}

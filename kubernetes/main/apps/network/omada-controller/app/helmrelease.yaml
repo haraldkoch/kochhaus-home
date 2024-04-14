@@ -62,13 +62,10 @@ spec:
       controller:
         controller: omada-controller
         type: LoadBalancer
-        externalIPs:
-          - ${SVC_OMADA_ADDR_V4:=10.0.0.1}
-          # - ${SVC_OMADA_ADDR_V6:=fe80::1}
+        externalIPs: ["${OMADA_IPV4}", "${OMADA_IPV6}"]
         externalTrafficPolicy: Local
-        # ipFamilies: [IPv4, IPv6]
-        # ipFamilyPolicy: PreferDualStack
-        ipFamilyPolicy: SingleStack
+        ipFamilies: [IPv4, IPv6]
+        ipFamilyPolicy: PreferDualStack
         ports:
           # # Docs: https://www.tp-link.com/us/support/faq/3281/
           # Management Ports

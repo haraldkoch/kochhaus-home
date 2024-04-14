@@ -75,10 +75,9 @@ spec:
       app:
         controller: openssh
         type: LoadBalancer
-        externalIPs:
-          - ${SVC_REMOTE_ADDR_V4}
-          - ${SVC_REMOTE_ADDR_V6}
+        externalIPs: ["${OPENSSH_IPV4}", "${OPENSSH_IPV6}"]
         externalTrafficPolicy: Local
+        ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack
         ports:
           ssh:

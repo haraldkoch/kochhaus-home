@@ -30,12 +30,10 @@ spec:
         - name: TZ
           value: "${TIMEZONE:=Etc/UTC}"
       service:
-        externalIPs:
-          - ${SVC_NGINX_ADDR_V4}
-          - ${SVC_NGINX_ADDR_V6}
+        externalIPs: ["${NGINX_IPV4}", "${NGINX_IPV6}"]
         externalTrafficPolicy: Local
-        ipFamilyPolicy: PreferDualStack
         ipFamilies: [IPv4, IPv6]
+        ipFamilyPolicy: PreferDualStack
       ingressClassResource:
         name: internal
         default: true

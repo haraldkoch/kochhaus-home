@@ -49,7 +49,9 @@ spec:
       app:
         controller: redis-lb
         type: LoadBalancer
-        externalIPs: ["${SVC_REDIS_ADDR_V4}", "${SVC_REDIS_ADDR_V6}"]
+        externalIPs: ["${REDIS_IPV4}", "${REDIS_IPV6}"]
+        externalTrafficPolicy: Local
+        ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack
         ports:
           http:

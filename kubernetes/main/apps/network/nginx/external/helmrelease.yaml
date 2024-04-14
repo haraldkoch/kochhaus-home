@@ -37,12 +37,10 @@ spec:
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: external.${CLUSTER_DOMAIN}
-        externalIPs:
-          - ${SVC_NGINX_EXT_ADDR_V4}
-          - ${SVC_NGINX_EXT_ADDR_V6}
+        externalIPs: ["${NGINX_EXT_IPV4}", "${NGINX_EXT_IPV6}"]
         externalTrafficPolicy: Local
-        ipFamilyPolicy: PreferDualStack
         ipFamilies: [IPv4, IPv6]
+        ipFamilyPolicy: PreferDualStack
       ingressClassResource:
         name: external
         default: false

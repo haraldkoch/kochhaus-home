@@ -69,12 +69,13 @@ spec:
     service:
       app:
         controller: vector-aggregator
-        ipFamilyPolicy: PreferDualStack
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "vector.${CLUSTER_DOMAIN}"
-        externalIPs: ["${SVC_SYSLOG_ADDR_V4}", "${SVC_SYSLOG_ADDR_V6}"]
+        externalIPs: ["${SYSLOG_IPV4}", "${SYSLOG_IPV6}"]
         externalTrafficPolicy: Local
+        ipFamilies: [IPv4, IPv6]
+        ipFamilyPolicy: PreferDualStack
         ports:
           http:
             primary: true

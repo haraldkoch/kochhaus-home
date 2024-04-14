@@ -7,8 +7,10 @@ metadata:
     external-dns.alpha.kubernetes.io/hostname: postgres.${CLUSTER_DOMAIN}
 spec:
   type: LoadBalancer
+  externalIPs: ["${POSTGRES_IPV4}", "${POSTGRES_IPV6}"]
   externalTrafficPolicy: Local
-  externalIPs: ["${SVC_POSTGRES_ADDR_V4}", "${SVC_POSTGRES_ADDR_V6}"]
+  ipFamilies: [IPv4, IPv6]
+  ipFamilyPolicy: PreferDualStack
   ports:
     - name: postgres
       port: 5432

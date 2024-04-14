@@ -91,10 +91,9 @@ spec:
       listen:
         controller: syncthing
         type: LoadBalancer
-        externalIPs:
-          - ${SVC_SYNCTHING_ADDR_V4}
-          - ${SVC_SYNCTHING_ADDR_V6}
+        externalIPs: ["${SYNCTHING_IPV4}", "${SYNCTHING_IPV6}"]
         externalTrafficPolicy: Local
+        ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack
         ports:
           listen:
