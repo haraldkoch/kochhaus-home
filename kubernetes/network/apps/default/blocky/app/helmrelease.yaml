@@ -80,7 +80,7 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: dns.${SECRET_DOMAIN}
-        externalIPs: ["${BLOCKY_ADDR}", "${BLOCKY_ADDR_V6}"]
+        externalIPs: ["${BLOCKY_IPV4}", "${BLOCKY_IPV6}"]
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         ipFamilies: [IPv4, IPv6]

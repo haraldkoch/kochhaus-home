@@ -73,7 +73,7 @@ spec:
       app:
         controller: smtp-relay
         type: LoadBalancer
-        externalIPs: ["${SMTP_RELAY_ADDR_V4}", "${SMTP_RELAY_ADDR_V6}"]
+        externalIPs: ["${SMTP_RELAY_IPV4}", "${SMTP_RELAY_IPV6}"]
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         annotations:

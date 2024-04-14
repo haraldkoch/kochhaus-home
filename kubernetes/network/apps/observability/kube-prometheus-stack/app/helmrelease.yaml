@@ -162,11 +162,11 @@ spec:
       thanosServiceExternal:
         enabled: true
         type: LoadBalancer
-        externalIPs: ["${THANOS_ADDR}"]
+        externalIPs: ["${THANOS_IPV4}"]
         # ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: thanos-network.${SECRET_DOMAIN}
-        externalTrafficPolicy: Cluster
+        externalTrafficPolicy: Local
       thanosServiceMonitor:
         enabled: true
     nodeExporter:

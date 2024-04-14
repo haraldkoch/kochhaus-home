@@ -73,9 +73,8 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: mqtt.${SECRET_DOMAIN}
-        externalIPs:
-          - ${MOSQUITTO_ADDR_V4}
-          - ${MOSQUITTO_ADDR_V6}
+        externalIPs: ["${MOSQUITTO_IPV4}", "${MOSQUITTO_IPV6}"]
+        externalTrafficPolicy: Local
         ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack
         ports:
