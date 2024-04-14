@@ -30,8 +30,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/haraldkoch/excalidraw
-              tag: latest@sha256:cb3779395c51500351affce38c1fc1e4121bff03e1ca704c3adb1bbdc748bbe0
+              repository: docker.io/excalidraw/excalidraw
+              tag: latest@sha256:648edf36c55793fdeed475e09a86fb6c16a68783dc442d37d5070adfc0362a8f
               pullPolicy: IfNotPresent
             probes:
               liveness:

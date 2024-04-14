@@ -28,7 +28,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/haraldkoch/syncthing
+              repository: docker.io/syncthing/syncthing
               tag: 1.27.6
             probes:
               liveness:
@@ -46,7 +46,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/haraldkoch/filebrowser
+              repository: docker.io/filebrowser/filebrowser
               tag: v2.28.0
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
@@ -61,7 +61,7 @@ spec:
                 spec:
                   httpGet:
                     path: /health
-                    port: 80
+                    port: &browserPort 80
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -110,7 +110,7 @@ spec:
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
-            port: 80
+            port: *browserPort
     ingress:
       app:
         className: internal

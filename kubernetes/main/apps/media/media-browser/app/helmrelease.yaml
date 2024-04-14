@@ -22,17 +22,13 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   values:
     controllers:
       media-browser:
-        type: statefulset
         containers:
           app:
             image:
-              repository: ghcr.io/haraldkoch/filebrowser
+              repository: docker.io/filebrowser/filebrowser
               tag: v2.28.0
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
@@ -47,7 +43,7 @@ spec:
                 spec:
                   httpGet:
                     path: /health
-                    port: 80
+                    port: &port 80
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -69,19 +65,13 @@ spec:
             runAsGroup: 2000
             fsGroup: 2000
             fsGroupChangePolicy: "OnRootMismatch"
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 1Gi
-              storageClass: ceph-block
     service:
       app:
         controller: media-browser
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
-            port: 80
+            port: *port
     ingress:
       app:
         className: internal
@@ -97,5 +87,10 @@ spec:
         tls:
           - hosts: [*host]
     persistence:
+      config:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: ceph-block
       media:
         existingClaim: media-nfs

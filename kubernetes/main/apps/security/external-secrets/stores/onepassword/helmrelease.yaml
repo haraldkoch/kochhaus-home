@@ -31,8 +31,7 @@ spec:
         containers:
           api:
             image:
-              # repository: docker.io/1password/connect-api
-              repository: ghcr.io/haraldkoch/onepassword-connect-api
+              repository: docker.io/1password/connect-api
               tag: 1.7.2
             env:
               XDG_DATA_HOME: &configDir /config
@@ -74,9 +73,8 @@ spec:
               limits:
                 memory: 100Mi
           sync:
-            # image: docker.io/1password/connect-sync:1.7.0
             image:
-              repository: ghcr.io/haraldkoch/onepassword-sync
+              repository: docker.io/1password/connect-sync
               tag: 1.7.2
             env:
               XDG_DATA_HOME: *configDir
