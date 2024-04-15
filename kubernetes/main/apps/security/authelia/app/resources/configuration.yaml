@@ -60,7 +60,13 @@ access_control:
   networks:
     - name: internal
       networks: ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "${SECRET_HOMELAN_IPV4}"]
-  rules: []
+  rules:
+    - domain:
+        - whoami.${CLUSTER_DOMAIN}
+      resources:
+        - ^/health$
+        - ^/health/
+      policy: bypass
 
 identity_providers:
   oidc:
