@@ -36,7 +36,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/haraldkoch/postgres-init
-              tag: 16.2@sha256:599c7b0a56cffdccab49fe5a016b0c53c25306551ddbfbeaefa7661d2a3daa68
+              tag: 16
             envFrom: &envFrom
               - secretRef:
                   name: authelia-secret
@@ -53,9 +53,6 @@ spec:
               AUTHELIA_THEME: dark
               X_AUTHELIA_CONFIG: /config/configuration.yaml
               X_AUTHELIA_CONFIG_FILTERS: expand-env
-              # needed for configuration.yaml substitutions
-              CLUSTER_DOMAIN: "${CLUSTER_DOMAIN:=fnord}"
-              SECRET_HOMELAN_IPV4: "${SECRET_HOMELAN_IPV4:=127.0.0.1}"
             envFrom: *envFrom
             probes:
               liveness: &probes
