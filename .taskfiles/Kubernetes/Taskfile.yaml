@@ -49,9 +49,8 @@ tasks:
     requires:
       vars: ["cluster"]
     cmd: |
-      kubectl run --context {{.cluster}} -n {{.ns}} netshoot-{{.ts}} --rm -i --tty --image ghcr.io/nicolaka/netshoot:latest {{.CLI_ARGS}}
+      kubectl run --context {{.cluster}} -n {{.ns}} netshoot --rm -i --tty --image ghcr.io/nicolaka/netshoot:latest {{.CLI_ARGS}}
     vars:
-      ts: '{{now | date "150405"}}'
       ns: '{{.ns | default "default"}}'
 
   list-dockerhub:
