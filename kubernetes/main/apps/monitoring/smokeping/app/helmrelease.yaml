@@ -30,8 +30,8 @@ spec:
         initContainers:
           copy-config:
             image:
-              repository: ghcr.io/haraldkoch/kubernetes-kubectl
-              tag: 1.29.3@sha256:4331a0de57e183c87e922cde42946a650be69646f8a9aa4ff0c534d9d6a76d0a
+              repository: docker.io/alpine
+              tag: 3.19.1
             command:
               - /bin/sh
               - -c
