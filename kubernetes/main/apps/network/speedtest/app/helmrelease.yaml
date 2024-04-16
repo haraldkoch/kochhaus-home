@@ -25,7 +25,7 @@ spec:
   values:
     controllers:
       speedtest:
-        replicas: 2
+        replicas: 1
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -57,6 +57,9 @@ spec:
               limits:
                 cpu: 1
                 memory: 100Mi
+        pod:
+          nodeSelector:
+            node.home.arpa/physical: "true"
     service:
       app:
         controller: speedtest

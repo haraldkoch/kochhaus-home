@@ -23,7 +23,7 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    replicas: 2
+    replicas: 1
     kind: Deployment
     deschedulerPolicyAPIVersion: descheduler/v1alpha2
     deschedulerPolicy:
@@ -73,8 +73,6 @@ spec:
     service:
       enabled: true
     serviceMonitor:
-      enabled: true
-    leaderElection:
       enabled: true
     resources:
       requests:
