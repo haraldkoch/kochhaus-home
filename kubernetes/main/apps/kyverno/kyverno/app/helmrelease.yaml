@@ -97,3 +97,24 @@ spec:
             memory: 384Mi
           limits:
             memory: 512Mi
+    webhooksCleanup:
+      image:
+        registry: registry.k8s.io
+        repository: kubectl
+        tag: v1.29.3
+    policyReportsCleanup:
+      image:
+        registry: registry.k8s.io
+        repository: kubectl
+        tag: v1.29.3
+    cleanupJobs:
+      admissionReports:
+        image:
+          registry: registry.k8s.io
+          repository: kubectl
+          tag: v1.29.3
+      clusterAdmissionReports:
+        image:
+          registry: registry.k8s.io
+          repository: kubectl
+          tag: v1.29.3
