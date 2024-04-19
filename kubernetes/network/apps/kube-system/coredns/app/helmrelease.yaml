@@ -24,17 +24,13 @@ spec:
       retries: 3
   values:
     fullnameOverride: coredns
-    replicaCount: 1
+    replicaCount: 2
     k8sAppLabelOverride: kube-dns
     service:
       name: kube-dns
-      clusterIP: "${COREDNS_ADDR}"
-      clusterIPs:
-      - "${COREDNS_ADDR}"
-      - "${COREDNS_ADDR_V6}"
-      ipFamilies:
-      - IPv4
-      - IPv6
+      clusterIP: ${COREDNS_ADDR}
+      clusterIPs: ["${COREDNS_ADDR}", "${COREDNS_ADDR_V6}"]
+      ipFamilies: ["IPV4", "IPV6"]
       ipFamilyPolicy: PreferDualStack
     serviceAccount:
       create: true
