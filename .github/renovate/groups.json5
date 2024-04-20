@@ -8,7 +8,17 @@
         "gha-runner-scale-set-controller",
         "gha-runner-scale-set"
       ],
-      "matchDatasources": ["helm", "docker"],
+      "matchDatasources": ["docker", "helm"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
+      "description": ["Dragonfly Operator Group"],
+      "groupName": "Dragonfly Operator",
+      "matchPackagePatterns": ["dragonfly(?:db)?.operator"],
+      "matchDatasources": ["docker", "github-releases"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
@@ -46,37 +56,15 @@
       "separateMinorPatch": true
     },
     {
-      "description": ["Tekton Group"],
-      "groupName": "Tekton",
-      "matchPackagePatterns": ["tektoncd"],
-      "matchDatasources": ["github-releases"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "group": {
-        "commitMessageTopic": "{{{groupName}}} group"
-      },
-      "separateMinorPatch": false
-    },
-    {
-      "description": ["Thanos image and chart - mismatched versions"],
-      "groupName": "Thanos",
-      "matchPackagePatterns": ["thanos"],
-      "matchDatasources": ["docker", "github-releases", "helm"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "group": {
-        "commitMessageTopic": "{{{groupName}}} group"
-      },
-      "separateMinorPatch": false
-    },
-    {
-      "description": ["volsync image and chart"],
-      "groupName": "volsync",
+      "description": ["Volsync Group"],
+      "groupName": "Volsync",
       "matchPackagePatterns": ["volsync"],
-      "matchDatasources": ["docker", "github-releases", "helm"],
+      "matchDatasources": ["docker", "helm"],
       "matchUpdateTypes": ["minor", "patch"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
-      "separateMinorPatch": false
+      "separateMinorPatch": true
     },
     {
       "description": ["x509-certificate-exporter image and chart"],
@@ -87,7 +75,7 @@
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
-      "separateMinorPatch": false
+      "separateMinorPatch": true
     }
   ]
 }
