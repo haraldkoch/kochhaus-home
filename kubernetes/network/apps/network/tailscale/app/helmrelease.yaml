@@ -37,7 +37,7 @@ spec:
             env:
               TZ: ${TIMEZONE}
               NO_AUTOUPDATE: true
-              PORT: &port ${TAILNET_PUBLIC_PORT}
+              #PORT: &port ${TAILNET_PUBLIC_PORT}
               TS_EXTRA_ARGS: --advertise-exit-node  --advertise-tags=tag:k8s
               TS_ROUTES: ${KUBERNETES_CIDR},${HOMELAN_IPV4}
               TS_STATE_DIR: &path /tmp
@@ -92,17 +92,17 @@ spec:
         ports:
           http:
             port: 3000
-      tailnet:
-        controller: *app
-        type: LoadBalancer
-        externalIPs: ["${TAILSCALE_IPV4}", "${TAILSCALE_IPV6}"]
-        externalTrafficPolicy: Local
-        ipFamilyPolicy: PreferDualStack
-        ipFamilies: [IPv4, IPv6]
-        ports:
-          tailnet:
-            port: *port
-            protocol: UDP
+      # tailnet:
+      #   controller: *app
+      #   type: LoadBalancer
+      #   externalIPs: ["${TAILSCALE_IPV4}", "${TAILSCALE_IPV6}"]
+      #   externalTrafficPolicy: Local
+      #   ipFamilyPolicy: PreferDualStack
+      #   ipFamilies: [IPv4, IPv6]
+      #   ports:
+      #     tailnet:
+      #       port: *port
+      #       protocol: UDP
     serviceMonitor:
       app:
         serviceName: *app
