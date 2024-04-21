@@ -5,6 +5,9 @@ metadata:
   name: cluster-settings-user
   namespace: flux-system
 data:
+  KUBERNETES_CIDR: "192.168.20.0/22"
+  KUBERNETES_CIDR_V6: "fdd5:aa8:9535:20::/62"
+
   SMTP_RELAY_IPV4: 192.168.22.25
   SMTP_RELAY_IPV6: fdd5:aa8:9535:22::25
   BIND_PRIMARY_IPV4: 192.168.22.51
@@ -22,3 +25,5 @@ data:
   THANOS_IPV4: 192.168.22.102
   EMQX_IPV4: 192.168.22.103
   EMQX_IPV6: fdd5:aa8:9535:22::103
+  TAILSCALE_IPV4: 192.168.22.104
+  TAILSCALE_IPV6: fdd5:aa8:9535:22::104
