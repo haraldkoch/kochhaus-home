@@ -1,0 +1,20 @@
+k3s_registries:
+    mirrors:
+        docker.io:
+            endpoint:
+                - https://harbor.kochhaus.dev/v2/docker.io
+        gcr.io:
+            endpoint:
+                - https://harbor.kochhaus.dev/v2/gcr.io
+        ghcr.io:
+            endpoint:
+                - https://harbor.kochhaus.dev/v2/ghcr.io
+        public.ecr.aws:
+            endpoint:
+                - https://harbor.kochhaus.dev/v2/public.ecr.aws
+        quay.io:
+            endpoint:
+                - https://harbor.kochhaus.dev/v2/quay.io
+        registry.k8s.io:
+            endpoint:
+                - https://harbor.kochhaus.dev/v2/registry.k8s.io
