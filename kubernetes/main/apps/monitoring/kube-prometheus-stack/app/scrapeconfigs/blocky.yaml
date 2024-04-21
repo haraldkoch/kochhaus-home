@@ -10,7 +10,7 @@ spec:
         - blocky1.${PRIVATE_STATIC_DOMAIN}:4000
         - blocky2.${PRIVATE_STATIC_DOMAIN}:4000
   metricsPath: /metrics
-  relabellings:
+  relabelings:
   - sourceLabels: [__address__]
     targetLabel: alias
     regex: ([^\.]*)\..*
