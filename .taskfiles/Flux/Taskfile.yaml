@@ -70,3 +70,12 @@ tasks:
     cmd: flux --context {{.cluster}} reconcile --namespace flux-system kustomization cluster --with-source
     requires:
       vars: ["cluster"]
+
+  monitor:
+    desc: Monitor the progress of Kustomizations and Helm Releases
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    cmd: watch "flux --context {{.cluster}} get kustomizations|grep -v Applied;flux --context {{.cluster}} get helmrelease -A|grep -v succeeded"
+    requires:
+      vars: ["cluster"]
