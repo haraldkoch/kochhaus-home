@@ -20,17 +20,17 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     controllers:
-      main:
+      bind-secondary:
         replicas: 1
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           # FIXME: add named-exporter as a sidecar
-          main:
+          named:
             image:
               repository: ubuntu/bind9
               tag: 9.18-22.04_beta
@@ -72,7 +72,7 @@ spec:
                   app.kubernetes.io/name: *app
     service:
       dns:
-        controller: main
+        controller: bind-secondary
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: bind-secondary.${SECRET_DOMAIN}
