@@ -20,17 +20,17 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     controllers:
-      main:
+      blocky:
         replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/0xerr0r/blocky
               tag: v0.23@sha256:450d193393c0dceb108d1cd80a5580ab9d851127c924c1ae89361d32161ae528
@@ -69,14 +69,14 @@ spec:
                 matchLabels:
                   app.kubernetes.io/name: *app
     service:
-      main:
-        controller: main
+      app:
+        controller: blocky
         primary: true
         ports:
           http:
             port: 4000
       dns:
-        controller: main
+        controller: blocky
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: dns.${SECRET_DOMAIN}
@@ -92,19 +92,20 @@ spec:
             port: 53
             protocol: UDP
     serviceMonitor:
-      main:
+      app:
         serviceName: *app
         endpoints:
           - port: http
     ingress:
-      main:
+      app:
         className: internal
         hosts:
           - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
+                  port: http
         tls:
           - hosts:
               - *host
