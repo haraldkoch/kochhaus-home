@@ -18,7 +18,7 @@ env:
 jobs:
   publish-schemas:
     name: Publish Schemas
-    runs-on: ["arc-runner-set-kochhaus-home"]
+    runs-on: ["gha-runner-scale-set"]
     permissions:
       contents: read
       packages: write
