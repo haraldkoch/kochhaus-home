@@ -20,17 +20,17 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
+      strategy: uninstall
       retries: 3
   values:
     controllers:
-      main:
+      bind-primary:
         replicas: 1
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           # FIXME: add named-exporter as a sidecar
-          main:
+          named:
             image:
               repository: ubuntu/bind9
               tag: 9.18-22.04_beta
@@ -89,7 +89,7 @@ spec:
                   app.kubernetes.io/name: *app
     service:
       dns:
-        controller: main
+        controller: bind-primary
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: bind.${SECRET_DOMAIN}
@@ -144,7 +144,7 @@ spec:
         name: sshd-initializer
         defaultMode: 0555
         advancedMounts:
-          main:
+          bind-primary:
             ssh:
               - path: /etc/cont-init.d/45-config
                 subPath: 45-config
@@ -152,6 +152,6 @@ spec:
         type: secret
         name: sshd-config
         advancedMounts:
-          main:
+          bind-primary:
             ssh:
               - path: /sshd
