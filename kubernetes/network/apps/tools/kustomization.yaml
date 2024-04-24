@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./descheduler/ks.yaml
+  - ./k8s-ycl/ks.yaml
   - ./kured/ks.yaml
   - ./node-feature-discovery/ks.yaml
   - ./reloader/ks.yaml
