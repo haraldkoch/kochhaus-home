@@ -48,7 +48,7 @@ spec:
               requiredDuringSchedulingIgnoredDuringExecution:
                 nodeSelectorTerms:
                   - matchExpressions:
-                      - key: apc.feature.node.kubernetes.io/ups
+                      - key: cyberpower.feature.node.kubernetes.io/ups
                         operator: In
                         values: ["true"]
           tolerations:
@@ -90,7 +90,8 @@ spec:
           - path: /etc/nut
       ups:
         type: hostPath
-        hostPath: /dev/bus/usb/002/001
+        #hostPath: /dev/bus/usb/002/001
+        hostPath: /dev/bus/usb/001/002
         globalMounts:
           - path: /dev/bus/usb/001/001
             readOnly: false
@@ -114,7 +115,7 @@ spec:
             [kubernetes]
               driver = usbhid-ups
               port = auto
-              desc = "Back-UPS NS 1500M2"
+              desc = "Cyber Power System, Inc. PR1500LCDRT2U UPS"
               pollinterval = 10
           upsmon.conf: |-
             MONITOR kubernetes@localhost:3493 1 upsmon "${NUT_PASSWORD}" primary
