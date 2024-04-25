@@ -69,18 +69,6 @@ spec:
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "exporters.${CLUSTER_DOMAIN}"
-      metrics:
-        controller: network-ups-tools
-        ports:
-          metrics:
-            enabled: true
-            port: 9199
-            protocol: TCP
-    serviceMonitor:
-      app:
-        serviceName: network-ups-tools-metrics
-        endpoints:
-          - name: metrics
     persistence:
       config:
         type: configMap
