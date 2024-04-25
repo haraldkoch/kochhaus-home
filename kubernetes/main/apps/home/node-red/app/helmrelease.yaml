@@ -25,6 +25,8 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: volsync
+      namespace: storage
   values:
     controllers:
       node-red:

@@ -22,6 +22,11 @@ spec:
     remediation:
       strategy: uninstall
       retries: 3
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+    - name: volsync
+      namespace: storage
   values:
     controllers:
       bind-primary:

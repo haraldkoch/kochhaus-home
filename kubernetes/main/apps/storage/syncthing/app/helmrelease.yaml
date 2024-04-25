@@ -22,6 +22,9 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   values:
     controllers:
       syncthing:
@@ -139,6 +142,7 @@ spec:
         tls:
           - hosts: [*host]
     persistence:
+      # TODO: volsync
       config:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce

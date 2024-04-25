@@ -13,7 +13,6 @@ spec:
   dependsOn:
     - name: dragonfly-cluster
     - name: external-secrets-stores
-    - name: volsync
   path: ./kubernetes/main/apps/storage/nextcloud/app
   prune: true
   sourceRef:
