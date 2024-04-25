@@ -98,7 +98,7 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: bind.${SECRET_DOMAIN}
-        externalIPs: ["${BIND_PRIMARY_IPV4}", "${BIND_PRIMARY_IPV6}"]
+          io.cilium/lb-ipam-ips: "${BIND_PRIMARY_IPV4},${BIND_PRIMARY_IPV6}"
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         ipFamilies: [IPv4, IPv6]

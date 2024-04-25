@@ -30,7 +30,8 @@ spec:
         - name: TZ
           value: "${TIMEZONE:=Etc/UTC}"
       service:
-        externalIPs: ["${NGINX_INT_IPV4}", "${NGINX_INT_IPV6}"]
+        annotations:
+          io.cilium/lb-ipam-ips: "${NGINX_INT_IPV4},${NGINX_INT_IPV6}"
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         ipFamilies: [IPv4, IPv6]

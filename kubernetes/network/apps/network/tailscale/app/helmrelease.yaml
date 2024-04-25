@@ -95,7 +95,8 @@ spec:
       # tailnet:
       #   controller: *app
       #   type: LoadBalancer
-      #   externalIPs: ["${TAILSCALE_IPV4}", "${TAILSCALE_IPV6}"]
+      #   annotations:
+      #     io.cilium/lb-ipam-ips: "${TAILSCALE_IPV4},${TAILSCALE_IPV6}"
       #   externalTrafficPolicy: Local
       #   ipFamilyPolicy: PreferDualStack
       #   ipFamilies: [IPv4, IPv6]

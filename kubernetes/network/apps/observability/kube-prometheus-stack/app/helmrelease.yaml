@@ -162,10 +162,10 @@ spec:
       thanosServiceExternal:
         enabled: true
         type: LoadBalancer
-        externalIPs: ["${THANOS_IPV4}"]
         # ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: thanos-network.${SECRET_DOMAIN}
+          io.cilium/lb-ipam-ips: "${THANOS_IPV4}"
         externalTrafficPolicy: Local
       thanosServiceMonitor:
         enabled: true

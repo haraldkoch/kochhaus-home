@@ -78,11 +78,11 @@ spec:
       app:
         controller: smtp-relay
         type: LoadBalancer
-        externalIPs: ["${SMTP_RELAY_IPV4}", "${SMTP_RELAY_IPV6}"]
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: smtp.${SECRET_DOMAIN}
+          io.cilium/lb-ipam-ips: "${SMTP_RELAY_IPV4},${SMTP_RELAY_IPV6}"
         ports:
           metrics:
             port: *metricsPort

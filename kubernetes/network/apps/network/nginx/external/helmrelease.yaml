@@ -29,7 +29,7 @@ spec:
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "network.${SECRET_DOMAIN}"
-        externalIPs: ["${NGINX_EXT_IPV4}", "${NGINX_EXT_IPV6}"]
+          io.cilium/lb-ipam-ips: "${NGINX_EXT_IPV4},${NGINX_EXT_IPV6}"
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         ipFamilies: [IPv4, IPv6]

@@ -54,9 +54,9 @@ spec:
     metadata:
       annotations:
         external-dns.alpha.kubernetes.io/hostname: mqtt-emqx.${SECRET_DOMAIN}
+        io.cilium/lb-ipam-ips: "${EMQX_IPV4},${EMQX_IPV6}"
     spec:
       type: LoadBalancer
-      externalIPs: ["${EMQX_IPV4}", "${EMQX_IPV6}"]
       externalTrafficPolicy: Local
       ipFamilies: [IPv4, IPv6]
       ipFamilyPolicy: PreferDualStack
