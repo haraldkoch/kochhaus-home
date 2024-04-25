@@ -12,9 +12,42 @@ spec:
   virtualRouters:
     - localASN: 64512
       neighbors:
+        # gateway
         - peerAddress: "192.168.20.1/32"
           peerASN: 64512
+        # other cluster
+        - peerAddress: "192.168.20.17/32"
+          peerASN: 64512
+        - peerAddress: "192.168.20.18/32"
+          peerASN: 64512
+        - peerAddress: "192.168.20.19/32"
+          peerASN: 64512
+        - peerAddress: "192.168.20.21/32"
+          peerASN: 64512
+        - peerAddress: "192.168.20.22/32"
+          peerASN: 64512
+        - peerAddress: "192.168.20.23/32"
+          peerASN: 64512
+        - peerAddress: "192.168.20.24/32"
+          peerASN: 64512
+
+        # gateway
         - peerAddress: "fdd5:aa8:9535:20::1/128"
+          peerASN: 64512
+        # other cluster
+        - peerAddress: "fdd5:aa8:9535:20::17/128"
+          peerASN: 64512
+        - peerAddress: "fdd5:aa8:9535:20::18/128"
+          peerASN: 64512
+        - peerAddress: "fdd5:aa8:9535:20::19/128"
+          peerASN: 64512
+        - peerAddress: "fdd5:aa8:9535:20::21/128"
+          peerASN: 64512
+        - peerAddress: "fdd5:aa8:9535:20::22/128"
+          peerASN: 64512
+        - peerAddress: "fdd5:aa8:9535:20::23/128"
+          peerASN: 64512
+        - peerAddress: "fdd5:aa8:9535:20::24/128"
           peerASN: 64512
       serviceSelector:
         matchExpressions:
