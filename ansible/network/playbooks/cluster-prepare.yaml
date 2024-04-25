@@ -20,7 +20,7 @@
         - name: Packages | Install
           ansible.builtin.apt:
             name: apt-transport-https,ca-certificates,conntrack,curl,dirmngr,gdisk,gnupg,hdparm,htop,
-              iptables,iputils-ping,ipvsadm,libseccomp2,lm-sensors,neofetch,net-tools,nfs-common,
+              iptables,iputils-ping,ipvsadm,libseccomp2,lm-sensors,net-tools,nfs-common,
               nvme-cli,open-iscsi,parted,psmisc,python3,python3-apt,python3-kubernetes,python3-yaml,
               smartmontools,socat,software-properties-common,unzip,util-linux
             install_recommends: false
@@ -82,7 +82,7 @@
             dest: "/etc/modules-load.d/{{ item }}.conf"
             mode: "0644"
             content: "{{ item }}"
-          loop: ["br_netfilter", "ceph", "ip_vs", "ip_vs_rr", "nbd", "overlay", "rbd"]
+          loop: ["br_netfilter", "ceph", "ip_vs", "ip_vs_rr", "iptable_mangle", "ip6table_mangle", "iptable_raw", "ip6table_raw", "nbd", "overlay", "rbd", "xt_socket"]
           register: modules_status
         - name: System Configuration | Reload Kernel modules # noqa: no-changed-when no-handler
           when: modules_status.changed

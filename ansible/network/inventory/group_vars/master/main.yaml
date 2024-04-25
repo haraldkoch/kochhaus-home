@@ -10,6 +10,7 @@ k3s_server:
     - servicelb                       # Disable servicelb               - replaced with MetalLB Helm Chart
     - traefik                         # Disable traefik                 - replaced with ingress-nginx Helm Chart
   disable-cloud-controller: true
+  disable-kube-proxy: true
   disable-network-policy: true
   docker: false
   etcd-expose-metrics: true           # Required to monitor etcd with kube-prometheus-stack
