@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./bgpconfiguration.yaml
   - ./bgppeer.yaml
+  - ./main-cluster.yaml
