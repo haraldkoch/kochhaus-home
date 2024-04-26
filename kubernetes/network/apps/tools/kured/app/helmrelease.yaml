@@ -25,8 +25,8 @@ spec:
   values:
     configuration:
       startTime: "7:00"
-      endTime: "12:00"
-      period: "10m"
+      endTime: "23:00"
+      period: "5m"
       timeZone: ${TIMEZONE:=Etc/UTC}
     service:
       ipFamilyPolicy: preferDualStack
