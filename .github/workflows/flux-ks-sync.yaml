@@ -5,8 +5,7 @@ name: "Flux Kustomization Sync"
 on:
   push:
     branches: ["main"]
-#    paths: ["kubernetes/network/**", "kubernetes/registry/**"]
-    paths: ["kubernetes/network/**"]
+    paths: ["kubernetes/network/**", "kubernetes/registry/**"]
 
 jobs:
   sync:
@@ -14,8 +13,7 @@ jobs:
     runs-on: ["gha-runner-scale-set"]
     strategy:
       matrix:
-#        cluster: ["network", "registry"]
-        cluster: ["network"]
+        cluster: ["network", "registry"]
     steps:
       - name: Generate Token
         uses: actions/create-github-app-token@v1
