@@ -17,9 +17,12 @@
 
     - name: Packages
       block:
-        - name: Packages | Install common packages
+        - name: Packages | Install
           ansible.builtin.package:
-            name: "{{ packages | default([]) }}"
+            name: ca-certificates,conntrack-tools,curl,gptfdisk,gnupg,hdparm,htop,
+                  intel-gpu-tools,iptables-nft,ipvsadm,lm_sensors,lvm2,nfs-utils,
+                  nvme-cli,open-iscsi,parted,python-kubernetes,
+                  smartmontools,socat,thin-provisioning-tools,unzip,util-linux,vi
             state: present
             update_cache: true
 
