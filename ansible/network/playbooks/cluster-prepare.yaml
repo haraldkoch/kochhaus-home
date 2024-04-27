@@ -71,6 +71,13 @@
             name: apparmor
             state: stopped
             masked: true
+        - name: System Configuration | NFS
+          ansible.builtin.copy:
+            src: files/nfsmount.conf
+            dest: /etc/nfsmount.conf
+            owner: root
+            group: root
+            mode: "0644"
         - name: System Configuration | Disable swap
           ansible.posix.mount:
             name: "{{ item }}"
