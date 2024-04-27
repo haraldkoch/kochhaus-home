@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
+  - ./media-nfs.yaml
   # Flux-Kustomizations
   - ./calibre-web/ks.yaml
   - ./media-browser/ks.yaml

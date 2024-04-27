@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: media-nfs
+spec:
+  storageClassName: media-nfs
+  capacity:
+    storage: 17Ti
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: "${SECRET_MEDIA_SERVER}"
+    path: /media
+  mountOptions:
+    - nfsvers=4.2
+    - nconnect=8
+    - hard
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media-nfs
+  namespace: media
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: media-nfs
+  resources:
+    requests:
+      storage: 17Ti
