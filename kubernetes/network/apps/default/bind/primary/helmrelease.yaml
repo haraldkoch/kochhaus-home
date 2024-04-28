@@ -131,6 +131,9 @@ spec:
           - path: /etc/bind/named.conf.mirrors
             subPath: named.conf.mirrors
             readOnly: true
+          - path: /etc/bind/named.conf.options
+            subPath: named.conf.options
+            readOnly: true
           - path: /etc/bind/named.keys
             subPath: named.keys
             readOnly: true
