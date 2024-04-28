@@ -31,7 +31,7 @@ A typical `zone` directive looks like:
 ```text
 zone "home.arpa" IN {
         type primary;
-        file "/etc/named/m/home.arpa.zone";
+        file "/var/lib/bind/home.arpa.zone";
         allow-update { key rndc-key; key dnsupdate; key dhcp; };
         allow-transfer { homelab; };
 };
@@ -41,6 +41,8 @@ This stanza says that we are the/a primary server for `home.arpa`, that anyone
 with one of the listed keys can perform dynamic updates, and that hosts in the
 homelab acl can perform transfers. (Normally we would lock down transfers more
 tightly, but this is a homelab).
+
+NOTE: the default folder for zone files is `/var/cache/named` (this is configured in the `named.conf.options` file that is part of the `ubuntu/bind9` container image). We separate primary and secondary zone files, and store the primary zone files in a PVC, mounted at `/var/lib/bind`. To do this we must put the full pathname in the `file` directive.
 
 Reverse zones are configured the same way.
 

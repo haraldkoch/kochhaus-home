@@ -106,7 +106,7 @@ zone "30.168.192.in-addr.arpa" IN {
     type secondary;
     file "192.168.30.zone";
     primaries {
-        homelab;
+        kubernetes;
     };
     allow-notify { homelab; };
 };
@@ -115,7 +115,7 @@ zone "80.168.192.in-addr.arpa" IN {
     type secondary;
     file "192.168.80.zone";
     primaries {
-        homelab;
+        kubernetes;
     };
     allow-notify { homelab; };
 };
