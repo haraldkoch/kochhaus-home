@@ -70,7 +70,7 @@ zone "10.168.192.in-addr.arpa" IN {
     type secondary;
     file "192.168.10.zone";
     primaries {
-        homelab;
+        kubernetes;
     };
     allow-notify { homelab; };
 };

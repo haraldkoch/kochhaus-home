@@ -62,12 +62,10 @@ zone "${SECRET_DOMAIN}" IN {
 # The reverse lookup zones, containing PTR records, for our various networks.
 #
 zone "10.168.192.in-addr.arpa" IN {
-    type secondary;
-    file "192.168.10.zone";
-    primaries {
-        homelab;
-    };
-    allow-notify { homelab; };
+    type primary;
+    file "/var/lib/bind/192.168.10.zone";
+    allow-update { key rndc-key; key dnsupdate; key dhcp; key dhcp-gw; };
+    allow-transfer { kochhaus; };
 };
 
 zone "20.168.192.in-addr.arpa" IN {
