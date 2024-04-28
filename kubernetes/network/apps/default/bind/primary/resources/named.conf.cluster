@@ -1,3 +1,13 @@
+
+# This ACL is defined to restrict which hosts can interact with the
+# name server, either by sending NOTIFY messages or by sending
+# commands (signed by our management key).
+#
+# Notify messages from the internet servers, and from castor/pollux,
+# appear from the HOMELAN_IPV4 network; that one is easy. NOTIFY
+# messages from bind running on Kubernetes appear to come from the
+# Kubernetes nodes themselves, so we need those IPs here also.
+#
 acl homelab {
     ${CLUSTER_CIDR};
     ${HOMELAN_IPV4};
@@ -13,11 +23,23 @@ controls {
         inet ::1        allow { ::1; }        keys { rndc-key; };
 };
 
+
+# Not all of our zones are migrated to this server. This directive lists
+# the addresses of the primary nameserver (castor).
+#
 primaries homelab {
     ${HOMELAN_DNS_PRIMARY_V4};
     ${HOMELAN_DNS_PRIMARY_V6};
 };
 
+# A typical zone directive specifying that this is a secondary server
+# that copies the zone data from a primary. The homelab primaries and
+# homelab ACL are defined elsewhere.
+#
+# We have more zones than this, but some of them are defined in a Secret
+# because they contain sensitive data. The format of the file in the
+# Secret is the same as this one.
+#
 zone "home.arpa" IN {
     type secondary;
     file "home.arpa.zone";
@@ -27,9 +49,21 @@ zone "home.arpa" IN {
     allow-notify { homelab; };
 };
 
+# sssh. secret.
 zone "${SECRET_DOMAIN}" IN {
     type secondary;
     file "${SECRET_DOMAIN}.zone";
+    primaries {
+        homelab;
+    };
+    allow-notify { homelab; };
+};
+
+# The reverse lookup zones, containing PTR records, for our various networks.
+#
+zone "10.168.192.in-addr.arpa" IN {
+    type secondary;
+    file "192.168.10.zone";
     primaries {
         homelab;
     };
@@ -57,6 +91,24 @@ zone "21.168.192.in-addr.arpa" IN {
 zone "22.168.192.in-addr.arpa" IN {
     type secondary;
     file "192.168.22.zone";
+    primaries {
+        homelab;
+    };
+    allow-notify { homelab; };
+};
+
+zone "30.168.192.in-addr.arpa" IN {
+    type secondary;
+    file "192.168.30.zone";
+    primaries {
+        homelab;
+    };
+    allow-notify { homelab; };
+};
+
+zone "80.168.192.in-addr.arpa" IN {
+    type secondary;
+    file "192.168.80.zone";
     primaries {
         homelab;
     };
