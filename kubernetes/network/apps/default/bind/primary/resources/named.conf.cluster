@@ -32,7 +32,21 @@ primaries homelab {
     ${HOMELAN_DNS_PRIMARY_V6};
 };
 
-# A typical zone directive specifying that this is a secondary server
+# A typical zone stanza specifying that this server is primary for the
+# zone. The zone file is stored in /var/lib/bind, which is a PVC that
+# is backed up (required for saving the results of dynamic updates).
+#
+# The zone is configured for dynamic updtes from the DHCP servers and
+# from the manual updates script, and allows transfers to the internal
+# network.
+zone "guest.arpa" IN {
+    type primary;
+    file "/var/lib/bind/guest.arpa.zone";
+    allow-update { key rndc-key; key dnsupdate; key dhcp; key dhcp-gw; };
+    allow-transfer { kochhaus; };
+};
+
+# A typical zone stanza specifying that this is a secondary server
 # that copies the zone data from a primary. The homelab primaries and
 # homelab ACL are defined elsewhere.
 #

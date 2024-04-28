@@ -54,6 +54,15 @@ zone "home.arpa" IN {
     allow-notify { homelab; };
 };
 
+zone "guest.arpa" IN {
+    type secondary;
+    file "guest.arpa.zone";
+    primaries {
+        kubernetes;
+    };
+    allow-notify { homelab; };
+};
+
 # sssh. secret.
 zone "${SECRET_DOMAIN}" IN {
     type secondary;
