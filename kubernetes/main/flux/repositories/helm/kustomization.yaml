@@ -26,7 +26,7 @@ resources:
   - ./nextcloud.yaml
   - ./node-feature-discovery.yaml
   - ./okgolove.yaml
-  - ./openebs.yaml
+  - ./openebs-archive.yaml
   - ./piraeus.yaml
   - ./postfinance.yaml
   - ./prometheus-community.yaml
