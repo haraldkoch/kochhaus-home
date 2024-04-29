@@ -2,9 +2,11 @@
 blocking:
   blackLists:
     ads:
+    # PiHole default
+    - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
     # via onedr0p
     # - https://raw.githubusercontent.com/ookangzheng/dbl-oisd-nl/master/dbl.txt
-    # the oisd.nl team has their own source
+    # This list is now empty, but the oisd.nl team has their own source:
     - https://big.oisd.nl/domainswild
     # trying to block iOS game ads
     - https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Regular%20Hosts.txt
