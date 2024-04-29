@@ -26,10 +26,11 @@ caching:
 clientLookup:
   upstream: tcp+udp:${PRIVATE_DNS_PRIMARY}
 
-conditional:
-  mapping:
-    ${SECRET_DOMAIN}: bind-secondary-dns.default.svc.cluster.local:53
-    home.arpa: bind-secondary-dns.default.svc.cluster.local:53
+# we don't need this since these are the default upstream.
+# conditional:
+#   mapping:
+#     ${SECRET_DOMAIN}: bind-secondary.default.svc.cluster.local:53
+#     home.arpa: bind-secondary.default.svc.cluster.local:53
 
 log:
   level: info
@@ -45,7 +46,8 @@ prometheus:
 upstreams:
   groups:
     default:
-      - 192.168.20.1
+      - bind-secondary.default.svc.cluster.local:53
+      - bind-primary.default.svc.cluster.local:53
       #- tcp-tls:one.one.one.one
       #- tcp-tls:dns.quad9.net
       #- https://cloudflare-dns.com/dns-query
