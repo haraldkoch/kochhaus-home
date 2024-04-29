@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: joseluisq/static-web-server
-              tag: 2.28.0-alpine
+              tag: 2.30.0-alpine
             env:
               SERVER_PORT: 80
               SERVER_ROOT: /config
