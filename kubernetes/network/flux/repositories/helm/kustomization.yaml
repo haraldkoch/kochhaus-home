@@ -17,7 +17,7 @@ resources:
   - ./longhorn.yaml
   - ./metrics-server.yaml
   - ./node-feature-discovery.yaml
-  - ./openebs-archive.yaml
+  - ./openebs.yaml
   - ./piraeus.yaml
   - ./prometheus-community.yaml
   - ./stakater.yaml
