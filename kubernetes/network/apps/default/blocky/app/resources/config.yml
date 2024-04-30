@@ -1,5 +1,8 @@
 ---
 blocking:
+  loading:
+    downloads:
+      timeout: 30s
   blackLists:
     ads:
     # PiHole default
