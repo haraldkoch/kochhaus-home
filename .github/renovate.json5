@@ -3,6 +3,7 @@
   "extends": [
     "config:recommended",
     "docker:enableMajor",
+    "mergeConfidence:all-badges",
     "replacements:k8s-registry-move",
     ":automergeBranch",
     ":disableRateLimiting",
