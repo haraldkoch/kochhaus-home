@@ -28,7 +28,8 @@ spec:
   values:
     controllers:
       blocky:
-        replicas: 2
+        # we cannot place multiple DNS resolves behind a LB IP because the clients get very confused
+        replicas: 1
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
