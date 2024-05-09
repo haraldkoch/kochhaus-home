@@ -35,7 +35,7 @@ spec:
               - --config
               - /config/dnssec-checks
               - --resolvers
-              - "8.8.8.8:53,1.1.1.1:53,${PRIVATE_GATEWAY}:53"
+              - "8.8.8.8:53,1.1.1.1:53,192.168.22.51:53,192.168.22.52:53,192.168.22.53:53,${PRIVATE_GATEWAY}:53"
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
             probes:
