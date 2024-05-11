@@ -12,5 +12,5 @@ k3s_server_manifests_templates:
   - custom-kube-vip-rbac.yaml.j2
 k3s_server_manifests_urls:
   # Tigera Operator for Calico CNI
-  - url: https://raw.githubusercontent.com/projectcalico/calico/v3.27.0/manifests/tigera-operator.yaml
+  - url: https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/tigera-operator.yaml
     filename: custom-tigera-operator.yaml
