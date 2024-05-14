@@ -34,14 +34,12 @@ spec:
   # actual value of "true".
   postRenderers:
     - kustomize:
-        patchesStrategicMerge:
-          - apiVersion: apps/v1
-            kind: Deployment
-            metadata:
+        patches:
+          - target:
+              version: apps/v1
+              kind: Deployment
               name: csi-nfs-controller
-              namespace: storage
-            spec:
-              template:
-                spec:
-                  nodeSelector:
-                    node-role.kubernetes.io/control-plane: "true"
+            patch: |
+              - op: replace
+                path: /spec/template/spec/nodeSelector/node-role.kubernetes.io~1control-plane
+                value: "true"
