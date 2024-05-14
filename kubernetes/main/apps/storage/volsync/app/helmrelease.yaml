@@ -27,30 +27,5 @@ spec:
       namespace: storage
   values:
     manageCRDs: true
-    image: &image
-      repository: ghcr.io/haraldkoch/volsync
-      tag: 0.9.1
-    restic:
-      <<: *image
     metrics:
       disableAuth: true
-  postRenderers:
-    - kustomize:
-        patchesStrategicMerge:
-          - apiVersion: apps/v1
-            kind: Deployment
-            metadata:
-              name: volsync
-            spec:
-              template:
-                spec:
-                  containers:
-                    - name: manager
-                      volumeMounts:
-                        - name: tz-config
-                          mountPath: /etc/localtime
-                  volumes:
-                    - name: tz-config
-                      hostPath:
-                        path: /usr/share/zoneinfo/America/Toronto
-                        type: File
