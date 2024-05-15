@@ -29,11 +29,11 @@ caching:
 clientLookup:
   upstream: tcp+udp:${PRIVATE_DNS_PRIMARY}
 
-# we don't need this since these are the default upstream.
-# conditional:
-#   mapping:
-#     ${SECRET_DOMAIN}: bind-secondary.default.svc.cluster.local:53
-#     home.arpa: bind-secondary.default.svc.cluster.local:53
+conditional:
+  mapping:
+    ${SECRET_DOMAIN}: bind-primary.default.svc.cluster.local:53, bind-secondary.default.svc.cluster.local:53
+    # without this, blocky replies NXDOMAIN to all home.arpa queries because of Special Use Domain Names
+    home.arpa: bind-primary.default.svc.cluster.local:53, bind-secondary.default.svc.cluster.local:53
 
 log:
   level: info
