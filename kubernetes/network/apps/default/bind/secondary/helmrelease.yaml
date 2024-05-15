@@ -90,6 +90,9 @@ spec:
           dns-udp:
             protocol: UDP
             port: 53
+          rndc:
+            protocol: TCP
+            port: 953
     persistence:
       config:
         type: configMap
