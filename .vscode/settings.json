@@ -1,12 +1,16 @@
 {
-    "ansible.validation.lint.arguments": "-c .ansible-lint",
+    "ansible.validation.lint.arguments": "-c ansible/.ansible-lint",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "editor.guides.bracketPairsHorizontal": true,
+    "editor.guides.highlightActiveBracketPair": true,
+    "editor.hover.delay": 1500,
     "files.associations": {
         "*.json5": "jsonc",
-        "**/provision/ansible/**/*.yml": "ansible",
-        "**/provision/ansible/**/*.sops.yml": "yaml",
-        "**/provision/ansible/**/inventory/**/*.yml": "yaml",
-        "**/kubernetes/**/*.sops.toml": "plaintext"
+        "./ansible/**/*.yaml": "ansible",
+        "./ansible/**/inventory/**/*.yaml": "yaml",
     },
+    "files.trimTrailingWhitespace": true,
     "material-icon-theme.folders.associations": {
         ".taskfiles": "utils",
         "bootstrap": "import",
@@ -23,15 +27,12 @@
         "networking": "connection",
         "rook-ceph": "dump",
     },
+    "sops.defaults.ageKeyFile": "age.key",
     "yaml.schemaStore.enable": true,
     "yaml.schemas": {
         "ansible": "provision/ansible/*.yml",
         "kubernetes": "kubernetes/*.yaml"
     },
-    "editor.bracketPairColorization.enabled": true,
-    "editor.guides.bracketPairs": true,
-    "editor.guides.bracketPairsHorizontal": true,
-    "editor.guides.highlightActiveBracketPair": true,
-    "editor.hover.delay": 1500,
-    "files.trimTrailingWhitespace": true,
+    "sops.configPath": "",
+    "sops.binPath": ""
 }
