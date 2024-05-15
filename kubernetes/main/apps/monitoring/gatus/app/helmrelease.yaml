@@ -93,9 +93,9 @@ spec:
             options:
               - { name: ndots, value: "1" }
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1022
             runAsGroup: 1022
-            runAsNonRoot: true
             fsGroup: 1022
             fsGroupChangePolicy: OnRootMismatch
     service:
