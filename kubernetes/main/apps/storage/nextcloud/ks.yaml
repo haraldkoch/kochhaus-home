@@ -25,6 +25,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      GATUS_SUBDOMAIN: cloud
       VOLSYNC_CLAIM: nextcloud-config-v2
       VOLSYNC_CAPACITY: 5Gi
       VOLSYNC_UID: "1022"

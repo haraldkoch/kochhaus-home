@@ -22,6 +22,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      GATUS_SUBDOMAIN: ebooks
       VOLSYNC_CLAIM: calibre-web-config-v1
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_UID: "2000"
