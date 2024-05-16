@@ -25,6 +25,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      GATUS_SUBDOMAIN: zigbee
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_UID: "1022"
       VOLSYNC_GID: "1022"

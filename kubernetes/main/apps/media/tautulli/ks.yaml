@@ -22,6 +22,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      GATUS_PATH: /status
       VOLSYNC_CLAIM: tautulli-config-v6
       VOLSYNC_CAPACITY: 2Gi
       VOLSYNC_UID: "1000"

@@ -22,6 +22,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      GATUS_SUBDOMAIN: omada
       VOLSYNC_CLAIM: omada-data-v2
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_UID: "508"
