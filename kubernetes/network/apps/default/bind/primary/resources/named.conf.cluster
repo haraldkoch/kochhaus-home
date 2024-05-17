@@ -6,13 +6,15 @@
 # Notify messages from the internet servers, and from castor/pollux,
 # appear from the HOMELAN_IPV4 network; that one is easy. NOTIFY
 # messages from bind running on Kubernetes appear to come from the
-# Kubernetes nodes themselves, so we need those IPs here also.
+# Kubernetes nodes themselves (external) or the Pod IPs (internal),
+# so we need those IPs here also.
 #
 acl homelab {
     ${CLUSTER_CIDR};
     ${HOMELAN_IPV4};
     192.168.10.0/24;
     192.168.20.0/22;
+    ${CLUSTER_CIDR_V6};
     fdd5:aa8:9535:10::/64;
     fdd5:aa8:9535:20::/60;
 };
@@ -36,7 +38,7 @@ primaries homelab {
 # zone. The zone file is stored in /var/lib/bind, which is a PVC that
 # is backed up (required for saving the results of dynamic updates).
 #
-# The zone is configured for dynamic updtes from the DHCP servers and
+# The zone is configured for dynamic updates from the DHCP servers and
 # from the manual updates script, and allows transfers to the internal
 # network.
 zone "guest.arpa" IN {
@@ -74,6 +76,7 @@ zone "${SECRET_DOMAIN}" IN {
 };
 
 # The reverse lookup zones, containing PTR records, for our various networks.
+# FIXME: just combine all of these into "168.192.in-addr.arpa".
 #
 zone "10.168.192.in-addr.arpa" IN {
     type primary;
