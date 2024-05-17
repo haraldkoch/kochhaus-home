@@ -1,0 +1,18 @@
+$ORIGIN .
+$TTL 3600       ; 1 hour
+guest.arpa           IN SOA  ns1.guest.arpa. hostmaster.guest.arpa. (
+                                2024051700 ; serial
+                                3600       ; refresh (1 hour)
+                                3600       ; retry (1 hour)
+                                2419200    ; expire (4 weeks)
+                                3600       ; negative cache (1 hour)
+                                )
+                        NS      ns1.guest.arpa.
+                        NS      ns2.guest.arpa.
+;---------------------------------------
+ns1                 IN  A       192.168.22.51
+                        AAAA    fdd5:aa8:9535:22::51
+ns2                 IN  A       192.168.22.52
+                        AAAA    fdd5:aa8:9535:22::52
+;
+www                 IN  A       192.168.22.80
