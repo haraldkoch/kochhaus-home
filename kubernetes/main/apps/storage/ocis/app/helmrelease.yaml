@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: docker.io/owncloud/ocis
-              tag: 5.0.0-rc.5
+              tag: 5.0.0
             command: [/bin/sh]
             args: ["-c", "ocis init || true; ocis server"]
             env:
