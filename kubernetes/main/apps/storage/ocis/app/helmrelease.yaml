@@ -27,45 +27,54 @@ spec:
       ocis:
         annotations:
           reloader.stakater.com/auto: "true"
-        containers:
-          app:
+        initContainers:
+          init-config:
             image:
               repository: docker.io/owncloud/ocis
               tag: 5.0.0
-            command: [/bin/sh]
-            args: ["-c", "ocis init || true; ocis server"]
+            command:
+              - /bin/sh
+              - -c
+            args:
+              - |
+                if [ ! -f /etc/ocis/ocis.yaml ]; then ocis init; else exit 0; fi
             env:
-              TZ: ${TIMEZONE}
               OCIS_INSECURE: true
-              OCIS_URL: https://ocis.${CLUSTER_DOMAIN}
-              PROXY_TLS: false
+
+        containers:
+          ocis:
+            image:
+              repository: docker.io/owncloud/ocis
+              tag: 5.0.0
+            env:
               DEMO_USERS: false
-              PROXY_HTTP_ADDR: 0.0.0.0:9200
-              OCIS_LOG_LEVEL: info
-              OCIS_LOG_COLOR: true
-              OCIS_LOG_PRETTY: true
-              PROXY_DEBUG_ADDR: 0.0.0.0:9205
-              STORAGE_USERS_OCIS_ROOT: /data
               NOTIFICATIONS_SMTP_HOST: smtp.${CLUSTER_DOMAIN}
+              NOTIFICATIONS_SMTP_INSECURE: true
               NOTIFICATIONS_SMTP_PORT: "25"
               NOTIFICATIONS_SMTP_SENDER: "ocis@${CLUSTER_DOMAIN:=fnord}"
-              NOTIFICATIONS_SMTP_INSECURE: true
+              OCIS_INSECURE: true
+              OCIS_LOG_COLOR: true
+              OCIS_LOG_LEVEL: info
+              OCIS_LOG_PRETTY: true
+              OCIS_URL: https://ocis.${CLUSTER_DOMAIN}
+              PROXY_DEBUG_ADDR: 0.0.0.0:9205
+              PROXY_HTTP_ADDR: 0.0.0.0:9200
+              PROXY_TLS: false
+              STORAGE_USERS_OCIS_ROOT: /data
+              TZ: ${TIMEZONE}
               # Authelia OIDC
-              WEB_OIDC_METADATA_URL: https://auth.${CLUSTER_DOMAIN}/.well-known/openid-configuration
+              # Auto role assignment:
+              # docs: https://doc.owncloud.com/ocis/next/deployment/services/s-list/proxy.html#automatic-role-assignments
               OCIS_OIDC_ISSUER: https://auth.${CLUSTER_DOMAIN}
-              WEB_OIDC_CLIENT_ID: ocis
-              # Without this, I got the following errors in the ownCloud log:
-              # Authelia: failed to verify access token: token contains an invalid number of segments
-              # Authentik:  failed to verify access token: the JWT has an invalid kid: could not find kid in JWT header
+              PROXY_AUTOPROVISION_ACCOUNTS: true
               PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD: none
               PROXY_OIDC_REWRITE_WELLKNOWN: true
-              PROXY_AUTOPROVISION_ACCOUNTS: true
-              # Auto role assignment
-              # docs: https://doc.owncloud.com/ocis/next/deployment/services/s-list/proxy.html#automatic-role-assignments
-              PROXY_USER_OIDC_CLAIM: "preferred_username"
               PROXY_ROLE_ASSIGNMENT_DRIVER: oidc
-              WEB_OIDC_SCOPE: "openid profile email groups"
               PROXY_ROLE_ASSIGNMENT_OIDC_CLAIM: groups
+              PROXY_USER_OIDC_CLAIM: "preferred_username"
+              WEB_OIDC_CLIENT_ID: ocis
+              WEB_OIDC_METADATA_URL: https://auth.${CLUSTER_DOMAIN}/.well-known/openid-configuration
+              WEB_OIDC_SCOPE: "openid profile email groups"
             envFrom:
               - secretRef:
                   name: ocis-secret
@@ -74,11 +83,18 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop: [ALL]
         pod:
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
             runAsNonRoot: true
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: ocis
@@ -129,3 +145,8 @@ spec:
           - path: /etc/ocis/proxy.yaml
             subPath: proxy.yaml
             readOnly: true
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+            subPath: tmp
