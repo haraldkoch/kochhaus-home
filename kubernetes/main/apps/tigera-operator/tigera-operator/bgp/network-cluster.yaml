@@ -15,7 +15,8 @@ kind: BGPPeer
 metadata:
   name: ipv6-rk0
 spec:
-  peerIP: fdd5:aa8:9535:20::33
+  #peerIP: fdd5:aa8:9535:20::33
+  peerIP: fdd5:aa8:9535:20:d49b:17ff:fe0b:2608
   asNumber: 64512
   keepOriginalNextHop: true
   filters:
@@ -37,7 +38,8 @@ kind: BGPPeer
 metadata:
   name: ipv6-rk1
 spec:
-  peerIP: fdd5:aa8:9535:20::34
+  #peerIP: fdd5:aa8:9535:20::34
+  peerIP: fdd5:aa8:9535:20:4007:e7ff:fe10:1d3
   asNumber: 64512
   keepOriginalNextHop: true
   filters:
@@ -59,7 +61,8 @@ kind: BGPPeer
 metadata:
   name: ipv6-rk2
 spec:
-  peerIP: fdd5:aa8:9535:20::35
+  #peerIP: fdd5:aa8:9535:20::35
+  peerIP: fdd5:aa8:9535:20:e08c:ffff:fe81:bf96
   asNumber: 64512
   keepOriginalNextHop: true
   filters:

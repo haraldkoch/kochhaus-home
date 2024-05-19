@@ -15,7 +15,8 @@ kind: BGPPeer
 metadata:
   name: ipv6-k3sj
 spec:
-  peerIP: fdd5:aa8:9535:20::17
+  #peerIP: fdd5:aa8:9535:20::17
+  peerIP: fdd5:aa8:9535:20:ee8e:b5ff:fe7a:3b84
   asNumber: 64512
   keepOriginalNextHop: true
   filters:
@@ -37,7 +38,8 @@ kind: BGPPeer
 metadata:
   name: ipv6-k3sm
 spec:
-  peerIP: fdd5:aa8:9535:20::18
+  #peerIP: fdd5:aa8:9535:20::18
+  peerIP: fdd5:aa8:9535:20:cad3:ffff:fea5:8ac8
   asNumber: 64512
   keepOriginalNextHop: true
   filters:
@@ -59,7 +61,8 @@ kind: BGPPeer
 metadata:
   name: ipv6-k3st
 spec:
-  peerIP: fdd5:aa8:9535:20::19
+  #peerIP: fdd5:aa8:9535:20::19
+  peerIP: fdd5:aa8:9535:20:cad3:ffff:fea5:8a34
   asNumber: 64512
   keepOriginalNextHop: true
   filters:
@@ -81,7 +84,8 @@ kind: BGPPeer
 metadata:
   name: ipv6-k3s0
 spec:
-  peerIP: fdd5:aa8:9535:20::21
+  #peerIP: fdd5:aa8:9535:20::21
+  peerIP: fdd5:aa8:9535:20:6e4b:90ff:fe64:6a54
   asNumber: 64512
   keepOriginalNextHop: true
   filters:
@@ -103,7 +107,8 @@ kind: BGPPeer
 metadata:
   name: ipv6-k3s1
 spec:
-  peerIP: fdd5:aa8:9535:20::22
+  #peerIP: fdd5:aa8:9535:20::22
+  peerIP: fdd5:aa8:9535:20:5054:ff:fe9b:a155
   asNumber: 64512
   keepOriginalNextHop: true
   filters:
@@ -125,7 +130,8 @@ kind: BGPPeer
 metadata:
   name: ipv6-k3s2
 spec:
-  peerIP: fdd5:aa8:9535:20::23
+  #peerIP: fdd5:aa8:9535:20::23
+  peerIP: fdd5:aa8:9535:20:223:24ff:fea5:a293
   asNumber: 64512
   keepOriginalNextHop: true
   filters:
@@ -147,7 +153,8 @@ kind: BGPPeer
 metadata:
   name: ipv6-k3s3
 spec:
-  peerIP: fdd5:aa8:9535:20::24
+  #peerIP: fdd5:aa8:9535:20::24
+  peerIP: fdd5:aa8:9535:20:6e4b:90ff:fe37:e2a5
   asNumber: 64512
   keepOriginalNextHop: true
   filters:
