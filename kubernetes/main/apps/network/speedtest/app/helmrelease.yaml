@@ -41,7 +41,7 @@ spec:
           app:
             image:
               repository: ghcr.io/linuxserver/librespeed
-              tag: 5.3.1
+              tag: 5.3.2
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
             envFrom: *envFrom
