@@ -2,7 +2,7 @@
 fail_fast: false
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: check-merge-conflict
       - id: end-of-file-fixer
@@ -10,12 +10,12 @@ repos:
       - id: trailing-whitespace
         args: [--markdown-linebreak-ext=md]
   - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.5.1
+    rev: v1.5.4
     hooks:
       - id: remove-crlf
       - id: remove-tabs
   - repo: https://github.com/sirosen/texthooks
-    rev: 0.5.0
+    rev: 0.6.3
     hooks:
       - id: fix-smartquotes
         exclude: ^ansible/manifests/
@@ -25,14 +25,8 @@ repos:
     rev: v2.1.1
     hooks:
       - id: forbid-secrets
-  - repo: https://github.com/gruntwork-io/pre-commit
-    rev: v0.1.21
-    hooks:
-      - id: terraform-fmt
-      - id: terraform-validate
-      - id: tflint
   - repo: https://github.com/gitguardian/gg-shield
-    rev: v1.15.0
+    rev: v1.22.0
     hooks:
       - id: ggshield
         language_version: python3
