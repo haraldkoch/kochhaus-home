@@ -23,6 +23,8 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
     replicas: 1
     kind: Deployment
     deschedulerPolicyAPIVersion: descheduler/v1alpha2

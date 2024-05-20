@@ -23,6 +23,9 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+    replicas: 1
     kind: Deployment
     deschedulerPolicyAPIVersion: descheduler/v1alpha2
     deschedulerPolicy:
@@ -73,3 +76,9 @@ spec:
       enabled: true
     serviceMonitor:
       enabled: true
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        memory: 256Mi
