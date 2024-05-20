@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ../../../../templates/gatus/external
 configMapGenerator:
   - name: ocis-configmap
     files:

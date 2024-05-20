@@ -98,5 +98,5 @@ identity_providers:
         authorization_policy: two_factor
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
-        redirect_uris: ["https://ocis.${CLUSTER_DOMAIN}/", "https://ocis.${CLUSTER_DOMAIN}/oidc-callback.html", "https://ocis.${CLUSTER_DOMAIN}/oidc-silent-redirect.html"]
+        redirect_uris: ["https://files.${CLUSTER_DOMAIN}/", "https://files.${CLUSTER_DOMAIN}/oidc-callback.html", "https://files.${CLUSTER_DOMAIN}/oidc-silent-redirect.html"]
         userinfo_signed_response_alg: none
