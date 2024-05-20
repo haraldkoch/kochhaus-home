@@ -1,0 +1,51 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: clickops
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  namespace: default
+  name: clickops-read
+rules:
+# used for reviewing pods
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods","secrets"]
+  verbs: ["get", "watch", "list"]
+# used for listing and retrieving information on helm releases
+- apiGroups: ["helm.toolkit.fluxcd.io"]
+  resources: ["helmreleases"]
+  verbs: ["get", "watch", "list"]
+# list ingress
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses"]
+  verbs: ["get", "watch", "list"]
+# events
+- apiGroups: [""]
+  resources: ["events"]
+  verbs: ["list"]
+
+# stderr: 'Error from server (Forbidden): helmreleases.helm.toolkit.fluxcd.io "nginx" is forbidden: User "system:serviceaccount:default:clickops" cannot patch resource "helmreleases" in API group "helm.toolkit.fluxcd.io" in the namespace "kube-system"\n',
+- apiGroups: ["helm.toolkit.fluxcd.io"]
+  resources: ["helmreleases"]
+  verbs: ["patch"]
+#   body: '{"kind":"Status","apiVersion":"v1","metadata":{},"status":"Failure","message":"pods \\"nginx-6c9fdc487b-fw2sz\\" is forbidden: User \\"system:serviceaccount:default:clickops\\" cannot delete resource \\"pods\\" in API group \\"\\" in the namespace \\"kube-system\\"","reason":"Forbidden","details":{"name":"nginx-6c9fdc487b-fw2sz","kind":"pods"},"code":403}\n',
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: clickops-binding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: clickops
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: clickops-read
+  apiGroup: rbac.authorization.k8s.io
