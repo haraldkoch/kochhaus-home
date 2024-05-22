@@ -29,7 +29,7 @@ spec:
     fullnameOverride: *app
     image:
       repository: ghcr.io/haraldkoch/smartctl_exporter
-      tag: 0.12.0@sha256:0fdc4436bdc867f6da0d50f54bdc829d85eb9f481f09df0937aa865838e228bb
+      tag: 0.12.0@sha256:2059d231312aba2104b536011521bab9807ffd412b291cd8de69c1f5d8bef6f4
     config:
       devices:
         - /dev/nvme0n1
