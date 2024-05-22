@@ -36,7 +36,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/haraldkoch/postgres-init
-              tag: 16.3@sha256:78b123ab180b0887f26fd1ccde9c5d7dd7d4d1822c6cc84bbb43c793bda6c633
+              tag: 16.3@sha256:485dd6c1a943e5516e7e586814941bf88de07eebf0c2ddd7bfc8326fcfb978f9
             envFrom: &envFrom
               - secretRef:
                   name: memos-secret
