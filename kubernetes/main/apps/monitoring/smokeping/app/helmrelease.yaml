@@ -36,7 +36,7 @@ spec:
           copy-config:
             image:
               repository: docker.io/alpine
-              tag: 3.19.1
+              tag: 3.20.0
             command:
               - /bin/sh
               - -c
