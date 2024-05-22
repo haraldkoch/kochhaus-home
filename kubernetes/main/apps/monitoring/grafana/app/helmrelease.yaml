@@ -208,7 +208,7 @@ spec:
           revision: 3
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
-            - { name: VAR_BLOCKY_URL, value: 'http:\\/\\/192.168.22.53:4000' }
+            - { name: VAR_BLOCKY_URL, value: 'http:\/\/192.168.22.53:4000' }
         zfs:
           # renovate: depName="ZFS"
           gnetId: 7845
