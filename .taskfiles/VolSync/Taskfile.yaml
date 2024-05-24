@@ -208,12 +208,12 @@ tasks:
     internal: true
     cmds:
       - envsubst < <(cat {{.VOLSYNC_TEMPLATES_DIR}}/replicationdestination.tmpl.yaml) | kubectl --context {{.cluster}} apply -f -
-      - bash {{.VOLSYNC_SCRIPTS_DIR}}/wait-for-job.sh {{.job}} {{.ns}} {{.cluster}}
-      - kubectl --context {{.cluster}} -n {{.ns}} wait job/{{.job}} --for condition=complete --timeout=120m
+      - bash {{.VOLSYNC_SCRIPTS_DIR}}/wait-for-job.sh volsync-dst-{{.job}} {{.ns}} {{.cluster}}
+      - kubectl --context {{.cluster}} -n {{.ns}} wait job/volsync-dst-{{.job}} --for condition=complete --timeout=120m
       - kubectl --context {{.cluster}} -n {{.ns}} delete replicationdestination {{.job}}
     env: *env
     vars:
-      job: volsync-dst-{{.app}}
+      job: "{{.app}}-restore"
 
   # Resume Flux ks and hr
   .resume:
