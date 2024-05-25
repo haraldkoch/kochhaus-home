@@ -113,14 +113,12 @@ spec:
       app:
         className: internal
         hosts:
-          - host: &host files.${CLUSTER_DOMAIN}
+          - host: files.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
     persistence:
       storage-users:
         type: nfs

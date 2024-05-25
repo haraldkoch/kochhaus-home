@@ -36,13 +36,10 @@ spec:
         hajimari.io/appName: "Postgres Admin"
         hajimari.io/icon: simple-icons:postgresql
       hosts:
-        - host: &host pgadmin.${CLUSTER_DOMAIN}
+        - host: pgadmin.${CLUSTER_DOMAIN}
           paths:
             - path: /
               pathType: Prefix
-      tls:
-        - hosts:
-            - *host
     networkPolicy:
       enabled: false
     persistentVolume:

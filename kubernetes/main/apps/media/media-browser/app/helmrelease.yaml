@@ -78,14 +78,12 @@ spec:
         annotations:
           hajimari.io/icon: mdi:folder-play-outline
         hosts:
-          - host: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+          - host: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
     persistence:
       config:
         type: persistentVolumeClaim

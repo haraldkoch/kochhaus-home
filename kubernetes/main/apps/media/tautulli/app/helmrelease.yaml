@@ -95,14 +95,12 @@ spec:
           gethomepage.dev/widget.url: http://tautulli.media:8181/plexpy
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TAUTULLI_TOKEN}}` }}"
         hosts:
-          - host: &host tautulli.${CLUSTER_DOMAIN}
+          - host: tautulli.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
     persistence:
       config:
         existingClaim: ${VOLSYNC_CLAIM}

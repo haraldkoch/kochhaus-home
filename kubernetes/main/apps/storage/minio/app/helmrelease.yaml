@@ -101,14 +101,12 @@ spec:
         annotations:
           hajimari.io/icon: mdi:pail
         hosts:
-          - host: &console-host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+          - host: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*console-host]
       s3:
         className: internal
         annotations:
@@ -119,14 +117,12 @@ spec:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             chunked_transfer_encoding off;
         hosts:
-          - host: &api-host s3.${CLUSTER_DOMAIN}
+          - host: s3.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: api
-        tls:
-          - hosts: [*api-host]
     persistence:
       data:
         type: nfs

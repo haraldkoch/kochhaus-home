@@ -68,14 +68,12 @@ spec:
       app:
         className: internal
         hosts:
-          - host: &host "www.${CLUSTER_DOMAIN}"
+          - host: www.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
     persistence:
       public:
         type: secret

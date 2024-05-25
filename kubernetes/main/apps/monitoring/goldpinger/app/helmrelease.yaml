@@ -36,13 +36,10 @@ spec:
       annotations:
         hajimari.io/icon: "table-tennis"
       hosts:
-        - host: &host goldpinger.${CLUSTER_DOMAIN}
+        - host: goldpinger.${CLUSTER_DOMAIN}
           paths:
             - path: /
               pathType: Prefix
-      tls:
-        - hosts:
-            - *host
     resources:
       requests:
         cpu: 15m

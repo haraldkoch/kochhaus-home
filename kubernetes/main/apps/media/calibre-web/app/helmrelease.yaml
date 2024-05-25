@@ -74,14 +74,12 @@ spec:
           gethomepage.dev/name: Calibre
           gethomepage.dev/icon: calibre.png
         hosts:
-          - host: &host ebooks.${CLUSTER_DOMAIN}
+          - host: ebooks.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
     persistence:
       cache:
         type: emptyDir

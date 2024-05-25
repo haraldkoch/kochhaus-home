@@ -126,14 +126,12 @@ spec:
           gethomepage.dev/name: Gatus
           gethomepage.dev/icon: gatus.png
         hosts:
-          - host: &host status.${CLUSTER_DOMAIN}
+          - host: status.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
     serviceAccount:
       create: true
       name: gatus

@@ -55,14 +55,12 @@ spec:
         annotations:
           hajimari.io/appName: "Ride To Remeber"
         hosts:
-          - host: &host "ridetoremember.${CLUSTER_DOMAIN}"
+          - host: ridetoremember.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
     persistence:
       data:
         existingClaim: rtr-data-v1

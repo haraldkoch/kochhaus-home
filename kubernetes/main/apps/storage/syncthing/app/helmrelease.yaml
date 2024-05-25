@@ -120,27 +120,23 @@ spec:
         annotations:
           hajimari.io/icon: "cloud"
         hosts:
-          - host: &host syncthing.${CLUSTER_DOMAIN}
+          - host: syncthing.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
       browser:
         className: internal
         annotations:
           hajimari.io/icon: mdi:folder-arrow-up-down-outline
         hosts:
-          - host: &host "sync.${CLUSTER_DOMAIN}"
+          - host: sync.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: browser
                   port: http
-        tls:
-          - hosts: [*host]
     persistence:
       # TODO: volsync
       config:

@@ -42,9 +42,7 @@ spec:
           hajimari.io/appName: "Alert Manager"
           hajimari.io/icon: mdi:alert-decagram-outline
         hosts:
-          - &host alertmanager.${CLUSTER_DOMAIN}
-        tls:
-          - hosts: [*host]
+          - alertmanager.${CLUSTER_DOMAIN}
       alertmanagerSpec:
         replicas: 2
         useExistingSecret: true
@@ -162,9 +160,7 @@ spec:
           gethomepage.dev/widget.url: http://kube-prometheus-stack-prometheus.monitoring.svc.cluster.local:9090
         pathType: Prefix
         hosts:
-          - &host prometheus.${CLUSTER_DOMAIN}
-        tls:
-          - hosts: [*host]
+          - prometheus.${CLUSTER_DOMAIN}
       thanosService:
         enabled: true
       thanosServiceMonitor:

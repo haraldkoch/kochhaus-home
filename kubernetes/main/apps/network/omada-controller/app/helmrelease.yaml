@@ -143,14 +143,12 @@ spec:
           nginx.ingress.kubernetes.io/proxy-redirect-from: "~https://(.+):8043/(.+)/login$"
           nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$1/$2/login"
         hosts:
-          - host: &host omada.${CLUSTER_DOMAIN}
+          - host: omada.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
     persistence:
       data:
         existingClaim: ${VOLSYNC_CLAIM}

@@ -111,9 +111,6 @@ spec:
           }
       path: /
       pathType: Prefix
-      tls:
-        - hosts:
-            - *host
     persistence:
       enabled: true
       existingClaim: ${VOLSYNC_CLAIM}

@@ -66,11 +66,9 @@ spec:
           external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
           hajimari.io/icon: mdi:draw-pen
         hosts:
-          - host: &host draw.${CLUSTER_DOMAIN}
+          - host: draw.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]

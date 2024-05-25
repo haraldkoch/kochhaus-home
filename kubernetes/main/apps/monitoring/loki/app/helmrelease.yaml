@@ -143,12 +143,10 @@ spec:
         annotations:
           hajimari.io/enable: "false"
         hosts:
-          - host: &host loki.${CLUSTER_DOMAIN}
+          - host: loki.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
-        tls:
-          - hosts: [*host]
       resources:
         requests:
           cpu: 50m
