@@ -80,14 +80,12 @@ spec:
         annotations:
           hajimari.io/enable: "false"
         hosts:
-          - host: &host "sr505n.${CLUSTER_DOMAIN}"
+          - host: sr505n.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
     persistence:
       config:
         type: emptyDir

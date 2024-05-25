@@ -55,7 +55,6 @@ spec:
       enabled: true
       ingressClassName: internal
       host: longhorn.${SECRET_DOMAIN}
-      tls: true
     longhornDriver:
       tolerations: &tolerations
         - key: CriticalAddonsOnly

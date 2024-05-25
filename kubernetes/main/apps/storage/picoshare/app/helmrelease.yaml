@@ -67,14 +67,12 @@ spec:
           external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
           hajimari.io/icon: mdi:share-outline
         hosts:
-          - host: &host "share.${CLUSTER_DOMAIN}"
+          - host: "share.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
     persistence:
       data:
         type: persistentVolumeClaim

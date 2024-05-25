@@ -31,7 +31,7 @@ metadata:
 spec:
   ingressClassName: external
   rules:
-    - host: &host ha.${CLUSTER_DOMAIN}
+    - host: ha.${CLUSTER_DOMAIN}
       http:
         paths:
           - path: /
@@ -41,6 +41,3 @@ spec:
                 name: *app
                 port:
                   number: 8123
-  tls:
-    - hosts:
-        - *host

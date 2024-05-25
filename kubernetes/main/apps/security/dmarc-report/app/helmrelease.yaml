@@ -61,14 +61,12 @@ spec:
         annotations:
           hajimari.io/icon: mdi:email
         hosts:
-          - host: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+          - host: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
     persistence:
       config:
         type: emptyDir

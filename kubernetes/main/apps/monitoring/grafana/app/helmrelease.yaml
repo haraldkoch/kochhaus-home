@@ -407,9 +407,7 @@ spec:
         hajimari.io/appName: "grafana"
         hajimari.io/icon: simple-icons:grafana
       hosts:
-        - &host grafana.${CLUSTER_DOMAIN}
-      tls:
-        - hosts: [*host]
+        - grafana.${CLUSTER_DOMAIN}
     imageRenderer:
       enabled: true
       image:

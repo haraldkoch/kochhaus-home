@@ -126,14 +126,12 @@ spec:
         annotations:
           hajimari.io/enable: "false"
         hosts:
-          - host: &host "1pwconnect.${SECRET_DOMAIN}"
+          - host: 1pwconnect.${SECRET_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
     persistence:
       config:
         type: emptyDir

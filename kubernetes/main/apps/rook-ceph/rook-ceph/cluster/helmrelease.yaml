@@ -39,10 +39,8 @@ spec:
           hajimari.io/appName: "Rook"
           hajimari.io/icon: mdi:chess-rook
         host:
-          name: &host rook.${CLUSTER_DOMAIN}
+          name: rook.${CLUSTER_DOMAIN}
           path: /
-        tls:
-          - hosts: [*host]
     toolbox:
       enabled: true
     configOverride: |
@@ -313,8 +311,5 @@ spec:
           enabled: true
           ingressClassName: internal
           host:
-            name: &host objects.${CLUSTER_DOMAIN}
+            name: objects.${CLUSTER_DOMAIN}
             path: /
-          tls:
-            - hosts:
-                - *host

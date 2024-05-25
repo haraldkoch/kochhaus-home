@@ -105,9 +105,7 @@ spec:
         ingressClassName: internal
         pathType: Prefix
         hosts:
-          - &host prometheus-network.${SECRET_DOMAIN}
-        tls:
-          - hosts: [*host]
+          - prometheus-network.${SECRET_DOMAIN}
       prometheusSpec:
         podMetadata:
           annotations:

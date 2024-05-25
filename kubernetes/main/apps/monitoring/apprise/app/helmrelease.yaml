@@ -53,14 +53,12 @@ spec:
         annotations:
           hajimari.io/icon: bell-cog
         hosts:
-          - host: &host "apprise.${CLUSTER_DOMAIN}"
+          - host: apprise.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
     # TODO: volsync
     persistence:
       config:

@@ -74,14 +74,12 @@ spec:
           external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
           hajimari.io/icon: mdi:speedometer
         hosts:
-          - host: &host speedtest.${CLUSTER_DOMAIN}
+          - host: speedtest.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
-        tls:
-          - hosts: [*host]
     persistence:
       init:
         type: configMap

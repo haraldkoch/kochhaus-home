@@ -82,13 +82,10 @@ spec:
         annotations:
           hajimari.io/enable: "false"
         hosts:
-          - host: &host "hajimari.${CLUSTER_DOMAIN}"
+          - host: hajimari.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
-        tls:
-          - hosts:
-              - *host
     podAnnotations:
       configmap.reloader.stakater.com/reload: "hajimari-settings"
     persistence:

@@ -77,14 +77,11 @@ spec:
         enabled: true
         className: internal
         hosts:
-          - host: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+          - host: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 service:
                   identifier: main
-        tls:
-          - hosts:
-              - *host
     persistence:
       data:
         enabled: true
