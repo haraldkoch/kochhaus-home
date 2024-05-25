@@ -26,6 +26,8 @@ spec:
     fullnameOverride: nginx-internal
     controller:
       replicaCount: 1
+      annotations:
+        configmap.reloader.stakater.com/reload: nginx-internal-controller
       extraEnvs:
         - name: TZ
           value: "${TIMEZONE:=Etc/UTC}"
@@ -52,6 +54,7 @@ spec:
         enable-brotli: "true"
         enable-ocsp: "true"
         enable-real-ip: "true"
+        force-ssl-redirect: "true"
         hide-headers: Server,X-Powered-By
         hsts-max-age: 31449600
         keep-alive-requests: 10000
