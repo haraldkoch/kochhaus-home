@@ -31,7 +31,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/haraldkoch/postgres-init
-              tag: 16.3@sha256:485dd6c1a943e5516e7e586814941bf88de07eebf0c2ddd7bfc8326fcfb978f9
+              tag: 16.3@sha256:61fc457adaddb503a2fcb21ae94dda3cff6d71737355ea196e5996503bee9a71
             envFrom: &envFrom
               - secretRef:
                   name: *app
