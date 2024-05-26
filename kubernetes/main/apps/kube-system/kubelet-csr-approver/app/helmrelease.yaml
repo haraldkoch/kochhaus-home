@@ -24,6 +24,7 @@ spec:
       retries: 3
   values:
     providerRegex: ^k3s[jmt\d]$
+    bypassDnsResolution: true
     metrics:
       enable: true
       serviceMonitor:
