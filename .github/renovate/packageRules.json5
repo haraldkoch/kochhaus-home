@@ -5,7 +5,7 @@
       "description": ["Loose versioning for non-semver packages"],
       "matchDatasources": ["docker"],
       "versioning": "loose",
-      "matchPackagePatterns": ["changedetection", "plex", "qbittorrent"]
+      "matchPackagePatterns": ["plex", "qbittorrent"]
     },
     {
       "description": ["Custom versioning for k3s"],
