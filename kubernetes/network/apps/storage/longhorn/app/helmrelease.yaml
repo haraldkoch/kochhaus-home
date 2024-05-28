@@ -23,14 +23,6 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              kind: Ingress
-            patch: |
-              - op: remove
-                path: /spec/tls/0/secretName
   values:
     monitoring:
       enabled: true
