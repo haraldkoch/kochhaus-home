@@ -13,4 +13,5 @@ resources:
   - ./jetstack.yaml
   - ./metallb.yaml
   - ./metrics-server.yaml
+  - ./openebs.yaml
   - ./stakater.yaml
