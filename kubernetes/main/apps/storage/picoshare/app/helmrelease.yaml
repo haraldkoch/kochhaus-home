@@ -34,7 +34,7 @@ spec:
           app:
             image:
               repository: docker.io/mtlynch/picoshare
-              tag: 1.4.3
+              tag: 1.4.4
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               PORT: "4001"
