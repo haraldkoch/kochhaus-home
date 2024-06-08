@@ -9,3 +9,4 @@ resources:
   - ./emqx/ks.yaml
   - ./mosquitto/ks.yaml
   - ./smtp-relay/ks.yaml
+  - ./zigbee2mqtt/ks.yaml
