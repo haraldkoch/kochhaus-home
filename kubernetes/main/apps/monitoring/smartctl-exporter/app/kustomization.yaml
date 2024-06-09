@@ -12,5 +12,13 @@ configMapGenerator:
     options:
       labels:
         loki_rule: "true"
+  - name: smartctl-dashboard
+    files:
+      - smartctl.json=./resources/dashboard.json
+    options:
+      annotations:
+        grafana_folder: Infrastructure
+      labels:
+        grafana_dashboard: "true"
 generatorOptions:
   disableNameSuffixHash: true
