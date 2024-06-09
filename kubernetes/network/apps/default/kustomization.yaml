@@ -8,5 +8,6 @@ resources:
   - ./blocky/ks.yaml
   - ./emqx/ks.yaml
   - ./mosquitto/ks.yaml
+  - ./node-red/ks.yaml
   - ./smtp-relay/ks.yaml
   - ./zigbee2mqtt/ks.yaml

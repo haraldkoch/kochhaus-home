@@ -6,4 +6,3 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./node-red/ks.yaml

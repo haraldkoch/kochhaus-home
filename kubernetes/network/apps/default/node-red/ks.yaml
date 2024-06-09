@@ -6,13 +6,13 @@ metadata:
   name: &app node-red
   namespace: flux-system
 spec:
-  targetNamespace: home
+  targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
-  path: ./kubernetes/main/apps/home/node-red/app
+  path: ./kubernetes/network/apps/default/node-red/app
   prune: true
   sourceRef:
     kind: GitRepository
