@@ -12,7 +12,38 @@ tasks:
         ns: Namespace to browse PersistentVolumeClaims in (default: default)
         claim: PersistentVolumeClaim to browse (required)
     interactive: true
-    cmd: kubectl browse-pvc --context {{.cluster}} --namespace {{.ns}} {{.claim}}
+    cmd: |
+      kubectl --context {{.cluster}} run -n {{.ns}} debug-{{.claim}} -i --tty --rm --image=null --privileged --overrides='
+        {
+          "apiVersion": "v1",
+          "spec": {
+            "containers": [
+              {
+                "name": "debug",
+                "image": "ghcr.io/haraldkoch/alpine:rolling",
+                "command": ["/bin/bash"],
+                "stdin": true,
+                "stdinOnce": true,
+                "tty": true,
+                "volumeMounts": [
+                  {
+                    "name": "config",
+                    "mountPath": "/config"
+                  }
+                ]
+              }
+            ],
+            "volumes": [
+              {
+                "name": "config",
+                "persistentVolumeClaim": {
+                  "claimName": "{{.claim}}"
+                }
+              }
+            ],
+            "restartPolicy": "Never"
+          }
+        }'
     vars:
       ns: '{{.ns | default "default"}}'
     requires:
