@@ -1,0 +1,210 @@
+---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2beta2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: rook-ceph-cluster
+spec:
+  interval: 30m
+  timeout: 15m
+  chart:
+    spec:
+      chart: rook-ceph-cluster
+      version: v1.14.5
+      sourceRef:
+        kind: HelmRepository
+        name: rook-ceph
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-operator
+      namespace: rook-ceph
+    - name: snapshot-controller
+      namespace: storage
+  values:
+    monitoring:
+      enabled: true
+      createPrometheusRules: true
+    ingress:
+      dashboard:
+        ingressClassName: internal
+        annotations:
+          hajimari.io/appName: "Rook"
+          hajimari.io/icon: mdi:chess-rook
+        host:
+          name: rook-network.${CLUSTER_DOMAIN}
+          path: /
+    toolbox:
+      enabled: true
+    configOverride: |
+      [global]
+      bdev_enable_discard = true
+      bdev_async_discard = true
+      osd_class_update_on_start = false
+
+      [mon]
+      mon_data_avail_warn = 20
+    cephClusterSpec:
+      crashCollector:
+        disable: false
+      dashboard:
+        enabled: true
+        urlPrefix: /
+        ssl: false
+        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
+      mgr:
+        modules:
+          - name: pg_autoscaler
+            enabled: true
+      network:
+        provider: host
+        connections:
+          requireMsgr2: true
+      storage:
+        useAllNodes: false
+        useAllDevices: false
+        config:
+          osdsPerDevice: "1"
+        nodes:
+          - name: rk0
+            devices:
+              - name: /dev/nvme0n1p3
+          - name: rk1
+            devices:
+              - name: /dev/nvme0n1p3
+          - name: rk2
+            devices:
+              - name: /dev/nvme0n1p3
+        placement:
+          tolerations:
+            - key: node.kubernetes.io/unschedulable
+              operator: Exists
+      # FIXME: do I still need these
+      healthCheck:
+        livenessProbe:
+          mon:
+            probe:
+              initialDelaySeconds: 30
+              periodSeconds: 30
+              timeoutSeconds: 10
+          mgr:
+            probe:
+              initialDelaySeconds: 30
+              periodSeconds: 30
+              timeoutSeconds: 10
+          osd:
+            probe:
+              initialDelaySeconds: 30
+              periodSeconds: 30
+              timeoutSeconds: 10
+        startupProbe:
+          mon:
+            probe:
+              initialDelaySeconds: 15
+              periodSeconds: 30
+              timeoutSeconds: 10
+          mgr:
+            probe:
+              initialDelaySeconds: 15
+              periodSeconds: 30
+              timeoutSeconds: 10
+          osd:
+            probe:
+              initialDelaySeconds: 15
+              periodSeconds: 30
+              timeoutSeconds: 10
+      resources:
+        mgr:
+          limits:
+            cpu: 500m
+            memory: 640Mi
+          requests:
+            cpu: 50m
+            memory: 320Mi
+        mon:
+          limits:
+            cpu: 1000m
+            memory: 1280Mi
+          requests:
+            cpu: 50m
+            memory: 256Mi
+        osd:
+          limits:
+            cpu: 500m
+            memory: 1792Mi
+          requests:
+            cpu: 250m
+            memory: 256Mi
+        prepareosd:
+          limits:
+            cpu: 1000m
+            memory: 400Mi
+          requests:
+            cpu: 50m
+            memory: 200Mi
+        mgr-sidecar:
+          limits:
+            cpu: 256m
+            memory: 100Mi
+          requests:
+            cpu: 50m
+            memory: 40Mi
+        crashcollector:
+          limits:
+            cpu: 100m
+            memory: 220M
+          requests:
+            cpu: 15m
+            memory: 64M
+        logcollector:
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
+        cleanup:
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
+    cephBlockPools:
+      - name: ceph-blockpool
+        spec:
+          failureDomain: host
+          replicated:
+            size: 3
+        storageClass:
+          enabled: true
+          name: ceph-block
+          isDefault: true
+          reclaimPolicy: Delete
+          allowVolumeExpansion: true
+          volumeBindingMode: Immediate
+          mountOptions: ["discard"]
+          parameters:
+            imageFormat: "2"
+            imageFeatures: layering
+            csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+            csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
+            csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
+            csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
+            csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+            csi.storage.k8s.io/fstype: ext4
+    cephBlockPoolsVolumeSnapshotClass:
+      enabled: true
+      name: csi-ceph-blockpool
+      isDefault: false
+      deletionPolicy: Delete
+    cephFileSystems: []
+    cephObjectStores: []
