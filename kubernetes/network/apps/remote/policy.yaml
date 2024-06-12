@@ -26,16 +26,8 @@ spec:
     - to:
         # Only allow egress to LAN
         - ipBlock:
-            cidr: ${SECRET_HOMELAN_IPV4}
+            cidr: ${HOMELAN_IPV4}
         - ipBlock:
-            cidr: ${SECRET_HOMELAN_IPV6}
-        - ipBlock:
-            cidr: ${NETWORK_K8S_POD_CIDR}
-        - ipBlock:
-            cidr: ${NETWORK_K8S_SERVICE_CIDR}
-        - ipBlock:
-            cidr: ${NETWORK_K8S_SERVICE_CIDR_V6}
-        - ipBlock:
-            cidr: ${NETWORK_K8S_POD_CIDR_V6}
+            cidr: ${HOMELAN_IPV6}
   policyTypes:
     - Egress

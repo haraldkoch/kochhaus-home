@@ -37,7 +37,7 @@ spec:
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               PUBLIC_KEY_FILE: /sshd/authorized_keys
-              USER_NAME: "chk"
+              USER_NAME: chk
             probes:
               liveness:
                 enabled: true
