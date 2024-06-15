@@ -34,7 +34,7 @@ spec:
               TZ: "${TIMEZONE:=Etc/UTC}"
               # LOG_LEVEL: DEBUG
               # LOG_MQTT_MESSAGE: "true"
-              MQTT_ADDRESS: mqtt.${CLUSTER_DOMAIN}
+              MQTT_ADDRESS: mosquitto.default.svc.cluster.local
               MQTT_TOPIC: "zigbee2mqtt/#"
               MQTT_V5_PROTOCOL: "true"
               PROMETHEUS_PORT: &port 3321
@@ -62,11 +62,11 @@ spec:
             protocol: HTTP
             port: *port
         type: LoadBalancer
-        externalIPs: ["${EXPORTERS_IPV4}", "${EXPORTERS_IPV6}"]
+        externalIPs: ["${MQTT_EXPORTER_IPV4}", "${MQTT_EXPORTER_IPV6}"]
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "exporters.${CLUSTER_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
     serviceMonitor:
       app:
         serviceName: *app
