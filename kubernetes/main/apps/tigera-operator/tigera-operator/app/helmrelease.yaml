@@ -34,6 +34,9 @@ spec:
               containers:
                 - name: calico-apiserver
                   resources:
+                    requests:
+                      cpu: 6m
+                      memory: 100M
                     limits:
                       memory: 300M
     # Configures general installation parameters for Calico. Schema is based
