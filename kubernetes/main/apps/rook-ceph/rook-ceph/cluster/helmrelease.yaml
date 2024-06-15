@@ -145,18 +145,18 @@ spec:
             memory: 320Mi
         mon:
           limits:
-            cpu: 1000m
-            memory: 1280Mi
+            cpu: 500m
+            memory: 640Mi
           requests:
-            cpu: 50m
-            memory: 256Mi
+            cpu: 100m
+            memory: 320Mi
         osd:
           limits:
             cpu: 500m
-            memory: 1792Mi
+            memory: 1600Mi
           requests:
-            cpu: 250m
-            memory: 256Mi
+            cpu: 150m
+            memory: 800Mi
         prepareosd:
           limits:
             cpu: 1000m
@@ -174,24 +174,24 @@ spec:
         crashcollector:
           limits:
             cpu: 100m
-            memory: 220M
+            memory: 64M
           requests:
             cpu: 15m
-            memory: 64M
+            memory: 32M
         logcollector:
           limits:
-            cpu: "500m"
-            memory: "1Gi"
+            cpu: 50m
+            memory: 32Mi
           requests:
-            cpu: "100m"
-            memory: "100Mi"
+            cpu: 5m
+            memory: 16Mi
         cleanup:
           limits:
-            cpu: "500m"
-            memory: "1Gi"
+            cpu: 500m
+            memory: 1Gi
           requests:
-            cpu: "100m"
-            memory: "100Mi"
+            cpu: 100m
+            memory: 100Mi
     cephBlockPools:
       - name: ceph-blockpool
         spec:
