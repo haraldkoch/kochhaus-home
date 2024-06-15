@@ -185,6 +185,8 @@ spec:
                     operator: In
                     values:
                       - "true"
+    chunksCache:
+      allocatedMemory: 1024
     sidecar:
       image:
         repository: ghcr.io/kiwigrid/k8s-sidecar
