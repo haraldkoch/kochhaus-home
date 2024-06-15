@@ -76,9 +76,6 @@ spec:
           - name: k3s0
             devices:
               - name: /dev/disk/by-id/nvme-PC601_NVMe_SK_hynix_512GB_SI97N008610707NDF-part3
-          - name: k3s1
-            devices:
-              - name: vdb
           - name: k3s2
             devices:
               - name: /dev/disk/by-id/ata-SAMSUNG_MZ7LH512HALU-000H1_S4HLNF0N721023-part3
