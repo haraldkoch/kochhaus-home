@@ -37,9 +37,9 @@ spec:
         resources:
           requests:
             cpu: 100m
-            memory: 32Mi
+            memory: 48Mi
           limits:
-            memory: 64Mi
+            memory: 96Mi
     openebs-crds:
       csi:
         volumeSnapshots:
