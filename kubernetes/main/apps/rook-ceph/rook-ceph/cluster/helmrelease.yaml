@@ -82,11 +82,11 @@ spec:
           - name: k3s3
             devices:
               - name: /dev/disk/by-id/nvme-KXG50ZNV512G_TOSHIBA_X8UF60F1F6GS-part3
-        placement:
+      placement:
+        osd:
           tolerations:
             - key: node.kubernetes.io/unschedulable
               operator: Exists
-      placement:
         mgr: &placement
           # nodeAffinity:
           #   requiredDuringSchedulingIgnoredDuringExecution:
