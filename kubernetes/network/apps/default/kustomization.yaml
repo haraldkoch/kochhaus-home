@@ -8,5 +8,6 @@ resources:
   - ./mosquitto/ks.yaml
   - ./mqtt-exporter/ks.yaml
   - ./node-red/ks.yaml
+  - ./omada-controller/ks.yaml
   - ./smtp-relay/ks.yaml
   - ./zigbee2mqtt/ks.yaml

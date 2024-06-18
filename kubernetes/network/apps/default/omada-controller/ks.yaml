@@ -6,11 +6,11 @@ metadata:
   name: &app omada-controller
   namespace: flux-system
 spec:
-  targetNamespace: network
+  targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/network/omada-controller/app
+  path: ./kubernetes/network/apps/default/omada-controller/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -23,7 +23,7 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: omada
-      VOLSYNC_CLAIM: omada-data-v2
+      VOLSYNC_CLAIM: omada-data-v1
       VOLSYNC_CAPACITY: 10Gi
       VOLSYNC_UID: "508"
       VOLSYNC_GID: "508"

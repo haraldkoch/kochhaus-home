@@ -24,8 +24,8 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+    - name: longhorn
+      namespace: storage
     - name: volsync
       namespace: storage
   values:
@@ -168,7 +168,7 @@ spec:
           - path: /opt/tplink/EAPController/logs
       backup:
         type: nfs
-        server: "${SECRET_BACKUP_SERVER:=fnord}"
+        server: "${BACKUP_SERVER:=fnord}"
         path: /backup/data/k8s/omada
         globalMounts:
           - path: /opt/tplink/EAPController/data/autobackup
