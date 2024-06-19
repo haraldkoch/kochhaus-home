@@ -1,0 +1,55 @@
+---
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: node-exporter
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: prometheus-node-exporter
+      version: 4.36.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    fullnameOverride: node-exporter
+    releaseLabel: true # disable for victoria-metrics
+    podLabels:
+      jobLabel: node-exporter
+    extraArgs:
+      - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+      - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
+      - --collector.textfile.directory=/host/root/var/lib/node_exporter/textfile_collector
+    prometheus:
+      monitor:
+        enabled: true
+        jobLabel: jobLabel
+        metricRelabelings:
+          - action: replace
+            sourceLabels: ["__meta_kubernetes_pod_node_name"]
+            targetLabel: kubernetes_node
+          - action: drop
+            sourceLabels: ["mountpoint"]
+            regex: /var/lib/kubelet/pods.+
+          - action: labeldrop
+            regex: (pod)
+    rbac:
+      pspEnabled: false
+    resources:
+      requests:
+        cpu: 50m
+        memory: 32Mi
+      limits:
+        cpu: 250m
+        memory: 64Mi
