@@ -1,7 +1,7 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
-apiVersion: monitoring.coreos.com/v1
-kind: PrometheusRule
+# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/operator.victoriametrics.com/vmrule_v1beta1.json
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMRule
 metadata:
   name: miscellaneous-rules
   labels:
