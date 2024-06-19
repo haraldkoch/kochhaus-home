@@ -137,29 +137,7 @@ spec:
     # Adjust to what scraping functions you have enabled
     # i.e. if you dont have kubeapisever setup & enabled, disable
     #   the kubeApiserver rules below
+    #
+    # There's no vmsingle on the network cluster, therefore nothing to process these rules
     defaultRules:
-      create: true
-      rules:
-        etcd: false
-        general: true
-        k8s: true
-        kubeApiserver: true
-        kubeApiserverAvailability: true
-        kubeApiserverBurnrate: true
-        kubeApiserverHistogram: true
-        kubeApiserverSlos: true
-        kubelet: true
-        kubePrometheusGeneral: true
-        kubePrometheusNodeRecording: true
-        kubernetesApps: true
-        kubernetesResources: true
-        kubernetesStorage: true
-        kubernetesSystem: true
-        kubeScheduler: false
-        kubeStateMetrics: true
-        network: true
-        node: true
-        vmagent: true
-        vmsingle: false
-        vmhealth: true
-        alertmanager: false
+      create: false
