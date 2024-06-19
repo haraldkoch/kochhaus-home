@@ -88,8 +88,6 @@ spec:
                 app.kubernetes.io/name: vmalert
         extraArgs:
           external.url: https://vmalert.${CLUSTER_DOMAIN}
-        notifiers:
-          - url: http://alertmanager-operated.monitoring.svc.cluster.local:9093
       ingress:
         enabled: true
         ingressClassName: internal
