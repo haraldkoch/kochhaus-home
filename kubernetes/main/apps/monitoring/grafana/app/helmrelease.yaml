@@ -186,18 +186,18 @@ spec:
             type: prometheus
             uid: prometheus
             access: proxy
-            url: http://thanos-query-frontend.monitoring.svc.cluster.local:10902
-            jsonData:
-              prometheusType: Thanos
-            isDefault: true
-          - name: VictoriaMetrics
-            type: prometheus
-            uid: victoria-metrics
-            access: proxy
             url: http://vmsingle-victoria-metrics.monitoring.svc.cluster.local:8429
-            isDefault: false
             jsonData:
               prometheusType: Prometheus
+            isDefault: true
+          - name: Thanos
+            type: prometheus
+            uid: thanos
+            access: proxy
+            url: http://thanos-query-frontend.monitoring.svc.cluster.local:10902
+            isDefault: false
+            jsonData:
+              prometheusType: Thanos
           - name: Loki
             type: loki
             uid: loki
@@ -383,28 +383,28 @@ spec:
           revision: 37
           datasource:
             - name: "DS_PROMETHEUS"
-              value: VictoriaMetrics
+              value: Prometheus
         vm-operator:
           # renovate: depName="VictoriaMetrics - operator"
           gnetId: 17869
           revision: 2
           datasource:
             - name: "DS_PROMETHEUS"
-              value: VictoriaMetrics
+              value: Prometheus
         vm-vmalert:
           # renovate: depName="VictoriaMetrics - vmalert"
           gnetId: 14950
           revision: 11
           datasource:
             - name: "DS_PROMETHEUS"
-              value: VictoriaMetrics
+              value: Prometheus
         vm-vmagent:
           # renovate: depName="VictoriaMetrics - vmagent"
           gnetId: 12683
           revision: 18
           datasource:
             - name: "DS_PROMETHEUS"
-              value: VictoriaMetrics
+              value: Prometheus
     sidecar:
       dashboards:
         enabled: true
