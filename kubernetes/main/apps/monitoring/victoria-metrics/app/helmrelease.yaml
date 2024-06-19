@@ -189,7 +189,47 @@ spec:
 
     # Enable deployment of alertmanager
     alertmanager:
-      enabled: false
+      enabled: true
+      spec:
+        replicaCount: 2
+        configSecret: alertmanager-secret
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ceph-block
+              resources:
+                requests:
+                  storage: 10Mi
+        serviceSpec:
+          metadata:
+            name: alertmanager-operated
+          spec:
+            ipFamilyPolicy: SingleStack
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 60m
+            memory: 64Mi
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: prometheus.home.arpa/enabled
+                      operator: In
+                      values:
+                        - "true"
+      ingress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: internal
+        annotations:
+          hajimari.io/appName: "Alert Manager"
+          hajimari.io/icon: mdi:alert-decagram-outline
+        hosts:
+          - alertmanager.${CLUSTER_DOMAIN}
 
     # Prepared sets of default rules
     # Adjust to what scraping functions you have enabled
