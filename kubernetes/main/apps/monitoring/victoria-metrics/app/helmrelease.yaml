@@ -186,6 +186,9 @@ spec:
     defaultDashboardsEnabled: false
     grafana:
       enabled: false
+      ingress:
+        hosts:
+          - grafana.${CLUSTER_DOMAIN}
 
     # Enable deployment of alertmanager
     alertmanager:
