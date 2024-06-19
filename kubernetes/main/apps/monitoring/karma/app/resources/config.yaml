@@ -10,10 +10,7 @@ alertmanager:
         filters:
           main:
             - alertname=Watchdog
-            - prometheus=monitoring/kube-prometheus-stack
-          network:
-            - alertname=Watchdog
-            - prometheus=observability/kube-prometheus-stack
+            - alertgroup=general.rules
 
 alertAcknowledgement:
   enabled: true
