@@ -55,6 +55,12 @@ spec:
             externalTrafficPolicy: Local
             ipFamilies: ["IPv4", "IPv6"]
             ipFamilyPolicy: PreferDualStack
+        resources:
+          limits:
+            memory: 3000Mi
+          requests:
+            cpu: 1000m
+            memory: 1500Mi
       ingress:
         enabled: true
         ingressClassName: internal
