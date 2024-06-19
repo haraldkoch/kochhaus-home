@@ -25,6 +25,7 @@ resources:
   - ./thanos/ks.yaml
   - ./tplink-plug-exporter/ks.yaml
   - ./vector/ks.yaml
+  - ./victoria-metrics/ks.yaml
   - ./x509-certificate-exporter/ks.yaml
   # Standard Resources
   - ./miscellaneous
