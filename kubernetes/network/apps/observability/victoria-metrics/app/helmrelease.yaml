@@ -50,7 +50,7 @@ spec:
         externalLabels:
           cluster: network
         remoteWrite:
-           - url: https://victoria-metrics.${CLUSTER_DOMAIN}/api/v1/write
+            - url: http://${VICTORIA_METRICS_IPV4}:8429/api/v1/write
         resources:
           requests:
             cpu: 50m

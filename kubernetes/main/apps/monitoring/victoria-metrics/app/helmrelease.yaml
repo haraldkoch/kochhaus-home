@@ -49,6 +49,12 @@ spec:
               storage: 50Gi
           accessModes:
             - ReadWriteOnce
+        serviceSpec:
+          spec:
+            externalIPs: ["${VICTORIA_METRICS_IPV4}", "${VICTORIA_METRICS_IPV6}"]
+            externalTrafficPolicy: Local
+            ipFamilies: ["IPv4", "IPv6"]
+            ipFamilyPolicy: PreferDualStack
       ingress:
         enabled: true
         ingressClassName: internal
