@@ -13,7 +13,7 @@ spec:
       port: 9091
       targetPort: 9091
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/monitoring.coreos.com/servicemonitor_v1.json
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/servicemonitor_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -43,7 +43,7 @@ spec:
       port: 9094
       targetPort: 9094
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/monitoring.coreos.com/servicemonitor_v1.json
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/servicemonitor_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -73,7 +73,7 @@ spec:
       port: 9093
       targetPort: 9093
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/monitoring.coreos.com/servicemonitor_v1.json
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/servicemonitor_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:

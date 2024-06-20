@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/scrapeconfig_v1alpha1.json
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:
@@ -21,7 +21,7 @@ spec:
     - targetLabel: __address__
       replacement: ${BLACKBOX_EXPORTER_WIFI}:9115
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/scrapeconfig_v1alpha1.json
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:

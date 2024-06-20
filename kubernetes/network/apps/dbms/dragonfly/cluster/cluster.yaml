@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.haraldkoch.ca/dragonflydb.io/dragonfly_v1alpha1.json
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/dragonflydb.io/dragonfly_v1alpha1.json
 apiVersion: dragonflydb.io/v1alpha1
 kind: Dragonfly
 metadata:
