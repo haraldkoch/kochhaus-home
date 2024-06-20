@@ -44,10 +44,7 @@ spec:
       enabled: false
     persistentVolume:
       enabled: true
-      storageClass: ceph-block
-      accessModes:
-        - ReadWriteOnce
-      size: 200Mi
+      existingClaim: ${VOLSYNC_CLAIM}
     resources:
       requests:
         cpu: 15m
