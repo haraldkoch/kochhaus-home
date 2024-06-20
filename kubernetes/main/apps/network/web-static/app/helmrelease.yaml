@@ -30,7 +30,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          app:
+          static-web-server:
             image:
               repository: joseluisq/static-web-server
               tag: 2.32.0-alpine

@@ -61,6 +61,7 @@ access_control:
     - name: internal
       networks: ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", "${SECRET_HOMELAN_IPV4}"]
   rules:
+    # This just reduces logging noise in authelia
     - domain:
         - whoami.${CLUSTER_DOMAIN}
       resources:
@@ -82,6 +83,7 @@ identity_providers:
         pre_configured_consent_duration: 1y
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://grafana.${CLUSTER_DOMAIN}/login/generic_oauth"]
+        token_endpoint_auth_method: client_secret_post
         userinfo_signed_response_alg: none
       - client_id: miniflux
         client_name: Miniflux
