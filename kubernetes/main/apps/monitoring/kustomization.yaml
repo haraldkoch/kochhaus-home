@@ -18,6 +18,7 @@ resources:
   - ./network-ups-tools/ks.yaml
   - ./node-exporter/ks.yaml
   - ./dnssec-exporter/ks.yaml
+  - ./silence-operator/ks.yaml
   - ./smartctl-exporter/ks.yaml
   - ./smokeping/ks.yaml
   - ./snmp-exporter/ks.yaml

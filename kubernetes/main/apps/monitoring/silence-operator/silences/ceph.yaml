@@ -1,0 +1,40 @@
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: cephmonclockskew
+spec:
+  matchers:
+    - name: alertname
+      value: CephMonClockSkew
+      isRegex: false
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: cephnodeinconsistentmtu
+spec:
+  matchers:
+    - name: alertname
+      value: CephNodeInconsistentMTU
+      isRegex: false
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: cephnodenetworkpacketdrops
+spec:
+  matchers:
+    - name: alertname
+      value: CephNodeNetworkPacketDrops
+      isRegex: false
+---
+apiVersion: monitoring.giantswarm.io/v1alpha1
+kind: Silence
+metadata:
+  name: cephnodenetworkpacketerrors
+spec:
+  matchers:
+    - name: alertname
+      value: CephNodeNetworkPacketErrors
+      isRegex: false
