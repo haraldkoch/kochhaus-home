@@ -9,7 +9,6 @@ resources:
   - ./excalidraw/ks.yaml
   - ./hajimari/ks.yaml
   - ./homepage/ks.yaml
-  - ./kubernetes-schemas/ks.yaml
   - ./memos/ks.yaml
   - ./miniflux/ks.yaml
   - ./populator-test/ks.yaml
