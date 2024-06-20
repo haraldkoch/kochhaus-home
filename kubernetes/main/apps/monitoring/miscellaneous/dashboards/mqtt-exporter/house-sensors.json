@@ -693,7 +693,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "mqtt_pressure * (1-(0.0065*154)/(mqtt_temperature + 0.0065*154 + 273.15))^-5.257",
+          "expr": "mqtt_pressure * (1-(0.0065*154)/ on() group_left () (openweathermap_temperature_celsius + 0.0065*154 + 273.15))^-5.257",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -837,6 +837,6 @@
   "timezone": "",
   "title": "House Sensors",
   "uid": "f34c065d-33a8-415a-89f2-0bbfc0a6a4b6",
-  "version": 174,
+  "version": 175,
   "weekStart": ""
 }
