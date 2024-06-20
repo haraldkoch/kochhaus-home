@@ -21,7 +21,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.4.0"
+      "version": "11.0.0"
     },
     {
       "type": "datasource",
@@ -116,7 +116,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -223,6 +223,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -235,7 +236,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "mqtt_temperature{topic=~\".*(Upstairs|Downstairs|Thermostat).*\"}",
+          "expr": "mqtt_temperature{topic=~\".*(Upstairs|Office|Thermostat|Downstairs).*\"}",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -333,6 +334,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -447,6 +449,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -459,7 +462,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "mqtt_humidity{topic=~\".*(Upstairs|Downstairs|Thermostat).*\"}",
+          "expr": "mqtt_humidity{topic=~\".*(Upstairs|Office|Thermostat|Downstairs).*\"}",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -557,6 +560,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -676,6 +680,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -725,8 +730,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": null
+                "color": "red"
               },
               {
                 "color": "#EAB839",
@@ -828,10 +832,11 @@
     "from": "now-24h",
     "to": "now"
   },
+  "timeRangeUpdatedDuringEditOrView": false,
   "timepicker": {},
   "timezone": "",
   "title": "House Sensors",
   "uid": "f34c065d-33a8-415a-89f2-0bbfc0a6a4b6",
-  "version": 81,
+  "version": 174,
   "weekStart": ""
 }
