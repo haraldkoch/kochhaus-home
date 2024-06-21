@@ -44,7 +44,7 @@ spec:
           app:
             image:
               repository: ghcr.io/usememos/memos
-              tag: 0.21.0
+              tag: 0.22.3
             env:
               TZ: "${TIMEZONE:=Etc/UTC}"
               MEMOS_PORT: "5230" # https://github.com/usememos/memos/issues/1782
