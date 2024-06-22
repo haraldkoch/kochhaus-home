@@ -22,5 +22,4 @@ resources:
   - ./prometheus-community.yaml
   - ./stakater.yaml
   - ./vector.yaml
-  - ./victoria-metrics.yaml
   - ./xenitab.yaml
