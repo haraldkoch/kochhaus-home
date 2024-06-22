@@ -35,4 +35,3 @@ resources:
   - ./stakater.yaml
   - ./stevehipwell.yaml
   - ./vector.yaml
-  - ./victoria-metrics.yaml

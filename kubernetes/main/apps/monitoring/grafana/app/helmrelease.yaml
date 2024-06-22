@@ -166,14 +166,6 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/thanos-folder
-          - name: victoriametrics
-            orgId: 1
-            folder: VictoriaMetrics
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/victoriametrics-folder
     datasources:
       datasources.yaml:
         apiVersion: 1
@@ -186,18 +178,10 @@ spec:
             type: prometheus
             uid: prometheus
             access: proxy
-            url: http://vmsingle-victoria-metrics.monitoring.svc.cluster.local:8429
-            jsonData:
-              prometheusType: Prometheus
-            isDefault: true
-          - name: Thanos
-            type: prometheus
-            uid: thanos
-            access: proxy
             url: http://thanos-query-frontend.monitoring.svc.cluster.local:10902
-            isDefault: false
             jsonData:
               prometheusType: Thanos
+            isDefault: true
           - name: Loki
             type: loki
             uid: loki
@@ -376,35 +360,6 @@ spec:
         thanos-store:
           url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/thanos/dashboards/store.json
           datasource: Prometheus
-      victoriametrics:
-        vm-single:
-          # renovate: depName="VictoriaMetrics - single-node"
-          gnetId: 10229
-          revision: 35
-          datasource:
-            - name: "DS_PROMETHEUS"
-              value: Prometheus
-        vm-operator:
-          # renovate: depName="VictoriaMetrics - operator"
-          gnetId: 17869
-          revision: 2
-          datasource:
-            - name: "DS_PROMETHEUS"
-              value: Prometheus
-        vm-vmalert:
-          # renovate: depName="VictoriaMetrics - vmalert"
-          gnetId: 14950
-          revision: 11
-          datasource:
-            - name: "DS_PROMETHEUS"
-              value: Prometheus
-        vm-vmagent:
-          # renovate: depName="VictoriaMetrics - vmagent"
-          gnetId: 12683
-          revision: 18
-          datasource:
-            - name: "DS_PROMETHEUS"
-              value: Prometheus
     sidecar:
       dashboards:
         enabled: true

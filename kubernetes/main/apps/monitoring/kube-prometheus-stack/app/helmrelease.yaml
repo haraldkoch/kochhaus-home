@@ -34,7 +34,42 @@ spec:
       enabled: true
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
-      enabled: false
+      ingress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: internal
+        annotations:
+          hajimari.io/appName: "Alert Manager"
+          hajimari.io/icon: mdi:alert-decagram-outline
+        hosts:
+          - alertmanager.${CLUSTER_DOMAIN}
+      alertmanagerSpec:
+        replicas: 2
+        useExistingSecret: true
+        configSecret: alertmanager-secret
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ceph-block
+              resources:
+                requests:
+                  storage: 10Mi
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 60m
+            memory: 64Mi
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: prometheus.home.arpa/enabled
+                      operator: In
+                      values:
+                        - "true"
     kubelet:
       enabled: true
       serviceMonitor:
