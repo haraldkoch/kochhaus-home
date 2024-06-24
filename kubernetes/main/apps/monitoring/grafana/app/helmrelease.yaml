@@ -255,6 +255,13 @@ spec:
         node-feature-discovery:
           url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
           datasource: Prometheus
+        volsync:
+          # renovate: depName="VolSync Dashboard"
+          gnetId: 21356
+          revision: 2
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+            - { name: VAR_REPLICATIONDESTNAME, value: '.*-dst|.*-bootstrap' }
         x509-certificate-exporter:
           # renovate: depName="Certificates Expiration (X509 Certificate Exporter)"
           gnetId: 13922
