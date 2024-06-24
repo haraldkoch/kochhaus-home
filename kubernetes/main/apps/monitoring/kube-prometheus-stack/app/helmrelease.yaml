@@ -43,6 +43,15 @@ spec:
           hajimari.io/icon: mdi:alert-decagram-outline
         hosts:
           - alertmanager.${CLUSTER_DOMAIN}
+      servicePerReplica:
+        enabled: true
+      ingressPerReplica:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: internal
+        hostPrefix: alertmanager
+        hostDomain: "${CLUSTER_DOMAIN}"
+        paths: ["/"]
       alertmanagerSpec:
         replicas: 2
         useExistingSecret: true
