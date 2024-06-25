@@ -37,20 +37,32 @@ spec:
             env:
               TZ: ${TIMEZONE}
               NO_AUTOUPDATE: true
-              #PORT: &port ${TAILNET_PUBLIC_PORT}
+              PORT: &port ${TAILNET_PUBLIC_PORT}
               TS_EXTRA_ARGS: --advertise-exit-node  --advertise-tags=tag:k8s
+              TS_HOSTNAME:
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
               TS_ROUTES: ${KUBERNETES_CIDR},${HOMELAN_IPV4}
               TS_STATE_DIR: &path /tmp
-              TS_TAILSCALED_EXTRA_ARGS: --debug=0.0.0.0:3000
+              TS_TAILSCALED_EXTRA_ARGS: --debug=0.0.0.0:9001
               TS_USERSPACE: true
             envFrom:
               - secretRef:
                   name: tailscale-secret
             probes:
-              liveness:
+              liveness: &probe
                 enabled: true
-              readiness:
-                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /debug/pprof/
+                    port: 9001
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probe
             resources:
               requests:
                 cpu: 10m
@@ -91,18 +103,18 @@ spec:
         nameOverride: *app
         ports:
           http:
-            port: 3000
-      # tailnet:
-      #   controller: *app
-      #   type: LoadBalancer
-      #   externalIPs: ["${TAILSCALE_IPV4}", "${TAILSCALE_IPV6}"]
-      #   externalTrafficPolicy: Local
-      #   ipFamilyPolicy: PreferDualStack
-      #   ipFamilies: [IPv4, IPv6]
-      #   ports:
-      #     tailnet:
-      #       port: *port
-      #       protocol: UDP
+            port: 9001
+      tailnet:
+        controller: *app
+        type: LoadBalancer
+        externalIPs: ["${TAILSCALE_IPV4}", "${TAILSCALE_IPV6}"]
+        externalTrafficPolicy: Local
+        ipFamilyPolicy: PreferDualStack
+        ipFamilies: [IPv4, IPv6]
+        ports:
+          tailnet:
+            port: *port
+            protocol: UDP
     serviceMonitor:
       app:
         serviceName: *app

@@ -8,4 +8,4 @@ resources:
   - ./echo-server/ks.yaml
   - ./external-dns/ks.yaml
   - ./nginx/ks.yaml
-  #- ./tailscale/ks.yaml
+  - ./tailscale/ks.yaml
