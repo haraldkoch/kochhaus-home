@@ -113,7 +113,7 @@ spec:
         ipFamilies: [IPv4, IPv6]
         ports:
           tailnet:
-            port: ${TAILNET_PUBLIC_PORT:=111}
+            port: "${TAILNET_PUBLIC_PORT:=111}"
             protocol: UDP
     serviceMonitor:
       app:
