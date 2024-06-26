@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: docker.io/nodered/node-red
-              tag: 4.0.0
+              tag: 4.0.1
             env:
               TZ: "${TIMEZONE:=Etc/UTC}"
               NODE_RED_ENABLE_SAFE_MODE: "false"
