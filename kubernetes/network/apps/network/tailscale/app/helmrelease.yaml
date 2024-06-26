@@ -37,7 +37,7 @@ spec:
             env:
               TZ: ${TIMEZONE}
               NO_AUTOUPDATE: true
-              PORT: &port ${TAILNET_PUBLIC_PORT}
+              PORT: &port ${TAILNET_PUBLIC_PORT:=1}
               TS_EXTRA_ARGS: --advertise-exit-node  --advertise-tags=tag:k8s
               TS_HOSTNAME:
                 valueFrom:
