@@ -37,7 +37,7 @@ spec:
             env:
               TZ: ${TIMEZONE}
               NO_AUTOUPDATE: true
-              PORT: &port ${TAILNET_PUBLIC_PORT:=111}
+              PORT: &port 41641
               TS_EXTRA_ARGS: --advertise-exit-node  --advertise-tags=tag:k8s
               TS_HOSTNAME:
                 valueFrom:
@@ -113,7 +113,7 @@ spec:
         ipFamilies: [IPv4, IPv6]
         ports:
           tailnet:
-            port: "${TAILNET_PUBLIC_PORT:=111}"
+            port: *port
             protocol: UDP
     serviceMonitor:
       app:
