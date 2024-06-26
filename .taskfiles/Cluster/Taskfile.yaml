@@ -5,7 +5,7 @@ vars:
   TIMENOW:
     sh: date +%Y%m%d-%H%M%S
   # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
-  PROMETHEUS_OPERATOR_VERSION: v0.74.0
+  PROMETHEUS_OPERATOR_VERSION: v0.75.0
 
 tasks:
 
