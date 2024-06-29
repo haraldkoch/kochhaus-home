@@ -41,10 +41,10 @@ spec:
             resources:
               requests:
                 cpu: 15m
-                memory: 100M
+                memory: 150M
               limits:
                 cpu: 100m
-                memory: 200M
+                memory: 300M
       browser:
         containers:
           app:
