@@ -85,6 +85,15 @@ identity_providers:
         redirect_uris: ["https://grafana.${CLUSTER_DOMAIN}/login/generic_oauth"]
         token_endpoint_auth_method: client_secret_post
         userinfo_signed_response_alg: none
+      - client_id: kyoo
+        client_name: Kyoo
+        client_secret: "$${KYOO_OAUTH_CLIENT_SECRET_DIGEST}"
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        scopes: ["openid", "profile", "groups", "email"]
+        redirect_uris: ["https://kyoo.${CLUSTER_DOMAIN}/api/auth/logged/authelia"]
+        userinfo_signed_response_alg: none
       - client_id: miniflux
         client_name: Miniflux
         client_secret: "$${MINIFLUX_OAUTH_CLIENT_SECRET_DIGEST}"

@@ -8,5 +8,6 @@ resources:
   - ./media-nfs.yaml
   # Flux-Kustomizations
   - ./calibre-web/ks.yaml
+  - ./kyoo/ks.yaml
   - ./media-browser/ks.yaml
   - ./tautulli/ks.yaml
