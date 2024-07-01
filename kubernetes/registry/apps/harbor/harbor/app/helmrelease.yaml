@@ -6,6 +6,7 @@ metadata:
   name: harbor
 spec:
   interval: 30m
+  timeout: 15m
   chart:
     spec:
       chart: harbor
@@ -59,8 +60,6 @@ spec:
 
     database:
       type: internal
-      internal:
-        password: ${HARBOR_POSTGRES_PASSWORD}
 
 #      imageChartStorage:
 #        type: s3
