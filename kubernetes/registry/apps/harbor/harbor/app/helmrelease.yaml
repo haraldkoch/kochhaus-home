@@ -47,23 +47,20 @@ spec:
           existingClaim: harbor-registry-v1
           storageClass: local-hostpath
           subPath: registry
-        chartmuseum:
-          existingClaim: harbor-registry-v1
-          storageClass: local-hostpath
-          subPath: chartmuseum
         jobService:
           jobLog:
             storageClass: local-hostpath
         database:
-          type: internal
-          internal:
-            password: ${HARBOR_POSTGRES_PASSWORD}
           storageClass: local-hostpath
         redis:
           storageClass: local-hostpath
         trivy:
           storageClass: local-hostpath
 
+    database:
+      type: internal
+      internal:
+        password: ${HARBOR_POSTGRES_PASSWORD}
 
 #      imageChartStorage:
 #        type: s3
