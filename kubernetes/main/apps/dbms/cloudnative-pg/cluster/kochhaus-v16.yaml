@@ -48,7 +48,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://cnpg/v16/
       endpointURL: http://${SECRET_BACKUP_SERVER}:9000
-      # Note: serverName version needs to be inclemented
+      # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
       serverName: &currentCluster kochhaus-v16-v1
       s3Credentials:
