@@ -43,6 +43,16 @@
       "separateMinorPatch": true
     },
     {
+      "description": ["Kyoo Group"],
+      "groupName": "Kyoo",
+      "matchPackagePatterns": ["kyoo"],
+      "matchDatasources": ["docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
       "description": ["Rook-Ceph Group"],
       "groupName": "Rook-Ceph",
       "matchPackagePatterns": ["rook.ceph"],
