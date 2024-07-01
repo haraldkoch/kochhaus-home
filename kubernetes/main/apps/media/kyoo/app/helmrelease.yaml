@@ -41,7 +41,7 @@ spec:
           app:
             image:
               repository: docker.io/getmeili/meilisearch
-              tag: v1.7
+              tag: v1.9
             env:
               MEILI_ENV: production
               MEILI_MASTER_KEY:
@@ -111,12 +111,12 @@ spec:
                   name: kyoo-secret
             image:
               repository: ghcr.io/zoriya/kyoo_migrations
-              tag: edge@sha256:436dd3769c273d8e5c426383cf9d5d5552dc08b9185a1efbb4b183262d074253
+              tag: edge@sha256:296bc4b4f557f21d3ad8594764f0eec9045c3e4dd4627444f5d4328f9623878f
         containers:
           app:
             image:
               repository: ghcr.io/zoriya/kyoo_back
-              tag: edge@sha256:9d4e600635c20753ff17142cf74fafe71a3add02688b8118a8e5f583db19ef46
+              tag: edge@sha256:a35a03536c42fcfc9b6928114ee990cf982b10dffd9b48e59e8ecccce7026b06
             env:
               TRANSCODER_URL: http://kyoo-transcoder:7666
             envFrom: *envFrom
@@ -231,7 +231,7 @@ spec:
           app:
             image:
               repository: ghcr.io/zoriya/kyoo_transcoder
-              tag: edge@sha256:d763c391b9d9da67b7f5e1a1a375879fb9a013fa46c89f8b4397bc0d0be28447
+              tag: edge@sha256:d81bcebc132f68b728e771dd70575bde5e2edc9b2bec1927e79a0419fc139e6c
             envFrom: *envFrom
             resources:
               requests:
