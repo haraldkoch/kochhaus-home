@@ -99,3 +99,77 @@ tasks:
     desc: Hash a client secret (for Authelia)
     interactive: true
     cmd: podman run --rm -ti authelia/authelia:latest authelia crypto hash generate pbkdf2 --variant sha512
+
+  letmeout:
+    desc: run a privileged container with host access on a node
+    summary: |
+      Args:
+        node: The node (required)
+    interactive: true
+    cmd: |
+      kubectl run letmeout-{{.node}} -n kube-system --rm -i --tty --image=archlinux --overrides='
+        {
+          "apiVersion": "v1",
+          "spec": {
+            "containers": [
+              {
+                "name": "arch",
+                "image": "archlinux",
+                "args": [
+                  "bash"
+                ],
+                "securityContext": {
+                  "allowPrivilegeEscalation": true,
+                  "privileged": true
+                },
+                "stdin": true,
+                "stdinOnce": true,
+                "tty": true,
+                "volumeMounts": [
+                  {
+                    "mountPath": "/host",
+                    "name": "host"
+                  },
+                  {
+                    "name": "efivars",
+                    "mountPath": "/sys/firmware/efi/efivars"
+                  },
+                  {
+                    "name": "run-containerd",
+                    "mountPath": "/run/containerd"
+                  }
+                ]
+              }
+            ],
+            "dnsPolicy": "ClusterFirstWithHostNet",
+            "hostIPC": true,
+            "hostNetwork": true,
+            "hostPID": true,
+            "nodeName": "{{.node}}",
+            "restartPolicy": "Never",
+            "volumes": [
+              {
+                "name": "host",
+                "hostPath": {
+                  "path": "/"
+                }
+              },
+              {
+                "name": "efivars",
+                "hostPath": {
+                  "path": "/sys/firmware/efi/efivars"
+                }
+              },
+              {
+                "name": "run-containerd",
+                "hostPath": {
+                  "path": "/run/containerd"
+                }
+              }
+            ]
+          }
+        }'
+    requires:
+      vars: ["node"]
+    preconditions:
+      - kubectl get node {{.node}}
