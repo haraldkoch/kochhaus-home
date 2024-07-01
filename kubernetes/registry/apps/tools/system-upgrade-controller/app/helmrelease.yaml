@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     controllers:
-      main:
+      system-upgrade-controller:
         strategy: RollingUpdate
         containers:
           main:
