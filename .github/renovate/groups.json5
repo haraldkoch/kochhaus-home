@@ -45,7 +45,7 @@
     {
       "description": ["Kyoo Group"],
       "groupName": "Kyoo",
-      "matchPackagePatterns": ["kyoo"],
+      "matchPackagePatterns": ["kyoo", "meilisearch"],
       "matchDatasources": ["docker"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
