@@ -32,7 +32,7 @@ spec:
           api:
             image:
               repository: docker.io/1password/connect-api
-              tag: 1.7.2
+              tag: 1.7.3
             env:
               XDG_DATA_HOME: &configDir /config
               OP_BUS_PORT: 11220
@@ -75,7 +75,7 @@ spec:
           sync:
             image:
               repository: docker.io/1password/connect-sync
-              tag: 1.7.2
+              tag: 1.7.3
             env:
               XDG_DATA_HOME: *configDir
               OP_HTTP_PORT: &syncPort 8081
