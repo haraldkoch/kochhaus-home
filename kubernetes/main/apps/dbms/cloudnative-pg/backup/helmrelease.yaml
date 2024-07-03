@@ -48,7 +48,7 @@ spec:
           app:
             image:
               repository: ghcr.io/cloudnative-pg/postgresql
-              # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
+              # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql versioning=redhat
               tag: 16.3-4
             env:
               PGHOST: postgres-rw.dbms
