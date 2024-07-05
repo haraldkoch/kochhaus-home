@@ -112,6 +112,16 @@
           ansible.builtin.systemd:
             service: fstrim.timer
             enabled: true
+        - name: System Configuration | multipathd tweak for longhorn
+          ansible.builtin.copy:
+            content: |
+              blacklist {
+                  devnode "^sd[a-z0-9]+"
+              }
+            dest: /etc/multipath.conf
+            owner: root
+            group: root
+            mode: "0644"
 
   handlers:
     - name: Reboot
