@@ -141,7 +141,6 @@ Outside the `external-dns` instance mentioned above another instance is deployed
 | HP EliteDesk 800 G2 | Intel i5-6500T    | 16GB | 240GB SSD  | control-plane        | Arch Linux |
 | HP EliteDesk 800 G2 | Intel i5-6500T    | 16GB | 240GB SSD  | control-plane        | Arch Linux |
 | Lenovo M910q tiny   | Intel i5-6500T    | 16GB | 512GB NVMe | worker, ceph storage | Arch Linux |
-| libvirtd VM         | AMD Ryzen 5 1600T | 16GB | 256GB HDD  | worker, ceph storage | Arch Linux |
 | Lenovo M900q tiny   | Intel i5-6500T    | 16GB | 512GB SSD  | worker, ceph storage | Arch Linux |
 | Lenovo M910q tiny   | Intel i5-6500T    | 16GB | 512GB NVMe | worker, ceph storage | Arch Linux |
 
@@ -153,11 +152,11 @@ Outside the `external-dns` instance mentioned above another instance is deployed
 
 ### Infrastructure Kubernetes Cluster (coming soon)
 
-| Node           | CPU        | RAM | Storage   | Function      | OS     |
-|----------------|------------|-----|-----------|---------------|--------|
-| Raspberry Pi 4 | Cortex A72 | 4GB | 240GB SSD | control-plane | Debian |
-| Raspberry Pi 4 | Cortex A72 | 8GB | 240GB SSD | control-plane | Debian |
-| Raspberry Pi 4 | Cortex A72 | 8GB | 240GB SSD | control-plane | Debian |
+| Node       | CPU            | RAM  | Storage  | Function      | OS     |
+|------------|----------------|------|----------|---------------|--------|
+| Turing RK1 | Cortex A76/A55 | 16GB | 1TB NVMe | control-plane | Debian |
+| Turing RK1 | Cortex A76/A55 | 16GB | 1TB NVMe | control-plane | Debian |
+| Turing RK1 | Cortex A76/A55 | 16GB | 1TB NVMe | control-plane | Debian |
 
 ---
 
