@@ -30,7 +30,7 @@
     "sops.defaults.ageKeyFile": "age.key",
     "yaml.schemaStore.enable": true,
     "yaml.schemas": {
-        "ansible": "provision/ansible/*.yml",
+        "ansible": "ansible/*.yml",
         "kubernetes": "kubernetes/*.yaml"
     },
     "sops.configPath": "",
