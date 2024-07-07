@@ -6,7 +6,6 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  # - ./clickops/ks.yaml
   - ./descheduler/ks.yaml
   - ./intel-device-plugin/ks.yaml
   - ./kured/ks.yaml
