@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./local-path-provisioner/ks.yaml
+  - ./openebs/ks.yaml
