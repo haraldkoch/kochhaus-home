@@ -64,6 +64,23 @@ spec:
         runAsUser: 1022
         runAsGroup: 1022
         runAsNonRoot: true
+      configs:
+        proxy.config.php: |-
+          <?php
+          $CONFIG = array (
+            'trusted_proxies' => array(
+              0 => '127.0.0.1',
+              1 => '${NETWORK_K8S_POD_CIDR}',
+              2 => '${NETWORK_K8S_POD_CIDR_V6}',
+            ),
+            'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
+          ); ?>
+        misc.config.php: |-
+          <?php
+          $CONFIG = array (
+            'default_phone_region' => 'CA',
+            'maintenance_window_start' => 2,
+          ); ?>
     internalDatabase:
       enabled: false
     externalDatabase:
