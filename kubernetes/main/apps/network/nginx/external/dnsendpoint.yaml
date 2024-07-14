@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/externaldns.k8s.io/dnsendpoint_v1alpha1.json
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: external-shortcut
+spec:
+  endpoints:
+    - dnsName: external.${CLUSTER_DOMAIN}
+      recordType: A
+      targets: ["${NGINX_EXT_IPV4}"]
+    - dnsName: external.${CLUSTER_DOMAIN}
+      recordType: AAAA
+      targets: ["${NGINX_EXT_IPV6}"]
