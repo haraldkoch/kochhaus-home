@@ -57,10 +57,8 @@ spec:
         containers:
           app:
             image:
-              # repository: ghcr.io/twin/gatus
-              # tag: v5.11.0@sha256:eb0374eb55e3ff84ec8f9ea10342ddb623cfba23e5836138896cde01f11cf23d
-              repository: twinproduction/gatus
-              tag: experimental
+              repository: ghcr.io/twin/gatus
+              tag: v5.11.0@sha256:eb0374eb55e3ff84ec8f9ea10342ddb623cfba23e5836138896cde01f11cf23d
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               GATUS_CONFIG_PATH: /config
@@ -75,7 +73,7 @@ spec:
                   httpGet:
                     path: /health
                     port: *port
-                  initialDelaySeconds: 10
+                  initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
                   failureThreshold: 3
