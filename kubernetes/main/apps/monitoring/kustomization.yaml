@@ -18,6 +18,7 @@ resources:
   - ./network-ups-tools/ks.yaml
   - ./node-exporter/ks.yaml
   - ./dnssec-exporter/ks.yaml
+  - ./promtail/ks.yaml
   - ./silence-operator/ks.yaml
   - ./smartctl-exporter/ks.yaml
   - ./smokeping/ks.yaml
@@ -26,7 +27,6 @@ resources:
   - ./sr505n-cache/ks.yaml
   - ./thanos/ks.yaml
   - ./tplink-plug-exporter/ks.yaml
-  - ./vector/ks.yaml
   - ./x509-certificate-exporter/ks.yaml
   # Standard Resources
   - ./miscellaneous
