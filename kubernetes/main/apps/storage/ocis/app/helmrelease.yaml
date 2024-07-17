@@ -31,7 +31,7 @@ spec:
           init-config:
             image:
               repository: docker.io/owncloud/ocis
-              tag: 5.0.5
+              tag: 5.0.6
             command:
               - /bin/sh
               - -c
@@ -45,7 +45,7 @@ spec:
           ocis:
             image:
               repository: docker.io/owncloud/ocis
-              tag: 5.0.5
+              tag: 5.0.6
             env:
               DEMO_USERS: false
               NOTIFICATIONS_SMTP_HOST: smtp.${CLUSTER_DOMAIN}
