@@ -49,7 +49,7 @@ spec:
               - --config
               - /etc/cloudflared/config/config.yaml
               - run
-              - "${CLUSTER_CLOUDFLARE_TUNNEL_ID}"
+              - "${CLUSTER_CLOUDFLARE_TUNNEL_ID:-Seekret}"
             probes:
               liveness: &probes
                 enabled: true
