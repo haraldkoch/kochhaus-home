@@ -24,18 +24,6 @@ spec:
       retries: 3
   values:
     fullnameOverride: blackbox-exporter
-    # recommended by the chart upgrades docs for 7.0.0 but does not work.
-    # securityContext:
-    #   readOnlyRootFilesystem: true
-    #   allowPrivilegeEscalation: false
-    #   capabilities:
-    #     add: ["NET_RAW"]
-    #
-    # Let's try this instead:
-    podSecurityContext:
-      sysctls:
-        - name: net.ipv4.ping_group_range
-          value: "0 2147483647"
     pspEnabled: false
     config:
       modules:
@@ -49,13 +37,11 @@ spec:
           icmp:
             preferred_ip_protocol: "ip6"
             ip_protocol_fallback: false
-    service:
-      ipFamilyPolicy: PreferDualStack
     ingress:
       enabled: true
-      className: internal
       annotations:
         hajimari.io/enable: "false"
+      className: internal
       hosts:
         - host: blackbox.${CLUSTER_DOMAIN}
           paths:
@@ -63,6 +49,13 @@ spec:
               pathType: Prefix
     podAnnotations:
       reloader.stakater.com/auto: "true"
+    securityContext:
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        add: ["NET_RAW"]
+    service:
+      ipFamilyPolicy: PreferDualStack
     resources:
       requests:
         cpu: 15m
@@ -74,8 +67,6 @@ spec:
     serviceMonitor:
       enabled: true
       defaults:
-        labels:
-          release: prometheus
         interval: 30s
         scrapeTimeout: 30s
         additionalRelabeling:
@@ -99,21 +90,12 @@ spec:
           url: ${SECRET_BACKUP_SERVER}
     prometheusRule:
       enabled: true
-      additionalLabels:
-        app: prometheus-operator
-        release: prometheus
       rules:
-        - alert: HostDown
+        - alert: BlackboxProbeFailed
           expr: probe_success == 0
-          for: 1m
+          for: 5m
           labels:
             severity: critical
           annotations:
-            message: The host "{{ $labels.instance }}" is currently unreachable
-        - alert: SlowResponseTime
-          annotations:
-            message: The response time for "{{ $labels.instance }}" has been greater than 30 seconds for 5 minutes.
-          expr: probe_duration_seconds > 30
-          for: 5m
-          labels:
-            severity: warning
+            summary: |-
+              The host {{ $labels.target }} is currently unreachable
