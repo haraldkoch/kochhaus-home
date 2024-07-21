@@ -1,44 +1,34 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/probe_v1.json
 ---
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/scrapeconfig_v1alpha1.json
-apiVersion: monitoring.coreos.com/v1alpha1
-kind: ScrapeConfig
+kind: Probe
+apiVersion: monitoring.coreos.com/v1
 metadata:
   name: ping-wired-4
-  namespace: monitoring
 spec:
-  metricsPath: /probe
-  params:
-    module:
-      - icmp
-  staticConfigs:
-    - targets:
+  module: icmp
+  metricRelabelings:
+    - action: labeldrop
+      regex: (pod)
+  prober:
+    url: ${BLACKBOX_EXPORTER_WIFI}:9115
+  targets:
+    staticConfig:
+      static:
         - ${NETWORK_STATUS_TARGET}
-  relabelings:
-    - sourceLabels: [__address__]
-      targetLabel: __param_target
-    - sourceLabels: [__param_target]
-      targetLabel: instance
-    - targetLabel: __address__
-      replacement: ${BLACKBOX_EXPORTER_WIFI}:9115
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/probe_v1.json
 ---
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/scrapeconfig_v1alpha1.json
-apiVersion: monitoring.coreos.com/v1alpha1
-kind: ScrapeConfig
+kind: Probe
+apiVersion: monitoring.coreos.com/v1
 metadata:
   name: ping-wired-6
-  namespace: monitoring
 spec:
-  metricsPath: /probe
-  params:
-    module:
-      - icmp6
-  staticConfigs:
-    - targets:
+  module: icmp6
+  metricRelabelings:
+    - action: labeldrop
+      regex: (pod)
+  prober:
+    url: ${BLACKBOX_EXPORTER_WIFI}:9115
+  targets:
+    staticConfig:
+      static:
         - ${NETWORK_STATUS_TARGET}
-  relabelings:
-    - sourceLabels: [__address__]
-      targetLabel: __param_target
-    - sourceLabels: [__param_target]
-      targetLabel: instance
-    - targetLabel: __address__
-      replacement: ${BLACKBOX_EXPORTER_WIFI}:9115

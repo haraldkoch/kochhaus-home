@@ -1,22 +1,17 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/probe_v1.json
 ---
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/scrapeconfig_v1alpha1.json
-apiVersion: monitoring.coreos.com/v1alpha1
-kind: ScrapeConfig
+kind: Probe
+apiVersion: monitoring.coreos.com/v1
 metadata:
   name: ping-wifi
-  namespace: monitoring
 spec:
-  metricsPath: /probe
-  params:
-    module:
-      - icmp_wifi
-  staticConfigs:
-    - targets:
+  module: icmp_wifi
+  metricRelabelings:
+    - action: labeldrop
+      regex: (pod)
+  prober:
+    url: ${BLACKBOX_EXPORTER_WIFI}:9115
+  targets:
+    staticConfig:
+      static:
         - ${NETWORK_STATUS_TARGET}
-  relabelings:
-    - sourceLabels: [__address__]
-      targetLabel: __param_target
-    - sourceLabels: [__param_target]
-      targetLabel: instance
-    - targetLabel: __address__
-      replacement: ${BLACKBOX_EXPORTER_WIFI}:9115
