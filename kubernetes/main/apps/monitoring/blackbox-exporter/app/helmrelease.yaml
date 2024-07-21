@@ -69,25 +69,6 @@ spec:
       defaults:
         interval: 30s
         scrapeTimeout: 30s
-        additionalRelabeling:
-          - action: labeldrop
-            regex: (pod)
-      targets:
-        - module: icmp
-          name: gw
-          url: gw.${PRIVATE_STATIC_DOMAIN}
-        - module: icmp
-          name: pikvm1.home.arpa
-          url: pikvm1.home.arpa
-        - module: icmp
-          name: pikvm2
-          url: pikvm2
-        - module: icmp
-          name: ${SECRET_BACKUP_SERVER}-4
-          url: ${SECRET_BACKUP_SERVER}
-        - module: icmp6
-          name: ${SECRET_BACKUP_SERVER}-6
-          url: ${SECRET_BACKUP_SERVER}
     prometheusRule:
       enabled: true
       rules:

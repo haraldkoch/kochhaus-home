@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/probe_v1.json
+---
+kind: Probe
+apiVersion: monitoring.coreos.com/v1
+metadata:
+  name: devices-v4
+spec:
+  module: icmp
+  metricRelabelings:
+    - action: labeldrop
+      regex: (pod)
+  prober:
+    url: blackbox-exporter.monitoring.svc.cluster.local:9115
+  targets:
+    staticConfig:
+      static:
+        - gw.${PRIVATE_STATIC_DOMAIN}
+        - pikvm1.home.arpa
+        - pikvm2.home.arpa
+        - ${SECRET_BACKUP_SERVER}
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/probe_v1.json
+---
+kind: Probe
+apiVersion: monitoring.coreos.com/v1
+metadata:
+  name: devices-v6
+spec:
+  module: icmp6
+  metricRelabelings:
+    - action: labeldrop
+      regex: (pod)
+  prober:
+    url: blackbox-exporter.monitoring.svc.cluster.local:9115
+  targets:
+    staticConfig:
+      static:
+        - ${SECRET_BACKUP_SERVER}
