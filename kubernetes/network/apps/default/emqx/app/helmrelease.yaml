@@ -27,6 +27,4 @@ spec:
       namespace: cert-manager
   values:
     fullnameOverride: emqx-operator
-#    image:
-#      repository: ghcr.io/emqx/emqx-operator
     development: true
