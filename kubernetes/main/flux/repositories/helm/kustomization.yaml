@@ -34,4 +34,3 @@ resources:
   - ./runix.yaml
   - ./stakater.yaml
   - ./stevehipwell.yaml
-  - ./vector.yaml
