@@ -22,5 +22,4 @@ resources:
   - ./piraeus.yaml
   - ./prometheus-community.yaml
   - ./stakater.yaml
-  - ./vector.yaml
   - ./xenitab.yaml
