@@ -30,7 +30,7 @@ spec:
     # The stock image is not yet multi-arch
     image: &image
       repository: ghcr.io/haraldkoch/volsync
-      tag: 0.9.1
+      tag: 0.10.0
     restic:
       <<: *image
     metrics:
