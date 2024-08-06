@@ -36,7 +36,7 @@ spec:
     - kustomize:
         patches:
           - target:
-              version: apps/v1
+              version: v1
               kind: Deployment
               name: csi-nfs-controller
             patch: |
