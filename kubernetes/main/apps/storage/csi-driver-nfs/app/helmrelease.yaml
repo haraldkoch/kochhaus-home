@@ -41,5 +41,6 @@ spec:
               name: csi-nfs-controller
             patch: |
               - op: replace
-                path: /spec/template/spec/nodeSelector/node-role.kubernetes.io~1control-plane
-                value: "true"
+                path: /spec/template/spec/nodeSelector
+                value:
+                  node-role.kubernetes.io/control-plane: "true"
