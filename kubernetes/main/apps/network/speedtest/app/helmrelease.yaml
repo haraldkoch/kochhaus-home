@@ -57,9 +57,6 @@ spec:
               limits:
                 cpu: 1
                 memory: 100Mi
-        pod:
-          nodeSelector:
-            node.home.arpa/physical: "true"
     service:
       app:
         controller: speedtest

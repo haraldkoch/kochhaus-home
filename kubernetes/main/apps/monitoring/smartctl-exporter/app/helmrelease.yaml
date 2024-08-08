@@ -31,8 +31,6 @@ spec:
       devices:
         - /dev/sda
         - /dev/nvme0n1
-    nodeSelector:
-      node.home.arpa/physical: "true"
     serviceMonitor:
       enabled: true
       relabelings:
