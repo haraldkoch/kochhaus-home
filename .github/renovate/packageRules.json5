@@ -22,7 +22,7 @@
     {
       "description": ["Custom schedule for reloader"],
       "matchDataSources": ["docker", "helm"],
-      "matchPackagePatterns": ["reloader"],
+      "matchPackagePatterns": ["omada-controller", "reloader"],
       "schedule": ["on saturday"]
     }
   ]
