@@ -36,6 +36,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
     - name: nginx-certificates
+    - name: nginx-internal
   path: ./kubernetes/main/apps/network/nginx/external
   prune: false
   sourceRef:
@@ -64,7 +65,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  wait: false
+  wait: true
   interval: 30m
   retryInterval: 1m
   timeout: 5m
