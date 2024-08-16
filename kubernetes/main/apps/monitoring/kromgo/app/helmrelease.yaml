@@ -40,19 +40,31 @@ spec:
             env:
               PROMETHEUS_URL: http://thanos-query-frontend.monitoring.svc.cluster.local:10902
               PORT: &port 80
+              SERVER_HOST: 0.0.0.0
+              HEALTH_HOST: 0.0.0.0
             probes:
-              liveness: &probes
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /-/health
+                    port: 8888
+                  initialDelaySeconds: 0
+                  periodSeconds: 5
+                  timeoutSeconds: 1
+                  failureThreshold: 5
+              readiness:
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
                     path: /-/ready
-                    port: *port
+                    port: 8888
                   initialDelaySeconds: 0
-                  periodSeconds: 10
+                  periodSeconds: 5
                   timeoutSeconds: 1
                   failureThreshold: 3
-              readiness: *probes
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
