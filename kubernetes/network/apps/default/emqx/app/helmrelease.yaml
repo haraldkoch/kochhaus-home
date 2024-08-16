@@ -27,4 +27,3 @@ spec:
       namespace: cert-manager
   values:
     fullnameOverride: emqx-operator
-    development: true
