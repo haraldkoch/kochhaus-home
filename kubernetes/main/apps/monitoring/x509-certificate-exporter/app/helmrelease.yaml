@@ -23,10 +23,6 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    image:
-      registry: ghcr.io
-      repository: haraldkoch/x509-certificate-exporter
-      tag: 3.13.0
     prometheusRules:
       warningDaysLeft: 14
       criticalDaysleft: 7
