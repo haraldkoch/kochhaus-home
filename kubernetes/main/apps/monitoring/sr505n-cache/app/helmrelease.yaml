@@ -50,7 +50,7 @@ spec:
             # FIXME: find a smaller image containing curl
             image:
               repository: ubuntu
-              tag: 22.04@sha256:adbb90115a21969d2fe6fa7f9af4253e16d45f8d4c1e930182610c4731962658
+              tag: 24.10@sha256:94c7f49d0a4485b5ea6f00c14aebb699bc14d3e16ad4d0bd44042da6016c510a
             args:
               - /bin/bash
               - -c
