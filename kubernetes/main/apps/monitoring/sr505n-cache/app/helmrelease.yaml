@@ -47,9 +47,10 @@ spec:
                 cpu: 100m
                 memory: 48Mi
           poller:
+            # FIXME: find a smaller image containing curl
             image:
-              repository: ghcr.io/haraldkoch/ubuntu
-              tag: jammy-20230126@sha256:f221896468eb3ca6932bfbee7bdbf7a12bda412ff3530418c150375ab3294591
+              repository: ubuntu
+              tag: 22.04@sha256:adbb90115a21969d2fe6fa7f9af4253e16d45f8d4c1e930182610c4731962658
             args:
               - /bin/bash
               - -c
