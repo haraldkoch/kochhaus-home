@@ -49,8 +49,8 @@ spec:
           poller:
             # FIXME: find a smaller image containing curl
             image:
-              repository: ubuntu
-              tag: 22.04@sha256:adbb90115a21969d2fe6fa7f9af4253e16d45f8d4c1e930182610c4731962658
+              repository: ghcr.io/haraldkoch/ubuntu
+              tag: noble-20240801@sha256:b9ac954ec0ba8612ba67d648c95bac9ae184dc1a8ddff710b3911563833d15db
             args:
               - /bin/bash
               - -c
