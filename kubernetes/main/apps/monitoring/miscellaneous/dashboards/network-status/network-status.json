@@ -26,12 +26,11 @@
               "mode": "palette-classic"
             },
             "custom": {
+              "axisBorderShow": false,
               "axisCenteredZero": false,
               "axisColorMode": "text",
               "axisLabel": "",
               "axisPlacement": "auto",
-              "axisSoftMax": 25500000,
-              "axisSoftMin": -6500000,
               "barAlignment": 0,
               "drawStyle": "line",
               "fillOpacity": 10,
@@ -68,11 +67,11 @@
                 },
                 {
                   "color": "light-red",
-                  "value": -6300000
+                  "value": -1000000000
                 },
                 {
                   "color": "light-blue",
-                  "value": 25000000
+                  "value": 1000000000
                 }
               ]
             },
@@ -111,7 +110,6 @@
             }
           ]
         },
-        "links": [],
         "options": {
           "legend": {
             "calcs": [
@@ -136,7 +134,7 @@
               "uid": "000000001"
             },
             "editorMode": "code",
-            "expr": "8*(irate(ifHCInOctets{job='snmp-exporter-opnsense',instance='192.168.20.1',ifDescr=~'pppoe0'}[$__rate_interval]) or irate(ifInOctets{job='snmp',instance='199.85.99.1',ifDescr=~'pppoe0'}[$__rate_interval]))",
+            "expr": "8*(irate(ifHCInOctets{job='snmp-exporter-opnsense',instance='192.168.20.1',ifDescr=~'igc3|pppoe0'}[$__rate_interval]) or irate(ifInOctets{job='snmp',instance='199.85.99.1',ifDescr=~'igc3|pppoe0'}[$__rate_interval]))",
             "format": "time_series",
             "interval": "",
             "intervalFactor": 1,
@@ -152,7 +150,7 @@
             },
             "editorMode": "code",
             "exemplar": true,
-            "expr": "-8*(irate(ifHCOutOctets{job='snmp-exporter-opnsense',instance='192.168.20.1',ifDescr=~'pppoe0'}[$__rate_interval]) or irate(ifOutOctets{job='snmp',instance='199.85.99.1',ifDescr=~'pppoe0'}[$__rate_interval]))",
+            "expr": "-8*(irate(ifHCOutOctets{job='snmp-exporter-opnsense',instance='192.168.20.1',ifDescr=~'igc3|pppoe0'}[$__rate_interval]) or irate(ifOutOctets{job='snmp',instance='199.85.99.1',ifDescr=~'igc3|pppoe0'}[$__rate_interval]))",
             "format": "time_series",
             "interval": "",
             "intervalFactor": 1,
@@ -184,6 +182,7 @@
               "mode": "palette-classic"
             },
             "custom": {
+              "axisBorderShow": false,
               "axisCenteredZero": false,
               "axisColorMode": "text",
               "axisLabel": "latency",
@@ -272,7 +271,6 @@
           ]
         },
         "interval": "30s",
-        "links": [],
         "options": {
           "legend": {
             "calcs": [
@@ -296,7 +294,7 @@
             },
             "editorMode": "code",
             "exemplar": true,
-            "expr": "max_over_time(probe_icmp_duration_seconds{instance='phaedra.cfrq.net',phase='rtt',job=~'.*ping-wired-6$'}[$__interval])",
+            "expr": "max_over_time(probe_icmp_duration_seconds{instance=\"phaedra.cfrq.net\",phase=\"rtt\",job=~\".*ping-wired-4$\"}[$__interval])",
             "format": "time_series",
             "interval": "30s",
             "intervalFactor": 2,
@@ -310,7 +308,7 @@
               "uid": "000000001"
             },
             "editorMode": "code",
-            "expr": "1-avg_over_time(probe_success{instance='phaedra.cfrq.net',job=~'.*ping-wired-6$'}[$__interval])",
+            "expr": "1-avg_over_time(probe_success{instance=\"phaedra.cfrq.net\",job=~\".*ping-wired-4$\"}[$__interval])",
             "format": "time_series",
             "interval": "30s",
             "intervalFactor": 2,
@@ -432,7 +430,6 @@
             }
           ]
         },
-        "links": [],
         "options": {
           "legend": {
             "calcs": [
@@ -563,10 +560,6 @@
             }
           ]
         },
-        "libraryPanel": {
-          "uid": "I4KGwnRnz"
-        },
-        "links": [],
         "options": {
           "legend": {
             "calcs": [],
@@ -673,7 +666,6 @@
           "overrides": []
         },
         "interval": null,
-        "links": [],
         "maxDataPoints": 100,
         "options": {
           "fieldOptions": {
@@ -823,7 +815,6 @@
             }
           ]
         },
-        "links": [],
         "options": {
           "legend": {
             "calcs": [
@@ -877,13 +868,13 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.1.4"
+      "version": "11.1.4"
     },
     {
       "type": "panel",
       "id": "grafana-clock-panel",
       "name": "Clock",
-      "version": "2.1.3"
+      "version": "2.1.7"
     },
     {
       "type": "datasource",
@@ -935,21 +926,6 @@
       }
     },
     {
-      "clockType": "24 hour",
-      "countdownSettings": {
-        "endCountdownTime": "2017-09-26T20:33:00.000Z",
-        "endText": "00:00:00"
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "dateSettings": {
-        "dateFormat": "YYYY-MM-DD",
-        "fontSize": "20px",
-        "fontWeight": "normal",
-        "showDate": false
-      },
       "description": "",
       "gridPos": {
         "h": 3,
@@ -959,18 +935,24 @@
       },
       "height": "104px",
       "id": 22,
-      "links": [],
-      "mode": "time",
       "options": {
         "bgColor": "transparent",
         "clockType": "24 hour",
         "countdownSettings": {
           "endCountdownTime": "2020-12-06T15:29:49-05:00",
-          "endText": "00:00:00"
+          "endText": "00:00:00",
+          "invalidValueText": "invalid value",
+          "noValueText": "no value found",
+          "queryCalculation": "last",
+          "source": "input"
         },
         "countupSettings": {
           "beginCountupTime": "2022-08-06T14:25:36-04:00",
-          "beginText": "00:00:00"
+          "beginText": "00:00:00",
+          "invalidValueText": "invalid value",
+          "noValueText": "no value found",
+          "queryCalculation": "last",
+          "source": "input"
         },
         "dateSettings": {
           "dateFormat": "YYYY-MM-DD",
@@ -978,6 +960,13 @@
           "fontWeight": "normal",
           "locale": "",
           "showDate": false
+        },
+        "descriptionSettings": {
+          "descriptionText": "",
+          "fontSize": "12px",
+          "fontWeight": "normal",
+          "noValueText": "no description found",
+          "source": "none"
         },
         "fontMono": false,
         "mode": "time",
@@ -994,34 +983,12 @@
           "zoneFormat": "offsetAbbv"
         }
       },
-      "pluginVersion": "2.1.3",
-      "refreshSettings": {
-        "syncWithDashboard": false
-      },
-      "timeSettings": {
-        "customFormat": "HH:mm:ss",
-        "fontSize": "40px",
-        "fontWeight": "normal"
-      },
+      "pluginVersion": "2.1.7",
+      "targets": [],
       "title": "LOCAL",
       "type": "grafana-clock-panel"
     },
     {
-      "clockType": "24 hour",
-      "countdownSettings": {
-        "endCountdownTime": "2017-09-26T20:33:00.000Z",
-        "endText": "00:00:00"
-      },
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "dateSettings": {
-        "dateFormat": "YYYY-MM-DD",
-        "fontSize": "20px",
-        "fontWeight": "normal",
-        "showDate": false
-      },
       "gridPos": {
         "h": 3,
         "w": 4,
@@ -1030,8 +997,6 @@
       },
       "height": "104px",
       "id": 24,
-      "links": [],
-      "mode": "time",
       "offsetFromUtc": "0",
       "offsetFromUtcMinutes": "0",
       "options": {
@@ -1039,11 +1004,19 @@
         "clockType": "24 hour",
         "countdownSettings": {
           "endCountdownTime": "2020-12-06T15:29:49-05:00",
-          "endText": "00:00:00"
+          "endText": "00:00:00",
+          "invalidValueText": "invalid value",
+          "noValueText": "no value found",
+          "queryCalculation": "last",
+          "source": "input"
         },
         "countupSettings": {
           "beginCountupTime": "2022-08-06T14:25:36-04:00",
-          "beginText": "00:00:00"
+          "beginText": "00:00:00",
+          "invalidValueText": "invalid value",
+          "noValueText": "no value found",
+          "queryCalculation": "last",
+          "source": "input"
         },
         "dateSettings": {
           "dateFormat": "YYYY-MM-DD",
@@ -1051,6 +1024,13 @@
           "fontWeight": "normal",
           "locale": "",
           "showDate": false
+        },
+        "descriptionSettings": {
+          "descriptionText": "",
+          "fontSize": "12px",
+          "fontWeight": "normal",
+          "noValueText": "no description found",
+          "source": "none"
         },
         "fontMono": false,
         "mode": "time",
@@ -1067,15 +1047,8 @@
           "zoneFormat": "offsetAbbv"
         }
       },
-      "pluginVersion": "2.1.3",
-      "refreshSettings": {
-        "syncWithDashboard": false
-      },
-      "timeSettings": {
-        "customFormat": "HH:mm:ss",
-        "fontSize": "40px",
-        "fontWeight": "normal"
-      },
+      "pluginVersion": "2.1.7",
+      "targets": [],
       "title": "UTC",
       "type": "grafana-clock-panel"
     },
@@ -1147,17 +1120,12 @@
   ],
   "refresh": "30s",
   "revision": 1,
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": false,
-          "text": "Prometheus",
-          "value": "prometheus"
-        },
+        "current": {},
         "hide": 0,
         "includeAll": false,
         "multi": false,
@@ -1179,6 +1147,6 @@
   "timezone": "",
   "title": "Network Status",
   "uid": "b5VdClAMz",
-  "version": 1,
+  "version": 426,
   "weekStart": ""
 }
