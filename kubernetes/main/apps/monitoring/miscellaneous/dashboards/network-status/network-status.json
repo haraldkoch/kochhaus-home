@@ -110,6 +110,7 @@
             }
           ]
         },
+        "interval": "5s",
         "options": {
           "legend": {
             "calcs": [
@@ -481,144 +482,6 @@
         "type": "timeseries"
       }
     },
-    "I4KGwnRnz": {
-      "name": "DSL rates",
-      "uid": "I4KGwnRnz",
-      "kind": 1,
-      "model": {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
-        },
-        "description": "",
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "palette-classic"
-            },
-            "custom": {
-              "axisCenteredZero": false,
-              "axisColorMode": "text",
-              "axisLabel": "",
-              "axisPlacement": "auto",
-              "barAlignment": 0,
-              "drawStyle": "line",
-              "fillOpacity": 0,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "lineInterpolation": "linear",
-              "lineWidth": 1,
-              "pointSize": 5,
-              "scaleDistribution": {
-                "type": "linear"
-              },
-              "showPoints": "never",
-              "spanNulls": true,
-              "stacking": {
-                "group": "A",
-                "mode": "none"
-              },
-              "thresholdsStyle": {
-                "mode": "off"
-              }
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                }
-              ]
-            },
-            "unit": "bps"
-          },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "rate OUT"
-              },
-              "properties": [
-                {
-                  "id": "color",
-                  "value": {
-                    "fixedColor": "#bf1b00",
-                    "mode": "fixed"
-                  }
-                },
-                {
-                  "id": "unit",
-                  "value": "binbps"
-                }
-              ]
-            }
-          ]
-        },
-        "options": {
-          "legend": {
-            "calcs": [],
-            "displayMode": "list",
-            "placement": "bottom",
-            "showLegend": true
-          },
-          "tooltip": {
-            "mode": "single",
-            "sort": "none"
-          }
-        },
-        "pluginVersion": "8.0.0",
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "000000001"
-            },
-            "exemplar": true,
-            "expr": "vdslPhysCurrAttainableRate*1000",
-            "format": "time_series",
-            "interval": "",
-            "intervalFactor": 2,
-            "legendFormat": "max IN",
-            "refId": "A"
-          },
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "000000001"
-            },
-            "expr": "ifSpeed{ifDescr=\"dsl0\"}",
-            "format": "time_series",
-            "interval": "",
-            "intervalFactor": 2,
-            "legendFormat": "cur IN",
-            "refId": "C"
-          },
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "000000001"
-            },
-            "exemplar": true,
-            "expr": "vdslPhysCurrLineRate*1000",
-            "format": "time_series",
-            "interval": "",
-            "intervalFactor": 2,
-            "legendFormat": "rate OUT",
-            "refId": "B"
-          }
-        ],
-        "timeFrom": null,
-        "timeShift": null,
-        "title": "DSL rates",
-        "type": "timeseries"
-      }
-    },
     "eN0Uwngnz": {
       "name": "LAN UPS (gauge)",
       "uid": "eN0Uwngnz",
@@ -914,8 +777,8 @@
   "panels": [
     {
       "gridPos": {
-        "h": 6,
-        "w": 20,
+        "h": 8,
+        "w": 24,
         "x": 0,
         "y": 0
       },
@@ -926,12 +789,38 @@
       }
     },
     {
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 7,
+      "libraryPanel": {
+        "uid": "-tqgwngnz",
+        "name": "PING (Wired)"
+      }
+    },
+    {
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 9,
+      "libraryPanel": {
+        "uid": "ejczw7Rnz",
+        "name": "PING (Wi-Fi)"
+      }
+    },
+    {
       "description": "",
       "gridPos": {
         "h": 3,
         "w": 4,
-        "x": 20,
-        "y": 0
+        "x": 0,
+        "y": 15
       },
       "height": "104px",
       "id": 22,
@@ -984,23 +873,51 @@
         }
       },
       "pluginVersion": "2.1.7",
-      "targets": [],
       "title": "LOCAL",
       "type": "grafana-clock-panel"
     },
     {
       "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 4,
+        "y": 15
+      },
+      "id": 20,
+      "libraryPanel": {
+        "uid": "eN0Uwngnz",
+        "name": "LAN UPS (gauge)"
+      }
+    },
+    {
+      "gridPos": {
+        "h": 6,
+        "w": 10,
+        "x": 8,
+        "y": 15
+      },
+      "id": 18,
+      "libraryPanel": {
+        "uid": "QiyoQng7k",
+        "name": "LAN UPS"
+      }
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "gridPos": {
         "h": 3,
         "w": 4,
-        "x": 20,
-        "y": 3
+        "x": 0,
+        "y": 18
       },
       "height": "104px",
       "id": 24,
       "offsetFromUtc": "0",
       "offsetFromUtcMinutes": "0",
       "options": {
-        "bgColor": "#000000",
         "clockType": "24 hour",
         "countdownSettings": {
           "endCountdownTime": "2020-12-06T15:29:49-05:00",
@@ -1048,74 +965,8 @@
         }
       },
       "pluginVersion": "2.1.7",
-      "targets": [],
       "title": "UTC",
       "type": "grafana-clock-panel"
-    },
-    {
-      "gridPos": {
-        "h": 7,
-        "w": 10,
-        "x": 0,
-        "y": 6
-      },
-      "id": 7,
-      "libraryPanel": {
-        "uid": "-tqgwngnz",
-        "name": "PING (Wired)"
-      }
-    },
-    {
-      "gridPos": {
-        "h": 7,
-        "w": 10,
-        "x": 10,
-        "y": 6
-      },
-      "id": 9,
-      "libraryPanel": {
-        "uid": "ejczw7Rnz",
-        "name": "PING (Wi-Fi)"
-      }
-    },
-    {
-      "gridPos": {
-        "h": 7,
-        "w": 4,
-        "x": 20,
-        "y": 6
-      },
-      "id": 11,
-      "libraryPanel": {
-        "uid": "I4KGwnRnz",
-        "name": "DSL rates"
-      }
-    },
-    {
-      "gridPos": {
-        "h": 6,
-        "w": 4,
-        "x": 0,
-        "y": 13
-      },
-      "id": 20,
-      "libraryPanel": {
-        "uid": "eN0Uwngnz",
-        "name": "LAN UPS (gauge)"
-      }
-    },
-    {
-      "gridPos": {
-        "h": 6,
-        "w": 10,
-        "x": 4,
-        "y": 13
-      },
-      "id": 18,
-      "libraryPanel": {
-        "uid": "QiyoQng7k",
-        "name": "LAN UPS"
-      }
     }
   ],
   "refresh": "30s",
@@ -1147,6 +998,6 @@
   "timezone": "",
   "title": "Network Status",
   "uid": "b5VdClAMz",
-  "version": 426,
+  "version": 427,
   "weekStart": ""
 }
