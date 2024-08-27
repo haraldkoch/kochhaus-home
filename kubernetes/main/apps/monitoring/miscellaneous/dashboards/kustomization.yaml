@@ -6,4 +6,3 @@ namespace: monitoring
 resources:
   - mqtt-exporter
   - network-status
-  - opnsense
