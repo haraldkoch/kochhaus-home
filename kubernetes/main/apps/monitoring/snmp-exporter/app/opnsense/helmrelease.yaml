@@ -51,12 +51,15 @@ spec:
         memory: 64Mi
     serviceMonitor:
       enabled: true
+      interval: 5s
       params:
         - name: gw
           module: ["if_mib"]
           target: ${PRIVATE_GATEWAY}
           auth: ["public_v2"]
       path: /snmp
-      scrapeTimeout: 10s
+      scrapeTimeout: 5s
       relabelings:
         - { sourceLabels: ["__param_target"], targetLabel: instance }
+      additionalMetricsRelabelConfigs:
+        - { regex: (pod), action: labeldrop }
