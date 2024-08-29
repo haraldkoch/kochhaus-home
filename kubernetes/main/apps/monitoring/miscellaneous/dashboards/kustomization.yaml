@@ -6,3 +6,4 @@ namespace: monitoring
 resources:
   - mqtt-exporter
   - network-status
+  - omada-controller
