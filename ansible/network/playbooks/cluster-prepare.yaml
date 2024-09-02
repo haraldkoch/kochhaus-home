@@ -122,6 +122,13 @@
             owner: root
             group: root
             mode: "0644"
+        - name: System Configuration | create openebs hostpath
+          ansible.builtin.file:
+            dest: /var/openebs/local
+            state: directory
+            owner: root
+            group: root
+            mode: "0755"
 
   handlers:
     - name: Reboot
