@@ -252,6 +252,9 @@ spec:
         external-secrets:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
           datasource: Prometheus
+        goldpinger:
+          url: https://raw.githubusercontent.com/bloomberg/goldpinger/v3.10.1/extras/goldpinger-dashboard.json
+          datasource: Prometheus
         node-feature-discovery:
           url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
           datasource: Prometheus
