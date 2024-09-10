@@ -111,3 +111,12 @@ identity_providers:
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://files.${CLUSTER_DOMAIN}/", "https://files.${CLUSTER_DOMAIN}/oidc-callback.html", "https://files.${CLUSTER_DOMAIN}/oidc-silent-redirect.html"]
         userinfo_signed_response_alg: none
+      - client_id: headscale
+        client_name: Headscale Tunnel Broker
+        client_secret: "$${HEADSCALE_OAUTH_CLIENT_SECRET_DIGEST}"
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        scopes: ["openid", "profile", "groups", "email"]
+        redirect_uris: ["https://hs.${CLUSTER_DOMAIN}/oidc/callback"]
+        userinfo_signed_response_alg: none
