@@ -116,11 +116,6 @@ spec:
                 service:
                   identifier: headscale
                   port: http
-      ui:
-        className: external
-        hosts:
-          - host: *host
-            paths:
               - path: /web
                 service:
                   identifier: ui
