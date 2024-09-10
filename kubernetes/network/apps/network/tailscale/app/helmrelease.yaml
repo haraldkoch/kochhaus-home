@@ -97,6 +97,10 @@ spec:
         type: emptyDir
         globalMounts:
           - path: *path
+      run:
+        type: emptyDir
+        globalMounts:
+          - path: /var/run
     service:
       app:
         controller: *app
