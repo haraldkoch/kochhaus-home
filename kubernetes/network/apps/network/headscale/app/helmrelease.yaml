@@ -107,8 +107,10 @@ spec:
     ingress:
       headscale:
         className: external
+        annotations:
+          external-dns.alpha.kubernetes.io/target: network.${CLUSTER_DOMAIN}
         hosts:
-          - host: &host hs.${SECRET_DOMAIN}
+          - host: &host hs.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
