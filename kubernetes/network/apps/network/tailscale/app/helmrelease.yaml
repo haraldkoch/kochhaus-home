@@ -38,7 +38,7 @@ spec:
               TZ: ${TIMEZONE}
               NO_AUTOUPDATE: true
               PORT: &port ${TAILNET_PUBLIC_PORT:=1}
-              TS_EXTRA_ARGS: --advertise-exit-node  --advertise-tags=tag:k8s
+              TS_EXTRA_ARGS: --advertise-exit-node --advertise-tags=tag:k8s --login-server=http://headscale.network:8080
               TS_HOSTNAME:
                 valueFrom:
                   fieldRef:
