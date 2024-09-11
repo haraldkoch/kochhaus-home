@@ -1,5 +1,5 @@
 ansible==10.4.0
-ansible-lint==24.7.0
+ansible-lint==24.9.0
 # https://github.com/pyca/bcrypt/issues/684
 bcrypt==4.2.0
 jmespath==1.0.1
