@@ -48,7 +48,7 @@ spec:
   listenersServiceTemplate:
     metadata:
       annotations:
-        external-dns.alpha.kubernetes.io/hostname: mqtt-emqx.${SECRET_DOMAIN}
+        external-dns.alpha.kubernetes.io/hostname: mqtt.${SECRET_DOMAIN}
     spec:
       type: LoadBalancer
       externalIPs: ["${EMQX_IPV4}", "${EMQX_IPV6}"]

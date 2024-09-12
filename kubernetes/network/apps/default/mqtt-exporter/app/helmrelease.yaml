@@ -34,7 +34,7 @@ spec:
               TZ: "${TIMEZONE:=Etc/UTC}"
               # LOG_LEVEL: DEBUG
               # LOG_MQTT_MESSAGE: "true"
-              MQTT_ADDRESS: mosquitto.default.svc.cluster.local
+              MQTT_ADDRESS: emqx-listeners.default.svc.cluster.local
               MQTT_TOPIC: "zigbee2mqtt/#"
               MQTT_V5_PROTOCOL: "true"
               PROMETHEUS_PORT: &port 3321
