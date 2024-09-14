@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: ipify
+spec:
+  groups:
+    - name: ipify
+      rules:
+        - alert: IPAddressChange
+          expr: absent(ipify_ip_address offset 1m)
+          labels:
+            severity: warning
+          annotations:
+            description: External IP address has changed to {{$labels.ip_address}}
+            summary: IP Address Change.
