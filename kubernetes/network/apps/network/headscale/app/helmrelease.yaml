@@ -74,11 +74,10 @@ spec:
         ports:
           http:
             port: 80
-
     persistence:
       config:
         type: secret
-        name: headscale-config
+        name: headscale-secret
         advancedMounts:
           headscale:
             app:
@@ -105,7 +104,6 @@ spec:
                 subPath: data
               - path: /home/appuser/.local
                 subPath: .local
-
     ingress:
       headscale:
         className: external
