@@ -52,6 +52,7 @@ spec:
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               ONEDRIVE_DOWNLOADONLY: 1
+              ONEDRIVE_RESYNC: 1
               ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE:=fnord}"
               ONEDRIVE_UID: 1000
               ONEDRIVE_GID: 1000
@@ -60,8 +61,7 @@ spec:
                 cpu: 15m
                 memory: 64M
               limits:
-                cpu: 50m
-                memory: 64M
+                memory: 1G
     persistence:
       config:
         existingClaim: ${VOLSYNC_CLAIM}
