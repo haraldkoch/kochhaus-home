@@ -11,6 +11,5 @@ resources:
   - ./external-dns/ks.yaml
   - ./nginx/ks.yaml
   - ./opnsense/ks.yaml
-  - ./speedtest/ks.yaml
   - ./web-static/ks.yaml
   - ./whoami/ks.yaml

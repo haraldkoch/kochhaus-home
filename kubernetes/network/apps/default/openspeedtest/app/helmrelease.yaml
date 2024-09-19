@@ -51,7 +51,7 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 256Mi
-    service:
+   service:
       app:
         controller: openspeedtest
         ports:
@@ -63,8 +63,14 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: network.${CLUSTER_DOMAIN}
           hajimari.io/icon: mdi:speedometer
+          nginx.ingress.kubernetes.io/configuration-snippet: |
+            add_header Cache-Control "no-store";
+            add_header Pragma "no-cache";
+            add_header X-Frame-Options "SAMEORIGIN";
+            add_header X-XSS-Protection "1; mode=block";
+            client_max_body_size 35m;
         hosts:
-          - host: openspeedtest.${CLUSTER_DOMAIN}
+          - host: speedtest.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
