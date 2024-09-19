@@ -51,7 +51,7 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 256Mi
-   service:
+    service:
       app:
         controller: openspeedtest
         ports:
