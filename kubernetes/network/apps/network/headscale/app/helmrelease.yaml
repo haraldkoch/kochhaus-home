@@ -110,8 +110,8 @@ spec:
         annotations:
           external-dns.alpha.kubernetes.io/target: network.${CLUSTER_DOMAIN}
           # websockets?
-          nginx.ingress.kubernetes.io/proxy-read-timeout: 3600
-          nginx.ingress.kubernetes.io/proxy-send-timeout: 3600
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
         hosts:
           - host: &host hs.${CLUSTER_DOMAIN}
             paths:
