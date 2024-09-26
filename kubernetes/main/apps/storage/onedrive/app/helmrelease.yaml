@@ -48,7 +48,7 @@ spec:
           app:
             image:
               repository: driveone/onedrive
-              tag: 2.5.0
+              tag: 2.5.1
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               ONEDRIVE_DOWNLOADONLY: 1
