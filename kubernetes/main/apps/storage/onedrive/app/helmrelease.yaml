@@ -51,11 +51,11 @@ spec:
               tag: 2.5.0
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
-              ONEDRIVE_DOWNLOADONLY: 1
-              ONEDRIVE_RESYNC: 1
+              ONEDRIVE_DOWNLOADONLY: "1"
+              ONEDRIVE_RESYNC: "0"
               ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE:=fnord}"
-              ONEDRIVE_UID: 1000
-              ONEDRIVE_GID: 1000
+              ONEDRIVE_UID: "1000"
+              ONEDRIVE_GID: "1000"
             resources:
               requests:
                 cpu: 15m
