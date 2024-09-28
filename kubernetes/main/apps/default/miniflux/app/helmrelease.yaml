@@ -41,7 +41,7 @@ spec:
           app:
             image:
               repository: ghcr.io/miniflux/miniflux
-              tag: 2.2.0
+              tag: 2.2.1
             env:
               BASE_URL: https://miniflux.${CLUSTER_DOMAIN}
               CREATE_ADMIN: "1"
