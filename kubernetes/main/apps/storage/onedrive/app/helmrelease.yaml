@@ -40,6 +40,7 @@ spec:
               - -c
               - |-
                 /bin/cp /temp/config /onedrive/conf/config
+                touch -d '2024-01-01 00:00:00' /onedrive/conf/config
             securityContext:
               runAsUser: 1000
               runAsGroup: 1000
