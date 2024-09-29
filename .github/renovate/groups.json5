@@ -63,6 +63,16 @@
       "separateMinorPatch": true
     },
     {
+      "description": ["System Upgrade Controller Group"],
+      "groupName": "System-Upgrade-Controller",
+      "matchPackagePatterns": ["system-upgrade-controller"],
+      "matchDatasources": ["docker", "github-releases"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
+    {
       "description": ["x509-certificate-exporter image and chart"],
       "groupName": "X509 Certificate Exporter",
       "matchPackagePatterns": ["x509-certificate-exporter"],
