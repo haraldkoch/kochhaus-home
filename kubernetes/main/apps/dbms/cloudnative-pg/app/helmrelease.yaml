@@ -28,13 +28,13 @@ spec:
   values:
     crds:
       create: true
+    config:
+      data:
+        INHERITED_ANNOTATIONS: kyverno.io/ignore
     monitoring:
       podMonitorEnabled: false
       grafanaDashboard:
         create: true
-    config:
-      data:
-        INHERITED_ANNOTATIONS: kyverno.io/ignore
     resources:
       requests:
         cpu: 15m

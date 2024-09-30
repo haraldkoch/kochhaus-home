@@ -74,7 +74,6 @@ spec:
             port: 80
     ingress:
       main:
-        enabled: true
         className: internal
         hosts:
           - host: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
@@ -84,5 +83,4 @@ spec:
                   identifier: main
     persistence:
       data:
-        enabled: true
         existingClaim: ${VOLSYNC_CLAIM}

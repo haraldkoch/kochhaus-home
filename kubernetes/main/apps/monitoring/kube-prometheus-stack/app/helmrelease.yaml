@@ -72,15 +72,6 @@ spec:
           limits:
             cpu: 60m
             memory: 64Mi
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: prometheus.home.arpa/enabled
-                      operator: In
-                      values:
-                        - "true"
     kubelet:
       enabled: true
       serviceMonitor:
@@ -221,15 +212,6 @@ spec:
               resources:
                 requests:
                   storage: 20Gi
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: prometheus.home.arpa/enabled
-                      operator: In
-                      values:
-                        - "true"
     nodeExporter:
       enabled: false
     prometheusOperator:
