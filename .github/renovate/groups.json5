@@ -64,7 +64,7 @@
     },
     {
       "description": ["System Upgrade Controller Group"],
-      "groupName": "System-Upgrade-Controller",
+      "groupName": "System Upgrade Controller",
       "matchPackagePatterns": ["system-upgrade-controller"],
       "matchDatasources": ["docker", "github-releases"],
       "group": {
