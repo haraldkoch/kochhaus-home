@@ -39,6 +39,9 @@ spec:
             envFrom:
               - secretRef:
                   name: homepage-secret
+            envFrom:
+              - secretRef:
+                  name: homepage-other-secret
             probes:
               liveness:
                 enabled: true
