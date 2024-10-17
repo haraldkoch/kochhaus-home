@@ -20,9 +20,9 @@
       "versioning": "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$"
     },
     {
-      "description": ["Custom schedule for reloader"],
+      "description": ["Custom schedule for noisy packages"],
       "matchDataSources": ["docker", "helm"],
-      "matchPackagePatterns": ["omada-controller", "reloader"],
+      "matchPackagePatterns": ["cloudnative-pg", "omada-controller", "reloader"],
       "schedule": ["on saturday"]
     }
   ]
