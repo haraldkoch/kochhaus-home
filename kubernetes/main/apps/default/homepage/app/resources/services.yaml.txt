@@ -1,12 +1,12 @@
 ---
 - Home:
     - HomeAssistant:
-        href: https://hass.${SECRET_INTERNAL_DOMAIN}
+        href: https://ha.${CLUSTER_DOMAIN}
         icon: home-assistant.png
         description: Home Assistant
         widget:
           type: homeassistant
-          url: https://hass.${SECRET_INTERNAL_DOMAIN}
+          url: http://homeassistant.home.arpa:8123
           key: "{{HOMEPAGE_VAR_HASS_TOKEN}}"
 - Infrastructure:
     - Cloudflared:
