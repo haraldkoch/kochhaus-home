@@ -90,7 +90,7 @@ spec:
           gethomepage.dev/name: Tautulli
           gethomepage.dev/icon: tautulli.png
           gethomepage.dev/widget.type: tautulli
-          gethomepage.dev/widget.url: http://tautulli.media:8181/plexpy
+          gethomepage.dev/widget.url: http://tautulli.media:80/plexpy
           gethomepage.dev/widget.key: "{{ `{{HOMEPAGE_VAR_TAUTULLI_TOKEN}}` }}"
         hosts:
           - host: tautulli.${CLUSTER_DOMAIN}
