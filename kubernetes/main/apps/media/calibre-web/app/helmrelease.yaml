@@ -73,6 +73,10 @@ spec:
           gethomepage.dev/group: Media
           gethomepage.dev/name: Calibre
           gethomepage.dev/icon: calibre.png
+          gethomepage.dev/widget.type: calibreweb
+          gethomepage.dev/widget.url: http://calibre-web.media:8083
+          gethomepage.dev/widget.username: '{{`{{HOMEPAGE_VAR_CALIBRE_USERNAME}}`}}'
+          gethomepage.dev/widget.password: '{{`{{HOMEPAGE_VAR_CALIBRE_PASSWORD}}`}}'
         hosts:
           - host: ebooks.${CLUSTER_DOMAIN}
             paths:
