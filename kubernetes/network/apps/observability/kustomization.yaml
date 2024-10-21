@@ -7,5 +7,6 @@ resources:
   - ./kube-prometheus-stack/ks.yaml
   - ./node-exporter/ks.yaml
   - ./omada-exporter/ks.yaml
+  - ./prometheus-operator-crds/ks.yaml
   - ./promtail/ks.yaml
   - ./smartctl-exporter/ks.yaml

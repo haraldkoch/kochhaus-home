@@ -15,12 +15,12 @@ spec:
         name: prometheus-community
         namespace: flux-system
   install:
-    crds: CreateReplace
+    crds: Skip
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
-    crds: CreateReplace
+    crds: Skip
     remediation:
       strategy: rollback
       retries: 3
@@ -28,9 +28,9 @@ spec:
     - name: longhorn
       namespace: storage
   values:
-    cleanPrometheusOperatorObjectNames: true
     crds:
-      enabled: true
+      enabled: false
+    cleanPrometheusOperatorObjectNames: true
     alertmanager:
       enabled: false
     kubelet:
@@ -195,6 +195,5 @@ spec:
               replacement: $1
               sourceLabels: ["__meta_kubernetes_pod_node_name"]
               targetLabel: kubernetes_node
-
     grafana:
       enabled: false
