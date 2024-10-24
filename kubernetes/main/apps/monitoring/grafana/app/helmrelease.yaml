@@ -268,7 +268,7 @@ spec:
         x509-certificate-exporter:
           # renovate: depName="Certificates Expiration (X509 Certificate Exporter)"
           gnetId: 13922
-          revision: 3
+          revision: 4
           datasource: Prometheus
       ceph:
         ceph-cluster:
