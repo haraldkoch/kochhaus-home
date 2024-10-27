@@ -16,7 +16,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: main
-          image: docker.io/restic/restic:0.17.1
+          image: docker.io/restic/restic:0.17.2
           args: ["snapshots"]
           envFrom:
             - secretRef:

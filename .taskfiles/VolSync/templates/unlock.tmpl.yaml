@@ -16,7 +16,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: minio
-          image: docker.io/restic/restic:0.17.1
+          image: docker.io/restic/restic:0.17.2
           args: ["unlock", "--remove-all"]
           envFrom:
             - secretRef:
