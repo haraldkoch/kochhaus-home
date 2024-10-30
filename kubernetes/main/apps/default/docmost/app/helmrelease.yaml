@@ -39,7 +39,7 @@ spec:
           app:
             image:
               repository: docmost/docmost
-              tag: 0.4.1
+              tag: 0.5.0
             env:
               TZ: "${TIMEZONE:=Etc/UTC}"
               APP_URL: "https://{{ .Release.Name }}.${CLUSTER_DOMAIN}"
