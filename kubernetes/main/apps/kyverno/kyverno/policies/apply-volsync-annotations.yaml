@@ -9,7 +9,6 @@ metadata:
     policies.kyverno.io/description: >-
       Apply additional annotations to Volsync Mover Pods.
 spec:
-  generateExistingOnPolicyUpdate: true
   rules:
     - name: gateway
       match:
