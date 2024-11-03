@@ -1,0 +1,98 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kochhaus-docs
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      kochhaus-docs:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          git-sync:
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.1.0
+            env:
+              GITSYNC_ROOT: /git
+              GITSYNC_LINK: /mdbook/book
+              GITSYNC_REF: HEAD
+            envFrom:
+              - secretRef:
+                  name: kochhaus-docs
+            restartPolicy: Always
+          mdbook:
+            dependsOn: git-sync
+            image:
+              repository: ghcr.io/peaceiris/mdbook
+              tag: v0.4.40
+            command:
+              - mdbook
+              - watch
+            args:
+              - --dest-dir
+              - /public
+              - /mdbook/book
+            restartPolicy: Always
+        containers:
+          static-web-server:
+            image:
+              repository: joseluisq/static-web-server
+              tag: 2.33.1-alpine
+            env:
+              TZ: ${TIMEZONE:=Etc/UTC}
+              SERVER_PORT: 80
+              SERVER_ROOT: /public
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+        pod:
+          securityContext:
+            runAsUser: 65533
+            runAsGroup: 65533
+            fsGroup: 65533
+            fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: kochhaus-docs
+        ports:
+          http:
+            port: 80
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: "docs.${CUSTER_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      git:
+        type: emptyDir
+      mdbook:
+        type: emptyDir
+      public:
+        type: emptyDir
