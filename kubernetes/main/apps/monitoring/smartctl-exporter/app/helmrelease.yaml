@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: prometheus-smartctl-exporter
-      version: 0.10.0
+      version: 0.11.0
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
@@ -31,6 +31,8 @@ spec:
       devices:
         - /dev/sda
         - /dev/nvme0n1
+    # we also monitor from heimdall
+    hostNetwork: true
     serviceMonitor:
       enabled: true
       relabelings:
