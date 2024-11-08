@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: quay.io/minio/minio
-              tag: RELEASE.2024-10-29T16-01-48Z
+              tag: RELEASE.2024-11-07T00-52-20Z
             env:
               TZ: "${TIMEZONE:=Etc/UTC}"
               MINIO_UPDATE: "off"
