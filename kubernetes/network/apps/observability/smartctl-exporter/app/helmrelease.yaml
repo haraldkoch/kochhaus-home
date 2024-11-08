@@ -33,6 +33,8 @@ spec:
     config:
       devices:
         - /dev/nvme0n1
+    # we also monitor from heimdall
+    hostNetwork: true
     serviceMonitor:
       enabled: true
       relabelings:
