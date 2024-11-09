@@ -27,5 +27,5 @@ spec:
       APP: jenkins
       VOLSYNC_CLAIM: jenkins
       VOLSYNC_CAPACITY: 3Gi
-      VOLSYNC_UID: "1022"
-      VOLSYNC_GID: "1022"
+      VOLSYNC_UID: "1000"
+      VOLSYNC_GID: "1000"

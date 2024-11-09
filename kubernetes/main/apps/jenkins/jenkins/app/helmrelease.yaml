@@ -83,9 +83,9 @@ spec:
                 memory: 2Gi
         pod:
           securityContext:
-            runAsUser: 1022
-            runAsGroup: 1022
-            fsGroup: 1022
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
     service:
       app:
