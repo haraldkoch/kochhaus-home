@@ -112,3 +112,11 @@ spec:
         existingClaim: ${VOLSYNC_CLAIM}
         globalMounts:
           - path: /var/jenkins_home
+      ssh:
+        type: secret
+        name: ssh-config
+        globalMounts:
+          - path: /etc/ssh/ssh_config.d/99-jenkins
+            subPath: ssh_config
+          - path: /etc/ssh/ssh_known_hosts
+            subPath: ssh_known_hosts
