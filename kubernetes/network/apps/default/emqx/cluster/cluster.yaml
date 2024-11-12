@@ -28,9 +28,6 @@ spec:
         no_match: "deny"
       }
   coreTemplate:
-    metadata:
-      annotations:
-        reloader.stakater.com/auto: "true"
     spec:
       replicas: 3
       envFrom:
