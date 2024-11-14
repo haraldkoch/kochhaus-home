@@ -50,7 +50,7 @@ spec:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/haraldkoch/actions-runner:2.320.0@sha256:36cf575c47bff8e53c87dcd4ec042ed142296e567bc827d09dd382c6f956203d
+            image: ghcr.io/haraldkoch/actions-runner:2.321.0@sha256:22a334e8a522765bbb6ad444e60edf0e756488c347c705f19456aa63fe4925f5
             command: ["/home/runner/run.sh"]
     controllerServiceAccount:
       name: gha-runner-scale-set-controller
