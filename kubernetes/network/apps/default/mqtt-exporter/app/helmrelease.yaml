@@ -29,17 +29,18 @@ spec:
           app:
             image:
               repository: ghcr.io/kpetremann/mqtt-exporter
-              tag: 1.4.7
+              tag: 1.5.0
             env:
               TZ: "${TIMEZONE:=Etc/UTC}"
               # LOG_LEVEL: DEBUG
-              # LOG_MQTT_MESSAGE: "true"
+              # LOG_MQTT_MESSAGE: "True"
               MQTT_ADDRESS: emqx-listeners.default.svc.cluster.local
               MQTT_TOPIC: "zigbee2mqtt/#"
-              MQTT_V5_PROTOCOL: "true"
+              MQTT_V5_PROTOCOL: "True"
               PROMETHEUS_PORT: &port 3321
               # PROMETHEUS_PREFIX: "mqtt_"
               ZIGBEE2MQTT_AVAILABILITY: "True"
+              EXPOSE_LAST_SEEN: "True"
             envFrom:
               - secretRef:
                   name: mqtt-exporter
