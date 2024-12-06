@@ -32,7 +32,7 @@ spec:
   values:
     extraInitContainers:
       - name: 01-init-db
-        image: ghcr.io/haraldkoch/postgres-init:16.6@sha256:203367b6e86224e27372d578cb166ad12099ad7e61a28a9e7524d47da1877012
+        image: ghcr.io/haraldkoch/postgres-init:16.6@sha256:27c77cf2b3f059c7d315c3aed843e7dd70a6b9f6027ae7300e583563c401b18b
         envFrom:
           - secretRef:
               name: &secret grafana-secret
