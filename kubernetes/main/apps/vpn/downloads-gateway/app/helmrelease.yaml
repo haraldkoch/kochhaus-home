@@ -81,6 +81,7 @@ spec:
               limits:
                 memory: 128Mi
             securityContext:
+              privileged: true
               capabilities:
                 add:
                   - NET_ADMIN
