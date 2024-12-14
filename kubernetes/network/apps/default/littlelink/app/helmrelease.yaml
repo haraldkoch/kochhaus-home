@@ -1,0 +1,109 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: littlelink
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      littlelink:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/techno-tim/littlelink-server
+              tag: latest@sha256:f953db398533c453745e1db670680e1cbf7e36072eaec0d938fef81334a72553
+            env:
+              TZ: ${TIMEZONE}
+              META_TITLE: Harald Koch
+              META_DESCRIPTION: Harald's Link Page
+              META_AUTHOR: Harald Koch
+              THEME: Dark
+              FAVICON_URL: https://avatars.githubusercontent.com/u/7131938?v=4
+              AVATAR_URL: https://avatars.githubusercontent.com/u/7131938?v=4
+              AVATAR_2X_URL: https://avatars.githubusercontent.com/u/7131938?v=4
+              AVATAR_ALT: Harald Koch
+              NAME: Harald Koch
+              BIO: I bake bread and build Kubernetes clusters.
+              BUTTON_ORDER: Website,Blog,GITHUB,INSTAGRAM,BLUESKY,UNTAPPD
+              BLUESKY: https://bsky.app/profile/haraldwithtwoehs.bsky.social
+              DISCORD: https://discord.com/users/498623612757082112
+              FLICKR: https://www.flickr.com/photos/chkoch/
+              GITHUB: https://github.com/haraldkoch
+              GITLAB: https://gitlab.com/haraldwithtwoehs
+              GOODREADS: https://www.goodreads.com/haraldkoch
+              INSTAGRAM: https://instagram.com/haraldwithtwoehs/
+              KEYBASE: https://keybase.io/chk
+              LINKED_IN: https://linkedin.com/in/chkoch
+              UNTAPPD: https://untappd.com/user/haraldwithtwoehs/beers
+              CUSTOM_BUTTON_ALT_TEXT: Blog link,Website link
+              CUSTOM_BUTTON_COLOR: "#ffffff,#ffffff"
+              CUSTOM_BUTTON_ICON: fas fa-blog,fa-solid fa-globe
+              CUSTOM_BUTTON_NAME: Blog,Website
+              CUSTOM_BUTTON_TEXT: My Blog,Main website
+              CUSTOM_BUTTON_TEXT_COLOR: "#ED2756,#00000"
+              CUSTOM_BUTTON_URL: https://haraldkoch.ca,https://haraldkoch.ca
+              BUTTON_TARGET: _blank
+              FOOTER: Harald Koch © 2024-2025
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /healthcheck
+                    port: &port 3000
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                memory: 64M
+              limits:
+                memory: 100M
+        pod:
+          securityContext:
+            runAsUser: 65533
+            runAsGroup: 65533
+            runAsNonRoot: true
+    service:
+      app:
+        controller: littlelink
+        ports:
+          http:
+            port: *port
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: "links.${CLUSTER_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
