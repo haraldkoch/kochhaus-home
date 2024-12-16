@@ -3,12 +3,12 @@
   "packageRules": [
     {
       "matchDatasources": ["docker"],
-      "matchPackagePatterns": ["joomla"],
+      "matchPackageNames": ["joomla"],
       "allowedVersions": "<4"
     },
     {
       "matchDatasources": ["docker"],
-      "matchPackagePatterns": ["postgresql"],
+      "matchPackageNames": ["postgresql"],
       "allowedVersions": "<=16"
     }
   ]
