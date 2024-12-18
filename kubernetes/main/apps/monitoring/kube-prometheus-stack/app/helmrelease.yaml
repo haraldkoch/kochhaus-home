@@ -55,9 +55,12 @@ spec:
         hostDomain: "${CLUSTER_DOMAIN}"
         paths: ["/"]
       alertmanagerSpec:
+        alertmanagerConfiguration:
+          name: alertmanager
+          global:
+            resolveTimeout: 5m
         replicas: 2
-        useExistingSecret: true
-        configSecret: alertmanager-secret
+        externalUrl: https://alertmanager.${CLUSTER_DOMAIN}
         storage:
           volumeClaimTemplate:
             spec:
