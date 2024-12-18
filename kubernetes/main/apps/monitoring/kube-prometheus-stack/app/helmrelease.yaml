@@ -38,28 +38,17 @@ spec:
     alertmanager:
       ingress:
         enabled: true
-        pathType: Prefix
         ingressClassName: internal
         annotations:
           hajimari.io/appName: "Alert Manager"
           hajimari.io/icon: mdi:alert-decagram-outline
-        hosts:
-          - alertmanager.${CLUSTER_DOMAIN}
-      servicePerReplica:
-        enabled: true
-      ingressPerReplica:
-        enabled: true
+        hosts: ["alertmanager.${CLUSTER_DOMAIN}"]
         pathType: Prefix
-        ingressClassName: internal
-        hostPrefix: alertmanager
-        hostDomain: "${CLUSTER_DOMAIN}"
-        paths: ["/"]
       alertmanagerSpec:
         alertmanagerConfiguration:
           name: alertmanager
           global:
             resolveTimeout: 5m
-        replicas: 2
         externalUrl: https://alertmanager.${CLUSTER_DOMAIN}
         storage:
           volumeClaimTemplate:
