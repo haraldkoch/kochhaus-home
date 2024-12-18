@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: x509-certificate-exporter
-      version: 3.17.0
+      version: 3.18.0
       sourceRef:
         kind: HelmRepository
         name: enix
