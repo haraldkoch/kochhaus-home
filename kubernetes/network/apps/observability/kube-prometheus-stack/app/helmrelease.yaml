@@ -27,6 +27,8 @@ spec:
   dependsOn:
     - name: longhorn
       namespace: storage
+    - name: prometheus-operator-crds
+      namespace: observability
   values:
     crds:
       enabled: false
@@ -156,8 +158,6 @@ spec:
         externalTrafficPolicy: Local
       thanosServiceMonitor:
         enabled: true
-    nodeExporter:
-      enabled: false
     prometheusOperator:
       resources:
         requests:
@@ -165,8 +165,25 @@ spec:
           memory: 256Mi
         limits:
           memory: 384Mi
-    kubeStateMetrics:
-      enabled: true
+    prometheus-node-exporter:
+      fullnameOverride: node-exporter
+      extraArgs:
+        - --collector.filesystem.mount-points-exclude=^/(dev|proc|sys|var/lib/docker/.+|var/lib/kubelet/.+)($|/)
+        - --collector.filesystem.fs-types-exclude=^(autofs|binfmt_misc|bpf|cgroup2?|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|iso9660|mqueue|nsfs|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|selinuxfs|squashfs|sysfs|tracefs)$
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              targetLabel: kubernetes_node
+            - action: drop
+              regex: /var/lib/kubelet/pods.+
+              sourceLabels: ["mountpoint"]
+            - action: labeldrop
+              regex: (pod)
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
       metricLabelsAllowlist:
