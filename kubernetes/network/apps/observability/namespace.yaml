@@ -14,7 +14,7 @@ metadata:
   namespace: observability
 spec:
   type: alertmanager
-  address: https://alertmanager.${SECRET_DOMAIN}/api/v2/alerts/
+  address: http://alertmanager-operated.observability.svc.cluster.local:9093/api/v2/alerts/
 ---
 # yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/alert-notification-v1beta3.json
 apiVersion: notification.toolkit.fluxcd.io/v1beta3

@@ -34,7 +34,31 @@ spec:
       enabled: false
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
-      enabled: false
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        hosts: ["alertmanager-network.${CLUSTER_DOMAIN}"]
+        pathType: Prefix
+      alertmanagerSpec:
+        alertmanagerConfiguration:
+          name: alertmanager
+          global:
+            resolveTimeout: 5m
+        externalUrl: https://alertmanager-network.${CLUSTER_DOMAIN}
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: longhorn
+              resources:
+                requests:
+                  storage: 10Mi
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 60m
+            memory: 64Mi
     kubelet:
       enabled: true
       serviceMonitor:
