@@ -100,3 +100,14 @@ spec:
     serviceAccount:
       create: true
       name: *app
+
+  postRenderers:
+    - kustomize:
+        patches:
+          - patch: |-
+              apiVersion: monitoring.coreos.com/v1
+              kind: ServiceMonitor
+              metadata:
+                name: dragonfly-operator
+              spec:
+                fallbackScrapeProtocol: PrometheusText1.0.0
