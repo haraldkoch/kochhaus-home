@@ -1,6 +1,9 @@
 ---
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
-version: "3"
+version: '3'
+
+set: [pipefail]
+shopt: [globstar]
 
 vars:
   ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
