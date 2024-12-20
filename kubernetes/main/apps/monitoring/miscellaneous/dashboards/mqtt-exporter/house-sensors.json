@@ -693,7 +693,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "mqtt_pressure * (1-(0.0065*154)/ on() group_left () (openweathermap_temperature_celsius + 0.0065*154 + 273.15))^-5.257",
+          "expr": "mqtt_pressure * on() group_left() (1-(0.0065*154)/ (openweathermap_temperature_celsius + 0.0065*154 + 273.15))^-5.257",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
