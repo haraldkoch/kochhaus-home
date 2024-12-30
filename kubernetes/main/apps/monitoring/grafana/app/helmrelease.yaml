@@ -178,12 +178,6 @@ spec:
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
             - { name: VAR_BLOCKY_URL, value: 'http:\/\/192.168.22.53:4000' }
-        ping:
-          # renovate: depName="Blackbox exporter - ICMP"
-          gnetId: 20338
-          revision: 3
-          datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
         zfs:
           # renovate: depName="ZFS"
           gnetId: 7845
@@ -217,6 +211,12 @@ spec:
           gnetId: 1860
           revision: 37
           datasource: Prometheus
+        ping:
+          # renovate: depName="Blackbox exporter - ICMP"
+          gnetId: 20338
+          revision: 3
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         smart:
           # renovate: depName="Dashboard for smartctl_exporter"
           gnetId: 20204
