@@ -17,6 +17,9 @@ spec:
     name: cloudnative-pg-secret
   enableSuperuserAccess: true
   postgresql:
+    synchronous:
+      method: any
+      number: 1
     parameters:
       max_connections: "400"
       shared_buffers: 256MB
