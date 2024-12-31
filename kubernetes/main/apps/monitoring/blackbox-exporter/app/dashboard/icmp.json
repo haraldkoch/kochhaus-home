@@ -15,7 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "11.1.4"
+      "version": "11.4.0"
     },
     {
       "type": "datasource",
@@ -55,11 +55,9 @@
   "description": "Prometheus Blackbox Exporter Overview",
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": 7587,
   "graphTooltip": 0,
   "id": null,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "datasource": {
@@ -78,6 +76,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -136,7 +135,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "8.0.1",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -159,10 +158,6 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "000000002"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -172,15 +167,6 @@
       "id": 15,
       "panels": [],
       "repeat": "target",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "000000002"
-          },
-          "refId": "A"
-        }
-      ],
       "title": "$target status",
       "type": "row"
     },
@@ -194,7 +180,21 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "index": 0,
+                  "text": "DOWN"
+                },
+                "1": {
+                  "index": 1,
+                  "text": "UP"
+                }
+              },
+              "type": "value"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -242,8 +242,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.4",
-      "repeatDirection": "v",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -277,6 +276,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -335,7 +335,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "8.0.1",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -408,7 +408,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.4",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -480,8 +480,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.4",
-      "repeatDirection": "h",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
@@ -500,7 +499,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 39,
+  "schemaVersion": 40,
   "tags": [
     "blackbox",
     "prometheus"
@@ -512,19 +511,12 @@
         "auto_count": 10,
         "auto_min": "10s",
         "current": {
-          "selected": false,
           "text": "5s",
           "value": "5s"
         },
-        "hide": 0,
         "label": "Interval",
         "name": "interval",
         "options": [
-          {
-            "selected": false,
-            "text": "auto",
-            "value": "$__auto_interval_interval"
-          },
           {
             "selected": true,
             "text": "5s",
@@ -592,9 +584,7 @@
           }
         ],
         "query": "5s,10s,30s,1m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
-        "queryValue": "",
         "refresh": 2,
-        "skipUrlSync": false,
         "type": "interval"
       },
       {
@@ -604,7 +594,6 @@
           "uid": "${DS_PROMETHEUS}"
         },
         "definition": "query_result(probe_success)",
-        "hide": 0,
         "includeAll": true,
         "multi": true,
         "name": "target",
@@ -616,24 +605,17 @@
         },
         "refresh": 1,
         "regex": "/instance=\"([^\"]+)\"/",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
         "current": {},
         "hide": 2,
         "includeAll": false,
-        "multi": false,
         "name": "DS_PROMETHEUS",
         "options": [],
         "query": "prometheus",
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
         "type": "datasource"
       }
     ]
@@ -642,34 +624,10 @@
     "from": "now-6h",
     "to": "now"
   },
-  "timepicker": {
-    "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
-      "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
-    ],
-    "time_options": [
-      "5m",
-      "15m",
-      "1h",
-      "6h",
-      "12h",
-      "24h",
-      "2d",
-      "7d",
-      "30d"
-    ]
-  },
+  "timepicker": {},
   "timezone": "",
-  "title": "Blackbox Ping",
-  "uid": "riYo8_3iz",
-  "version": 409,
+  "title": "Blackbox Ping - Kochhaus",
+  "uid": "de8l6z7w5nri8c",
+  "version": 1,
   "weekStart": ""
 }
