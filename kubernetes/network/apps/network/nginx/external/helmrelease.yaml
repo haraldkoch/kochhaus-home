@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2
+# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -28,13 +28,16 @@ spec:
       replicaCount: 1
       annotations:
         configmap.reloader.stakater.com/reload: nginx-external-controller
+      extraEnvs:
+        - name: TZ
+          value: "${TIMEZONE:=Etc/UTC}"
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "network.${SECRET_DOMAIN}"
         externalIPs: ["${NGINX_EXT_IPV4}", "${NGINX_EXT_IPV6}"]
         externalTrafficPolicy: Local
-        ipFamilyPolicy: PreferDualStack
         ipFamilies: [IPv4, IPv6]
+        ipFamilyPolicy: PreferDualStack
       ingressClassResource:
         name: external
         default: false
@@ -45,13 +48,18 @@ spec:
             - key: ingress-class
               operator: In
               values: ["external"]
+      allowSnippetAnnotations: true
       config:
+        annotations-risk-level: Critical
+        block-user-agents: "GPTBot,~*GPTBot*,ChatGPT-User,~*ChatGPT-User*,Google-Extended,~*Google-Extended*,CCBot,~*CCBot*,Omgilibot,~*Omgilibot*,FacebookBot,~*FacebookBot*" # taken from https://github.com/superseriousbusiness/gotosocial/blob/main/internal/web/robots.go
         client-body-buffer-size: 100M
         client-body-timeout: 120
         client-header-timeout: 120
         enable-brotli: "true"
+        enable-ocsp: "true"
         enable-real-ip: "true"
         force-ssl-redirect: "true"
+        hide-headers: Server,X-Powered-By
         hsts-max-age: 31449600
         keep-alive-requests: 10000
         keep-alive: 120
@@ -65,14 +73,18 @@ spec:
         proxy-body-size: 0
         proxy-buffer-size: 16k
         ssl-protocols: TLSv1.3 TLSv1.2
+        strict-validate-path-type: "true"
+        use-forwarded-headers: "true"
+      enableAnnotationValidations: true
+      extraArgs:
+        default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
       metrics:
         enabled: true
         serviceMonitor:
           enabled: true
           namespaceSelector:
             any: true
-      extraArgs:
-        default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
+      terminationGracePeriodSeconds: 120
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
@@ -84,7 +96,7 @@ spec:
               app.kubernetes.io/component: controller
       resources:
         requests:
-          cpu: 10m
+          cpu: 100m
           memory: 250Mi
         limits:
           memory: 500Mi

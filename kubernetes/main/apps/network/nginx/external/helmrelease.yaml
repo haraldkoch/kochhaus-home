@@ -55,6 +55,7 @@ spec:
               values: ["external"]
       allowSnippetAnnotations: true
       config:
+        annotations-risk-level: Critical
         block-user-agents: "GPTBot,~*GPTBot*,ChatGPT-User,~*ChatGPT-User*,Google-Extended,~*Google-Extended*,CCBot,~*CCBot*,Omgilibot,~*Omgilibot*,FacebookBot,~*FacebookBot*" # taken from https://github.com/superseriousbusiness/gotosocial/blob/main/internal/web/robots.go
         client-body-buffer-size: 100M
         client-body-timeout: 120
@@ -80,15 +81,15 @@ spec:
         strict-validate-path-type: "true"
         use-geoip2: true
         use-forwarded-headers: "true"
+      enableAnnotationValidations: true
+      extraArgs:
+        default-ssl-certificate: network/tls.${CLUSTER_DOMAIN/./-}
       metrics:
         enabled: true
         serviceMonitor:
           enabled: true
           namespaceSelector:
             any: true
-      extraArgs:
-        default-ssl-certificate: network/tls.${CLUSTER_DOMAIN/./-}
-        enable-annotation-validation: true
       terminationGracePeriodSeconds: 120
       topologySpreadConstraints:
         - maxSkew: 1

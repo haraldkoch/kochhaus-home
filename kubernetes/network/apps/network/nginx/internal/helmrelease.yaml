@@ -34,8 +34,8 @@ spec:
       service:
         externalIPs: ["${NGINX_INT_IPV4}", "${NGINX_INT_IPV6}"]
         externalTrafficPolicy: Local
-        ipFamilyPolicy: PreferDualStack
         ipFamilies: [IPv4, IPv6]
+        ipFamilyPolicy: PreferDualStack
       ingressClassResource:
         name: internal
         default: true
@@ -48,6 +48,7 @@ spec:
               values: ["internal"]
       allowSnippetAnnotations: true
       config:
+        annotations-risk-level: Critical
         client-body-buffer-size: 100M
         client-body-timeout: 120
         client-header-timeout: 120
@@ -71,15 +72,15 @@ spec:
         ssl-protocols: TLSv1.3 TLSv1.2
         strict-validate-path-type: "true"
         use-forwarded-headers: "true"
+      enableAnnotationValidations: true
+      extraArgs:
+        default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
       metrics:
         enabled: true
         serviceMonitor:
           enabled: true
           namespaceSelector:
             any: true
-      extraArgs:
-        default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
-        enable-annotation-validation: true
       terminationGracePeriodSeconds: 120
       topologySpreadConstraints:
         - maxSkew: 1

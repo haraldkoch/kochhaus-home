@@ -48,6 +48,7 @@ spec:
               values: ["internal"]
       allowSnippetAnnotations: true
       config:
+        annotations-risk-level: Critical
         client-body-buffer-size: 100M
         client-body-timeout: 120
         client-header-timeout: 120
@@ -71,15 +72,15 @@ spec:
         ssl-protocols: TLSv1.3 TLSv1.2
         strict-validate-path-type: "true"
         use-forwarded-headers: "true"
+      enableAnnotationValidations: true
+      extraArgs:
+        default-ssl-certificate: network/tls.${CLUSTER_DOMAIN/./-}
       metrics:
         enabled: true
         serviceMonitor:
           enabled: true
           namespaceSelector:
             any: true
-      extraArgs:
-        default-ssl-certificate: network/tls.${CLUSTER_DOMAIN/./-}
-        enable-annotation-validation: true
       terminationGracePeriodSeconds: 120
       topologySpreadConstraints:
         - maxSkew: 1

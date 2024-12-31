@@ -32,6 +32,9 @@ spec:
       replicaCount: 1
       annotations:
         configmap.reloader.stakater.com/reload: nginx-internal-controller
+      extraEnvs:
+        - name: TZ
+          value: "${TIMEZONE:=Etc/UTC}"
       service:
         annotations:
           metallb.universe.tf/loadBalancerIPs: "192.168.20.68"
@@ -48,6 +51,7 @@ spec:
               values: ["internal"]
       allowSnippetAnnotations: true
       config:
+        annotations-risk-level: Critical
         client-body-buffer-size: 100M
         client-body-timeout: 120
         client-header-timeout: 120
@@ -71,15 +75,16 @@ spec:
         ssl-protocols: TLSv1.3 TLSv1.2
         strict-validate-path-type: "true"
         use-forwarded-headers: "true"
+      enableAnnotationValidations: true
+      extraArgs:
+        default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
       metrics:
         enabled: true
         serviceMonitor:
           enabled: true
           namespaceSelector:
             any: true
-      extraArgs:
-        default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
-        enable-annotation-validation: true
+      terminationGracePeriodSeconds: 120
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
@@ -91,7 +96,7 @@ spec:
               app.kubernetes.io/component: controller
       resources:
         requests:
-          cpu: 10m
+          cpu: 100m
           memory: 250Mi
         limits:
           memory: 500Mi
