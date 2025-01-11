@@ -84,7 +84,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: "docs.${CUSTER_DOMAIN}"
+          - host: "docs.${CLUSTER_DOMAIN}"
             paths:
               - path: /
                 service:
