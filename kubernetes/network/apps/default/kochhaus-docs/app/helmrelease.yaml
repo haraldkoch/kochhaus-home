@@ -46,12 +46,13 @@ spec:
               repository: ghcr.io/peaceiris/mdbook
               tag: v0.4.40
             command:
-              - mdbook
-              - watch
-            args:
-              - --dest-dir
-              - /public
-              - /mdbook/book
+              - /bin/sh
+              - -c
+              - |-
+                printf "\e[1;32m%-6s\e[m\n" "Building initial output tree ..."
+                mdbook build --dest-dir /public /mdbook/book
+                printf "\e[1;32m%-6s\e[m\n" "Watching for changes  ..."
+                mdbook watch --dest-dir /public /mdbook/book
             restartPolicy: Always
         containers:
           static-web-server:
