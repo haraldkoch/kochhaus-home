@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./emqx/ks.yaml
+  - ./kochhaus-docs/ks.yaml
   - ./mqtt-exporter/ks.yaml
   - ./node-red/ks.yaml
   - ./omada-controller/ks.yaml
