@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: docker.io/syncthing/syncthing
-              tag: 1.29.1
+              tag: 1.29.2
             probes:
               liveness:
                 enabled: true
