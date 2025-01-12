@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
+  - ../../templates/alerts
   # Flux-Kustomizations
   - ./apprise/ks.yaml
   - ./blackbox-exporter/ks.yaml
@@ -30,3 +31,11 @@ resources:
   - ./x509-certificate-exporter/ks.yaml
   # Standard Resources
   - ./miscellaneous
+transformers:
+  - |-
+    apiVersion: builtin
+    kind: NamespaceTransformer
+    metadata:
+      name: not-used
+      namespace: monitoring
+    unsetOnly: true

@@ -5,8 +5,17 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
+  - ../../templates/alerts
   # Flux-Kustomizations
   - ./authelia/ks.yaml
   - ./dmarc-report/ks.yaml
   - ./external-secrets/ks.yaml
   - ./lldap/ks.yaml
+transformers:
+  - |-
+    apiVersion: builtin
+    kind: NamespaceTransformer
+    metadata:
+      name: not-used
+      namespace: security
+    unsetOnly: true

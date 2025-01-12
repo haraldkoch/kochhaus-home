@@ -4,6 +4,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./namespace.yaml
+  - ../../templates/alerts
   - ./emqx/ks.yaml
   - ./kochhaus-docs/ks.yaml
   - ./mqtt-exporter/ks.yaml
@@ -12,3 +13,11 @@ resources:
   - ./openspeedtest/ks.yaml
   - ./smtp-relay/ks.yaml
   - ./zigbee2mqtt/ks.yaml
+transformers:
+  - |-
+    apiVersion: builtin
+    kind: NamespaceTransformer
+    metadata:
+      name: not-used
+      namespace: default
+    unsetOnly: true

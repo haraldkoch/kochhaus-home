@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
+  - ../../templates/alerts
   # Flux-Kustomizations
   - ./csi-driver-nfs/ks.yaml
   - ./minio/ks.yaml
@@ -16,3 +17,11 @@ resources:
   - ./snapshot-controller/ks.yaml
   - ./syncthing/ks.yaml
   - ./volsync/ks.yaml
+transformers:
+  - |-
+    apiVersion: builtin
+    kind: NamespaceTransformer
+    metadata:
+      name: not-used
+      namespace: storage
+    unsetOnly: true

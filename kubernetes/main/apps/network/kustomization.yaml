@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ./external-services
+  - ../../templates/alerts
   # Flux-Kustomizations
   - ./cloudflared/ks.yaml
   - ./external-dns/ks.yaml
@@ -13,3 +13,13 @@ resources:
   - ./opnsense/ks.yaml
   - ./web-static/ks.yaml
   - ./whoami/ks.yaml
+  # Standard Resources
+  - ./external-services
+transformers:
+  - |-
+    apiVersion: builtin
+    kind: NamespaceTransformer
+    metadata:
+      name: not-used
+      namespace: network
+    unsetOnly: true
