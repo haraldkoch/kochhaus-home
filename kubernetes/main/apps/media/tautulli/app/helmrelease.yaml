@@ -58,7 +58,7 @@ spec:
                   timeoutSeconds: 1
                   failureThreshold: 3
               readiness: *probes
-            securityContext: &securityContext
+            securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
@@ -68,6 +68,7 @@ spec:
                 memory: 128Mi
         pod:
           securityContext:
+            runAsNonRoot: true
             runAsUser: 1000
             runAsGroup: 1000
             fsGroup: 1000
@@ -102,13 +103,15 @@ spec:
     persistence:
       config:
         existingClaim: ${VOLSYNC_CLAIM}
-      tmp:
-        type: emptyDir
-      add-ons:
-        type: emptyDir
+      cache:
+        existingClaim: tautulli-cache
+        globalMounts:
+          - path: /config/cache
       backup:
         type: nfs
         server: "${SECRET_BACKUP_SERVER:=fnord}"
         path: /backup/data/k8s/tautulli
         globalMounts:
           - path: /config/backups
+      tmp:
+        type: emptyDir
