@@ -11,6 +11,7 @@ resources:
   - ./dmarc-report/ks.yaml
   - ./external-secrets/ks.yaml
   - ./lldap/ks.yaml
+  - ./onepassword-connect/ks.yaml
 transformers:
   - |-
     apiVersion: builtin

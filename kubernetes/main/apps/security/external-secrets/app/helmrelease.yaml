@@ -22,13 +22,15 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: onepassword-connect
+      namespace: security
   values:
+    installCRDs: true
+    replicaCount: 1
+    leaderElect: true
     image:
       repository: ghcr.io/external-secrets/external-secrets
-    installCRDs: true
-    serviceMonitor:
-      enabled: true
-      interval: 1m
     webhook:
       image:
         repository: ghcr.io/external-secrets/external-secrets
@@ -41,3 +43,6 @@ spec:
       serviceMonitor:
         enabled: true
         interval: 1m
+    serviceMonitor:
+      enabled: true
+      interval: 1m
