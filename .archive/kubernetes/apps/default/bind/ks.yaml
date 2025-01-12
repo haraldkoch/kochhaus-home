@@ -19,7 +19,6 @@ spec:
     name: home-kubernetes
   wait: false
   interval: 30m
-  retryInterval: 1m
   timeout: 5m
   postBuild:
     substitute:
@@ -49,5 +48,4 @@ spec:
     name: home-kubernetes
   wait: false
   interval: 30m
-  retryInterval: 1m
   timeout: 5m

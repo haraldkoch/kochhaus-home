@@ -20,7 +20,6 @@ spec:
       name: metallb
       namespace: network
   interval: 30m
-  retryInterval: 1m
   timeout: 3m
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -42,5 +41,4 @@ spec:
     name: home-kubernetes
   wait: true
   interval: 30m
-  retryInterval: 1m
   timeout: 3m

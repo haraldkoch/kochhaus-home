@@ -15,7 +15,6 @@ spec:
     name: home-kubernetes
   wait: true
   interval: 15m
-  retryInterval: 1m
   timeout: 3m
 ---
 # yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/kustomization-kustomize-v1.json
@@ -34,5 +33,4 @@ spec:
     name: home-kubernetes
   wait: true
   interval: 15m
-  retryInterval: 1m
   timeout: 3m

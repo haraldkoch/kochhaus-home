@@ -20,5 +20,4 @@ spec:
     - name: external-secrets-stores
   wait: false
   interval: 30m
-  retryInterval: 1m
   timeout: 5m
