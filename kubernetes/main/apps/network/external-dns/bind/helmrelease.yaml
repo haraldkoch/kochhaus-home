@@ -33,6 +33,7 @@ spec:
             name: &secret external-dns-bind-secret
             key: rfc2136_tsig_secret
     extraArgs:
+      - --ignore-ingress-tls-spec
       - --rfc2136-host=${PRIVATE_DNS_PRIMARY}
       - --rfc2136-port=53
       - --rfc2136-zone=${CLUSTER_DOMAIN}
@@ -40,6 +41,7 @@ spec:
       - --rfc2136-tsig-axfr
       - --rfc2136-tsig-keyname=externaldns
       - --rfc2136-tsig-secret-alg=hmac-sha256
+    triggerLoopOnEvent: true
     policy: sync
     sources: ["ingress", "service"]
     # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.

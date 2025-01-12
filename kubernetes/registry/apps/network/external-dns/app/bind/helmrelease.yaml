@@ -23,16 +23,17 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    nameOverride: *app
+    fullnameOverride: *app
     provider:
       name: rfc2136
     env:
       - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
         valueFrom:
           secretKeyRef:
-            name: external-dns-bind-secret
+            name: &secret external-dns-bind-secret
             key: rfc2136_tsig_secret
     extraArgs:
+      - --ignore-ingress-tls-spec
       - --rfc2136-host=${PRIVATE_DNS_PRIMARY}
       - --rfc2136-port=53
       - --rfc2136-zone=${SECRET_DOMAIN}
@@ -40,6 +41,7 @@ spec:
       - --rfc2136-tsig-axfr
       - --rfc2136-tsig-keyname=externaldns
       - --rfc2136-tsig-secret-alg=hmac-sha256
+    triggerLoopOnEvent: true
     policy: sync
     sources: ["ingress", "service"]
     # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
@@ -50,4 +52,4 @@ spec:
     serviceMonitor:
       enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-bind-secret
+      secret.reloader.stakater.com/reload: *secret
