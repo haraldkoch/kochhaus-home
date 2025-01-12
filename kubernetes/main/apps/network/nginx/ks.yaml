@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: cert-manager-issuers
   path: ./kubernetes/main/apps/network/nginx/certificates
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -33,17 +33,15 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-secrets-stores
     - name: nginx-certificates
-    - name: nginx-internal
   path: ./kubernetes/main/apps/network/nginx/external
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
   wait: false
   interval: 30m
-  timeout: 5m
+  timeout: 15m
 ---
 # yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -59,10 +57,10 @@ spec:
   dependsOn:
     - name: nginx-certificates
   path: ./kubernetes/main/apps/network/nginx/internal
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  wait: true
+  wait: false
   interval: 30m
-  timeout: 5m
+  timeout: 15m
