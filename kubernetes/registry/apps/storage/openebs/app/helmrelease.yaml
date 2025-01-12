@@ -24,22 +24,23 @@ spec:
       retries: 3
   values:
     localpv-provisioner:
-      rbac:
-        create: true
       localpv:
         image:
           registry: quay.io/
-        hostpathClass:
-          enabled: true
-          name: openebs-hostpath
-          isDefaultClass: false
-          basePath: /var/lib/rancher/k3s/openebs-hostpath
         resources:
           requests:
             cpu: 100m
             memory: 48Mi
           limits:
             memory: 96Mi
+      hostpathClass:
+        enabled: true
+        name: openebs-hostpath
+        isDefaultClass: false
+        basePath: /var/lib/rancher/k3s/openebs-hostpath
+      helperPod:
+        image:
+          registry: quay.io/
     openebs-crds:
       csi:
         volumeSnapshots:
