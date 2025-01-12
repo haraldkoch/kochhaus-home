@@ -33,7 +33,7 @@ spec:
           value: "${TIMEZONE:=Etc/UTC}"
       service:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "network.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: &hostname network.${SECRET_DOMAIN}
         externalIPs: ["${NGINX_EXT_IPV4}", "${NGINX_EXT_IPV6}"]
         externalTrafficPolicy: Local
         ipFamilies: [IPv4, IPv6]
@@ -51,7 +51,7 @@ spec:
       allowSnippetAnnotations: true
       config:
         annotations-risk-level: Critical
-        block-user-agents: "GPTBot,~*GPTBot*,ChatGPT-User,~*ChatGPT-User*,Google-Extended,~*Google-Extended*,CCBot,~*CCBot*,Omgilibot,~*Omgilibot*,FacebookBot,~*FacebookBot*" # taken from https://github.com/superseriousbusiness/gotosocial/blob/main/internal/web/robots.go
+        block-user-agents: "AdsBot-Google,Amazonbot,anthropic-ai,Applebot-Extended,Bytespider,CCBot,ChatGPT-User,ClaudeBot,Claude-Web,cohere-ai,Diffbot,FacebookBot,FriendlyCrawler,Google-Extended,GoogleOther,GPTBot,img2dataset,omgili,omgilibot,peer39_crawler,peer39_crawler/1.0,PerplexityBot,YouBot," # taken from https://github.com/ai-robots-txt/ai.robots.txt
         client-body-buffer-size: 100M
         client-body-timeout: 120
         client-header-timeout: 120
@@ -65,10 +65,12 @@ spec:
         keep-alive: 120
         log-format-escape-json: "true"
         log-format-upstream: >
-          {"time": "$time_iso8601", "remote_addr": "$proxy_protocol_addr", "x_forwarded_for": "$proxy_add_x_forwarded_for",
-          "request_id": "$req_id", "remote_user": "$remote_user", "bytes_sent": $bytes_sent, "request_time": $request_time,
-          "status": $status, "vhost": "$host", "request_proto": "$server_protocol", "path": "$uri", "request_query": "$args",
-          "request_length": $request_length, "duration": $request_time, "method": "$request_method", "http_referrer": "$http_referer",
+          {"time": "$time_iso8601", "remote_addr": "$proxy_protocol_addr",
+          "x_forwarded_for": "$proxy_add_x_forwarded_for", "request_id": "$req_id",
+          "remote_user": "$remote_user", "bytes_sent": $bytes_sent, "request_time": $request_time,
+          "status": $status, "vhost": "$host", "request_proto": "$server_protocol",
+          "path": "$uri", "request_query": "$args", "request_length": $request_length,
+          "duration": $request_time, "method": "$request_method", "http_referrer": "$http_referer",
           "http_user_agent": "$http_user_agent"}
         proxy-body-size: 0
         proxy-buffer-size: 16k
@@ -78,6 +80,7 @@ spec:
       enableAnnotationValidations: true
       extraArgs:
         default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
+        publish-status-address: *hostname
       metrics:
         enabled: true
         serviceMonitor:
@@ -85,6 +88,8 @@ spec:
           namespaceSelector:
             any: true
       terminationGracePeriodSeconds: 120
+      publishService:
+        enabled: false
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
