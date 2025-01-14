@@ -1,0 +1,65 @@
+pages:
+  - name: Home
+    columns:
+      - size: small
+        widgets:
+          - type: clock
+            hour-format: 24h
+            timezones:
+              - timezone: Europe/Paris
+                label: Paris
+
+          - type: calendar
+
+          - type: weather
+            location: Toronto, Canada
+            hour-format: 24h
+
+      - size: full
+        widgets:
+          - type: hacker-news
+
+          - type: videos
+            channels:
+              - UCR-DXc1voovS8nhAvccRZhg # Jeff Geerling
+              - UCv6J_jJa8GJqFwQNgNrMuww # ServeTheHome
+              - UCOk-gHyjcWZNj3Br4oxwh0A # Techno Tim
+              - UCcEH1uSjWiKpYp4B2lShqlA # Christian Schaffer
+              - UCuCkxoKLYO_EQ2GeFtbM_bw # Half as Interesting
+              - UCLqQ5m7AXj_oyUvLZPsts0Q # Hands On Katie
+              - UCGaVdbSav8xWuFWTadK6loA # vlogbrothers
+              - UCUdzaY_Jzjt09b9xLpg0T6g # WoodworkingisBullshit
+
+          - type: reddit
+            subreddit: selfhosted
+
+      - size: small
+        widgets:
+          - type: rss
+            limit: 10
+            collapse-after: 3
+            cache: 10m
+            feeds:
+              - url: https://letsencrypt.org/feed.xml
+              - url: https://chipsandcheese.com/feed/
+              - url: https://www.home-assistant.io/atom.xml
+
+          - type: releases
+            show-source-icon: true
+            repositories:
+              - go-gitea/gitea
+              - glanceapp/glance
+              - k3s-io/k3s
+
+          - type: markets
+            markets:
+              - symbol: SPY
+                name: S&P 500
+              - symbol: HPE
+                name: HPE
+              - symbol: HPQ
+                name: HPQ
+
+# Other widgets:
+# - grafana - network and UPS
+# - bookmarks

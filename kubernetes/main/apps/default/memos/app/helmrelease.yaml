@@ -74,7 +74,6 @@ spec:
             port: 5230
     ingress:
       app:
-        enabled: true
         className: internal
         hosts:
           - host: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
