@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/juanfont/headscale
-              tag: v0.23.0@sha256:ffe793968ef6fbec78a8d095893fe03112e6a74231afe366eb504fbc822afea6
+              tag: v0.24.0@sha256:2a2dcc9fef8f6e520a096743b668e3fd5df06ae422298c808c4e934a78764860
             command: [headscale]
             args: [serve]
             probes:
