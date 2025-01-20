@@ -12,6 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/external
+    - ../../../../components/volsync
   dependsOn:
     - name: dragonfly-cluster
     - name: external-secrets-stores
