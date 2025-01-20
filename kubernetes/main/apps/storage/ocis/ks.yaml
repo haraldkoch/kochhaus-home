@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/gatus/external
+    - ../../../../components/gatus/guarded
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/main/apps/storage/ocis/app
