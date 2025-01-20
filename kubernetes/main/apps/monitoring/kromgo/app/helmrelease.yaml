@@ -39,8 +39,8 @@ spec:
               tag: v0.4.3@sha256:c9148045a3e211ad46d416c3e3bb7ffd4c169a8b6f8e56df03ea68ed1ed5571b
             env:
               PROMETHEUS_URL: http://thanos-query-frontend.monitoring.svc.cluster.local:10902
-              SERVER_HOST: 0.0.0.0
-              HEALTH_HOST: 0.0.0.0
+              SERVER_PORT: &serverPort 80
+              HEALTH_PORT: &healthPort 8080
             probes:
               liveness:
                 enabled: true
@@ -48,7 +48,7 @@ spec:
                 spec:
                   httpGet:
                     path: /-/health
-                    port: 8888
+                    port: *healthPort
                   initialDelaySeconds: 0
                   periodSeconds: 5
                   timeoutSeconds: 1
@@ -59,7 +59,7 @@ spec:
                 spec:
                   httpGet:
                     path: /-/ready
-                    port: 8888
+                    port: *healthPort
                   initialDelaySeconds: 0
                   periodSeconds: 5
                   timeoutSeconds: 1
@@ -91,7 +91,10 @@ spec:
         controller: kromgo
         ports:
           http:
-            port: 8080
+            primary: true
+            port: *serverPort
+          health:
+            port: *healthPort
     ingress:
       app:
         className: external
