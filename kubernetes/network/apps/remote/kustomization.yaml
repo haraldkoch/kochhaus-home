@@ -5,10 +5,11 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ../../templates/alerts
   - ./policy.yaml
   # Flux-Kustomizations
   - ./openssh/ks.yaml
+components:
+  - ../../components/alerts
 transformers:
   - |-
     apiVersion: builtin

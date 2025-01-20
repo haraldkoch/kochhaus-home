@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ../../templates/alerts
   # Flux-Kustomizations
   - ./apprise/ks.yaml
   - ./blackbox-exporter/ks.yaml
@@ -31,6 +30,8 @@ resources:
   - ./x509-certificate-exporter/ks.yaml
   # Standard Resources
   - ./miscellaneous
+components:
+  - ../../components/alerts
 transformers:
   - |-
     apiVersion: builtin

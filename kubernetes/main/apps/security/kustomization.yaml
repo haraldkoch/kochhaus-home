@@ -5,13 +5,14 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ../../templates/alerts
   # Flux-Kustomizations
   - ./authelia/ks.yaml
   - ./dmarc-report/ks.yaml
   - ./external-secrets/ks.yaml
   - ./lldap/ks.yaml
   - ./onepassword-connect/ks.yaml
+components:
+  - ../../components/alerts
 transformers:
   - |-
     apiVersion: builtin

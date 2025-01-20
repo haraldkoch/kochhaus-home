@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ../../templates/alerts
   # Flux-Kustomizations
   - ./cloudflared/ks.yaml
   - ./external-dns/ks.yaml
@@ -15,6 +14,8 @@ resources:
   - ./whoami/ks.yaml
   # Standard Resources
   - ./external-services
+components:
+  - ../../components/alerts
 transformers:
   - |-
     apiVersion: builtin

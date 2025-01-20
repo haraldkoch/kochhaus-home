@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ../../templates/alerts
   # Flux-Kustomizations
   - ./descheduler/ks.yaml
   - ./intel-device-plugin/ks.yaml
@@ -13,6 +12,8 @@ resources:
   - ./node-feature-discovery/ks.yaml
   - ./reloader/ks.yaml
   - ./system-upgrade-controller/ks.yaml
+components:
+  - ../../components/alerts
 transformers:
   - |-
     apiVersion: builtin

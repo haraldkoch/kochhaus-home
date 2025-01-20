@@ -5,12 +5,13 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ../../templates/alerts
   # Flux-Kustomizations
   - ./coredns/ks.yaml
   - ./kube-vip/ks.yaml
   - ./kubelet-csr-approver/ks.yaml
   - ./metrics-server/ks.yaml
+components:
+  - ../../components/alerts
 transformers:
   - |-
     apiVersion: builtin
