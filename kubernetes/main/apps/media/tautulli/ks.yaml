@@ -10,6 +10,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus/internal
   path: ./kubernetes/main/apps/media/tautulli/app
   prune: true
   sourceRef:
