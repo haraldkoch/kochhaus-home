@@ -91,8 +91,8 @@ This Git repository contains the following directories under [Kubernetes](./kube
 ├── 📁 main            # main cluster
 │   ├── 📁 apps           # applications
 │   ├── 📁 bootstrap      # bootstrap procedures
-│   ├── 📁 flux           # core flux configuration
-│   └── 📁 templates      # re-useable components
+│   ├── 📁 components     # re-useable components
+│   └── 📁 flux           # core flux configuration
 └── 📁 registry        # registry cluster (running harbor)
     ├── 📁 apps           # applications
     ├── 📁 bootstrap      # bootstrap procedures

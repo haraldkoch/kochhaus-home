@@ -5,12 +5,13 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ../../templates/alerts
   # Flux-Kustomizations
   - ./cloudnative-pg/ks.yaml
   - ./dragonfly/ks.yaml
   - ./pgadmin/ks.yaml
   - ./postgres-backup/ks.yaml
+components:
+  - ../../components/alerts
 transformers:
   - |-
     apiVersion: builtin

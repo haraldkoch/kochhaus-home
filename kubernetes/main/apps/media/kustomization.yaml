@@ -5,12 +5,13 @@ kind: Kustomization
 resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
-  - ../../templates/alerts
   - ./media-nfs.yaml
   # Flux-Kustomizations
   - ./calibre-web/ks.yaml
   - ./media-browser/ks.yaml
   - ./tautulli/ks.yaml
+components:
+  - ../../components/alerts
 transformers:
   - |-
     apiVersion: builtin
