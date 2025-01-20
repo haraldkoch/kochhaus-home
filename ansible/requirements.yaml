@@ -9,7 +9,7 @@ collections:
   - name: community.sops
     version: 2.0.1
   - name: kubernetes.core
-    version: 5.0.0
+    version: 5.1.0
   - name: onepassword.connect
     version: 2.3.0
 roles:
