@@ -7,8 +7,8 @@ resources:
   - ./namespace.yaml
   - ./policy.yaml
   # Flux-Kustomizations
-  - ./mariadb/ks.yaml
-  - ./rtr/ks.yaml
+  #- ./mariadb/ks.yaml
+  #- ./rtr/ks.yaml
 components:
   - ../../components/alerts
 transformers:
