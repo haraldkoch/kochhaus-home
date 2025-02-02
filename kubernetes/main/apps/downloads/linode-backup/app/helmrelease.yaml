@@ -63,7 +63,6 @@ spec:
                 cpu: 15m
               limits:
                 memory: 512Mi
-                cpu: 1000m
     persistence:
       backup:
         type: nfs

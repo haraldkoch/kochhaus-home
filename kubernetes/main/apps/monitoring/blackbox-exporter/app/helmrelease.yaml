@@ -61,7 +61,6 @@ spec:
         cpu: 15m
         memory: 64M
       limits:
-        cpu: 100m
         memory: 64M
 
     serviceMonitor:

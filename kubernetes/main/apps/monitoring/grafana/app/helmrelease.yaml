@@ -371,7 +371,6 @@ spec:
           cpu: 15m
           memory: 64Mi
         limits:
-          cpu: 100m
           memory: 128Mi
     plugins:
       - grafana-clock-panel
@@ -414,5 +413,4 @@ spec:
         cpu: 50m
         memory: 256Mi
       limits:
-        cpu: 500m
         memory: 512Mi

@@ -43,7 +43,6 @@ spec:
                 cpu: 15m
                 memory: 150M
               limits:
-                cpu: 100m
                 memory: 300M
       browser:
         containers:

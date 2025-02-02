@@ -57,7 +57,6 @@ spec:
         cpu: 25m
         memory: 50Mi
       limits:
-        cpu: 50m
         memory: 100Mi
     tolerations:
       - key: "node-role.kubernetes.io/control-plane"

@@ -70,7 +70,6 @@ spec:
                 cpu: 50m
                 memory: 128Mi
               limits:
-                cpu: 250m
                 memory: 512Mi
     persistence:
       backup:
