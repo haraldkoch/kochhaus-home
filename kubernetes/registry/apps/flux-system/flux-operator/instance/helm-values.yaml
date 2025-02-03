@@ -1,0 +1,77 @@
+---
+instance:
+  cluster:
+    networkPolicy: false
+  components:
+    - source-controller
+    - kustomize-controller
+    - helm-controller
+    - notification-controller
+  sync:
+    name: home-kubernetes
+    kind: GitRepository
+    url: "https://github.com/haraldkoch/kochhaus-home.git"
+    ref: "refs/heads/main"
+    path: kubernetes/registry/flux/cluster
+  kustomize:
+    patches:
+      # Remove the network policies that does not work with k3s
+      - patch: |
+          $patch: delete
+          apiVersion: networking.k8s.io/v1
+          kind: NetworkPolicy
+          metadata:
+            name: not-used
+        target:
+          group: networking.k8s.io
+          kind: NetworkPolicy
+      # Increase the number of reconciliations that can be performed in parallel and bump the resources limits
+      # Ref: https://fluxcd.io/flux/cheatsheets/bootstrap/#increase-the-number-of-workers
+      - patch: |
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --concurrent=8
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --kube-api-qps=500
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --kube-api-burst=1000
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --requeue-dependency=5s
+        target:
+          kind: Deployment
+          name: (kustomize-controller|helm-controller|source-controller)
+      - patch: |
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: not-used
+          spec:
+            template:
+              spec:
+                containers:
+                  - name: manager
+                    resources:
+                      limits:
+                        cpu: 2000m
+                        memory: 2Gi
+        target:
+          kind: Deployment
+          name: (kustomize-controller|helm-controller|source-controller)
+      # Enable Helm near OOM detection
+      # Ref: https://fluxcd.io/flux/cheatsheets/bootstrap/#enable-helm-near-oom-detection
+      - patch: |
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --feature-gates=OOMWatch=true
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --oom-watch-memory-threshold=95
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --oom-watch-interval=500ms
+        target:
+          kind: Deployment
+          name: helm-controller

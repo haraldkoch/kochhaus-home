@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./bjw-s.yaml
   - ./calico.yaml
+  - ./controlplaneio.yaml
   - ./coredns.yaml
   - ./democratic-csi.yaml
   - ./external-dns.yaml
