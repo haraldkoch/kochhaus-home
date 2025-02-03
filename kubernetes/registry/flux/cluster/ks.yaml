@@ -10,7 +10,7 @@ spec:
   targetNamespace: flux-system
   interval: 30m
   path: ./kubernetes/registry/flux/meta
-  prune: false # restore to true
+  prune: true
   wait: true
   sourceRef:
     kind: GitRepository
@@ -31,7 +31,7 @@ spec:
   dependsOn:
     - name: cluster-meta
   path: ./kubernetes/registry/apps
-  prune: false # restore to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

@@ -13,7 +13,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/registry/apps/storage/local-path-provisioner/app
-  prune: false # restore to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
