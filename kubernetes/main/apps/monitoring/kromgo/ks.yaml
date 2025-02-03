@@ -13,7 +13,7 @@ spec:
   components:
     - ../../../../components/gatus/external
   path: ./kubernetes/main/apps/monitoring/kromgo/app
-  prune: false # restore to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/main/apps/dbms/dragonfly/app
-  prune: false # restore to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -35,7 +35,7 @@ spec:
   dependsOn:
     - name: dragonfly
   path: ./kubernetes/main/apps/dbms/dragonfly/cluster
-  prune: false # restore to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
