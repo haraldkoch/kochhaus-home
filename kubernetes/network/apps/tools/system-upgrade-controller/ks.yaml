@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/network/apps/tools/system-upgrade-controller/app
-  prune: false # restore to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -33,7 +33,7 @@ spec:
   dependsOn:
     - name: system-upgrade-controller
   path: ./kubernetes/network/apps/tools/system-upgrade-controller/plans
-  prune: false # restore to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

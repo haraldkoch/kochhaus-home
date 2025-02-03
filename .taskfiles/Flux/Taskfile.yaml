@@ -67,7 +67,7 @@ tasks:
     summary: |
       Args:
         cluster: Cluster to run command against (required)
-    cmd: flux --context {{.cluster}} reconcile --namespace flux-system kustomization cluster --with-source
+    cmd: flux --context {{.cluster}} reconcile --namespace flux-system kustomization home-kubernetes --with-source
     requires:
       vars: ["cluster"]
 

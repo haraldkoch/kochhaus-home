@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets-stores
   path: ./kubernetes/network/apps/default/kochhaus-docs/app
-  prune: false # restore to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

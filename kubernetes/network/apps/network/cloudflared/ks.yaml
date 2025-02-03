@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-dns-bind
   path: ./kubernetes/network/apps/network/cloudflared/app
-  prune: false # restore to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
