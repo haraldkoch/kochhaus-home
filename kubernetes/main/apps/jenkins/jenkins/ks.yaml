@@ -16,7 +16,7 @@ spec:
     - name: external-secrets-stores
     - name: volsync
   path: ./kubernetes/main/apps/jenkins/jenkins/app
-  prune: true
+  prune: false # restore to true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

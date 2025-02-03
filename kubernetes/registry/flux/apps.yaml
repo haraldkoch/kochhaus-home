@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 30m
   path: ./kubernetes/registry/apps
-  prune: true
+  prune: false # restore to true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

@@ -17,7 +17,7 @@ spec:
     - name: dragonfly-cluster
     - name: external-secrets-stores
   path: ./kubernetes/main/apps/security/authelia/app
-  prune: true
+  prune: false # restore to true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

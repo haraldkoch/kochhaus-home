@@ -14,7 +14,7 @@ spec:
     - ../../../../components/gatus/internal
     - ../../../../components/volsync
   path: ./kubernetes/main/apps/media/tautulli/app
-  prune: true
+  prune: false # restore to true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

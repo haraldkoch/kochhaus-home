@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: cert-manager
   path: ./kubernetes/network/apps/tools/k8s-ycl/app
-  prune: true
+  prune: false # restore to true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
