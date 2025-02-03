@@ -6,6 +6,7 @@ resources:
   - ./backube.yaml
   - ./bjw-s.yaml
   - ./calico.yaml
+  - ./controlplaneio.yaml
   - ./coredns.yaml
   - ./descheduler.yaml
   - ./emqx.yaml
