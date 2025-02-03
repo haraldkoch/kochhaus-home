@@ -6,7 +6,7 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
-  - ./addons/ks.yaml
+  - ./flux-operator/ks.yaml
 components:
   - ../../components/alerts
 transformers:

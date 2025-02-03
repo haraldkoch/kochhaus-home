@@ -8,6 +8,7 @@ resources:
   - ./bjw-s.yaml
   - ./calico.yaml
   - ./cloudnative-pg.yaml
+  - ./controlplaneio.yaml
   - ./coredns.yaml
   - ./csi-driver-nfs.yaml
   - ./democratic-csi.yaml
