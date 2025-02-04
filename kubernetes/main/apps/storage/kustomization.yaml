@@ -7,7 +7,6 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./csi-driver-nfs/ks.yaml
-  - ./minio/ks.yaml
   - ./nextcloud/ks.yaml
   - ./ocis/ks.yaml
   - ./onedrive/ks.yaml
