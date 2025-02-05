@@ -28,3 +28,13 @@ spec:
   valuesFrom:
     - kind: ConfigMap
       name: flux-instance-helm-values
+  postRenderers:
+    - kustomize:
+        patches:
+            # Don't pull the repo every 1 minute. Replace once the chart supports this
+          - patch: |
+              - op: replace
+                path: /spec/sync/interval
+                value: 30m
+            target:
+              kind: FluxInstance
