@@ -36,7 +36,7 @@ spec:
     nextcloud:
       extraInitContainers:
         - name: init-db
-          image: ghcr.io/haraldkoch/postgres-init:16.6@sha256:be83955b56fdeb0155741ccd92bfbf164aa81e7b53d5979516026d84e9040962
+          image: ghcr.io/haraldkoch/postgres-init:16.6@sha256:eb1fe2e0c3f815e0ce2e1e59bbce7fca6a2f157a295c173b5e5c261a17fd82da
           envFrom:
             - secretRef:
                 name: nextcloud-secret
