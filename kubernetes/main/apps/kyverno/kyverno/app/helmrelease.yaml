@@ -36,12 +36,12 @@ spec:
       image:
         registry: registry.k8s.io
         repository: kubectl
-        tags: v1.32.1
+        tag: v1.32.1
     policyReportsCleanup:
       image:
         registry: registry.k8s.io
         repository: kubectl
-        tags: v1.32.1
+        tag: v1.32.1
     backgroundController:
       serviceMonitor:
         enabled: true
