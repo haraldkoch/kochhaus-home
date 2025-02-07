@@ -34,14 +34,10 @@ spec:
         registry: ghcr.io
     webhooksCleanup:
       image:
-        registry: registry.k8s.io
-        repository: kubectl
-        tag: v1.32.1
+        registry: docker.io
     policyReportsCleanup:
       image:
-        registry: registry.k8s.io
-        repository: kubectl
-        tag: v1.32.1
+        registry: docker.io
     backgroundController:
       serviceMonitor:
         enabled: true
