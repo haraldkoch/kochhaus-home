@@ -29,6 +29,19 @@ spec:
       enabled: true
       annotations:
         grafana_folder: Infrastructure
+    global:
+      image:
+        registry: ghcr.io
+    webhooksCleanup:
+      image:
+        registry: registry.k8s.io
+        repository: kubectl
+        tags: v1.32.1
+    policyReportsCleanup:
+      image:
+        registry: registry.k8s.io
+        repository: kubectl
+        tags: v1.32.1
     backgroundController:
       serviceMonitor:
         enabled: true
