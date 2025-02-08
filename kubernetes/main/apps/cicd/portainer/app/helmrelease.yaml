@@ -23,13 +23,13 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: longhorn
-      namespace: storage
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   values:
     persistence:
       # FIXME: volsync
       size: 128Mi
-      storageClass: longhorn
+      storageClass: ceph-block
     service:
       type: ClusterIP
     ingress:
@@ -48,4 +48,4 @@ spec:
             - path: /
               pathType: Prefix
       tls:
-        - hosts: ["*host"]
+        - hosts: [*host]
