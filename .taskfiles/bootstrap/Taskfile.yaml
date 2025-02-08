@@ -1,0 +1,36 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: '3'
+
+vars:
+
+tasks:
+
+  apps:
+    desc: Bootstrap apps into the cluster
+    summary: |
+      Args:
+        cluster: Cluster to run command against (required)
+    cmds:
+      - kubectl create namespace flux-system --dry-run=client -o yaml | kubectl apply --server-side --filename -
+      - '{{if eq .BITBUCKET_DEPLOY_KEY_EXISTS "true"}}sops exec-file {{.BITBUCKET_DEPLOY_KEY_FILE}} "kubectl apply --server-side --filename {}"{{end}}'
+      - '{{if eq .SOPS_SECRET_EXISTS "false"}}cat {{.SOPS_AGE_KEY_FILE}} | kubectl --namespace flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin{{end}}'
+      - sops exec-file {{.KUBERNETES_DIR}}/{{.cluster}}/flux/meta/settings/cluster-secrets.sops.yaml "kubectl apply --server-side --filename {}"
+      - kubectl apply --server-side --filename {{.KUBERNETES_DIR}}/{{.cluster}}/flux/meta/settings/cluster-settings.yaml
+      - helmfile --file {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/apps/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+    vars:
+      APPLY_SECRETS:
+        sh: find {{.KUBERNETES_DIR}}/{{.cluster}}/{bootstrap/apps,flux/meta} -type f -name '*.sops.yaml'
+      BITBUCKET_DEPLOY_KEY_FILE: '{{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/flux/github-deploy-key.sops.yaml'
+      BITBUCKET_DEPLOY_KEY_EXISTS:
+        sh: test -f {{.BITBUCKET_DEPLOY_KEY_FILE}} && echo true || echo false
+      KUBECONFIG: "{{.KUBERNETES_DIR}}/{{.cluster}}/kubeconfig"
+      SOPS_SECRET_EXISTS:
+        sh: kubectl --namespace flux-system get secret sops-age &>/dev/null && echo true || echo false
+    preconditions:
+      - test -f {{.KUBECONFIG}}
+      - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/bootstrap/apps/helmfile.yaml
+      - test -f {{.SOPS_AGE_KEY_FILE}}
+      - which helmfile kubectl sops
+    requires:
+      vars: ["cluster"]

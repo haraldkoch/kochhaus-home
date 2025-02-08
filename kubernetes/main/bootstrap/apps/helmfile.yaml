@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/helmfile
+
+helmDefaults:
+  timeout: 600
+  force: true
+  wait: true
+  waitForJobs: true
+
+releases:
+  - name: prometheus-operator-crds
+    namespace: observability
+    chart: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
+    version: 17.0.2
+
+  - name: flux-operator
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
+    version: 0.13.0
+    values:
+      - ../apps/flux-system/flux-operator/app/helm-values.yaml
+    needs:
+      - observability/prometheus-operator-crds
+
+  - name: flux-instance
+    namespace: flux-system
+    chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
+    version: 0.13.0
+    wait: false
+    values:
+      - ../apps/flux-system/flux-operator/instance/helm-values.yaml
+    needs:
+      - flux-system/flux-operator

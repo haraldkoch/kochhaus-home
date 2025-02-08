@@ -15,6 +15,7 @@ env:
 
 includes:
   ansible: .taskfiles/Ansible/Taskfile.yaml
+  bootstrap: .taskfiles/bootstrap/Taskfile.yaml
   cluster: .taskfiles/Cluster/Taskfile.yaml
   database:
     aliases: ["db"]
