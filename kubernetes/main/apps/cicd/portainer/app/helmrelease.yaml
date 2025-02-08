@@ -30,6 +30,8 @@ spec:
       # FIXME: volsync
       size: 128Mi
       storageClass: longhorn
+    service:
+      type: ClusterIP
     ingress:
       enabled: true
       ingressClassName: internal
