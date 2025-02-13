@@ -109,5 +109,6 @@ spec:
               kind: ServiceMonitor
               metadata:
                 name: dragonfly-operator
+                namespace: dbms
               spec:
                 fallbackScrapeProtocol: PrometheusText1.0.0
