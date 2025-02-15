@@ -31,7 +31,7 @@ spec:
           glance:
             image:
               repository: docker.io/glanceapp/glance
-              tag: v0.7.1@sha256:4604ac19c011ba357da08a6a99d60d7ff3f8189c34dbe14a56507edb12a51e8f
+              tag: v0.7.2@sha256:c86fe9822cc4f75a98bf5de17f568fb6afea4080822c9b5b274a2dfd1dea720a
             args:
               - --config
               - /config/glance.yml
