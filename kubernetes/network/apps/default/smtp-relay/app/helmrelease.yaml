@@ -37,8 +37,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/foxcpp/maddy
-              tag: 0.7.1
+              repository: ghcr.io/haraldkoch/maddy
+              tag: 0.8.1@sha256:909cf24730854ee243f0e38d5c61b8b74ac9aea7a1577aa1cb3ac59ca1a5dd9a
             env:
               SMTP_RELAY_SMTP_PORT: &port 25
               SMTP_RELAY_METRICS_PORT: &metricsPort 8080
