@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: portainer
-      version: 1.0.59
+      version: 1.0.60
       sourceRef:
         kind: HelmRepository
         name: portainer
