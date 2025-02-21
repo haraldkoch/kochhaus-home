@@ -5,7 +5,7 @@
       "description": "Auto merge KPS minors and patches",
       "matchDatasources": ["helm"],
       "automerge": true,
-      "automergeType": "branch",
+      "automergeType": "pr",
       "matchUpdateTypes": ["minor", "patch"],
       "matchPackageNames": ["kube-prometheus-stack"]
     }

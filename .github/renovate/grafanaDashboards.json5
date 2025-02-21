@@ -22,7 +22,7 @@
     {
       "addLabels": ["renovate/grafana-dashboard"],
       "automerge": true,
-      "automergeType": "branch",
+      "automergeType": "pr",
       "matchDatasources": ["custom.grafana-dashboards"],
       "matchUpdateTypes": ["major"],
       "semanticCommitType": "chore",
