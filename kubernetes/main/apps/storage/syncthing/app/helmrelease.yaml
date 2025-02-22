@@ -31,7 +31,7 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/syncthing/syncthing
+              repository: ghcr.io/haraldkoch/syncthing
               tag: 1.29.2
             probes:
               liveness:
