@@ -48,7 +48,7 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/filebrowser/filebrowser
+              repository: ghcr.io/haraldkoch/filebrowser
               tag: v2.32.0
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
