@@ -31,8 +31,8 @@ spec:
         containers:
           api:
             image:
-              repository: docker.io/1password/connect-api
-              tag: 1.7.3@sha256:0601c7614e102eada268dbda6ba4b5886ce77713be2c332ec6a2fd0f028484ba
+              repository: ghcr.io/haraldkoch/onepassword-connect-api
+              tag: 1.7.3@sha256:257a6ca59b806fec2c9c6df0acaef633a39e600eefba0ba03396554c00e065c1
             env:
               XDG_DATA_HOME: &configDir /config
               OP_BUS_PORT: 11220
@@ -74,8 +74,8 @@ spec:
                 memory: 100Mi
           sync:
             image:
-              repository: docker.io/1password/connect-sync
-              tag: 1.7.3@sha256:2f17621c7eb27bbcb1f86bbc5e5a5198bf54ac3b9c2ffac38064d03c932b07d5
+              repository: ghcr.io/haraldkoch/onepassword-sync
+              tag: 1.7.3@sha256:7e30af4d83e6884981b2d47e6cfe5cca056da20b182e4c4c6def9e8ac65c0982
             env:
               XDG_DATA_HOME: *configDir
               OP_HTTP_PORT: &syncPort 8081
