@@ -393,6 +393,10 @@ spec:
         hajimari.io/appName: "grafana"
         hajimari.io/icon: simple-icons:grafana
       hosts: ["grafana.${CLUSTER_DOMAIN}"]
+    downloadDashboardsImage:
+      registry: quay.io
+      repository: curl/curl
+      tag: 8.12.1@sha256:84ec2a70279219a45d327ec1f2f112d019bc9dcdd0e19f1ba7689b646c2de0c2
     imageRenderer:
       enabled: true
       image:
