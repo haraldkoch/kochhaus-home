@@ -10,6 +10,10 @@ on:
     branches: ["main"]
     paths: [".github/workflows/schemas.yaml"]
 
+env:
+  HOMEBREW_NO_ANALYTICS: "1"
+  UV_SYSTEM_PYTHON: "1"
+
 jobs:
   publish:
     name: Schemas (cloudflare)
@@ -22,30 +26,34 @@ jobs:
         uses: actions/create-github-app-token@v1
         id: app-token
         with:
-          app-id: "${{ secrets.BOT_APP_ID }}"
-          private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
 
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          token: "${{ steps.app-token.outputs.token }}"
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Setup Homebrew
         uses: Homebrew/actions/setup-homebrew@master
+        with:
+          stable: true
 
       - name: Setup Workflow Tools
-        shell: bash
-        run: brew install kubernetes-cli
+        run: brew install kubectl uv
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.x
+          python-version: 3.12.x
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18.x
+          node-version: 22.x
+
+      - name: Install Python Dependencies
+        run: uv pip install pyyaml
 
       - name: Write kubeconfig
         id: kubeconfig
@@ -56,8 +64,7 @@ jobs:
 
       - name: Download and run crd-extractor
         env:
-          KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
-        shell: bash
+          KUBECONFIG: ${{ steps.kubeconfig.outputs.filePath }}
         run: |
           curl -fsSL -o $GITHUB_WORKSPACE/crd-extractor.sh \
               https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/Utilities/crd-extractor.sh
@@ -67,7 +74,7 @@ jobs:
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
-          apiToken: "${{ secrets.CLOUDFLARE_API_TOKEN }}"
-          accountId: "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           workingDirectory: /home/runner/.datree/crdSchemas
           command: pages deploy --project-name=kochhaus-schemas --branch main .
