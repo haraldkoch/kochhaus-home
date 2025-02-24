@@ -8,10 +8,7 @@ on:
     branches: ["main"]
     paths: [".github/labels.yaml"]
   schedule:
-    - cron: "0 0 * * *" # Every day at midnight
-
-permissions:
-  issues: write
+    - cron: "0 0 * * *" # Daily at Midnight
 
 jobs:
   label-sync:
