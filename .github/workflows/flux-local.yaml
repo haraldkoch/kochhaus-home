@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.process-changes.outputs.matrix }}
-      any_changed: ${{ steps.process-change.outputs.any_changed }}
+      any_changed: ${{ steps.changed-clusters.outputs.any_changed }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
           changed=$(echo '${{ steps.changed-clusters.outputs.all_changed_and_modified_files }}' | jq -r '. | @json')
 
           if echo "$changed" | grep -q "kubernetes/shared"; then
-            echo 'matrix=["kubernetes/main", "kubernetes/utility"]' >> "$GITHUB_OUTPUT"
+            echo 'matrix=["kubernetes/main", "kubernetes/network", "kubernetes/registry"]' >> "$GITHUB_OUTPUT"
           else
             if [[ "$changed" == "["*"]" ]]; then
               echo "matrix=$changed" >> "$GITHUB_OUTPUT"
