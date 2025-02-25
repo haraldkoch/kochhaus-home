@@ -41,7 +41,7 @@ jobs:
     name: Extract Images
     needs: changed-clusters
     runs-on: ubuntu-latest
-    if: ${{ needs.changed-cluster.outputs.any_changed == 'true' }}
+    if: ${{ needs.changed-clusters.outputs.any_changed == 'true' }}
     strategy:
       matrix:
         branches: ["default", "pull"]
@@ -104,8 +104,14 @@ jobs:
         paths: ${{ fromJSON(needs.changed-clusters.outputs.clusters) }}
       max-parallel: 4
       fail-fast: false
-    if: ${{ needs.changed-clusters.outputs.any_changed == 'true' }}
+    if: ${{ needs.changed-clusters.outputs.any_changed == 'true' && needs.compare-images.outputs.images != '[]' }}
     steps:
+      - name: Grab Cluster Name
+        run: |
+          cluster="${{ matrix.paths }}"
+          cluster="${cluster/kubernetes\//}"
+          echo "cluster=${cluster^^}" >> $GITHUB_ENV
+
       - name: Inspect Image
         run: docker buildx imagetools inspect ${{ matrix.images }}
 
