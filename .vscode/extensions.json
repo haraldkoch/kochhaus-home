@@ -9,8 +9,10 @@
         "redhat.vscode-yaml",
         "signageos.signageos-vscode-sops",
         "will-stone.in-any-case",
+        "EditorConfig.editorconfig",
         "BriteSnow.vscode-toggle-quotes",
         "HashiCorp.terraform",
         "PKief.material-icon-theme",
+        "Gruntfuggly.todo-tree"
     ]
 }

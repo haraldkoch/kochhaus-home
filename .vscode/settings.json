@@ -31,7 +31,7 @@
     "yaml.schemaStore.enable": true,
     "yaml.schemas": {
         "ansible": "ansible/*.yml",
-        "kubernetes": "kubernetes/*.yaml"
+        "kubernetes": "./kubernetes/**/*.yaml"
     },
     "sops.configPath": "",
     "sops.binPath": ""
