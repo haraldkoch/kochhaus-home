@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
+---
+# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+talosVersion: v1.9.4
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: v1.32.2
+
+clusterName: kubernetes
+endpoint: https://192.168.20.66:6443
+
+clusterPodNets:
+  - "10.42.0.0/16"
+clusterSvcNets:
+  - "10.43.0.0/16"
+
+additionalApiServerCertSans: &sans
+  - "192.168.20.66"
+  - "127.0.0.1"
+additionalMachineCertSans: *sans
+
+# Disable built-in Flannel to use Cilium
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: "harbor"
+    ipAddress: "192.168.20.65"
+    installDisk: "/dev/vda1"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/59d62cee3be51c032d5d3d3d998cdd89c6e800be0f364c547b85fcc41fb55482
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "52:54:00:72:ea:ea"
+        dhcp: false
+        addresses:
+          - "192.168.20.65/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "192.168.20.1"
+        mtu: 1500
+        vip:
+          ip: "192.168.20.66"
+
+# Global patches
+patches:
+  - "@./patches/global/machine-files.yaml"
+  - "@./patches/global/machine-kubelet.yaml"
+  - "@./patches/global/machine-network.yaml"
+  - "@./patches/global/machine-sysctls.yaml"
+  - "@./patches/global/machine-time.yaml"
+  - "@./patches/global/machine-openebs.yaml"
+
+# Controller patches
+controlPlane:
+  patches:
+    - "@./patches/controller/admission-controller-patch.yaml"
+    - "@./patches/controller/cluster.yaml"
+
