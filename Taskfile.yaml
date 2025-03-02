@@ -6,16 +6,22 @@ set: [pipefail]
 shopt: [globstar]
 
 vars:
-  ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
-  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+  ANSIBLE_DIR: '{{.ROOT_DIR}}/ansible'
+  BOOTSTRAP_DIR: '{{.ROOT_DIR}}/bootstrap'
+  KUBERNETES_DIR: '{{.ROOT_DIR}}/kubernetes'
+  SCRIPTS_DIR: '{{.ROOT_DIR}}/scripts'
+  TALOS_DIR: '{{.ROOT_DIR}}/talos'
+  PRIVATE_DIR: '{{.ROOT_DIR}}/.private'
+  TALOSCONFIG: '{{.ROOT_DIR}}/talos/clusterconfig/talosconfig'
 
 env:
   KUBECONFIG: "{{.KUBERNETES_DIR}}/main/kubeconfig:{{.KUBERNETES_DIR}}/network/kubeconfig:{{.KUBERNETES_DIR}}/registry/kubeconfig"
   SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
+  TALOSCONFIG: '{{.TALOSCONFIG}}'
 
 includes:
   ansible: .taskfiles/Ansible/Taskfile.yaml
-  bootstrap: .taskfiles/bootstrap/Taskfile.yaml
+  bootstrap: .taskfiles/bootstrap
   cluster: .taskfiles/Cluster/Taskfile.yaml
   database:
     aliases: ["db"]
@@ -30,6 +36,7 @@ includes:
     aliases: ["k8s", "ku"]
     taskfile: .taskfiles/Kubernetes/Taskfile.yaml
   rook: .taskfiles/Rook/Taskfile.yaml
+  talos: .taskfiles/talos
   volsync:
     aliases: ["vs"]
     taskfile: .taskfiles/VolSync/Taskfile.yaml
