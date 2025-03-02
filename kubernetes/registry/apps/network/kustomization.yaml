@@ -2,9 +2,9 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: network
+components:
+  - ../../components/common
 resources:
-  - ./namespace.yaml
-  - ./echo-server/ks.yaml
   - ./external-dns/ks.yaml
-  - ./metallb/ks.yaml
   - ./nginx/ks.yaml

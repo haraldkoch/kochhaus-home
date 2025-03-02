@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -27,17 +27,12 @@ spec:
       localpv:
         image:
           registry: quay.io/
-        resources:
-          requests:
-            cpu: 100m
-            memory: 48Mi
-          limits:
-            memory: 96Mi
+        basePath: &hostPath /var/openebs/local
       hostpathClass:
         enabled: true
-        name: openebs-hostpath
+        name: local-hostpath
         isDefaultClass: false
-        basePath: /var/lib/rancher/k3s/openebs-hostpath
+        basePath: *hostPath
       helperPod:
         image:
           registry: quay.io/
