@@ -1,0 +1,30 @@
+# not rate limited
+      3 coredns/coredns:1.12.0
+      1 docker:dind
+      2 docker.io/alpine:3.21.3
+      1 docker.io/grafana/grafana:11.5.1
+      1 docker.io/grafana/grafana-image-renderer:3.12.1
+      1 docker.io/grafana/loki:3.4.2
+      6 docker.io/grafana/promtail:3.0.0
+      1 docker.io/rancher/system-upgrade-controller:v0.15.0
+      6 docker.io/rook/ceph:v1.16.4
+      1 driveone/onedrive:2.5.4
+      1 intel/intel-deviceplugin-operator:0.32.0
+      3 intel/intel-gpu-plugin:0.32.0
+      1 jenkins/jenkins:2.498
+      1 nextcloud:30.0.6-fpm-alpine
+      1 nginx:alpine
+
+# rate limited
+      1 docker.io/dpage/pgadmin4:9.0
+      1 docker.io/fallenbagel/jellyseerr:2.3.0@sha256:df53a7b06006e9da117a7072a55cf5d8b2071a6272f6bb329d8ca62b6f5c08a6
+      1 docker.io/glanceapp/glance:v0.7.3@sha256:ecf8c49224cff1264fc028eea9a91cd8fb5aab39ab75c0bebd30235ef42d0cab
+      1 docker.io/mtlynch/picoshare:1.4.5
+      2 docker.io/owncloud/ocis:7.0.1
+      1 docker.io/prodrigestivill/postgres-backup-local:17@sha256:483fa15ecd998302bd312fc380cb1b3683a940881d9099d6dfe65bcc1e2714e8
+      2 docker.io/traefik/whoami:v1.10.4
+      1 docmost/docmost:0.8.2
+      1 dperson/openvpn-client:latest
+      1 fffonion/tplink-plug-exporter:0.4.0
+      3 joseluisq/static-web-server:2.36.0-alpine
+      1 kiwigrid/k8s-sidecar:1.30.0

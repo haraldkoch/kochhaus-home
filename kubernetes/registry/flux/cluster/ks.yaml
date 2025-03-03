@@ -12,7 +12,7 @@ spec:
       name: sops-age
   interval: 30m
   path: ./kubernetes/registry/flux/meta
-  prune: true
+  prune: false # restore to true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -37,7 +37,7 @@ spec:
       namespace: flux-system
   interval: 30m
   path: ./kubernetes/registry/apps
-  prune: true
+  prune: false # restore to true
   postBuild:
     substituteFrom:
       - name: cluster-settings

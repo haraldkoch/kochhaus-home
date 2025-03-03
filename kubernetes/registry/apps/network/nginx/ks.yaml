@@ -13,8 +13,8 @@ spec:
     - name: cert-manager-tls
       namespace: cert-manager
   interval: 30m
-  path: ./kubernetes/registry/apps/network/nginx/internal
-  prune: true
+  path: kubernetes/registry/apps/network/nginx/internal
+  prune: false # restore to true
   sourceRef:
     kind: GitRepository
     name: flux-system
