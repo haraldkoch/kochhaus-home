@@ -46,8 +46,13 @@ jobs:
           KUBECONFIG: "${{ steps.kubeconfig.outputs.filePath }}"
         shell: bash
         run: |
+          if [ "${{ matrix.cluster }}" == "registry" ]; then
+            ks=flux-system
+          else
+            ks=home-kubernetes
+          fi
           flux \
               --context "${{ matrix.cluster }}" \
               --namespace flux-system \
-              reconcile ks home-kubernetes \
+              reconcile ks $ks \
               --with-source
