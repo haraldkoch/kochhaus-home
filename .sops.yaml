@@ -1,15 +1,16 @@
 ---
 creation_rules:
-  - path_regex: kubernetes/.*\.sops\.ya?ml
-    encrypted_regex: ^(data|stringData)$
-    key_groups:
-      - age:
-          - age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r
+  - path_regex: talos/.*\.sops\.ya?ml
+    mac_only_encrypted: true
+    age: "age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r"
+  - path_regex: (bootstrap|kubernetes)/.*\.sops\.ya?ml
+    encrypted_regex: "^(data|stringData)$"
+    mac_only_encrypted: true
+    age: "age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r"
   - path_regex: kubernetes/.*\.sops\.(env|ini|json|pem|toml)
-    key_groups:
-      - age:
-          - age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r
+    age: "age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r"
   - path_regex: ansible/.*\.sops\.ya?ml
-    key_groups:
-      - age:
-          - age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r
+    age: "age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r"
+stores:
+  yaml:
+    indent: 2

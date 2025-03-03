@@ -1,0 +1,34 @@
+[env]
+_.python.venv = { path = "{{config_root}}/.venv", create = true }
+ROOT_DIR = "{{config_root}}"
+KUBERNETES_DIR = '{{config_root}}/kubernetes'
+SCRIPTS_DIR = '{{config_root}}/scripts'
+BOOTSTRAP_DIR = '{{config_root}}/bootstrap'
+TALOS_DIR = '{{config_root}}/talos'
+KUBECONFIG = "{{config_root}}/kubeconfig"
+SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
+TALOSCONFIG = "{{config_root}}/talos/clusterconfig/talosconfig"
+
+[tasks.deps]
+description = "Install dependencies"
+run = "uv pip install -r requirements.txt"
+
+[tools]
+# Template tools
+python = "3.13"
+uv = "latest"
+# Operations tools
+"aqua:budimanjojo/talhelper" = "3.0.19"
+"aqua:cloudflare/cloudflared" = "2025.2.0"
+"aqua:FiloSottile/age" = "1.2.1"
+"aqua:fluxcd/flux2" = "2.5.0"
+"aqua:getsops/sops" = "3.9.4"
+"aqua:go-task/task" = "3.41.0"
+"aqua:helm/helm" = "3.17.1"
+"aqua:helmfile/helmfile" = "0.171.0"
+"aqua:jqlang/jq" = "1.7.1"
+"aqua:kubernetes-sigs/kustomize" = "5.6.0"
+"aqua:kubernetes/kubectl" = "1.32.2"
+"aqua:mikefarah/yq" = "4.45.1"
+"aqua:siderolabs/talos" = "1.9.4"
+"aqua:yannh/kubeconform" = "0.6.7"

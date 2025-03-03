@@ -2,8 +2,11 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: kube-system
+components:
+  - ../../components/common
 resources:
-  - ./namespace.yaml
+  - ./cilium/ks.yaml
   - ./coredns/ks.yaml
-  - ./kube-vip/ks.yaml
   - ./metrics-server/ks.yaml
+  - ./reloader/ks.yaml
