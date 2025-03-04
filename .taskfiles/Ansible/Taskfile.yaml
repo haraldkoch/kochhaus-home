@@ -6,7 +6,7 @@ vars:
   PYTHON_BIN: python3
 
 env:
-  PATH: "{{.ROOT_DIR}}/.venv/bin:$PATH"
+  PATH: "{{.ROOT_DIR}}/.venv/bin:{{.PATH}}"
   VIRTUAL_ENV: "{{.ROOT_DIR}}/.venv"
   ANSIBLE_COLLECTIONS_PATH: "{{.ROOT_DIR}}/.venv/galaxy"
   ANSIBLE_ROLES_PATH: "{{.ROOT_DIR}}/.venv/galaxy/ansible_roles"
