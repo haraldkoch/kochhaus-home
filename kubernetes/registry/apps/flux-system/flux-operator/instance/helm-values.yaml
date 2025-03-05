@@ -13,7 +13,7 @@ instance:
   sync:
     kind: GitRepository
     url: "https://github.com/haraldkoch/kochhaus-home.git"
-    ref: "refs/heads/registry-talos"
+    ref: "refs/heads/main"
     path: kubernetes/registry/flux/cluster
   kustomize:
     patches:
