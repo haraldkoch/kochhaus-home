@@ -10,7 +10,8 @@ spec:
     labels:
       app.kubernetes.io/name: *appname
   dependsOn:
-    - name: cert-manager
+    - name: cert-manager-issuers
+      namespace: cert-manager
   interval: 10m
   path: ./kubernetes/network/apps/tools/k8s-ycl/app
   prune: false # reset to true

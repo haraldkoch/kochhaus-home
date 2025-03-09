@@ -13,7 +13,9 @@ spec:
     - ../../../../components/volsync
   dependsOn:
     - name: external-secrets-stores
+      namespace: external-secrets
     - name: node-feature-discovery-rules
+      namespace: tools
   interval: 30m
   path: ./kubernetes/network/apps/default/zigbee2mqtt/app
   postBuild:

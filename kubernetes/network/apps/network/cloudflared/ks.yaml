@@ -11,6 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-dns-bind
+      namespace: network
   interval: 30m
   path: ./kubernetes/network/apps/network/cloudflared/app
   prune: false # reset to true

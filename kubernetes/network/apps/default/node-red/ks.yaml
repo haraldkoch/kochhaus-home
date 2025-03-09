@@ -13,6 +13,7 @@ spec:
     - ../../../../components/volsync
   dependsOn:
     - name: external-secrets-stores
+      namespace: external-secrets
   interval: 30m
   path: ./kubernetes/network/apps/default/node-red/app
   postBuild:
