@@ -1,12 +1,11 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/kustomization-kustomize-v1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app node-red
-  namespace: flux-system
+  namespace: &namespace default
 spec:
-  targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -14,18 +13,20 @@ spec:
     - ../../../../components/volsync
   dependsOn:
     - name: external-secrets-stores
-  path: ./kubernetes/network/apps/default/node-red/app
-  prune: false # reset to true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-  wait: false
   interval: 30m
-  timeout: 5m
+  path: ./kubernetes/network/apps/default/node-red/app
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CLAIM: node-red-config-v2
       VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_UID: "568"
+      VOLSYNC_CLAIM: node-red-config-v2
       VOLSYNC_GID: "568"
+      VOLSYNC_UID: "568"
+  prune: false # reset to true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
+  wait: false

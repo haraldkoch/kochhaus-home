@@ -2,20 +2,13 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: observability
+components:
+  - ../../components/common
+  - ../../components/alerts
 resources:
-  - ./namespace.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./omada-exporter/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
   - ./promtail/ks.yaml
   - ./smartctl-exporter/ks.yaml
-components:
-  - ../../components/alerts
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: NamespaceTransformer
-    metadata:
-      name: not-used
-      namespace: observability
-    unsetOnly: true

@@ -2,21 +2,13 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+components:
+  - ../../components/common
+  - ../../components/alerts
 resources:
-  - ./namespace.yaml
   - ./descheduler/ks.yaml
   - ./k8s-ycl/ks.yaml
   - ./kured/ks.yaml
   - ./node-feature-discovery/ks.yaml
   - ./reloader/ks.yaml
   - ./system-upgrade-controller/ks.yaml
-components:
-  - ../../components/alerts
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: NamespaceTransformer
-    metadata:
-      name: not-used
-      namespace: tools
-    unsetOnly: true

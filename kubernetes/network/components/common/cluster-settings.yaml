@@ -1,9 +1,9 @@
 ---
+# yaml-language-server: $schema=https://kubernetesjsonschema.dev/v1.18.1-standalone-strict/configmap-v1.json
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: cluster-settings
-  namespace: flux-system
 data:
   TIMEZONE: "America/Toronto"
 
