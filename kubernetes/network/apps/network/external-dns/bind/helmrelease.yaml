@@ -45,7 +45,6 @@ spec:
       - --rfc2136-tsig-axfr
       - --rfc2136-tsig-keyname=externaldns
       - --rfc2136-tsig-secret-alg=hmac-sha256
-    triggerLoopOnEvent: true
     policy: sync
     sources: ["crd", "ingress", "service"]
     # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
