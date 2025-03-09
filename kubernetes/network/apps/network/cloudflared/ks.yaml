@@ -14,7 +14,7 @@ spec:
       namespace: network
   interval: 30m
   path: ./kubernetes/network/apps/network/cloudflared/app
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

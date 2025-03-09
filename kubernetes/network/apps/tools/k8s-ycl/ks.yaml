@@ -14,7 +14,7 @@ spec:
       namespace: cert-manager
   interval: 10m
   path: ./kubernetes/network/apps/tools/k8s-ycl/app
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

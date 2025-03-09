@@ -15,7 +15,7 @@ spec:
 
   interval: 30m
   path: ./kubernetes/network/apps/network/external-dns/bind
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

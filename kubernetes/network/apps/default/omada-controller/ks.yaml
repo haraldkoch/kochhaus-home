@@ -21,7 +21,7 @@ spec:
       VOLSYNC_CLAIM: omada-data-v1
       VOLSYNC_GID: "508"
       VOLSYNC_UID: "508"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

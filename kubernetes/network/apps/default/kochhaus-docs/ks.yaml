@@ -14,7 +14,7 @@ spec:
       namespace: external-secrets
   interval: 30m
   path: ./kubernetes/network/apps/default/kochhaus-docs/app
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
