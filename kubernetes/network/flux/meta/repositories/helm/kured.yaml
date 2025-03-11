@@ -6,5 +6,5 @@ metadata:
   name: kured
   namespace: flux-system
 spec:
-  interval: 2h
+  interval: 1h
   url: https://kubereboot.github.io/charts/
