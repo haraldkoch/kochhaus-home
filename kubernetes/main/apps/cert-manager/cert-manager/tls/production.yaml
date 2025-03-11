@@ -3,9 +3,9 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${CLUSTER_DOMAIN/./-}-production"
+  name: "${CLUSTER_DOMAIN/./-}"
 spec:
-  secretName: "${CLUSTER_DOMAIN/./-}-production-tls"
+  secretName: "tls.${CLUSTER_DOMAIN/./-}"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
