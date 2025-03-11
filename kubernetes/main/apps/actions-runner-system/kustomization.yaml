@@ -9,5 +9,3 @@ components:
 resources:
   - ./gha-runner-scale-set-controller/ks.yaml
   - ./gha-runner-scale-set/ks.yaml
-components:
-  - ../../components/alerts
