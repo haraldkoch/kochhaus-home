@@ -67,7 +67,7 @@ tasks:
     summary: |
       Args:
         cluster: Cluster to run command against (required)
-    cmd: flux --context {{.cluster}} reconcile --namespace flux-system kustomization home-kubernetes --with-source
+    cmd: flux --context {{.cluster}} reconcile --namespace flux-system kustomization flux-system --with-source
     requires:
       vars: ["cluster"]
 
@@ -76,6 +76,6 @@ tasks:
     summary: |
       Args:
         cluster: Cluster to run command against (required)
-    cmd: watch "flux --context {{.cluster}} get kustomizations|grep -v Applied;flux --context {{.cluster}} get helmrelease -A|grep -v succeeded"
+    cmd: watch "flux --context {{.cluster}} get kustomizations -A|grep -v Applied;flux --context {{.cluster}} get helmrelease -A|grep -v succeeded"
     requires:
       vars: ["cluster"]
