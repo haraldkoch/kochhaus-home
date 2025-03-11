@@ -2,10 +2,11 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: default
+components:
+  - ../../components/alerts
+  - ../../components/common
 resources:
-  # Pre Flux-Kustomizations
-  - ./namespace.yaml
-  # Flux-Kustomizations
   - ./docmost/ks.yaml
   - ./excalidraw/ks.yaml
   - ./glance/ks.yaml
@@ -14,13 +15,3 @@ resources:
   - ./memos/ks.yaml
   - ./miniflux/ks.yaml
   - ./populator-test/ks.yaml
-components:
-  - ../../components/alerts
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: NamespaceTransformer
-    metadata:
-      name: not-used
-      namespace: default
-    unsetOnly: true

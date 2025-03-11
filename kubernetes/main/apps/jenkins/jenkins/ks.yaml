@@ -4,9 +4,8 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app jenkins
-  namespace: flux-system
+  namespace: &namespace jenkins
 spec:
-  targetNamespace: jenkins
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
@@ -14,19 +13,23 @@ spec:
     - ../../../../components/volsync
   dependsOn:
     - name: external-secrets-stores
+      namespace: security
     - name: volsync
-  path: ./kubernetes/main/apps/jenkins/jenkins/app
-  prune: false # reset to true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-  wait: false
+      namespace: storage
   interval: 30m
-  timeout: 5m
+  path: ./kubernetes/main/apps/jenkins/jenkins/app
   postBuild:
     substitute:
       APP: jenkins
-      VOLSYNC_CLAIM: jenkins
       VOLSYNC_CAPACITY: 3Gi
-      VOLSYNC_UID: "1000"
+      VOLSYNC_CLAIM: jenkins
       VOLSYNC_GID: "1000"
+      VOLSYNC_UID: "1000"
+  prune: false # reset to true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
+  wait: false

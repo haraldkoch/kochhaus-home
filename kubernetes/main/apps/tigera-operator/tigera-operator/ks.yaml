@@ -1,42 +1,44 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/kustomization-kustomize-v1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app tigera-operator
-  namespace: flux-system
+  namespace: &namespace tigera-operator
 spec:
-  targetNamespace: tigera-operator
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  interval: 30m
   path: ./kubernetes/main/apps/tigera-operator/tigera-operator/app
   prune: false # never should be deleted
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
-  wait: true
-  interval: 30m
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
   timeout: 5m
+  wait: true
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/kustomization-kustomize-v1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app tigera-operator-bgp
-  namespace: flux-system
+  namespace: &namespace tigera-operator
 spec:
-  targetNamespace: tigera-operator
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: tigera-operator
+      namespace: tigera-operator
+  interval: 30m
   path: ./kubernetes/main/apps/tigera-operator/tigera-operator/bgp
   prune: false # never should be deleted
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
-  wait: false
-  interval: 30m
+    name: flux-system
+  targetNamespace: *namespace
   timeout: 5m
+  wait: false

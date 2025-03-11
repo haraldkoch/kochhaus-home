@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/helmrelease-helm-v2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -74,7 +74,7 @@ spec:
         use-forwarded-headers: "true"
       enableAnnotationValidations: true
       extraArgs:
-        default-ssl-certificate: network/tls.${CLUSTER_DOMAIN/./-}
+        default-ssl-certificate: "network/${CLUSTER_DOMAIN/./-}-production-tls"
       metrics:
         enabled: true
         serviceMonitor:

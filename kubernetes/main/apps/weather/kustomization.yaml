@@ -2,18 +2,9 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-  # Pre Flux-Kustomizations
-  - ./namespace.yaml
-  # Flux-Kustomizations
-  - ./openweathermap-exporter/ks.yaml
+namespace: weather
 components:
   - ../../components/alerts
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: NamespaceTransformer
-    metadata:
-      name: not-used
-      namespace: weather
-    unsetOnly: true
+  - ../../components/common
+resources:
+  - ./openweathermap-exporter/ks.yaml

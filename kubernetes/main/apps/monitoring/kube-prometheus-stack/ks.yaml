@@ -1,26 +1,28 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/kustomization-kustomize-v1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app kube-prometheus-stack
-  namespace: flux-system
+  namespace: &namespace monitoring
 spec:
-  targetNamespace: monitoring
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets-stores
-  path: ./kubernetes/main/apps/monitoring/kube-prometheus-stack/app
-  prune: false # reset to true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-  wait: false
+      namespace: security
   interval: 30m
-  timeout: 5m
+  path: ./kubernetes/main/apps/monitoring/kube-prometheus-stack/app
   postBuild:
     substitute:
       # renovate: datasource=docker depName=quay.io/thanos/thanos
       THANOS_VERSION: v0.37.2
+  prune: false # reset to true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
+  wait: false
