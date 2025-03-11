@@ -6,8 +6,7 @@ SCRIPTS_DIR = '{{config_root}}/scripts'
 BOOTSTRAP_DIR = '{{config_root}}/bootstrap'
 TALOS_DIR = '{{config_root}}/talos'
 KUBECONFIG = "{{config_root}}/kubernetes/main/kubeconfig:{{config_root}}/kubernetes/network/kubeconfig:{{config_root}}/kubernetes/registry/kubeconfig"
-#SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
-SOPS_AGE_KEY_FILE="~/.config/sops/age/keys.txt"
+SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
 TALOSCONFIG = "{{config_root}}/talos/clusterconfig/talosconfig"
 
 # I think I still need this for some tasks
