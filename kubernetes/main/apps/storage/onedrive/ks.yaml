@@ -13,7 +13,7 @@ spec:
   components:
     - ../../../../components/volsync
   path: ./kubernetes/main/apps/storage/onedrive/app
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

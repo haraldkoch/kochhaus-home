@@ -14,7 +14,7 @@ spec:
     - ../../../../components/gatus/external
     - ../../../../components/volsync
   path: ./kubernetes/main/apps/media/calibre-web/app
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

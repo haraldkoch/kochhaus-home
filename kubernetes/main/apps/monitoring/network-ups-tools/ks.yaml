@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: node-feature-discovery-rules
   path: ./kubernetes/main/apps/monitoring/network-ups-tools/app
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
@@ -33,7 +33,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   path: ./kubernetes/main/apps/monitoring/network-ups-tools/exporter
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
