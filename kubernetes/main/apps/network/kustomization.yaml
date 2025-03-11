@@ -2,25 +2,16 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: network
+components:
+  - ../../components/alerts
+  - ../../components/common
 resources:
-  # Pre Flux-Kustomizations
-  - ./namespace.yaml
-  # Flux-Kustomizations
   - ./cloudflared/ks.yaml
   - ./external-dns/ks.yaml
   - ./nginx/ks.yaml
   - ./opnsense/ks.yaml
   - ./web-static/ks.yaml
   - ./whoami/ks.yaml
-  # Standard Resources
+
   - ./external-services
-components:
-  - ../../components/alerts
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: NamespaceTransformer
-    metadata:
-      name: not-used
-      namespace: network
-    unsetOnly: true

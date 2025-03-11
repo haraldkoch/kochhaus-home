@@ -1,23 +1,26 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/kustomization-kustomize-v1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app thanos
-  namespace: flux-system
+  namespace: &namespace monitoring
 spec:
-  targetNamespace: monitoring
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: dragonfly-cluster
+      namespace: dbms
     - name: external-secrets-stores
+      namespace: security
+  interval: 30m
   path: ./kubernetes/main/apps/monitoring/thanos/app
   prune: false # reset to true
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
-  wait: false
-  interval: 30m
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
   timeout: 15m
+  wait: false

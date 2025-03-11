@@ -11,23 +11,12 @@ instance:
     - helm-controller
     - notification-controller
   sync:
-    name: home-kubernetes
     kind: GitRepository
     url: "https://github.com/haraldkoch/kochhaus-home.git"
     ref: "refs/heads/main"
     path: kubernetes/main/flux/cluster
   kustomize:
     patches:
-      # Remove the network policies that does not work with k3s
-      - patch: |
-          $patch: delete
-          apiVersion: networking.k8s.io/v1
-          kind: NetworkPolicy
-          metadata:
-            name: not-used
-        target:
-          group: networking.k8s.io
-          kind: NetworkPolicy
       # allow flux components to run on the control-plane.
       - patch: |-
           apiVersion: apps/v1

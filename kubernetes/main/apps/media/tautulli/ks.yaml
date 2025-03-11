@@ -1,31 +1,32 @@
 ---
-# yaml-language-server: $schema=https://github.com/fluxcd-community/flux2-schemas/raw/main/kustomization-kustomize-v1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app tautulli
-  namespace: flux-system
+  namespace: &namespace media
 spec:
-  targetNamespace: media
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/internal
     - ../../../../components/volsync
-  path: ./kubernetes/main/apps/media/tautulli/app
-  prune: false # reset to true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-  wait: false
   interval: 30m
-  timeout: 5m
+  path: ./kubernetes/main/apps/media/tautulli/app
   postBuild:
     substitute:
       APP: *app
       GATUS_PATH: /status
-      VOLSYNC_CLAIM: tautulli-config-v6
       VOLSYNC_CAPACITY: 2Gi
-      VOLSYNC_UID: "1000"
+      VOLSYNC_CLAIM: tautulli-config-v6
       VOLSYNC_GID: "1000"
+      VOLSYNC_UID: "1000"
+  prune: false # reset to true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 5m
+  wait: false

@@ -1,0 +1,43 @@
+---
+# yaml-language-server: $schema=https://kubernetesjsonschema.dev/v1.18.1-standalone-strict/configmap-v1.json
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-settings
+data:
+  TIMEZONE: "America/Toronto"
+
+  CLUSTER_CIDR: "10.42.0.0/16"
+  CLUSTER_CIDR_V6: "fdd5:aa8:9535:42::/108"
+
+  NODE_CIDR: "192.168.20.0/24"
+  NODE_CIDR_V6: "fdd5:aa8:9535:20::/64"
+  SERVICE_CIDR: "10.43.0.0/16"
+  SERVICE_CIDR_V6: "fdd5:aa8:9535:43::/108"
+
+  # FIXME: remove these four
+  NETWORK_K8S_POD_CIDR: 10.42.0.0/16
+  NETWORK_K8S_SERVICE_CIDR: 10.43.0.0/16
+  NETWORK_K8S_POD_CIDR_V6: fdd5:aa8:9535:42::/108
+  NETWORK_K8S_SERVICE_CIDR_V6: fdd5:aa8:9535:43::/108
+
+  COREDNS_ADDR: 10.43.0.10
+  COREDNS_ADDR_V6: fdd5:aa8:9535:43::a
+  KUBEAPI_ADDR: 192.168.20.16
+
+  CLUSTER_NAME: kochhaus-home
+
+  NGINX_IPV4: 192.168.21.80
+  NGINX_IPV6: fdd5:aa8:9535:21::80
+  NGINX_EXT_IPV4: 192.168.21.81
+  NGINX_EXT_IPV6: fdd5:aa8:9535:21::81
+  EXPORTERS_IPV4: 192.168.21.100
+  EXPORTERS_IPV6: fdd5:aa8:9535:21::100
+  SYSLOG_IPV4: 192.168.21.102
+  SYSLOG_IPV6: fdd5:aa8:9535:21::102
+  SYNCTHING_IPV4: 192.168.21.103
+  SYNCTHING_IPV6: fdd5:aa8:9535:21::103
+  REDIS_IPV4: 192.168.21.106
+  REDIS_IPV6: fdd5:aa8:9535:21::106
+  POSTGRES_IPV4: 192.168.21.107
+  POSTGRES_IPV6: fdd5:aa8:9535:21::107

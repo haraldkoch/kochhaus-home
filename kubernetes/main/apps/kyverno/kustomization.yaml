@@ -2,18 +2,9 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-  # Pre Flux-Kustomizations
-  - ./namespace.yaml
-  # Flux-Kustomizations
-  - ./kyverno/ks.yaml
+namespace: kyverno
 components:
   - ../../components/alerts
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: NamespaceTransformer
-    metadata:
-      name: not-used
-      namespace: kyverno
-    unsetOnly: true
+  - ../../components/common
+resources:
+  - ./kyverno/ks.yaml

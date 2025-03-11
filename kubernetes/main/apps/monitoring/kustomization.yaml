@@ -2,10 +2,11 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: monitoring
+components:
+  - ../../components/alerts
+  - ../../components/common
 resources:
-  # Pre Flux-Kustomizations
-  - ./namespace.yaml
-  # Flux-Kustomizations
   - ./blackbox-exporter/ks.yaml
   - ./gatus/ks.yaml
   - ./goldpinger/ks.yaml
@@ -27,15 +28,5 @@ resources:
   - ./thanos/ks.yaml
   - ./tplink-plug-exporter/ks.yaml
   - ./x509-certificate-exporter/ks.yaml
-  # Standard Resources
+
   - ./miscellaneous
-components:
-  - ../../components/alerts
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: NamespaceTransformer
-    metadata:
-      name: not-used
-      namespace: monitoring
-    unsetOnly: true
