@@ -89,15 +89,6 @@ jobs:
           ref: ${{ github.event.repository.default_branch }}
           path: default
 
-      - name: Determine correct cluster name
-        run: |
-          if [ "${{ matrix.paths }}" == "kubernetes/main" ]; then
-            ks=home-kubernetes
-          else
-            ks=flux-system
-          fi
-          echo "FLUX_CLUSTER_NAME=$ks" >> $GITHUB_ENV
-
       - name: Run flux-local diff
         uses: docker://ghcr.io/allenporter/flux-local:v7.2.1
         with:
@@ -109,7 +100,7 @@ jobs:
             --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
             --limit-bytes 10000
             --all-namespaces
-            --sources ${{ env.FLUX_CLUSTER_NAME }}
+            --sources flux-system
             --output-file diff.patch
 
       - name: Generate Diff
