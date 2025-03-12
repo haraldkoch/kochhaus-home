@@ -22,7 +22,7 @@ spec:
       VOLSYNC_CLAIM: calibre-web-config-v1
       VOLSYNC_GID: "2000"
       VOLSYNC_UID: "2000"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -25,7 +25,7 @@ spec:
       VOLSYNC_CLAIM: jenkins
       VOLSYNC_GID: "1000"
       VOLSYNC_UID: "1000"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

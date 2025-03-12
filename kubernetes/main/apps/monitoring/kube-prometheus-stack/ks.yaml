@@ -18,7 +18,7 @@ spec:
     substitute:
       # renovate: datasource=docker depName=quay.io/thanos/thanos
       THANOS_VERSION: v0.37.2
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

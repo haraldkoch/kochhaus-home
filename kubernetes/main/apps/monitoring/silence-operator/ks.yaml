@@ -11,7 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   interval: 10m
   path: ./kubernetes/main/apps/monitoring/silence-operator/app
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -35,7 +35,7 @@ spec:
       namespace: monitoring
   interval: 10m
   path: ./kubernetes/main/apps/monitoring/silence-operator/silences
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

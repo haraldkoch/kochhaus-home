@@ -23,7 +23,7 @@ spec:
       VOLSYNC_CLAIM: populator-test-data
       VOLSYNC_GID: "65533"
       VOLSYNC_UID: "65533"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

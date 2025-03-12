@@ -14,7 +14,7 @@ spec:
       namespace: security
   interval: 30m
   path: ./kubernetes/main/apps/joomla/rtr/app
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

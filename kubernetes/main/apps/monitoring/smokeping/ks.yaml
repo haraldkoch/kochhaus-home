@@ -23,7 +23,7 @@ spec:
       VOLSYNC_CLAIM: smokeping-data-v5
       VOLSYNC_GID: "101"
       VOLSYNC_UID: "102"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

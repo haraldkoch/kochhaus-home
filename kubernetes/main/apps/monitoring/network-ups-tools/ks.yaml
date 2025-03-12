@@ -14,7 +14,7 @@ spec:
       namespace: tools
   interval: 30m
   path: ./kubernetes/main/apps/monitoring/network-ups-tools/app
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -35,7 +35,7 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   path: ./kubernetes/main/apps/monitoring/network-ups-tools/exporter
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

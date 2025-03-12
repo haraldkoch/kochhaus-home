@@ -14,7 +14,7 @@ spec:
       namespace: security
   interval: 30m
   path: ./kubernetes/main/apps/dbms/dragonfly/app
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -38,7 +38,7 @@ spec:
       namespace: dbms
   interval: 30m
   path: ./kubernetes/main/apps/dbms/dragonfly/cluster
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

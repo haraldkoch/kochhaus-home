@@ -23,7 +23,7 @@ spec:
       VOLSYNC_CLAIM: pgadmin-config-v1
       VOLSYNC_GID: "5050"
       VOLSYNC_UID: "5050"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

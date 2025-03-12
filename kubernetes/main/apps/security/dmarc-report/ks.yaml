@@ -16,7 +16,7 @@ spec:
       namespace: security
   interval: 30m
   path: ./kubernetes/main/apps/security/dmarc-report/app
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

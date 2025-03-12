@@ -20,7 +20,7 @@ spec:
       VOLSYNC_CLAIM: onedrive-config-v5
       VOLSYNC_GID: "1000"
       VOLSYNC_UID: "1000"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

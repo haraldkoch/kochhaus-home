@@ -25,7 +25,7 @@ spec:
       VOLSYNC_CLAIM: *app
       VOLSYNC_GID: "568"
       VOLSYNC_UID: "568"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
