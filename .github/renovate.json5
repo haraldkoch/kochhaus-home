@@ -13,14 +13,13 @@
   ],
   "ignorePaths": ["**/*.sops.*", "**/.archive/**", "**/resources/**"],
   "flux": {
-    "fileMatch": [
-      "(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"
-    ]
+    "fileMatch": ["(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"]
   },
   "helm-values": {
-    "fileMatch": [
-      "(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"
-    ]
+    "fileMatch": ["(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"]
+  },
+  "helmfile": {
+    "fileMatch": ["(^|/)helmfile\\.ya?ml(?:\\.j2)?$"]
   },
   "kubernetes": {
     "fileMatch": [
@@ -28,5 +27,11 @@
       "(^|/)ansible/.+\\.ya?ml(?:\\.j2)?$",
       "(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"
     ]
+  },
+  "kustomize": {
+    "fileMatch": ["(^|/)kustomization\\.ya?ml(?:\\.j2)?$"]
+  },
+  "pip_requirements": {
+    "fileMatch": ["(^|/)[\\w-]*requirements(-\\w+)?\\.(txt|pip)(?:\\.j2)?$"]
   }
 }
