@@ -1,38 +1,22 @@
 {
     "ansible.validation.lint.arguments": "-c ansible/.ansible-lint",
     "editor.bracketPairColorization.enabled": true,
-    "editor.guides.bracketPairs": true,
-    "editor.guides.bracketPairsHorizontal": true,
-    "editor.guides.highlightActiveBracketPair": true,
-    "editor.hover.delay": 1500,
     "files.associations": {
-        "*.json5": "jsonc",
+        "**/*.json5": "jsonc",
         "./ansible/**/*.yaml": "ansible",
         "./ansible/**/inventory/**/*.yaml": "yaml",
     },
     "files.trimTrailingWhitespace": true,
-    "material-icon-theme.folders.associations": {
-        ".taskfiles": "utils",
-        "bootstrap": "import",
-        "charts": "kubernetes",
-        "hack": "scripts",
-        "repositories": "database",
-        "terraforms": "terraform",
-        "vars": "other",
-        // namespaces
-        "cert-manager": "guard",
-        "external-secrets": "keys",
-        "kube-system": "kubernetes",
-        "monitoring": "event",
-        "networking": "connection",
-        "rook-ceph": "dump",
-    },
     "sops.defaults.ageKeyFile": "age.key",
+    "vs-kubernetes": {
+        "vs-kubernetes.kubeconfig": "./kubeconfig",
+        "vs-kubernetes.knownKubeconfigs": [
+          "./kubeconfig"
+      ]
+    },
     "yaml.schemaStore.enable": true,
     "yaml.schemas": {
         "ansible": "ansible/*.yml",
         "kubernetes": "./kubernetes/**/*.yaml"
-    },
-    "sops.configPath": "",
-    "sops.binPath": ""
+    }
 }
