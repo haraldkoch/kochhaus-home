@@ -31,6 +31,11 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 30m
+  healthCheckExprs:
+    - apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
+      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   path: ./kubernetes/main/apps/cert-manager/cert-manager/issuers
   prune: true
   sourceRef:
