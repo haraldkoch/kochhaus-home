@@ -14,3 +14,4 @@ resources:
   - ./homepage/ks.yaml
   - ./miniflux/ks.yaml
   - ./populator-test/ks.yaml
+  - ./wallos/ks.yaml
