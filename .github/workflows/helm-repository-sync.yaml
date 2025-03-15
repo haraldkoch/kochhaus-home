@@ -20,7 +20,7 @@ jobs:
       any_changed: ${{ steps.changed-files.outputs.any_changed }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       - name: Get Changed Files
         id: changed-files
@@ -38,7 +38,7 @@ jobs:
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
 
       # - name: Setup Homebrew
       #   uses: Homebrew/actions/setup-homebrew@master
@@ -48,7 +48,7 @@ jobs:
 
       - name: Write kubeconfig
         id: kubeconfig
-        uses: timheuer/base64-to-file@v1
+        uses: timheuer/base64-to-file@adaa40c0c581f276132199d4cf60afa07ce60eac # v1
         with:
           encodedString: ${{ secrets.KUBECONFIG }}
           fileName: kubeconfig
