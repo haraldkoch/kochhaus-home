@@ -23,7 +23,7 @@ jobs:
 
       - name: Get Changed Clusters
         id: changed-clusters
-        uses: tj-actions/changed-files@v45
+        uses: JJGadgets/tj-actions-changed-files@9200e69727eb73eb060652b19946b8a2fdfb654b
         with:
           files: kubernetes/**
           dir_names: true
