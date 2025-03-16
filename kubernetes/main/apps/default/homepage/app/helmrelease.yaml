@@ -36,6 +36,7 @@ spec:
               tag: v1.0.3
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
+              HOMEPAGE_ALLOWED_HOSTS: &hostname home.${CLUSTER_DOMAIN}
             envFrom:
               - secretRef:
                   name: homepage-secret
@@ -63,7 +64,7 @@ spec:
       app:
         className: internal
         hosts:
-          - host: home.${CLUSTER_DOMAIN}
+          - host: *hostname
             paths:
               - path: /
                 pathType: Prefix
