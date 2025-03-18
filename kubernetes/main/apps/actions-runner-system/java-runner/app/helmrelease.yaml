@@ -73,6 +73,9 @@ spec:
             #   - mountPath: /var/run/secrets/talos.dev
             #     name: talos
             #     readOnly: true
+        dnsConfig:
+          searches:
+            - "${PRIVATE_STATIC_DOMAIN}"
         securityContext:
           fsGroup: 123
         serviceAccountName: actions-runner
