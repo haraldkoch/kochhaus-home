@@ -16,7 +16,7 @@ releases:
   - name: flux-operator
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
-    version: 0.17.0
+    version: 0.18.0
     values:
       - ../apps/flux-system/flux-operator/app/helm-values.yaml
     needs:
@@ -25,7 +25,7 @@ releases:
   - name: flux-instance
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
-    version: 0.17.0
+    version: 0.18.0
     wait: false
     values:
       - ../apps/flux-system/flux-operator/instance/helm-values.yaml
