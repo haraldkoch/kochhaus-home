@@ -7,6 +7,7 @@ components:
   - ../../components/common
   - ../../components/alerts
 resources:
+  - ./changedetection/ks.yaml
   - ./emqx/ks.yaml
   - ./it-tools/ks.yaml
   - ./kochhaus-docs/ks.yaml
