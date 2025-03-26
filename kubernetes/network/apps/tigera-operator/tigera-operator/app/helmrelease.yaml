@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: tigera-operator
-      version: v3.29.2
+      version: v3.29.3
       sourceRef:
         kind: HelmRepository
         name: calico
