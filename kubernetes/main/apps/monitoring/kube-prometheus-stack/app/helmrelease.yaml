@@ -45,11 +45,18 @@ spec:
         hosts: ["alertmanager.${CLUSTER_DOMAIN}"]
         pathType: Prefix
       alertmanagerSpec:
+        additionalPeers:
+          - amcluster-network.${CLUSTER_DOMAIN}:9094
         alertmanagerConfiguration:
           name: alertmanager
           global:
             resolveTimeout: 5m
         externalUrl: https://alertmanager.${CLUSTER_DOMAIN}
+        service:
+          annotations:
+            external-dns.alpha.kubernetes.io/hostname: "amcluster-main.${SECRET_DOMAIN}"
+          externalIPs: ["${ALERTMANAGER_IPV4}", "${ALERTMANAGER_IPV6}"]
+          type: LoadBalancer
         storage:
           volumeClaimTemplate:
             spec:
