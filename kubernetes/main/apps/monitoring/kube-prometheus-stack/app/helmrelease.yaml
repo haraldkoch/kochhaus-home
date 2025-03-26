@@ -44,12 +44,31 @@ spec:
           hajimari.io/icon: mdi:alert-decagram-outline
         hosts: ["alertmanager.${CLUSTER_DOMAIN}"]
         pathType: Prefix
+      service:
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: "amcluster-main.${CLUSTER_DOMAIN}"
+        externalIPs: ["${ALERTMANAGER_IPV4}"]
+        additionalPorts:
+          - name: tcp-mesh
+            port: 9094
+            protocol: TCP
+            targetPort: 9094
+          - name: udp-mesh
+            port: 9094
+            protocol: UDP
+            targetPort: 9094
+        type: LoadBalancer
       alertmanagerSpec:
+        additionalPeers:
+          - amcluster-network.${CLUSTER_DOMAIN}:9094
         alertmanagerConfiguration:
           name: alertmanager
           global:
             resolveTimeout: 5m
+        clusterAdvertiseAddress: "${ALERTMANAGER_IPV4}:9094"
+        clusterLabel: kochhaus
         externalUrl: https://alertmanager.${CLUSTER_DOMAIN}
+        forceEnableClusterMode: true
         storage:
           volumeClaimTemplate:
             spec:
@@ -184,6 +203,13 @@ spec:
         retentionSize: 15GB
         externalLabels:
           cluster: main
+        additionalAlertManagerConfigs:
+          - scheme: http
+            static_configs:
+              - targets:
+                  - "amcluster-network.${CLUSTER_DOMAIN}:9093"
+                labels:
+                  server: amcluster-network.${CLUSTER_DOMAIN}
         resources:
           requests:
             cpu: 100m
