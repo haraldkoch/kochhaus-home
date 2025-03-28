@@ -18,6 +18,7 @@ resources:
   - ./external-secrets.yaml
   - ./grafana.yaml
   - ./hajimari.yaml
+  - ./headlamp.yaml
   - ./ingress-nginx.yaml
   - ./intel.yaml
   - ./jetstack.yaml
