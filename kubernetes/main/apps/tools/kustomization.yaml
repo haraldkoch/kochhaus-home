@@ -8,6 +8,7 @@ components:
   - ../../components/common
 resources:
   - ./descheduler/ks.yaml
+  - ./headlamp/ks.yaml
   - ./intel-device-plugin/ks.yaml
   - ./kured/ks.yaml
   - ./node-feature-discovery/ks.yaml

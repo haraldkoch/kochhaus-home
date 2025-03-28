@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Management
+    gethomepage.dev/icon: fnord.png
+    gethomepage.dev/name: Headlamp
+    hajimari.io/icon: mdi:eye
+  labels:
+    app.kubernetes.io/instance: headlamp
+    app.kubernetes.io/name: headlamp
+    app.kubernetes.io/part-of: headlamp
+  name: headlamp
+spec:
+  ingressClassName: internal
+  rules:
+  - host: headlamp.${CLUSTER_DOMAIN}
+    http:
+      paths:
+      - backend:
+          service:
+            name: headlamp
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
