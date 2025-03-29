@@ -23,7 +23,7 @@ spec:
       containers:
         - name: postgres
           # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
-          image: ghcr.io/cloudnative-pg/postgresql:16.8-6
+          image: ghcr.io/cloudnative-pg/postgresql:16.8-7
           command: ["/bin/sh"]
           args:
             - "-c"
