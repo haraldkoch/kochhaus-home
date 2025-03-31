@@ -9,7 +9,6 @@
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
-      "separateMinorPatch": true
     },
     {
       "description": ["Actions Runner Controller Group"],
@@ -19,7 +18,6 @@
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
-      "separateMinorPatch": true
     },
     {
       "description": ["Dragonfly Operator Group"],
@@ -29,7 +27,6 @@
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
-      "separateMinorPatch": true
     },
     {
       "description": ["Flux Operator Group"],
@@ -48,7 +45,6 @@
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
-      "separateMinorPatch": true
     },
     {
       "description": ["Rook-Ceph Group"],
@@ -58,7 +54,15 @@
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
-      "separateMinorPatch": true
+    },
+    {
+      "description": ["Silence-Operator Gruop"],
+      "groupName": "Silence-Operator",
+      "matchPackagePatterns": ["/silence-operator/"],
+      "matchDatasources": ["docker", "github-releases"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
     },
     {
       "description": ["System Upgrade Controller Group"],
@@ -68,7 +72,6 @@
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
-      "separateMinorPatch": true
     },
     {
       "description": ["x509-certificate-exporter image and chart"],
@@ -79,7 +82,6 @@
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
       },
-      "separateMinorPatch": true
     }
   ]
 }
