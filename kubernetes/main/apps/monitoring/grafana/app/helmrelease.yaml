@@ -241,6 +241,12 @@ spec:
         node-feature-discovery:
           url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
           datasource: Prometheus
+        opnsense:
+          # renovate: depName="OPNsense"
+          gnetId: 21113
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS-K0, value: Prometheus }
         volsync:
           # renovate: depName="VolSync Dashboard"
           gnetId: 21356
