@@ -6,7 +6,5 @@ metadata:
   name: headlamp
   namespace: flux-system
 spec:
-  type: oci
   interval: 1h
-  # url: https://headlamp-k8s.github.io/headlamp/
-  url: oci://ghcr.io/home-operations/charts-mirror/
+  url: https://kubernetes-sigs.github.io/headlamp
