@@ -32,8 +32,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/bjw-s-labs/it-tools
-              tag: 2024.10.22@sha256:75cbecf0092c306ba86d7342d8488fd8c86564bda27644921618debb6215c4e1
+              repository: ghcr.io/home-operations/it-tools
+              tag: 2024.10.22@sha256:384b8387aa8ab3efb8a3da6d7a4c0ec738ac6bb5f0ec3deade6f7e6c66fb93ac
             resources:
               requests:
                 cpu: 5m
