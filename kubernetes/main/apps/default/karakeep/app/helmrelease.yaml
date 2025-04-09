@@ -1,0 +1,183 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: karakeep
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  values:
+    controllers:
+      karakeep:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/karakeep-app/karakeep
+              tag: 0.23.2
+            env:
+              BROWSER_WEB_URL: http://karakeep-chrome.default.svc.cluster.local:9222
+              CRAWLER_DOWNLOAD_BANNER_IMAGE: true
+              CRAWLER_ENABLE_ADBLOCKER: true
+              CRAWLER_STORE_SCREENSHOT: true
+              DATA_DIR: /data
+              DISABLE_SIGNUPS: true
+              MEILI_ADDR: http://karakeep-meilisearch.default.svc.cluster.local:7700
+              MEILI_MASTER_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: karakeep-secret
+                    key: meilisearch_master_key
+              NEXTAUTH_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: karakeep-secret
+                    key: encryption_key
+              NEXTAUTH_URL: https://karakeep.${CLUSTER_DOMAIN}
+              DISABLE_NEW_RELEASE_CHECK: true
+              COREPACK_INTEGRITY_KEYS: 0
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+
+      chrome:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: gcr.io/zenika-hub/alpine-chrome
+              tag: 124
+            command:
+              - chromium-browser
+            args:
+              - --headless
+              - --no-sandbox
+              - --disable-gpu
+              - --disable-dev-shm-usage
+              - --remote-debugging-address=0.0.0.0
+              - --remote-debugging-port=9222
+              - --hide-scrollbars
+            securityContext:
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+
+      meilisearch:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values:
+                          - karakeep
+                      - key: app.kubernetes.io/component
+                        operator: In
+                        values:
+                          - karakeep
+                  topologyKey: kubernetes.io/hostname
+        containers:
+          app:
+            image:
+              repository: docker.io/getmeili/meilisearch
+              tag: v1.13.3
+            args:
+              - /bin/meilisearch
+              - --experimental-dumpless-upgrade
+            env:
+              MEILI_NO_ANALYTICS: true
+              MEILI_MASTER_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: karakeep-secret
+                    key: meilisearch_master_key
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 4Gi
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1022
+        runAsGroup: 1022
+        fsGroup: 1022
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        primary: true
+        controller: karakeep
+        ports:
+          http:
+            port: &httpPort 3000
+      chrome:
+        controller: chrome
+        ports:
+          http:
+            port: 9222
+      meilisearch:
+        controller: meilisearch
+        ports:
+          http:
+            port: 7700
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+
+    persistence:
+      data:
+        existingClaim: karakeep-data
+        advancedMounts:
+          karakeep:
+            app:
+              - path: /data
+                subPath: karakeep
+          meilisearch:
+            app:
+              - path: /meili_data
+                subPath: meilisearch
