@@ -9,6 +9,7 @@ components:
 resources:
   - ./changedetection/ks.yaml
   - ./emqx/ks.yaml
+  - ./homer/ks.yaml
   - ./it-tools/ks.yaml
   - ./kochhaus-docs/ks.yaml
   - ./mqtt-exporter/ks.yaml

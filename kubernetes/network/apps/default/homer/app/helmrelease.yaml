@@ -1,0 +1,80 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: homer
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      homer:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/bastienwirtz/homer
+              tag: v25.04.1@sha256:602287607aa9ba98e317a9d5d31ce45fd37e016685d230bf7fb0dc9f4004e607
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              limits:
+                memory: 50Mi
+              requests:
+                cpu: 10m
+                memory: 20Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1022
+        runAsGroup: 1022
+        runAsNonRoot: true
+        runAsUser: 1022
+        seccompProfile:
+          type: RuntimeDefault
+    service:
+      app:
+        controller: homer
+        ports:
+          http:
+            port: 8080
+    ingress:
+      app:
+        className: internal
+        hosts:
+          - host: landing.${CLUSTER_DOMAIN}
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+    persistence:
+      config:
+        name: homer
+        type: configMap
+        globalMounts:
+          - path: /www/assets/config.yml
+            subPath: config.yml

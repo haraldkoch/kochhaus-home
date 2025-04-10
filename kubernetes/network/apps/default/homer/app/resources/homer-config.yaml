@@ -1,0 +1,141 @@
+title: Koch Haus
+#subtitle: ""
+#logo: ""
+
+header: true
+footer: false
+
+columns: auto
+connectivityCheck: true
+
+theme: default
+# colors from Nord theme: https://github.com/arcticicestudio/nord
+colors:
+  light:
+    highlight-primary: "#3367d6"
+    highlight-secondary: "#4285f4"
+    highlight-hover: "#5a95f5"
+    background: "#f5f5f5"
+    card-background: "#ffffff"
+    text: "#363636"
+    text-header: "#ffffff"
+    text-title: "#303030"
+    text-subtitle: "#424242"
+    card-shadow: rgba(0, 0, 0, 0.1)
+    link-hover: "#363636"
+  dark:
+    highlight-primary: "#2E3440"
+    highlight-secondary: "#4C566A"
+    highlight-hover: "#81A1C1"
+    background: "#3B4252"
+    card-background: "#2E3440"
+    text: "#D8DEE9"
+    text-header: "#D8DEE9"
+    text-title: "#81A1C1"
+    text-subtitle: "#81A1C1"
+    card-shadow: rgba(0, 0, 0, 0.4)
+    link-hover: "#BF616A"
+
+# Optional navbar
+links: []
+
+services:
+  - name: Media
+    icon: fas fa-film
+    items:
+      - name: Plex
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/plex.png
+        url: https://${MEDIA_SERVER}/web/
+        subtitle: Watch Movies and TV
+      - name: Jellyseerr
+        logo: https://raw.githubusercontent.com/Fallenbagel/jellyseerr/refs/heads/develop/public/os_logo_square.png
+        url: https://requests.${SECRET_DOMAIN}
+        subtitle: Request new movies and shows
+      - name: Radarr
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/radarr.png
+        url: https://radarr.${SECRET_DOMAIN}
+        subtitle: the movie downloader
+      - name: Sonarr
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/sonarr.png
+        url: https://sonarr.${SECRET_DOMAIN}
+        subtitle: the series downloader
+      - name: Bazarr
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/bazarr.png
+        url: https://bazarr.${SECRET_DOMAIN}
+        subtitle: subtitle downloader
+      - name: Tautulli
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/tautulli.png
+        url: https://tautulli.${SECRET_DOMAIN}
+        subtitle: track watched movies and shows
+      - name: Calibre Web
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/calibreweb.png
+        url: https://ebooks.${SECRET_DOMAIN}
+        subtitle: eBook library
+
+      # - name: "SFTPGo"
+      #   logo: "https://raw.githubusercontent.com/drakkan/sftpgo/main/img/logo.png"
+      #   url: "https://sftpgo.${SECRET_DOMAIN}"
+      # - name: "Immich"
+      #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/immich.png"
+      #   url: "https://immich.${SECRET_DOMAIN}"
+      # - name: "Paperless"
+      #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/paperless-ng.png"
+      #   url: "https://paperless.${SECRET_DOMAIN}"
+      # - name: "Memos"
+      #   logo: "https://raw.githubusercontent.com/usememos/memos/main/web/public/logo.webp"
+      #   url: "https://memos.${SECRET_DOMAIN}"
+      # - name: "Tandoor Recipes"
+      #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/tandoorrecipes.png"
+      #   url: "https://recipes.${SECRET_DOMAIN}"
+
+  - name: Cloud
+    icon: fas fa-cloud
+    items:
+      - name: Hoarder
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/hoarder.png
+        url: https://karakeep.${SECRET_DOMAIN}
+        subtitle: store links, snippets, and full web pages
+      - name: NextCloud
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/nextcloud.png
+        url: https://cloud.${SECRET_DOMAIN}
+        subtitle: personal file storage with desktop, web, and mobile clients
+      - name: PicoShare
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/picoshare.png
+        url: https://share.${SECRET_DOMAIN}
+        subtitle: simple and secure file sharing portal
+
+  - name: Tools
+    icon: fas fa-screwdriver-wrench
+    items:
+      - name: Change Detection
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/changedetection.png
+        url: https://changedetection.${SECRET_DOMAIN}
+        subtitle: monitor any website for changes and send notifications
+      - name: Exaclidraw
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/excalidraw.png
+        url: https://draw.${SECRET_DOMAIN}
+        subtitle: simple drawing tool
+      - name: Wallos
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/wallos.png
+        url: https://wallos.${SECRET_DOMAIN}
+        subtitle: track recurring expenses
+      - name: Docmost
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/docmost.png
+        url: https://notes.${SECRET_DOMAIN}
+        subtitle: simple documentation / notes app with wiki features
+      - name: Docs
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/docmost.png
+        url: https://docs.${SECRET_DOMAIN}
+        subtitle: Detailed KochHaus documentation
+
+  - name: Home Automation
+    icon: fas fa-robot
+    items:
+      - name: Home Assistant
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/homeassistant.png
+        url: https://ha.${SECRET_DOMAIN}
+        subtitle: Primary home automation controller
+      - name: Zigbee"
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/zigbee2mqtt.png
+        url: https://zigbee.${SECRET_DOMAIN}
+        subtitle: Manage the Zigbee network of automation devices
