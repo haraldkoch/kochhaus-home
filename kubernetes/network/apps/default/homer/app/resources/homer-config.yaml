@@ -92,7 +92,7 @@ services:
     icon: fas fa-cloud
     items:
       - name: Hoarder
-        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/hoarder.png
+        logo: https://raw.githubusercontent.com/karakeep-app/karakeep/main/docs/static/img/logo.png
         url: https://karakeep.${SECRET_DOMAIN}
         subtitle: store links, snippets, and full web pages
       - name: NextCloud
@@ -100,7 +100,7 @@ services:
         url: https://cloud.${SECRET_DOMAIN}
         subtitle: personal file storage with desktop, web, and mobile clients
       - name: PicoShare
-        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/picoshare.png
+        icon: fas fa-share
         url: https://share.${SECRET_DOMAIN}
         subtitle: simple and secure file sharing portal
 
@@ -112,19 +112,19 @@ services:
         url: https://changedetection.${SECRET_DOMAIN}
         subtitle: monitor any website for changes and send notifications
       - name: Exaclidraw
-        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/excalidraw.png
+        logo: https://raw.githubusercontent.com/excalidraw/excalidraw/master/public/android-chrome-192x192.png
         url: https://draw.${SECRET_DOMAIN}
         subtitle: simple drawing tool
       - name: Wallos
-        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/wallos.png
+        logo: https://raw.githubusercontent.com/ellite/Wallos/main/images/icon/android-chrome-192x192.png
         url: https://wallos.${SECRET_DOMAIN}
         subtitle: track recurring expenses
       - name: Docmost
-        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/docmost.png
+        logo: https://docmost.com/favicon.ico
         url: https://notes.${SECRET_DOMAIN}
         subtitle: simple documentation / notes app with wiki features
       - name: Docs
-        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/docmost.png
+        icon: fas fa-book
         url: https://docs.${SECRET_DOMAIN}
         subtitle: Detailed KochHaus documentation
 
@@ -132,7 +132,7 @@ services:
     icon: fas fa-robot
     items:
       - name: Home Assistant
-        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/homeassistant.png
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/home-assistant.png
         url: https://ha.${SECRET_DOMAIN}
         subtitle: Primary home automation controller
       - name: Zigbee"
