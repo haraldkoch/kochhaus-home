@@ -31,7 +31,7 @@ spec:
           routes:
             image:
               repository: ghcr.io/angelnu/pod-gateway
-              tag: v1.11.1
+              tag: v1.12.0
             command:
               - /bin/gateway_init.sh
             securityContext:
@@ -40,7 +40,7 @@ spec:
           pod-gateway:
             image:
               repository: ghcr.io/angelnu/pod-gateway
-              tag: v1.11.1
+              tag: v1.12.0
             command:
               - /bin/gateway_sidecar.sh
             securityContext:
@@ -116,12 +116,12 @@ spec:
               - --tls-key-file-path=/tls/tls.key
               - --DNSPolicy=None
               # Init container
-              - --initImage=ghcr.io/angelnu/pod-gateway:v1.9.0
+              - --initImage=ghcr.io/angelnu/pod-gateway:v1.12.0
               - --initImagePullPol=IfNotPresent
               - --initCmd=/bin/client_init.sh
               - --initMountPoint=/config
               # Sidecar container
-              - --sidecarImage=ghcr.io/angelnu/pod-gateway:v1.9.0
+              - --sidecarImage=ghcr.io/angelnu/pod-gateway:v1.12.0
               - --sidecarImagePullPol=IfNotPresent
               - --sidecarCmd=/bin/client_sidecar.sh
               - --sidecarMountPoint=/config
