@@ -26,6 +26,8 @@ spec:
     - name: snapshot-controller
       namespace: storage
   values:
+    image:
+      tag: v1.17.0
     csi:
       enableCephfsDriver: false
       enableLiveness: true
