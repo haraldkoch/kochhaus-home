@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: rook-ceph
-      version: v1.17.0
+      version: v1.17.1
       sourceRef:
         kind: HelmRepository
         name: rook-ceph
@@ -26,8 +26,6 @@ spec:
     - name: snapshot-controller
       namespace: storage
   values:
-    image:
-      tag: v1.17.0
     csi:
       enableCephfsDriver: false
       enableLiveness: true
