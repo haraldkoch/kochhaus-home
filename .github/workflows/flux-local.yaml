@@ -57,6 +57,8 @@ jobs:
       matrix:
         paths: ${{ fromJSON(needs.changed-clusters.outputs.matrix) }}
     if: ${{ needs.changed-clusters.outputs.any_changed == 'true' }}
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -148,6 +150,7 @@ jobs:
     needs: ["test", "diff"]
     runs-on: ubuntu-latest
     if: ${{ always() }}
+    permissions: {}
     steps:
       - name: Any jobs failed?
         if: ${{ contains(needs.*.result, 'failure') }}
