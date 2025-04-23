@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       any_changed: ${{ steps.changed-files.outputs.any_changed }}
+    permissions:
+      content: read
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -35,6 +37,8 @@ jobs:
     needs: pre-job
     runs-on: gha-runner-scale-set
     if: ${{ needs.pre-job.outputs.any_changed == 'true' }}
+    permissions:
+      content: read
     steps:
 
       - name: Checkout
@@ -88,6 +92,7 @@ jobs:
     name: Helm Repository Sync Success
     runs-on: ubuntu-latest
     if: ${{ always() }}
+    permissions: {}
     steps:
       - name: Any jobs failed?
         if: ${{ contains(needs.*.result, 'failure') }}
