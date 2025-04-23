@@ -69,6 +69,7 @@ jobs:
     needs: changed-clusters
     runs-on: ubuntu-latest
     permissions:
+      contents: read
       pull-requests: write
     strategy:
       matrix:
