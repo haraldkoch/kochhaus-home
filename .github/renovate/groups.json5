@@ -58,7 +58,7 @@
     {
       "description": ["Silence-Operator Gruop"],
       "groupName": "Silence-Operator",
-      "matchPackagePatterns": ["/silence-operator/"],
+      "matchPackagePatterns": ["silence-operator"],
       "matchDatasources": ["docker", "github-releases"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group"
