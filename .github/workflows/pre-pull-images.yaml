@@ -13,6 +13,9 @@ concurrency:
 env:
   HOMEBREW_NO_ANALYTICS: "1"
 
+permissions:
+  contents: read
+
 jobs:
   changed-clusters:
     name: Changed Clusters
