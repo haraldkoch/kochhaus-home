@@ -91,7 +91,8 @@ jobs:
               --argjson f2 '${{ needs.extract-images.outputs.pull }}' \
               '$f2 - $f1' \
           )
-          echo "images=${images}" >> $GITHUB_OUTPUT
+          echo "images=${images}" >> "$GITHUB_OUTPUT"
+          echo "images=${images}" >> "$GITHUB_STEP_SUMMARY"
 
   pre-pull-images:
     name: Pre-pull Images
