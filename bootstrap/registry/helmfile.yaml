@@ -31,7 +31,7 @@ releases:
   - name: cert-manager
     namespace: cert-manager
     chart: jetstack/cert-manager
-    version: v1.17.1
+    version: v1.17.2
     values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/registry/apps/cert-manager/cert-manager/app/helm-values.yaml']
     needs: ['kube-system/coredns']
 
