@@ -57,7 +57,6 @@ jobs:
     strategy:
       matrix:
         paths: ${{ fromJSON(needs.changed-clusters.outputs.matrix) }}
-    if: ${{ needs.changed-clusters.outputs.any_changed == 'true' }}
     permissions:
       contents: read
     steps:
@@ -154,7 +153,6 @@ jobs:
     needs: ["test", "diff"]
     name: Flux Local - Success
     runs-on: ubuntu-latest
-    if: ${{ always() }}
     permissions: {}
     steps:
       - name: Any jobs failed?
