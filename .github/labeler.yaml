@@ -3,6 +3,9 @@
 area/ansible:
   - changed-files:
       - any-glob-to-any-file: "ansible/**/*"
+area/bootstrap:
+  - changed-files:
+      - any-glob-to-any-file: "bootstrap/**/*"
 area/docs:
   - changed-files:
       - any-glob-to-any-file:
@@ -14,6 +17,17 @@ area/github:
 area/kubernetes:
   - changed-files:
       - any-glob-to-any-file: "kubernetes/**/*"
+area/renovate:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/renovate/**/*"
+          - ".github/renovate.json5"
+area/scripts:
+  - changed-files:
+      - any-glob-to-any-file: "scripts/**/*"
+area/talos:
+  - changed-files:
+      - any-glob-to-any-file: "talos/**/*"
 area/taskfile:
   - changed-files:
       - any-glob-to-any-file:
