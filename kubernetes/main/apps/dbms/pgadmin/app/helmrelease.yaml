@@ -29,6 +29,8 @@ spec:
     env:
       email: ${SECRET_ADMIN_EMAIL}
     existingSecret: pgadmin-secrets
+    secretKeys:
+      pgadminPasswordKey: password
     ingress:
       enabled: true
       ingressClassName: internal
