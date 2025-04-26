@@ -32,6 +32,8 @@ spec:
       ipFamilyPolicy: preferDualStack
     metrics:
       create: false
+    nodeSelector:
+      node.home.arpa/reboot-allowed: "true"
     resources:
       requests:
         cpu: 15m
