@@ -34,7 +34,7 @@ spec:
           wallos:
             image:
               repository: ghcr.io/ellite/wallos
-              tag: 2.52.0
+              tag: 2.52.2
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               SERVER_PORT: 80
