@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ghcr.io/jr0dd/network-ups-tools
-              tag: v2.8.1@sha256:7999ff0ed6f4e31d64f8a6afc66dce26e147608c9d595f4f4fb7b4a6e442ae00
+              tag: v2.8.1@sha256:2a6e47d431cbb901482ad6692f089a7541524fd3538e42857b39663bb331ba25
             env:
               TZ: "${TIMEZONE:=Etc/UTC}"
             securityContext:
