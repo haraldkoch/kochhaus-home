@@ -8,15 +8,17 @@ shopt: [globstar]
 vars:
   ANSIBLE_DIR: '{{.ROOT_DIR}}/ansible'
   BOOTSTRAP_DIR: '{{.ROOT_DIR}}/bootstrap'
+  CLUSTER: '{{.CLUSTER | default "main"}}'
+  CLUSTER_DIR: '{{.ROOT_DIR}}/kubernetes/{{.CLUSTER}}'
   KUBERNETES_DIR: '{{.ROOT_DIR}}/kubernetes'
   SCRIPTS_DIR: '{{.ROOT_DIR}}/scripts'
-  TALOS_DIR: '{{.ROOT_DIR}}/talos'
+  TALOS_DIR: '{{.ROOT_DIR}}/talos/{{.CLUSTER}}'
   PRIVATE_DIR: '{{.ROOT_DIR}}/.private'
-  TALOSCONFIG: '{{.ROOT_DIR}}/talos/clusterconfig/talosconfig'
+  TALOSCONFIG: '{{.ROOT_DIR}}/talos/{{.CLUSTER}}/clusterconfig/talosconfig'
 
 env:
   KUBECONFIG: "{{.KUBERNETES_DIR}}/main/kubeconfig:{{.KUBERNETES_DIR}}/network/kubeconfig:{{.KUBERNETES_DIR}}/registry/kubeconfig"
-  SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
+  # SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
   TALOSCONFIG: '{{.TALOSCONFIG}}'
 
 includes:
