@@ -45,6 +45,7 @@ nodes:
 
 # Global patches
 patches:
+  - "@./patches/global/machine-extrakernelargs.yaml"
   - "@./patches/global/machine-files.yaml"
   - "@./patches/global/machine-kubelet.yaml"
   - "@./patches/global/machine-network.yaml"
