@@ -1,0 +1,52 @@
+---
+# Create a selfsigned Issuer, in order to create a root CA certificate for
+# signing webhook serving certificates
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: k8s-ycl-webhook-selfsign
+  namespace: tools
+spec:
+  selfSigned: {}
+---
+# Generate a CA Certificate used to sign certificates for the webhook
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: k8s-ycl-webhook-ca
+  namespace: tools
+spec:
+  secretName: k8s-ycl-webhook-ca
+  duration: 43800h
+  issuerRef:
+    kind: Issuer
+    name: k8s-ycl-webhook-selfsign
+  commonName: ca.k8s-ycl.cert-manager
+  isCA: true
+---
+# Create an Issuer that uses the above generated CA certificate to issue certs
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: k8s-ycl-webhook-ca
+  namespace: tools
+spec:
+  ca:
+    secretName: k8s-ycl-webhook-ca
+---
+# Finally, generate a serving certificate for the webhook to use
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: k8s-ycl-webhook-tls
+  namespace: tools
+spec:
+  secretName: k8s-ycl-webhook-tls
+  duration: 8760h
+  issuerRef:
+    kind: Issuer
+    name: k8s-ycl-webhook-ca
+  dnsNames:
+    - k8s-ycl-webhook
+    - k8s-ycl-webhook.tools
+    - k8s-ycl-webhook.tools.svc

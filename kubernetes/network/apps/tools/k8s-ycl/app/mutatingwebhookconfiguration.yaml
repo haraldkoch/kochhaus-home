@@ -1,0 +1,36 @@
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  annotations:
+    cert-manager.io/inject-ca-from: tools/k8s-ycl-webhook-tls
+  name: k8s-ycl
+webhooks:
+  - name: k8s-ycl.svc.cluster.local
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values:
+            - tools
+            - kube-system
+    clientConfig:
+      service:
+        name: k8s-ycl-webhook
+        namespace: tools
+        path: /mutate--v1-pod
+        port: 9443
+    failurePolicy: Fail
+    admissionReviewVersions: ["v1", "v1beta1"]
+    sideEffects: None
+    timeoutSeconds: 5
+    rules:
+      - apiGroups:
+          - ""
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+          - UPDATE
+        resources:
+          - pods
