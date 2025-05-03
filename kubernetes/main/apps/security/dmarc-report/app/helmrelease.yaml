@@ -38,8 +38,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/szinn/dmarc-report
-              tag: 1.4.5@sha256:ee0f734c50dedade2359e5d15ed5765dce4369327c6d86f0b4adb5c6d7cf4f11
+              repository: ghcr.io/haraldkoch/dmarc-report
+              tag: 1.4.5@sha256:99301943721c95aea5f4b31c0dbe4d68e6fab8d25c29a82363851f928e2f7d98
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               REPORT_DB_TYPE: pgsql
