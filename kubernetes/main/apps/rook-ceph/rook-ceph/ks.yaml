@@ -12,16 +12,21 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: security
-  interval: 30m
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: rook-ceph-operator
+      namespace: *namespace
+  interval: 1h
   path: ./kubernetes/main/apps/rook-ceph/rook-ceph/app
-  prune: false # never should be deleted
+  prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: rook-ceph
+  targetNamespace: *namespace
   timeout: 5m
-  wait: false
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -33,13 +38,32 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 30m
+  dependsOn:
+    - name: rook-ceph
+      namespace: *namespace
+    - name: volsync
+      namespace: volsync-system
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: rook-ceph-cluster
+      namespace: *namespace
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      name: rook-ceph
+      namespace: *namespace
+  healthCheckExprs:
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      failed: status.ceph.health == 'HEALTH_ERR'
+      current: status.ceph.health in ['HEALTH_OK', 'HEALTH_WARN']
+  interval: 1h
   path: ./kubernetes/main/apps/rook-ceph/rook-ceph/cluster
-  prune: false # never should be deleted
+  prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: rook-ceph
-  timeout: 10m
-  wait: false
+  targetNamespace: *namespace
+  timeout: 15m
