@@ -48,7 +48,6 @@ spec:
       bdev_enable_discard = true
       bdev_async_discard_threads = 1
       osd_class_update_on_start = false
-      device_failure_prediction_mode = local # requires mgr module
 
       [mon]
       mon_data_avail_warn = 20
@@ -62,8 +61,6 @@ spec:
         prometheusEndpoint: http://thanos-query-frontend.monitoring.svc.cluster.local:10902
       mgr:
         modules:
-          - name: diskprediction_local
-            enabled: true
           - name: insights
             enabled: true
           - name: pg_autoscaler
