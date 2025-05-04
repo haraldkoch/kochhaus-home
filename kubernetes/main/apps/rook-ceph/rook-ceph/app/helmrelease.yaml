@@ -27,10 +27,16 @@ spec:
       namespace: storage
   values:
     csi:
+      cephFSKernelMountOptions: ms_mode=prefer-crc
+      # NOTE: Enable the driver and shapshotter if you want to use CephFS
       enableCephfsDriver: false
+      enableCephfsSnapshotter: false
       enableLiveness: true
       serviceMonitor:
         enabled: true
+    enableDiscoveryDaemon: true
+    image:
+      repository: ghcr.io/rook/ceph
       csiRBDProvisionerResource: |
         - name : csi-provisioner
           resource:
