@@ -46,7 +46,7 @@ spec:
     configOverride: |
       [global]
       bdev_enable_discard = true
-      bdev_async_discard = true
+      bdev_async_discard_threads = 1
       osd_class_update_on_start = false
 
       [mon]
