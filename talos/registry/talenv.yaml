@@ -1,2 +1,2 @@
 # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
-prometheusOperatorVersion: v0.82.0
+prometheusOperatorVersion: v0.82.1
