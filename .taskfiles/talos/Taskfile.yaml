@@ -6,7 +6,7 @@ tasks:
 
   generate-config:
     desc: Generate Talos configuration
-    dir: '{{.TALOS_DIR}}/{{.cluster}}'
+    dir: '{{.TALOS_DIR}}'
     cmds:
       - echo age $SOPS_AGE_KEY_FILE
       - pwd
