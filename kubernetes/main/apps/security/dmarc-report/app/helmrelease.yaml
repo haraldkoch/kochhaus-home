@@ -39,7 +39,7 @@ spec:
           app:
             image:
               repository: ghcr.io/haraldkoch/dmarc-report
-              tag: 1.4.5@sha256:99301943721c95aea5f4b31c0dbe4d68e6fab8d25c29a82363851f928e2f7d98
+              tag: 1.4.5@sha256:8d3a6c219e5047a9f87522d48e5856f8ff70ceda386657206396448ff5c2fc58
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               REPORT_DB_TYPE: pgsql
