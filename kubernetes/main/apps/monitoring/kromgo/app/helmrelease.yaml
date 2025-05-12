@@ -100,6 +100,7 @@ spec:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
+          hajimari.io/enable: "false"
         hosts:
           - host: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:

@@ -89,6 +89,8 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
+        annotations:
+          hajimari.io/enable: "false"
         hosts:
           - thanos.${CLUSTER_DOMAIN}
       podAnnotations: &podAnnotations
