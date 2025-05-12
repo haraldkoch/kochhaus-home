@@ -9,7 +9,6 @@ components:
 resources:
   - ./docmost/ks.yaml
   - ./excalidraw/ks.yaml
-  - ./glance/ks.yaml
   - ./hajimari/ks.yaml
   - ./homepage/ks.yaml
   - ./karakeep/ks.yaml
