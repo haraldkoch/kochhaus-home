@@ -8,11 +8,11 @@ spec:
   interval: 30m
   chart:
     spec:
-      chart: app-template
-      version: 3.7.3
+      chart: silence-operator
+      version: 0.0.8
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: silence-operator
         namespace: flux-system
   install:
     remediation:
@@ -26,85 +26,61 @@ spec:
     - name: thanos
       namespace: monitoring
   values:
-    configMaps:
+    image:
+      name: quay.io/giantswarm/silence-operator
+    operator:
       config:
-        enabled: true
-        data:
-          config.yml: |
-            server:
-              enable:
-                debug:
-                  server: true
-              listen:
-                address: 'http://0.0.0.0:8000'
-            service:
-              alertmanager:
-                address: http://alertmanager-operated.monitoring.svc.cluster.local:9093
-              kubernetes:
-                address: ''
-                inCluster: true
-                tls:
-                  caFile: ''
-                  crtFile: ''
-                  keyFile: ''
-
-    controllers:
-      silence-operator:
-        pod:
-          securityContext:
-            runAsGroup: 1000
-            runAsUser: 1000
-            runAsNonRoot: true
-            seccompProfile:
-              type: RuntimeDefault
-
-        containers:
-          silence-operator:
-            image:
-              repository: quay.io/giantswarm/silence-operator
-              tag: 0.14.1
-            args:
-              - daemon
-              - --config.dirs=/var/run/silence-operator/configmap/
-              - --config.files=config
-            probes:
-              liveness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /healthz
-                    port: &port 8000
-                  initialDelaySeconds: 15
-                  periodSeconds: 20
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness:
-                enabled: false
-              startup:
-                enabled: false
-            resources:
-              requests:
-                cpu: 10m
-                memory: 128Mi
-              limits:
-                memory: 256Mi
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - "ALL"
-              seccompProfile:
-                type: RuntimeDefault
-
-    persistence:
-      config:
-        enabled: true
-        type: configMap
-        identifier: config
-        globalMounts:
-          - path: /var/run/silence-operator/configmap
-
-    serviceAccount:
+        alertmanager:
+          service:
+            address: http://alertmanager-operated.monitoring.svc.cluster.local:9093
+    rbac:
       create: true
-      name: silence-operator
+    extraDeploy:
+      - apiVersion: monitoring.giantswarm.io/v1alpha1
+        kind: Silence
+        metadata:
+          name: ceph-mon-clock-skew
+        spec:
+          matchers:
+            - name: alertname
+              value: CephMonClockSkew
+              isRegex: false
+      - apiVersion: monitoring.giantswarm.io/v1alpha1
+        kind: Silence
+        metadata:
+          name: ceph-node-inconsistent-mtu
+        spec:
+          matchers:
+            - name: alertname
+              value: CephNodeInconsistentMTU
+              isRegex: false
+      - apiVersion: monitoring.giantswarm.io/v1alpha1
+        kind: Silence
+        metadata:
+          name: ceph-node-network-packet-drops
+        spec:
+          matchers:
+            - name: alertname
+              value: CephNodeNetworkPacketDrops
+              isRegex: false
+      - apiVersion: monitoring.giantswarm.io/v1alpha1
+        kind: Silence
+        metadata:
+          name: cephnodenetworkpacketerrors
+        spec:
+          matchers:
+            - name: alertname
+              value: CephNodeNetworkPacketErrors
+              isRegex: false
+      - apiVersion: monitoring.giantswarm.io/v1alpha1
+        kind: Silence
+        metadata:
+          name: mnemosyne-memory-high-utilization
+        spec:
+          matchers:
+            - name: alertname
+              value: NodeMemoryHighUtilization
+              isRegex: false
+            - name: instance
+              value: mnemosyne.*
+              isRegex: true

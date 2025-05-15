@@ -35,5 +35,6 @@ resources:
   - ./prometheus-community.yaml
   - ./rook-ceph.yaml
   - ./runix.yaml
+  - ./silence-operator.yaml
   - ./stakater.yaml
   - ./stevehipwell.yaml
