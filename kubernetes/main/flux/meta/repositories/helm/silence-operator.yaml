@@ -8,4 +8,4 @@ metadata:
 spec:
   type: oci
   interval: 5m
-  url: oci://ghcr.io/wiremind/wiremind-helm-charts/silence-operator
+  url: oci://ghcr.io/wiremind/wiremind-helm-charts
