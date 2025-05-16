@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.7.3
+      version: 4.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -101,6 +101,8 @@ spec:
             sysctls:
               - name: net.ipv4.ping_group_range
                 value: "0 2147483647"
+        serviceAccount:
+          identifier: gatus
     service:
       app:
         controller: gatus
@@ -136,8 +138,7 @@ spec:
                   identifier: app
                   port: http
     serviceAccount:
-      create: true
-      name: gatus
+      gatus: {}
     persistence:
       config:
         type: emptyDir
