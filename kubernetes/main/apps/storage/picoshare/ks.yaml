@@ -11,6 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/external
+    - ../../../../components/volsync
   dependsOn:
     - name: external-secrets-stores
       namespace: security
@@ -20,6 +21,10 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: share
+      VOLSYNC_CAPACITY: 25Gi
+      VOLSYNC_CLAIM: picoshare-data-v1
+      VOLSYNC_GID: "1000"
+      VOLSYNC_UID: "1000"
   prune: true
   sourceRef:
     kind: GitRepository
