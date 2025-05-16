@@ -24,6 +24,12 @@
       "matchDataSources": ["docker", "helm"],
       "matchPackagePatterns": ["cloudnative-pg", "omada-controller", "reloader"],
       "schedule": ["on saturday"]
+    },
+    {
+      "description": ["Split app-template 4.0.x into separate PRs per-app"],
+      "matchDataSources": ["helm"],
+      "matchPackagePatterns": ["app-template"],
+      "additionalBranchPrefix": "{{baseDir}}-"
     }
   ]
 }
