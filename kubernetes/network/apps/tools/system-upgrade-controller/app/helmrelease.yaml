@@ -25,6 +25,8 @@ spec:
   values:
     controllers:
       system-upgrade-controller:
+        serviceAccount:
+          identifier: system-upgrade
         strategy: RollingUpdate
         containers:
           app:
@@ -71,8 +73,7 @@ spec:
               operator: Exists
               effect: NoSchedule
     serviceAccount:
-      create: true
-      name: system-upgrade
+      system-upgrade: {}
     persistence:
       tmp:
         type: emptyDir
