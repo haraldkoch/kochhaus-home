@@ -25,11 +25,11 @@ spec:
   values:
     controllers:
       system-upgrade-controller:
+        serviceAccount:
+          identifier: system-upgrade
         strategy: RollingUpdate
         containers:
           app:
-            serviceAccount:
-              identifier: system-upgrade
             image:
               repository: docker.io/rancher/system-upgrade-controller
               tag: v0.15.2
