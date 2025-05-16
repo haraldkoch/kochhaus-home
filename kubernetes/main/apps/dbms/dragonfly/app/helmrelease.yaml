@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 3.7.3
+      version: 4.0.1
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -26,6 +26,8 @@ spec:
     controllers:
       dragonfly-operator:
         replicas: 1
+        serviceAccount:
+          identifier: *app
         strategy: RollingUpdate
         containers:
           app:
@@ -98,9 +100,7 @@ spec:
             interval: 1m
             scrapeTimeout: 10s
     serviceAccount:
-      create: true
-      name: *app
-
+      dragonfly-operator: {}
   postRenderers:
     - kustomize:
         patches:
