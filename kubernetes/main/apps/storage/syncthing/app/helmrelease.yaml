@@ -140,6 +140,7 @@ spec:
       # TODO: volsync
       config:
         type: persistentVolumeClaim
+        suffix: config
         accessMode: ReadWriteOnce
         size: 1Gi
         advancedMounts:
