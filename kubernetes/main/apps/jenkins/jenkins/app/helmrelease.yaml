@@ -24,12 +24,13 @@ spec:
       retries: 3
   values:
     serviceAccount:
-      create: true
-      name: jenkins-admin
+      jenkins: {}
     controllers:
       jenkins:
         annotations:
           reloader.stakater.com/auto: "true"
+        serviceAccount:
+          identifier: jenkins
         containers:
           app:
             image:
