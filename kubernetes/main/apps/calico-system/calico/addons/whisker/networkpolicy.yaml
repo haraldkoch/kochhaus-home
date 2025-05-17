@@ -9,15 +9,15 @@ spec:
     - from:
         - namespaceSelector:
             matchLabels:
-              kubernetes.io/metadata.name: networking
+              kubernetes.io/metadata.name: network
         - podSelector:
             matchLabels:
-              app.kubernetes.io/instance: nginx
+              app.kubernetes.io/instance: nginx-internal
   egress:
     - to:
         - podSelector:
             matchLabels:
-              app.kubernetes.io/instance: whisker
+              app.kubernetes.io/name: whisker
       ports:
         - protocol: TCP
           port: 8081
