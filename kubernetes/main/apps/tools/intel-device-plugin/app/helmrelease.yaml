@@ -28,5 +28,6 @@ spec:
     - name: node-feature-discovery
       namespace: tools
   values:
-    controllerExtraArgs: |
-      - --devices=gpu
+    manager:
+      devices:
+        gpu: true
