@@ -21,6 +21,9 @@ spec:
       ports:
         - protocol: TCP
           port: 8081
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: whisker
   policyTypes:
     - Ingress
     - Egress
