@@ -9,16 +9,21 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus/guarded
   dependsOn:
     - name: external-secrets-stores
       namespace: security
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/monitoring/kube-prometheus-stack/app
   postBuild:
     substitute:
+      APP: kube-prometheus-stack
+      GATUS_SUBDOMAIN: prometheus
       # renovate: datasource=docker depName=quay.io/thanos/thanos
       THANOS_VERSION: v0.38.0
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
