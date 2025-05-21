@@ -1,4 +1,4 @@
-cloudflare==4.1.0
+cloudflare==4.2.0
 dnspython==2.7.0
 email-validator==2.2.0
 makejinja==2.7.2
