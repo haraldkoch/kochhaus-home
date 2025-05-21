@@ -26,6 +26,7 @@ k3s_server:
     - node-cidr-mask-size-ipv6=112
   kube-proxy-arg:
     - "metrics-bind-address=0.0.0.0"  # Required to monitor kube-proxy with kube-prometheus-stack
+    - "proxy-mode nftables"
   kube-scheduler-arg:
     - "bind-address=0.0.0.0"          # Required to monitor kube-scheduler with kube-prometheus-stack
   kubelet-arg:

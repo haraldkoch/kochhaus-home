@@ -1,6 +1,9 @@
 ---
 k3s_control_node: false
 k3s_agent:
+  kube-proxy-arg:
+    - "metrics-bind-address=0.0.0.0"  # Required to monitor kube-proxy with kube-prometheus-stack
+    - "proxy-mode nftables"
   kubelet-arg:
     - "image-gc-high-threshold=64"
     - "image-gc-low-threshold=55"
