@@ -7,7 +7,7 @@ metadata:
 spec:
   # local changes
   featureDetectOverride: ChecksumOffloadBroken=true
-  iptablesBackend: NFT
+  iptablesBackend: Auto
   # defaults
   bpfLogLevel: ""
   healthPort: 9099
