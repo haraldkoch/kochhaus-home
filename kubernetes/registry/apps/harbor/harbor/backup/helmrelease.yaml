@@ -33,7 +33,7 @@ spec:
           main:
             image:
               repository: docker.io/goharbor/harbor-db
-              tag: v2.13.0
+              tag: v2.13.1
             command: ["/usr/bin/pg_dumpall"]
             args:
               - "-f"
