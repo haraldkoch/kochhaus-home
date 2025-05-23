@@ -25,13 +25,14 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: prometheus-operator-crds
-      namespace: monitoring
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
     crds:
-      enabled: false
+      enabled: true
+      upgradeJob:
+        enabled: true
+        forceConflicts: true
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       ingress:

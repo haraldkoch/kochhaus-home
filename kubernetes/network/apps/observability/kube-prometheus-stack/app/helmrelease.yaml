@@ -27,11 +27,12 @@ spec:
   dependsOn:
     - name: longhorn
       namespace: storage
-    - name: prometheus-operator-crds
-      namespace: observability
   values:
     crds:
-      enabled: false
+      enabled: true
+      upgradeJob:
+        enabled: true
+        forceConflicts: true
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       ingress:
