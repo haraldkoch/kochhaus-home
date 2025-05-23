@@ -23,7 +23,7 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: thanos
+    - name: kube-prometheus-stack
       namespace: monitoring
   values:
     image:

@@ -26,7 +26,6 @@ resources:
   - ./smokeping/ks.yaml
   - ./snmp-exporter/ks.yaml
   - ./speedtest-exporter/ks.yaml
-  - ./thanos/ks.yaml
   - ./tplink-plug-exporter/ks.yaml
   - ./x509-certificate-exporter/ks.yaml
 

@@ -29,8 +29,6 @@ spec:
       namespace: monitoring
     - name: rook-ceph-cluster
       namespace: rook-ceph
-    - name: thanos
-      namespace: monitoring
   values:
     crds:
       enabled: false
@@ -173,14 +171,7 @@ spec:
         pathType: Prefix
         hosts:
           - prometheus.${CLUSTER_DOMAIN}
-      thanosService:
-        enabled: true
-      thanosServiceMonitor:
-        enabled: true
       prometheusSpec:
-        podMetadata:
-          annotations:
-            secret.reloader.stakater.com/reload: &secret thanos-objstore-config
         replicas: 1
         replicaExternalLabelName: __replica__
         podMonitorSelectorNilUsesHelmValues: false
@@ -192,15 +183,8 @@ spec:
         walCompression: true
         enableFeatures:
           - memory-snapshot-on-shutdown
-        thanos:
-          image: quay.io/thanos/thanos:${THANOS_VERSION}
-          version: "${THANOS_VERSION#v}"
-          objectStorageConfig:
-            existingSecret:
-              name: *secret
-              key: config
-        retention: 2d
-        retentionSize: 15GB
+        retention: 14d
+        retentionSize: 50GB
         externalLabels:
           cluster: main
         additionalAlertManagerConfigs:
@@ -221,7 +205,7 @@ spec:
               storageClassName: ceph-block
               resources:
                 requests:
-                  storage: 20Gi
+                  storage: 50Gi
     prometheusOperator:
       resources:
         requests:
