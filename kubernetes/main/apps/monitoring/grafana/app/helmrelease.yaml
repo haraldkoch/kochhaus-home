@@ -87,14 +87,6 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/flux-folder
-          - name: home
-            orgId: 1
-            folder: "Home"
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/home-folder
           - name: infrastructure
             orgId: 1
             folder: "Infrastructure"
@@ -160,19 +152,6 @@ spec:
         miniflux:
           url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
           datasource: Prometheus
-      home:
-        blocky:
-          # renovate: depName="blocky"
-          gnetId: 13768
-          revision: 6
-          datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
-            - { name: VAR_BLOCKY_URL, value: 'http:\/\/192.168.22.53:4000' }
-        zfs:
-          # renovate: depName="ZFS"
-          gnetId: 7845
-          revision: 4
-          datasource: Prometheus
       infrastructure:
         cert-manager:
           # renovate: depName="Cert-manager-Kubernetes"
@@ -219,6 +198,11 @@ spec:
           revision: 2
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
+        zfs:
+          # renovate: depName="ZFS"
+          gnetId: 7845
+          revision: 4
+          datasource: Prometheus
         dragonfly:
           url: https://raw.githubusercontent.com/dragonflydb/dragonfly/main/tools/local/monitoring/grafana/provisioning/dashboards/dragonfly.json
           datasource: Prometheus
