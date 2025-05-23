@@ -9,7 +9,7 @@ spec:
     - action: labeldrop
       regex: (pod)
   prober:
-    url: json-exporter.monitoring.svc.cluster.local:7979
+    url: json-exporter.observability.svc.cluster.local:7979
   targets:
     staticConfig:
       static:

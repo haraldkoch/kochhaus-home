@@ -7,10 +7,15 @@ components:
   - ../../components/common
   - ../../components/alerts
 resources:
+  - ./dnssec-exporter/ks.yaml
   - ./grafana/ks.yaml
+  - ./json-exporter/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
+  - ./network-ups-tools/ks.yaml
   - ./omada-exporter/ks.yaml
+  - ./opnsense-exporter/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
   - ./promtail/ks.yaml
   - ./smartctl-exporter/ks.yaml
+  - ./snmp-exporter/ks.yaml
   - ./tplink-plug-exporter/ks.yaml

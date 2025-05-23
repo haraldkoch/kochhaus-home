@@ -65,7 +65,6 @@ metadata:
     app.kubernetes.io/instance: servers
     app.kubernetes.io/name: nut-exporter
   name: nut-exporter-servers
-  namespace: monitoring
 spec:
   endpoints:
     - interval: 30s
@@ -107,7 +106,6 @@ metadata:
     app.kubernetes.io/instance: servers
     app.kubernetes.io/name: nut-exporter
   name: nut-exporter-internet
-  namespace: monitoring
 spec:
   endpoints:
     - interval: 30s
@@ -149,7 +147,6 @@ metadata:
     app.kubernetes.io/instance: kubernetes
     app.kubernetes.io/name: nut-exporter
   name: nut-exporter-kubernetes
-  namespace: monitoring
 spec:
   endpoints:
     - interval: 30s
@@ -168,7 +165,7 @@ spec:
           regex: (pod)
       params:
         server:
-          - network-ups-tools
+          - network-ups-tools.${CLUSTER_DOMAIN}
       path: /ups_metrics
       port: metrics
       scheme: http
