@@ -42,7 +42,7 @@ spec:
   jobLabel: tplink-plug-exporter
   namespaceSelector:
     matchNames:
-      - monitoring
+      - observability
   selector:
     matchLabels:
       app.kubernetes.io/instance: tplink-plug-exporter
@@ -81,7 +81,7 @@ spec:
   jobLabel: tplink-plug-exporter
   namespaceSelector:
     matchNames:
-      - monitoring
+      - observability
   selector:
     matchLabels:
       app.kubernetes.io/instance: tplink-plug-exporter
@@ -120,7 +120,7 @@ spec:
   jobLabel: tplink-plug-exporter
   namespaceSelector:
     matchNames:
-      - monitoring
+      - observability
   selector:
     matchLabels:
       app.kubernetes.io/instance: tplink-plug-exporter
@@ -154,7 +154,7 @@ spec:
   jobLabel: tplink-plug-exporter
   namespaceSelector:
     matchNames:
-      - monitoring
+      - observability
   selector:
     matchLabels:
       app.kubernetes.io/instance: tplink-plug-exporter
