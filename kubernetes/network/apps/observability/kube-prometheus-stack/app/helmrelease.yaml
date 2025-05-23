@@ -38,7 +38,7 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
-        hosts: ["alertmanager-network.${CLUSTER_DOMAIN}"]
+        hosts: ["alertmanager.${CLUSTER_DOMAIN}"]
         pathType: Prefix
       service:
         annotations:
@@ -63,7 +63,7 @@ spec:
             resolveTimeout: 5m
         clusterAdvertiseAddress: "${ALERTMANAGER_IPV4}:9094"
         clusterLabel: kochhaus
-        externalUrl: https://alertmanager-network.${CLUSTER_DOMAIN}
+        externalUrl: https://alertmanager.${CLUSTER_DOMAIN}
         forceEnableClusterMode: true
         storage:
           volumeClaimTemplate:
@@ -150,7 +150,7 @@ spec:
         ingressClassName: internal
         pathType: Prefix
         hosts:
-          - prometheus-network.${SECRET_DOMAIN}
+          - prometheus.${SECRET_DOMAIN}
       prometheusSpec:
         image:
           registry: docker.io

@@ -298,7 +298,7 @@ spec:
     ingress:
       enabled: true
       ingressClassName: internal
-      hosts: ["grafana-network.${CLUSTER_DOMAIN}"]
+      hosts: ["grafana.${CLUSTER_DOMAIN}"]
     downloadDashboardsImage:
       registry: quay.io
       repository: curl/curl

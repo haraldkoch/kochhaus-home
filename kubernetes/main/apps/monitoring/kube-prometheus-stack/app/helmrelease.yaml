@@ -41,7 +41,7 @@ spec:
         annotations:
           hajimari.io/appName: "Alert Manager"
           hajimari.io/icon: mdi:alert-decagram-outline
-        hosts: ["alertmanager.${CLUSTER_DOMAIN}"]
+        hosts: ["alertmanager-main.${CLUSTER_DOMAIN}"]
         pathType: Prefix
       service:
         annotations:
@@ -66,7 +66,7 @@ spec:
             resolveTimeout: 5m
         clusterAdvertiseAddress: "${ALERTMANAGER_IPV4}:9094"
         clusterLabel: kochhaus
-        externalUrl: https://alertmanager.${CLUSTER_DOMAIN}
+        externalUrl: https://alertmanager-main.${CLUSTER_DOMAIN}
         forceEnableClusterMode: true
         storage:
           volumeClaimTemplate:
@@ -171,7 +171,7 @@ spec:
           gethomepage.dev/widget.url: http://prometheus-operated.monitoring.svc.cluster.local:9090
         pathType: Prefix
         hosts:
-          - prometheus.${CLUSTER_DOMAIN}
+          - prometheus-main.${CLUSTER_DOMAIN}
       prometheusSpec:
         image:
           registry: docker.io
