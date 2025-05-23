@@ -28,8 +28,8 @@ spec:
         containers:
           app:
             image:
-              repository: fffonion/tplink-plug-exporter
-              tag: 0.4.0
+              repository: ghcr.io/haraldkoch/tplink-plug-exporter
+              tag: 0.5.0@sha256:9ee1bd839bb714f5223ab945a55cb074b0bc7637f4990f0db52594cc18034d23
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
             probes:
