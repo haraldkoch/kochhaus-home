@@ -56,5 +56,4 @@ spec:
         ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack
         annotations:
-          # FIXME: I will switch this back to exporters.${CLUSTER_DOMAIN} once I migrate the other exporters
-          external-dns.alpha.kubernetes.io/hostname: "exporters-network.${CLUSTER_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: "exporters.${CLUSTER_DOMAIN}"

@@ -3,14 +3,14 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app openweathermap-exporter
-  namespace: &namespace weather
+  name: &app snmp-exporter
+  namespace: &namespace observability
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   interval: 30m
-  path: ./kubernetes/main/apps/weather/openweathermap-exporter/app
+  path: ./kubernetes/network/apps/observability/snmp-exporter/app
   prune: true
   sourceRef:
     kind: GitRepository

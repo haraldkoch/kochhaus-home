@@ -68,7 +68,7 @@ spec:
         ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "exporters.${CLUSTER_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: "network-ups-tools.${CLUSTER_DOMAIN}"
     persistence:
       config:
         type: configMap
