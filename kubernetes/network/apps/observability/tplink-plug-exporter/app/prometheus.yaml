@@ -1,0 +1,161 @@
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: tplink-plug-exporter
+spec:
+  groups:
+    - name: tplink-plugexporter.rules
+      rules: []
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/servicemonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/instance: k8s
+    app.kubernetes.io/name: tplink-plug-exporter
+  name: tplink-plug-exporter-k8s
+spec:
+  endpoints:
+    - interval: 30s
+      metricRelabelings:
+        - action: replace
+          replacement: k8s
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: kp115-k8s
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        target:
+          - 192.168.30.132
+      path: /scrape
+      port: metrics
+      scheme: http
+      scrapeTimeout: 30s
+  jobLabel: tplink-plug-exporter
+  namespaceSelector:
+    matchNames:
+      - monitoring
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: tplink-plug-exporter
+      app.kubernetes.io/name: tplink-plug-exporter
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/servicemonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/instance: internet
+    app.kubernetes.io/name: tplink-plug-exporter
+  name: tplink-plug-exporter-internet
+spec:
+  endpoints:
+    - interval: 30s
+      metricRelabelings:
+        - action: replace
+          replacement: internet
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: kp115-internet
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        target:
+          - 192.168.30.133
+      path: /scrape
+      port: metrics
+      scheme: http
+      scrapeTimeout: 30s
+  jobLabel: tplink-plug-exporter
+  namespaceSelector:
+    matchNames:
+      - monitoring
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: tplink-plug-exporter
+      app.kubernetes.io/name: tplink-plug-exporter
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/servicemonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/instance: servers
+    app.kubernetes.io/name: tplink-plug-exporter
+  name: tplink-plug-exporter-servers
+spec:
+  endpoints:
+    - interval: 30s
+      metricRelabelings:
+        - action: replace
+          replacement: servers
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: kp115-servers
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        target:
+          - 192.168.30.134
+      path: /scrape
+      port: metrics
+      scheme: http
+      scrapeTimeout: 30s
+  jobLabel: tplink-plug-exporter
+  namespaceSelector:
+    matchNames:
+      - monitoring
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: tplink-plug-exporter
+      app.kubernetes.io/name: tplink-plug-exporter
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/servicemonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/component: metrics
+    app.kubernetes.io/instance: spare
+    app.kubernetes.io/name: tplink-plug-exporter
+  name: tplink-plug-exporter-spare
+spec:
+  endpoints:
+    - interval: 30s
+      metricRelabelings:
+        - action: replace
+          replacement: spare
+          sourceLabels:
+            - instance
+          targetLabel: instance
+      params:
+        target:
+          - 192.168.30.135
+      path: /scrape
+      port: metrics
+      scheme: http
+      scrapeTimeout: 30s
+  jobLabel: tplink-plug-exporter
+  namespaceSelector:
+    matchNames:
+      - monitoring
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: tplink-plug-exporter
+      app.kubernetes.io/name: tplink-plug-exporter

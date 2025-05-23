@@ -1,0 +1,60 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tplink-plug-exporter
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 4.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      tplink-plug-exporter:
+        containers:
+          app:
+            image:
+              repository: fffonion/tplink-plug-exporter
+              tag: 0.4.0
+            env:
+              TZ: ${TIMEZONE:=Etc/UTC}
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 50m
+                memory: 100Mi
+              limits:
+                memory: 100Mi
+    service:
+      app:
+        controller: tplink-plug-exporter
+        ports:
+          metrics:
+            protocol: TCP
+            port: 9233
+        type: LoadBalancer
+        externalIPs: ["${EXPORTERS_IPV4}", "${EXPORTERS_IPV6}"]
+        externalTrafficPolicy: Local
+        ipFamilies: [IPv4, IPv6]
+        ipFamilyPolicy: PreferDualStack
+        annotations:
+          # FIXME: I will switch this back to exporters.${CLUSTER_DOMAIN} once I migrate the other exporters
+          external-dns.alpha.kubernetes.io/hostname: "exporters-network.${CLUSTER_DOMAIN}"

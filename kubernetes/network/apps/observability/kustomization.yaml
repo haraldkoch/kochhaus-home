@@ -13,3 +13,4 @@ resources:
   - ./prometheus-operator-crds/ks.yaml
   - ./promtail/ks.yaml
   - ./smartctl-exporter/ks.yaml
+  - ./tplink-plug-exporter/ks.yaml
