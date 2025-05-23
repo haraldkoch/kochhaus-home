@@ -20,8 +20,6 @@ spec:
     substitute:
       APP: kube-prometheus-stack
       GATUS_SUBDOMAIN: prometheus
-      # renovate: datasource=docker depName=quay.io/thanos/thanos
-      THANOS_VERSION: v0.38.0
   prune: true
   retryInterval: 2m
   sourceRef:

@@ -23,7 +23,7 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
-    - name: thanos
+    - name: kube-prometheus-stack
       namespace: monitoring
   values:
     controllers:
@@ -38,7 +38,7 @@ spec:
               repository: ghcr.io/kashalls/kromgo
               tag: v0.6.0@sha256:4b908ea0be5acd61e67ce38d8f1342d0731296b00b8ca2c35533aa519d804cc6
             env:
-              PROMETHEUS_URL: http://thanos-query-frontend.monitoring.svc.cluster.local:10902
+              PROMETHEUS_URL: http://prometheus-operated.monitoring.svc.cluster.local:9090
               SERVER_PORT: &serverPort 80
               HEALTH_PORT: &healthPort 8080
             probes:

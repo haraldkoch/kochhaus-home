@@ -29,4 +29,3 @@ cluster:
     - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/${prometheusOperatorVersion}/example/prometheus-operator-crd/monitoring.coreos.com_prometheusrules.yaml
     - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/${prometheusOperatorVersion}/example/prometheus-operator-crd/monitoring.coreos.com_scrapeconfigs.yaml
     - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/${prometheusOperatorVersion}/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml
-    - https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/${prometheusOperatorVersion}/example/prometheus-operator-crd/monitoring.coreos.com_thanosrulers.yaml

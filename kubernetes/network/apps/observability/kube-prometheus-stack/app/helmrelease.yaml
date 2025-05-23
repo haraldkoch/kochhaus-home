@@ -151,9 +151,6 @@ spec:
         hosts:
           - prometheus-network.${SECRET_DOMAIN}
       prometheusSpec:
-        podMetadata:
-          annotations:
-            secret.reloader.stakater.com/reload: &secret thanos-objstore-config
         replicas: 1
         replicaExternalLabelName: __replica__
         podMonitorSelectorNilUsesHelmValues: false
@@ -165,8 +162,8 @@ spec:
         walCompression: true
         enableFeatures:
           - memory-snapshot-on-shutdown
-        retention: 2d
-        retentionSize: 15GB
+        retention: 14d
+        retentionSize: 50GB
         externalLabels:
           cluster: network
         additionalAlertManagerConfigs:
@@ -187,26 +184,7 @@ spec:
               storageClassName: longhorn
               resources:
                 requests:
-                  storage: 20Gi
-        thanos:
-          image: "quay.io/thanos/thanos:${THANOS_VERSION}"
-          version: "${THANOS_VERSION#v}"
-          objectStorageConfig:
-            existingSecret:
-              name: *secret
-              key: config
-      thanosService:
-        enabled: true
-      thanosServiceExternal:
-        enabled: true
-        type: LoadBalancer
-        externalIPs: ["${THANOS_IPV4}"]
-        # ipFamilyPolicy: PreferDualStack
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: thanos-network.${SECRET_DOMAIN}
-        externalTrafficPolicy: Local
-      thanosServiceMonitor:
-        enabled: true
+                  storage: 50Gi
     prometheusOperator:
       resources:
         requests:
