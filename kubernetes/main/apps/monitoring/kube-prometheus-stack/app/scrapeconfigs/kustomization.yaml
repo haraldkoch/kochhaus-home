@@ -10,5 +10,3 @@ resources:
   - ./mnemosyne.yaml
   - ./node-exporter.yaml
   - ./pikvm.yaml
-  - ./wifi.yaml
-  - ./wired.yaml

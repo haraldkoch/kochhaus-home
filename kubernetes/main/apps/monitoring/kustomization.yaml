@@ -7,7 +7,6 @@ components:
   - ../../components/alerts
   - ../../components/common
 resources:
-  - ./blackbox-exporter/ks.yaml
   - ./gatus/ks.yaml
   - ./goldpinger/ks.yaml
   - ./grafana/ks.yaml

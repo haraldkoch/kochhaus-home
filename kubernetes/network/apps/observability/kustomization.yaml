@@ -7,6 +7,7 @@ components:
   - ../../components/common
   - ../../components/alerts
 resources:
+  - ./blackbox-exporter/ks.yaml
   - ./dnssec-exporter/ks.yaml
   - ./grafana/ks.yaml
   - ./json-exporter/ks.yaml
