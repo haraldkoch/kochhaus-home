@@ -7,6 +7,7 @@ components:
   - ../../components/common
   - ../../components/alerts
 resources:
+  - ./grafana/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./omada-exporter/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
