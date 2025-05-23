@@ -4,7 +4,6 @@ apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:
   name: mnemosyne-minio
-  namespace: monitoring
 spec:
   staticConfigs:
     - targets: ["mnemosyne.${PRIVATE_STATIC_DOMAIN}:9000"]
@@ -15,7 +14,6 @@ apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:
   name: mnemosyne-smartctl-exporter
-  namespace: monitoring
 spec:
   staticConfigs:
     - targets: ["mnemosyne.${PRIVATE_STATIC_DOMAIN}:9633"]
@@ -26,7 +24,6 @@ apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:
   name: mnemosyne-zrepl
-  namespace: monitoring
 spec:
   staticConfigs:
     - targets: ["mnemosyne.${PRIVATE_STATIC_DOMAIN}:9811"]
