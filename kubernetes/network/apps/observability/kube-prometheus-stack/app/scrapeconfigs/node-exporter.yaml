@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: node-exporter
+spec:
+  staticConfigs:
+    - targets:
+        - ${SECRET_MEDIA_SERVER}:9100
+        - 192.168.20.1:9100
+        - pikvm1.home.arpa:9100
+        - pikvm2.home.arpa:9100
+  metricsPath: /metrics

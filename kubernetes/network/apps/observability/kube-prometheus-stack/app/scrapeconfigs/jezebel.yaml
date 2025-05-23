@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: jezebel-smartctl-exporter
+  namespace: monitoring
+spec:
+  staticConfigs:
+    - targets: ["jezebel.${PRIVATE_STATIC_DOMAIN}:9633"]
+  metricsPath: /metrics
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: jezebel-zrepl
+  namespace: monitoring
+spec:
+  staticConfigs:
+    - targets: ["jezebel.${PRIVATE_STATIC_DOMAIN}:9811"]
+  metricsPath: /metrics

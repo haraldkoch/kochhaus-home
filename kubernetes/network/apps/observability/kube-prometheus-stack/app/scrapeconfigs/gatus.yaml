@@ -3,10 +3,10 @@
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:
-  name: haproxy
+  name: gatus
   namespace: monitoring
 spec:
   staticConfigs:
     - targets:
-        - gw.${PRIVATE_STATIC_DOMAIN}:8404
+        - status.${CLUSTER_DOMAIN}
   metricsPath: /metrics
