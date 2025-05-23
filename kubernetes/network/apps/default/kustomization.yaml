@@ -16,6 +16,6 @@ resources:
   - ./node-red/ks.yaml
   - ./omada-controller/ks.yaml
   - ./openspeedtest/ks.yaml
-  - ./openweathermap/ks.yaml
+  - ./openweathermap-exporter/ks.yaml
   - ./smtp-relay/ks.yaml
   - ./zigbee2mqtt/ks.yaml
