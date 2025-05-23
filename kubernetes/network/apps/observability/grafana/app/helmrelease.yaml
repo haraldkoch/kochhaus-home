@@ -61,14 +61,6 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/default-folder
-          - name: applications
-            orgId: 1
-            folder: "Applications"
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/applications-folder
           - name: flux
             orgId: 1
             folder: Flux
@@ -146,6 +138,12 @@ spec:
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
             - { name: VAR_BLOCKY_URL, value: 'http:\/\/192.168.22.53:4000' }
+        ping:
+          # renovate: depName="Blackbox exporter - ICMP"
+          gnetId: 20338
+          revision: 3
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
       infrastructure:
         cert-manager:
           # renovate: depName="Cert-manager-Kubernetes"
@@ -168,12 +166,6 @@ spec:
           gnetId: 1860
           revision: 40
           datasource: Prometheus
-        ping:
-          # renovate: depName="Blackbox exporter - ICMP"
-          gnetId: 20338
-          revision: 3
-          datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
         smart:
           # renovate: depName="Dashboard for smartctl_exporter"
           gnetId: 20204
