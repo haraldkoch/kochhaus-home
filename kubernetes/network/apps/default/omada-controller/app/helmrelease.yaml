@@ -35,7 +35,7 @@ spec:
           app:
             image:
               repository: mbentley/omada-controller
-              tag: 5.15.20.20@sha256:e08323c2c7b761013d50ed619cb5d1faff3ce66384989d044f66fedb56f01da6
+              tag: 5.15.20.20@sha256:f9b70a245e7bd25667dae5d8704bfc8bfafd39ab9a93a53bc8bad5441015ff84
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               MANAGE_HTTP_PORT: "8088"
