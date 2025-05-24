@@ -27,6 +27,10 @@ spec:
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
+  valuesFrom:
+    - kind: ConfigMap
+      name: flux-kube-state-metrics-config
+      valuesKey: kube-state-metrics-config.yaml
   values:
     crds:
       enabled: true
