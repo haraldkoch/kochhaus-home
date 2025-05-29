@@ -12,13 +12,17 @@ instance:
     - notification-controller
   sync:
     kind: GitRepository
-    url: "https://github.com/haraldkoch/kochhaus-home.git"
-    ref: "refs/heads/main"
+    url: https://github.com/haraldkoch/kochhaus-home
+    ref: refs/heads/main
     path: kubernetes/registry/flux/cluster
+    interval: 1h
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: flux
   kustomize:
     patches:
-      # allow flux components to run on the control-plane.
-      - patch: |-
+      - # allow flux components to run on the control-plane.
+        patch: |-
           apiVersion: apps/v1
           kind: Deployment
           metadata:
@@ -39,29 +43,23 @@ instance:
         target:
           kind: Deployment
           labelSelector: control-plane=controller
-      # Increase the number of reconciliations that can be performed in parallel and bump the resources limits
-      # Ref: https://fluxcd.io/flux/cheatsheets/bootstrap/#increase-the-number-of-workers
-      - patch: |
+      - # Increase the number of workers
+        patch: |
           - op: add
             path: /spec/template/spec/containers/0/args/-
-            value: --concurrent=12
-          - op: add
-            path: /spec/template/spec/containers/0/args/-
-            value: --kube-api-qps=500
-          - op: add
-            path: /spec/template/spec/containers/0/args/-
-            value: --kube-api-burst=1000
+            value: --concurrent=10
           - op: add
             path: /spec/template/spec/containers/0/args/-
             value: --requeue-dependency=5s
         target:
           kind: Deployment
           name: (kustomize-controller|helm-controller|source-controller)
-      - patch: |
+      - # Increase the memory limits
+        patch: |
           apiVersion: apps/v1
           kind: Deployment
           metadata:
-            name: not-used
+            name: all
           spec:
             template:
               spec:
@@ -73,9 +71,11 @@ instance:
         target:
           kind: Deployment
           name: (kustomize-controller|helm-controller|source-controller)
-      # Enable in-memory-kustomize builds
-      # Ref: https://fluxcd.io/flux/installation/configuration/vertical-scaling/#enable-in-memory-kustomize-builds
-      - patch: |
+      - # Enable in-memory kustomize builds
+        patch: |
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --concurrent=20
           - op: replace
             path: /spec/template/spec/volumes/0
             value:
@@ -85,9 +85,22 @@ instance:
         target:
           kind: Deployment
           name: kustomize-controller
-      # Enable Helm near OOM detection
-      # Ref: https://fluxcd.io/flux/cheatsheets/bootstrap/#enable-helm-near-oom-detection
-      - patch: |
+      - # Enable Helm repositories caching
+        patch: |
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --helm-cache-max-size=10
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --helm-cache-ttl=60m
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --helm-cache-purge-interval=5m
+        target:
+          kind: Deployment
+          name: source-controller
+      - # Flux near OOM detection for Helm
+        patch: |
           - op: add
             path: /spec/template/spec/containers/0/args/-
             value: --feature-gates=OOMWatch=true
@@ -100,3 +113,11 @@ instance:
         target:
           kind: Deployment
           name: helm-controller
+#      - # Disable chart digest tracking
+#        patch: |
+#          - op: add
+#            path: /spec/template/spec/containers/0/args/-
+#            value: --feature-gates=DisableChartDigestTracking=true
+#        target:
+#          kind: Deployment
+#          name: helm-controller

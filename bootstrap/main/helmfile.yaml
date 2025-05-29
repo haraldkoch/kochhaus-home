@@ -17,8 +17,7 @@ releases:
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
     version: 0.20.0
-    values:
-      - ../apps/flux-system/flux-operator/app/helm-values.yaml
+    values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/main/apps/flux-system/flux-operator/app/helm/values.yaml']
     needs:
       - observability/prometheus-operator-crds
 
@@ -27,7 +26,5 @@ releases:
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
     version: 0.20.0
     wait: false
-    values:
-      - ../apps/flux-system/flux-operator/instance/helm-values.yaml
-    needs:
-      - flux-system/flux-operator
+    values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/main/apps/flux-system/flux-instance/app/helm/values.yaml']
+    needs: ['flux-system/flux-operator']

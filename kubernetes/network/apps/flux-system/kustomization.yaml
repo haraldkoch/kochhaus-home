@@ -7,4 +7,5 @@ components:
   - ../../components/common
   - ../../components/alerts
 resources:
+  - ./flux-instance/ks.yaml
   - ./flux-operator/ks.yaml

@@ -2,8 +2,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/helmfile
 
 helmDefaults:
-  timeout: 600
-  force: true
+  cleanupOnFail: true
   wait: true
   waitForJobs: true
 
@@ -39,7 +38,7 @@ releases:
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
     version: 0.20.0
-    values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/registry/apps/flux-system/flux-operator/app/helm-values.yaml']
+    values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/registry/apps/flux-system/flux-operator/app/helm/values.yaml']
     needs: ['cert-manager/cert-manager']
 
   - name: flux-instance
@@ -47,5 +46,5 @@ releases:
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
     version: 0.20.0
     wait: false
-    values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/registry/apps/flux-system/flux-operator/instance/helm-values.yaml']
+    values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/registry/apps/flux-system/flux-instance/app/helm/values.yaml']
     needs: ['flux-system/flux-operator']
