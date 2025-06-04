@@ -9,12 +9,18 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus/guarded
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: dbms
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/monitoring/grafana/app
+  postBuild:
+    substitute:
+      APP: *app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
