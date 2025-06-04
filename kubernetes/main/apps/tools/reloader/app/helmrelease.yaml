@@ -25,14 +25,16 @@ spec:
   values:
     fullnameOverride: reloader
     reloader:
-      readOnlyRootFileSystem: true
+      enableHA: true
       deployment:
+        replicas: 1
         resources:
           requests:
             cpu: 15m
             memory: 128Mi
           limits:
             memory: 192Mi
+      readOnlyRootFileSystem: true
       podMonitor:
         enabled: true
         namespace: "{{ .Release.Namespace }}"
