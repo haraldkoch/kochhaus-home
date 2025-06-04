@@ -9,9 +9,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: external-secrets-stores
-      namespace: security
   interval: 30m
   path: ./kubernetes/main/apps/network/external-dns/bind
   prune: false
@@ -33,9 +30,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: external-secrets-stores
-      namespace: security
   interval: 30m
   path: ./kubernetes/main/apps/network/external-dns/cloudflare
   prune: false

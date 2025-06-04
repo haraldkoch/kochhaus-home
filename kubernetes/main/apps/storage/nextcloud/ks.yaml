@@ -15,8 +15,6 @@ spec:
   dependsOn:
     - name: dragonfly-cluster
       namespace: dbms
-    - name: external-secrets-stores
-      namespace: security
   interval: 30m
   path: ./kubernetes/main/apps/storage/nextcloud/app
   postBuild:

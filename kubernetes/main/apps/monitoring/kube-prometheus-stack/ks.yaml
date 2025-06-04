@@ -11,9 +11,6 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/guarded
-  dependsOn:
-    - name: external-secrets-stores
-      namespace: security
   interval: 1h
   path: ./kubernetes/main/apps/monitoring/kube-prometheus-stack/app
   postBuild:

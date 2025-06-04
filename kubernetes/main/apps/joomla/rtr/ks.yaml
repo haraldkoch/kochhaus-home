@@ -9,9 +9,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: external-secrets-stores
-      namespace: security
   interval: 30m
   path: ./kubernetes/main/apps/joomla/rtr/app
   prune: true

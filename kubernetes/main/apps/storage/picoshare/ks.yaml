@@ -12,9 +12,6 @@ spec:
   components:
     - ../../../../components/gatus/external
     - ../../../../components/volsync
-  dependsOn:
-    - name: external-secrets-stores
-      namespace: security
   interval: 30m
   path: ./kubernetes/main/apps/storage/picoshare/app
   postBuild:

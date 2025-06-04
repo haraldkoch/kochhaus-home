@@ -33,8 +33,6 @@ spec:
   dependsOn:
     - name: cloudnative-pg
       namespace: dbms
-    - name: external-secrets-stores
-      namespace: security
   interval: 30m
   path: ./kubernetes/main/apps/dbms/cloudnative-pg/cluster
   prune: true

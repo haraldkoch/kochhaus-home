@@ -12,8 +12,6 @@ spec:
   components:
     - ../../../../components/volsync
   dependsOn:
-    - name: external-secrets-stores
-      namespace: security
     - name: volsync
       namespace: storage
   interval: 30m
