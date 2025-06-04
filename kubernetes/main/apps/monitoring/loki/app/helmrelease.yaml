@@ -25,9 +25,6 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  dependsOn:
-    - name: openebs
-      namespace: storage
   values:
     deploymentMode: SingleBinary
     loki:
@@ -38,8 +35,14 @@ spec:
         log_level: info
       commonConfig:
         replication_factor: 1
+      compactor:
+        working_directory: /var/loki/compactor/retention
+        delete_request_store: filesystem
+        retention_enabled: true
       ingester:
         chunk_encoding: snappy
+      limits_config:
+        retention_period: 14d
       storage:
         type: filesystem
       schemaConfig:
@@ -51,13 +54,21 @@ spec:
             index:
               prefix: loki_index_
               period: 24h
-      limits_config:
-        retention_period: 14d
+      structuredConfig:
+        ruler:
+          enable_api: true
+          enable_alertmanager_v2: true
+          alertmanager_url: http://alertmanager-operated.monitoring.svc.cluster.local:9093
+          storage:
+            type: local
+            local:
+              directory: /rules
+          rule_path: /rules/fake
     singleBinary:
       replicas: 1
       persistence:
         enabled: true
-        storageClass: openebs-hostpath
+        storageClass: ceph-block
         size: 50Gi
     gateway:
       replicas: 0
@@ -75,3 +86,9 @@ spec:
       enabled: false
     test:
       enabled: false
+    sidecar:
+      image:
+        repository: ghcr.io/home-operations/k8s-sidecar
+        tag: 1.30.3@sha256:39cca7abcad8f1621b9462d95f7d0e60301b92fcb0ff4de0ad4561859011cddf
+      rules:
+        searchNamespace: ALL
