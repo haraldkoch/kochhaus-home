@@ -4,7 +4,7 @@ originRequest:
 
 ingress:
   - hostname: ${CLUSTER_DOMAIN}
-    service: https://nginx-external-controller.network.svc.cluster.local:443
+    service: &svc https://nginx-external-controller.network.svc.cluster.local:443
   - hostname: "*.${CLUSTER_DOMAIN}"
-    service: https://nginx-external-controller.network.svc.cluster.local:443
+    service: *svc
   - service: http_status:404

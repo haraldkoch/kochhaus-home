@@ -15,7 +15,7 @@ spec:
     - name: external-dns-cloudflare
       namespace: network
   interval: 30m
-  path: ./kubernetes/main/apps/network/cloudflared/app
+  path: ./kubernetes/main/apps/network/cloudflare-tunnel/app
   prune: false
   sourceRef:
     kind: GitRepository

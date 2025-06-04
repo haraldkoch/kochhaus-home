@@ -7,7 +7,7 @@ components:
   - ../../components/alerts
   - ../../components/common
 resources:
-  - ./cloudflared/ks.yaml
+  - ./cloudflare-tunnel/ks.yaml
   - ./external-dns/ks.yaml
   - ./nginx/ks.yaml
   - ./opnsense/ks.yaml
