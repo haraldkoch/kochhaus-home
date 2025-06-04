@@ -1,35 +1,49 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/kashalls/kromgo/main/config.schema.json
+badge:
+  font: Verdana.ttf
+  size: 12
+
 metrics:
   - name: kubernetes_version
-    query: kubernetes_build_info{cluster="main", service="kubernetes"}
+    query: label_replace(kubernetes_build_info{cluster="main", service="kubernetes"}, "git_version", "$1", "git_version", "v(.+)")
     label: git_version
+    title: Kubernetes
+
+  - name: flux_version
+    query: label_replace(flux_instance_info{cluster="main"}, "revision", "$1", "revision", "v(.+)@sha256:.+")
+    label: revision
+    title: Flux
 
   - name: cluster_node_count
     query: count(count by (node) (kube_node_status_condition{cluster="main", condition="Ready"}))
     colors:
       - { color: "green", min: 0, max: 9999 }
+    title: Nodes
 
   - name: cluster_pod_count
     query: sum(kube_pod_status_phase{cluster="main", phase="Running"})
     colors:
       - { color: "green", min: 0, max: 9999 }
+    title: Pods
 
   - name: cluster_cpu_usage
-    query: round(avg(instance:node_cpu_utilisation:rate5m{cluster="main"}) * 100, 0.1)
+    query: round(avg(instance:node_cpu_utilisation:rate5m{cluster="main",kubernetes_node!=""}) * 100, 0.1)
     suffix: "%"
     colors:
       - { color: "green", min: 0, max: 60 }
       - { color: "orange", min: 60, max: 75 }
       - { color: "red", min: 76, max: 9999 }
+    title: CPU
 
   - name: cluster_memory_usage
-    query: round(sum(node_memory_MemTotal_bytes{cluster="main"} - node_memory_MemAvailable_bytes{cluster="main"}) / sum(node_memory_MemTotal_bytes{cluster="main"}) * 100, 0.1)
+    query: round(sum(node_memory_MemTotal_bytes{cluster="main",kubernetes_node!=""} - node_memory_MemAvailable_bytes{cluster="main",kubernetes_node!=""}) / sum(node_memory_MemTotal_bytes{cluster="main",kubernetes_node!=""}) * 100, 0.1)
     suffix: "%"
     colors:
       - { color: green, min: 0, max: 60 }
       - { color: orange, min: 60, max: 75 }
       - { color: red, min: 76, max: 9999 }
+    title: Memory
 
   - name: cluster_power_usage
     query: kasa_power_load{target="kp115-k8s"} + ignoring(alias, id, instance, pod, target) kasa_power_load{target="kp115-servers"}
@@ -38,6 +52,7 @@ metrics:
       - { color: "green", min: 0, max: 400 }
       - { color: "orange", min: 401, max: 750 }
       - { color: "red", min: 751, max: 9999 }
+    title: Power
 
   - name: cluster_age_days
     query: round((time() - min(kube_node_created{cluster="main"}) ) / 86400)
@@ -46,6 +61,7 @@ metrics:
       - { color: "green", min: 0, max: 180 }
       - { color: "orange", min: 181, max: 360 }
       - { color: "red", min: 361, max: 9999 }
+    title: Age
 
   - name: cluster_uptime_days
     query: round(avg(node_time_seconds{cluster="main"} - node_boot_time_seconds{cluster="main"}) / 86400)
@@ -54,6 +70,7 @@ metrics:
       - { color: "green", min: 0, max: 180 }
       - { color: "orange", min: 181, max: 360 }
       - { color: "red", min: 361, max: 9999 }
+    title: Uptime
 
   - name: cluster_alert_count
     query: alertmanager_alerts{state="active"} -1 # ignore Watchdog
@@ -61,3 +78,4 @@ metrics:
       - { color: "green", min: 0, max: 0 }
       - { color: "orange", min: 1, max: 4 }
       - { color: "red", min: 5, max: 9999 }
+    title: Alerts

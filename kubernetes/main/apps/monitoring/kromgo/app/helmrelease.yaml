@@ -76,9 +76,9 @@ spec:
                 memory: 64Mi
         pod:
           securityContext:
+            runAsNonRoot: true
             runAsUser: 568
             runAsGroup: 568
-            runAsNonRoot: true
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname
