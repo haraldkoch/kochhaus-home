@@ -12,9 +12,14 @@ spec:
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: dbms
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/monitoring/gatus/app
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: status
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
