@@ -27,8 +27,13 @@ spec:
       namespace: storage
   values:
     manageCRDs: true
+    replicaCount: 2
     metrics:
       disableAuth: true
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1022
+      runAsGroup: 1022
   postRenderers:
     - kustomize:
         patches:

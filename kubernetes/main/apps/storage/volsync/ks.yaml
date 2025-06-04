@@ -9,13 +9,23 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 30m
+  dependsOn:
+    - name: openebs
+      namespace: storage
+    - name: snapshot-controller
+      namespace: storage
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: *app
+      namespace: *namespace
+  interval: 1h
   path: ./kubernetes/main/apps/storage/volsync/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-  wait: false
