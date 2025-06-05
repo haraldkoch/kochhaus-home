@@ -4,6 +4,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./kochhaus-v16.yaml
+  - ./objectstore.yaml
   - ./scheduledbackup.yaml
   - ./prometheusrule.yaml
   - ./service.yaml
