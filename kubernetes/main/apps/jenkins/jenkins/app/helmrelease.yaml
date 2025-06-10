@@ -35,7 +35,7 @@ spec:
           app:
             image:
               repository: jenkins/jenkins
-              tag: 2.513
+              tag: 2.514
             env:
               TZ: ${TIMEZONE}
               # FIXME
