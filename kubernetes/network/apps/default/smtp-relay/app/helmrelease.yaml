@@ -38,7 +38,7 @@ spec:
           app:
             image:
               repository: ghcr.io/haraldkoch/maddy
-              tag: 0.8.1@sha256:15722a18f31b1806c5954d1fb12558f7207bc71a0034623918ddc78174079a51
+              tag: 0.8.1@sha256:ae2215d95969cbeeb7a8ea264f9795e13efcfd33e72cf7d458004f93ba682411
             env:
               SMTP_RELAY_SMTP_PORT: &port 25
               SMTP_RELAY_METRICS_PORT: &metricsPort 8080
