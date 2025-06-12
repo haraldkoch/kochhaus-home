@@ -36,7 +36,7 @@ spec:
           app:
             image:
               repository: ghcr.io/haraldkoch/cloudflared
-              tag: 2025.5.0@sha256:06239986b4b7227a5472d35b877a8be4578dfbc6ed78f38c4298f3899cfac5f4
+              tag: 2025.6.0@sha256:6e6e648453575ba8e898b84fc2b0cf743566e19a352cd74e1fb1d0d677cca053
             env:
               NO_AUTOUPDATE: true
               TUNNEL_CRED_FILE: /etc/cloudflared/creds/credentials.json
