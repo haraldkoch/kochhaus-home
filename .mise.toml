@@ -27,7 +27,7 @@ run = "uv pip install -r requirements.txt"
 python = "3.13"
 uv = "latest"
 # Operations tools
-"aqua:budimanjojo/talhelper" = "3.0.28"
+"aqua:budimanjojo/talhelper" = "3.0.29"
 "aqua:cloudflare/cloudflared" = "2025.6.0"
 "aqua:FiloSottile/age" = "1.2.1"
 "aqua:fluxcd/flux2" = "2.6.1"
