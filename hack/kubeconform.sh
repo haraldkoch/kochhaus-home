@@ -18,7 +18,7 @@ kubeconform_args=(
     "-schema-location"
     "default"
     "-schema-location"
-    "https://kubernetes-schemas.pages.dev/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json"
+    "https://datreeio.github.io/CRDs-catalog/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json"
     "-skip"
     "ReplicationSource,ReplicationDestination,Secret"
     "-verbose"

@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.coreos.com/prometheusrule_v1.json
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/monitoring.coreos.com/prometheusrule_v1.json
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:

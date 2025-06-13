@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/external-secrets.io/externalsecret_v1.json
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
@@ -20,7 +20,7 @@ spec:
     - extract:
         key: volsync-restic-template
 ---
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
@@ -48,7 +48,7 @@ spec:
       daily: 7
       weekly: 5
 ---
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/volsync.backube/replicationdestination_v1alpha1.json
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/volsync.backube/replicationdestination_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
