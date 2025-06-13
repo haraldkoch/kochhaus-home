@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -10,9 +10,10 @@ spec:
     provider: sops
     secretRef:
       name: sops-age
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/registry/flux/meta
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -21,7 +22,7 @@ spec:
   targetNamespace: *namespace
   wait: true
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -35,7 +36,7 @@ spec:
   dependsOn:
     - name: cluster-meta
       namespace: flux-system
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/registry/apps
   prune: true
   postBuild:
@@ -46,6 +47,7 @@ spec:
       - name: cluster-secrets
         kind: Secret
         optional: false
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system

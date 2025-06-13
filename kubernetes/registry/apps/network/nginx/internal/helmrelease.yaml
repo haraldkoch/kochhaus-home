@@ -1,11 +1,11 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: nginx-internal
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: ingress-nginx
@@ -16,11 +16,10 @@ spec:
         namespace: flux-system
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   values:
     fullnameOverride: nginx-internal
@@ -57,7 +56,7 @@ spec:
         enable-real-ip: "true"
         force-ssl-redirect: "true"
         hide-headers: Server,X-Powered-By
-        hsts-max-age: 31449600
+        hsts-max-age: "31449600" # quote
         keep-alive-requests: 10000
         keep-alive: 120
         log-format-escape-json: "true"
@@ -80,7 +79,7 @@ spec:
           namespaceSelector:
             any: true
       extraArgs:
-        default-ssl-certificate: "cert-manager/${SECRET_DOMAIN/./-}-production-tls"
+        default-ssl-certificate: cert-manager/${SECRET_DOMAIN/./-}-production-tls
       resources:
         requests:
           cpu: 100m
