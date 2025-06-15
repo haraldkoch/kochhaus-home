@@ -348,7 +348,7 @@ spec:
     downloadDashboardsImage:
       registry: quay.io
       repository: curl/curl
-      tag: 8.13.0@sha256:f7100c4af2ea54f6fd73e517ef5d51ab4fd47c1bb89c0c5ec5b18ebe832e0205
+      tag: 8.14.1@sha256:f95026f35f8e40ca1c11738a1c5710baadf4b8cafabab9738dadbf9fb99084a9
     imageRenderer:
       enabled: true
       image:
