@@ -57,6 +57,7 @@ spec:
       alertmanagerSpec:
         additionalPeers:
           - amcluster-main.${CLUSTER_DOMAIN}:9094
+          - amcluster-uvtn.${CLUSTER_DOMAIN}:9094
         alertmanagerConfiguration:
           name: alertmanager
           global:
