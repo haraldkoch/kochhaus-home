@@ -79,7 +79,7 @@ spec:
         use-forwarded-headers: "true"
       enableAnnotationValidations: true
       extraArgs:
-        default-ssl-certificate: "network/${SECRET_DOMAIN/./-}-production-tls"
+        default-ssl-certificate: "cert-manager/tls.${CLUSTER_DOMAIN/./-}-production-tls"
         publish-status-address: *hostname
       metrics:
         enabled: true

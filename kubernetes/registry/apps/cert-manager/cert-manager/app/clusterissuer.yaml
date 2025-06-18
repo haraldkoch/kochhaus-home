@@ -17,7 +17,7 @@ spec:
               key: api-token
         selector:
           dnsZones:
-            - ${CLUSTER_DOMAIN}
+            - ${SECRET_DOMAIN}
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/cert-manager.io/clusterissuer_v1.json
 apiVersion: cert-manager.io/v1

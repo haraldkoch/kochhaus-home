@@ -17,24 +17,41 @@ spec:
               key: api-token
         selector:
           dnsZones:
-            - "${SECRET_DOMAIN}"
+            - ${CLUSTER_DOMAIN}
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/cert-manager.io/clusterissuer_v1.json
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt-staging
+  name: cluster-selfsigned-issuer
 spec:
-  acme:
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
-    privateKeySecretRef:
-      name: letsencrypt-staging
-    solvers:
-      - dns01:
-          cloudflare:
-            apiTokenSecretRef:
-              name: cert-manager-secret
-              key: api-token
-        selector:
-          dnsZones:
-            - "${SECRET_DOMAIN}"
+  selfSigned: {}
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: &name cluster-signed-issuer
+spec:
+  isCA: true
+  commonName: *name
+  subject:
+    organizations:
+      - '${CLUSTER_DOMAIN}'
+  secretName: cluster-signed-issuer-secret
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  issuerRef:
+    name: cluster-selfsigned-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/cert-manager.io/clusterissuer_v1.json
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: cluster-signed-issuer
+spec:
+  ca:
+    secretName: cluster-signed-issuer-secret
