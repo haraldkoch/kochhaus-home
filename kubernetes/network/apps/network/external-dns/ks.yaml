@@ -13,9 +13,10 @@ spec:
     - name: external-secrets-stores
       namespace: external-secrets
 
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/network/apps/network/external-dns/bind
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -37,9 +38,10 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/network/apps/network/external-dns/cloudflare
-  prune: false
+  prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system

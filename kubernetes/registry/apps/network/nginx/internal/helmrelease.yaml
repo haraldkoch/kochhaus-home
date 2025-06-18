@@ -72,14 +72,14 @@ spec:
         strict-validate-path-type: "true"
         use-forwarded-headers: "true"
       enableAnnotationValidations: true
+      extraArgs:
+        default-ssl-certificate: "cert-manager/${SECRET_DOMAIN/./-}-production-tls"
       metrics:
         enabled: true
         serviceMonitor:
           enabled: true
           namespaceSelector:
             any: true
-      extraArgs:
-        default-ssl-certificate: cert-manager/${SECRET_DOMAIN/./-}-production-tls
       resources:
         requests:
           cpu: 100m

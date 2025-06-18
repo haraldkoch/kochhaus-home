@@ -12,9 +12,10 @@ spec:
   dependsOn:
     - name: node-feature-discovery-rules
       namespace: tools
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/monitoring/network-ups-tools/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system

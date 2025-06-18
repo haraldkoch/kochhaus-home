@@ -12,16 +12,16 @@ spec:
   dependsOn:
     - name: cert-manager-tls
       namespace: cert-manager
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/network/nginx/external
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-  wait: false
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -36,13 +36,13 @@ spec:
   dependsOn:
     - name: cert-manager-tls
       namespace: cert-manager
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/network/nginx/internal
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-  wait: false

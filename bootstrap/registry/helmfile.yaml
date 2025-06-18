@@ -31,7 +31,7 @@ releases:
     namespace: cert-manager
     chart: jetstack/cert-manager
     version: v1.18.1
-    values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/registry/apps/cert-manager/cert-manager/app/helm-values.yaml']
+    values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/registry/apps/cert-manager/cert-manager/app/helm/values.yaml']
     needs: ['kube-system/coredns']
 
   - name: flux-operator

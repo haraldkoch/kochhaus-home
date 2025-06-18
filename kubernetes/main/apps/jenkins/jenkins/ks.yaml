@@ -14,7 +14,7 @@ spec:
   dependsOn:
     - name: volsync
       namespace: storage
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/jenkins/jenkins/app
   postBuild:
     substitute:
@@ -24,10 +24,10 @@ spec:
       VOLSYNC_GID: "1000"
       VOLSYNC_UID: "1000"
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-  wait: false

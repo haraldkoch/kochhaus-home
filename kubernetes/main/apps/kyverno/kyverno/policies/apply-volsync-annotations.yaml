@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kyverno.io/clusterpolicy_v1.json
 ---
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy

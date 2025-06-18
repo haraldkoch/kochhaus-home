@@ -11,16 +11,16 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/guarded
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/cicd/portainer/app
   postBuild:
     substitute:
       APP: *app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-  wait: false

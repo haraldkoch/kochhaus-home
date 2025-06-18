@@ -11,10 +11,10 @@ spec:
     - name: cluster-apps-external-secrets-stores
   path: './kubernetes/apps/default/vikunja/app/'
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false
-  interval: 30m
+  interval: 1h
   timeout: 5m
