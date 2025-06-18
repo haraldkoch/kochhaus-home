@@ -12,9 +12,10 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: security
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/network/apps/network/tailscale/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -46,11 +46,6 @@ spec:
   dependsOn:
     - name: cert-manager
       namespace: cert-manager
-  healthCheckExprs:
-    - apiVersion: cert-manager.io/v1
-      kind: Certificate
-      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
-      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/main/apps/cert-manager/cert-manager/tls
   prune: true
@@ -61,3 +56,4 @@ spec:
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
+  wait: true

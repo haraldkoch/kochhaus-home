@@ -6,16 +6,16 @@ metadata:
   name: &app calico-addons
   namespace: flux-system
 spec:
-  targetNamespace: calico-system
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  interval: 1h
   path: ./kubernetes/main/apps/calico-system/calico/addons
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false
-  interval: 30m
+  targetNamespace: calico-system
   timeout: 5m

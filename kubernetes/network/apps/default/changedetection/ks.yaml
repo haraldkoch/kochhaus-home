@@ -11,7 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/network/apps/default/changedetection/app
   postBuild:
     substitute:
@@ -21,10 +21,10 @@ spec:
       VOLSYNC_CLAIM: changedetection-config
       VOLSYNC_CAPACITY: 1Gi
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-  wait: false

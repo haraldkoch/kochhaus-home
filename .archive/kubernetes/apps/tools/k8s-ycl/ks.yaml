@@ -15,10 +15,10 @@ spec:
   interval: 10m
   path: ./kubernetes/network/apps/tools/k8s-ycl/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 1m
-  wait: false

@@ -8,10 +8,11 @@ metadata:
 spec:
   path: ./kubernetes/apps/security/glauth/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   wait: true
-  interval: 30m
+  interval: 1h
   timeout: 5m

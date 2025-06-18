@@ -9,9 +9,10 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/tools/system-upgrade-controller/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -33,13 +34,13 @@ spec:
   dependsOn:
     - name: system-upgrade-controller
       namespace: tools
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/tools/system-upgrade-controller/plans
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-  wait: false

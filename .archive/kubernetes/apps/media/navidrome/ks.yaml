@@ -12,7 +12,7 @@ spec:
   dependsOn:
     - name: volsync
       namespace: storage
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/media/navidrome/app
   postBuild:
     substitute:
@@ -22,10 +22,10 @@ spec:
       VOLSYNC_GID: "2000"
       VOLSYNC_UID: "1022"
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-  wait: false

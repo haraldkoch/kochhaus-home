@@ -12,13 +12,13 @@ spec:
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: dbms
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/security/dmarc-report/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-  wait: false

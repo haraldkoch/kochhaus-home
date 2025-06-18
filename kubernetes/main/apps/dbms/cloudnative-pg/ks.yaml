@@ -5,7 +5,7 @@ kind: GitRepository
 metadata:
   name: cloudnative-pg-barman-cloud-crds
 spec:
-  interval: 30m
+  interval: 1h
   url: https://github.com/cloudnative-pg/plugin-barman-cloud.git
   ref:
     tag: v0.5.0
@@ -23,8 +23,7 @@ metadata:
   namespace: &namespace dbms
 spec:
   healthChecks:
-    - &crds
-      apiVersion: apiextensions.k8s.io/v1
+    - apiVersion: apiextensions.k8s.io/v1
       kind: CustomResourceDefinition
       name: objectstores.barmancloud.cnpg.io
   interval: 1h
@@ -46,9 +45,10 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/dbms/cloudnative-pg/app
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -104,16 +104,16 @@ spec:
       kind: *postgresKind
       failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/dbms/cloudnative-pg/cluster
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-  wait: true
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -128,13 +128,13 @@ spec:
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: dbms
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/dbms/cloudnative-pg/backup
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
-  wait: false

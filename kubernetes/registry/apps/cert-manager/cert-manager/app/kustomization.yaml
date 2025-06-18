@@ -3,7 +3,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - ./clusterissuer.yaml
   - ./helmrelease.yaml
+  - ./secret.sops.yaml
 configMapGenerator:
   - name: cert-manager-helm-values
     files:

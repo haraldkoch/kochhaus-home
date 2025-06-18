@@ -16,17 +16,17 @@ spec:
       namespace: dbms
     - name: dragonfly-cluster
       namespace: dbms
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/main/apps/security/authelia/app
   postBuild:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: auth
   prune: true
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: security
   timeout: 5m
-  wait: false
