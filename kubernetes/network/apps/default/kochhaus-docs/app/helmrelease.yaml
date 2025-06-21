@@ -31,7 +31,7 @@ spec:
           git-sync:
             image:
               repository: registry.k8s.io/git-sync/git-sync
-              tag: v4.4.1
+              tag: v4.4.2
             env:
               GITSYNC_ROOT: /git
               GITSYNC_LINK: /mdbook/book
