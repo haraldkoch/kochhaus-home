@@ -1,0 +1,136 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vikunja
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 4.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: storage
+  values:
+    controllers:
+      vikunja:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/haraldkoch/postgres-init
+              tag: 17.5@sha256:45d029ac1f219bd1d6a2d52cc2ab583d27bb9aca8cdb646dfc46553f26f03946
+            envFrom: &envFrom
+              - secretRef:
+                  name: vikunja-secret
+        containers:
+          main:
+            image:
+              repository: docker.io/vikunja/vikunja
+              tag: 0.24.6@sha256:ed1f3ed467fecec0b57e9de7bc6607f8bbcbb23ffced6a81f5dfefc794cdbe3b
+            env:
+              # Proper shell path for cli
+              PATH: /app/vikunja:$${PATH}
+              VIKUNJA_SERVICE_PUBLICURL: https://vikunja.${SECRET_DOMAIN}
+              VIKUNJA_SERVICE_TIMEZONE: "${TIMEZONE}"
+              POSTGRES_ENABLED: "true"
+              VIKUNJA_MAILER_ENABLED: true
+              VIKUNJA_METRICS_ENABLED: true
+              VIKUNJA_DEFAULTSETTINGS_DISCOVERABLE_BY_NAME: true
+              VIKUNJA_DEFAULTSETTINGS_EMAIL_REMINDERS_ENABLED: true
+              discoverable_by_email: true
+              overdue_tasks_reminders_time: '11:00'
+              VIKUNJA_DEFAULTSETTINGS_WEEK_START: 1
+
+              # Redis
+              VIKUNJA_REDIS_ENABLED: true
+              VIKUNJA_REDIS_HOST: dragonfly.database.svc.cluster.local:6379
+              VIKUNJA_REDIS_DB: 7
+              VIKUNJA_KEYVALUE_TYPE: redis
+
+              # SMTP
+              VIKUNJA_MAILER_HOST: smtp.${SECRET_DOMAIN}
+              VIKUNJA_MAILER_PORT: 25
+              VIKUNJA_MAILER_FROMEMAIL: Vikunja <bot@${SECRET_DOMAIN}>
+
+              # postgres
+              VIKUNJA_DATABASE_TYPE: postgres
+            envFrom:
+              - secretRef:
+                  name: vikunja-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 3456
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 100m
+                memory: 20Mi
+              limits:
+                memory: 150Mi
+        pod:
+          hostUsers: false
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: Always
+            seccompProfile: { type: RuntimeDefault }
+    service:
+      main:
+        controller: *app
+        ports:
+          http:
+            port: *port
+    ingress:
+      main:
+        className: internal
+        hosts:
+          - host: "{{ .Release.Name}}.${SECRET_DOMAIN}"
+            paths:
+            - path: /
+              service:
+                identifier: main
+    persistence:
+      files:
+        existingClaim: "${VOLSYNC_CLAIM}"
+        globalMounts:
+          - path: /app/vikunja/files
+      config:
+        type: secret
+        name: vikunja-secret
+        globalMounts:
+          - path: /etc/vikunja/config.yml
+            subPath: config.yml
+            readOnly: true
