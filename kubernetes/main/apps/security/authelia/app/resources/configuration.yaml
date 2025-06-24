@@ -120,3 +120,12 @@ identity_providers:
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://hs.${CLUSTER_DOMAIN}/oidc/callback"]
         userinfo_signed_response_alg: none
+      - client_id: vikunja
+        client_name: Vikunja
+        client_secret: "$${VIKUNJA_OAUTH_CLIENT_SECRET_DIGEST}"
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        scopes: ["openid", "profile", "groups", "email"]
+        redirect_uris: ["https://vikunja.${CLUSTER_DOMAIN}/auth/openid/authelia"]
+        userinfo_signed_response_alg: none
