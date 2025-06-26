@@ -1,0 +1,11 @@
+---
+modules:
+  ipify:
+    metrics:
+      - name: ipify
+        path: '{ @ }'
+        type: object
+        labels:
+          ip_address: '{ .ip }'
+        values:
+          ip_address: 1

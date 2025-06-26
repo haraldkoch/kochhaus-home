@@ -12,7 +12,7 @@ spec:
     name: "${APP}-volsync"
     template:
       data:
-        RESTIC_REPOSITORY: "{{ .REPOSITORY_TEMPLATE }}/${APP}"
+        RESTIC_REPOSITORY: "{{ .REPOSITORY_TEMPLATE }}/testing/${APP}"
         RESTIC_PASSWORD: "{{ .RESTIC_PASSWORD }}"
         AWS_ACCESS_KEY_ID: "{{ .AWS_ACCESS_KEY_ID }}"
         AWS_SECRET_ACCESS_KEY: "{{ .AWS_SECRET_ACCESS_KEY }}"
@@ -34,15 +34,15 @@ spec:
     pruneIntervalDays: 7
     repository: "${APP}-volsync"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:=longhorn}"
-    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:=8Gi}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:=openebs-hostpath}"
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:=5Gi}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:=longhorn-volsync}"
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:=ReadWriteOnce}"]
     storageClassName: "${VOLSYNC_STORAGECLASS:=longhorn}"
-    accessModes: ["${VOLSYNC_ACCESSMODES:=ReadWriteOnce}"]
+    accessModes: ["${VOLSYNC_SNAP_ACCESSMODES:=ReadWriteOnce}"]
     moverSecurityContext:
-      runAsUser: "${VOLSYNC_UID:=568}"
-      runAsGroup: "${VOLSYNC_GID:=568}"
-      fsGroup: "${VOLSYNC_GID:=568}"
+      runAsUser: ${VOLSYNC_PUID:=1000}
+      runAsGroup: ${VOLSYNC_PGID:=1000}
+      fsGroup: ${VOLSYNC_PGID:=1000}
     retain:
       hourly: 24
       daily: 7
@@ -62,16 +62,16 @@ spec:
     repository: "${APP}-volsync"
     copyMethod: Snapshot
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:=longhorn}"
-    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:=openebs-hostpath}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:=longhorn-volsync}"
     cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:=ReadWriteOnce}"]
-    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:=8Gi}"
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:=5Gi}"
     storageClassName: "${VOLSYNC_STORAGECLASS:=longhorn}"
     accessModes: ["${VOLSYNC_ACCESSMODES:=ReadWriteOnce}"]
-    capacity: "${VOLSYNC_CAPACITY}"
+    capacity: "${VOLSYNC_CAPACITY:=5Gi}"
     moverSecurityContext:
-      runAsUser: "${VOLSYNC_UID:=568}"
-      runAsGroup: "${VOLSYNC_GID:=568}"
-      fsGroup: "${VOLSYNC_GID:=568}"
+      runAsUser: ${VOLSYNC_PUID:=1000}
+      runAsGroup: ${VOLSYNC_PGID:=1000}
+      fsGroup: ${VOLSYNC_PGID:=1000}
     enableFileDeletion: true
     # true for Rook-Ceph, false for Longhorn
     cleanupCachePVC: false

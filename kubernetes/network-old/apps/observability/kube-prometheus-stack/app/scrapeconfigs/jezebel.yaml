@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: jezebel-smartctl-exporter
+spec:
+  staticConfigs:
+    - targets: ["jezebel.${PRIVATE_STATIC_DOMAIN}:9633"]
+  metricsPath: /metrics
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: jezebel-zrepl
+spec:
+  staticConfigs:
+    - targets: ["jezebel.${PRIVATE_STATIC_DOMAIN}:9811"]
+  metricsPath: /metrics
