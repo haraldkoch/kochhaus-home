@@ -7,6 +7,9 @@ components:
   - ../../components/common
   - ../../components/alerts
 resources:
+  - ./cilium/ks.yaml
   - ./coredns/ks.yaml
-  - ./kube-vip/ks.yaml
+  - ./descheduler/ks.yaml
   - ./metrics-server/ks.yaml
+  - ./reloader/ks.yaml
+  - ./spegel/ks.yaml

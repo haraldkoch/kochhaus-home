@@ -1,23 +1,32 @@
 ---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: snapshot-controller
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 4.1.0
+  url: oci://ghcr.io/piraeusdatastore/helm-charts/snapshot-controller
+---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: snapshot-controller
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: snapshot-controller
-      version: 4.1.0
-      sourceRef:
-        kind: HelmRepository
-        name: piraeus
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: snapshot-controller
   install:
     crds: CreateReplace
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     crds: CreateReplace
@@ -26,6 +35,7 @@ spec:
       retries: 3
   values:
     controller:
+      replicaCount: 2
       serviceMonitor:
         create: true
       volumeSnapshotClasses:
@@ -38,5 +48,3 @@ spec:
             # needed for successful VolumeSnapshots
             # see: https://github.com/longhorn/longhorn/issues/2534#issuecomment-1010508714
             type: snap
-    webhook:
-      enabled: false

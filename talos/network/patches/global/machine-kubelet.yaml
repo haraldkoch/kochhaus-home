@@ -1,0 +1,12 @@
+machine:
+  kubelet:
+    extraConfig:
+      serializeImagePulls: false
+    extraMounts:
+      - destination: /var/mnt/extra
+        type: bind
+        source: /var/mnt/extra
+        options: ["bind", "rshared", "rw"]
+    nodeIP:
+      validSubnets:
+        - 192.168.20.0/24

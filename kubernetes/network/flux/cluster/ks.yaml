@@ -39,14 +39,7 @@ spec:
   interval: 1h
   path: ./kubernetes/network/apps
   prune: true
-  postBuild:
-    substituteFrom:
-      - name: cluster-settings
-        kind: ConfigMap
-        optional: false
-      - name: cluster-secrets
-        kind: Secret
-        optional: false
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -63,15 +56,6 @@ spec:
             provider: sops
             secretRef:
               name: sops-age
-          postBuild:
-            substituteFrom:
-              - name: cluster-settings
-                kind: ConfigMap
-                optional: false
-              - name: cluster-secrets
-                kind: Secret
-                optional: false
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
-        labelSelector: substitution.flux.home.arpa/disabled notin (true)
