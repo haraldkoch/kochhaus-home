@@ -56,7 +56,6 @@ spec:
         controller: json-exporter
         annotations:
           external-dns.alpha.kubernetes.io/hostname: exporters.${CLUSTER_DOMAIN}
-          # lbipam.cilium.io/ips: "${EXPORTERS_IPV4},${EXPORTERS_IPV6}"
           lbipam.cilium.io/ips: "${EXPORTERS_IPV4}"
         externalTrafficPolicy: Local
         # ipFamilies: [IPv4, IPv6]
