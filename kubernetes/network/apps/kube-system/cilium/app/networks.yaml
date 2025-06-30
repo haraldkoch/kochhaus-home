@@ -8,6 +8,7 @@ spec:
   allowFirstLastIPs: "No"
   blocks:
     - cidr: "192.168.22.0/24"
+    - cidr: "fdd5:aa8:9535:22::/64"
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/cilium.io/ciliuml2announcementpolicy_v2alpha1.json
 apiVersion: cilium.io/v2alpha1
@@ -53,6 +54,11 @@ spec:
       advertisements:
         matchLabels:
           advertise: bgp
+    - afi: ipv6
+      safi: unicast
+      advertisements:
+        matchLabels:
+          advertise: bgp
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/cilium.io/ciliumbgpclusterconfig_v2alpha1.json
 apiVersion: cilium.io/v2alpha1
@@ -67,8 +73,13 @@ spec:
     - name: cilium
       localASN: 64514
       peers:
-        - name: opnsense
+        - name: opnsense-v4
           peerASN: 64512
           peerAddress: 192.168.20.1
+          peerConfigRef:
+            name: l3-bgp-peer-config
+        - name: opnsense-v6
+          peerASN: 64512
+          peerAddress: fdd5:aa8:9535:20::1
           peerConfigRef:
             name: l3-bgp-peer-config

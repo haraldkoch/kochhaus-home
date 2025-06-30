@@ -25,17 +25,17 @@ spec:
     fullnameOverride: external-ingress-nginx
     controller:
       annotations:
-        configmap.reloader.stakater.com/reload: nginx-external-controller
+        configmap.reloader.stakater.com/reload: external-ingress-nginx-controller
       extraEnvs:
         - name: TZ
           value: "${TIMEZONE:=Etc/UTC}"
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: &hostname network.${SECRET_DOMAIN}
-          lbipam.cilium.io/ips: "${NGINX_EXT_IPV4}"
+          lbipam.cilium.io/ips: "${NGINX_EXT_IPV4}.${NGINX_EXT_IPV6}"
         externalTrafficPolicy: Local
-        # ipFamilies: [IPv4, IPv6]
-        # ipFamilyPolicy: PreferDualStack
+        ipFamilies: [IPv4, IPv6]
+        ipFamilyPolicy: PreferDualStack
       ingressClassResource:
         name: external
         default: false

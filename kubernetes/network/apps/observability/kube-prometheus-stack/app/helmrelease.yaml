@@ -49,8 +49,11 @@ spec:
         pathType: Prefix
       service:
         annotations:
-          lbipam.cilium.io/ips: "${ALERTMANAGER_IPV4}"
+          lbipam.cilium.io/ips: "${ALERTMANAGER_IPV4},${ALERTMANAGER_IPv6}"
           external-dns.alpha.kubernetes.io/hostname: "amcluster-network.${CLUSTER_DOMAIN}"
+        externalTrafficPolicy: Local
+        ipFamilies: [IPv4, IPv6]
+        ipFamilyPolicy: PreferDualStack
         additionalPorts:
           - name: tcp-mesh
             port: 9094

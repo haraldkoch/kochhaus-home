@@ -11,8 +11,8 @@ additionalApiServerCertSans: &sans
   - "192.168.20.32"
 additionalMachineCertSans: *sans
 
-clusterPodNets: ["10.42.0.0/16"]
-clusterSvcNets: ["10.43.0.0/16"]
+clusterPodNets: ["10.42.0.0/16","fdd5:aa8:9535:42::/108"]
+clusterSvcNets: ["10.43.0.0/16","fdd5:aa8:9535:43::/108"]
 
 # Disable built-in CNI to use Cilium
 cniConfig:
@@ -48,6 +48,7 @@ nodes:
           - vlanId: 20
             addresses:
               - "192.168.20.33/24"
+              - "fdd5:aa8:9535:20::33/64"
             routes:
               - network: "0.0.0.0/0"
                 gateway: "192.168.20.1"
@@ -82,6 +83,7 @@ nodes:
           - vlanId: 20
             addresses:
               - "192.168.20.34/24"
+              - "fdd5:aa8:9535:20::34/64"
             routes:
               - network: "0.0.0.0/0"
                 gateway: "192.168.20.1"
@@ -116,6 +118,7 @@ nodes:
           - vlanId: 20
             addresses:
               - "192.168.20.35/24"
+              - "fdd5:aa8:9535:20::35/64"
             routes:
               - network: "0.0.0.0/0"
                 gateway: "192.168.20.1"

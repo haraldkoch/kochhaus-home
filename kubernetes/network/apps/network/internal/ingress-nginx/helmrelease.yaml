@@ -25,16 +25,16 @@ spec:
     fullnameOverride: internal-ingress-nginx
     controller:
       annotations:
-        configmap.reloader.stakater.com/reload: nginx-internal-controller
+        configmap.reloader.stakater.com/reload: internal-ingress-nginx-controller
       extraEnvs:
         - name: TZ
           value: "${TIMEZONE:=Etc/UTC}"
       service:
         annotations:
-          lbipam.cilium.io/ips: "${NGINX_INT_IPV4}"
+          lbipam.cilium.io/ips: "${NGINX_INT_IPV4},${NGINX_INT_IPV6}"
         externalTrafficPolicy: Local
-        # ipFamilies: [IPv4, IPv6]
-        # ipFamilyPolicy: PreferDualStack
+        ipFamilies: [IPv4, IPv6]
+        ipFamilyPolicy: PreferDualStack
       ingressClassResource:
         name: internal
         default: true

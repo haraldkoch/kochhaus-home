@@ -8,6 +8,9 @@ serviceAccount:
 service:
   name: kube-dns
   clusterIP: "10.43.0.10"
+  clusterIPs: ["10.43.0.10", "fdd5:aa8:9535:43::a"]
+  ipFamilies: ["IPV4", "IPV6"]
+  ipFamilyPolicy: PreferDualStack
 replicaCount: 2
 servers:
   - zones:
