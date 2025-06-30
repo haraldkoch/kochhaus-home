@@ -3,7 +3,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: kochhaus-v16
+  name: kochhaus
   annotations:
     kyverno.io/ignore: "true"
 spec:
@@ -46,11 +46,11 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://cnpg/v16/
+      destinationPath: s3://cnpg/kochhaus/
       endpointURL: http://${SECRET_BACKUP_SERVER}:9000
       # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster kochhaus-v16-v2
+      serverName: &currentCluster kochhaus-v1
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -62,7 +62,7 @@ spec:
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
     recovery:
-      source: &previousCluster kochhaus-v16-v1
+      source: &previousCluster kochhaus-v1
     # upgrade or recover from another running instance
     # initdb:
     #   import:
@@ -72,7 +72,7 @@ spec:
     #     roles:
     #       - "*"
     #     source:
-    #       externalCluster: kochhaus-pg15
+    #       externalCluster: kochhaus-v16
 
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
@@ -80,9 +80,9 @@ spec:
       barmanObjectStore:
         <<: *barmanObjectStore
         serverName: *previousCluster
-    # - name: kochhaus-pg15
+    # - name: kochhaus-v16
     #   connectionParameters:
-    #     host: kochhaus-v15-ro.dbms
+    #     host: kochhaus-v16-ro.dbms
     #     user: postgres
     #     dbname: postgres
     #     sslmode: require

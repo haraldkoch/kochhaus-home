@@ -9,4 +9,4 @@ spec:
   immediate: true
   backupOwnerReference: self
   cluster:
-    name: kochhaus-v16
+    name: kochhaus

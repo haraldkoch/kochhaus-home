@@ -17,7 +17,7 @@ spec:
       protocol: TCP
       targetPort: 5432
   selector:
-    cnpg.io/cluster: kochhaus-v16
+    cnpg.io/cluster: kochhaus
     role: primary
 ---
 apiVersion: v1
@@ -32,7 +32,7 @@ spec:
       protocol: TCP
       targetPort: 5432
   selector:
-    cnpg.io/cluster: kochhaus-v16
+    cnpg.io/cluster: kochhaus
     cnpg.io/podRole: instance
 ---
 apiVersion: v1
@@ -47,7 +47,7 @@ spec:
       protocol: TCP
       targetPort: 5432
   selector:
-    cnpg.io/cluster: kochhaus-v16
+    cnpg.io/cluster: kochhaus
     role: replica
 ---
 apiVersion: v1
@@ -62,6 +62,6 @@ spec:
       protocol: TCP
       targetPort: 5432
   selector:
-    cnpg.io/cluster: kochhaus-v16
+    cnpg.io/cluster: kochhaus
     role: primary
   sessionAffinity: None
