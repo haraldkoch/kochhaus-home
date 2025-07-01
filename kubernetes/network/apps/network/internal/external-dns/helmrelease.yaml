@@ -5,7 +5,7 @@ kind: HelmRelease
 metadata:
   name: &app external-dns-bind
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: external-dns
@@ -17,7 +17,7 @@ spec:
   install:
     crds: CreateReplace
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     crds: CreateReplace
