@@ -21,8 +21,13 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_CLAIM: node-red-config-v2
-      VOLSYNC_GID: "568"
-      VOLSYNC_UID: "568"
+      VOLSYNC_GID: "1000"
+      VOLSYNC_UID: "1000"
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+      - name: cluster-settings
+        kind: ConfigMap
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -31,3 +36,4 @@ spec:
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
+  wait: false
