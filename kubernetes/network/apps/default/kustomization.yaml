@@ -12,3 +12,4 @@ resources:
   - ./mosquitto/ks.yaml
   - ./mqtt-exporter/ks.yaml
   - ./populator-test/ks.yaml
+  - ./zigbee2mqtt/ks.yaml
