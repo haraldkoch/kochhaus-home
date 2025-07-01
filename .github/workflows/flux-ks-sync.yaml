@@ -4,7 +4,7 @@ name: "Flux Kustomization Sync"
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main","talos-network"]
     paths: ["kubernetes/network/**", "kubernetes/registry/**"]
 
 permissions:
