@@ -41,7 +41,7 @@ nodes:
         filesystem:
           type: xfs
     networkInterfaces:
-      - interface: eth0
+      - interface: end0
         dhcp: false
         mtu: 1500
         vlans:
@@ -76,7 +76,7 @@ nodes:
         filesystem:
           type: xfs
     networkInterfaces:
-      - interface: eth0
+      - interface: end0
         dhcp: false
         mtu: 1500
         vlans:
@@ -111,7 +111,7 @@ nodes:
         filesystem:
           type: xfs
     networkInterfaces:
-      - interface: eth0
+      - interface: end0
         dhcp: false
         mtu: 1500
         vlans:
