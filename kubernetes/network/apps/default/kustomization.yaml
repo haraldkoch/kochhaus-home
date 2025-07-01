@@ -11,6 +11,7 @@ resources:
   - ./changedetection/ks.yaml
   - ./echo/ks.yaml
   - ./homer/ks.yaml
+  - ./it-tools/ks.yaml
   - ./mosquitto/ks.yaml
   - ./mqtt-exporter/ks.yaml
   - ./node-red/ks.yaml
