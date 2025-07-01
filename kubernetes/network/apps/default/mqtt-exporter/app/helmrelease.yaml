@@ -58,11 +58,11 @@ spec:
             protocol: HTTP
             port: *port
         type: LoadBalancer
-        externalIPs: ["${MQTT_EXPORTER_IPV4}", "${MQTT_EXPORTER_IPV6}"]
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+          lbipam.cilium.io/ips: "${MQTT_EXPORTER_IPV4},${MQTT_EXPORTER_IPV6}"
     serviceMonitor:
       app:
         serviceName: *app

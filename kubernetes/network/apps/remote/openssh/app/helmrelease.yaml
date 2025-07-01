@@ -67,8 +67,9 @@ spec:
     service:
       app:
         controller: openssh
+        annotations:
+          lbipam.cilium.io/ips: "${OPENSSH_IPV4},${OPENSSH_IPV6}"
         type: LoadBalancer
-        externalIPs: ["${OPENSSH_IPV4}", "${OPENSSH_IPV6}"]
         externalTrafficPolicy: Local
         ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack

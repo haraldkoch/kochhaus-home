@@ -65,7 +65,7 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: mqtt.${CLUSTER_DOMAIN}
-        externalIPs: ["${MOSQUITTO_IPV4}", "${MOSQUITTO_IPV6}"]
+          lbipam.cilium.io/ips: "${MOSQUITTO_IPV4},${MOSQUITTO_IPV6}"
         externalTrafficPolicy: Local
         ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack
