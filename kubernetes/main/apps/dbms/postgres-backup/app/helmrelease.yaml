@@ -46,7 +46,7 @@ spec:
               - /backup.sh
             env:
               - { name: TZ, value: "${TIMEZONE:=Etc/UTC}" }
-              - { name: POSTGRES_DB, value: "authelia,dmarc,gatus,grafana,lldap,miniflux,nextcloud,outline,paperless" }
+              - { name: POSTGRES_DB, value: "authelia,dmarc,docmost,gatus,lldap,miniflux,nextcloud,outline,speedtest,vikunja" }
               - { name: POSTGRES_HOST, value: "postgres-ro.dbms.svc.cluster.local" }
               - { name: POSTGRES_PORT, value: 5432 }
               - name: POSTGRES_USER
