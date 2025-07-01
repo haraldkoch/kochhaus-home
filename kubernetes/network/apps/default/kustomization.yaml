@@ -10,4 +10,5 @@ components:
 resources:
   - ./echo/ks.yaml
   - ./mosquitto/ks.yaml
+  - ./mqtt-exporter/ks.yaml
   - ./populator-test/ks.yaml
