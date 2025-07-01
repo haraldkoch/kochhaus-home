@@ -8,38 +8,38 @@ tasks:
     desc: Bootstrap the Talos cluster
     summary: |
       Args:
-        cluster: Cluster to run command against (required)
-    dir: '{{.TALOS_DIR}}/{{.cluster}}'
+        CLUSTER: Cluster to run command against (required)
+    dir: '{{.TALOS_DIR}}'
     cmds:
-      - '[ -f talsecret.sops.yaml ] || talhelper gensecret | sops --filename-override talos/talsecret.sops.yaml --encrypt /dev/stdin > talsecret.sops.yaml'
+      - '[ -f talsecret.sops.yaml ] || talhelper gensecret | sops --filename-override talsecret.sops.yaml --encrypt /dev/stdin > talsecret.sops.yaml'
       - talhelper genconfig
-      - talhelper gencommand apply --extra-flags="--insecure" | bash
+      - talhelper gencommand apply --extra-flags="--insecure" | sed -e 's/192\.168\.20/199.85.99/g' | bash
       - until talhelper gencommand bootstrap | bash; do sleep 10; done
-      - until talhelper gencommand kubeconfig --extra-flags="{{.ROOT_DIR}} --force" | bash; do sleep 10; done
+      - until talhelper gencommand kubeconfig --extra-flags="{{.ROOT_DIR}}/kubernetes/{{.CLUSTER}} --force" | bash; do sleep 10; done
     preconditions:
       - test -f {{.ROOT_DIR}}/.sops.yaml
       - test -f {{.SOPS_AGE_KEY_FILE}}
       - test -f {{.TALOS_DIR}}/talconfig.yaml
       - which talhelper talosctl sops
     requires:
-      vars: ["cluster"]
+      vars: [CLUSTER]
 
   apps:
     desc: Bootstrap apps into the Talos cluster
     summary: |
       Args:
-        cluster: Cluster to run command against (required)
+        CLUSTER: Cluster to run command against (required)
     # FIXME: per-cluster script?
-    cmd: bash {{.SCRIPTS_DIR}}/bootstrap-apps.sh
+    cmd: bash {{.SCRIPTS_DIR}}/bootstrap-apps.sh {{.CLUSTER}}
     preconditions:
       - msg: Unsupported bash version, run `brew install bash` to upgrade
         sh: '{{if eq OS "darwin"}}test -f /opt/homebrew/bin/bash{{end}}'
-      - test -f {{.KUBECONFIG}}
+      #- test -f {{.KUBECONFIG}}
       - test -f {{.ROOT_DIR}}/.sops.yaml
       - test -f {{.SCRIPTS_DIR}}/bootstrap-apps.sh
       - test -f {{.SOPS_AGE_KEY_FILE}}
     requires:
-      vars: ["cluster"]
+      vars: ["CLUSTER"]
 
 
   ## old ansible/flux clusters

@@ -1,4 +1,4 @@
 talosconfig
-kubernetes-t1.yaml
-kubernetes-t2.yaml
-kubernetes-t3.yaml
+kubernetes-rk0.yaml
+kubernetes-rk1.yaml
+kubernetes-rk2.yaml
