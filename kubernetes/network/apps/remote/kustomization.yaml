@@ -8,5 +8,4 @@ components:
   - ../../components/alerts
   - ../../components/repos/app-template
 resources:
-  - ./policy.yaml
   - ./openssh/ks.yaml
