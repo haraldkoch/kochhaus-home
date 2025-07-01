@@ -8,6 +8,7 @@ components:
   - ../../components/alerts
   - ../../components/repos/app-template
 resources:
+  - ./changedetection/ks.yaml
   - ./echo/ks.yaml
   - ./mosquitto/ks.yaml
   - ./mqtt-exporter/ks.yaml
