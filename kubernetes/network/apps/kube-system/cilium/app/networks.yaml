@@ -71,7 +71,7 @@ spec:
       kubernetes.io/os: linux
   bgpInstances:
     - name: cilium
-      localASN: 64514
+      localASN: 64513
       peers:
         - name: opnsense-v4
           peerASN: 64512
