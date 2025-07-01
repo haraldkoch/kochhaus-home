@@ -9,4 +9,5 @@ components:
   - ../../components/repos/app-template
 resources:
   - ./echo/ks.yaml
+  - ./mosquitto/ks.yaml
   - ./populator-test/ks.yaml
