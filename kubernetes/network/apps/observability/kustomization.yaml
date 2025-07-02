@@ -18,3 +18,4 @@ resources:
   - ./opnsense-exporter/ks.yaml
   - ./promtail/ks.yaml
   - ./smartctl-exporter/ks.yaml
+  - ./snmp-exporter/ks.yaml
