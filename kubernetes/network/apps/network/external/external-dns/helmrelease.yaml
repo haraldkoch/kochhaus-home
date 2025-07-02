@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app external-dns
+  name: &app external-dns-cloudflare
 spec:
   interval: 1h
   chart:
@@ -30,8 +30,8 @@ spec:
       - name: CF_API_TOKEN
         valueFrom:
           secretKeyRef:
-            name: external-dns-secret
-            key: api-token
+            name: &secret external-dns-cloudflare-secret
+            key: api_token
     extraArgs:
       - --cloudflare-dns-records-per-page=1000
       - --cloudflare-proxied
@@ -42,10 +42,20 @@ spec:
       - --ingress-class=external
     policy: sync
     sources: ["crd", "ingress"]
-    txtPrefix: k8s.
     txtOwnerId: network
+    txtPrefix: k8s.
     domainFilters: ["${SECRET_DOMAIN}"]
+    logLevel: info
     serviceMonitor:
       enabled: true
     podAnnotations:
-      secret.reloader.stakater.com/reload: external-dns-secret
+      secret.reloader.stakater.com/reload: *secret
+    resources:
+      requests:
+        cpu: 25m
+        memory: 96Mi
+      limits:
+        memory: 192Mi
+    tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
