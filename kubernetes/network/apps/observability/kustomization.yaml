@@ -16,3 +16,4 @@ resources:
   - ./network-ups-tools/ks.yaml
   - ./omada-exporter/ks.yaml
   - ./opnsense-exporter/ks.yaml
+  - ./promtail/ks.yaml
