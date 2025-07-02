@@ -19,3 +19,4 @@ resources:
   - ./promtail/ks.yaml
   - ./smartctl-exporter/ks.yaml
   - ./snmp-exporter/ks.yaml
+  - ./tplink-plug-exporter/ks.yaml
