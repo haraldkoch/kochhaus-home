@@ -17,3 +17,4 @@ resources:
   - ./omada-exporter/ks.yaml
   - ./opnsense-exporter/ks.yaml
   - ./promtail/ks.yaml
+  - ./smartctl-exporter/ks.yaml
