@@ -1,0 +1,118 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app your-spotify
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: app-template
+      version: 4.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      server:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/yooooomi/your_spotify_server
+              tag: 1.13.1@sha256:552f1577b38fdd2d9e1a52a5f945c5471f57feaed9684c7b88abc9640c4a2fac
+            env:
+              TIMEZONE: ${TIMEZONE}
+              # Caveat if it includes Spotify in name: https://github.com/Yooooomi/your_spotify/pull/254
+              API_ENDPOINT: &api_endpoint https://spotty.{$CLUSTER_DOMAIN}/api
+              CLIENT_ENDPOINT: https://spotty.${CLUSTER_DOMAIN}
+              MONGO_ENDPOINT: mongodb://your-spotify-mongodb:27017/your_spotify #mongo sucks
+              PORT: &port 8080
+            envFrom:
+              - secretRef:
+                  name: *app
+            probes: &probes
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: false
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 500Mi
+      web:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/yooooomi/your_spotify_client
+              tag: 1.13.1@sha256:a9672141625f47ce34aa837ddab15d436bc6b3a72cff001a906fe79b078403e5
+            env:
+              API_ENDPOINT: *api_endpoint
+            probes: *probes
+            securityContext: *securityContext
+      mongodb: #mongo still sucks
+        type: statefulset
+        statefulset:
+          podManagementPolicy: OrderedReady
+        containers:
+          app:
+            image:
+              repository: docker.io/library/mongo
+              tag: 6.0.4-focal
+            probes: *probes
+    service:
+      server:
+        controller: server
+        primary: true
+        ports:
+          http:
+            port: *port
+      web:
+        controller: web
+        ports:
+          http:
+            port: &webport 3000
+      mongodb:
+        controller: mongodb
+        ports:
+          http:
+            port: 27017
+    ingress:
+      app:
+        className: external
+        hosts:
+          - host: ${GATUS_SUBDOMAIN:=${APP}}.${CLUSTER_DOMAIN}
+            paths:
+              - path: /api
+                pathType: Prefix
+                service:
+                  identifier: server
+                  port: http
+              - path: /
+                pathType: Prefix
+                service:
+                  identifier: web
+                  port: http
+    persistence:
+      configs:
+        existingClaim: ${VOLSYNC_CLAIM}
+        advancedMounts:
+          mongodb:
+            app:
+              - path: /data/db

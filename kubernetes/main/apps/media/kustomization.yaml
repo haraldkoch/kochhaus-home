@@ -11,3 +11,4 @@ resources:
   - ./calibre-web/ks.yaml
   - ./media-browser/ks.yaml
   - ./tautulli/ks.yaml
+  - ./your-spotify/ks.yaml
