@@ -1,6 +1,6 @@
 ---
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
-apiVersion: monitoring.giantswarm.io/v1alpha1
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
 kind: Silence
 metadata:
   name: ceph-mon-clock-skew
@@ -8,10 +8,10 @@ spec:
   matchers:
     - name: alertname
       value: CephMonClockSkew
-      isRegex: false
+      matchType: "="
 ---
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
-apiVersion: monitoring.giantswarm.io/v1alpha1
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
 kind: Silence
 metadata:
   name: ceph-node-inconsistent-mtu
@@ -19,10 +19,10 @@ spec:
   matchers:
     - name: alertname
       value: CephNodeInconsistentMTU
-      isRegex: false
+      matchType: "="
 ---
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
-apiVersion: monitoring.giantswarm.io/v1alpha1
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
 kind: Silence
 metadata:
   name: ceph-node-local-diskspace-warning
@@ -30,13 +30,13 @@ spec:
   matchers:
     - name: alertname
       value: CephNodeDiskspaceWarning
-      isRegex: false
+      matchType: "="
     - name: device
       value: /dev/sd.*
-      isRegex: true
+      matchType: "=~"
 ---
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
-apiVersion: monitoring.giantswarm.io/v1alpha1
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
 kind: Silence
 metadata:
   name: ceph-node-nfsmount-diskspace-warning
@@ -44,13 +44,13 @@ spec:
   matchers:
     - name: alertname
       value: CephNodeDiskspaceWarning
-      isRegex: false
+      matchType: "="
     - name: mountpoint
       value: /etc/nfsmount.conf
-      isRegex: false
+      matchType: "="
 ---
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
-apiVersion: monitoring.giantswarm.io/v1alpha1
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
 kind: Silence
 metadata:
   name: ceph-node-network-packet-drops
@@ -58,10 +58,10 @@ spec:
   matchers:
     - name: alertname
       value: CephNodeNetworkPacketDrops
-      isRegex: false
+      matchType: "="
 ---
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
-apiVersion: monitoring.giantswarm.io/v1alpha1
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
 kind: Silence
 metadata:
   name: ceph-node-network-packet-errors
@@ -69,10 +69,10 @@ spec:
   matchers:
     - name: alertname
       value: CephNodeNetworkPacketErrors
-      isRegex: false
+      matchType: "="
 ---
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
-apiVersion: monitoring.giantswarm.io/v1alpha1
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
 kind: Silence
 metadata:
   name: nas-memory-high-utilization
@@ -80,13 +80,13 @@ spec:
   matchers:
     - name: alertname
       value: NodeMemoryHighUtilization
-      isRegex: false
+      matchType: "="
     - name: instance
       value: mnemosyne.*
-      isRegex: true
+      matchType: "=~"
 ---
-# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/monitoring.giantswarm.io/silence_v1alpha1.json
-apiVersion: monitoring.giantswarm.io/v1alpha1
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
 kind: Silence
 metadata:
   name: keda-hpa-maxed-out
@@ -94,7 +94,7 @@ spec:
   matchers:
     - name: alertname
       value: KubeHpaMaxedOut
-      isRegex: false
+      matchType: "="
     - name: horizontalpodautoscaler
       value: keda-hpa-.*
-      isRegex: true
+      matchType: "=~"
