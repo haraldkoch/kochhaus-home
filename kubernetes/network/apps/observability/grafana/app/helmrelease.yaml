@@ -314,7 +314,7 @@ spec:
       enabled: true
       image:
         repository: grafana/grafana-image-renderer
-        tag: 3.12.8
+        tag: 3.12.9
         pullPolicy: IfNotPresent
       replicas: 1
       networkPolicy:
