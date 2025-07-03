@@ -75,7 +75,7 @@ spec:
             - instance
           targetLabel: instance
         - action: replace
-          replacement: castor
+          replacement: castor.${PRIVATE_STATIC_DOMAIN}
           sourceLabels:
             - server
           targetLabel: server
@@ -83,7 +83,7 @@ spec:
           regex: (pod)
       params:
         server:
-          - castor
+          - castor.${PRIVATE_STATIC_DOMAIN}
       path: /ups_metrics
       port: metrics
       scheme: http
@@ -116,7 +116,7 @@ spec:
             - instance
           targetLabel: instance
         - action: replace
-          replacement: pollux
+          replacement: pollux.${PRIVATE_STATIC_DOMAIN}
           sourceLabels:
             - server
           targetLabel: server
@@ -124,7 +124,7 @@ spec:
           regex: (pod)
       params:
         server:
-          - pollux
+          - pollux.${PRIVATE_STATIC_DOMAIN}
       path: /ups_metrics
       port: metrics
       scheme: http

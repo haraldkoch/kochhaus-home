@@ -116,6 +116,30 @@ function apply_sops_secrets() {
     done
 }
 
+# CRDs to be applied before the helmfile charts are installed
+function apply_crds() {
+    log debug "Applying CRDs"
+
+    local -r crds=(
+        # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
+        https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.83.0/stripped-down-crds.yaml
+        # renovate: datasource=github-releases depName=kubernetes-sigs/external-dns
+        https://raw.githubusercontent.com/kubernetes-sigs/external-dns/refs/tags/v0.18.0/config/crd/standard/dnsendpoints.externaldns.k8s.io.yaml
+    )
+
+    for crd in "${crds[@]}"; do
+        if kubectl --context ${cluster} diff --filename "${crd}" &>/dev/null; then
+            log info "CRDs are up-to-date" "crd=${crd}"
+            continue
+        fi
+        if kubectl --context ${cluster} apply --server-side --filename "${crd}" &>/dev/null; then
+            log info "CRDs applied" "crd=${crd}"
+        else
+            log error "Failed to apply CRDs" "crd=${crd}"
+        fi
+    done
+}
+
 # Apply Helm releases using helmfile
 function apply_helm_releases() {
     log debug "Applying Helm releases with helmfile"
@@ -141,6 +165,7 @@ function main() {
     apply_namespaces
     apply_configmaps
     apply_sops_secrets
+    apply_crds
     apply_helm_releases
 
     log info "Congrats! The cluster is bootstrapped and Flux is syncing the Git repository"

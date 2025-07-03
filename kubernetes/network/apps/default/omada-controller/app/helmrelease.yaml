@@ -5,19 +5,13 @@ kind: HelmRelease
 metadata:
   name: &app omada-controller
 spec:
-  interval: 30m
-  timeout: 10m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.1.2
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
@@ -64,6 +58,8 @@ spec:
       app:
         controller: omada-controller
         primary: true
+        annotations:
+          lbipam.cilium.io/ips: "${OMADA_IPV4},${OMADA_IPV6}"
         ports:
           http:
             port: 8043
@@ -72,7 +68,6 @@ spec:
       controller:
         controller: omada-controller
         type: LoadBalancer
-        externalIPs: ["${OMADA_IPV4:=fnord}", "${OMADA_IPV6:=fnord}"]
         externalTrafficPolicy: Local
         ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack

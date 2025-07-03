@@ -14,6 +14,12 @@ spec:
       namespace: external-secrets
   interval: 1h
   path: ./kubernetes/network/apps/observability/kube-prometheus-stack/app
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
+      - name: cluster-settings
+        kind: ConfigMap
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -22,3 +28,4 @@ spec:
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
+  wait: false

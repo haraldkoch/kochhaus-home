@@ -67,6 +67,10 @@ services:
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/tautulli.png
         url: https://tautulli.${SECRET_DOMAIN}
         subtitle: track watched movies and shows
+      - name: Your Spotify
+        logo: https://raw.githubusercontent.com/Yooooomi/your_spotify/master/apps/client/public/logo192.png
+        url: https://spotty.${SECRET_DOMAIN}
+        subtitle: all the Spotify listening statistics you could ever want
       - name: Calibre Web
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/calibreweb.png
         url: https://ebooks.${SECRET_DOMAIN}
@@ -135,7 +139,13 @@ services:
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/home-assistant.png
         url: https://ha.${SECRET_DOMAIN}
         subtitle: Primary home automation controller
-      - name: Zigbee"
+      - name: Zigbee2MQTT
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/zigbee2mqtt.png
         url: https://zigbee.${SECRET_DOMAIN}
         subtitle: Manage the Zigbee network of automation devices
+      - name: Home Internet Status
+        url: https://grafana.${SECRET_DOMAIN}/d/b5VdClAMz/network-status
+        subtitle: Current status of the home internet connection
+      - name: House Temperatures
+        url: https://grafana.${SECRET_DOMAIN}/d/f34c065d-33a8-415a-89f2-0bbfc0a6a4b6/house-sensors
+        subtitle: Temperatures in the house

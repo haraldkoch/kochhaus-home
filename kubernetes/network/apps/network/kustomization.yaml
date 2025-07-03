@@ -6,8 +6,7 @@ namespace: network
 components:
   - ../../components/common
   - ../../components/alerts
+  - ../../components/repos/app-template
 resources:
-  - ./cloudflared/ks.yaml
-  - ./echo-server/ks.yaml
-  - ./external-dns/ks.yaml
-  - ./nginx/ks.yaml
+  - ./external/ks.yaml
+  - ./internal/ks.yaml

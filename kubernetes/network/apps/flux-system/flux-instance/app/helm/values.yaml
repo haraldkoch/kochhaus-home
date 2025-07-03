@@ -13,7 +13,7 @@ instance:
   sync:
     kind: GitRepository
     url: https://github.com/haraldkoch/kochhaus-home
-    ref: refs/heads/main
+    ref: refs/heads/talos-network
     path: kubernetes/network/flux/cluster
     interval: 1h
   commonMetadata:
@@ -21,28 +21,6 @@ instance:
       app.kubernetes.io/name: flux
   kustomize:
     patches:
-      - # allow flux components to run on the control-plane.
-        patch: |-
-          apiVersion: apps/v1
-          kind: Deployment
-          metadata:
-            name: not-used
-          spec:
-            template:
-              spec:
-                affinity:
-                  nodeAffinity:
-                    requiredDuringSchedulingIgnoredDuringExecution:
-                      nodeSelectorTerms:
-                      - matchExpressions:
-                        - key: node-role.kubernetes.io/control-plane
-                          operator: Exists
-                tolerations:
-                - key: node-role.kubernetes.io/control-plane
-                  operator: Exists
-        target:
-          kind: Deployment
-          labelSelector: control-plane=controller
       - # Increase the number of workers
         patch: |
           - op: add
@@ -113,11 +91,11 @@ instance:
         target:
           kind: Deployment
           name: helm-controller
-#      - # Disable chart digest tracking
-#        patch: |
-#          - op: add
-#            path: /spec/template/spec/containers/0/args/-
-#            value: --feature-gates=DisableChartDigestTracking=true
-#        target:
-#          kind: Deployment
-#          name: helm-controller
+      - # Disable chart digest tracking
+        patch: |
+          - op: add
+            path: /spec/template/spec/containers/0/args/-
+            value: --feature-gates=DisableChartDigestTracking=true
+        target:
+          kind: Deployment
+          name: helm-controller
