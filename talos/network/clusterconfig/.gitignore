@@ -2,3 +2,6 @@ talosconfig
 kubernetes-rk0.yaml
 kubernetes-rk1.yaml
 kubernetes-rk2.yaml
+network-rk0.yaml
+network-rk1.yaml
+network-rk2.yaml
