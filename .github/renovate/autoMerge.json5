@@ -3,7 +3,7 @@
   "packageRules": [
     {
       "description": "Auto merge KPS minors and patches",
-      "matchDatasources": ["helm"],
+      "matchDatasources": ["docker", "helm"],
       "automerge": true,
       "automergeType": "pr",
       "matchUpdateTypes": ["minor", "patch"],
