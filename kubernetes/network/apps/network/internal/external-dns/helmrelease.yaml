@@ -46,7 +46,7 @@ spec:
       - --rfc2136-tsig-keyname=externaldns
       - --rfc2136-tsig-secret-alg=hmac-sha256
     policy: sync
-    sources: ["crd", "ingress", "service"]
+    sources: ["crd", "gateway-httproute", "ingress", "service"]
     # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
     txtOwnerId: network
     txtPrefix: k8s.

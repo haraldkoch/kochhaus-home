@@ -3,6 +3,10 @@ originRequest:
   originServerName: network.${SECRET_DOMAIN}
 
 ingress:
+  # temporary; gateway testing
+  - hostname: echo.${SECRET_DOMAIN}
+    service: &service https://cilium-gateway-external.kube-system.svc.cluster.local
+
   - hostname: ${SECRET_DOMAIN}
     service: &svc https://external-ingress-nginx-controller.network.svc.cluster.local:443
   - hostname: "*.${SECRET_DOMAIN}"

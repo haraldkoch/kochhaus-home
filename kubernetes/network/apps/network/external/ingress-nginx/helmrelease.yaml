@@ -32,7 +32,7 @@ spec:
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: &hostname network.${SECRET_DOMAIN}
-          lbipam.cilium.io/ips: "${NGINX_EXT_IPV4}.${NGINX_EXT_IPV6}"
+          lbipam.cilium.io/ips: "${NGINX_EXT_IPV4},${NGINX_EXT_IPV6}"
         externalTrafficPolicy: Local
         ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack

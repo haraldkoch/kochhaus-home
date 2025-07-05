@@ -40,8 +40,9 @@ spec:
       - --events
       - --ignore-ingress-tls-spec
       - --ingress-class=external
+      - --gateway-name=external
     policy: sync
-    sources: ["crd", "ingress"]
+    sources: ["crd", "gateway-httproute", "ingress"]
     txtOwnerId: network
     txtPrefix: k8s.
     domainFilters: ["${SECRET_DOMAIN}"]
