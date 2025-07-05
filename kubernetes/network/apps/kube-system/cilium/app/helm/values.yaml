@@ -20,6 +20,8 @@ cni:
   exclusive: false
 dashboards:
   enabled: true
+  annotations:
+    grafana_folder: Infrastructure
 # NOTE: devices might need to be set if you have more than one active NIC on your hosts
 # devices: eno+ enp+ eth+
 ipv4:
@@ -69,6 +71,8 @@ prometheus:
   serviceMonitor:
     enabled: true
     trustCRDsExist: true
+  annotations:
+    grafana_folder: Infrastructure
 rollOutCiliumPods: true
 routingMode: native
 securityContext:
