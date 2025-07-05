@@ -115,18 +115,13 @@ spec:
         ports:
           http:
             port: *apiPort
-    ingress:
+    route:
       app:
-        className: internal
-        annotations:
-          hajimari.io/enable: "false"
-        hosts:
-          - host: 1pwconnect.${CLUSTER_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["1pwconnect.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
     persistence:
       config:
         type: emptyDir

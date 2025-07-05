@@ -74,16 +74,13 @@ spec:
         ports:
           http:
             port: 80
-    ingress:
+    route:
       app:
-        className: internal
-        hosts:
-          - host: "docs.${CLUSTER_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["docs.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
     persistence:
       git:
         type: emptyDir

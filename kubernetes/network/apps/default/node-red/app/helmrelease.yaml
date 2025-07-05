@@ -58,18 +58,13 @@ spec:
         ports:
           http:
             port: 1880
-    ingress:
+    route:
       app:
-        className: internal
-        annotations:
-          hajimari.io/icon: mdi:sitemap
-        hosts:
-          - host: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
     persistence:
       data:
         existingClaim: ${VOLSYNC_CLAIM}

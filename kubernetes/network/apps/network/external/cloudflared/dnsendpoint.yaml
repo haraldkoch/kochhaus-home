@@ -9,14 +9,3 @@ spec:
     - dnsName: network.${CLUSTER_DOMAIN}
       recordType: CNAME
       targets: ["${SECRET_CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]
----
-# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/externaldns.k8s.io/dnsendpoint_v1alpha1.json
-apiVersion: externaldns.k8s.io/v1alpha1
-kind: DNSEndpoint
-metadata:
-  name: cloudflared-gateway
-spec:
-  endpoints:
-    - dnsName: network-gateway.${CLUSTER_DOMAIN}
-      recordType: CNAME
-      targets: ["${SECRET_CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]

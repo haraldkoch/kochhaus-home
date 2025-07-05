@@ -52,10 +52,6 @@ spec:
       defaultLonghornStaticStorageClass: longhorn
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
       taintToleration: node-role.kubernetes.io/control-plane:NoSchedule
-    ingress:
-      enabled: true
-      ingressClassName: internal
-      host: longhorn.${CLUSTER_DOMAIN}
     longhornDriver:
       tolerations: &tolerations
         - key: CriticalAddonsOnly

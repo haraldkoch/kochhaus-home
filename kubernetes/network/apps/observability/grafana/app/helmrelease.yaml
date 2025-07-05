@@ -306,10 +306,14 @@ spec:
           regex: (pod)
     service:
       ipFamilyPolicy: PreferDualStack
-    ingress:
-      enabled: true
-      ingressClassName: internal
-      hosts: ["grafana.${CLUSTER_DOMAIN}"]
+    route:
+      main:
+        enabled: true
+        hostnames: ["grafana.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
     imageRenderer:
       enabled: true
       image:

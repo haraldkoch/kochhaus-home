@@ -46,16 +46,6 @@ spec:
           icmp:
             preferred_ip_protocol: "ip6"
             ip_protocol_fallback: false
-    ingress:
-      enabled: true
-      annotations:
-        hajimari.io/enable: "false"
-      className: internal
-      hosts:
-        - host: blackbox.${CLUSTER_DOMAIN}
-          paths:
-            - path: /
-              pathType: Prefix
     podAnnotations:
       reloader.stakater.com/auto: "true"
     securityContext:
@@ -71,7 +61,6 @@ spec:
         memory: 64M
       limits:
         memory: 64M
-
     serviceMonitor:
       enabled: true
       defaults:
