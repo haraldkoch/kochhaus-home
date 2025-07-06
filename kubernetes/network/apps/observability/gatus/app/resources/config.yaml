@@ -24,7 +24,7 @@ connectivity:
     interval: 1m
 endpoints:
   - name: status
-    group: network-guarded
+    group: guarded
     url: 1.1.1.1
     interval: 1m
     dns:
@@ -35,7 +35,7 @@ endpoints:
     alerts:
       - type: pushover
   - name: flux-webhook
-    group: network-external
+    group: external
     url: https://flux-webhook-network.${CLUSTER_DOMAIN}
     interval: 1m
     client:
