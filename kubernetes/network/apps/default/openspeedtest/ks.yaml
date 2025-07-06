@@ -9,9 +9,14 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus/external
   interval: 1h
   path: ./kubernetes/network/apps/default/openspeedtest/app
   postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: speedtest
     substituteFrom:
       - name: cluster-secrets
         kind: Secret

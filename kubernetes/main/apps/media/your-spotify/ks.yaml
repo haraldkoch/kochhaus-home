@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/gatus/internal
+    - ../../../../components/gatus/external
     - ../../../../components/volsync
   interval: 1h
   path: ./kubernetes/main/apps/media/your-spotify/app

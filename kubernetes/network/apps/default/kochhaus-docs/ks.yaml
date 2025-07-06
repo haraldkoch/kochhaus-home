@@ -9,12 +9,16 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus/guarded
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
   interval: 1h
   path: ./kubernetes/network/apps/default/kochhaus-docs/app
   postBuild:
+    substitute:
+      APP: *app
     substituteFrom:
       - name: cluster-secrets
         kind: Secret

@@ -9,9 +9,14 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus/guarded
   interval: 1h
   path: ./kubernetes/network/apps/default/homer/app
   postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: landing
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
