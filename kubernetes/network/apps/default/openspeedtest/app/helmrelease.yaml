@@ -53,7 +53,7 @@ spec:
             port: 3000
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
+        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.${CLUSTER_DOMAIN}"]
         parentRefs:
           - name: external
             namespace: kube-system
