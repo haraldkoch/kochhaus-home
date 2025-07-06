@@ -18,7 +18,7 @@ spec:
   path: ./kubernetes/main/apps/monitoring/kube-prometheus-stack/app
   postBuild:
     substitute:
-      APP: kube-prometheus-stack
+      APP: *app
       GATUS_SUBDOMAIN: prometheus
   prune: true
   retryInterval: 2m

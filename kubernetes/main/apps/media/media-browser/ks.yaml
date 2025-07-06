@@ -9,8 +9,14 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus/guarded
   interval: 1h
   path: ./kubernetes/main/apps/media/media-browser/app
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: media
   prune: true
   retryInterval: 2m
   sourceRef:

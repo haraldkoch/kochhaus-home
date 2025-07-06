@@ -37,11 +37,16 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus/guarded
   dependsOn:
     - name: external-secrets
   interval: 1h
   path: ./kubernetes/network/apps/external-secrets/external-secrets/stores
   postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: 1pwconnect
     substituteFrom:
       - name: cluster-secrets
         kind: Secret

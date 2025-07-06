@@ -9,9 +9,14 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus/guarded
   interval: 1h
   path: ./kubernetes/network/apps/storage/longhorn/app
   postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: longhorn
     substituteFrom:
       - name: cluster-secrets
         kind: Secret
