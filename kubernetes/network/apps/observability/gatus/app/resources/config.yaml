@@ -1,0 +1,46 @@
+---
+# Note: Gatus vars should be escaped with $${VAR_NAME} to avoid interpolation by Flux
+web:
+  port: $${WEB_PORT}
+metrics: true
+debug: false
+ui:
+  title: Status | Gatus
+  header: Status
+alerting:
+  pushover:
+    title: Gatus (Kubernetes)
+    application-token: $${PUSHOVER_TOKEN}
+    user-key: $${PUSHOVER_USER_KEY}
+    priority: 1
+    default-alert:
+      description: health-check failed
+      send-on-resolved: true
+      failure-threshold: 3
+      success-threshold: 3
+connectivity:
+  checker:
+    target: 1.1.1.1:53
+    interval: 1m
+endpoints:
+  - name: status
+    group: network-guarded
+    url: 1.1.1.1
+    interval: 1m
+    dns:
+      query-name: "status-network.${CLUSTER_DOMAIN}"
+      query-type: A
+    conditions:
+      - "len([BODY]) == 0"
+    alerts:
+      - type: pushover
+  - name: flux-webhook
+    group: network-external
+    url: https://flux-webhook-network.${CLUSTER_DOMAIN}
+    interval: 1m
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    conditions:
+      - "[STATUS] == 404"
+    alerts:
+      - type: pushover

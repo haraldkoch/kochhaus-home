@@ -10,6 +10,7 @@ components:
 resources:
   - ./blackbox-exporter/ks.yaml
   - ./dnssec-exporter/ks.yaml
+  - ./gatus/ks.yaml
   - ./grafana/ks.yaml
   - ./json-exporter/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
