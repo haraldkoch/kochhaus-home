@@ -68,7 +68,8 @@ spec:
           "request_length": $request_length, "duration": $request_time, "method": "$request_method", "http_referrer": "$http_referer",
           "http_user_agent": "$http_user_agent"}
         proxy-body-size: 0
-        proxy-buffer-size: 16k
+        proxy-buffer-size: 32k
+        proxy-busy-buffers-size: 32k
         ssl-protocols: TLSv1.3 TLSv1.2
         strict-validate-path-type: "true"
         use-forwarded-headers: "true"
