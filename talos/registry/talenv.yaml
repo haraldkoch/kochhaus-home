@@ -1,2 +1,4 @@
-# renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
-prometheusOperatorVersion: v0.83.0
+# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+talosVersion: v1.10.5
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: v1.33.2

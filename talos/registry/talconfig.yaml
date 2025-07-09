@@ -1,24 +1,21 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 ---
-# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
-talosVersion: v1.10.5
-# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
-kubernetesVersion: v1.33.2
-
 clusterName: registry
-endpoint: https://192.168.20.66:6443
 
-clusterPodNets:
-  - "10.42.0.0/16"
-clusterSvcNets:
-  - "10.43.0.0/16"
+talosVersion: "${talosVersion}"
+kubernetesVersion: "${kubernetesVersion}"
+
+endpoint: https://192.168.20.66:6443
 
 additionalApiServerCertSans: &sans
   - "192.168.20.66"
   - "127.0.0.1"
 additionalMachineCertSans: *sans
 
-# Disable built-in Flannel to use Cilium
+clusterPodNets: ["10.42.0.0/16"]
+clusterSvcNets: ["10.43.0.0/16"]
+
+# Disable built-in CNI to use Cilium
 cniConfig:
   name: none
 
@@ -45,13 +42,39 @@ nodes:
 
 # Global patches
 patches:
-  - "@./patches/global/machine-extrakernelargs.yaml"
   - "@./patches/global/machine-files.yaml"
   - "@./patches/global/machine-kubelet.yaml"
   - "@./patches/global/machine-network.yaml"
   - "@./patches/global/machine-sysctls.yaml"
   - "@./patches/global/machine-time.yaml"
   - "@./patches/global/machine-openebs.yaml"
+  # Disable selinux
+  - |-
+    machine:
+      install:
+        extraKernelArgs:
+	  - -selinux
+  # Configure NFS mount options
+  - |-
+    machine:
+      files:
+        - op: overwrite
+          path: /etc/nfsmount.conf
+          permissions: 0o644
+          content: |
+            [ NFSMount_Global_Options ]
+            nfsvers=4.2
+            hard=True
+            nconnect=16
+            noatime=True
+  # Disable talos forwarding kube-dns to Host DNS - we don't need another cache
+  - |-
+    machine:
+      features:
+        hostDNS:
+          enabled: true
+          resolveMemberNames: true
+          forwardKubeDNSToHost: false
 
 # Controller patches
 controlPlane:
