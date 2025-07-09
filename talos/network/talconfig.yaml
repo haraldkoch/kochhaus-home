@@ -133,6 +133,29 @@ patches:
   - "@./patches/global/machine-network.yaml"
   - "@./patches/global/machine-sysctls.yaml"
   - "@./patches/global/machine-time.yaml"
+  # Pull-through cache
+  - |-
+    machine:
+      registries:
+        mirrors:
+          docker.io:
+              endpoints:
+                  - https://harbor.kochhaus.dev/v2/docker.io
+          gcr.io:
+              endpoints:
+                  - https://harbor.kochhaus.dev/v2/gcr.io
+          ghcr.io:
+              endpoints:
+                  - https://harbor.kochhaus.dev/v2/ghcr.io
+          public.ecr.aws:
+              endpoints:
+                  - https://harbor.kochhaus.dev/v2/public.ecr.aws
+          quay.io:
+              endpoints:
+                  - https://harbor.kochhaus.dev/v2/quay.io
+          registry.k8s.io:
+              endpoints:
+                  - https://harbor.kochhaus.dev/v2/registry.k8s.io
   # Disable selinux
   - |-
     machine:
