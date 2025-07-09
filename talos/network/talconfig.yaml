@@ -133,6 +133,12 @@ patches:
   - "@./patches/global/machine-network.yaml"
   - "@./patches/global/machine-sysctls.yaml"
   - "@./patches/global/machine-time.yaml"
+  # Disable selinux
+  - |-
+    machine:
+      install:
+        extraKernelArgs:
+          - -selinux
   # Configure NFS mount options
   - |-
     machine:
