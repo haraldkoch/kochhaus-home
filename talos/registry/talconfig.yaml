@@ -53,7 +53,7 @@ patches:
     machine:
       install:
         extraKernelArgs:
-	  - -selinux
+          - -selinux
   # Configure NFS mount options
   - |-
     machine:
