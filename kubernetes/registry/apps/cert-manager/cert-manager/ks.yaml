@@ -23,7 +23,7 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
-  timeout: 5m
+  timeout: 15m
   wait: true
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
@@ -53,5 +53,5 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
-  timeout: 5m
+  timeout: 15m
   wait: true
