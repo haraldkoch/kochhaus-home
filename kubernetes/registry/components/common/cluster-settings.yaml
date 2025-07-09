@@ -5,4 +5,4 @@ kind: ConfigMap
 metadata:
   name: cluster-settings
 data:
-  SETTING_EXAMPLE: This value will be available to all YAML resources as ${SETTING_EXAMPLE}
+  GATEWAY_INT_IPV4: 192.168.20.70

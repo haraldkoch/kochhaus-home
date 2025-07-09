@@ -1,4 +1,14 @@
 ---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/cilium.io/ciliumloadbalancerippool_v2alpha1.json
+apiVersion: cilium.io/v2alpha1
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: pool
+spec:
+  allowFirstLastIPs: "No"
+  blocks:
+    - cidr: "192.168.20.64/29"
+---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/cilium.io/ciliuml2announcementpolicy_v2alpha1.json
 apiVersion: cilium.io/v2alpha1
 kind: CiliumL2AnnouncementPolicy
@@ -9,6 +19,7 @@ spec:
   # NOTE: interfaces might need to be set if you have more than one active NIC on your hosts
   # interfaces:
   #   - ^eno[0-9]+
+  #   - ^enp[0-9]+
   #   - ^eth[0-9]+
   nodeSelector:
     matchLabels:
