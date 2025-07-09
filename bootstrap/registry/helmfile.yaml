@@ -23,7 +23,7 @@ releases:
     atomic: true
     chart: oci://ghcr.io/coredns/charts/coredns
     version: 1.43.0
-    values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/registry/apps/kube-system/coredns/app/helm-values.yaml']
+    values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/registry/apps/kube-system/coredns/app/helm/values.yaml']
     needs: ['kube-system/cilium']
 
   - name: cert-manager

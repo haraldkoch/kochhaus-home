@@ -6,7 +6,6 @@ resources:
   - ./bjw-s.yaml
   - ./cilium.yaml
   - ./controlplaneio.yaml
-  - ./coredns.yaml
   - ./external-dns.yaml
   - ./harbor.yaml
   - ./ingress-nginx.yaml
