@@ -5,5 +5,6 @@ kind: Kustomization
 namespace: harbor
 components:
   - ../../components/common
+  - ../../components/repos/app-template
 resources:
   - ./harbor/ks.yaml
