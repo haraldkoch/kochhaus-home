@@ -12,5 +12,3 @@ resources:
   - ./k8s-gateway.yaml
   - ./openebs.yaml
   - ./prometheus-community.yaml
-  - ./spegel.yaml
-  - ./stakater.yaml
