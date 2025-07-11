@@ -42,8 +42,3 @@ spec:
     extraEnvVars:
       - name: TZ
         value: ${TIMEZONE:=Etc/UTC}
-      - name: KURED_NOTIFY_URL
-        valueFrom:
-          secretKeyRef:
-            name: discord-kured
-            key: discord-webhook
