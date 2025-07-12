@@ -142,12 +142,23 @@ spec:
           nginx.ingress.kubernetes.io/proxy-redirect-from: "~https://(.+):8043/(.+)/login$"
           nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$1/$2/login"
         hosts:
-          - host: omada.${CLUSTER_DOMAIN}
+          - host: ${GATUS_SUBDOMAIN}.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
                   identifier: app
                   port: http
+    route:
+      app:
+        hostnames: ["${GATUS_SUBDOMAIN}-gateway.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 8043
     persistence:
       data:
         existingClaim: ${VOLSYNC_CLAIM}
