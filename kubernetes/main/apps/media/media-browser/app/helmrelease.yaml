@@ -91,3 +91,5 @@ spec:
         storageClass: ceph-block
       media:
         existingClaim: media-nfs
+      tmp:
+        type: emptyDir
