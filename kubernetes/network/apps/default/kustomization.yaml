@@ -15,6 +15,7 @@ resources:
   - ./kochhaus-docs/ks.yaml
   - ./mosquitto/ks.yaml
   - ./mqtt-exporter/ks.yaml
+  - ./n8n/ks.yaml
   - ./node-red/ks.yaml
   - ./omada-controller/ks.yaml
   - ./openspeedtest/ks.yaml
