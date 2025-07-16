@@ -42,7 +42,7 @@ spec:
           main:
             image:
               repository: ghcr.io/haraldkoch/rsync
-              tag: 3.4.1@sha256:a4d00584495920ff703ccd85ed3ec3aded9ce2f15b04f3cf65f74839e5b0dce5
+              tag: 3.4.1@sha256:1cad72aab6b96567a6d715f7eb4c4f6036d0c0782b0726b35b8fd960a2ead413
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
             command:
