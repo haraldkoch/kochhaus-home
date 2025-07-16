@@ -1,6 +1,6 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: atuin
@@ -9,23 +9,21 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.5.0
+      version: 4.1.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
         namespace: flux-system
-  maxHistory: 2
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
-      strategy: rollback
       retries: 3
   values:
     controllers:
-      main:
+      atuin:
         replicas: 2
         strategy: RollingUpdate
         annotations:
@@ -34,15 +32,15 @@ spec:
           init-db:
             image:
               repository: ghcr.io/haraldkoch/postgres-init
-              tag: 16
+              tag: 17.5@sha256:6eb67ee5fc5d574f06f9d9822be08fdabb2a519e555c67d91d060a99a2af670f
             envFrom: &envFrom
               - secretRef:
                   name: atuin-secret
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/atuinsh/atuin
-              tag: v17.2.1@sha256:149ba8c5445c205f4ca7f88256eb409ef36820fc2a74fd462869a489721d03d3
+              tag: v18.7.1@sha256:f096ee29583b53f8d9442b1bc2631b3a07e0e5887bac99a672406359147fec0f
             env:
               ATUIN_HOST: 0.0.0.0
               ATUIN_PORT: &port 80
@@ -65,13 +63,14 @@ spec:
                 cpu: 10m
         pod:
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
+            runAsUser: 1000
+            runAsGroup: 1000
             runAsNonRoot: true
-            fsGroup: 568
+            fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
     service:
-      main:
+      app:
+        controller: atuin
         ports:
           http:
             port: *port
@@ -87,19 +86,16 @@ spec:
             interval: 1m
             scrapeTimeout: 10s
     ingress:
-      main:
+      app:
         enabled: true
         className: internal
         hosts:
-          - host: &host sh.${CLUSTER_DOMAIN}
+          - host: sh.${CLUSTER_DOMAIN}
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
-        tls:
-          - hosts:
-              - *host
     persistence:
       config:
         enabled: true
