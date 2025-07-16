@@ -1,0 +1,100 @@
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: ceph-mon-clock-skew
+spec:
+  matchers:
+    - name: alertname
+      value: CephMonClockSkew
+      matchType: "="
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: ceph-node-inconsistent-mtu
+spec:
+  matchers:
+    - name: alertname
+      value: CephNodeInconsistentMTU
+      matchType: "="
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: ceph-node-local-diskspace-warning
+spec:
+  matchers:
+    - name: alertname
+      value: CephNodeDiskspaceWarning
+      matchType: "="
+    - name: device
+      value: /dev/sd.*
+      matchType: "=~"
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: ceph-node-nfsmount-diskspace-warning
+spec:
+  matchers:
+    - name: alertname
+      value: CephNodeDiskspaceWarning
+      matchType: "="
+    - name: mountpoint
+      value: /etc/nfsmount.conf
+      matchType: "="
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: ceph-node-network-packet-drops
+spec:
+  matchers:
+    - name: alertname
+      value: CephNodeNetworkPacketDrops
+      matchType: "="
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: ceph-node-network-packet-errors
+spec:
+  matchers:
+    - name: alertname
+      value: CephNodeNetworkPacketErrors
+      matchType: "="
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: nas-memory-high-utilization
+spec:
+  matchers:
+    - name: alertname
+      value: NodeMemoryHighUtilization
+      matchType: "="
+    - name: instance
+      value: mnemosyne.*
+      matchType: "=~"
+---
+# yaml-language-server: $schema=https://kochhaus-schemas.pages.dev/observability.giantswarm.io/silence_v1alpha2.json
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: keda-hpa-maxed-out
+spec:
+  matchers:
+    - name: alertname
+      value: KubeHpaMaxedOut
+      matchType: "="
+    - name: horizontalpodautoscaler
+      value: keda-hpa-.*
+      matchType: "=~"
