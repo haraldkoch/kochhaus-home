@@ -78,7 +78,6 @@ spec:
             port: *metricsPort
     serviceMonitor:
       main:
-        enabled: true
         endpoints:
           - port: metrics
             scheme: http
@@ -87,7 +86,6 @@ spec:
             scrapeTimeout: 10s
     ingress:
       app:
-        enabled: true
         className: internal
         hosts:
           - host: sh.${CLUSTER_DOMAIN}
@@ -98,5 +96,4 @@ spec:
                   port: http
     persistence:
       config:
-        enabled: true
         type: emptyDir
