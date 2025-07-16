@@ -18,6 +18,7 @@ resources:
   - ./omada-exporter/ks.yaml
   - ./opnsense-exporter/ks.yaml
   - ./promtail/ks.yaml
+  - ./silence-operator/ks.yaml
   - ./smartctl-exporter/ks.yaml
   - ./snmp-exporter/ks.yaml
   - ./tplink-plug-exporter/ks.yaml
