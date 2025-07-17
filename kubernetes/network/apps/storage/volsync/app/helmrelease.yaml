@@ -32,13 +32,7 @@ spec:
       retries: 3
   values:
     manageCRDs: true
-    # The stock image is not yet multi-arch
-    image: &image
-      repository: ghcr.io/haraldkoch/volsync
-      tag: v0.12.1
     replicaCount: 2
-    restic:
-      <<: *image
     metrics:
       disableAuth: true
     podSecurityContext:
