@@ -33,24 +33,3 @@ spec:
       runAsNonRoot: true
       runAsUser: 1022
       runAsGroup: 1022
-  postRenderers:
-    - kustomize:
-        patches:
-          - patch: |-
-              apiVersion: apps/v1
-              kind: Deployment
-              metadata:
-                name: volsync
-              spec:
-                template:
-                  spec:
-                    containers:
-                      - name: manager
-                        volumeMounts:
-                          - name: tz-config
-                            mountPath: /etc/localtime
-                    volumes:
-                      - name: tz-config
-                        hostPath:
-                          path: /usr/share/zoneinfo/America/Toronto
-                          type: File
