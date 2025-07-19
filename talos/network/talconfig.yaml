@@ -133,7 +133,7 @@ patches:
   - "@./patches/global/machine-network.yaml"
   - "@./patches/global/machine-sysctls.yaml"
   - "@./patches/global/machine-time.yaml"
-  # Pull-through cache
+  # Pull-through cache. Harbor needs overridePath so that Talos/containerd do not append /v2 to the path.
   - |-
     machine:
       registries:
@@ -141,21 +141,27 @@ patches:
           docker.io:
               endpoints:
                   - https://harbor.kochhaus.dev/v2/docker.io
+              overridePath: true
           gcr.io:
               endpoints:
                   - https://harbor.kochhaus.dev/v2/gcr.io
+              overridePath: true
           ghcr.io:
               endpoints:
                   - https://harbor.kochhaus.dev/v2/ghcr.io
+              overridePath: true
           public.ecr.aws:
               endpoints:
                   - https://harbor.kochhaus.dev/v2/public.ecr.aws
+              overridePath: true
           quay.io:
               endpoints:
                   - https://harbor.kochhaus.dev/v2/quay.io
+              overridePath: true
           registry.k8s.io:
               endpoints:
                   - https://harbor.kochhaus.dev/v2/registry.k8s.io
+              overridePath: true
   # Disable selinux
   - |-
     machine:
