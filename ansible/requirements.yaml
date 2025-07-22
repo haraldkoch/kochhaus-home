@@ -7,7 +7,7 @@ collections:
   - name: community.general
     version: 11.1.0
   - name: community.sops
-    version: 2.1.0
+    version: 2.2.0
   - name: kubernetes.core
     version: 6.0.0
   - name: onepassword.connect
