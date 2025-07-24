@@ -11,7 +11,6 @@ resources:
   - ./excalidraw/ks.yaml
   - ./hajimari/ks.yaml
   - ./homepage/ks.yaml
-  - ./karakeep/ks.yaml
   - ./miniflux/ks.yaml
   - ./populator-test/ks.yaml
   - ./vikunja/ks.yaml
