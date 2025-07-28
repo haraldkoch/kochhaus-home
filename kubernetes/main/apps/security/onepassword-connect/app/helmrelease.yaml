@@ -31,7 +31,7 @@ spec:
           api:
             image:
               repository: ghcr.io/haraldkoch/onepassword-connect-api
-              tag: 1.7.3@sha256:257a6ca59b806fec2c9c6df0acaef633a39e600eefba0ba03396554c00e065c1
+              tag: 1.7.4@sha256:49fb3eefe44938ee770c8a371c06fc8eb64da211e10a0dc83ff61f4a0823dff5
             env:
               XDG_DATA_HOME: &configDir /config
               OP_BUS_PORT: 11220
