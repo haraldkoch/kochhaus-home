@@ -43,10 +43,11 @@ tasks:
       - test -f {{.TALOS_DIR}}/clusterconfig/talosconfig
 
   upgrade-node:
-    desc: Upgrade Talos on a single node [CLUSTER=main] [HOSTNAME=required]
+    desc: Upgrade Talos on a single node [CLUSTER=main] [HOSTNAME=required] [MODE=powercycle]
     dir: '{{.TALOS_DIR}}'
-    cmd: talhelper gencommand upgrade --node {{.HOSTNAME}} --extra-flags "--image='{{.TALOS_IMAGE}}:{{.TALOS_VERSION}}' --timeout=10m" | bash
+    cmd: talhelper gencommand upgrade --node {{.HOSTNAME}} --extra-flags "--image='{{.TALOS_IMAGE}}:{{.TALOS_VERSION}}' --reboot-mode={{.MODE}} --timeout=10m" | bash
     vars:
+      MODE: '{{.MODE | default "powercycle"}}'
       TALOS_IMAGE:
         sh: yq '.nodes[] | select(.hostname == "{{.HOSTNAME}}") | .talosImageURL' {{.TALOS_DIR}}/talconfig.yaml
       TALOS_VERSION:
