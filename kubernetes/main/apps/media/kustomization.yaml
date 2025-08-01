@@ -9,6 +9,7 @@ components:
 resources:
   - ./media-nfs.yaml
   - ./calibre-web/ks.yaml
+  - ./jellyfin/ks.yaml
   - ./media-browser/ks.yaml
   - ./tautulli/ks.yaml
   - ./your-spotify/ks.yaml
