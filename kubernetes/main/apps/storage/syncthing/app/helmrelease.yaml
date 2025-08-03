@@ -115,8 +115,6 @@ spec:
     ingress:
       app:
         className: internal
-        annotations:
-          hajimari.io/icon: "cloud"
         hosts:
           - host: syncthing.${CLUSTER_DOMAIN}
             paths:
@@ -126,8 +124,6 @@ spec:
                   port: http
       browser:
         className: internal
-        annotations:
-          hajimari.io/icon: mdi:folder-arrow-up-down-outline
         hosts:
           - host: sync.${CLUSTER_DOMAIN}
             paths:

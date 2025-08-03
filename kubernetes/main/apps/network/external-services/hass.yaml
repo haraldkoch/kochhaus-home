@@ -23,7 +23,6 @@ metadata:
   namespace: network
   annotations:
     external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
-    hajimari.io/icon: "home-assistant"
     # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
   labels:
     app.kubernetes.io/name: *app

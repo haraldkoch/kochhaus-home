@@ -108,8 +108,6 @@ spec:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
-          hajimari.io/appName: authelia
-          hajimari.io/icon: mdi:shield-account
           nginx.ingress.kubernetes.io/configuration-snippet: |
             add_header Cache-Control "no-store";
             add_header Pragma "no-cache";

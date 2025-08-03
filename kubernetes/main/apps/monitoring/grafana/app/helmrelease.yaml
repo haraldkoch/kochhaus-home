@@ -340,9 +340,6 @@ spec:
     ingress:
       enabled: true
       ingressClassName: internal
-      annotations:
-        hajimari.io/appName: "grafana"
-        hajimari.io/icon: simple-icons:grafana
       hosts: ["grafana-main.${CLUSTER_DOMAIN}"]
     downloadDashboardsImage:
       registry: quay.io

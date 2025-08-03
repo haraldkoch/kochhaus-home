@@ -6,8 +6,6 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-production"
     external-dns.alpha.kubernetes.io/target: "gw.${SECRET_PUBLIC_DOMAIN}"
     external-dns/is-public: "true"
-    hajimari.io/enable: "true"
-    hajimari.io/icon: cloud
   labels:
     app.kubernetes.io/name: drone
     app.kubernetes.io/instance: drone
@@ -36,9 +34,6 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  annotations:
-    hajimari.io/enable: "true"
-    hajimari.io/icon: cloud
   labels:
     app.kubernetes.io/name: drone
     app.kubernetes.io/instance: drone

@@ -63,7 +63,6 @@ spec:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
-          hajimari.io/icon: mdi:draw-pen
         hosts:
           - host: draw.${CLUSTER_DOMAIN}
             paths:

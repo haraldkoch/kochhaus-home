@@ -2,8 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: loki
-  annotations:
-    hajimari.io/enable: "false"
   labels:
     app.kubernetes.io/instance: loki
     app.kubernetes.io/name: loki

@@ -134,7 +134,6 @@ spec:
       app:
         className: internal
         annotations:
-          hajimari.io/icon: "router-wireless-settings"
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
           nginx.ingress.kubernetes.io/use-regex: "true"

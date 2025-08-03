@@ -31,9 +31,6 @@ spec:
     ingress:
       enabled: true
       className: internal
-      annotations:
-        hajimari.io/appName: "GitOps Dashboard"
-        hajimari.io/icon: mdi:sawtooth-wave
       hosts:
         - host: &host wego.${CLUSTER_DOMAIN}
           paths:
