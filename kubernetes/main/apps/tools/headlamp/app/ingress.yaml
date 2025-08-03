@@ -2,11 +2,6 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  annotations:
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/group: Management
-    gethomepage.dev/icon: fnord.png
-    gethomepage.dev/name: Headlamp
   labels:
     app.kubernetes.io/instance: headlamp
     app.kubernetes.io/name: headlamp

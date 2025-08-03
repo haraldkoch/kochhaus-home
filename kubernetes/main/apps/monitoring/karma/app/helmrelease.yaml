@@ -75,12 +75,6 @@ spec:
     ingress:
       app:
         className: internal
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/icon: prometheus.png
-          gethomepage.dev/name: Karma
-          gethomepage.dev/group: Observability
-          gethomepage.dev/description: Alertmanger Quick View
         hosts:
           - host: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
             paths:
