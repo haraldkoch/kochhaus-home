@@ -51,8 +51,6 @@ spec:
       main:
         enabled: true
         ingressClassName: nginx
-        annotations:
-          hajimari.io/enable: "true"
         hosts:
           - host: &host "volsync-test.${CLUSTER_DOMAIN}"
             paths:

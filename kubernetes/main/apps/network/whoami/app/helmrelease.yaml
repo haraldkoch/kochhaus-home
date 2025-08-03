@@ -61,8 +61,6 @@ spec:
         className: external
         annotations:
           external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
-          hajimari.io/appName: "Who Am I?"
-          hajimari.io/icon: mdi:id-card-outline
           # Proxied Auth
           nginx.ingress.kubernetes.io/auth-method: GET
           nginx.ingress.kubernetes.io/auth-response-headers: |-

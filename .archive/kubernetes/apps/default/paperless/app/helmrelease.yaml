@@ -94,7 +94,6 @@ spec:
         enabled: true
         className: internal
         annotations:
-          hajimari.io/icon: mdi:file-multiple
           nginx.ingress.kubernetes.io/auth-method: GET
           nginx.ingress.kubernetes.io/auth-url: http://authelia.security.svc.cluster.local/api/verify
           nginx.ingress.kubernetes.io/auth-signin: https://auth.${CLUSTER_DOMAIN}/rm=$request_method

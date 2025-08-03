@@ -79,8 +79,6 @@ spec:
         className: nginx
         annotations:
           external-dns.home.arpa/enabled: "true"
-          hajimari.io/appName: Immich
-          hajimari.io/icon: heroicons:photo
           nginx.ingress.kubernetes.io/configuration-snippet: |
             rewrite /api/(.*) /$1 break;
           nignx.ingress.kubernetes.io/force-ssl-redirect: "true"

@@ -70,9 +70,6 @@ spec:
     ingress:
       app:
         className: internal
-        annotations:
-          hajimari.io/appName: "Redis Load Balancer"
-          hajimari.io/icon: simple-icons:redis
         hosts:
           - host: "redis-ui.${CLUSTER_DOMAIN}"
             paths:

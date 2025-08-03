@@ -113,8 +113,6 @@ spec:
       main:
         enabled: true
         ingressClassName: nginx
-        annotations:
-          hajimari.io/icon: mdi:format-list-checks
         hosts:
           - host: &host "tasks.${CLUSTER_DOMAIN}"
             paths:

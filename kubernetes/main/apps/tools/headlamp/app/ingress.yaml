@@ -7,7 +7,6 @@ metadata:
     gethomepage.dev/group: Management
     gethomepage.dev/icon: fnord.png
     gethomepage.dev/name: Headlamp
-    hajimari.io/icon: mdi:eye
   labels:
     app.kubernetes.io/instance: headlamp
     app.kubernetes.io/name: headlamp

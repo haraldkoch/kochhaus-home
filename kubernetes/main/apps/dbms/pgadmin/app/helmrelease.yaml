@@ -33,9 +33,6 @@ spec:
     ingress:
       enabled: true
       ingressClassName: internal
-      annotations:
-        hajimari.io/appName: "Postgres Admin"
-        hajimari.io/icon: simple-icons:postgresql
       hosts:
         - host: pgadmin.${CLUSTER_DOMAIN}
           paths:

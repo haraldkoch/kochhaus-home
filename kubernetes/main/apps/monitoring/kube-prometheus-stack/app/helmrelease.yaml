@@ -41,9 +41,6 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
-        annotations:
-          hajimari.io/appName: "Alert Manager"
-          hajimari.io/icon: mdi:alert-decagram-outline
         hosts: ["alertmanager-main.${CLUSTER_DOMAIN}"]
         pathType: Prefix
       service:
@@ -165,8 +162,6 @@ spec:
         enabled: true
         ingressClassName: internal
         annotations:
-          hajimari.io/appName: Prometheus
-          hajimari.io/icon: simple-icons:prometheus
           gethomepage.dev/enabled: "true"
           gethomepage.dev/icon: prometheus.png
           gethomepage.dev/name: Prometheus

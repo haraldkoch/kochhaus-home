@@ -9,7 +9,6 @@ components:
 resources:
   - ./docmost/ks.yaml
   - ./excalidraw/ks.yaml
-  - ./hajimari/ks.yaml
   - ./homepage/ks.yaml
   - ./miniflux/ks.yaml
   - ./populator-test/ks.yaml
