@@ -118,11 +118,6 @@ spec:
     ingress:
       app:
         className: internal
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Observability
-          gethomepage.dev/name: Gatus
-          gethomepage.dev/icon: gatus.png
         hosts:
           - host: status.${CLUSTER_DOMAIN}
             paths:

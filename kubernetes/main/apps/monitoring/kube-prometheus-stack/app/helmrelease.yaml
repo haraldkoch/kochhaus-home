@@ -161,13 +161,6 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/icon: prometheus.png
-          gethomepage.dev/name: Prometheus
-          gethomepage.dev/group: Observability
-          gethomepage.dev/widget.type: prometheus
-          gethomepage.dev/widget.url: http://prometheus-operated.monitoring.svc.cluster.local:9090
         pathType: Prefix
         hosts:
           - prometheus-main.${CLUSTER_DOMAIN}
