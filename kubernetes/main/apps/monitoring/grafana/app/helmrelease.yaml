@@ -349,7 +349,7 @@ spec:
       enabled: true
       image:
         repository: grafana/grafana-image-renderer
-        tag: v4.0.9
+        tag: v4.0.10
         pullPolicy: IfNotPresent
       replicas: 1
       networkPolicy:
