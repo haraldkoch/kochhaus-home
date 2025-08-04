@@ -51,11 +51,9 @@ spec:
               sectionName: https
       service:
         annotations:
-          lbipam.cilium.io/ips: "${ALERTMANAGER_IPV4},${ALERTMANAGER_IPV6}"
+          lbipam.cilium.io/ips: "${ALERTMANAGER_IPV4}"
           external-dns.alpha.kubernetes.io/hostname: "amcluster-network.${CLUSTER_DOMAIN}"
         externalTrafficPolicy: Local
-        ipFamilies: [IPv4, IPv6]
-        ipFamilyPolicy: PreferDualStack
         additionalPorts:
           - name: tcp-mesh
             port: 9094
