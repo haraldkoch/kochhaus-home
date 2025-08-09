@@ -1,0 +1,6 @@
+machine:
+  time:
+    disabled: false
+    servers:
+      - 199.85.99.3
+      - 199.85.99.11

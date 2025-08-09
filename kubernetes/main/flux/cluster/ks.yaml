@@ -47,6 +47,7 @@ spec:
       - name: cluster-secrets
         kind: Secret
         optional: false
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system

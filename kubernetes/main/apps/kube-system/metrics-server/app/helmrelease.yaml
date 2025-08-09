@@ -1,11 +1,21 @@
 ---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/source.toolkit.fluxcd.io/helmrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: metrics-server
+  namespace: kube-system # Required for Renovate lookups
+spec:
+  interval: 1h
+  url: https://kubernetes-sigs.github.io/metrics-server
+---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: metrics-server
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: metrics-server
@@ -13,10 +23,10 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: metrics-server
-        namespace: flux-system
+        namespace: kube-system
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
@@ -28,10 +38,6 @@ spec:
       - --kubelet-use-node-status-port
       - --metric-resolution=10s
       - --kubelet-request-timeout=2s
-    service:
-      labels:
-        kubernetes.io/cluster-service: "true"
-        kubernetes.io/name: "Metrics-server"
     metrics:
       enabled: true
     serviceMonitor:

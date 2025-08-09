@@ -1,0 +1,207 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
+---
+clusterName: main
+
+talosVersion: "${talosVersion}"
+kubernetesVersion: "${kubernetesVersion}"
+
+endpoint: https://192.168.20.16:6443
+additionalApiServerCertSans: &sans
+  - "127.0.0.1"
+  - "192.168.20.16"
+additionalMachineCertSans: *sans
+
+clusterPodNets: ["10.42.0.0/16","fdd5:aa8:9535:42::/108"]
+clusterSvcNets: ["10.43.0.0/16","fdd5:aa8:9535:43::/108"]
+
+# Disable built-in CNI to use Cilium
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: "k3sj"
+    ipAddress: "192.168.20.17"
+    installDisk: "/dev/sda" # FIXME
+    machineSpec:
+      secureboot: false
+    talosImageURL:  factory.talos.dev/metal-installer/249d9135de54962744e917cfe654117000cba369f9152fbab9d055a00aa3664f
+    controlPlane: true
+    volumes:
+      - name: EPHEMERAL
+        provisioning:
+          maxSize: 200GB
+    userVolumes:
+      - name: extra
+        provisioning:
+          minSize: 200GB
+          maxSize: 300GB
+          grow: true
+          diskSelector:
+            match: system_disk
+        filesystem:
+          type: xfs
+    networkInterfaces:
+      - interface: end0 # FIXME
+        dhcp: false
+        mtu: 1500
+        vlans:
+          - vlanId: 20
+            addresses:
+              - "192.168.20.17/24"
+              - "fdd5:aa8:9535:20::17/64"
+            routes:
+              - network: "0.0.0.0/0"
+                gateway: "192.168.20.1"
+            vip:
+              ip: "192.168.20.16"
+  - hostname: "k3sm"
+    ipAddress: "192.168.20.18"
+    installDisk: "/dev/sda1" # FIXME
+    machineSpec:
+      secureboot: false
+    talosImageURL:  factory.talos.dev/metal-installer/249d9135de54962744e917cfe654117000cba369f9152fbab9d055a00aa3664f
+    controlPlane: true
+    volumes:
+      - name: EPHEMERAL
+        provisioning:
+          maxSize: 200GB
+    userVolumes:
+      - name: extra
+        provisioning:
+          minSize: 200GB
+          maxSize: 300GB
+          grow: true
+          diskSelector:
+            match: system_disk
+        filesystem:
+          type: xfs
+    networkInterfaces:
+      - interface: end0 # FIXME
+        dhcp: false
+        mtu: 1500
+        vlans:
+          - vlanId: 20
+            addresses:
+              - "192.168.20.18/24"
+              - "fdd5:aa8:9535:20::18/64"
+            routes:
+              - network: "0.0.0.0/0"
+                gateway: "192.168.20.1"
+            vip:
+              ip: "192.168.20.16"
+  - hostname: "k3st"
+    ipAddress: "192.168.20.19"
+    installDisk: "/dev/sda" # FIXME
+    machineSpec:
+      secureboot: false
+    talosImageURL:  factory.talos.dev/metal-installer/249d9135de54962744e917cfe654117000cba369f9152fbab9d055a00aa3664f
+    controlPlane: true
+    volumes:
+      - name: EPHEMERAL
+        provisioning:
+          maxSize: 200GB
+    userVolumes:
+      - name: extra
+        provisioning:
+          minSize: 200GB
+          maxSize: 300GB
+          grow: true
+          diskSelector:
+            match: system_disk
+        filesystem:
+          type: xfs
+    networkInterfaces:
+      - interface: end0 # FIXME
+        dhcp: false
+        mtu: 1500
+        vlans:
+          - vlanId: 20
+            addresses:
+              - "192.168.20.19/24"
+              - "fdd5:aa8:9535:20::19/64"
+            routes:
+              - network: "0.0.0.0/0"
+                gateway: "192.168.20.1"
+            vip:
+              ip: "192.168.20.16"
+
+# Global patches
+patches:
+  - "@./patches/global/machine-files.yaml"
+  - "@./patches/global/machine-kubelet.yaml"
+  - "@./patches/global/machine-network.yaml"
+  - "@./patches/global/machine-sysctls.yaml"
+  - "@./patches/global/machine-time.yaml"
+  # Pull-through cache. Harbor needs overridePath so that Talos/containerd do not append /v2 to the path.
+  - |-
+    machine:
+      registries:
+        mirrors:
+          docker.io:
+              endpoints:
+                  - https://harbor.kochhaus.dev/v2/docker.io
+              overridePath: true
+          gcr.io:
+              endpoints:
+                  - https://harbor.kochhaus.dev/v2/gcr.io
+              overridePath: true
+          ghcr.io:
+              endpoints:
+                  - https://harbor.kochhaus.dev/v2/ghcr.io
+              overridePath: true
+          public.ecr.aws:
+              endpoints:
+                  - https://harbor.kochhaus.dev/v2/public.ecr.aws
+              overridePath: true
+          quay.io:
+              endpoints:
+                  - https://harbor.kochhaus.dev/v2/quay.io
+              overridePath: true
+          registry.k8s.io:
+              endpoints:
+                  - https://harbor.kochhaus.dev/v2/registry.k8s.io
+              overridePath: true
+  # Disable selinux
+  - |-
+    machine:
+      install:
+        extraKernelArgs:
+          - -selinux
+  # Configure NFS mount options
+  - |-
+    machine:
+      files:
+        - op: overwrite
+          path: /etc/nfsmount.conf
+          permissions: 0o644
+          content: |
+            [ NFSMount_Global_Options ]
+            nfsvers=4.2
+            hard=True
+            nconnect=16
+            noatime=True
+  # Enable K8s Talos API Access
+  - |-
+    machine:
+      features:
+        kubernetesTalosAPIAccess:
+          enabled: true
+          allowedRoles:
+            - os:admin
+          allowedKubernetesNamespaces:
+            - actions-runner-system
+            - system-upgrade
+  # Disable talos forwarding kube-dns to Host DNS - we don't need another cache
+  - |-
+    machine:
+      features:
+        hostDNS:
+          enabled: true
+          resolveMemberNames: true
+          forwardKubeDNSToHost: false
+
+# Controller patches
+controlPlane:
+  patches:
+    - "@./patches/controller/admission-controller-patch.yaml"
+    - "@./patches/controller/cluster.yaml"
