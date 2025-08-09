@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 1h
-  path: ./kubernetes/main/apps/external/external-dns
+  path: ./kubernetes/main/apps/network/external/external-dns
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -32,7 +32,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 1h
-  path: ./kubernetes/main/apps/external/cloudflared
+  path: ./kubernetes/main/apps/network/external/cloudflared
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -57,7 +57,7 @@ spec:
     - name: cert-manager-tls
       namespace: cert-manager
   interval: 1h
-  path: ./kubernetes/main/apps/external/ingress-nginx
+  path: ./kubernetes/main/apps/network/external/ingress-nginx
   prune: true
   retryInterval: 2m
   sourceRef:
