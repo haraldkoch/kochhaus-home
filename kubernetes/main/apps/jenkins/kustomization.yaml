@@ -2,8 +2,10 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: cicd
+namespace: jenkins
 components:
   - ../../components/alerts
   - ../../components/common
-resources: []
+  - ../../components/repos/app-template
+resources:
+  - ./jenkins/ks.yaml
