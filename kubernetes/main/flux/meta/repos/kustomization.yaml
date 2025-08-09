@@ -11,4 +11,5 @@ resources:
   - ./kyverno.yaml
   - ./nextcloud.yaml
   - ./node-feature-discovery.yaml
+  - ./okgolove.yaml
   - ./runix.yaml
