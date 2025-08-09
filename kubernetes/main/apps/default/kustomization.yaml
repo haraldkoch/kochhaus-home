@@ -21,6 +21,7 @@ resources:
   - ./picoshare/ks.yaml
   - ./populator-test/ks.yaml
   - ./static-web/ks.yaml
+  - ./tautulli/ks.yaml
   - ./syncthing/ks.yaml
   - ./vikunja/ks.yaml
   - ./whoami/ks.yaml
