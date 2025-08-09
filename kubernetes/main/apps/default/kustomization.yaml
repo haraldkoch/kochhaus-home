@@ -12,8 +12,12 @@ resources:
   - ./excalidraw/ks.yaml
   # - ./miniflux/ks.yaml
   - ./nextcloud/ks.yaml
+  - ./ocis/ks.yaml
+  - ./onedrive/ks.yaml
   - ./opnsense-backup/ks.yaml
+  - ./picoshare/ks.yaml
   - ./populator-test/ks.yaml
   - ./static-web/ks.yaml
+  - ./syncthing/ks.yaml
   # - ./vikunja/ks.yaml
   - ./whoami/ks.yaml

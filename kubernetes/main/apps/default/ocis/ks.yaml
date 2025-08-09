@@ -3,8 +3,8 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app syncthing
-  namespace: &namespace storage
+  name: &app ocis
+  namespace: &namespace default
 spec:
   commonMetadata:
     labels:
@@ -12,10 +12,11 @@ spec:
   components:
     - ../../../../components/gatus/guarded
   interval: 1h
-  path: ./kubernetes/main/apps/storage/syncthing/app
+  path: ./kubernetes/main/apps/default/ocis/app
   postBuild:
     substitute:
       APP: *app
+      GATUS_SUBDOMAIN: files
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -23,4 +24,4 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
-  timeout: 5m
+  timeout: 3m

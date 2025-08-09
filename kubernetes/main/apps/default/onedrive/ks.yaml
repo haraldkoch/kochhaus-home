@@ -3,23 +3,21 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app picoshare
-  namespace: &namespace storage
+  name: &app onedrive
+  namespace: &namespace default
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../../components/gatus/external
     - ../../../../components/volsync
   interval: 1h
-  path: ./kubernetes/main/apps/storage/picoshare/app
+  path: ./kubernetes/main/apps/default/onedrive/app
   postBuild:
     substitute:
       APP: *app
-      GATUS_SUBDOMAIN: share
-      VOLSYNC_CAPACITY: 25Gi
-      VOLSYNC_CLAIM: picoshare-data-v1
+      VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_CLAIM: onedrive-config-v5
       VOLSYNC_GID: "1000"
       VOLSYNC_UID: "1000"
   prune: true
