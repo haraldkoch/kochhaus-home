@@ -93,7 +93,6 @@ spec:
               limits:
                 memory: 150Mi
         pod:
-          hostUsers: false
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
