@@ -48,7 +48,7 @@ spec:
           app:
             image:
               repository: ghcr.io/haraldkoch/filebrowser
-              tag: v2.42.2
+              tag: v2.42.3
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               FB_DATABASE: /config/filebrowser.db
