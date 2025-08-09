@@ -12,6 +12,7 @@ resources:
   - ./calibre-web/ks.yaml
   - ./docmost/ks.yaml
   - ./excalidraw/ks.yaml
+  - ./media-browser/ks.yaml
   - ./miniflux/ks.yaml
   - ./nextcloud/ks.yaml
   - ./ocis/ks.yaml
