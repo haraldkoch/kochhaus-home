@@ -49,7 +49,7 @@ releases:
           - --server-side
           - --field-manager=kustomize-controller
           - --filename
-          - ../kubernetes/main/apps/security/external-secrets/app/clustersecretstore.yaml
+          - '{{ requiredEnv "ROOT_DIR" }}/kubernetes/main/apps/security/external-secrets/app/clustersecretstore.yaml'
           - --wait=true
         showlogs: true
     needs: ['cert-manager/cert-manager']
