@@ -37,16 +37,12 @@ spec:
       createPrometheusRules: true
     toolbox:
       enabled: true
-    route:
+    ingress:
       dashboard:
+        ingressClassName: internal
         host:
           name: rook.${CLUSTER_DOMAIN}
           path: /
-          pathType: PathPrefix
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
     cephClusterSpec:
       cephConfig:
         global:
