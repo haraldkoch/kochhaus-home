@@ -243,17 +243,6 @@ patches:
             hard=True
             nconnect=16
             noatime=True
-  # Enable K8s Talos API Access
-  - |-
-    machine:
-      features:
-        kubernetesTalosAPIAccess:
-          enabled: true
-          allowedRoles:
-            - os:admin
-          allowedKubernetesNamespaces:
-            - actions-runner-system
-            - system-upgrade
   # Disable talos forwarding kube-dns to Host DNS - we don't need another cache
   - |-
     machine:
@@ -268,3 +257,15 @@ controlPlane:
   patches:
     - "@./patches/controller/admission-controller-patch.yaml"
     - "@./patches/controller/cluster.yaml"
+
+    # Enable K8s Talos API Access
+    - |-
+      machine:
+        features:
+          kubernetesTalosAPIAccess:
+            enabled: true
+            allowedRoles:
+              - os:admin
+            allowedKubernetesNamespaces:
+              - actions-runner-system
+              - system-upgrade
