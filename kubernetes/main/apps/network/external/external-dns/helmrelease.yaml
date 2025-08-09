@@ -5,7 +5,7 @@ kind: HelmRelease
 metadata:
   name: &app external-dns-cloudflare
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: external-dns
@@ -15,13 +15,12 @@ spec:
         name: external-dns
         namespace: flux-system
   install:
-    crds: CreateReplace
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
-    crds: CreateReplace
     remediation:
+      strategy: rollback
       retries: 3
   values:
     fullnameOverride: *app
