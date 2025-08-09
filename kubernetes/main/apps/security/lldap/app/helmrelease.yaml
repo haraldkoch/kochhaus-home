@@ -3,27 +3,24 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app dmarc-report
+  name: &app lldap
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 4.2.0
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
   values:
     controllers:
-      dmarc-report:
+      lldap:
+        replicas: 2
+        strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -33,27 +30,47 @@ spec:
               tag: 17.5@sha256:6eb67ee5fc5d574f06f9d9822be08fdabb2a519e555c67d91d060a99a2af670f
             envFrom: &envFrom
               - secretRef:
-                  name: *app
+                  name: lldap-secret
         containers:
           app:
             image:
-              repository: ghcr.io/haraldkoch/dmarc-report
-              tag: 1.4.5@sha256:d9059e510fc08d87ce00bf1bd0e23232fb8d63fc2cfa2d919ff6c5c4a5cc44d2
+              repository: ghcr.io/lldap/lldap
+              tag: v0.6.1
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
-              REPORT_DB_TYPE: pgsql
+              LLDAP_HTTP_PORT: &port 80
+              LLDAP_HTTP_URL: https://lldap.${CLUSTER_DOMAIN}
+              LLDAP_LDAP_PORT: &ldapPort 389
+              LLDAP_LDAP_BASE_DN: dc=home,dc=arpa
             envFrom: *envFrom
             probes:
               liveness:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              requests:
+                cpu: 5m
+                memory: 36M
+              limits:
+                memory: 128M
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
     service:
       app:
-        controller: dmarc-report
+        controller: lldap
         ports:
           http:
-            port: 80
+            port: *port
+            primary: true
+          ldap:
+            port: *ldapPort
     ingress:
       app:
         className: internal
@@ -65,5 +82,5 @@ spec:
                   identifier: app
                   port: http
     persistence:
-      config:
+      data:
         type: emptyDir
