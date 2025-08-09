@@ -12,7 +12,7 @@ resources:
   - ./excalidraw/ks.yaml
   # - ./miniflux/ks.yaml
   - ./opnsense-backup/ks.yaml
-  # - ./populator-test/ks.yaml
+  - ./populator-test/ks.yaml
   - ./static-web/ks.yaml
   # - ./vikunja/ks.yaml
   - ./whoami/ks.yaml
