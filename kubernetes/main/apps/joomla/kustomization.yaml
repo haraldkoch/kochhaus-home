@@ -6,6 +6,7 @@ namespace: joomla
 components:
   - ../../components/alerts
   - ../../components/common
+  - ../../components/repos/app-template
 resources:
   - ./policy.yaml
   #- ./mariadb/ks.yaml
