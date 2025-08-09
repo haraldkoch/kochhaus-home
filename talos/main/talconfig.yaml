@@ -85,40 +85,108 @@ nodes:
                 gateway: "192.168.20.1"
             vip:
               ip: "192.168.20.16"
-#  - hostname: "k3s0"
-#    ipAddress: "192.168.20.21"
-#    installDiskSelector:
-#      model: Samsung SSD 850
-#    machineSpec:
-#      secureboot: false
-#    talosImageURL:  factory.talos.dev/metal-installer/249d9135de54962744e917cfe654117000cba369f9152fbab9d055a00aa3664f
-#    controlPlane: false
-#    volumes:
-#      - name: EPHEMERAL
-#        provisioning:
-#          maxSize: 200GB
-#    userVolumes:
-#      - name: extra
-#        provisioning:
-#          minSize: 200GB
-#          maxSize: 300GB
-#          grow: true
-#          diskSelector:
-#            match: system_disk
-#        filesystem:
-#          type: xfs
-#    networkInterfaces:
-#      - interface: eno1 # FIXME
-#        dhcp: false
-#        mtu: 1500
-#        vlans:
-#          - vlanId: 20
-#            addresses:
-#              - "192.168.20.21/24"
-#              - "fdd5:aa8:9535:20::21/64"
-#            routes:
-#              - network: "0.0.0.0/0"
-#                gateway: "192.168.20.1"
+  - hostname: "k3s0"
+    ipAddress: "192.168.20.21"
+    installDiskSelector:
+      model: P3-512
+    machineSpec:
+      secureboot: false
+    talosImageURL:  factory.talos.dev/metal-installer/249d9135de54962744e917cfe654117000cba369f9152fbab9d055a00aa3664f
+    controlPlane: false
+    volumes:
+      - name: EPHEMERAL
+        provisioning:
+          maxSize: 200GB
+    userVolumes:
+      - name: extra
+        provisioning:
+          minSize: 200GB
+          maxSize: 300GB
+          grow: true
+          diskSelector:
+            match: system_disk
+        filesystem:
+          type: xfs
+    networkInterfaces:
+      - interface: enp0s31f6 # WTF?
+        dhcp: false
+        mtu: 1500
+        vlans:
+          - vlanId: 20
+            addresses:
+              - "192.168.20.21/24"
+              - "fdd5:aa8:9535:20::21/64"
+            routes:
+              - network: "0.0.0.0/0"
+                gateway: "192.168.20.1"
+  - hostname: "k3s2"
+    ipAddress: "192.168.20.23"
+    installDiskSelector:
+      model: SAMSUNG MZ7LH512
+    machineSpec:
+      secureboot: false
+    talosImageURL:  factory.talos.dev/metal-installer/249d9135de54962744e917cfe654117000cba369f9152fbab9d055a00aa3664f
+    controlPlane: false
+    volumes:
+      - name: EPHEMERAL
+        provisioning:
+          maxSize: 200GB
+    userVolumes:
+      - name: extra
+        provisioning:
+          minSize: 200GB
+          maxSize: 300GB
+          grow: true
+          diskSelector:
+            match: system_disk
+        filesystem:
+          type: xfs
+    networkInterfaces:
+      - interface: eno1
+        dhcp: false
+        mtu: 1500
+        vlans:
+          - vlanId: 20
+            addresses:
+              - "192.168.20.23/24"
+              - "fdd5:aa8:9535:20::23/64"
+            routes:
+              - network: "0.0.0.0/0"
+                gateway: "192.168.20.1"
+  - hostname: "k3s3"
+    ipAddress: "192.168.20.24"
+    installDiskSelector:
+      model: P3-512
+    machineSpec:
+      secureboot: false
+    talosImageURL:  factory.talos.dev/metal-installer/249d9135de54962744e917cfe654117000cba369f9152fbab9d055a00aa3664f
+    controlPlane: false
+    volumes:
+      - name: EPHEMERAL
+        provisioning:
+          maxSize: 200GB
+    userVolumes:
+      - name: extra
+        provisioning:
+          minSize: 200GB
+          maxSize: 300GB
+          grow: true
+          diskSelector:
+            match: system_disk
+        filesystem:
+          type: xfs
+    networkInterfaces:
+      - interface: enp0s31f6 # WTF?
+        dhcp: false
+        mtu: 1500
+        vlans:
+          - vlanId: 20
+            addresses:
+              - "192.168.20.21/24"
+              - "fdd5:aa8:9535:20::21/64"
+            routes:
+              - network: "0.0.0.0/0"
+                gateway: "192.168.20.1"
 
 # Global patches
 patches:
