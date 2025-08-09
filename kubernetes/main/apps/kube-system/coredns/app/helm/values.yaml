@@ -7,8 +7,8 @@ serviceAccount:
   create: true
 service:
   name: kube-dns
-  clusterIP: ${COREDNS_ADDR}
-  clusterIPs: ["${COREDNS_ADDR}", "${COREDNS_ADDR_V6}"]
+  clusterIP: "10.43.0.10"
+  clusterIPs: ["10.43.0.10", "fdd5:aa8:9535:43::a"]
   ipFamilies: ["IPV4", "IPV6"]
   ipFamilyPolicy: PreferDualStack
 deployment:
