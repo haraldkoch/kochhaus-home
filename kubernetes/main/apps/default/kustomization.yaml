@@ -25,3 +25,4 @@ resources:
   - ./syncthing/ks.yaml
   - ./vikunja/ks.yaml
   - ./whoami/ks.yaml
+  - ./your-spotify/ks.yaml
