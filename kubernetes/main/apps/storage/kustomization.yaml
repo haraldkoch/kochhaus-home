@@ -8,7 +8,7 @@ components:
   - ../../components/common
   - ../../components/repos/app-template
 resources:
-  # - ./csi-driver-nfs/ks.yaml
+  - ./csi-driver-nfs/ks.yaml
   # - ./nextcloud/ks.yaml
   # - ./ocis/ks.yaml
   # - ./onedrive/ks.yaml
