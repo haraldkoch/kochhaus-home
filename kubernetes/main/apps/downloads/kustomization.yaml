@@ -8,7 +8,7 @@ components:
   - ../../components/common
   - ../../components/repos/app-template
 resources:
-  - ./policy.yaml
+  # - ./policy.yaml
   - ./vpnconfig.yaml
   - ./linode-backup/ks.yaml
 transformers:
