@@ -21,27 +21,14 @@ cniConfig:
 nodes:
   - hostname: "k3sj"
     ipAddress: "192.168.20.17"
-    installDisk: "/dev/sda" # FIXME
+    installDiskSelector:
+      model: Samsung SSD 860
     machineSpec:
       secureboot: false
     talosImageURL:  factory.talos.dev/metal-installer/249d9135de54962744e917cfe654117000cba369f9152fbab9d055a00aa3664f
     controlPlane: true
-    volumes:
-      - name: EPHEMERAL
-        provisioning:
-          maxSize: 200GB
-    userVolumes:
-      - name: extra
-        provisioning:
-          minSize: 200GB
-          maxSize: 300GB
-          grow: true
-          diskSelector:
-            match: system_disk
-        filesystem:
-          type: xfs
     networkInterfaces:
-      - interface: end0 # FIXME
+      - interface: eno1
         dhcp: false
         mtu: 1500
         vlans:
@@ -56,27 +43,14 @@ nodes:
               ip: "192.168.20.16"
   - hostname: "k3sm"
     ipAddress: "192.168.20.18"
-    installDisk: "/dev/sda1" # FIXME
+    installDiskSelector:
+      model: Samsung SSD 860
     machineSpec:
       secureboot: false
     talosImageURL:  factory.talos.dev/metal-installer/249d9135de54962744e917cfe654117000cba369f9152fbab9d055a00aa3664f
     controlPlane: true
-    volumes:
-      - name: EPHEMERAL
-        provisioning:
-          maxSize: 200GB
-    userVolumes:
-      - name: extra
-        provisioning:
-          minSize: 200GB
-          maxSize: 300GB
-          grow: true
-          diskSelector:
-            match: system_disk
-        filesystem:
-          type: xfs
     networkInterfaces:
-      - interface: end0 # FIXME
+      - interface: eno1
         dhcp: false
         mtu: 1500
         vlans:
@@ -91,27 +65,14 @@ nodes:
               ip: "192.168.20.16"
   - hostname: "k3st"
     ipAddress: "192.168.20.19"
-    installDisk: "/dev/sda" # FIXME
+    installDiskSelector:
+      model: Samsung SSD 850
     machineSpec:
       secureboot: false
     talosImageURL:  factory.talos.dev/metal-installer/249d9135de54962744e917cfe654117000cba369f9152fbab9d055a00aa3664f
     controlPlane: true
-    volumes:
-      - name: EPHEMERAL
-        provisioning:
-          maxSize: 200GB
-    userVolumes:
-      - name: extra
-        provisioning:
-          minSize: 200GB
-          maxSize: 300GB
-          grow: true
-          diskSelector:
-            match: system_disk
-        filesystem:
-          type: xfs
     networkInterfaces:
-      - interface: end0 # FIXME
+      - interface: eno1 # FIXME
         dhcp: false
         mtu: 1500
         vlans:
@@ -124,6 +85,40 @@ nodes:
                 gateway: "192.168.20.1"
             vip:
               ip: "192.168.20.16"
+#  - hostname: "k3s0"
+#    ipAddress: "192.168.20.21"
+#    installDiskSelector:
+#      model: Samsung SSD 850
+#    machineSpec:
+#      secureboot: false
+#    talosImageURL:  factory.talos.dev/metal-installer/249d9135de54962744e917cfe654117000cba369f9152fbab9d055a00aa3664f
+#    controlPlane: false
+#    volumes:
+#      - name: EPHEMERAL
+#        provisioning:
+#          maxSize: 200GB
+#    userVolumes:
+#      - name: extra
+#        provisioning:
+#          minSize: 200GB
+#          maxSize: 300GB
+#          grow: true
+#          diskSelector:
+#            match: system_disk
+#        filesystem:
+#          type: xfs
+#    networkInterfaces:
+#      - interface: eno1 # FIXME
+#        dhcp: false
+#        mtu: 1500
+#        vlans:
+#          - vlanId: 20
+#            addresses:
+#              - "192.168.20.21/24"
+#              - "fdd5:aa8:9535:20::21/64"
+#            routes:
+#              - network: "0.0.0.0/0"
+#                gateway: "192.168.20.1"
 
 # Global patches
 patches:
