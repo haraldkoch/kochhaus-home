@@ -35,8 +35,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-secrets-stores
-      namespace: external-secrets
+    - name: external-secrets
+      namespace: security
   interval: 1h
   path: ./kubernetes/apps/main/internal/external-dns
   prune: true
