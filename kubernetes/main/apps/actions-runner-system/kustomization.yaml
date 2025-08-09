@@ -7,6 +7,4 @@ components:
   - ../../components/alerts
   - ../../components/common
 resources:
-  - ./gha-runner-scale-set-controller/ks.yaml
-  - ./gha-runner-scale-set/ks.yaml
-  - ./java-runner/ks.yaml
+  - ./actions-runner-controller/ks.yaml
