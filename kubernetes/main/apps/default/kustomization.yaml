@@ -11,6 +11,7 @@ resources:
   # - ./docmost/ks.yaml
   - ./excalidraw/ks.yaml
   # - ./miniflux/ks.yaml
+  - ./nextcloud/ks.yaml
   - ./opnsense-backup/ks.yaml
   - ./populator-test/ks.yaml
   - ./static-web/ks.yaml
