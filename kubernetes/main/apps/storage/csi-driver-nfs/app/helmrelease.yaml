@@ -50,17 +50,3 @@ spec:
         - noatime
       reclaimPolicy: Delete
       volumeBindingMode: Immediate
-  # runOnControlPlane: true sets the nodeSelector to
-  # node-role.kubernetes.io/control-plane: "" - which does not match the
-  # actual value of "true".
-  postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              version: v1
-              kind: Deployment
-              name: csi-nfs-controller
-            patch: |
-              - op: replace
-                path: /spec/template/spec/nodeSelector/node-role.kubernetes.io~1control-plane
-                value: "true"
