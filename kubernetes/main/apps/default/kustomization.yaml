@@ -8,9 +8,9 @@ components:
   - ../../components/common
   - ../../components/repos/app-template
 resources:
-  # - ./docmost/ks.yaml
+  - ./docmost/ks.yaml
   - ./excalidraw/ks.yaml
-  # - ./miniflux/ks.yaml
+  - ./miniflux/ks.yaml
   - ./nextcloud/ks.yaml
   - ./ocis/ks.yaml
   - ./onedrive/ks.yaml
@@ -19,5 +19,5 @@ resources:
   - ./populator-test/ks.yaml
   - ./static-web/ks.yaml
   - ./syncthing/ks.yaml
-  # - ./vikunja/ks.yaml
+  - ./vikunja/ks.yaml
   - ./whoami/ks.yaml
