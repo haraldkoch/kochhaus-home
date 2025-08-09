@@ -34,6 +34,26 @@ releases:
     values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/main/apps/cert-manager/cert-manager/app/helm/values.yaml']
     needs: ['kube-system/coredns']
 
+  - name: external-secrets
+    namespace: security
+    chart: oci://ghcr.io/external-secrets/charts/external-secrets
+    version: 0.19.1
+    values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/main/apps/security/external-secrets/app/helm/values.yaml']
+    hooks:
+      - # Apply cluster secret store
+        events: ['postsync']
+        command: kubectl
+        args:
+          - apply
+          - --namespace=security
+          - --server-side
+          - --field-manager=kustomize-controller
+          - --filename
+          - ../kubernetes/main/apps/security/external-secrets/app/clustersecretstore.yaml
+          - --wait=true
+        showlogs: true
+    needs: ['cert-manager/cert-manager']
+
   - name: flux-operator
     namespace: flux-system
     atomic: true
