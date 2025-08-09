@@ -2,11 +2,17 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: network
+namespace: default
 components:
   - ../../components/alerts
   - ../../components/common
   - ../../components/repos/app-template
 resources:
-  - ./external/ks.yaml
-  - ./internal/ks.yaml
+  # - ./docmost/ks.yaml
+  - ./excalidraw/ks.yaml
+  # - ./miniflux/ks.yaml
+  - ./opnsense-backup/ks.yaml
+  # - ./populator-test/ks.yaml
+  - ./static-web/ks.yaml
+  # - ./vikunja/ks.yaml
+  - ./whoami/ks.yaml
