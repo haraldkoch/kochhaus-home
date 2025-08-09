@@ -8,6 +8,7 @@ components:
   - ../../components/common
   - ../../components/repos/app-template
 resources:
+  - ./media-nfs.yaml
   - ./calibre-web/ks.yaml
   - ./docmost/ks.yaml
   - ./excalidraw/ks.yaml
