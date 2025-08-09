@@ -6,5 +6,6 @@ namespace: vpn
 components:
   - ../../components/alerts
   - ../../components/common
+  - ../../components/repos/app-template
 resources:
   - ./downloads-gateway/ks.yaml

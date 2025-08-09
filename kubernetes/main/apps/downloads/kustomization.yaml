@@ -6,6 +6,7 @@ namespace: downloads
 components:
   - ../../components/alerts
   - ../../components/common
+  - ../../components/repos/app-template
 resources:
   - ./policy.yaml
   - ./vpnconfig.yaml
