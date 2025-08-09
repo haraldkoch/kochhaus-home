@@ -6,6 +6,7 @@ namespace: dbms
 components:
   - ../../components/alerts
   - ../../components/common
+  - ../../components/repos/app-template
 resources:
   - ./cloudnative-pg/ks.yaml
   - ./dragonfly/ks.yaml
