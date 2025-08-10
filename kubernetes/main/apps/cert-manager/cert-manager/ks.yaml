@@ -9,6 +9,14 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: *app
+      namespace: *namespace
+    - apiVersion: cert-manager.io/v1
+      kind: ClusterIssuer
+      name: letsencrypt-production
   healthCheckExprs:
     - apiVersion: cert-manager.io/v1
       kind: ClusterIssuer
@@ -39,6 +47,11 @@ spec:
   dependsOn:
     - name: cert-manager
       namespace: cert-manager
+  healthChecks:
+    - apiVersion: cert-manager.io/v1
+      kind: Certificate
+      name: "${CLUSTER_DOMAIN/./-}-production"
+      namespace: *namespace
   healthCheckExprs:
     - apiVersion: cert-manager.io/v1
       kind: Certificate
