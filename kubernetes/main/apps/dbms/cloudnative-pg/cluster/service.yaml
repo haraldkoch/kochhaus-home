@@ -5,9 +5,9 @@ metadata:
   name: postgres-lb
   annotations:
     external-dns.alpha.kubernetes.io/hostname: postgres.${CLUSTER_DOMAIN}
+    lbipam.cilium.io/ips: "${POSTGRES_IPV4},${POSTGRES_IPV6}"
 spec:
   type: LoadBalancer
-  externalIPs: ["${POSTGRES_IPV4}", "${POSTGRES_IPV6}"]
   externalTrafficPolicy: Local
   ipFamilies: [IPv4, IPv6]
   ipFamilyPolicy: PreferDualStack

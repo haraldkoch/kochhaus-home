@@ -87,7 +87,8 @@ spec:
       listen:
         controller: syncthing
         type: LoadBalancer
-        externalIPs: ["${SYNCTHING_IPV4}", "${SYNCTHING_IPV6}"]
+        annotations:
+          lbipam.cilium.io/ips: "${SYNCTHING_IPV4},${SYNCTHING_IPV6}"
         externalTrafficPolicy: Local
         ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack

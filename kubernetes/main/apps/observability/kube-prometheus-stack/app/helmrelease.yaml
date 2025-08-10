@@ -50,7 +50,7 @@ spec:
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "amcluster-main.${CLUSTER_DOMAIN}"
-        externalIPs: ["${ALERTMANAGER_IPV4}"]
+          lbipam.cilium.io/ips: "${ALERTMANAGER_IPV4}"
         additionalPorts:
           - name: tcp-mesh
             port: 9094
