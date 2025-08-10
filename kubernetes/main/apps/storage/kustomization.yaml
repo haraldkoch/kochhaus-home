@@ -9,11 +9,6 @@ components:
   - ../../components/repos/app-template
 resources:
   - ./csi-driver-nfs/ks.yaml
-  # - ./nextcloud/ks.yaml
-  # - ./ocis/ks.yaml
-  # - ./onedrive/ks.yaml
   - ./openebs/ks.yaml
-  # - ./picoshare/ks.yaml
   - ./snapshot-controller/ks.yaml
-  # - ./syncthing/ks.yaml
   - ./volsync/ks.yaml
