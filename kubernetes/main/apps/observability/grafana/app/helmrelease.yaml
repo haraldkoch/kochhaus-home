@@ -134,20 +134,20 @@ spec:
             type: prometheus
             uid: prometheus
             access: proxy
-            url: http://prometheus-operated.monitoring.svc.cluster.local:9090
+            url: http://prometheus-operated.observability.svc.cluster.local:9090
             isDefault: true
           - name: Loki
             type: loki
             uid: loki
             access: proxy
-            url: http://loki-headless.monitoring.svc.cluster.local:3100
+            url: http://loki-headless.observability.svc.cluster.local:3100
             jsonData:
               maxLines: 250
           - name: Alertmanager
             type: alertmanager
             uid: alertmanager
             access: proxy
-            url: http://alertmanager-operated.monitoring.svc.cluster.local:9093
+            url: http://alertmanager-operated.observability.svc.cluster.local:9093
             jsonData:
               implementation: prometheus
     dashboards:
