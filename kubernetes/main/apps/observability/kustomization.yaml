@@ -17,7 +17,7 @@ resources:
   # - ./loki/ks.yaml
   # - ./network-ups-tools/ks.yaml
   # - ./promtail/ks.yaml
-  # - ./silence-operator/ks.yaml
+  - ./silence-operator/ks.yaml
   # - ./smartctl-exporter/ks.yaml
   # - ./smokeping/ks.yaml
   # - ./speedtest-exporter/ks.yaml

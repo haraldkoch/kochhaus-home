@@ -4,7 +4,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app silence-operator
-  namespace: &namespace monitoring
+  namespace: &namespace observability
 spec:
   commonMetadata:
     labels:
@@ -18,7 +18,7 @@ spec:
       kind: CustomResourceDefinition
       name: silences.monitoring.giantswarm.io
   interval: 1h
-  path: ./kubernetes/main/apps/monitoring/silence-operator/app
+  path: ./kubernetes/main/apps/observability/silence-operator/app
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -33,7 +33,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app silence-operator-silences
-  namespace: &namespace monitoring
+  namespace: &namespace observability
 spec:
   commonMetadata:
     labels:
@@ -42,7 +42,7 @@ spec:
     - name: silence-operator
       namespace: *namespace
   interval: 1h
-  path: ./kubernetes/main/apps/monitoring/silence-operator/silences
+  path: ./kubernetes/main/apps/observability/silence-operator/silences
   prune: true
   retryInterval: 2m
   sourceRef:
@@ -51,3 +51,4 @@ spec:
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
+  wait: false
