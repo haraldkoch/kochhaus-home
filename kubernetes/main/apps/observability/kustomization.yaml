@@ -10,7 +10,7 @@ components:
 resources:
   - ./gatus/ks.yaml
   - ./goldpinger/ks.yaml
-  # - ./grafana/ks.yaml
+  - ./grafana/ks.yaml
   - ./karma/ks.yaml
   - ./kromgo/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
