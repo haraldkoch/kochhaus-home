@@ -32,7 +32,7 @@ spec:
           value: "${TIMEZONE:=Etc/UTC}"
       service:
         annotations:
-          lbipam.cilium.io/ips: "${NGINX_IPV4}, ${NGINX_IPV6}"
+          lbipam.cilium.io/ips: "${NGINX_INT_IPV4}, ${NGINX_INT_IPV6}"
         externalTrafficPolicy: Local
         ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack
