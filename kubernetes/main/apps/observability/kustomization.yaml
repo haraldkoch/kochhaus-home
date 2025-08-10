@@ -19,6 +19,6 @@ resources:
   # - ./promtail/ks.yaml
   - ./silence-operator/ks.yaml
   # - ./smartctl-exporter/ks.yaml
-  # - ./smokeping/ks.yaml
+  - ./smokeping/ks.yaml
   # - ./speedtest-exporter/ks.yaml
   # - ./x509-certificate-exporter/ks.yaml
