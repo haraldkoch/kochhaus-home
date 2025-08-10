@@ -72,6 +72,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: intel-device-plugin-gpu
+      namespace: tools
   interval: 1h
   path: ./kubernetes/main/apps/tools/intel-device-plugin/exporter
   prune: true

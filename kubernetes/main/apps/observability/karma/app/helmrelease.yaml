@@ -16,9 +16,6 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  dependsOn:
-    - name: kube-prometheus-stack
-      namespace: observability
   values:
     controllers:
       karma:
