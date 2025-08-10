@@ -5,6 +5,11 @@ badge:
   size: 12
 
 metrics:
+  - name: talos_version
+    query: label_replace(node_os_info{cluster="main", name="Talos"}, "version_id", "$1", "version_id", "v(.+)")
+    label: version_id
+    title: Talos
+
   - name: kubernetes_version
     query: label_replace(kubernetes_build_info{cluster="main", service="kubernetes"}, "git_version", "$1", "git_version", "v(.+)")
     label: git_version
@@ -73,7 +78,7 @@ metrics:
     title: Uptime
 
   - name: cluster_alert_count
-    query: alertmanager_alerts{state="active"} -1 # ignore Watchdog
+    query: alertmanager_alerts{state="active"} - 1 # Ignore Watchdog
     colors:
       - { color: "green", min: 0, max: 0 }
       - { color: "orange", min: 1, max: 4 }
