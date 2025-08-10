@@ -41,14 +41,19 @@ spec:
         forceConflicts: true
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
-      route:
-        main:
-          enabled: true
-          hostnames: ["alertmanager.${CLUSTER_DOMAIN}"]
-          parentRefs:
-            - name: internal
-              namespace: kube-system
-              sectionName: https
+      # route:
+      #   main:
+      #     enabled: true
+      #     hostnames: ["alertmanager.${CLUSTER_DOMAIN}"]
+      #     parentRefs:
+      #       - name: internal
+      #         namespace: kube-system
+      #         sectionName: https
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        hosts: ["alertmanager.${CLUSTER_DOMAIN}"]
+        pathType: Prefix
       service:
         annotations:
           lbipam.cilium.io/ips: "${ALERTMANAGER_IPV4}"
