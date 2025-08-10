@@ -45,7 +45,7 @@ spec:
       namespace: *namespace
     - apiVersion: deviceplugin.intel.com/v1
       kind: GpuDevicePlugin
-      name: intel-device-plugin-gpu
+      name: i915
   healthCheckExprs:
     - apiVersion: deviceplugin.intel.com/v1
       kind: GpuDevicePlugin
@@ -72,6 +72,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: intel-device-plugin-gpu
+      namespace: tools
   interval: 1h
   path: ./kubernetes/main/apps/tools/intel-device-plugin/exporter
   prune: true

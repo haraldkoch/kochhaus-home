@@ -1,0 +1,10 @@
+---
+originRequest:
+  originServerName: external.${CLUSTER_DOMAIN}
+
+ingress:
+  - hostname: ${CLUSTER_DOMAIN}
+    service: &svc https://external-ingress-nginx-controller.network.svc.cluster.local:443
+  - hostname: "*.${CLUSTER_DOMAIN}"
+    service: *svc
+  - service: http_status:404

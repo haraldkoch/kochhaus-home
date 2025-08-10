@@ -34,6 +34,8 @@ spec:
   dependsOn:
     - name: cloudnative-pg
       namespace: dbms
+    - name: openebs
+      namespace: storage
   healthCheckExprs:
     - apiVersion: &postgresVersion postgresql.cnpg.io/v1
       kind: &postgresKind Cluster

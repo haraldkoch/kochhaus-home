@@ -20,6 +20,7 @@ spec:
     namespace: flux-system
   # Flux repositories under this need flux-system hardcoded as namespace for Renovate lookups
   targetNamespace: *namespace
+  timeout: 5m
   wait: true
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
@@ -47,10 +48,13 @@ spec:
       - name: cluster-secrets
         kind: Secret
         optional: false
+  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  timeout: 5m
+  wait: false
   patches:
     - # Add Sops decryption and postBuild substitutions to child Kustomizations
       patch: |-

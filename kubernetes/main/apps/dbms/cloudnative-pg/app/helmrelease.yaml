@@ -21,9 +21,6 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  dependsOn:
-    - name: openebs
-      namespace: storage
   values:
     crds:
       create: true

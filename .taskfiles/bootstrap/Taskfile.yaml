@@ -13,7 +13,7 @@ tasks:
     cmds:
       - '[ -f talsecret.sops.yaml ] || talhelper gensecret | sops --filename-override talsecret.sops.yaml --encrypt /dev/stdin > talsecret.sops.yaml'
       - talhelper genconfig
-      - talhelper gencommand apply --extra-flags="--insecure" | sed -e 's/192\.168\.20/199.85.99/g' | bash
+      - talhelper gencommand apply --extra-flags="--insecure" | {{.ROOT_DIR}}/scripts/fix-talos-ips.sh | bash
       - until talhelper gencommand bootstrap | bash; do sleep 10; done
       - until talhelper gencommand kubeconfig --extra-flags="{{.ROOT_DIR}}/kubernetes/{{.CLUSTER}} --force" | bash; do sleep 10; done
     preconditions:

@@ -2,19 +2,16 @@
 fullnameOverride: coredns
 image:
   repository: mirror.gcr.io/coredns/coredns
-replicaCount: 2
 k8sAppLabelOverride: kube-dns
 serviceAccount:
   create: true
 service:
   name: kube-dns
-  clusterIP: ${COREDNS_ADDR}
-  clusterIPs: ["${COREDNS_ADDR}", "${COREDNS_ADDR_V6}"]
+  clusterIP: 10.43.0.10
+  clusterIPs: ["10.43.0.10", "fdd5:aa8:9535:43::a"]
   ipFamilies: ["IPV4", "IPV6"]
   ipFamilyPolicy: PreferDualStack
-deployment:
-  annotations:
-    reloader.stakater.com/auto: "true"
+replicaCount: 2
 servers:
   - zones:
       - zone: .
@@ -68,3 +65,9 @@ topologySpreadConstraints:
     labelSelector:
       matchLabels:
         app.kubernetes.io/instance: coredns
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    memory: 128Mi

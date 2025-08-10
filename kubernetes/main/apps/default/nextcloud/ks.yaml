@@ -1,0 +1,37 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app nextcloud
+  namespace: &namespace default
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus/external
+    - ../../../../components/volsync
+  dependsOn:
+    - name: dragonfly-cluster
+      namespace: dbms
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  interval: 1h
+  path: ./kubernetes/main/apps/default/nextcloud/app
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: cloud
+      VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_CLAIM: nextcloud-config-v2
+      VOLSYNC_GID: "1022"
+      VOLSYNC_UID: "1022"
+  prune: true
+  retryInterval: 2m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 15m

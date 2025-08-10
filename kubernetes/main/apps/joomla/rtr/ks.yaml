@@ -9,6 +9,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: mariadb
+      namespace: joomla
   interval: 1h
   path: ./kubernetes/main/apps/joomla/rtr/app
   prune: true

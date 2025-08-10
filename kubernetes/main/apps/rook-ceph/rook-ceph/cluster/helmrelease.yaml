@@ -1,62 +1,73 @@
 ---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: rook-ceph-cluster
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: v1.17.7
+  url: oci://ghcr.io/rook/rook-ceph-cluster
+---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rook-ceph-cluster
 spec:
-  interval: 30m
-  timeout: 10m
-  chart:
-    spec:
-      chart: rook-ceph-cluster
-      version: v1.17.7
-      sourceRef:
-        kind: HelmRepository
-        name: rook-ceph
-        namespace: flux-system
+  interval: 1h
+  timeout: 15m
+  chartRef:
+    kind: OCIRepository
+    name: rook-ceph-cluster
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
-  dependsOn:
-    - name: rook-ceph-operator
-      namespace: rook-ceph
-    - name: snapshot-controller
-      namespace: storage
   values:
     monitoring:
       enabled: true
       createPrometheusRules: true
+    toolbox:
+      enabled: true
     ingress:
       dashboard:
         ingressClassName: internal
         host:
           name: rook.${CLUSTER_DOMAIN}
           path: /
-    toolbox:
-      enabled: true
-    configOverride: |
-      [global]
-      bdev_enable_discard = true
-      bdev_async_discard_threads = 1
-      osd_class_update_on_start = false
-
-      [mon]
-      mon_data_avail_warn = 20
     cephClusterSpec:
+      cephConfig:
+        global:
+          bdev_enable_discard: "true" # quote
+          bdev_async_discard_threads: "1" # quote
+          osd_class_update_on_start: "false" # quote
+          device_failure_prediction_mode: local # requires mgr module
+        mon:
+          mon_data_avail_warn: "20" # quote
+      cleanupPolicy:
+        wipeDevicesFromOtherClusters: true
       crashCollector:
         disable: false
+      csi:
+        readAffinity:
+          enabled: true
       dashboard:
         enabled: true
         urlPrefix: /
         ssl: false
-        prometheusEndpoint: http://prometheus-operated.monitoring.svc.cluster.local:9090
+        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
       mgr:
         modules:
+          - name: diskprediction_local
+            enabled: true
           - name: insights
             enabled: true
           - name: pg_autoscaler
@@ -75,13 +86,13 @@ spec:
         nodes:
           - name: k3s0
             devices:
-              - name: /dev/disk/by-id/nvme-PC601_NVMe_SK_hynix_512GB_SI97N008610707NDF-part3
+              - name: /dev/disk/by-id/nvme-PC601_NVMe_SK_hynix_512GB_SI97N008610707NDF
           - name: k3s2
             devices:
-              - name: /dev/disk/by-id/ata-SAMSUNG_MZ7LH512HALU-000H1_S4HLNF0N721023-part3
+              - name: /dev/disk/by-id/nvme-NE-512_2280_0027843000089
           - name: k3s3
             devices:
-              - name: /dev/disk/by-id/nvme-KXG50ZNV512G_TOSHIBA_X8UF60F1F6GS-part3
+              - name: /dev/disk/by-id/nvme-KXG50ZNV512G_TOSHIBA_X8UF60F1F6GS
       placement:
         osd:
           tolerations:
@@ -204,8 +215,10 @@ spec:
           volumeBindingMode: Immediate
           mountOptions: ["discard"]
           parameters:
+            compression_mode: aggressive
+            compression_algorithm: zstd
             imageFormat: "2"
-            imageFeatures: layering
+            imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock
             csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
             csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
             csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
@@ -221,98 +234,4 @@ spec:
     # NOTE: After disabling the filesystem, the filesystem can be removed with the following commands:
     # ceph fs fail ceph-filesystem && ceph fs rm ceph-filesystem --yes-i-really-mean-it
     cephFileSystems: []
-    # cephFileSystems:
-    #   - name: ceph-filesystem
-    #     spec:
-    #       metadataPool:
-    #         replicated:
-    #           size: 3
-    #       dataPools:
-    #         - failureDomain: host
-    #           replicated:
-    #             size: 3
-    #           name: data0
-    #       metadataServer:
-    #         activeCount: 1
-    #         activeStandby: true
-    #         priorityClassName: system-cluster-critical
-    #         placement:
-    #           topologySpreadConstraints:
-    #             - maxSkew: 1
-    #               topologyKey: kubernetes.io/hostname
-    #               whenUnsatisfiable: DoNotSchedule
-    #               labelSelector:
-    #                 matchLabels:
-    #                   app.kubernetes.io/name: ceph-mds
-    #                   app.kubernetes.io/part-of: *cephFileSystemName
-    #         resources:
-    #           requests:
-    #             cpu: 50m
-    #             memory: 64M
-    #           limits:
-    #             cpu: 1000m
-    #             memory: 850M
-    #     storageClass:
-    #       enabled: true
-    #       isDefault: false
-    #       name: ceph-filesystem
-    #       pool: data0
-    #       reclaimPolicy: Delete
-    #       allowVolumeExpansion: true
-    #       volumeBindingMode: Immediate
-    #       parameters:
-    #         csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
-    #         csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
-    #         csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
-    #         csi.storage.k8s.io/controller-expand-secret-namespace: rook-ceph
-    #         csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
-    #         csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
-    #         csi.storage.k8s.io/fstype: ext4
-    # cephFileSystemVolumeSnapshotClass:
-    #   enabled: true
-    #   name: csi-ceph-filesystem
-    #   isDefault: false
-    #   deletionPolicy: Delete
     cephObjectStores: []
-      # - name: ceph-objectstore
-      #   spec:
-      #     metadataPool:
-      #       failureDomain: host
-      #       replicated:
-      #         size: 3
-      #     dataPool:
-      #       failureDomain: host
-      #       erasureCoded:
-      #         dataChunks: 2
-      #         codingChunks: 1
-      #     preservePoolsOnDelete: true
-      #     gateway:
-      #       hostNetwork: false
-      #       port: 80
-      #       resources:
-      #         requests:
-      #           cpu: 250m
-      #           memory: 1Gi
-      #         limits:
-      #           memory: 2Gi
-      #       instances: 1
-      #       priorityClassName: system-cluster-critical
-      #     healthCheck:
-      #       bucket:
-      #         interval: 60s
-      #   storageClass:
-      #     enabled: true
-      #     name: ceph-bucket
-      #     reclaimPolicy: Delete
-      #     volumeBindingMode: Immediate
-      #     parameters:
-      #       region: us-east-1
-      #   ingress:
-      #     enabled: true
-      #     ingressClassName: internal
-      #     annotations:
-      #       nginx.ingress.kubernetes.io/proxy-body-size: "0"
-      #       nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
-      #     host:
-      #       name: objects.${CLUSTER_DOMAIN}
-      #       path: /

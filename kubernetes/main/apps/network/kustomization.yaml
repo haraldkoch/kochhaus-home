@@ -4,14 +4,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: network
 components:
-  - ../../components/alerts
   - ../../components/common
 resources:
-  - ./cloudflare-tunnel/ks.yaml
-  - ./external-dns/ks.yaml
-  - ./nginx/ks.yaml
-  - ./opnsense/ks.yaml
-  - ./web-static/ks.yaml
-  - ./whoami/ks.yaml
-
-  - ./external-services
+  - ./external/ks.yaml
+  - ./internal/ks.yaml
