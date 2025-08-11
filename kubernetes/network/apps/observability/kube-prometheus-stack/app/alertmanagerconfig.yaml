@@ -17,7 +17,7 @@ spec:
           - name: alertname
             value: InfoInhibitor
             matchType: =
-      - receiver: heartbeat
+      - receiver: heartbeat-network
         groupInterval: 5m
         groupWait: 0s
         repeatInterval: 1h
@@ -42,7 +42,7 @@ spec:
           matchType: =
   receivers:
     - name: "null"
-    - name: heartbeat
+    - name: heartbeat-network
       webhookConfigs:
         - urlSecret:
             name: &secret alertmanager-secret
