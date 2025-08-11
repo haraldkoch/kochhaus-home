@@ -66,21 +66,17 @@ spec:
     service:
       app:
         controller: docmost
-        ipFamilyPolicy: PreferDualStack
+        ipFamilyPolicy: SingleStack
         ports:
           http:
             port: 3000
-    ingress:
+    route:
       app:
-        enabled: true
-        className: internal
-        hosts:
-          - host: "notes.${CLUSTER_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["notes.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
     persistence:
       data:
         existingClaim: ${VOLSYNC_CLAIM}

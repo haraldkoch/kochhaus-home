@@ -101,15 +101,13 @@ spec:
         ports:
           http:
             port: *port
-    ingress:
-      main:
-        className: internal
-        hosts:
-          - host: "{{ .Release.Name}}.${SECRET_DOMAIN}"
-            paths:
-            - path: /
-              service:
-                identifier: main
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
     persistence:
       files:
         existingClaim: "${VOLSYNC_CLAIM}"

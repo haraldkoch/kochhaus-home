@@ -42,11 +42,14 @@ spec:
         forceConflicts: true
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
-      ingress:
-        enabled: true
-        ingressClassName: internal
-        hosts: ["alertmanager-main.${CLUSTER_DOMAIN}"]
-        pathType: Prefix
+      route:
+        main:
+          enabled: true
+          hostnames: ["alertmanager-main.${CLUSTER_DOMAIN}"]
+          parentRefs:
+            - name: internal
+              namespace: kube-system
+              sectionName: https
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "amcluster-main.${CLUSTER_DOMAIN}"
@@ -93,17 +96,19 @@ spec:
     kubeProxy:
       enabled: false
     prometheus:
-      ingress:
-        enabled: true
-        ingressClassName: internal
-        pathType: Prefix
-        hosts:
-          - prometheus-main.${CLUSTER_DOMAIN}
+      route:
+        main:
+          enabled: true
+          hostnames: ["prometheus-main.${CLUSTER_DOMAIN}"]
+          parentRefs:
+            - name: internal
+              namespace: kube-system
+              sectionName: https
       prometheusSpec:
         image:
           registry: docker.io
           repository: prompp/prompp
-          tag: 2.53.2-0.2.5
+          tag: 2.53.2-0.4.0
         securityContext:
           runAsNonRoot: true
           runAsUser: 64535

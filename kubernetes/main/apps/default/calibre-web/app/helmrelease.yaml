@@ -52,18 +52,13 @@ spec:
         ports:
           http:
             port: 8083
-    ingress:
+    route:
       app:
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
-        hosts:
-          - host: ebooks.${CLUSTER_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["ebooks.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
     persistence:
       cache:
         type: emptyDir

@@ -103,16 +103,13 @@ spec:
         serviceName: *app
         endpoints:
           - port: metrics
-    ingress:
+    route:
       app:
-        className: internal
-        hosts:
-          - host: files.${CLUSTER_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["files.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
     persistence:
       storage-users:
         type: nfs

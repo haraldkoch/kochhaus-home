@@ -105,25 +105,27 @@ spec:
         ports:
           http:
             port: *browserPort
-    ingress:
+    route:
       app:
-        className: internal
-        hosts:
-          - host: syncthing.${CLUSTER_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 8384
       browser:
-        className: internal
-        hosts:
-          - host: sync.${CLUSTER_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: browser
-                  port: http
+        hostnames: ["sync.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: browser
+                port: *browserPort
     persistence:
       # TODO: volsync
       config:

@@ -88,24 +88,27 @@ spec:
         ports:
           http:
             port: 27017
-    ingress:
+    route:
       app:
-        className: external
-        hosts:
-          - host: ${GATUS_SUBDOMAIN:=${APP}}.${CLUSTER_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: web
-                  port: http
-          - host: spotty-api.${CLUSTER_DOMAIN}
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  identifier: server
-                  port: http
+        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: web
+                port: *webport
+      api:
+        hostnames: ["spotty-api.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: server
+                port: *port
     persistence:
       configs:
         existingClaim: ${VOLSYNC_CLAIM}

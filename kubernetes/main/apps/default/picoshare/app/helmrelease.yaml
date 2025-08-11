@@ -51,18 +51,13 @@ spec:
         ports:
           http:
             port: 4001
-    ingress:
+    route:
       app:
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.${CLUSTER_DOMAIN}
-        hosts:
-          - host: "share.${CLUSTER_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["share.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
     persistence:
       data:
         existingClaim: picoshare-data-v1

@@ -5,5 +5,4 @@ kind: Kustomization
 resources:
   - ./add-safe-to-evict.yaml
   - ./apply-volsync-annotations.yaml
-  - ./deny-ingress-implementationspecific.yaml
   - ./remove-cpu-limits.yaml

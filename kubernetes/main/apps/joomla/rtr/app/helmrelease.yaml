@@ -38,16 +38,13 @@ spec:
         ports:
           http:
             port: 80
-    ingress:
+    route:
       app:
-        className: internal
-        hosts:
-          - host: ridetoremember.${CLUSTER_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames: ["ridetoremember.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
     persistence:
       data:
         existingClaim: rtr-data-v1

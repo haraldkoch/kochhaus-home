@@ -3,7 +3,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: external-dns-bind
+  name: cloudflare-dns
 spec:
   interval: 5m
   layerSelector:
@@ -17,12 +17,12 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app external-dns-bind
+  name: &app cloudflare-dns
 spec:
-  interval: 30m
+  interval: 1h
   chartRef:
     kind: OCIRepository
-    name: external-dns-bind
+    name: cloudflare-dns
   install:
     remediation:
       retries: -1
@@ -33,28 +33,24 @@ spec:
   values:
     fullnameOverride: *app
     provider:
-      name: rfc2136
+      name: cloudflare
     env:
-      - name: EXTERNAL_DNS_RFC2136_TSIG_SECRET
+      - name: CF_API_TOKEN
         valueFrom:
           secretKeyRef:
-            name: &secret external-dns-bind-secret
-            key: rfc2136_tsig_secret
+            name: &secret cloudflare-dns-secret
+            key: api_token
     extraArgs:
-      - --ignore-ingress-tls-spec
-      - --rfc2136-host=${PRIVATE_DNS_PRIMARY}
-      - --rfc2136-port=53
-      - --rfc2136-zone=${CLUSTER_DOMAIN}
-      - --rfc2136-min-ttl=0s
-      - --rfc2136-tsig-axfr
-      - --rfc2136-tsig-keyname=externaldns
-      - --rfc2136-tsig-secret-alg=hmac-sha256
+      - --cloudflare-dns-records-per-page=1000
+      - --cloudflare-proxied
+      - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
+      - --crd-source-kind=DNSEndpoint
+      - --gateway-name=external
     triggerLoopOnEvent: true
     policy: sync
-    sources: ["gateway-httproute", "ingress", "service"]
-    # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
+    sources: ["crd", "gateway-httproute"]
     txtOwnerId: homelab
-    txtPrefix: homelab+
+    txtPrefix: k8s.
     domainFilters: ["${CLUSTER_DOMAIN}"]
     logLevel: info
     serviceMonitor:
@@ -64,9 +60,9 @@ spec:
     resources:
       requests:
         cpu: 25m
-        memory: 96Mi
+        memory: 50Mi
       limits:
-        memory: 192Mi
+        memory: 100Mi
     tolerations:
       - key: "node-role.kubernetes.io/control-plane"
         operator: "Exists"

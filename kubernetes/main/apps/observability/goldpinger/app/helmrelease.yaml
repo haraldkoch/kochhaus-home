@@ -41,13 +41,7 @@ spec:
       port: 80
       ipFamilyPolicy: PreferDualStack
     ingress:
-      enabled: true
-      className: internal
-      hosts:
-        - host: goldpinger.${CLUSTER_DOMAIN}
-          paths:
-            - path: /
-              pathType: Prefix
+      enabled: false
     resources:
       requests:
         cpu: 15m

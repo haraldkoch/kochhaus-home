@@ -106,14 +106,6 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/kubernetes-folder
-          - name: nginx
-            orgId: 1
-            folder: Nginx
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/nginx-folder
           - name: prometheus
             orgId: 1
             folder: Prometheus
@@ -295,13 +287,6 @@ spec:
           gnetId: 11454
           revision: 14
           datasource: Prometheus
-      nginx:
-        nginx:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
-          datasource: Prometheus
-        nginx-request-handling-performance:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
-          datasource: Prometheus
       prometheus:
         prometheus:
           # renovate: depName="Prometheus"
@@ -341,10 +326,14 @@ spec:
           regex: (pod)
     service:
       ipFamilyPolicy: PreferDualStack
-    ingress:
-      enabled: true
-      ingressClassName: internal
-      hosts: ["grafana-main.${CLUSTER_DOMAIN}"]
+    route:
+      main:
+        enabled: true
+        hostnames: ["grafana-main.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
     downloadDashboardsImage:
       registry: quay.io
       repository: curl/curl
@@ -356,8 +345,6 @@ spec:
         tag: v4.0.10
         pullPolicy: IfNotPresent
       replicas: 1
-      networkPolicy:
-        limitIngress: false
       serviceMonitor:
         enabled: true
     persistence:

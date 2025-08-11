@@ -110,16 +110,15 @@ spec:
               - action: replace
                 sourceLabels: ["service"]
                 targetLabel: instance
-    ingress:
+    route:
       app:
-        className: internal
-        hosts:
-          - host: status.${CLUSTER_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+          - status.${CLUSTER_DOMAIN}
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
     rbac:
       roles:
         gatus:

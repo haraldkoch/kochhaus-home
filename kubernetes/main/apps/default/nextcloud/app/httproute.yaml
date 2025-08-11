@@ -1,0 +1,119 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: nextcloud
+spec:
+  parentRefs:
+    - name: external
+      namespace: kube-system
+      sectionName: https
+  hostnames:
+    - cloud.${CLUSTER_DOMAIN}
+  rules:
+    - backendRefs: &backendRef
+        - name: nextcloud
+          port: 8080
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+      filters:
+        - &hsts
+          type: ResponseHeaderModifier
+          responseHeaderModifier:
+            add:
+              - name: strict-transport-security
+                value: max-age=31536000
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /.well-known/webfinger
+      filters:
+        - *hsts
+        - type: URLRewrite # TODO do better after https://github.com/kubernetes-sigs/gateway-api/issues/2177
+          urlRewrite:
+            path:
+              type: ReplacePrefixMatch
+              replacePrefixMatch: /index.php/.well-known/webfinger
+
+      backendRefs: *backendRef
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /.well-known/nodeinfo
+      filters:
+        - *hsts
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplacePrefixMatch
+              replacePrefixMatch: /index.php/.well-known/nodeinfo
+      backendRefs: *backendRef
+    - matches:
+        - path:
+            type: Exact
+            value: /.well-known/host-meta
+      filters:
+        - *hsts
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplaceFullPath
+              replaceFullPath: /public.php?service=host-meta
+      backendRefs: *backendRef
+    - matches:
+        - path:
+            type: Exact
+            value: /.well-known/host-meta.json
+      filters:
+        - *hsts
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplaceFullPath
+              replaceFullPath: /public.php?service=host-meta-json
+      backendRefs: *backendRef
+    # Block restricted paths
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /build
+        - path:
+            type: PathPrefix
+            value: /tests
+        - path:
+            type: PathPrefix
+            value: /config
+        - path:
+            type: PathPrefix
+            value: /lib
+        - path:
+            type: PathPrefix
+            value: /3rdparty
+        - path:
+            type: PathPrefix
+            value: /templates
+        - path:
+            type: PathPrefix
+            value: /data
+        - path:
+            type: PathPrefix
+            value: /autotest
+        - path:
+            type: PathPrefix
+            value: /occ
+        - path:
+            type: PathPrefix
+            value: /issue
+        - path:
+            type: PathPrefix
+            value: /indie
+        - path:
+            type: PathPrefix
+            value: /db_
+        - path:
+            type: PathPrefix
+            value: /console
+      backendRefs: [] # No backend = deny # TODO do better after https://github.com/kubernetes-sigs/gateway-api/issues/2826
