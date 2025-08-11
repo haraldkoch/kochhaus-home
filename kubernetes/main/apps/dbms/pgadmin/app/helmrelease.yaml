@@ -1,51 +1,69 @@
 ---
-# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: pgadmin
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: pgadmin4
-      version: 1.48.0
-      sourceRef:
-        kind: HelmRepository
-        name: runix
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
   values:
-    nameOverride: pgadmin
-    strategy:
-      type: Recreate
-    env:
-      email: ${SECRET_ADMIN_EMAIL}
-    existingSecret: pgadmin-secrets
-    secretKeys:
-      pgadminPasswordKey: password
-    ingress:
-      enabled: true
-      ingressClassName: internal
-      hosts:
-        - host: pgadmin.${CLUSTER_DOMAIN}
-          paths:
-            - path: /
-              pathType: Prefix
-    networkPolicy:
-      enabled: false
-    persistentVolume:
-      enabled: true
-      existingClaim: ${VOLSYNC_CLAIM}
-    resources:
-      requests:
-        cpu: 15m
-        memory: 183M
-      limits:
-        memory: 283M
+    controllers:
+      pgadmin:
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: docker.io/dpage/pgadmin4
+              tag: 9.6@sha256:2c7d73e13bd6c30b1d53e4c25d0d6d81adbd0799c4f4d6a09efc5d68fca5d16d
+            envFrom:
+              - secretRef:
+                  name: pgadmin-secret
+            resources:
+              requests:
+                cpu: 15m
+                memory: 164M
+              limits:
+                memory: 236M
+        pod:
+          securityContext:
+            runAsUser: 5050
+            runAsGroup: 5050
+            fsGroup: 5050
+            fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: pgadmin
+        ports:
+          http:
+            port: 80
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+    persistence:
+      config:
+        existingClaim: "${VOLSYNC_CLAIM}"
+        globalMounts:
+          - path: /var/lib/pgadmin
+      # server-json:
+      #   enabled: true
+      #   type: configMap
+      #   name: servers-json
+      #   globalMounts:
+      #     - path: /pgadmin4/servers.json
+      #       subPath: servers.json

@@ -1,4 +1,18 @@
 ---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: external-dns-bind
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 1.18.0
+  url: oci://ghcr.io/home-operations/charts-mirror/external-dns
+---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -6,17 +20,12 @@ metadata:
   name: &app external-dns-bind
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: external-dns
-      version: 1.18.0
-      sourceRef:
-        kind: HelmRepository
-        name: external-dns
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: external-dns-bind
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
