@@ -31,40 +31,4 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: *namespace
-  timeout: 15m
-  wait: true
----
-# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &app cert-manager-tls
-  namespace: &namespace cert-manager
-spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  dependsOn:
-    - name: cert-manager
-      namespace: cert-manager
-  healthChecks:
-    - apiVersion: cert-manager.io/v1
-      kind: Certificate
-      name: "${CLUSTER_DOMAIN/./-}-production"
-      namespace: *namespace
-  healthCheckExprs:
-    - apiVersion: cert-manager.io/v1
-      kind: Certificate
-      failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
-      current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
-  interval: 1h
-  path: ./kubernetes/main/apps/cert-manager/cert-manager/tls
-  prune: true
-  retryInterval: 2m
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 15m
-  wait: true
+  timeout: 5m
