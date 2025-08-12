@@ -38,8 +38,8 @@ spec:
   dependsOn:
     - name: actions-runner-controller
       namespace: *namespace
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+    - name: openebs
+      namespace: storage
   interval: 1h
   path: ./kubernetes/main/apps/actions-runner-system/actions-runner-controller/runners
   prune: true
