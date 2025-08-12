@@ -24,16 +24,15 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/tautulli/tautulli
-              tag: v2.15.3
+              repository: ghcr.io/home-operations/tautulli
+              tag: 2.15.3@sha256:3e0eaca8c082ebe121a0ae9125bea1b4e2d177fca34ac8df4ec14a28e62f63a4
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
-            command: ["/usr/local/bin/python", "Tautulli.py"]
-            args: [
-              "--config", "/config/config.ini",
-              "--datadir", "/config",
-              "--port", "80"
-            ]
+              TAUTULLI_HTTP_BASE_URL: https://tautulli.${CLUSTER_DOMAIN}
+              TAUTULLI_HTTP_PORT: &port 80
+            envFrom:
+              - secretRef:
+                  name: "{{ .Release.Name }}-secret"
             probes:
               liveness: &probes
                 enabled: true
@@ -41,7 +40,7 @@ spec:
                 spec:
                   httpGet:
                     path: /status
-                    port: &port 80
+                    port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -53,18 +52,18 @@ spec:
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 50m
-                memory: 128Mi
-        pod:
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
+                cpu: 10m
+              limits:
+                memory: 1Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: tautulli
         # tautulli container does not support IPv6
         ipFamilyPolicy: SingleStack
         ports:
@@ -90,5 +89,12 @@ spec:
         path: /backup/data/k8s/tautulli
         globalMounts:
           - path: /config/backups
-      tmp:
+      tmpfs:
         type: emptyDir
+        advancedMounts:
+          tautulli:
+            app:
+              - path: /config/logs
+                subPath: logs
+              - path: /tmp
+                subPath: tmp
