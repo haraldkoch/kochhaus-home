@@ -6,6 +6,7 @@ namespace: observability
 components:
   - ../../components/common
 resources:
+  - ./alloy/ks.yaml
   - ./blackbox-exporter/ks.yaml
   - ./dnssec-exporter/ks.yaml
   - ./gatus/ks.yaml
@@ -15,7 +16,6 @@ resources:
   - ./network-ups-tools/ks.yaml
   - ./omada-exporter/ks.yaml
   - ./opnsense-exporter/ks.yaml
-  - ./promtail/ks.yaml
   # silence-operator does not yet support arm64
   # - ./silence-operator/ks.yaml
   - ./smartctl-exporter/ks.yaml
