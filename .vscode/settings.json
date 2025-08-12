@@ -1,10 +1,7 @@
 {
-    "ansible.validation.lint.arguments": "-c ansible/.ansible-lint",
     "editor.bracketPairColorization.enabled": true,
     "files.associations": {
         "**/*.json5": "jsonc",
-        "./ansible/**/*.yaml": "ansible",
-        "./ansible/**/inventory/**/*.yaml": "yaml",
     },
     "files.trimTrailingWhitespace": true,
     "sops.defaults.ageKeyFile": "age.key",
@@ -16,7 +13,6 @@
     },
     "yaml.schemaStore.enable": true,
     "yaml.schemas": {
-        "ansible": "ansible/*.yml",
         "kubernetes": "./kubernetes/**/*.yaml"
     }
 }

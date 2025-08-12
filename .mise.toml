@@ -13,11 +13,6 @@ TALOSCONFIG = "{{config_root}}/talos/clusterconfig/talosconfig"
 TASK_X_ENV_PRECEDENCE = 1
 TASK_X_MAP_VARIABLES = 0
 
-# Ansible
-ANSIBLE_COLLECTIONS_PATH = "{{config_root}}/.venv/galaxy"
-ANSIBLE_ROLES_PATH = "{{config_root}}/.venv/galaxy/ansible_roles"
-ANSIBLE_VARS_ENABLED = "host_group_vars"
-
 [tasks.deps]
 description = "Install dependencies"
 run = "uv pip install -r requirements.txt"

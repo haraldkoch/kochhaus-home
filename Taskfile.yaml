@@ -6,7 +6,6 @@ set: [pipefail]
 shopt: [globstar]
 
 vars:
-  ANSIBLE_DIR: '{{.ROOT_DIR}}/ansible'
   BOOTSTRAP_DIR: '{{.ROOT_DIR}}/bootstrap'
   CLUSTER: '{{.CLUSTER | default "main"}}'
   CLUSTER_DIR: '{{.ROOT_DIR}}/kubernetes/{{.CLUSTER}}'
@@ -22,7 +21,6 @@ env:
   TALOSCONFIG: '{{.TALOSCONFIG}}'
 
 includes:
-  ansible: .taskfiles/Ansible/Taskfile.yaml
   bootstrap: .taskfiles/bootstrap
   cluster: .taskfiles/Cluster/Taskfile.yaml
   database:

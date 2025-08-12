@@ -1,7 +1,5 @@
 ---
 # Areas
-- name: area/ansible
-  color: "0e8a16"
 - name: area/bootstrap
   color: "0e8a16"
 - name: area/docs
@@ -24,8 +22,6 @@
 - name: cluster/storage
   color: "ffc300"
 # Renovate Types
-- name: renovate/ansible
-  color: "027fa0"
 - name: renovate/container
   color: "027fa0"
 - name: renovate/github-action

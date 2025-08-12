@@ -9,8 +9,6 @@ creation_rules:
     age: "age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r"
   - path_regex: kubernetes/.*\.sops\.(env|ini|json|pem|toml)
     age: "age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r"
-  - path_regex: ansible/.*\.sops\.ya?ml
-    age: "age1ncxmpfzemcs4327v7hw5ea2dxvqypsygad2d3rjarqa5t6l9cqqse9ek5r"
 stores:
   yaml:
     indent: 2
