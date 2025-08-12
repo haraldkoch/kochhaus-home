@@ -12,7 +12,7 @@ spec:
   components:
     - ../../../../components/volsync
   dependsOn:
-    - name: volsync
+    - name: longhorn
       namespace: storage
   interval: 1h
   path: ./kubernetes/network/apps/default/populator-test/app
@@ -23,9 +23,6 @@ spec:
       VOLSYNC_CLAIM: populator-test-data
       VOLSYNC_PGID: "65533"
       VOLSYNC_PUID: "65533"
-    substituteFrom:
-      - name: cluster-secrets
-        kind: Secret
   prune: true
   retryInterval: 2m
   sourceRef:
