@@ -9,3 +9,4 @@ spec:
     - targets:
         - status.${CLUSTER_DOMAIN}
   metricsPath: /metrics
+  scheme: HTTPS

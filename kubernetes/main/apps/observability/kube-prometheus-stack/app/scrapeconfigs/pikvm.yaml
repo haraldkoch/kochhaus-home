@@ -17,5 +17,6 @@ spec:
     password:
       name: pikvm-auth
       key: password
+  scheme: HTTPS
   tlsConfig:
     insecureSkipVerify: true
