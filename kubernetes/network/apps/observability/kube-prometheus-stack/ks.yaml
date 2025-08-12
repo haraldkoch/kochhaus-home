@@ -14,6 +14,8 @@ spec:
   dependsOn:
     - name: external-secrets-stores
       namespace: external-secrets
+    - name: longhorn
+      namespace: storage
   interval: 1h
   path: ./kubernetes/network/apps/observability/kube-prometheus-stack/app
   postBuild:

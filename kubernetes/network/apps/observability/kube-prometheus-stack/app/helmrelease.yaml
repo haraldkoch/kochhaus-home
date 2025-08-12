@@ -30,9 +30,10 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  dependsOn:
-    - name: longhorn
-      namespace: storage
+  valuesFrom:
+    - kind: ConfigMap
+      name: flux-kube-state-metrics-config
+      valuesKey: kube-state-metrics-config.yaml
   values:
     crds:
       enabled: true
@@ -41,24 +42,18 @@ spec:
         forceConflicts: true
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
-      # route:
-      #   main:
-      #     enabled: true
-      #     hostnames: ["alertmanager.${CLUSTER_DOMAIN}"]
-      #     parentRefs:
-      #       - name: internal
-      #         namespace: kube-system
-      #         sectionName: https
-      ingress:
-        enabled: true
-        ingressClassName: internal
-        hosts: ["alertmanager.${CLUSTER_DOMAIN}"]
-        pathType: Prefix
+      route:
+        main:
+          enabled: true
+          hostnames: ["alertmanager.${CLUSTER_DOMAIN}"]
+          parentRefs:
+            - name: internal
+              namespace: kube-system
+              sectionName: https
       service:
         annotations:
-          lbipam.cilium.io/ips: "${ALERTMANAGER_IPV4}"
           external-dns.alpha.kubernetes.io/hostname: "amcluster-network.${CLUSTER_DOMAIN}"
-        externalTrafficPolicy: Local
+          lbipam.cilium.io/ips: "${ALERTMANAGER_IPV4}"
         additionalPorts:
           - name: tcp-mesh
             port: 9094
@@ -113,7 +108,7 @@ spec:
         image:
           registry: docker.io
           repository: prompp/prompp
-          tag: 2.53.2-0.3.3
+          tag: 2.53.2-0.4.0
         securityContext:
           runAsNonRoot: true
           runAsUser: 64535
