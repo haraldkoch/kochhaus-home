@@ -5,8 +5,6 @@ kind: Kustomization
 namespace: observability
 components:
   - ../../components/common
-  - ../../components/alerts
-  - ../../components/repos/app-template
 resources:
   - ./blackbox-exporter/ks.yaml
   - ./dnssec-exporter/ks.yaml

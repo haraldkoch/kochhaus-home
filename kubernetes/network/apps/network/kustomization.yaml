@@ -5,8 +5,6 @@ kind: Kustomization
 namespace: network
 components:
   - ../../components/common
-  - ../../components/alerts
-  - ../../components/repos/app-template
 resources:
   - ./bind-dns/ks.yaml
   - ./cloudflare-dns/ks.yaml

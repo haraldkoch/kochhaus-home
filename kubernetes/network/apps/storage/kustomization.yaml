@@ -5,8 +5,6 @@ kind: Kustomization
 namespace: storage
 components:
   - ../../components/common
-  - ../../components/alerts
-  - ../../components/repos/app-template
 resources:
   - ./longhorn/ks.yaml
   - ./openebs/ks.yaml

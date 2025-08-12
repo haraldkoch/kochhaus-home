@@ -5,7 +5,5 @@ kind: Kustomization
 namespace: remote
 components:
   - ../../components/common
-  - ../../components/alerts
-  - ../../components/repos/app-template
 resources:
   - ./openssh/ks.yaml
