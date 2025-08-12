@@ -1,19 +1,28 @@
 ---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: cloudflare-dns
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 1.18.0
+  url: oci://ghcr.io/home-operations/charts-mirror/external-dns
+---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app external-dns-cloudflare
+  name: &app cloudflare-dns
 spec:
   interval: 1h
-  chart:
-    spec:
-      chart: external-dns
-      version: 1.18.0
-      sourceRef:
-        kind: HelmRepository
-        name: external-dns
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: cloudflare-dns
   install:
     remediation:
       retries: -1
@@ -29,22 +38,20 @@ spec:
       - name: CF_API_TOKEN
         valueFrom:
           secretKeyRef:
-            name: &secret external-dns-cloudflare-secret
+            name: &secret cloudflare-dns-secret
             key: api_token
     extraArgs:
       - --cloudflare-dns-records-per-page=1000
       - --cloudflare-proxied
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
-      - --events
-      - --ignore-ingress-tls-spec
-      - --ingress-class=external
       - --gateway-name=external
+    triggerLoopOnEvent: true
     policy: sync
-    sources: ["crd", "gateway-httproute", "ingress"]
+    sources: ["crd", "gateway-httproute"]
     txtOwnerId: network
     txtPrefix: k8s.
-    domainFilters: ["${SECRET_DOMAIN}"]
+    domainFilters: ["${CLUSTER_DOMAIN}"]
     logLevel: info
     serviceMonitor:
       enabled: true
@@ -53,9 +60,9 @@ spec:
     resources:
       requests:
         cpu: 25m
-        memory: 96Mi
+        memory: 50Mi
       limits:
-        memory: 192Mi
+        memory: 100Mi
     tolerations:
       - key: "node-role.kubernetes.io/control-plane"
         operator: "Exists"

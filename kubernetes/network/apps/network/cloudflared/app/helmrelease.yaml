@@ -1,9 +1,9 @@
 ---
-# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/helm.toolkit.fluxcd.io/helmrelease_v2.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: cloudflared
+  name: &app cloudflared
 spec:
   interval: 1h
   chartRef:
@@ -25,8 +25,8 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/cloudflare/cloudflared
-              tag: 2025.8.0
+              repository: ghcr.io/haraldkoch/cloudflared
+              tag: 2025.8.0@sha256:274e0821c4440c584746aee8a950cf83a1de9dd6f0a57dd2a4aa7a9ac47c6647
             env:
               NO_AUTOUPDATE: true
               TUNNEL_METRICS: 0.0.0.0:8080
@@ -57,14 +57,22 @@ spec:
             resources:
               requests:
                 cpu: 10m
+                memory: 128Mi
               limits:
                 memory: 256Mi
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 65534
-        runAsGroup: 65534
-        seccompProfile: { type: RuntimeDefault }
+        pod:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
+            seccompProfile: { type: RuntimeDefault }
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
     service:
       app:
         controller: cloudflared

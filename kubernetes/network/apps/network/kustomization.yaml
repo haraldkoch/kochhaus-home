@@ -8,5 +8,7 @@ components:
   - ../../components/alerts
   - ../../components/repos/app-template
 resources:
-  - ./external/ks.yaml
-  - ./internal/ks.yaml
+  - ./bind-dns/ks.yaml
+  - ./cloudflare-dns/ks.yaml
+  - ./cloudflared/ks.yaml
+  - ./ingress-nginx/ks.yaml
