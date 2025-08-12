@@ -7,6 +7,13 @@ debug: false
 ui:
   title: Status | Gatus
   header: Status
+  logo: https://avatars.githubusercontent.com/u/7131938
+  link: https://github.com/haraldkoch
+  buttons:
+    - name: Github
+      link: https://github.com/haraldkoch
+    - name: Homelab
+      link: https://github.com/haraldkoch/kochhaus-home
 alerting:
   pushover:
     title: Gatus (Kubernetes)
