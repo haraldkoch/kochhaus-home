@@ -35,11 +35,11 @@ spec:
     provider:
       name: cloudflare
     env:
-      - name: CF_API_TOKEN
+      - name: &name CF_API_TOKEN
         valueFrom:
           secretKeyRef:
             name: &secret cloudflare-dns-secret
-            key: api_token
+            key: *name
     extraArgs:
       - --cloudflare-dns-records-per-page=1000
       - --cloudflare-proxied
