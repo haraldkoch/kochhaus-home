@@ -7,7 +7,7 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - ${SECRET_MEDIA_SERVER}:9100
+        - ${BACKUP_SERVER}:9100
         - 192.168.20.1:9100
         - pikvm1.home.arpa:9100
         - pikvm2.home.arpa:9100
