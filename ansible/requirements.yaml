@@ -5,7 +5,7 @@ collections:
   - name: ansible.utils
     version: 6.0.0
   - name: community.general
-    version: 11.1.2
+    version: 11.2.0
   - name: community.sops
     version: 2.2.1
   - name: kubernetes.core
