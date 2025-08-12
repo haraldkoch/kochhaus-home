@@ -33,7 +33,6 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: node-feature-discovery
-      namespace: tools
   interval: 1h
   path: ./kubernetes/main/apps/tools/node-feature-discovery/rules
   prune: true
