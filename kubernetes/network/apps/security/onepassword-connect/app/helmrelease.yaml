@@ -103,9 +103,9 @@ spec:
             resources: *resources
         pod:
           securityContext:
+            runAsNonRoot: true
             runAsUser: 999
             runAsGroup: 999
-            runAsNonRoot: true
             fsGroup: 999
             fsGroupChangePolicy: OnRootMismatch
     service:

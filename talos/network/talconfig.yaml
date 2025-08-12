@@ -188,17 +188,6 @@ patches:
         rules:
           # set owner and group on the zigbee USB device
           - SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d4", OWNER="1022", GROUP="1022"
-  # Enable K8s Talos API Access
-  - |-
-    machine:
-      features:
-        kubernetesTalosAPIAccess:
-          enabled: true
-          allowedRoles:
-            - os:admin
-          allowedKubernetesNamespaces:
-            - actions-runner-system
-            - system-upgrade
   # Disable talos forwarding kube-dns to Host DNS - we don't need another cache
   - |-
     machine:
@@ -213,3 +202,15 @@ controlPlane:
   patches:
     - "@./patches/controller/admission-controller-patch.yaml"
     - "@./patches/controller/cluster.yaml"
+
+    # Enable K8s Talos API Access
+    - |-
+      machine:
+        features:
+          kubernetesTalosAPIAccess:
+            enabled: true
+            allowedRoles:
+              - os:admin
+            allowedKubernetesNamespaces:
+              - actions-runner-system
+              - system-upgrade

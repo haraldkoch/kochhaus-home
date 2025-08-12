@@ -13,8 +13,8 @@ spec:
     - ../../../../components/gatus/guarded
     - ../../../../components/volsync
   dependsOn:
-    - name: external-secrets-stores
-      namespace: external-secrets
+    - name: external-secrets
+      namespace: security
   interval: 1h
   path: ./kubernetes/network/apps/default/n8n/app
   postBuild:
