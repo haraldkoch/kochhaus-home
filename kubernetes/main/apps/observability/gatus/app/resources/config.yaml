@@ -47,7 +47,7 @@ endpoints:
       - type: pushover
   - name: flux-webhook
     group: external
-    url: https://flux-receiver.${CLUSTER_DOMAIN}
+    url: https://flux-webhook.${CLUSTER_DOMAIN}
     interval: 1m
     client:
       dns-resolver: tcp://1.1.1.1:53
