@@ -1,5 +1,4 @@
 [env]
-_.python.venv = { path = "{{config_root}}/.venv", create = true }
 ROOT_DIR = "{{config_root}}"
 KUBERNETES_DIR = '{{config_root}}/kubernetes'
 SCRIPTS_DIR = '{{config_root}}/scripts'
@@ -13,15 +12,19 @@ TALOSCONFIG = "{{config_root}}/talos/clusterconfig/talosconfig"
 TASK_X_ENV_PRECEDENCE = 1
 TASK_X_MAP_VARIABLES = 0
 
+_.python.venv = { path = "{{config_root}}/.venv", create = true }
+
 [tasks.deps]
 description = "Install dependencies"
 run = "uv pip install -r requirements.txt"
 
+[settings]
+pipx_uvx = true
+
 [tools]
-# Template tools
-python = "3.13"
-uv = "latest"
-# Operations tools
+"aqua:astral-sh/uv" = "0.8.11"
+"pipx:flux-local" = "7.8.0"
+
 "aqua:budimanjojo/talhelper" = "3.0.32"
 "aqua:cloudflare/cloudflared" = "2025.8.0"
 "aqua:FiloSottile/age" = "1.2.1"
