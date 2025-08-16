@@ -17,10 +17,6 @@ spec:
       kind: HelmRelease
       name: *app
       namespace: *namespace
-    - apiVersion: external-secrets.io/v1
-      kind: ClusterSecretStore
-      name: onepassword
-      namespace: *namespace
   healthCheckExprs:
     - apiVersion: external-secrets.io/v1
       kind: ClusterSecretStore
