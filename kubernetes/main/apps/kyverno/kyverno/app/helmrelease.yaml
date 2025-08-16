@@ -42,6 +42,10 @@ spec:
     global:
       image:
         registry: ghcr.io
+    webhooksCleanup:
+      image:
+        registry: registry.k8s.io
+        repository: kubectl
     backgroundController:
       serviceMonitor:
         enabled: true
