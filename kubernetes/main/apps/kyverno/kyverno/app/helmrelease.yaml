@@ -42,12 +42,6 @@ spec:
     global:
       image:
         registry: ghcr.io
-    webhooksCleanup:
-      image:
-        registry: docker.io
-    policyReportsCleanup:
-      image:
-        registry: docker.io
     backgroundController:
       serviceMonitor:
         enabled: true
