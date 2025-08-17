@@ -1,15 +1,15 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "packageRules": [
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
     {
-      "matchDatasources": ["docker"],
-      "matchPackagePatterns": ["joomla"],
-      "allowedVersions": "<4"
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/joomla/"],
+      allowedVersions: "<4"
     },
     {
-      "matchDatasources": ["docker"],
-      "matchPackagePatterns": ["postgresql"],
-      "allowedVersions": "<=16"
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/postgresql/"],
+      allowedVersions: "<=16"
     }
   ]
 }

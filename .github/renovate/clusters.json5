@@ -1,35 +1,35 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "packageRules": [
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
     {
-      "description": ["Separate PRs for main cluster"],
-      "matchFileNames": [
+      description: "Separate PRs for main cluster",
+      matchFileNames: [
         "**/bootstrap/main/**",
         "**/kubernetes/main/**",
         "**/talos/main/**"
       ],
-      "additionalBranchPrefix": "main-",
-      "commitMessageSuffix": " [main]"
+      additionalBranchPrefix: "main-",
+      commitMessageSuffix: " [main]"
     },
     {
-      "description": ["Separate PRs for network cluster"],
-      "matchFileNames": [
+      description: "Separate PRs for network cluster",
+      matchFileNames: [
         "**/bootstrap/network/**",
         "**/kubernetes/network/**",
         "**/talos/network/**"
       ],
-      "additionalBranchPrefix": "network-",
-      "commitMessageSuffix": " [network]"
+      additionalBranchPrefix: "network-",
+      commitMessageSuffix: " [network]"
     },
     {
-      "description": ["Separate PRs for registry cluster"],
-      "matchFileNames": [
+      description: "Separate PRs for registry cluster",
+      matchFileNames: [
         "**/bootstrap/registry/**",
         "**/kubernetes/registry/**",
         "**/talos/registry/**"
       ],
-      "additionalBranchPrefix": "registry-",
-      "commitMessageSuffix": " [registry]"
+      additionalBranchPrefix: "registry-",
+      commitMessageSuffix: " [registry]"
     }
   ]
 }
