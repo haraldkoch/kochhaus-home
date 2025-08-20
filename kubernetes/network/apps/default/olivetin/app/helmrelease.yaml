@@ -54,6 +54,14 @@ spec:
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
         pod:
+          dnsPolicy: None
+          dnsConfig:
+            nameservers:
+              - 10.43.0.10
+            searches: ["home.arpa", "${PRIVATE_STATIC_DOMAIN}"]
+            options:
+              - name: ndots
+                value: "1"
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
