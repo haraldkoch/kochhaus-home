@@ -1,0 +1,51 @@
+---
+# There is a built-in micro proxy that will host the webui and REST API all on
+# one port (this is called the "Single HTTP Frontend") and means you just need
+# one open port in the container/firewalls/etc.
+#
+# Listen on all addresses available, port 1337
+listenAddressSingleHTTPFrontend: 0.0.0.0:1337
+
+# Choose from INFO (default), WARN and DEBUG
+logLevel: "INFO"
+
+# Actions (buttons) to show up on the WebUI:
+actions:
+
+  - title: Ping the Internet
+    icon: <iconify-icon icon="vscode-icons:file-type-go-gopher"></iconify-icon>
+    shell: ping -c 3 1.1.1.1
+    maxConcurrent: 1
+    timeout: 10
+
+  - title: Disable Blocky for 5 minutes
+    icon: <iconify-icon icon="vscode-icons:file-type-go-gopher"></iconify-icon>
+    shell: /scripts/olivetin-blocky-script.sh disable 5m ads
+    maxConcurrent: 1
+    timeout: 10
+
+  - title: Blocky Status
+    icon: <iconify-icon icon="vscode-icons:file-type-go-gopher"></iconify-icon>
+    shell: /scripts/olivetin-blocky-script.sh status
+    maxConcurrent: 1
+    timeout: 10
+    popupOnStart: execution-dialog
+
+  - title: Blocky All Commands
+    shell: /scripts/olivetin-blocky-script.sh {{ `{{blocky_action}}` }} {{ `{{blocky_duration}}` }}m {{ `{{blocky_groups}}` }}
+    timeout: 10
+    icon: <iconify-icon icon="vscode-icons:file-type-go-gopher"></iconify-icon>
+    popupOnStart: execution-dialog
+    arguments:
+      - name: blocky_action
+        choices:
+          - title: Disable
+            value: disable
+          - title: Enable
+            value: enable
+          - title: Status
+            value: status
+      - name: blocky_duration
+        type: int
+      - name: blocky_groups
+        type: ascii_sentence
