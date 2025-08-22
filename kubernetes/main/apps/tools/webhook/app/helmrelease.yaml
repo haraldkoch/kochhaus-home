@@ -19,13 +19,11 @@ spec:
   values:
     controllers:
       webhook:
-        replicas: 2
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
           init-config:
-            dependsOn: init-db
             image:
               repository: ghcr.io/home-operations/k8s-sidecar
               tag: 1.30.9@sha256:74d65c3def9276b24b5bfe41f8efb773174e7a1ecf3c9b5a31bd02cfdee232c9
@@ -53,7 +51,7 @@ spec:
               TZ: America/New_York
             envFrom:
               - secretRef:
-                  name: webhook-secret
+                  name: "{{ .Release.Name }}-secret"
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -62,7 +60,9 @@ spec:
               requests:
                 cpu: 100m
               limits:
-                memory: 256Mi
+                memory: 512Mi
+        serviceAccount:
+          identifier: webhook
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -72,21 +72,33 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: webhook
         ports:
           http:
             port: *port
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.devbu.io"]
+        hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
         parentRefs:
           - name: internal
             namespace: kube-system
             sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
+    rbac:
+      roles:
+        webhook:
+          type: ClusterRole
+          rules:
+            - apiGroups: [""]
+              resources: ["configmaps", "secrets"]
+              verbs: ["get", "watch", "list"]
+      bindings:
+        webhook:
+          type: ClusterRoleBinding
+          roleRef:
+            identifier: webhook
+          subjects:
+            - identifier: webhook
+    serviceAccount:
+      webhook: {}
     persistence:
       config:
         type: configMap
