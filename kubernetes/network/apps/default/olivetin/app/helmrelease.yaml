@@ -26,8 +26,8 @@ spec:
         containers:
           app:
             image:
-              repository: jamesread/olivetin
-              tag: 2025.7.29@sha256:db2029a29b7cec56a32f40dec0fd5d7d3fc8802e02794bde1d6b9708d3be1deb
+              repository: ghcr.io/haraldkoch/olivetin
+              tag: 2025.7.29@sha256:8d53033cb55384f2128f1568482cf3e486b5d5d1459c1d7b519fd31814d0cf37
               pullPolicy: IfNotPresent
             env:
               TZ: ${TIMEZONE}
