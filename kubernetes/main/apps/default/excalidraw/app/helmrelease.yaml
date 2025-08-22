@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/haraldkoch/excalidraw
-              tag: latest@sha256:1919878ae9cc04f16325876229a7d55c0386e7e23c4dc80235619ae3d066cab4
+              tag: latest@sha256:1995e1b183eac92c822aa945752bb1212b1c1585c4c3cf7792ed258d03e6b11c
               pullPolicy: IfNotPresent
             probes:
               liveness:
