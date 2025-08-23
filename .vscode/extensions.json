@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "bennycode.sort-everything",
     "blueglassblock.better-json5",
     "EditorConfig.editorconfig",
     "fcrespo82.markdown-table-formatter",

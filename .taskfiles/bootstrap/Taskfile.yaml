@@ -5,22 +5,20 @@ version: '3'
 tasks:
 
   talos:
-    desc: Bootstrap the Talos cluster
+    desc: Bootstrap Talos
     summary: |
       Args:
         CLUSTER: Cluster to run command against (required)
-    dir: '{{.TALOS_DIR}}'
     cmds:
-      - '[ -f talsecret.sops.yaml ] || talhelper gensecret | sops --filename-override talsecret.sops.yaml --encrypt /dev/stdin > talsecret.sops.yaml'
-      - talhelper genconfig
-      - talhelper gencommand apply --extra-flags="--insecure" | {{.ROOT_DIR}}/scripts/fix-talos-ips.sh | bash
-      - until talhelper gencommand bootstrap | bash; do sleep 10; done
-      - until talhelper gencommand kubeconfig --extra-flags="{{.ROOT_DIR}}/kubernetes/{{.CLUSTER}} --force" | bash; do sleep 10; done
+      - until talosctl --talosconfig {{.TALOS_DIR}}/talosconfig --nodes {{.RANDOM_CONTROLLER}} bootstrap; do sleep 5; done
+      - talosctl kubeconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig --nodes {{.RANDOM_CONTROLLER}} --talosconfig {{.TALOS_DIR}}/talosconfig
+    vars:
+      RANDOM_CONTROLLER:
+        sh: talosctl --talosconfig {{.TALOS_DIR}}/talosconfig config info --output yaml | yq --exit-status '.endpoints[0]'
     preconditions:
-      - test -f {{.ROOT_DIR}}/.sops.yaml
-      - test -f {{.SOPS_AGE_KEY_FILE}}
-      - test -f {{.TALOS_DIR}}/talconfig.yaml
-      - which talhelper talosctl sops
+      - talosctl config info --talosconfig {{.TALOS_DIR}}/talosconfig
+      - talosctl --nodes {{.RANDOM_CONTROLLER}} get machineconfig --talosconfig {{.TALOS_DIR}}/talosconfig
+      - which yq talosctl
     requires:
       vars: [CLUSTER]
 
@@ -33,8 +31,8 @@ tasks:
     cmd: bash {{.SCRIPTS_DIR}}/bootstrap-apps.sh {{.CLUSTER}}
     preconditions:
       - msg: Unsupported bash version, run `brew install bash` to upgrade
-        sh: '{{if eq OS "darwin"}}test -f /opt/homebrew/bin/bash{{end}}'
-      #- test -f {{.KUBECONFIG}}
+        sh: '{{if eq OS "darwin"}}test -f /opt/homebrew/bin/bash || test -f /usr/local/bin/bash{{end}}'
+      - test -f {{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig
       - test -f {{.ROOT_DIR}}/.sops.yaml
       - test -f {{.SCRIPTS_DIR}}/bootstrap-apps.sh
       - test -f {{.SOPS_AGE_KEY_FILE}}
