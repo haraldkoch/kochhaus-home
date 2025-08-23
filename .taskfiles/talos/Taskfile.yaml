@@ -51,7 +51,7 @@ tasks:
         task:  apply-node
         vars:
           NODE: '{{.ITEM}}'
-	  CLUSTER: '{{.CLUSTER}}'
+          CLUSTER: '{{.CLUSTER}}'
     preconditions:
       - talosctl config info --talosconfig {{.TALOS_DIR}}/talosconfig
       - test -f {{.TALOS_DIR}}/talosconfig
