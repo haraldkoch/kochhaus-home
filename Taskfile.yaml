@@ -20,6 +20,8 @@ env:
   # SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
   SOPS_AGE_KEY_FILE: '{{.ROOT_DIR}}/age.key'
   TALOSCONFIG: '{{.TALOSCONFIG}}'
+  # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+  KUBERNETES_VERSION: v1.33.3
 
 includes:
   bootstrap: .taskfiles/bootstrap
