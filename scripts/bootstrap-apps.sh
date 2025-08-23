@@ -26,7 +26,7 @@ function wait_for_nodes() {
     done
 }
 
-# The application namespaces are created before applying the resources
+# Namespaces to be applied before the SOPS secrets are installed
 function apply_namespaces() {
     log debug "Applying namespaces"
 
@@ -160,7 +160,7 @@ function apply_helm_releases() {
 }
 
 function main() {
-    check_cli helmfile kubectl kustomize sops talhelper yq
+    check_cli helmfile kubectl kustomize sops yq
 
     # Apply resources and Helm releases
     wait_for_nodes

@@ -1,22 +1,20 @@
 [env]
-ROOT_DIR = "{{config_root}}"
-KUBERNETES_DIR = '{{config_root}}/kubernetes'
-SCRIPTS_DIR = '{{config_root}}/scripts'
-BOOTSTRAP_DIR = '{{config_root}}/bootstrap'
-TALOS_DIR = '{{config_root}}/talos'
 KUBECONFIG = "{{config_root}}/kubernetes/main/kubeconfig:{{config_root}}/kubernetes/network/kubeconfig:{{config_root}}/kubernetes/registry/kubeconfig"
+MINIJINJA_CONFIG_FILE = "{{config_root}}/.minijinja.toml"
 SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
-TALOSCONFIG = "{{config_root}}/talos/clusterconfig/talosconfig"
+TALOSCONFIG = "{{config_root}}/talos/main/talosconfig"
+# File paths
+BOOTSTRAP_DIR = "{{config_root}}/bootstrap"
+KUBERNETES_DIR = "{{config_root}}/kubernetes"
+ROOT_DIR = "{{config_root}}"
+SCRIPTS_DIR = "{{config_root}}/scripts"
+TALOS_DIR = "{{config_root}}/talos"
 
 # I think I still need this for some tasks
 TASK_X_ENV_PRECEDENCE = 1
 TASK_X_MAP_VARIABLES = 0
 
 _.python.venv = { path = "{{config_root}}/.venv", create = true }
-
-[tasks.deps]
-description = "Install dependencies"
-run = "uv pip install -r requirements.txt"
 
 [settings]
 pipx_uvx = true
@@ -25,7 +23,8 @@ pipx_uvx = true
 "aqua:astral-sh/uv" = "0.8.12"
 "pipx:flux-local" = "7.8.0"
 
-"aqua:budimanjojo/talhelper" = "3.0.32"
+"aqua:cilium/cilium-cli" = "0.18.6"
+"aqua:cli/cli" = "2.76.2"
 "aqua:cloudflare/cloudflared" = "2025.8.0"
 "aqua:FiloSottile/age" = "1.2.1"
 "aqua:fluxcd/flux2" = "2.6.4"
@@ -33,9 +32,10 @@ pipx_uvx = true
 "aqua:go-task/task" = "3.44.1"
 "aqua:helm/helm" = "3.18.6"
 "aqua:helmfile/helmfile" = "1.1.5"
-"aqua:jqlang/jq" = "1.7.1"
+"aqua:jqlang/jq" = "1.8.0"
 "aqua:kubernetes-sigs/kustomize" = "5.6.0"
-"aqua:kubernetes/kubectl" = "1.33.0"
+"aqua:kubernetes/kubectl" = "1.33.1"
 "aqua:mikefarah/yq" = "4.47.1"
+"aqua:mitsuhiko/minijinja" = "2.11.0"
 "aqua:siderolabs/talos" = "1.10.6"
 "aqua:yannh/kubeconform" = "0.7.0"

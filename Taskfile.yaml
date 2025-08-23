@@ -13,11 +13,12 @@ vars:
   SCRIPTS_DIR: '{{.ROOT_DIR}}/scripts'
   TALOS_DIR: '{{.ROOT_DIR}}/talos/{{.CLUSTER}}'
   PRIVATE_DIR: '{{.ROOT_DIR}}/.private'
-  TALOSCONFIG: '{{.ROOT_DIR}}/talos/{{.CLUSTER}}/clusterconfig/talosconfig'
+  TALOSCONFIG: '{{.ROOT_DIR}}/talos/{{.CLUSTER}}/talosconfig'
 
 env:
   KUBECONFIG: "{{.KUBERNETES_DIR}}/main/kubeconfig:{{.KUBERNETES_DIR}}/network/kubeconfig:{{.KUBERNETES_DIR}}/registry/kubeconfig"
   # SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
+  SOPS_AGE_KEY_FILE: '{{.ROOT_DIR}}/age.key'
   TALOSCONFIG: '{{.TALOSCONFIG}}'
 
 includes:
@@ -28,7 +29,7 @@ includes:
     taskfile: .taskfiles/Database/Taskfile.yaml
   externalsecrets:
     aliases: ["es"]
-    taskfile: .taskfiles/ExternalSecrets/Taskfile.yaml
+    taskfile: .taskfiles/ExternalSecrets
   flux:
     aliases: ["fx"]
     taskfile: .taskfiles/Flux/Taskfile.yaml
@@ -39,10 +40,10 @@ includes:
   talos: .taskfiles/talos
   volsync:
     aliases: ["vs"]
-    taskfile: .taskfiles/VolSync/Taskfile.yaml
+    taskfile: .taskfiles/VolSync
 
 tasks:
 
   default:
+    cmd: task --list
     silent: true
-    cmd: task -l
