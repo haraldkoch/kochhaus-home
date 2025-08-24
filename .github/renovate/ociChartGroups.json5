@@ -72,16 +72,17 @@
       },
       minimumGroupSize: 2,
     },
-    {
-      description: "Kube Prometheus Stack Group",
-      groupName: "kube-prometheus-stack",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/kube-prometheus-stack/"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
-      minimumGroupSize: 2,
-    },
+// after we add the CRDs helmfile
+//    {
+//      description: "Kube Prometheus Stack Group",
+//      groupName: "kube-prometheus-stack",
+//      matchDatasources: ["docker"],
+//      matchPackageNames: ["/kube-prometheus-stack/"],
+//      group: {
+//        commitMessageTopic: "{{{groupName}}} group",
+//      },
+//      minimumGroupSize: 2,
+//    },
     {
       description: "Spegel Group",
       groupName: "spegel",
