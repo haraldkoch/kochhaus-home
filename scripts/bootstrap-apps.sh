@@ -160,7 +160,7 @@ function apply_helm_releases() {
 }
 
 function main() {
-    check_cli helmfile kubectl kustomize sops yq
+    check_cli helmfile kubectl kustomize sops
 
     # Apply resources and Helm releases
     wait_for_nodes
