@@ -9,18 +9,17 @@ tasks:
     summary: |
       Args:
         CLUSTER: Cluster to run command against (required)
-    cmds:
-      - until talosctl --talosconfig {{.TALOS_DIR}}/talosconfig --nodes {{.RANDOM_CONTROLLER}} bootstrap; do sleep 5; done
-      - talosctl kubeconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig --nodes {{.RANDOM_CONTROLLER}} --talosconfig {{.TALOS_DIR}}/talosconfig
-    vars:
-      RANDOM_CONTROLLER:
-        sh: talosctl --talosconfig {{.TALOS_DIR}}/talosconfig config info --output yaml | yq --exit-status '.endpoints[0]'
+    cmd: bash {{.SCRIPTS_DIR}}/bootstrap-talos.sh
     preconditions:
       - talosctl config info --talosconfig {{.TALOS_DIR}}/talosconfig
       - talosctl --nodes {{.RANDOM_CONTROLLER}} get machineconfig --talosconfig {{.TALOS_DIR}}/talosconfig
       - which yq talosctl
     requires:
       vars: [CLUSTER]
+    preconditions:
+      - find --version | grep -q GNU
+      - test -f {{.SCRIPTS_DIR}}/bootstrap-talos.sh
+      - which gum op talosctl yq
 
   apps:
     desc: Bootstrap apps into the Talos cluster
@@ -36,5 +35,6 @@ tasks:
       - test -f {{.ROOT_DIR}}/.sops.yaml
       - test -f {{.SCRIPTS_DIR}}/bootstrap-apps.sh
       - test -f {{.SOPS_AGE_KEY_FILE}}
+      - which gum helm helmfile kubectl
     requires:
       vars: ["CLUSTER"]
