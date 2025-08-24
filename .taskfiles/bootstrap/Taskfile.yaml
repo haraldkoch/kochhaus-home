@@ -9,11 +9,7 @@ tasks:
     summary: |
       Args:
         CLUSTER: Cluster to run command against (required)
-    cmd: bash {{.SCRIPTS_DIR}}/bootstrap-talos.sh
-    preconditions:
-      - talosctl config info --talosconfig {{.TALOS_DIR}}/talosconfig
-      - talosctl --nodes {{.RANDOM_CONTROLLER}} get machineconfig --talosconfig {{.TALOS_DIR}}/talosconfig
-      - which yq talosctl
+    cmd: bash {{.SCRIPTS_DIR}}/bootstrap-talos.sh {{.CLUSTER}}
     requires:
       vars: [CLUSTER]
     preconditions:

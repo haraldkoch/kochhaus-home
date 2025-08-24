@@ -3,6 +3,8 @@ set -Eeuo pipefail
 
 export ROOT_DIR="$(git rev-parse --show-toplevel)"
 
+readonly CLUSTER="${1:?}"
+
 # Log messages with structured output
 function log() {
     local lvl="${1:?}" msg="${2:?}"
@@ -14,7 +16,7 @@ function log() {
 function install_talos() {
     log info "Installing Talos configuration"
 
-    local machineconfig_file="${ROOT_DIR}/talos/machineconfig.yaml.j2"
+    local machineconfig_file="${ROOT_DIR}/talos/${CLUSTER}/machineconfig.yaml.j2"
 
     if [[ ! -f ${machineconfig_file} ]]; then
         log fatal "No Talos machine files found for machineconfig" "file" "${machineconfig_file}"
@@ -27,7 +29,7 @@ function install_talos() {
 
     # Check that all nodes have a Talos configuration file
     for node in ${nodes}; do
-        local node_file="${ROOT_DIR}/talos/nodes/${node}.yaml.j2"
+        local node_file="${ROOT_DIR}/talos/${CLUSTER}/nodes/${node}.yaml.j2"
 
         if [[ ! -f "${node_file}" ]]; then
             log fatal "No Talos machine files found for node" "node" "${node}" "file" "${node_file}"
@@ -36,7 +38,7 @@ function install_talos() {
 
     # Apply the Talos configuration to the nodes
     for node in ${nodes}; do
-        local node_file="${ROOT_DIR}/talos/nodes/${node}.yaml.j2"
+        local node_file="${ROOT_DIR}/talos/${CLUSTER}/nodes/${node}.yaml.j2"
 
         log info "Applying Talos node configuration" "node" "${node}"
 
@@ -84,7 +86,7 @@ function fetch_kubeconfig() {
         log fatal "No Talos controller found"
     fi
 
-    if ! talosctl kubeconfig --nodes "${controller}" --force --force-context-name main "$(basename "${KUBECONFIG}")" &>/dev/null; then
+    if ! talosctl kubeconfig --nodes "${controller}" --force --force-context-name {{.CLUSTER}} kubernetes/{{.CLUSTER}} &>/dev/null; then
         log fatal "Failed to fetch kubeconfig"
     fi
 

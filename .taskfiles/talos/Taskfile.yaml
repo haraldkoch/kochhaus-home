@@ -58,14 +58,13 @@ tasks:
 
   dashboard:
     desc: Display the Talos dashboard
-    dir: '{{.TALOS_DIR}}'
     cmds:
       - talosctl dashboard
-    preconditions:
-      - test -f {{.TALOS_DIR}}/clusterconfig/talosconfig
     requires:
        vars: [CLUSTER]
-
+    preconditions:
+      - test -f {{.TALOS_DIR}}/talosconfig
+      - which talosctl
 
   upgrade-k8s:
     desc: Upgrade Kubernetes [CLUSTER=required]

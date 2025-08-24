@@ -3,9 +3,9 @@
 version: v1alpha1
 machine:
   ca:
-    crt: op://homelab/talos-uvt/MACHINE_CA_CRT
+    crt: op://homelab/talos-registry/MACHINE_CA_CRT
     {% if machinetype == 'controlplane' %}
-    key: op://homelab/talos-uvt/MACHINE_CA_KEY
+    key: op://homelab/talos-registry/MACHINE_CA_KEY
     {% endif %}
   certSANs:
     - 127.0.0.1
@@ -66,7 +66,7 @@ machine:
         options: ["bind", "rshared", "rw"]
         source: /var/mnt/extra
         type: bind
-    image: ghcr.io/siderolabs/kubelet:1.33.3
+    image: ghcr.io/siderolabs/kubelet:v1.33.3
     nodeIP:
       validSubnets:
         - 192.168.20.0/24
@@ -89,7 +89,7 @@ machine:
     servers:
       - 199.85.99.3
       - 199.85.99.11
-  token: op://kubernetes/talos/MACHINE_TOKEN
+  token: op://homelab/talos-registry/MACHINE_TOKEN
 cluster:
   ca:
     crt: op://homelab/talos-registry/CLUSTER_CA_CRT
@@ -166,7 +166,7 @@ cluster:
 #                    whenUnsatisfiable: ScheduleAnyway
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-scheduler:1.33.3
+    image: registry.k8s.io/kube-scheduler:v1.33.3
   secretboxEncryptionSecret: op://homelab/talos-registry/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
     key: op://homelab/talos-registry/CLUSTER_SERVICEACCOUNT_KEY
