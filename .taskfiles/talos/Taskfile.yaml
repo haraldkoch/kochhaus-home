@@ -125,7 +125,7 @@ tasks:
 
   reset-cluster:
     desc: Reset whole cluster [CLUSTER=required]
-    prompt: Reset the Talos cluster ... continue?
+    prompt: Reset the Talos cluster {{.CLUSTER}} ... continue?
     cmd: talosctl reset --nodes {{.NODES}} --graceful=false
     vars:
       NODES:
