@@ -17,3 +17,22 @@ machine:
             network: 0.0.0.0/0
         vip:
           ip: 192.168.20.66
+  type: controlplane
+---
+apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  maxSize: 32Gi
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: extra
+provisioning:
+  diskSelector:
+    match: system_disk
+  grow: true
+  minSize: 32Gi
+  maxSize: 64Gi
+filesystem:
+  type: xfs
