@@ -36,6 +36,6 @@ pipx_uvx = true
 "aqua:kubernetes-sigs/kustomize" = "5.6.0"
 "aqua:kubernetes/kubectl" = "1.33.1"
 "aqua:mikefarah/yq" = "4.47.1"
-"aqua:mitsuhiko/minijinja" = "2.11.0"
+"aqua:mitsuhiko/minijinja" = "2.12.0"
 "aqua:siderolabs/talos" = "1.10.6"
 "aqua:yannh/kubeconform" = "0.7.0"
