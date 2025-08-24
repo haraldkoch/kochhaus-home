@@ -1,14 +1,11 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
 version: v1alpha1
-persist: true
 machine:
-  type: {{ ENV.MACHINE_TYPE }}
-  token: op://homelab/talos-uvt/MACHINE_TOKEN
   ca:
-    crt: op://homelab/talos-uvt/MACHINE_CA_CRT
-    {% if ENV.MACHINE_TYPE == 'controlplane' %}
-    key: op://homelab/talos-uvt/MACHINE_CA_KEY
+    crt: op://homelab/talos-registry/MACHINE_CA_CRT
+    {% if machinetype == 'controlplane' %}
+    key: op://homelab/talos-registry/MACHINE_CA_KEY
     {% endif %}
   certSANs:
     - 127.0.0.1
@@ -23,16 +20,24 @@ machine:
     kubePrism:
       enabled: true
       port: 7445
+    {% if machinetype == 'controlplane' %}
+    kubernetesTalosAPIAccess:
+      allowedKubernetesNamespaces:
+        - actions-runner-system
+        - system-upgrade
+      allowedRoles:
+        - os:admin
+      enabled: true
+    {% endif %}
     rbac: true
     stableHostname: true
   files:
     - op: create
       path: /etc/cri/conf.d/20-customization.part
-      permissions: 0o644
       content: |
         [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
-        [plugins."io.containerd.grpc.v1.cri"]
+        [plugins."io.containerd.cri.v1.runtime"]
           device_ownership_from_security_context = true
     - op: overwrite
       path: /etc/nfsmount.conf
@@ -41,12 +46,11 @@ machine:
         [ NFSMount_Global_Options ]
         nfsvers=4.2
         hard=True
-        nconnect=8
+        nconnect=16
         noatime=True
-        rsize=1048576
-        wsize=1048576
   install:
-    image: factory.talos.dev/installer/{{ ENV.TALOS_SCHEMATIC }}:v1.10.6
+    image: factory.talos.dev/metal-installer/05b4a47a70bc97786ed83d200567dcc8a13f731b164537ba59d5397d668851fa:v1.11.0-rc.0
+    wipe: false
   kernel:
     modules:
       - name: nbd
@@ -62,14 +66,17 @@ machine:
         options: ["bind", "rshared", "rw"]
         source: /var/mnt/extra
         type: bind
-    image: ghcr.io/siderolabs/kubelet:{{ ENV.KUBERNETES_VERSION }}
+    image: ghcr.io/siderolabs/kubelet:v1.33.3
     nodeIP:
-      validSubnets: ["192.168.20.0/24"]
+      validSubnets:
+        - 192.168.20.0/24
   network:
-    nameservers: ["199.85.99.6", "199.85.99.7"]
+    nameservers:
+      - 199.85.99.6
+      - 199.85.99.7
     disableSearchDomain: true
   nodeLabels:
-    node.kubernetes.io/exclude-from-external-load-balancers: ""
+    topology.kubernetes.io/region: main
   sysctls:
     fs.inotify.max_user_instances: "8192"      # Watchdog
     fs.inotify.max_user_watches: "1048576"     # Watchdog
@@ -79,53 +86,59 @@ machine:
     user.max_user_namespaces: "11255"          # User Namespaces
   time:
     disabled: false
-    servers: ["199.85.99.3", "199.85.99.11"]
+    servers:
+      - 199.85.99.3
+      - 199.85.99.11
+  token: op://homelab/talos-registry/MACHINE_TOKEN
 cluster:
-  allowSchedulingOnControlPlanes: true
   ca:
     crt: op://homelab/talos-registry/CLUSTER_CA_CRT
-    {% if ENV.MACHINE_TYPE == 'controlplane' %}
+    {% if machinetype == 'controlplane' %}
     key: op://homelab/talos-registry/CLUSTER_CA_KEY
     {% endif %}
   clusterName: registry
   controlPlane:
     endpoint: https://192.168.20.66:6443
-  discovery:
-    enabled: true
-    registries:
-      kubernetes:
-        disabled: true
-      service:
-        disabled: false
   id: op://homelab/talos-registry/CLUSTER_ID
   network:
     cni:
       name: none
     dnsDomain: cluster.local
-    podSubnets: ["10.42.0.0/16"]
-    serviceSubnets: ["10.43.0.0/16"]
+    podSubnets:
+      - 10.42.0.0/16
+    serviceSubnets:
+      - 10.43.0.0/16
   secret: op://homelab/talos-registry/CLUSTER_SECRET
   token: op://homelab/talos-registry/CLUSTER_TOKEN
-  {% if ENV.MACHINE_TYPE == 'controlplane' %}
+  {% if machinetype == 'controlplane' %}
   aggregatorCA:
     crt: op://homelab/talos-registry/CLUSTER_AGGREGATORCA_CRT
     key: op://homelab/talos-registry/CLUSTER_AGGREGATORCA_KEY
+  allowSchedulingOnControlPlanes: true
   apiServer:
-    image: registry.k8s.io/kube-apiserver:{{ ENV.KUBERNETES_VERSION }}
-    certSANs: ["192.168.20.66", "127.0.0.1"]
+    auditPolicy:
+      apiVersion: audit.k8s.io/v1
+      kind: Policy
+      rules:
+        - level: Metadata
+    certSANs:
+      - 127.0.0.1
+      - 192.168.20.66
     disablePodSecurityPolicy: true
     extraArgs:
-      enable-aggregator-routing: true
+      enable-aggregator-routing: "true"
       feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
       runtime-config: admissionregistration.k8s.io/v1alpha1=true
+    image: registry.k8s.io/kube-apiserver:v1.33.3
   controllerManager:
-    image: registry.k8s.io/kube-controller-manager:{{ ENV.KUBERNETES_VERSION }}
     extraArgs:
       bind-address: 0.0.0.0
+    image: registry.k8s.io/kube-controller-manager:v1.33.3
   coreDNS:
     disabled: true
   etcd:
-    advertisedSubnets: ["192.168.20.0/24"]
+    advertisedSubnets:
+      - 192.168.20.0/24
     ca:
       crt: op://homelab/talos-registry/CLUSTER_ETCD_CA_CRT
       key: op://homelab/talos-registry/CLUSTER_ETCD_CA_KEY
@@ -133,11 +146,7 @@ cluster:
       listen-metrics-urls: http://0.0.0.0:2381
   proxy:
     disabled: true
-    image: registry.k8s.io/kube-proxy:{{ ENV.KUBERNETES_VERSION }}
   scheduler:
-    image: registry.k8s.io/kube-scheduler:{{ ENV.KUBERNETES_VERSION }}
-    extraArgs:
-      bind-address: 0.0.0.0
     config:
       apiVersion: kubescheduler.config.k8s.io/v1
       kind: KubeSchedulerConfiguration
@@ -155,25 +164,10 @@ cluster:
 #                  - maxSkew: 1
 #                    topologyKey: kubernetes.io/hostname
 #                    whenUnsatisfiable: ScheduleAnyway
+    extraArgs:
+      bind-address: 0.0.0.0
+    image: registry.k8s.io/kube-scheduler:v1.33.3
   secretboxEncryptionSecret: op://homelab/talos-registry/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
     key: op://homelab/talos-registry/CLUSTER_SERVICEACCOUNT_KEY
   {% endif %}
----
-apiVersion: v1alpha1
-kind: VolumeConfig
-name: EPHEMERAL
-provisioning:
-  maxSize: 32Gi
----
-apiVersion: v1alpha1
-kind: UserVolumeConfig
-name: extra
-provisioning:
-  diskSelector:
-    match: system_disk
-  grow: true
-  minSize: 32Gi
-  maxSize: 64Gi
-filesystem:
-  type: xfs
