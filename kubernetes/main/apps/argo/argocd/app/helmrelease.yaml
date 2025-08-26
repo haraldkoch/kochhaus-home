@@ -67,8 +67,8 @@ spec:
           g, admins, role:admin
           g, people, role:devs
       params:
-        application.namespaces: cicd,default
-        applicationsetcontroller.namespaces: cicd,default
+        application.namespaces: argo,cicd,default
+        applicationsetcontroller.namespaces: argo,cicd,default
         applicationsetcontroller.allowed.scm.providers: https://anemone.${PRIVATE_STATIC_DOMAIN}/gitea/,https://github.com/haraldkoch/
         redis.server: argocd-redis:6379
         server.insecure: true
@@ -118,5 +118,5 @@ spec:
       enabled: false
     redis:
       enabled: true
-    # applicationSet:
-    #   allowAnyNamespace: true
+    applicationSet:
+      allowAnyNamespace: true
