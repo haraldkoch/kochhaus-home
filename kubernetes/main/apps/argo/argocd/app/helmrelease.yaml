@@ -72,6 +72,48 @@ spec:
         applicationsetcontroller.allowed.scm.providers: https://anemone.${PRIVATE_STATIC_DOMAIN}/gitea/,https://github.com/haraldkoch/
         redis.server: argocd-redis:6379
         server.insecure: true
+      cmp:
+        create: true
+        plugins:
+          argocd-vault-plugin:
+            allowConcurrency: true
+            discover:
+              find:
+                command:
+                  - sh
+                  - "-c"
+                  - "find . -name '*.yaml' | xargs -I {} grep \"<path\\|avp\\.kubernetes\\.io\" {} | grep ."
+            generate:
+              command:
+                - argocd-vault-plugin
+                - generate
+                - "."
+                - "-s"
+                - "argocd-vault-plugin-credentials"
+            lockRepo: false
+    controller:
+      initContainers:
+        - name: download-tools
+          image: docker.io/library/alpine:3.22
+          command: [sh, -c]
+          env:
+            - name: AVP_VERSION
+              # FIXME renovate
+              value: 1.18.1
+          args:
+            - >-
+              wget -qO /custom-tools/argocd-vault-plugin https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v$(AVP_VERSION)/argocd-vault-plugin_$(AVP_VERSION)_linux_amd64 &&
+              chmod +x /custom-tools/argocd-vault-plugin
+          volumeMounts:
+            - mountPath: /custom-tools
+              name: custom-tools
+      volumeMounts:
+        - mountPath: /usr/local/bin/argocd-vault-plugin
+          name: custom-tools
+          subPath: argocd-vault-plugin
+      volumes:
+        - name: custom-tools
+          emptyDir: {}
     dex:
       enabled: false
     redis:
