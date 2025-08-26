@@ -91,7 +91,7 @@ spec:
                 - "-s"
                 - "argocd-vault-plugin-credentials"
             lockRepo: false
-    controller:
+    repoServer:
       initContainers:
         - name: download-tools
           image: docker.io/library/alpine:3.22
@@ -107,13 +107,36 @@ spec:
           volumeMounts:
             - mountPath: /custom-tools
               name: custom-tools
-      volumeMounts:
-        - mountPath: /usr/local/bin/argocd-vault-plugin
-          name: custom-tools
-          subPath: argocd-vault-plugin
+      extraContainers:
+        - name: argocd-vault-plugin
+          command: [/var/run/argocd/argocd-cmp-server]
+          image: docker.io/library/alpine:3.22
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 999
+          volumeMounts:
+            - mountPath: /var/run/argocd
+              name: var-files
+            - mountPath: /home/argocd/cmp-server/plugins
+              name: plugins
+            - mountPath: /tmp
+              name: cmp-tmp
+            # Register plugins into sidecar
+            - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+              subPath: argocd-vault-plugin.yaml
+              name: argocd-cmp-cm
+            # Mount tools into $PATH
+            - mountPath: /usr/local/bin/argocd-vault-plugin
+              name: custom-tools
+              subPath: argocd-vault-plugin
       volumes:
         - name: custom-tools
           emptyDir: {}
+        - name: cmp-tmp
+          emptyDir: {}
+        - name: argocd-cmp-cm
+          configMap:
+            name: argocd-cmp-cm
     dex:
       enabled: false
     redis:
