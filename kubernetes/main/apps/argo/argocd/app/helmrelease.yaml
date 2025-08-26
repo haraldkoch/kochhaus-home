@@ -80,16 +80,15 @@ spec:
             discover:
               find:
                 command:
-                  - sh
-                  - "-c"
-                  - "find . -name '*.yaml' | xargs -I {} grep \"<path\\|avp\\.kubernetes\\.io\" {} | grep ."
+                  - find
+                  - "."
+                  - -name
+                  - kustomization.yaml
             generate:
               command:
-                - argocd-vault-plugin
-                - generate
-                - "."
-                - "-s"
-                - "argocd-vault-plugin-credentials"
+                - sh
+                - "-c"
+                - "kustomize build --enable-alpha-plugins --enable-helm . | argocd-vault-plugin generate -"
             lockRepo: false
     repoServer:
       initContainers:
@@ -110,7 +109,10 @@ spec:
       extraContainers:
         - name: argocd-vault-plugin
           command: [/var/run/argocd/argocd-cmp-server]
-          image: docker.io/library/alpine:3.22
+          image: quay.io/argoproj/argocd:v3.1.0
+          envFrom:
+            - secretRef:
+                name: argocd-vault-plugin-credentials
           securityContext:
             runAsNonRoot: true
             runAsUser: 999
