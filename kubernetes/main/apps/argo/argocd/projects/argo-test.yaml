@@ -9,6 +9,7 @@ spec:
     - default
   sourceRepos:
     - https://anemone.${PRIVATE_STATIC_DOMAIN}/gitea/chk/argo-test.git
+    - https://github.com/haraldkoch/argo-test.git
   destinations:
     - namespace: default
       server: https://kubernetes.default.svc
