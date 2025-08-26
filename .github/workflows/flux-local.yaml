@@ -85,7 +85,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix:
-        paths: ${{ fromJSON(needs.changed-clusters.outputs.matrix) }}
+        paths: ${{ fromJSON(needs.filter.outputs.matrix) }}
         resource: ["helmrelease", "kustomization"]
       max-parallel: 4
       fail-fast: false
