@@ -129,3 +129,12 @@ identity_providers:
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://vikunja.${CLUSTER_DOMAIN}/auth/openid/authelia"]
         userinfo_signed_response_alg: none
+      - client_id: argocd
+        client_name: Argo CD
+        client_secret: "$${ARGOCD_OAUTH_CLIENT_SECRET_DIGEST}"
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        scopes: ["openid", "profile", "groups", "email"]
+        redirect_uris: ["https://argocd.${CLUSTER_DOMAIN}/auth/callback"]
+        userinfo_signed_response_alg: none
