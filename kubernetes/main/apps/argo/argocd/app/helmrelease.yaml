@@ -1,0 +1,80 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/source.toolkit.fluxcd.io/helmrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: argo
+spec:
+  interval: 1h
+  url: https://argoproj.github.io/argo-helm
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: argocd
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: argo-cd
+      version: 8.2.5
+      sourceRef:
+        kind: HelmRepository
+        name: argo
+  install:
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    configs:
+      cm:
+        admin.enabled: false
+        application.resourceTrackingMethod: annotation
+        kustomize.buildOptions: --enable-alpha-plugins --enable-helm
+        url: https://argocd.${CLUSTER_DOMAIN}
+        oidc.config: |
+          name: Authelia
+          issuer: https://auth.${CLUSTER_DOMAIN}
+          clientID: argocd
+          clientSecret: ${ARGOCD_OAUTH_CLIENT_SECRET}
+          cliClientID: argocd
+          requestedScopes: ["openid", "profile", "email", "groups"]
+          requestedIDTokenClaims: {"groups": {"essential": true}}
+      rbac:
+        scopes: "[groups, email]"
+        policy.default: ""
+        policy.csv: |
+          p, role:devs, applications, get, */*, allow
+          p, role:devs, applications, create, */*, allow
+          p, role:devs, applications, update, */*, allow
+          p, role:devs, applications, delete, */*, allow
+          p, role:devs, applications, sync, */*, allow
+          p, role:devs, applications, override, */*, allow
+          p, role:devs, logs, get, */*, allow
+          p, role:devs, projects, get, *, allow
+          p, role:devs, repositories, get, *, allow
+          p, role:devs, repositories, create, *, allow
+          p, role:devs, repositories, update, *, allow
+          p, role:devs, repositories, delete, *, allow
+
+          g, admins, role:admin
+          g, people, role:devs
+      params:
+        application.namespaces: cicd,default
+        applicationsetcontroller.namespaces: cicd,default
+        applicationsetcontroller.allowed.scm.providers: https://anemone.${PRIVATE_STATIC_DOMAIN}/gitea/,https://github.com/haraldkoch/
+        redis.server: argocd-redis:6379
+        server.insecure: true
+    dex:
+      enabled: false
+    redis:
+      enabled: true
+    # applicationSet:
+    #   allowAnyNamespace: true

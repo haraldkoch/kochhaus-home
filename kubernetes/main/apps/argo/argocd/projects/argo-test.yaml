@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/argoproj.io/appproject_v1alpha1.json
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: argo-test
+spec:
+  sourceNamespaces:
+    - default
+  sourceRepos:
+    - https://anemone.${PRIVATE_STATIC_DOMAIN}/gitea/chk/argo-test.git
+  destinations:
+    - namespace: default
+      server: https://kubernetes.default.svc
