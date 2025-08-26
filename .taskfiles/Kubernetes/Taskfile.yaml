@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
-version: "3"
+version: '3'
 
 tasks:
 
@@ -48,6 +48,46 @@ tasks:
       ns: '{{.ns | default "default"}}'
     requires:
       vars: ["cluster", "claim"]
+    preconditions:
+      - kubectl --context {{.cluster}} --namespace {{.ns}} get persistentvolumeclaims {{.claim}}
+      - kubectl browse-pvc --version
+      - which kubectl
+
+  node-shell:
+    desc: Open a shell to a node [CLUSTER=main] [NODE=required]
+    interactive: true
+    cmd: kubectl node-shell --context {{.CLUSTER}} -n kube-system -x {{.NODE}}
+    requires:
+      vars: [CLUSTER,NODE]
+    preconditions:
+      - kubectl get nodes --context {{.CLUSTER}} {{.NODE}}
+      - kubectl node-shell --version
+      - which kubectl
+
+  sync-secrets:
+    desc: Sync all ExternalSecrets
+    cmds:
+      - for: { var: SECRETS, split: "\n" }
+        cmd: kubectl --context {{.CLUSTER}} --namespace {{splitList "," .ITEM | first}} annotate externalsecret {{splitList "," .ITEM | last}} force-sync="{{now | unixEpoch}}" --overwrite
+    vars:
+      SECRETS:
+        sh: kubectl get externalsecret --context {{.CLUSTER}} --all-namespaces --no-headers --output=jsonpath='{range .items[*]}{.metadata.namespace},{.metadata.name}{"\n"}{end}'
+    requires:
+      vars: [CLUSTER]
+    preconditions:
+      - which kubectl
+
+  cleanse-pods:
+    desc: Cleanse pods with a Failed/Pending/Succeeded phase
+    cmds:
+      - for:
+          matrix:
+            PHASE: [Failed, Pending, Succeeded]
+        cmd: kubectl delete pods --context {{.CLUSTER}} --all-namespaces --field-selector status.phase={{.ITEM.PHASE}} --ignore-not-found=true
+    requires:
+      vars: [CLUSTER]
+    preconditions:
+      - which kubectl
 
   drain:
     desc: Drain a node
@@ -58,17 +98,6 @@ tasks:
     cmd: kubectl --context {{.cluster}} drain {{.node}} --ignore-daemonsets --delete-local-data --force
     requires:
       vars: ["cluster", "node"]
-
-  delete-failed-pods:
-    desc: Deletes pods with a fucked status
-    summary: |
-      Args:
-        cluster: Cluster to run command against (required)
-    cmds:
-      - for: ["Evicted", "Failed", "Succeeded"]
-        cmd: kubectl --context {{.cluster}} delete pods --field-selector status.phase={{.ITEM}} -A --ignore-not-found=true
-    requires:
-      vars: ["cluster"]
 
   network:
     desc: Create a netshoot container for a cluster
@@ -100,79 +129,6 @@ tasks:
     interactive: true
     cmd: podman run --rm -ti authelia/authelia:latest authelia crypto hash generate pbkdf2 --variant sha512
 
-  letmeout:
-    desc: run a privileged container with host access on a node
-    summary: |
-      Args:
-        node: The node (required)
-    interactive: true
-    cmd: |
-      kubectl run letmeout-{{.node}} -n kube-system --rm -i --tty --image=archlinux --overrides='
-        {
-          "apiVersion": "v1",
-          "spec": {
-            "containers": [
-              {
-                "name": "arch",
-                "image": "archlinux",
-                "args": [
-                  "bash"
-                ],
-                "securityContext": {
-                  "allowPrivilegeEscalation": true,
-                  "privileged": true
-                },
-                "stdin": true,
-                "stdinOnce": true,
-                "tty": true,
-                "volumeMounts": [
-                  {
-                    "mountPath": "/host",
-                    "name": "host"
-                  },
-                  {
-                    "name": "efivars",
-                    "mountPath": "/sys/firmware/efi/efivars"
-                  },
-                  {
-                    "name": "run-containerd",
-                    "mountPath": "/run/containerd"
-                  }
-                ]
-              }
-            ],
-            "dnsPolicy": "ClusterFirstWithHostNet",
-            "hostIPC": true,
-            "hostNetwork": true,
-            "hostPID": true,
-            "nodeName": "{{.node}}",
-            "restartPolicy": "Never",
-            "volumes": [
-              {
-                "name": "host",
-                "hostPath": {
-                  "path": "/"
-                }
-              },
-              {
-                "name": "efivars",
-                "hostPath": {
-                  "path": "/sys/firmware/efi/efivars"
-                }
-              },
-              {
-                "name": "run-containerd",
-                "hostPath": {
-                  "path": "/run/containerd"
-                }
-              }
-            ]
-          }
-        }'
-    requires:
-      vars: ["node"]
-    preconditions:
-      - kubectl get node {{.node}}
 
   # https://docs.github.com/en/enterprise-cloud@latest/actions/hosting-your-own-runners/managing-self-hosted-runners-with-actions-runner-controller/deploying-runner-scale-sets-with-actions-runner-controller#upgrading-arc
   upgrade-arc:
