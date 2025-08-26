@@ -19,7 +19,9 @@
 # Clusters
 - name: cluster/main
   color: "ffc300"
-- name: cluster/storage
+- name: cluster/network
+  color: "ffc300"
+- name: cluster/registry
   color: "ffc300"
 # Renovate Types
 - name: renovate/container
