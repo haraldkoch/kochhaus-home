@@ -10,18 +10,20 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
-  changed-clusters:
-    name: Changed Clusters
+  filter:
+    name: Flux Local - Filter
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.process-changes.outputs.matrix }}
-      any_changed: ${{ steps.changed-clusters.outputs.any_changed }}
-    permissions:
-      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
 
       - name: Get Changed Clusters
         id: changed-clusters
@@ -50,18 +52,18 @@ jobs:
           echo "matrix: $(cat $GITHUB_OUTPUT | grep matrix)"
 
   test:
-    if: ${{ needs.changed-clusters.outputs.any_changed == 'true' }}
-    needs: changed-clusters
+    if: ${{ needs.filter.outputs.matrix != '[]' }}
+    needs: filter
     name: Flux Local - Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        paths: ${{ fromJSON(needs.changed-clusters.outputs.matrix) }}
-    permissions:
-      contents: read
+        paths: ${{ fromJSON(needs.filter.outputs.matrix) }}
     steps:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
 
       - name: Run flux-local test
         uses: docker://ghcr.io/allenporter/flux-local:v7.8.0
@@ -74,8 +76,8 @@ jobs:
             --verbose
 
   diff:
-    if: ${{ needs.changed-clusters.outputs.any_changed == 'true' }}
-    needs: changed-clusters
+    if: ${{ needs.filter.outputs.matrix != '[]' }}
+    needs: filter
     name: Flux Local - Diff
     runs-on: ubuntu-latest
     permissions:
@@ -92,12 +94,14 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           path: pull
+          persist-credentials: false
 
       - name: Checkout Default Branch
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          ref: "${{ github.event.repository.default_branch }}"
           path: default
+          persist-credentials: false
+          ref: "${{ github.event.repository.default_branch }}"
 
       - name: Run flux-local diff
         uses: docker://ghcr.io/allenporter/flux-local:v7.8.0
@@ -110,24 +114,15 @@ jobs:
             --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
             --limit-bytes 10000
             --all-namespaces
-            --sources flux-system
+            --sources "flux-system"
             --output-file diff.patch
 
       - name: Generate Diff
         id: diff
         run: |
-          cat diff.patch;
-          {
-              echo 'diff<<EOF'
-              cat diff.patch
-              echo EOF
-          } >> "$GITHUB_OUTPUT";
-          {
-              echo "### Diff"
-              echo '```diff'
-              cat diff.patch
-              echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
+          echo 'diff<<EOF' >> $GITHUB_OUTPUT
+          cat diff.patch >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
 
       - if: ${{ steps.diff.outputs.diff != '' }}
         name: Generate Token
@@ -153,7 +148,6 @@ jobs:
     needs: ["test", "diff"]
     name: Flux Local - Success
     runs-on: ubuntu-latest
-    permissions: {}
     steps:
       - name: Any jobs failed?
         if: ${{ contains(needs.*.result, 'failure') }}

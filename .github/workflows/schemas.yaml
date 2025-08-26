@@ -13,6 +13,9 @@ on:
 env:
   UV_SYSTEM_PYTHON: "1"
 
+permissions:
+  contents: read
+
 jobs:
   main:
     name: Schemas
@@ -23,6 +26,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
 
       - name: Install kubectl
         uses: azure/setup-kubectl@776406bce94f63e41d621b960d78ee25c8b76ede # v4.0.1
@@ -43,16 +48,7 @@ jobs:
       - name: Install Python Dependencies
         run: uv pip install pyyaml
 
-      - name: Write kubeconfig
-        id: kubeconfig
-        uses: timheuer/base64-to-file@adaa40c0c581f276132199d4cf60afa07ce60eac # v1
-        with:
-          encodedString: "${{ secrets.KUBECONFIG }}"
-          fileName: kubeconfig
-
       - name: Run crd-extractor
-        env:
-          KUBECONFIG: ${{ steps.kubeconfig.outputs.filePath }}
         run: curl -fsSL https://raw.githubusercontent.com/datreeio/CRDs-catalog/43e4407642d4c37683c88711f37caa6c9c20ca40/Utilities/crd-extractor.sh | bash
 
       - name: Publish Schemas
