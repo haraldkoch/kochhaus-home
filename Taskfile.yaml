@@ -29,9 +29,6 @@ includes:
   database:
     aliases: ["db"]
     taskfile: .taskfiles/Database/Taskfile.yaml
-  externalsecrets:
-    aliases: ["es"]
-    taskfile: .taskfiles/ExternalSecrets
   flux:
     aliases: ["fx"]
     taskfile: .taskfiles/Flux/Taskfile.yaml
