@@ -47,7 +47,7 @@ tasks:
     vars:
       MODE: '{{.MODE | default "powercycle"}}'
       FACTORY_IMAGE:
-        sh: yq --exit-status 'select(documentIndex == 0) | .machine.install.image' {{.TALOS_DIR}}/nodes/{{.NODE}}.yaml.j2
+        sh: minijinja-cli "{{.TALOS_DIR}}/machineconfig.yaml.j2" | yq -e '.machine.install.image // ""'
     requires:
       vars: [CLUSTER, NODE]
     preconditions:
