@@ -109,7 +109,7 @@ spec:
       extraContainers:
         - name: argocd-vault-plugin
           command: [/var/run/argocd/argocd-cmp-server]
-          image: quay.io/argoproj/argocd:v3.1.0
+          image: quay.io/argoproj/argocd:v3.1.1
           envFrom:
             - secretRef:
                 name: argocd-vault-plugin-credentials
