@@ -50,6 +50,8 @@ machine:
         nconnect=16
         noatime=True
   install:
+    extraKernelArgs:
+      - -selinux
     image: factory.talos.dev/installer/82ad5623c0330f01924a1f0233880456129bd2d49c6b2ba190d3211cb10c5bd1:v1.10.6
     wipe: false
   kubelet:
@@ -169,6 +171,12 @@ cluster:
     image: registry.k8s.io/kube-controller-manager:v1.33.4
   coreDNS:
     disabled: true
+  discovery:
+    enabled: true
+    registries:
+      kubernetes:
+        disabled: true
+      service: {}
   etcd:
     advertisedSubnets:
       - 192.168.20.0/24

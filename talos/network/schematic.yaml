@@ -1,0 +1,17 @@
+---
+overlay:
+    image: siderolabs/sbc-rockchip
+    name: turingrk1
+customization:
+    extraKernelArgs:
+        - -console
+        - console=ttyS9,115200
+        - console=tty1
+    systemExtensions:
+        officialExtensions:
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
+
+# Your image schematic ID is: 82ad5623c0330f01924a1f0233880456129bd2d49c6b2ba190d3211cb10c5bd1
+# Disk Image
+#   https://factory.talos.dev/image/82ad5623c0330f01924a1f0233880456129bd2d49c6b2ba190d3211cb10c5bd1/v1.10.4/metal-arm64.raw.xz

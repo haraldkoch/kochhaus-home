@@ -116,7 +116,7 @@ tasks:
   reset-node:
     desc: Reset a node [CLUSTER=required] [NODE=required]
     prompt: Reset Talos node '{{.NODE}}' ... continue?
-    cmd: talosctl reset --nodes {{.NODE}} --system-labels-to-wipe STATE --system-labels-to-wipe EPHEMERAL --graceful=false --reboot #--user-disks-to-wipe u-local-hostpath
+    cmd: talosctl reset --nodes {{.NODE}} --system-labels-to-wipe STATE --system-labels-to-wipe EPHEMERAL --graceful=false --reboot --user-disks-to-wipe u-extra
     requires:
       vars: [CLUSTER,NODE]
     preconditions:
