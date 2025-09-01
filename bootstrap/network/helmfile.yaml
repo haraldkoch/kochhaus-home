@@ -26,21 +26,13 @@ releases:
     values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/network/apps/kube-system/coredns/app/helm/values.yaml']
     needs: ['kube-system/cilium']
 
-  - name: spegel
-    namespace: kube-system
-    atomic: true
-    chart: oci://ghcr.io/spegel-org/helm-charts/spegel
-    version: 0.3.0
-    values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/network/apps/kube-system/spegel/app/helm/values.yaml']
-    needs: ['kube-system/coredns']
-
   - name: cert-manager
     namespace: cert-manager
     atomic: true
     chart: oci://quay.io/jetstack/charts/cert-manager
     version: v1.18.2
     values: ['{{ requiredEnv "ROOT_DIR" }}/kubernetes/network/apps/cert-manager/cert-manager/app/helm/values.yaml']
-    needs: ['kube-system/spegel']
+    needs: ['kube-system/coredns']
 
   - name: flux-operator
     namespace: flux-system
