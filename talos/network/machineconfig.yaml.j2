@@ -34,6 +34,7 @@ machine:
   files:
     - op: create
       path: /etc/cri/conf.d/20-customization.part
+      permissions: 0o644
       content: |
         [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
@@ -125,9 +126,9 @@ cluster:
     {% if machinetype == 'controlplane' %}
     key: op://homelab/talos-network/CLUSTER_CA_KEY
     {% endif %}
-  clusterName: registry
+  clusterName: network
   controlPlane:
-    endpoint: https://192.168.20.66:6443
+    endpoint: https://192.168.20.32:6443
   id: op://homelab/talos-network/CLUSTER_ID
   network:
     cni:
