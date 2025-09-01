@@ -79,8 +79,8 @@ tasks:
       - which talosctl yq
 
   reboot-node:
-    desc: Reboot a node [CLUSTER=main] [NODE=required] [MODE=powercycle]
-    cmd: talosctl --nodes {{.NODE}} reboot --mode={{.MODE}}
+    desc: Reboot a node [CLUSTER=main] [NODE=required]
+    cmd: talosctl --nodes {{.NODE}} reboot --mode=powercycle
     requires:
       vars: [CLUSTER, NODE]
     preconditions:
