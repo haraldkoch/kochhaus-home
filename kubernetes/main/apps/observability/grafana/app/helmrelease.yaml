@@ -347,6 +347,15 @@ spec:
       replicas: 1
       serviceMonitor:
         enabled: true
+      networkPolicy:
+        extraIngressSelectors:
+          - namespaceSelector:
+              matchLabels:
+                kubernetes.io/metadata.name: observability
+            podSelector:
+              matchLabels:
+                app.kubernetes.io/instance: kube-prometheus-stack
+                app.kubernetes.io/name: prometheus
     persistence:
       enabled: false
     testFramework:
