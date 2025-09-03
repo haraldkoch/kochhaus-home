@@ -23,7 +23,7 @@ pipx_uvx = true
 "aqua:astral-sh/uv" = "0.8.15"
 "pipx:flux-local" = "7.8.0"
 
-"aqua:cilium/cilium-cli" = "0.18.6"
+"aqua:cilium/cilium-cli" = "0.18.7"
 "aqua:cli/cli" = "2.78.0"
 "aqua:cloudflare/cloudflared" = "2025.8.1"
 "aqua:FiloSottile/age" = "1.2.1"
