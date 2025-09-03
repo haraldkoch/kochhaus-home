@@ -49,6 +49,8 @@ machine:
         hard=True
         nconnect=16
         noatime=True
+        rsize=1048576
+        wsize=1048576
   install:
     extraKernelArgs:
       - -selinux
@@ -156,8 +158,8 @@ cluster:
       rules:
         - level: Metadata
     certSANs:
-      - 127.0.0.1
       - 192.168.20.32
+      - 127.0.0.1
     disablePodSecurityPolicy: true
     extraArgs:
       enable-aggregator-routing: "true"

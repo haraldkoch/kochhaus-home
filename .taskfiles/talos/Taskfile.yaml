@@ -126,7 +126,7 @@ tasks:
   reset-cluster:
     desc: Reset whole cluster [CLUSTER=required]
     prompt: Reset the Talos cluster {{.CLUSTER}} ... continue?
-    cmd: talosctl reset --nodes {{.NODES}} --graceful=false
+    cmd: talosctl reset --nodes {{.NODES}} --graceful=false --reboot --user-disks-to-wipe u-extra
     vars:
       NODES:
         sh: talosctl config info --output yaml | yq --exit-status '.nodes | join (",")'
