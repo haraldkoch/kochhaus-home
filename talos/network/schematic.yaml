@@ -1,16 +1,26 @@
 ---
 overlay:
-    image: siderolabs/sbc-rockchip
-    name: turingrk1
+  image: siderolabs/sbc-rockchip
+  name: turingrk1
 customization:
-    extraKernelArgs:
-        - -console
-        - console=ttyS9,115200
-        - console=tty1
-    systemExtensions:
-        officialExtensions:
-            - siderolabs/iscsi-tools
-            - siderolabs/util-linux-tools
+  extraKernelArgs:
+    - -console
+    - console=ttyS9,115200
+    - console=tty1
+    - -init_on_alloc                      # Less security, faster puter
+    - -init_on_free                       # Less security, faster puter
+    - -selinux                            # Less security, faster puter
+    - apparmor=0                          # Less security, faster puter
+    - init_on_alloc=0                     # Less security, faster puter
+    - init_on_free=0                      # Less security, faster puter
+    - mitigations=off                     # Less security, faster puter
+    - security=none                       # Less security, faster puter
+    - talos.auditd.disabled=1             # Less security, faster puter
+
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/iscsi-tools            # Longhorn
+      - siderolabs/util-linux-tools       # Longhorn
 
 # Your image schematic ID is: 82ad5623c0330f01924a1f0233880456129bd2d49c6b2ba190d3211cb10c5bd1
 # Disk Image
