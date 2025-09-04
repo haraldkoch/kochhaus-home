@@ -121,9 +121,6 @@ machine:
       - 199.85.99.3
       - 199.85.99.11
   token: op://homelab/talos-network/MACHINE_TOKEN
-  udev:
-    rules:
-      - SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d4", OWNER="1022", GROUP="1022"
 cluster:
   ca:
     crt: op://homelab/talos-network/CLUSTER_CA_CRT
