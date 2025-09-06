@@ -34,6 +34,7 @@ machine:
   files:
     - op: create
       path: /etc/cri/conf.d/20-customization.part
+      permissions: 0o644
       content: |
         [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
@@ -48,12 +49,11 @@ machine:
         hard=True
         nconnect=16
         noatime=True
+        rsize=1048576
+        wsize=1048576
   install:
     image: factory.talos.dev/installer/d36031c3e4a95a935eb2a38ebafbe0ce976d438e05c11f3642c34adf404868a1:v1.11.0
     wipe: false
-  kernel:
-    modules:
-      - name: nbd
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
     disableManifestsDirectory: true
@@ -76,7 +76,7 @@ machine:
       - 199.85.99.7
     disableSearchDomain: true
   nodeLabels:
-    topology.kubernetes.io/region: main
+    topology.kubernetes.io/region: registry
   sysctls:
     fs.inotify.max_user_instances: "8192"      # Watchdog
     fs.inotify.max_user_watches: "1048576"     # Watchdog
@@ -136,6 +136,12 @@ cluster:
     image: registry.k8s.io/kube-controller-manager:v1.34.0
   coreDNS:
     disabled: true
+  discovery:
+    enabled: true
+    registries:
+      kubernetes:
+        disabled: true
+      service: {}
   etcd:
     advertisedSubnets:
       - 192.168.20.0/24

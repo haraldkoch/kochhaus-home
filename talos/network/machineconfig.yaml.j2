@@ -52,8 +52,6 @@ machine:
         rsize=1048576
         wsize=1048576
   install:
-    extraKernelArgs:
-      - -selinux
     image: factory.talos.dev/installer/82ad5623c0330f01924a1f0233880456129bd2d49c6b2ba190d3211cb10c5bd1:v1.10.6
     wipe: false
   kubelet:
@@ -155,8 +153,8 @@ cluster:
       rules:
         - level: Metadata
     certSANs:
-      - 192.168.20.32
       - 127.0.0.1
+      - 192.168.20.32
     disablePodSecurityPolicy: true
     extraArgs:
       enable-aggregator-routing: "true"
