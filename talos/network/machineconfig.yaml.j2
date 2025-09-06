@@ -3,13 +3,13 @@
 version: v1alpha1
 machine:
   ca:
-    crt: op://homelab/talos-registry/MACHINE_CA_CRT
+    crt: op://homelab/talos-network/MACHINE_CA_CRT
     {% if machinetype == 'controlplane' %}
-    key: op://homelab/talos-registry/MACHINE_CA_KEY
+    key: op://homelab/talos-network/MACHINE_CA_KEY
     {% endif %}
   certSANs:
     - 127.0.0.1
-    - 192.168.20.66
+    - 192.168.20.32
   features:
     apidCheckExtKeyUsage: true
     diskQuotaSupport: true
@@ -52,7 +52,7 @@ machine:
         rsize=1048576
         wsize=1048576
   install:
-    image: factory.talos.dev/installer/d36031c3e4a95a935eb2a38ebafbe0ce976d438e05c11f3642c34adf404868a1:v1.11.0
+    image: factory.talos.dev/installer/82ad5623c0330f01924a1f0233880456129bd2d49c6b2ba190d3211cb10c5bd1:v1.10.6
     wipe: false
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
@@ -66,17 +66,46 @@ machine:
         options: ["bind", "rshared", "rw"]
         source: /var/mnt/extra
         type: bind
-    image: ghcr.io/siderolabs/kubelet:v1.34.0
+    image: ghcr.io/siderolabs/kubelet:v1.33.4
     nodeIP:
       validSubnets:
         - 192.168.20.0/24
+        - fdd5:aa8:9535:20::/64
   network:
     nameservers:
       - 199.85.99.6
       - 199.85.99.7
     disableSearchDomain: true
   nodeLabels:
-    topology.kubernetes.io/region: registry
+    topology.kubernetes.io/region: network
+    node.kubernetes.io/exclude-from-external-load-balancers: ""
+    node.longhorn.io/create-default-disk: "true"
+  registries:
+    mirrors:
+      docker.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/docker.io
+        overridePath: true
+      gcr.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/gcr.io
+        overridePath: true
+      ghcr.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/ghcr.io
+        overridePath: true
+      public.ecr.aws:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/public.ecr.aws
+        overridePath: true
+      quay.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/quay.io
+        overridePath: true
+      registry.k8s.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/registry.k8s.io
+        overridePath: true
   sysctls:
     fs.inotify.max_user_instances: "8192"      # Watchdog
     fs.inotify.max_user_watches: "1048576"     # Watchdog
@@ -89,31 +118,33 @@ machine:
     servers:
       - 199.85.99.3
       - 199.85.99.11
-  token: op://homelab/talos-registry/MACHINE_TOKEN
+  token: op://homelab/talos-network/MACHINE_TOKEN
 cluster:
   ca:
-    crt: op://homelab/talos-registry/CLUSTER_CA_CRT
+    crt: op://homelab/talos-network/CLUSTER_CA_CRT
     {% if machinetype == 'controlplane' %}
-    key: op://homelab/talos-registry/CLUSTER_CA_KEY
+    key: op://homelab/talos-network/CLUSTER_CA_KEY
     {% endif %}
-  clusterName: registry
+  clusterName: network
   controlPlane:
-    endpoint: https://192.168.20.66:6443
-  id: op://homelab/talos-registry/CLUSTER_ID
+    endpoint: https://192.168.20.32:6443
+  id: op://homelab/talos-network/CLUSTER_ID
   network:
     cni:
       name: none
     dnsDomain: cluster.local
     podSubnets:
       - 10.42.0.0/16
+      - fdd5:aa8:9535:42::/108
     serviceSubnets:
       - 10.43.0.0/16
-  secret: op://homelab/talos-registry/CLUSTER_SECRET
-  token: op://homelab/talos-registry/CLUSTER_TOKEN
+      - fdd5:aa8:9535:43::/108
+  secret: op://homelab/talos-network/CLUSTER_SECRET
+  token: op://homelab/talos-network/CLUSTER_TOKEN
   {% if machinetype == 'controlplane' %}
   aggregatorCA:
-    crt: op://homelab/talos-registry/CLUSTER_AGGREGATORCA_CRT
-    key: op://homelab/talos-registry/CLUSTER_AGGREGATORCA_KEY
+    crt: op://homelab/talos-network/CLUSTER_AGGREGATORCA_CRT
+    key: op://homelab/talos-network/CLUSTER_AGGREGATORCA_KEY
   allowSchedulingOnControlPlanes: true
   apiServer:
     auditPolicy:
@@ -123,17 +154,17 @@ cluster:
         - level: Metadata
     certSANs:
       - 127.0.0.1
-      - 192.168.20.66
+      - 192.168.20.32
     disablePodSecurityPolicy: true
     extraArgs:
       enable-aggregator-routing: "true"
-      feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
-      runtime-config: admissionregistration.k8s.io/v1beta1=true
-    image: registry.k8s.io/kube-apiserver:v1.34.0
+      feature-gates: ImageVolume=true
+    image: registry.k8s.io/kube-apiserver:v1.33.4
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-controller-manager:v1.34.0
+      node-cidr-mask-size-ipv6: "112"
+    image: registry.k8s.io/kube-controller-manager:v1.33.4
   coreDNS:
     disabled: true
   discovery:
@@ -146,8 +177,8 @@ cluster:
     advertisedSubnets:
       - 192.168.20.0/24
     ca:
-      crt: op://homelab/talos-registry/CLUSTER_ETCD_CA_CRT
-      key: op://homelab/talos-registry/CLUSTER_ETCD_CA_KEY
+      crt: op://homelab/talos-network/CLUSTER_ETCD_CA_CRT
+      key: op://homelab/talos-network/CLUSTER_ETCD_CA_KEY
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
   proxy:
@@ -172,8 +203,8 @@ cluster:
 #                    whenUnsatisfiable: ScheduleAnyway
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-scheduler:v1.34.0
-  secretboxEncryptionSecret: op://homelab/talos-registry/CLUSTER_SECRETBOXENCRYPTIONSECRET
+    image: registry.k8s.io/kube-scheduler:v1.33.4
+  secretboxEncryptionSecret: op://homelab/talos-network/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
-    key: op://homelab/talos-registry/CLUSTER_SERVICEACCOUNT_KEY
+    key: op://homelab/talos-network/CLUSTER_SERVICEACCOUNT_KEY
   {% endif %}

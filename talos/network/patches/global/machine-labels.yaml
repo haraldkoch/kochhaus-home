@@ -1,3 +1,0 @@
-machine:
-  nodeLabels:
-    node.longhorn.io/create-default-disk: "true"

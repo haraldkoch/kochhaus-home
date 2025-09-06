@@ -1,0 +1,40 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
+machine:
+  install:
+    disk: /dev/nvme0n1
+  network:
+    hostname: rk2
+    interfaces:
+      - dhcp: false
+        interface: end0
+        mtu: 1500
+        vlans:
+          - addresses:
+              - 192.168.20.35/24
+              - fdd5:aa8:9535:20::35/64
+            routes:
+              - gateway: 192.168.20.1
+                network: 0.0.0.0/0
+            vip:
+              ip: 192.168.20.32
+            vlanId: 20
+  type: controlplane
+---
+apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  maxSize: 250GB
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: extra
+provisioning:
+  diskSelector:
+    match: system_disk
+  grow: true
+  minSize: 500GB
+  maxSize: 750GB
+filesystem:
+  type: xfs
