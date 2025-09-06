@@ -91,8 +91,8 @@ function apply_sops_secrets() {
 
     local -r secrets=(
         "${ROOT_DIR}/bootstrap/${CLUSTER}/github-deploy-key.sops.yaml"
-        "${ROOT_DIR}/kubernetes/${CLUSTER}/components/common/cluster-secrets.sops.yaml"
-        "${ROOT_DIR}/kubernetes/${CLUSTER}/components/common/sops-age.sops.yaml"
+        "${ROOT_DIR}/kubernetes/${CLUSTER}/components/common/sops/cluster-secrets.sops.yaml"
+        "${ROOT_DIR}/kubernetes/${CLUSTER}/components/common/sops/secret.sops.yaml"
     )
 
     for secret in "${secrets[@]}"; do
@@ -120,39 +120,30 @@ function apply_sops_secrets() {
 function apply_crds() {
     log debug "Applying CRDs"
 
-    local -r crds=(
-        # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
-        https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.85.0/stripped-down-crds.yaml
-        # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
-        https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.3.0/experimental-install.yaml
-        # renovate: datasource=github-releases depName=kubernetes-sigs/external-dns
-        https://raw.githubusercontent.com/kubernetes-sigs/external-dns/refs/tags/v0.19.0/config/crd/standard/dnsendpoints.externaldns.k8s.io.yaml
-    )
+    local -r helmfile_file="${ROOT_DIR}/bootstrap/${CLUSTER}/00-crds.yaml"
 
-    for crd in "${crds[@]}"; do
-        if kubectl --context ${CLUSTER} diff --filename "${crd}" &>/dev/null; then
-            log info "CRDs are up-to-date" "crd=${crd}"
-            continue
-        fi
-        if kubectl --context ${CLUSTER} apply --server-side --filename "${crd}" &>/dev/null; then
-            log info "CRDs applied" "crd=${crd}"
-        else
-            log error "Failed to apply CRDs" "crd=${crd}"
-        fi
-    done
+    if [[ ! -f "${helmfile_file}" ]]; then
+        log error "File does not exist" "file=${helmfile_file}"
+    fi
+
+    if ! helmfile --kube-context ${CLUSTER} --file "${helmfile_file}" template -q | kubectl --context ${CLUSTER} apply --server-side -f -; then
+        log error "Failed to apply CRDs"
+    fi
+
+    log info "CRDs applied successfully"
 }
 
 # Apply Helm releases using helmfile
 function apply_helm_releases() {
     log debug "Applying Helm releases with helmfile"
 
-    local -r helmfile_file="${ROOT_DIR}/bootstrap/${CLUSTER}/helmfile.yaml"
+    local -r helmfile_file="${ROOT_DIR}/bootstrap/${CLUSTER}/01-apps.yaml"
 
     if [[ ! -f "${helmfile_file}" ]]; then
         log error "File does not exist" "file=${helmfile_file}"
     fi
 
-    if ! helmfile --kube-context ${CLUSTER} --file "${helmfile_file}" apply --hide-notes --skip-diff-on-install --suppress-diff --suppress-secrets; then
+    if ! helmfile --kube-context ${CLUSTER} --file "${helmfile_file}" sync --hide-notes; then
         log error "Failed to apply Helm releases"
     fi
 
