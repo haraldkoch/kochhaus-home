@@ -19,3 +19,7 @@ customization:
       - siderolabs/mei                    # Intel iGPU
       - siderolabs/nfsrahead              # NFS Performance
       - siderolabs/util-linux-tools       # Longhorn
+
+# Your image schematic ID is: ecd7f2ca59a064a6cb0c0bbb41ec1d1e017b3d034315c0efc1ac19947e7b6fc4
+# Disk Image
+#   https://factory.talos.dev/image/ecd7f2ca59a064a6cb0c0bbb41ec1d1e017b3d034315c0efc1ac19947e7b6fc4/v1.11.0/metal-amd64.iso
