@@ -1,0 +1,39 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
+machine:
+  install:
+    diskSelector:
+      model: P3-512
+  network:
+    hostname: k3s0
+    interfaces:
+      - dhcp: false
+        interface: enp0s31f6
+        mtu: 1500
+        vlans:
+          - addresses:
+              - 192.168.20.21/24
+              - fdd5:aa8:9535:20::21/64
+            routes:
+              - gateway: 192.168.20.1
+                network: 0.0.0.0/0
+            vlanId: 20
+  type: worker
+---
+apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  maxSize: 200GB
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: extra
+provisioning:
+  diskSelector:
+    match: system_disk
+  grow: true
+  minSize: 200GB
+  maxSize: 300GB
+filesystem:
+  type: xfs

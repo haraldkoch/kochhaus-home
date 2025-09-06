@@ -1,0 +1,210 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
+version: v1alpha1
+machine:
+  ca:
+    crt: op://homelab/talos-main/MACHINE_CA_CRT
+    {% if machinetype == 'controlplane' %}
+    key: op://homelab/talos-main/MACHINE_CA_KEY
+    {% endif %}
+  certSANs:
+    - 127.0.0.1
+    - 192.168.20.16
+  features:
+    apidCheckExtKeyUsage: true
+    diskQuotaSupport: true
+    hostDNS:
+      enabled: true
+      forwardKubeDNSToHost: false
+      resolveMemberNames: true
+    kubePrism:
+      enabled: true
+      port: 7445
+    {% if machinetype == 'controlplane' %}
+    kubernetesTalosAPIAccess:
+      allowedKubernetesNamespaces:
+        - actions-runner-system
+        - system-upgrade
+      allowedRoles:
+        - os:admin
+      enabled: true
+    {% endif %}
+    rbac: true
+    stableHostname: true
+  files:
+    - op: create
+      path: /etc/cri/conf.d/20-customization.part
+      permissions: 0o644
+      content: |
+        [plugins."io.containerd.cri.v1.images"]
+          discard_unpacked_layers = false
+        [plugins."io.containerd.cri.v1.runtime"]
+          device_ownership_from_security_context = true
+    - op: overwrite
+      path: /etc/nfsmount.conf
+      permissions: 0o644
+      content: |
+        [ NFSMount_Global_Options ]
+        nfsvers=4.2
+        hard=True
+        nconnect=16
+        noatime=True
+        rsize=1048576
+        wsize=1048576
+  install:
+    image: factory.talos.dev/metal-installer/ecd7f2ca59a064a6cb0c0bbb41ec1d1e017b3d034315c0efc1ac19947e7b6fc4:v1.11.0
+    wipe: false
+  kubelet:
+    defaultRuntimeSeccompProfileEnabled: true
+    disableManifestsDirectory: true
+    extraConfig:
+      featureGates:
+        ImageVolume: true
+      serializeImagePulls: false
+    extraMounts:
+      - destination: /var/mnt/extra
+        options: ["bind", "rshared", "rw"]
+        source: /var/mnt/extra
+        type: bind
+    image: ghcr.io/siderolabs/kubelet:v1.33.4
+    nodeIP:
+      validSubnets:
+        - 192.168.20.0/24
+        - fdd5:aa8:9535:20::/108
+  network:
+    nameservers:
+      - 199.85.99.6
+      - 199.85.99.7
+    disableSearchDomain: true
+  nodeLabels:
+    topology.kubernetes.io/region: main
+    node.kubernetes.io/exclude-from-external-load-balancers: ""
+  registries:
+    mirrors:
+      docker.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/docker.io
+        overridePath: true
+      gcr.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/gcr.io
+        overridePath: true
+      ghcr.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/ghcr.io
+        overridePath: true
+      public.ecr.aws:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/public.ecr.aws
+        overridePath: true
+      quay.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/quay.io
+        overridePath: true
+      registry.k8s.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/registry.k8s.io
+        overridePath: true
+  sysctls:
+    fs.inotify.max_user_instances: "8192"      # Watchdog
+    fs.inotify.max_user_watches: "1048576"     # Watchdog
+    net.core.rmem_max: "7500000"               # Cloudflared / QUIC
+    net.core.wmem_max: "7500000"               # Cloudflared / QUIC
+    net.ipv4.tcp_fastopen: "3"                 # Send and accept data in the opening SYN packet
+    user.max_user_namespaces: "11255"          # User Namespaces
+    # vm.nr_hugepages: "1024"                  # PostgreSQL
+  time:
+    disabled: false
+    servers:
+      - 199.85.99.3
+      - 199.85.99.11
+  token: op://homelab/talos-main/MACHINE_TOKEN
+cluster:
+  ca:
+    crt: op://homelab/talos-main/CLUSTER_CA_CRT
+    {% if machinetype == 'controlplane' %}
+    key: op://homelab/talos-main/CLUSTER_CA_KEY
+    {% endif %}
+  clusterName: main
+  controlPlane:
+    endpoint: https://192.168.20.16:6443
+  id: op://homelab/talos-main/CLUSTER_ID
+  network:
+    cni:
+      name: none
+    dnsDomain: cluster.local
+    podSubnets:
+      - 10.42.0.0/16
+      - fdd5:aa8:9535:42::/108
+    serviceSubnets:
+      - 10.43.0.0/16
+      - fdd5:aa8:9535:43::/108
+  secret: op://homelab/talos-main/CLUSTER_SECRET
+  token: op://homelab/talos-main/CLUSTER_TOKEN
+  {% if machinetype == 'controlplane' %}
+  aggregatorCA:
+    crt: op://homelab/talos-main/CLUSTER_AGGREGATORCA_CRT
+    key: op://homelab/talos-main/CLUSTER_AGGREGATORCA_KEY
+  allowSchedulingOnControlPlanes: true
+  apiServer:
+    auditPolicy:
+      apiVersion: audit.k8s.io/v1
+      kind: Policy
+      rules:
+        - level: Metadata
+    certSANs:
+      - 127.0.0.1
+      - 192.168.20.16
+    disablePodSecurityPolicy: true
+    extraArgs:
+      enable-aggregator-routing: "true"
+      feature-gates: ImageVolume=true
+    image: registry.k8s.io/kube-apiserver:v1.33.4
+  controllerManager:
+    extraArgs:
+      bind-address: 0.0.0.0
+      node-cidr-mask-size-ipv6: "112"
+    image: registry.k8s.io/kube-controller-manager:v1.33.4
+  coreDNS:
+    disabled: true
+  discovery:
+    enabled: true
+    registries:
+      kubernetes:
+        disabled: true
+      service: {}
+  etcd:
+    advertisedSubnets:
+      - 192.168.20.0/24
+    ca:
+      crt: op://homelab/talos-main/CLUSTER_ETCD_CA_CRT
+      key: op://homelab/talos-main/CLUSTER_ETCD_CA_KEY
+    extraArgs:
+      listen-metrics-urls: http://0.0.0.0:2381
+  proxy:
+    disabled: true
+  scheduler:
+    config:
+      apiVersion: kubescheduler.config.k8s.io/v1
+      kind: KubeSchedulerConfiguration
+      profiles:
+        - schedulerName: default-scheduler
+          plugins:
+            score:
+              disabled:
+                - name: ImageLocality
+#          pluginConfig:
+#            - name: PodTopologySpread
+#              args:
+#                defaultingType: List
+#                defaultConstraints:
+#                  - maxSkew: 1
+#                    topologyKey: kubernetes.io/hostname
+#                    whenUnsatisfiable: ScheduleAnyway
+    extraArgs:
+      bind-address: 0.0.0.0
+    image: registry.k8s.io/kube-scheduler:v1.33.4
+  secretboxEncryptionSecret: op://homelab/talos-main/CLUSTER_SECRETBOXENCRYPTIONSECRET
+  serviceAccount:
+    key: op://homelab/talos-main/CLUSTER_SERVICEACCOUNT_KEY
+  {% endif %}

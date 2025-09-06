@@ -1,0 +1,25 @@
+---
+customization:
+  extraKernelArgs:
+    - -init_on_alloc                      # Less security, faster puter
+    - -init_on_free                       # Less security, faster puter
+    - -selinux                            # Less security, faster puter
+    - apparmor=0                          # Less security, faster puter
+    - init_on_alloc=0                     # Less security, faster puter
+    - init_on_free=0                      # Less security, faster puter
+    - mitigations=off                     # Less security, faster puter
+    - security=none                       # Less security, faster puter
+    - talos.auditd.disabled=1             # Less security, faster puter
+
+  systemExtensions:
+    officialExtensions:
+      - siderolabs/i915                   # Intel iGPU
+      - siderolabs/intel-ucode            # Intel iGPU
+      - siderolabs/iscsi-tools            # Longhorn
+      - siderolabs/mei                    # Intel iGPU
+      - siderolabs/nfsrahead              # NFS Performance
+      - siderolabs/util-linux-tools       # Longhorn
+
+# Your image schematic ID is: ecd7f2ca59a064a6cb0c0bbb41ec1d1e017b3d034315c0efc1ac19947e7b6fc4
+# Disk Image
+#   https://factory.talos.dev/image/ecd7f2ca59a064a6cb0c0bbb41ec1d1e017b3d034315c0efc1ac19947e7b6fc4/v1.11.0/metal-amd64.iso

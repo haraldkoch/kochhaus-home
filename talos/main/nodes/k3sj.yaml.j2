@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
+machine:
+  install:
+    diskSelector:
+      model: Samsung SSD 860
+  network:
+    hostname: k3sj
+    interfaces:
+      - dhcp: false
+        interface: eno1
+        mtu: 1500
+        vlans:
+          - addresses:
+              - 192.168.20.17/24
+              - fdd5:aa8:9535:20::17/64
+            routes:
+              - gateway: 192.168.20.1
+                network: 0.0.0.0/0
+            vip:
+              ip: 192.168.20.16
+            vlanId: 20
+  type: controlplane
