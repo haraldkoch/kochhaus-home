@@ -1,6 +1,0 @@
-machine:
-  network:
-    disableSearchDomain: true
-    nameservers:
-      - 199.85.99.6
-      - 199.85.99.7
