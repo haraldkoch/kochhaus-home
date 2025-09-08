@@ -49,7 +49,7 @@ spec:
   healthChecks:
     - apiVersion: cert-manager.io/v1
       kind: Certificate
-      name: "${CLUSTER_DOMAIN/./-}-production"
+      name: "${SECRET_DOMAIN/./-}-production"
       namespace: cert-manager
   healthCheckExprs:
     - apiVersion: cert-manager.io/v1
