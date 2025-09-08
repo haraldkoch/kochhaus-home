@@ -32,6 +32,7 @@ spec:
       retries: 3
   values:
     manageCRDs: true
+    replicaCount: 2
     metrics:
       disableAuth: true
     podSecurityContext:

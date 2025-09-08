@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: longhorn
+    - name: openebs
       namespace: storage
     - name: snapshot-controller
       namespace: storage
