@@ -11,9 +11,6 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/guarded
-  dependsOn:
-    - name: external-secrets
-      namespace: security
   interval: 1h
   path: ./kubernetes/network/apps/default/kochhaus-docs/app
   postBuild:

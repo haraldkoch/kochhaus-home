@@ -9,9 +9,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: external-secrets
-      namespace: security
   interval: 1h
   path: ./kubernetes/network/apps/network/bind-dns/app
   prune: true

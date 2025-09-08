@@ -12,8 +12,6 @@ spec:
   components:
     - ../../../../components/gatus/guarded
   dependsOn:
-    - name: external-secrets
-      namespace: security
     - name: longhorn
       namespace: storage
   interval: 1h

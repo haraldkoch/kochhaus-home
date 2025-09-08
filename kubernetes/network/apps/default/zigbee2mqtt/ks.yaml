@@ -13,8 +13,6 @@ spec:
     - ../../../../components/gatus/guarded
     - ../../../../components/volsync
   dependsOn:
-    - name: external-secrets
-      namespace: security
     - name: node-feature-discovery-rules
       namespace: kube-system
   interval: 1h
