@@ -7,4 +7,3 @@ components:
   - ../../components/common
 resources:
   - ./bind-dns/ks.yaml
-  - ./ingress-nginx/ks.yaml
