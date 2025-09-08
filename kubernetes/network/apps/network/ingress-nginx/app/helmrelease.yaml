@@ -18,7 +18,7 @@ spec:
   chart:
     spec:
       chart: ingress-nginx
-      version: 4.13.0
+      version: 4.13.2
       sourceRef:
         kind: HelmRepository
         name: ingress-nginx
@@ -33,6 +33,7 @@ spec:
   values:
     fullnameOverride: internal-ingress-nginx
     controller:
+      replicaCount: 1
       annotations:
         configmap.reloader.stakater.com/reload: internal-ingress-nginx-controller
       extraEnvs:
@@ -103,7 +104,6 @@ spec:
       resources:
         requests:
           cpu: 100m
-          memory: 250Mi
         limits:
           memory: 500Mi
     defaultBackend:

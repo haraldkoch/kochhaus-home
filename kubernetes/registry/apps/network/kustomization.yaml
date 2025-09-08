@@ -6,5 +6,5 @@ namespace: network
 components:
   - ../../components/common
 resources:
-  - ./external-dns/ks.yaml
-  - ./nginx/ks.yaml
+  - ./bind-dns/ks.yaml
+  - ./ingress-nginx/ks.yaml
