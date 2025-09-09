@@ -41,7 +41,6 @@ spec:
             name: &secret bind-dns-secret
             key: rfc2136_tsig_secret
     extraArgs:
-      - --ignore-ingress-tls-spec
       - --rfc2136-host=${PRIVATE_DNS_PRIMARY}
       - --rfc2136-port=53
       - --rfc2136-zone=${CLUSTER_DOMAIN}
@@ -51,7 +50,7 @@ spec:
       - --rfc2136-tsig-secret-alg=hmac-sha256
     triggerLoopOnEvent: true
     policy: sync
-    sources: ["gateway-httproute", "ingress", "service"]
+    sources: ["gateway-httproute", "service"]
     # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
     txtOwnerId: network
     txtPrefix: k8s.

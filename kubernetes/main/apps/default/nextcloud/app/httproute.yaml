@@ -6,8 +6,8 @@ metadata:
   name: nextcloud
 spec:
   parentRefs:
-    - name: external
-      namespace: kube-system
+    - name: envoy-external
+      namespace: network
       sectionName: https
   hostnames:
     - cloud.${CLUSTER_DOMAIN}

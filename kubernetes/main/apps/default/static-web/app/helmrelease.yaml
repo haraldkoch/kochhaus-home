@@ -61,8 +61,8 @@ spec:
       app:
         hostnames: ["www.${CLUSTER_DOMAIN}"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
     persistence:
       public:

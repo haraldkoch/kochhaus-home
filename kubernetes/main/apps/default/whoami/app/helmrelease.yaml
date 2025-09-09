@@ -55,8 +55,8 @@ spec:
       # FIXME: AUTH
       main:
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         hostnames:
           - whoami.${CLUSTER_DOMAIN}
