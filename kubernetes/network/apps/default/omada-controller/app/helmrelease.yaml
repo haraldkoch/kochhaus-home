@@ -130,23 +130,6 @@ spec:
             port: 27217
             protocol: TCP
             targetPort: 27217
-    ingress:
-      app:
-        className: internal
-        annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
-          nginx.ingress.kubernetes.io/use-regex: "true"
-          nginx.ingress.kubernetes.io/upstream-vhost: "omada.${CLUSTER_DOMAIN}:8043"
-          nginx.ingress.kubernetes.io/proxy-redirect-from: "~https://(.+):8043/(.+)/login$"
-          nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$1/$2/login"
-        hosts:
-          - host: ${GATUS_SUBDOMAIN}.${CLUSTER_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
     persistence:
       data:
         existingClaim: ${VOLSYNC_CLAIM}

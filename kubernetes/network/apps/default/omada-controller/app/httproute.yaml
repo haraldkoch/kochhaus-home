@@ -11,7 +11,7 @@ metadata:
   name: omada-controller
 spec:
   hostnames:
-    - ${GATUS_SUBDOMAIN}-gateway.${CLUSTER_DOMAIN}
+    - ${GATUS_SUBDOMAIN}.${CLUSTER_DOMAIN}
   parentRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
