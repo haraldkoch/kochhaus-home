@@ -6,8 +6,8 @@ metadata:
   name: longhorn
 spec:
   parentRefs:
-    - name: internal
-      namespace: kube-system
+    - name: envoy-internal
+      namespace: network
       sectionName: https
   hostnames: ["longhorn.${CLUSTER_DOMAIN}"]
   rules:

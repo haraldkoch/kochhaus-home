@@ -1,0 +1,46 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: internal-network.${SECRET_DOMAIN}
+  labels:
+    app.kubernetes.io/instance: omada-controller
+    app.kubernetes.io/name: omada-controller
+  name: omada-controller
+spec:
+  hostnames:
+    - ${GATUS_SUBDOMAIN}.${CLUSTER_DOMAIN}
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-internal
+      namespace: network
+      sectionName: https
+  rules:
+    - backendRefs:
+        - group: gateway.envoyproxy.io
+          kind: Backend
+          name: omada-controller
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/gateway.envoyproxy.io/backend_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: Backend
+metadata:
+  labels:
+    app.kubernetes.io/instance: omada-controller
+    app.kubernetes.io/name: omada-controller
+  name: omada-controller
+spec:
+  endpoints:
+    - fqdn:
+        hostname: omada-controller-app.default.svc.cluster.local
+        port: 8043
+  tls:
+    insecureSkipVerify: true

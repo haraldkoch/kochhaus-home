@@ -66,15 +66,15 @@ spec:
         hostnames:
           - *hostName
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
       webhooks:
         hostnames:
           - n8n-webhook.${CLUSTER_DOMAIN}
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https
         rules:
           - matches:

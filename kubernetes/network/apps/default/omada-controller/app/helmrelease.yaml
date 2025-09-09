@@ -57,8 +57,6 @@ spec:
       app:
         controller: omada-controller
         primary: true
-        annotations:
-          lbipam.cilium.io/ips: "${OMADA_IPV4},${OMADA_IPV6}"
         ports:
           http:
             port: 8043
@@ -67,6 +65,8 @@ spec:
       controller:
         controller: omada-controller
         type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: "${OMADA_IPV4},${OMADA_IPV6}"
         externalTrafficPolicy: Local
         ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack
@@ -130,34 +130,6 @@ spec:
             port: 27217
             protocol: TCP
             targetPort: 27217
-    ingress:
-      app:
-        className: internal
-        annotations:
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
-          nginx.ingress.kubernetes.io/use-regex: "true"
-          nginx.ingress.kubernetes.io/upstream-vhost: "omada.${CLUSTER_DOMAIN}:8043"
-          nginx.ingress.kubernetes.io/proxy-redirect-from: "~https://(.+):8043/(.+)/login$"
-          nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$1/$2/login"
-        hosts:
-          - host: ${GATUS_SUBDOMAIN}.${CLUSTER_DOMAIN}
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
-    route:
-      app:
-        hostnames: ["${GATUS_SUBDOMAIN}-gateway.${CLUSTER_DOMAIN}"]
-        parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: 8043
     persistence:
       data:
         existingClaim: ${VOLSYNC_CLAIM}
