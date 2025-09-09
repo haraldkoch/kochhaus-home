@@ -331,8 +331,8 @@ spec:
         enabled: true
         hostnames: ["grafana-main.${CLUSTER_DOMAIN}"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
     downloadDashboardsImage:
       registry: quay.io

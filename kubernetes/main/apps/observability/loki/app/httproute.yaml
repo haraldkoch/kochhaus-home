@@ -7,11 +7,11 @@ metadata:
 spec:
   hostnames: ["loki.${CLUSTER_DOMAIN}"]
   parentRefs:
-    - name: internal
-      namespace: kube-system
+    - name: envoy-internal
+      namespace: network
       sectionName: https
   rules:
     - backendRefs:
         - name: loki-headless
-          namespace: flux-system
+          namespace: observability
           port: 3100
