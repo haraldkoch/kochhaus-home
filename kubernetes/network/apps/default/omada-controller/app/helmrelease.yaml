@@ -147,17 +147,6 @@ spec:
                 service:
                   identifier: app
                   port: http
-    route:
-      app:
-        hostnames: ["${GATUS_SUBDOMAIN}-gateway.${CLUSTER_DOMAIN}"]
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: 8043
     persistence:
       data:
         existingClaim: ${VOLSYNC_CLAIM}
