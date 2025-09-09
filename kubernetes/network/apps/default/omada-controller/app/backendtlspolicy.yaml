@@ -1,4 +1,17 @@
 ---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/gateway.envoyproxy.io/backend_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: Backend
+metadata:
+  name: omada-controller
+spec:
+  endpoints:
+    - fqdn:
+        hostname: omada-controller-app.default.svc.cluster.local
+        port: 8043
+  tls:
+    insecureSkipVerify: true
+---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/gateway.networking.k8s.io/backendtlspolicy_v1alpha3.json
 apiVersion: gateway.networking.k8s.io/v1alpha3
 kind: BackendTLSPolicy
