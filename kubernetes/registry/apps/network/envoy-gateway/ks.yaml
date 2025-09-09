@@ -9,9 +9,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: certificates-import
-      namespace: network
+  # dependsOn:
+  #   - name: certificates-import
+  #     namespace: network
   interval: 1h
   path: ./kubernetes/registry/apps/network/envoy-gateway/app
   prune: true
