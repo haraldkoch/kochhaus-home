@@ -108,8 +108,8 @@ spec:
       app:
         hostnames: ["status-network.${CLUSTER_DOMAIN}"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
     rbac:
       roles:

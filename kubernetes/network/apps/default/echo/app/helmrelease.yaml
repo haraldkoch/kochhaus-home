@@ -75,6 +75,6 @@ spec:
       app:
         hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
         parentRefs:
-          - name: external
-            namespace: kube-system
+          - name: envoy-external
+            namespace: network
             sectionName: https

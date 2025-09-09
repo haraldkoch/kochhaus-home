@@ -151,8 +151,8 @@ spec:
       app:
         hostnames: ["${GATUS_SUBDOMAIN}-gateway.${CLUSTER_DOMAIN}"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
+          - name: envoy-internal
+            namespace: network
             sectionName: https
         rules:
           - backendRefs:

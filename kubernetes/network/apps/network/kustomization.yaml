@@ -6,8 +6,10 @@ namespace: network
 components:
   - ../../components/common
 resources:
+  - ./certificates/ks.yaml
   - ./bind-dns/ks.yaml
   - ./cloudflare-dns/ks.yaml
   - ./cloudflared/ks.yaml
+  - ./envoy-gateway/ks.yaml
   - ./haproxy/ks.yaml
   - ./ingress-nginx/ks.yaml
