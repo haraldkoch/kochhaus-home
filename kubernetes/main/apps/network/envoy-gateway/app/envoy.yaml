@@ -5,6 +5,7 @@ kind: EnvoyProxy
 metadata:
   name: envoy
 spec:
+  ipFamily: DualStack
   logging:
     level:
       default: info
