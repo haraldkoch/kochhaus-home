@@ -57,8 +57,6 @@ spec:
       app:
         controller: omada-controller
         primary: true
-        annotations:
-          lbipam.cilium.io/ips: "${OMADA_IPV4},${OMADA_IPV6}"
         ports:
           http:
             port: 8043
@@ -67,6 +65,8 @@ spec:
       controller:
         controller: omada-controller
         type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: "${OMADA_IPV4},${OMADA_IPV6}"
         externalTrafficPolicy: Local
         ipFamilies: [IPv4, IPv6]
         ipFamilyPolicy: PreferDualStack
