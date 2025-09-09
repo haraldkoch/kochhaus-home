@@ -13,7 +13,7 @@ instance:
   sync:
     kind: GitRepository
     url: https://github.com/haraldkoch/kochhaus-home
-    ref: refs/heads/envoy-gateway-registry
+    ref: refs/heads/main
     path: kubernetes/registry/flux/cluster
     interval: 1h
   commonMetadata:
