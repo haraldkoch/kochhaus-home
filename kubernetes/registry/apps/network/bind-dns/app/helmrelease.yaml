@@ -43,7 +43,6 @@ spec:
     extraArgs:
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
-      - --ignore-ingress-tls-spec
       - --rfc2136-host=${SECRET_DNS_PRIMARY}
       - --rfc2136-port=53
       - --rfc2136-zone=${SECRET_DOMAIN}
@@ -53,7 +52,7 @@ spec:
       - --rfc2136-tsig-secret-alg=hmac-sha256
     triggerLoopOnEvent: true
     policy: sync
-    sources: ["crd", "gateway-httproute", "ingress", "service"]
+    sources: ["crd", "gateway-httproute", "service"]
     # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
     txtOwnerId: registry
     txtPrefix: k8s.
