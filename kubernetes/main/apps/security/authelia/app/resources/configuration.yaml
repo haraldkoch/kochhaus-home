@@ -138,3 +138,12 @@ identity_providers:
         scopes: ["openid", "profile", "groups", "email"]
         redirect_uris: ["https://argocd.${CLUSTER_DOMAIN}/auth/callback"]
         userinfo_signed_response_alg: none
+      - client_id: whoami
+        client_name: Who Am I
+        client_secret: "$${WHOAMI_OAUTH_CLIENT_SECRET_DIGEST}"
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        scopes: ["openid", "profile", "groups", "email"]
+        redirect_uris: ["https://whoami.${CLUSTER_DOMAIN}/oauth2/callback"]
+        userinfo_signed_response_alg: none
