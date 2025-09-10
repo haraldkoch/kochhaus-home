@@ -66,7 +66,7 @@ machine:
         options: ["bind", "rshared", "rw"]
         source: /var/mnt/extra
         type: bind
-    image: ghcr.io/siderolabs/kubelet:v1.34.0
+    image: ghcr.io/siderolabs/kubelet:v1.34.1
     nodeIP:
       validSubnets:
         - 192.168.20.0/24
@@ -159,12 +159,12 @@ cluster:
     extraArgs:
       enable-aggregator-routing: "true"
       feature-gates: ImageVolume=true
-    image: registry.k8s.io/kube-apiserver:v1.34.0
+    image: registry.k8s.io/kube-apiserver:v1.34.1
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
       node-cidr-mask-size-ipv6: "112"
-    image: registry.k8s.io/kube-controller-manager:v1.34.0
+    image: registry.k8s.io/kube-controller-manager:v1.34.1
   coreDNS:
     disabled: true
   discovery:
@@ -203,7 +203,7 @@ cluster:
 #                    whenUnsatisfiable: ScheduleAnyway
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-scheduler:v1.34.0
+    image: registry.k8s.io/kube-scheduler:v1.34.1
   secretboxEncryptionSecret: op://homelab/talos-main/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
     key: op://homelab/talos-main/CLUSTER_SERVICEACCOUNT_KEY
