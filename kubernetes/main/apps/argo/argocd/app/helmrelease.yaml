@@ -18,7 +18,7 @@ spec:
   chart:
     spec:
       chart: argo-cd
-      version: 8.3.9
+      version: 8.5.0
       sourceRef:
         kind: HelmRepository
         name: argo
