@@ -77,16 +77,6 @@
       minimumGroupSize: 2,
     },
     {
-      description: "Silence-Operator Group",
-      groupName: "silence-operator",
-      matchPackageNames: ["/silence-operator/"],
-      matchDatasources: ["docker", "github-releases"],
-      group: {
-        commitMessageTopic: "{{{groupName}}} group",
-      },
-      minimumGroupSize: 2,
-    },
-    {
       description: "System Upgrade Controller Group",
       groupName: "System Upgrade Controller",
       matchPackageNames: ["/system-upgrade-controller/"],
