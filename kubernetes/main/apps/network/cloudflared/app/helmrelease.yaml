@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: ghcr.io/haraldkoch/cloudflared
-              tag: 2025.8.1@sha256:e53797378d94d67571a0733514a61a9dd690a75c944a50c45359f76a11477663
+              tag: 2025.9.0@sha256:465de59e1ec4ed30b9610b84f1b1022c2ce019129b7e9e7a94cf4f06531bae99
             env:
               NO_AUTOUPDATE: true
               TUNNEL_METRICS: 0.0.0.0:8080
