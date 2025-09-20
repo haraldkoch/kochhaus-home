@@ -135,12 +135,6 @@ cluster:
     image: registry.k8s.io/kube-controller-manager:v1.34.1
   coreDNS:
     disabled: true
-  discovery:
-    enabled: true
-    registries:
-      kubernetes:
-        disabled: true
-      service: {}
   etcd:
     advertisedSubnets:
       - 192.168.20.0/24
@@ -151,6 +145,7 @@ cluster:
       listen-metrics-urls: http://0.0.0.0:2381
   proxy:
     disabled: true
+    image: registry.k8s.io/kube-proxy:v1.34.1
   scheduler:
     config:
       apiVersion: kubescheduler.config.k8s.io/v1
@@ -161,14 +156,14 @@ cluster:
             score:
               disabled:
                 - name: ImageLocality
-#          pluginConfig:
-#            - name: PodTopologySpread
-#              args:
-#                defaultingType: List
-#                defaultConstraints:
-#                  - maxSkew: 1
-#                    topologyKey: kubernetes.io/hostname
-#                    whenUnsatisfiable: ScheduleAnyway
+          pluginConfig:
+            - name: PodTopologySpread
+              args:
+                defaultingType: List
+                defaultConstraints:
+                  - maxSkew: 1
+                    topologyKey: kubernetes.io/hostname
+                    whenUnsatisfiable: ScheduleAnyway
     extraArgs:
       bind-address: 0.0.0.0
     image: registry.k8s.io/kube-scheduler:v1.34.1
