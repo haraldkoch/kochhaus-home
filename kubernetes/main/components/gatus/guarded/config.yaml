@@ -1,3 +1,4 @@
+---
 endpoints:
   - name: "${APP}"
     group: guarded
@@ -10,6 +11,6 @@ endpoints:
       query-name: "${GATUS_SUBDOMAIN:=${APP}}.${CLUSTER_DOMAIN}"
       query-type: A
     conditions:
-      - "len([BODY]) == 0"
+      - len([BODY]) == 0
     alerts:
       - type: pushover
