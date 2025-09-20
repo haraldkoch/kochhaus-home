@@ -19,4 +19,3 @@ spec:
   values:
     serviceMonitor:
       create: true
-
