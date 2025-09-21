@@ -6,9 +6,9 @@ namespace: observability
 components:
   - ../../components/common
 resources:
-  - ./alloy/ks.yaml
   - ./blackbox-exporter/ks.yaml
   - ./dnssec-exporter/ks.yaml
+  - ./fluent-bit/ks.yaml
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
   - ./json-exporter/ks.yaml

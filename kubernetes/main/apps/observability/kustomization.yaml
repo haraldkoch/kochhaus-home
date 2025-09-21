@@ -6,7 +6,7 @@ namespace: observability
 components:
   - ../../components/common
 resources:
-  - ./alloy/ks.yaml
+  - ./fluent-bit/ks.yaml
   - ./gatus/ks.yaml
   - ./goldpinger/ks.yaml
   - ./grafana/ks.yaml
