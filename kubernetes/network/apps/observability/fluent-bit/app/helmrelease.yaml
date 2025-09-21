@@ -83,6 +83,7 @@ spec:
           name loki
           match kubernetes.*
           host loki.${CLUSTER_DOMAIN}
+          net.dns.prefer_ipv4 on
           port 443
           tls on
           uri /loki/api/v1/push
