@@ -59,6 +59,7 @@ spec:
         ports:
           http:
             port: &port 8123
+            appProtocol: kubernetes.io/ws
       metrics:
         controller: haproxy
         ports:
