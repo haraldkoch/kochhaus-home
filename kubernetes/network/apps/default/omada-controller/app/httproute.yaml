@@ -22,7 +22,7 @@ spec:
     - backendRefs:
         - group: gateway.envoyproxy.io
           kind: Backend
-          name: omada-controller
+          name: omada-controller-app
           weight: 1
       matches:
         - path:
