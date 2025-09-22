@@ -91,6 +91,7 @@ spec:
               namespace: network
               sectionName: https
       prometheusSpec:
+        externalUrl: https://prometheus-main.${CLUSTER_DOMAIN}
         image:
           registry: docker.io
           repository: prompp/prompp
