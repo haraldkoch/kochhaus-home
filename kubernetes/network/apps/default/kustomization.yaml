@@ -8,6 +8,7 @@ components:
 resources:
   - ./changedetection/ks.yaml
   - ./echo/ks.yaml
+  - ./hass/ks.yaml
   - ./homer/ks.yaml
   - ./it-tools/ks.yaml
   - ./kochhaus-docs/ks.yaml

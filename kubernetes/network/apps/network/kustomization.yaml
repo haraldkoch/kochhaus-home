@@ -12,4 +12,3 @@ resources:
   - ./cloudflared/ks.yaml
   - ./dyndns/ks.yaml
   - ./envoy-gateway/ks.yaml
-  - ./haproxy/ks.yaml
