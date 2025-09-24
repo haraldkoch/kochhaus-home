@@ -75,7 +75,8 @@ machine:
     nameservers:
       - 199.85.99.6
       - 199.85.99.7
-    disableSearchDomain: true
+    searchDomains:
+      - op://homelab/talos-main/private_static_domain
   nodeLabels:
     topology.kubernetes.io/region: main
   registries:
