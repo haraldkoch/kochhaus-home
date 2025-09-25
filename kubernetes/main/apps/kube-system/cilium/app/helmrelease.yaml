@@ -58,17 +58,12 @@ spec:
       mode: kubernetes
     ipv4NativeRoutingCIDR: 10.42.0.0/16
     ipv6NativeRoutingCIDR: fdd5:aa8:9535:42::/108
-    k8s:
-      apiServerURLs: >-
-        https://192.168.20.17:6443
-        https://192.168.20.18:6443
-        https://192.168.20.19:6443
     k8sServiceHost: 127.0.0.1
     k8sServicePort: 7445
     kubeProxyReplacement: true
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
     l2announcements:
-      enabled: true
+      enabled: false
     loadBalancer:
       algorithm: maglev
       mode: dsr
