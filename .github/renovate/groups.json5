@@ -3,9 +3,9 @@
   packageRules: [
     {
       description: "1Password Connect Group",
-      groupName: "1passwordconnnect",
+      groupName: "1password-connect",
       matchDatasources: ["docker"],
-      matchPackageNames: ["/1password\/connect/"],
+      matchPackageNames: ["/1password/"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
@@ -58,13 +58,14 @@
       matchPackageNames: [
         "/kube-apiserver/",
         "/kube-controller-manager/",
+        "/kube-proxy/",
         "/kube-scheduler/",
         "/kubelet/",
       ],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
-      minimumGroupSize: 4,
+      minimumGroupSize: 5,
     },
     {
       description: "Rook-Ceph Group",
@@ -77,10 +78,10 @@
       minimumGroupSize: 2,
     },
     {
-      description: "System Upgrade Controller Group",
-      groupName: "System Upgrade Controller",
-      matchPackageNames: ["/system-upgrade-controller/"],
-      matchDatasources: ["docker", "github-releases"],
+      description: "Talos Group",
+      groupName: "talos",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/installer/"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
