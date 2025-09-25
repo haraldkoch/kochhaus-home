@@ -86,7 +86,7 @@ function fetch_kubeconfig() {
         log fatal "No Talos controller found"
     fi
 
-    if ! talosctl kubeconfig --nodes "${controller}" --force --force-context-name {{.CLUSTER}} kubernetes/{{.CLUSTER}} &>/dev/null; then
+    if ! talosctl kubeconfig --nodes "${controller}" --force --force-context-name ${CLUSTER} kubernetes/${CLUSTER} &>/dev/null; then
         log fatal "Failed to fetch kubeconfig"
     fi
 
