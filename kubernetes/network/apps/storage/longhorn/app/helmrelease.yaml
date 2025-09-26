@@ -24,16 +24,16 @@ spec:
       backupTarget: s3://longhorn@ca-east-1/
       backupTargetCredentialSecret: longhorn-secret
       defaultDataPath: /var/mnt/extra/longhorn
-      defaultReplicaCount: 3
+      defaultReplicaCount: "3"
       backupstorePollInterval: 0
       createDefaultDiskLabeledNodes: true
       restoreVolumeRecurringJobs: true
-      storageOverProvisioningPercentage: 100
-      storageMinimalAvailablePercentage: 1
+      storageOverProvisioningPercentage: "100"
+      storageMinimalAvailablePercentage: "1"
       guaranteedEngineManagerCPU: 20
       guaranteedReplicaManagerCPU: 20
       orphanAutoDeletion: true
-      concurrentAutomaticEngineUpgradePerNodeLimit: 3
+      concurrentAutomaticEngineUpgradePerNodeLimit: "3"
       defaultLonghornStaticStorageClass: longhorn
       nodeDownPodDeletionPolicy: delete-both-statefulset-and-deployment-pod
       taintToleration: node-role.kubernetes.io/control-plane:NoSchedule
