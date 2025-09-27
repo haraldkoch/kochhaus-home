@@ -153,12 +153,13 @@ cluster:
       rules:
         - level: Metadata
     certSANs:
-      - 127.0.0.1
       - 192.168.20.16
+      - 127.0.0.1
     disablePodSecurityPolicy: true
     extraArgs:
       enable-aggregator-routing: "true"
-      feature-gates: ImageVolume=true
+      feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
+      runtime-config: admissionregistration.k8s.io/v1beta1=true
     image: registry.k8s.io/kube-apiserver:v1.34.1
   controllerManager:
     extraArgs:
