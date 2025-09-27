@@ -118,13 +118,6 @@ spec:
         ports:
           http:
             port: *apiPort
-    route:
-      app:
-        hostnames: ["1pwconnect.${CLUSTER_DOMAIN}"]
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
-            sectionName: https
     persistence:
       config:
         type: emptyDir
