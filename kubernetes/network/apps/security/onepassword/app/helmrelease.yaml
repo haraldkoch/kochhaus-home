@@ -3,40 +3,40 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: onepassword-connect
+  name: onepassword
 spec:
-  interval: 30m
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: app-template
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
   values:
     controllers:
-      onepassword-connect:
+      onepassword:
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           api:
             image:
-              repository: ghcr.io/haraldkoch/onepassword-connect-api
-              tag: 1.8.1@sha256:a7f072b50c65e161ccdf8d0f6714a631a93fea4c92f2865651a34818cb6ef3b1
+              repository: ghcr.io/1password/connect-api
+              tag: 1.8.1@sha256:ac6e9efe4f54cc351393fcb8f01b10e667b08b68ff47ebf6024ff93eae642e5c
             env:
               XDG_DATA_HOME: &configDir /config
+              OP_HTTP_PORT: &apiPort 80
               OP_BUS_PORT: 11220
               OP_BUS_PEERS: localhost:11221
-              OP_HTTP_PORT: &apiPort 80
               OP_SESSION:
                 valueFrom:
                   secretKeyRef:
-                    name: onepassword-connect-secret
-                    key: onepassword-credentials.json
+                    name: "{{ .Release.Name }}-secret"
+                    key: 1password-credentials.json
             probes:
               liveness:
                 enabled: true
@@ -45,8 +45,9 @@ spec:
                   httpGet:
                     path: /heartbeat
                     port: *apiPort
-                  initialDelaySeconds: 15
-                  periodSeconds: 30
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
                   failureThreshold: 3
               readiness:
                 enabled: true
@@ -55,21 +56,23 @@ spec:
                   httpGet:
                     path: /health
                     port: *apiPort
-                  initialDelaySeconds: 15
-            securityContext: &securityContext
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
             resources: &resources
               requests:
                 cpu: 10m
-                memory: 10Mi
               limits:
-                memory: 100Mi
+                memory: 64Mi
+            securityContext: &securityContext
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
           sync:
             image:
-              repository: ghcr.io/haraldkoch/onepassword-sync
-              tag: 1.8.1@sha256:48974a6763dc02c75ad1b0464e050a320e4510ee9cbd1f4c19973abe8d4de0fe
+              repository: ghcr.io/1password/connect-sync
+              tag: 1.8.1@sha256:565e1765aff957379acbb46fab2b2d67380a149d70ef22507d05a5316a100052
             env:
               XDG_DATA_HOME: *configDir
               OP_HTTP_PORT: &syncPort 8081
@@ -78,8 +81,8 @@ spec:
               OP_SESSION:
                 valueFrom:
                   secretKeyRef:
-                    name: onepassword-connect-secret
-                    key: onepassword-credentials.json
+                    name: "{{ .Release.Name }}-secret"
+                    key: 1password-credentials.json
             probes:
               liveness:
                 enabled: true
@@ -88,8 +91,9 @@ spec:
                   httpGet:
                     path: /heartbeat
                     port: *syncPort
-                  initialDelaySeconds: 15
-                  periodSeconds: 30
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
                   failureThreshold: 3
               readiness:
                 enabled: true
@@ -98,19 +102,19 @@ spec:
                   httpGet:
                     path: /health
                     port: *syncPort
-                  initialDelaySeconds: 15
-            securityContext: *securityContext
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
             resources: *resources
-        pod:
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 999
-            runAsGroup: 999
-            fsGroup: 999
-            fsGroupChangePolicy: OnRootMismatch
+            securityContext: *securityContext
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+        runAsGroup: 999
     service:
       app:
-        controller: onepassword-connect
         ports:
           http:
             port: *apiPort

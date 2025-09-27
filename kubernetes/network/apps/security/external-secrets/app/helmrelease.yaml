@@ -17,14 +17,10 @@ spec:
     remediation:
       retries: 3
   values:
-    grafanaDashboard:
-      enabled: true
+    installCRDs: true
+    leaderElect: true
     image:
       repository: ghcr.io/external-secrets/external-secrets
-    installCRDs: true
-    serviceMonitor:
-      enabled: true
-      interval: 1m
     webhook:
       image:
         repository: ghcr.io/external-secrets/external-secrets
@@ -37,3 +33,8 @@ spec:
       serviceMonitor:
         enabled: true
         interval: 1m
+    serviceMonitor:
+      enabled: true
+      interval: 1m
+    grafanaDashboard:
+      enabled: true
