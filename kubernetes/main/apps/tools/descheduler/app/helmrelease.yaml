@@ -17,12 +17,11 @@ spec:
     remediation:
       retries: 3
   values:
-    podAnnotations:
-      reloader.stakater.com/auto: "true"
-    replicas: 2
     kind: Deployment
     deschedulerPolicyAPIVersion: descheduler/v1alpha2
     deschedulerPolicy:
+      metricsProviders:
+        - source: KubernetesMetrics
       profiles:
         - name: Default
           pluginConfig:
@@ -31,6 +30,18 @@ spec:
                 evictFailedBarePods: true
                 evictLocalStoragePods: true
                 evictSystemCriticalPods: true
+            - name: LowNodeUtilization
+              args:
+                metricsUtilization:
+                  source: KubernetesMetrics
+                thresholds:
+                  cpu: 20
+                  memory: 20
+                  pods: 20
+                targetThresholds:
+                  cpu: 50
+                  memory: 50
+                  pods: 50
             - name: RemoveFailedPods
               args:
                 reasons:
@@ -50,24 +61,11 @@ spec:
                   - requiredDuringSchedulingIgnoredDuringExecution
             - name: RemovePodsViolatingNodeTaints
             - name: RemovePodsViolatingTopologySpreadConstraint
-            - name: LowNodeUtilization
-              namespaces:
-                exclude:
-                  - "remote"
-              args:
-                thresholds:
-                  cpu: 50
-                  memory: 50
-                  pods: 20
-                targetThresholds:
-                  cpu: 75
-                  memory: 75
-                  pods: 50
           plugins:
             balance:
               enabled:
-                - RemovePodsViolatingTopologySpreadConstraint
                 - LowNodeUtilization
+                - RemovePodsViolatingTopologySpreadConstraint
             deschedule:
               enabled:
                 - RemoveFailedPods
