@@ -1,0 +1,113 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/tags/app-template-4.3.0/charts/other/app-template/values.schema.json
+controllers:
+  netbootxyz:
+    containers:
+      app:
+        image:
+          repository: ghcr.io/netbootxyz/netbootxyz
+          tag: 0.7.6-nbxyz6@sha256:d39d956fb5afbfab01f450eb09a88cfdf10c94245fae07e91e4db3acd1681e16
+        env:
+          TZ: ${TIMEZONE}
+          TFTPD_OPTS: --tftp-single-port
+        probes:
+          liveness: &probe
+            enabled: true
+          readiness: *probe
+        securityContext: &securityContext
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: false
+          capabilities: {}
+          seccompProfile: {type: RuntimeDefault}
+        resources:
+          requests:
+            cpu: 10m
+            memory: 512Mi
+          limits:
+            memory: 1Gi
+
+defaultPodOptions:
+  automountServiceAccountToken: false
+  enableServiceLinks: false
+  securityContext:
+    runAsNonRoot: false
+    runAsUser: &uid 0
+    runAsGroup: &gid 1000
+    fsGroup: *gid
+    fsGroupChangePolicy: OnRootMismatch
+    seccompProfile: {type: RuntimeDefault}
+
+service:
+  app:
+    controller: &app netbootxyz
+    ports:
+      http:
+        port: 80
+      mgm:
+        port: 3000
+  tftp:
+    controller: *app
+    type: LoadBalancer
+    externalTrafficPolicy: Cluster
+    annotations:
+      ingress.cilium.io/loadbalancer-mode: dedicated
+      lbipam.cilium.io/sharing-key: "{{ .Release.Name }}"
+    labels:
+      service.cilium/announcement: l2
+    ports:
+      tftp:
+        port: 69
+        protocol: UDP
+
+ingress:
+  app:
+    className: cilium
+    annotations:
+      ingress.cilium.io/loadbalancer-mode: dedicated
+      lbipam.cilium.io/sharing-key: "{{ .Release.Name }}"
+      ingress.cilium.io/force-https: disabled
+    labels:
+      service.cilium/announcement: l2
+    hosts:
+      - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            service:
+              identifier: app
+              port: http
+    tls:
+      - hosts: [*host]
+  mgm:
+    className: cilium
+    annotations:
+      ingress.cilium.io/loadbalancer-mode: dedicated
+    labels:
+      service.cilium/announcement: l2
+    hosts:
+      - host: &hostMgm "{{ .Release.Name }}-mgm.${SECRET_DOMAIN}"
+        paths:
+          - path: /
+            service:
+              identifier: app
+              port: mgm
+    tls:
+      - hosts: [*hostMgm]
+
+persistence:
+  tmp:
+    type: emptyDir
+    medium: Memory
+    sizeLimit: 128Mi
+    globalMounts:
+      - subPath: tmp
+        path: /tmp
+      - subPath: run
+        path: /var/run
+
+  data:
+    existingClaim: "{{ .Release.Name }}-data"
+    globalMounts:
+      - subPath: config
+        path: /config
+      - subPath: assets
+        path: /assets

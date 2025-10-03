@@ -11,6 +11,7 @@ resources:
   - ./docmost/ks.yaml
   - ./excalidraw/ks.yaml
   - ./jellyfin/ks.yaml
+  - ./karakeep/ks.yaml
   - ./media-browser/ks.yaml
   - ./miniflux/ks.yaml
   - ./nextcloud/ks.yaml
