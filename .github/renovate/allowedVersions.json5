@@ -9,7 +9,7 @@
     {
       matchDatasources: ["docker"],
       matchPackageNames: ["/postgresql/"],
-      allowedVersions: "<=16"
+      allowedVersions: "<=17"
     }
   ]
 }
