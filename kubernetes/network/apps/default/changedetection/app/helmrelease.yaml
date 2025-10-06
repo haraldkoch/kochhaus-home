@@ -28,7 +28,7 @@ spec:
           app:
             image:
               repository: ghcr.io/dgtlmoon/changedetection.io
-              tag: 0.50.14@sha256:d8113bf66f47895d29c6935000bbac4c0f33d79588ae37d9ed6000ed328c5833
+              tag: 0.50.15@sha256:a53eeb07bfd161ed2939cd02624650bcd11d35d5e86b8cdd037ac10adda3afa5
             env:
               TZ: ${TIMEZONE}
               PORT: &port 5000
