@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: docker.io/prodrigestivill/postgres-backup-local
-              tag: 17@sha256:e803bd9eb4bfb42e9b3e74ba411227f3d55da292905800395659cc579b6641e8
+              tag: 18@sha256:f70742ebe42b2277689b028d1fd15aa80f77cffa01da163cc9f85a6ff1866e7f
             command:
               - /bin/bash
               - -x
