@@ -22,7 +22,7 @@ tasks:
     requires:
        vars: [CLUSTER,NODE]
     preconditions:
-      - op whoami
+      - op whoami --format=json
       - talosctl --nodes {{.NODE}} get machineconfig
       - test -f {{.RENDER_MACHINE_SCRIPT}}
       - test -f {{.TALOS_MACHINE_FILE}}
