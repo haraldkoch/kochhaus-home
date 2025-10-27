@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: argo-cd
-      version: 8.6.0
+      version: 8.6.4
       sourceRef:
         kind: HelmRepository
         name: argo
@@ -100,7 +100,7 @@ spec:
       extraContainers:
         - name: argocd-vault-plugin
           command: [/var/run/argocd/argocd-cmp-server]
-          image: quay.io/argoproj/argocd:v3.1.8
+          image: quay.io/argoproj/argocd:v3.1.9
           envFrom:
             - secretRef:
                 name: argocd-vault-plugin-credentials
