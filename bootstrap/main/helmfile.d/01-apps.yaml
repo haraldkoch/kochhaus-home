@@ -37,7 +37,7 @@ releases:
   - name: coredns
     namespace: kube-system
     chart: oci://ghcr.io/coredns/charts/coredns
-    version: 1.44.3
+    version: 1.45.0
     values:
       - ./templates/values.yaml.gotmpl
     needs:
@@ -46,7 +46,7 @@ releases:
   - name: cert-manager
     namespace: cert-manager
     chart: oci://quay.io/jetstack/charts/cert-manager
-    version: v1.19.0
+    version: v1.19.1
     values:
       - ./templates/values.yaml.gotmpl
     needs:
