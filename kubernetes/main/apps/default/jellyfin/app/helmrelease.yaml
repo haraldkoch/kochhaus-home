@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: ghcr.io/jellyfin/jellyfin
-              tag: 10.10.7@sha256:e4d1dc5374344446a3a78e43dd211247f22afba84ea2e5a13cbe1a94e1ff2141
+              tag: 10.11.1@sha256:66f8c685241cb6d1611ddf90c593d47f18fb851d07d696b821280497f6f2b5b7
             env:
               TZ: ${TIMEZONE}
             probes:
