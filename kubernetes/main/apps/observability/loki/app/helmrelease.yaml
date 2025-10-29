@@ -91,3 +91,8 @@ spec:
       rules:
         searchNamespace: ALL
         folder: /rules/fake
+      resources:
+        requests:
+          memory: 240Mi
+        limits:
+          memory: 320Mi
