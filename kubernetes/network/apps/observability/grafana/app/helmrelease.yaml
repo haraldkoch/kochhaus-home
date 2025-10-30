@@ -275,9 +275,9 @@ spec:
       resources:
         requests:
           cpu: 15m
-          memory: 64Mi
+          memory: 240Mi
         limits:
-          memory: 128Mi
+          memory: 320Mi
     plugins:
       - grafana-clock-panel
       - grafana-piechart-panel
