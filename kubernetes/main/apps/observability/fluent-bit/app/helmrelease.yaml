@@ -39,6 +39,8 @@ spec:
           tag kubernetes.*
           skip_empty_lines on
           skip_long_lines on
+          buffer_chunk_size 64kb
+          buffer_max_size 128kb
 
       filters: |-
         [FILTER]
@@ -50,6 +52,7 @@ spec:
           k8s-logging.exclude on
           namespace_labels off
           annotations off
+          buffer_size 64kb
 
         [FILTER]
           name nest
