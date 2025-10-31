@@ -42,6 +42,8 @@ spec:
         log_level: info
       storage:
         type: filesystem
+        bucketNames:
+          chunks: fnord
       schemaConfig:
         configs:
           - from: "2024-04-01" # quote
