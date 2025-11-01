@@ -3,12 +3,8 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app dmarc-report
-  namespace: &namespace security
+  name: dmarc-report
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/guarded
   dependsOn:
@@ -18,12 +14,11 @@ spec:
   path: ./kubernetes/main/apps/security/dmarc-report/app
   postBuild:
     substitute:
-      APP: *app
+      APP: dmarc-report
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: security
+  wait: false

@@ -3,25 +3,20 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app media-browser
-  namespace: &namespace default
+  name: media-browser
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/guarded
   interval: 1h
   path: ./kubernetes/main/apps/default/media-browser/app
   postBuild:
     substitute:
-      APP: *app
+      APP: media-browser
       GATUS_SUBDOMAIN: media
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: default
+  wait: false

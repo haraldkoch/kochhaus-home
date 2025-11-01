@@ -3,25 +3,20 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app excalidraw
-  namespace: &namespace default
+  name: excalidraw
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/external
   interval: 1h
   path: ./kubernetes/main/apps/default/excalidraw/app
   postBuild:
     substitute:
-      APP: *app
+      APP: excalidraw
       GATUS_SUBDOMAIN: draw
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: default
+  wait: false

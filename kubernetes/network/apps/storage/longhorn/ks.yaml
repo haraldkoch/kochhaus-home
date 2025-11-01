@@ -3,26 +3,21 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app longhorn
-  namespace: &namespace storage
+  name: longhorn
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/guarded
   interval: 1h
   path: ./kubernetes/network/apps/storage/longhorn/app
   postBuild:
     substitute:
-      APP: *app
+      APP: longhorn
       GATUS_SUBDOMAIN: longhorn
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
+  targetNamespace: storage
   timeout: 15m
   wait: true

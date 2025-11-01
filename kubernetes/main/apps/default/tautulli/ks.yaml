@@ -3,12 +3,8 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app tautulli
-  namespace: &namespace default
+  name: tautulli
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/guarded
     - ../../../../components/keda/nfs-scaler
@@ -22,17 +18,16 @@ spec:
   path: ./kubernetes/main/apps/default/tautulli/app
   postBuild:
     substitute:
-      APP: *app
+      APP: tautulli
       GATUS_PATH: /status
       VOLSYNC_CAPACITY: 2Gi
       VOLSYNC_CLAIM: tautulli-config-v6
       VOLSYNC_GID: "1000"
       VOLSYNC_UID: "1000"
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: default
+  wait: false

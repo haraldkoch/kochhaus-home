@@ -3,12 +3,8 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app kyverno
-  namespace: &namespace kyverno
+  name: kyverno
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   healthChecks:
     - apiVersion: apiextensions.k8s.io/v1
       kind: CustomResourceDefinition
@@ -16,34 +12,28 @@ spec:
   interval: 1h
   path: ./kubernetes/main/apps/kyverno/kyverno/app
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: kyverno
+  wait: true
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cluster-policies
-  namespace: &namespace kyverno
+  name: cluster-policies
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: kyverno
       namespace: kyverno
   interval: 1h
   path: ./kubernetes/main/apps/kyverno/kyverno/policies
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: kyverno
+  wait: false

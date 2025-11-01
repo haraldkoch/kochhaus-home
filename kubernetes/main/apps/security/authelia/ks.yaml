@@ -3,12 +3,8 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app authelia
-  namespace: &namespace security
+  name: authelia
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/external
   dependsOn:
@@ -22,13 +18,12 @@ spec:
   path: ./kubernetes/main/apps/security/authelia/app
   postBuild:
     substitute:
-      APP: *app
+      APP: authelia
       GATUS_SUBDOMAIN: auth
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
   targetNamespace: security
-  timeout: 5m
+  wait: false

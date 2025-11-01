@@ -3,46 +3,31 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app intel-device-plugin-operator
-  namespace: &namespace tools
+  name: intel-device-plugin-operator
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2
-      kind: HelmRelease
-      name: *app
-      namespace: *namespace
   interval: 1h
   path: ./kubernetes/main/apps/tools/intel-device-plugin/app
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: tools
+  wait: true
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app intel-device-plugin-gpu
-  namespace: &namespace tools
+  name: intel-device-plugin-gpu
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: intel-device-plugin-operator
-      namespace: *namespace
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
-      name: *app
-      namespace: *namespace
+      name: intel-device-plugin-gpu
+      namespace: tools
     - apiVersion: deviceplugin.intel.com/v1
       kind: GpuDevicePlugin
       name: i915
@@ -54,34 +39,27 @@ spec:
   interval: 1h
   path: ./kubernetes/main/apps/tools/intel-device-plugin/gpu
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: tools
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app intel-device-plugin-exporter
-  namespace: &namespace tools
+  name: intel-device-plugin-exporter
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: intel-device-plugin-gpu
       namespace: tools
   interval: 1h
   path: ./kubernetes/main/apps/tools/intel-device-plugin/exporter
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: tools
+  wait: false

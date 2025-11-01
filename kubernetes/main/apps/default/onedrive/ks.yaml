@@ -3,12 +3,8 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app onedrive
-  namespace: &namespace default
+  name: onedrive
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync
   dependsOn:
@@ -18,16 +14,15 @@ spec:
   path: ./kubernetes/main/apps/default/onedrive/app
   postBuild:
     substitute:
-      APP: *app
+      APP: onedrive
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_CLAIM: onedrive-config-v5
       VOLSYNC_GID: "1000"
       VOLSYNC_UID: "1000"
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: default
+  wait: false

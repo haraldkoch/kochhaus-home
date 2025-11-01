@@ -3,9 +3,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: tools
+
 components:
   - ../../components/common
+
 resources:
+  - ./namespace.yaml
   - ./descheduler/ks.yaml
   - ./headlamp/ks.yaml
   - ./intel-device-plugin/ks.yaml

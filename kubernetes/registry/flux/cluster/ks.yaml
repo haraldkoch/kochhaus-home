@@ -8,8 +8,7 @@ metadata:
 spec:
   decryption:
     provider: sops
-    secretRef:
-      name: sops-age
+  deletionPolicy: WaitForTermination
   interval: 1h
   path: ./kubernetes/registry/apps
   prune: true
@@ -21,23 +20,47 @@ spec:
       - name: cluster-secrets
         kind: Secret
         optional: false
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  wait: false
   patches:
-    - # Add Sops decryption and postBuild substitutions to child Kustomizations
+    - # Add Kustomization defaults for all child Kustomizations
       patch: |-
         apiVersion: kustomize.toolkit.fluxcd.io/v1
         kind: Kustomization
         metadata:
-          name: not-used
+          name: _
         spec:
           decryption:
             provider: sops
-            secretRef:
-              name: sops-age
+          deletionPolicy: WaitForTermination
+          patches:
+            - patch: |-
+                apiVersion: helm.toolkit.fluxcd.io/v2
+                kind: HelmRelease
+                metadata:
+                  name: _
+                spec:
+                  install:
+                    crds: CreateReplace
+                    strategy:
+                      name: RetryOnFailure
+                  rollback:
+                    cleanupOnFail: true
+                    recreate: true
+                  upgrade:
+                    cleanupOnFail: true
+                    crds: CreateReplace
+                    strategy:
+                      name: RemediateOnFailure
+                    remediation:
+                      remediateLastFailure: true
+                      retries: 2
+              target:
+                group: helm.toolkit.fluxcd.io
+                kind: HelmRelease
           postBuild:
             substituteFrom:
               - name: cluster-settings
@@ -49,4 +72,3 @@ spec:
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
-        labelSelector: substitution.flux.home.arpa/disabled notin (true)

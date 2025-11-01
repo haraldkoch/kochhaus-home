@@ -3,12 +3,8 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app changedetection
-  namespace: &namespace default
+  name: changedetection
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/guarded
     - ../../../../components/volsync
@@ -16,16 +12,15 @@ spec:
   path: ./kubernetes/network/apps/default/changedetection/app
   postBuild:
     substitute:
-      APP: *app
+      APP: changedetection
       APP_UID: "2000"
       APP_GID: "2000"
       VOLSYNC_CLAIM: changedetection-config
       VOLSYNC_CAPACITY: 1Gi
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: default
+  wait: false

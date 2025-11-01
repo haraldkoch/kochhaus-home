@@ -3,24 +3,19 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app headlamp
-  namespace: &namespace tools
+  name: headlamp
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/guarded
   interval: 1h
   path: ./kubernetes/main/apps/tools/headlamp/app
   postBuild:
     substitute:
-      APP: *app
+      APP: headlamp
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: tools
+  wait: false

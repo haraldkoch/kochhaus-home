@@ -3,12 +3,8 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app joomla-rtr
-  namespace: &namespace joomla
+  name: joomla-rtr
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
@@ -17,10 +13,9 @@ spec:
   interval: 1h
   path: ./kubernetes/main/apps/joomla/rtr/app
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: joomla
+  wait: false

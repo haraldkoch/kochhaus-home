@@ -3,31 +3,28 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app populator-test
-  namespace: &namespace default
+  name: populator-test
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync
   dependsOn:
     - name: longhorn
       namespace: storage
+    - name: volsync
+      namespace: storage
   interval: 1h
   path: ./kubernetes/network/apps/default/populator-test/app
   postBuild:
     substitute:
-      APP: *app
+      APP: populator-test
       VOLSYNC_CAPACITY: 2Gi
       VOLSYNC_CLAIM: populator-test-data
       VOLSYNC_PGID: "65533"
       VOLSYNC_PUID: "65533"
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: default
+  wait: false

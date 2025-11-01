@@ -3,12 +3,8 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app syncthing
-  namespace: &namespace default
+  name: syncthing
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/gatus/guarded
   dependsOn:
@@ -18,12 +14,11 @@ spec:
   path: ./kubernetes/main/apps/default/syncthing/app
   postBuild:
     substitute:
-      APP: *app
+      APP: syncthing
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
+  targetNamespace: default
+  wait: false

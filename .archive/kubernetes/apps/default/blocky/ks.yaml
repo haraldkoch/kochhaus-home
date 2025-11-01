@@ -6,7 +6,7 @@ metadata:
   name: &app blocky
   namespace: &namespace default
 spec:
-  targetNamespace: *namespace
+  targetNamespace: default
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
