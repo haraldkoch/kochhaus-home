@@ -46,8 +46,8 @@ function apply_namespaces() {
         fi
 
         # Apply the namespace resources
-        if kubectl --context ${CLUSTER} create namespace "${namespace}" --dry-run=client --output=yaml \
-            | kubectl --context ${CLUSTER} apply --server-side --filename - &>/dev/null;
+        if kustomize build --context ${CLUSTER} ${app} | yq ea -e 'select(.kind == "Namespace")' \
+            | kubectl --context ${CLUSTER} apply --server-side --field-manager bootstrap --force-conflicts --filename - &>/dev/null;
         then
             log info "Namespace resource applied" "resource=${namespace}"
         else
