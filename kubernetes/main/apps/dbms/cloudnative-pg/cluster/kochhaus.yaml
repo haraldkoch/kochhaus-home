@@ -50,7 +50,7 @@ spec:
       endpointURL: http://${SECRET_BACKUP_SERVER}:9000
       # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster kochhaus-v2
+      serverName: &currentCluster kochhaus-v3
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -62,7 +62,7 @@ spec:
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
     recovery:
-      source: &previousCluster kochhaus-v1
+      source: &previousCluster kochhaus-v2
     # upgrade or recover from another running instance
     # initdb:
     #   import:
