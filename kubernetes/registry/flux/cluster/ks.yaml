@@ -11,7 +11,7 @@ spec:
   deletionPolicy: WaitForTermination
   interval: 1h
   path: ./kubernetes/registry/apps
-  prune: true
+  prune: false # reset to true
   postBuild:
     substituteFrom:
       - name: cluster-settings
