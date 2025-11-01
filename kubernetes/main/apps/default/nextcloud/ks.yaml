@@ -9,6 +9,8 @@ spec:
     - ../../../../components/gatus/external
     - ../../../../components/volsync
   dependsOn:
+    - name: cloudnative-pg-cluster
+      namespace: dbms
     - name: dragonfly-cluster
       namespace: dbms
     - name: rook-ceph-cluster
