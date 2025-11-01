@@ -46,7 +46,7 @@ function apply_namespaces() {
         fi
 
         # Apply the namespace resources
-        if kustomize build --context ${CLUSTER} ${app} | yq ea -e 'select(.kind == "Namespace")' \
+        if kustomize build ${app} | yq ea -e 'select(.kind == "Namespace")' \
             | kubectl --context ${CLUSTER} apply --server-side --field-manager bootstrap --force-conflicts --filename - &>/dev/null;
         then
             log info "Namespace resource applied" "resource=${namespace}"
@@ -61,7 +61,7 @@ function apply_configmaps() {
     log debug "Applying ConfigMaps"
 
     local -r configmaps=(
-        "${ROOT_DIR}/kubernetes/${CLUSTER}/components/common/cluster-settings.yaml"
+        "${ROOT_DIR}/kubernetes/${CLUSTER}/components/common/sops/cluster-settings.yaml"
     )
 
     for configmap in "${configmaps[@]}"; do
@@ -120,7 +120,7 @@ function apply_sops_secrets() {
 function apply_crds() {
     log debug "Applying CRDs"
 
-    local -r helmfile_file="${ROOT_DIR}/bootstrap/${CLUSTER}/00-crds.yaml"
+    local -r helmfile_file="${ROOT_DIR}/bootstrap/${CLUSTER}/helmfile.d/00-crds.yaml"
 
     if [[ ! -f "${helmfile_file}" ]]; then
         log error "File does not exist" "file=${helmfile_file}"
@@ -137,7 +137,7 @@ function apply_crds() {
 function apply_helm_releases() {
     log debug "Applying Helm releases with helmfile"
 
-    local -r helmfile_file="${ROOT_DIR}/bootstrap/${CLUSTER}/01-apps.yaml"
+    local -r helmfile_file="${ROOT_DIR}/bootstrap/${CLUSTER}/helmfile.d/01-apps.yaml"
 
     if [[ ! -f "${helmfile_file}" ]]; then
         log error "File does not exist" "file=${helmfile_file}"
