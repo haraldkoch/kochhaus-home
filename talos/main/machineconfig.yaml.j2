@@ -39,6 +39,7 @@ machine:
         [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
         [plugins."io.containerd.cri.v1.runtime"]
+          cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
           device_ownership_from_security_context = true
     - op: overwrite
       path: /etc/nfsmount.conf
@@ -60,6 +61,7 @@ machine:
     extraConfig:
       featureGates:
         ImageVolume: true
+        ResourceHealthStatus: true
       serializeImagePulls: false
     extraMounts:
       - destination: /var/mnt/extra
@@ -128,6 +130,13 @@ cluster:
   clusterName: main
   controlPlane:
     endpoint: https://192.168.20.16:6443
+  discovery:
+    enabled: true
+    registries:
+      kubernetes:
+        disabled: true
+      service:
+        disabled: false
   id: op://homelab/talos-main/CLUSTER_ID
   network:
     cni:
@@ -158,7 +167,7 @@ cluster:
     disablePodSecurityPolicy: true
     extraArgs:
       enable-aggregator-routing: "true"
-      feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
+      feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true,ResourceHealthStatus=true
       runtime-config: admissionregistration.k8s.io/v1beta1=true
     image: registry.k8s.io/kube-apiserver:v1.34.1
   controllerManager:
@@ -168,13 +177,6 @@ cluster:
     image: registry.k8s.io/kube-controller-manager:v1.34.1
   coreDNS:
     disabled: true
-  discovery:
-    enabled: true
-    registries:
-      kubernetes:
-        disabled: true
-      service:
-        disabled: false
   etcd:
     advertisedSubnets:
       - 192.168.20.0/24

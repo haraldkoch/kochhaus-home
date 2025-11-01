@@ -39,6 +39,7 @@ machine:
         [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
         [plugins."io.containerd.cri.v1.runtime"]
+          cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
           device_ownership_from_security_context = true
     - op: overwrite
       path: /etc/nfsmount.conf
@@ -60,6 +61,7 @@ machine:
     extraConfig:
       featureGates:
         ImageVolume: true
+        ResourceHealthStatus: true
       serializeImagePulls: false
     extraMounts:
       - destination: /var/mnt/extra
@@ -100,6 +102,13 @@ cluster:
   clusterName: registry
   controlPlane:
     endpoint: https://192.168.20.66:6443
+  discovery:
+    enabled: true
+    registries:
+      kubernetes:
+        disabled: true
+      service:
+        disabled: false
   id: op://homelab/talos-registry/CLUSTER_ID
   network:
     cni:
@@ -128,7 +137,7 @@ cluster:
     disablePodSecurityPolicy: true
     extraArgs:
       enable-aggregator-routing: "true"
-      feature-gates: ImageVolume=true
+      feature-gates: ImageVolume=true,ResourceHealthStatus=true
     image: registry.k8s.io/kube-apiserver:v1.34.1
   controllerManager:
     extraArgs:
@@ -136,13 +145,6 @@ cluster:
     image: registry.k8s.io/kube-controller-manager:v1.34.1
   coreDNS:
     disabled: true
-  discovery:
-    enabled: true
-    registries:
-      kubernetes:
-        disabled: true
-      service:
-        disabled: false
   etcd:
     advertisedSubnets:
       - 192.168.20.0/24
@@ -179,3 +181,8 @@ cluster:
   serviceAccount:
     key: op://homelab/talos-registry/CLUSTER_SERVICEACCOUNT_KEY
   {% endif %}
+---
+apiVersion: v1alpha1
+kind: WatchdogTimerConfig
+device: /dev/watchdog0
+timeout: 5m
