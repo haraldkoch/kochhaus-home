@@ -49,16 +49,19 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
+              claims:
+                - name: gpu
               requests:
-                gpu.intel.com/i915: 1
                 cpu: 100m
                 memory: 1Gi
               limits:
-                gpu.intel.com/i915: 1
                 memory: 4Gi
         pod:
+          resourceClaims:
+            - name: gpu
+              resourceClaimTemplateName: jellyfin
           securityContext:
             runAsNonRoot: true
             runAsUser: ${VOLSYNC_UID}
