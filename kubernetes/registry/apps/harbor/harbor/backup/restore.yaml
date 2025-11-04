@@ -11,8 +11,9 @@ spec:
       restartPolicy: OnFailure
       volumes:
         - name: backup
-          persistentVolumeClaim:
-            claimName: harbor-pg-backup-v1
+          nfs:
+            path: /backup/data/k8s/harbor
+            server: mnemosyne.chk.cfrq.net
       containers:
         - name: postgres
           image: docker.io/goharbor/harbor-db:v2.14.0
