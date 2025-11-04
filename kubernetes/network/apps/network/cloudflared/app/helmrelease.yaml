@@ -25,8 +25,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/haraldkoch/cloudflared
-              tag: 2025.10.1@sha256:2e6db54291249aa17003d8e25d3ab0e57fb1696eb4efca903d91a8286ad219be
+              repository: mirror.gcr.io/cloudflare/cloudflared
+              tag: 2025.10.1@sha256:21f3607baf2384c54d592b0efe76dd5f548c0dbc083e62fa22c7fac3923d077f
             env:
               NO_AUTOUPDATE: true
               TUNNEL_METRICS: 0.0.0.0:8080
