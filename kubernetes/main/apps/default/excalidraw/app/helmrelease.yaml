@@ -24,8 +24,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/haraldkoch/excalidraw
-              tag: latest@sha256:6074dc0b009ad172da0e9d665639f72bc8a091f26e009e1a20ad0100df230bef
+              repository: mirror.gcr.io/excalidraw/excalidraw
+              tag: latest@sha256:71b9c25d8bfb47c051015456ef9b64700d53934eeb0e691db5c6522bb265c362
               pullPolicy: IfNotPresent
             probes:
               liveness:
