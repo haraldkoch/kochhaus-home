@@ -47,10 +47,10 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: s3://cnpg/kochhaus/
-      endpointURL: http://${SECRET_BACKUP_SERVER}:9000
+      endpointURL: http://${SECRET_BACKUP_SERVER}:3900
       # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster kochhaus-v3
+      serverName: &currentCluster kochhaus-v4
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -62,7 +62,7 @@ spec:
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
     recovery:
-      source: &previousCluster kochhaus-v2
+      source: &previousCluster kochhaus-v3
     # upgrade or recover from another running instance
     # initdb:
     #   import:
