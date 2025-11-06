@@ -17,6 +17,7 @@ resources:
   - ./karakeep/ks.yaml
   - ./media-browser/ks.yaml
   - ./miniflux/ks.yaml
+  - ./monica/ks.yaml
   - ./nextcloud/ks.yaml
   - ./ocis/ks.yaml
   - ./onedrive/ks.yaml

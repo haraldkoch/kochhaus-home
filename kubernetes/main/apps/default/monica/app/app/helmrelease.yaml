@@ -1,0 +1,80 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app monica
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  interval: 1h
+  values:
+    controllers:
+      monica:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/haraldkoch/postgres-init
+              tag: 17.6@sha256:f5d0c30dc5cba0b5a24837f3a7af48f9609c825dafcb67743362a46005c57f48
+            envFrom: &envFrom
+              - secretRef:
+                  name: monica-secret
+        containers:
+          app: &bapp
+            image:
+              repository: ghcr.io/monicahq/monica-next
+              tag: main@sha256:8be69156acbb1edce2ba82685729f2d4ce79f1b7f749fe967d0a36f78e7ad454
+
+            env:
+              TZ: "${TIMEZONE:=Etc/UTC}"
+              APP_ENV: production
+              APP_URL: "https://{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+              APP_TRUSTED_PROXIES: "*"
+              APP_DISABLE_SIGNUP: false
+              DEFAULT_MAX_UPLOAD_SIZE: 2000
+              DEFAULT_MAX_STORAGE_SIZE: 4096
+              APP_DEBUG: "false"
+              CACHE_DRIVER: redis
+              QUEUE_CONNECTION: redis
+              REDIS_HOST: dragonfly.dbms.svc.cluster.local.
+              MAIL_MAILER: smtp
+              MAIL_HOST: smtp.${CLUSTER_DOMAIN}
+              MAIL_PORT: 25
+              MAIL_FROM_ADDRESS: monica@${CLUSTER_DOMAIN}
+              MAIL_FROM_NAME: Koch Haus Contacts
+            envFrom: *envFrom
+            resources:
+              requests:
+                cpu: 25m
+                memory: 128M
+              limits:
+                memory: 256M
+          cron:
+            <<: *bapp
+            command:
+              - cron.sh
+          queue:
+            <<: *bapp
+            command:
+              - queue.sh
+    service:
+      app:
+        controller: monica
+        ipFamilyPolicy: SingleStack
+        ports:
+          http:
+            port: 80
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+    persistence:
+      config:
+        existingClaim: ${VOLSYNC_CLAIM}
