@@ -82,9 +82,9 @@ spec:
           - name: k3s2
             devices:
               - name: /dev/disk/by-id/nvme-NE-512_2280_0027843000089
-          - name: k3s3
-            devices:
-              - name: /dev/disk/by-id/nvme-KXG50ZNV512G_TOSHIBA_X8UF60F1F6GS
+          # - name: k3s3
+          #   devices:
+          #     - name: /dev/disk/by-id/nvme-KXG50ZNV512G_TOSHIBA_X8UF60F1F6GS
       placement:
         osd:
           tolerations:
