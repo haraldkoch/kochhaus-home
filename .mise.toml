@@ -38,6 +38,6 @@ pipx_uvx = true
 "aqua:kubernetes/kubectl" = "1.33.1"
 "aqua:mikefarah/yq" = "4.48.1"
 "aqua:mitsuhiko/minijinja" = "2.12.0"
-"aqua:siderolabs/talos" = "1.11.3"
+"aqua:siderolabs/talos" = "1.11.5"
 "aqua:yannh/kubeconform" = "0.7.0"
 "aqua:sigstore/cosign" = "3.0.2"
