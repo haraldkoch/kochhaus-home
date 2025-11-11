@@ -11,4 +11,4 @@ spec:
     operation: copy
   ref:
     tag: 0.20.0
-  url: oci://ghcr.io/home-operations/charts-mirror/silence-operator
+  url: oci://gsoci.azurecr.io/charts/giantswarm/silence-operator
