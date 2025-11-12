@@ -18,7 +18,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/haraldkoch/postgres-init
-              tag: 17.6@sha256:f5d0c30dc5cba0b5a24837f3a7af48f9609c825dafcb67743362a46005c57f48
+              tag: 18.0@sha256:d803e9372073fa3981de9b505b825deec74f2cf376340dd2200ccdcff1f29cb6
             envFrom: &envFrom
               - secretRef:
                   name: monica-secret
