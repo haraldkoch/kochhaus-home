@@ -11,6 +11,8 @@ spec:
   dependsOn:
     - name: node-feature-discovery-rules
       namespace: kube-system
+    - name: volsync
+      namespace: storage
   interval: 1h
   path: ./kubernetes/network/apps/default/zigbee2mqtt/app
   postBuild:

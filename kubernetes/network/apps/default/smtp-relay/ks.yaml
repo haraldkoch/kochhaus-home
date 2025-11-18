@@ -5,6 +5,9 @@ kind: Kustomization
 metadata:
   name: smtp-relay
 spec:
+  dependsOn:
+    - name: cert-manager
+      namespace: cert-manager
   interval: 1h
   path: ./kubernetes/network/apps/default/smtp-relay/app
   prune: true
