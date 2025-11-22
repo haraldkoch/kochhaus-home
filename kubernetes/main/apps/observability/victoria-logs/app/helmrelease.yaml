@@ -23,7 +23,7 @@ spec:
       persistentVolume:
         enabled: true
         storageClassName: ceph-block
-        size: 20Gi
+        size: 24Gi
       route:
         enabled: true
         hostnames:
