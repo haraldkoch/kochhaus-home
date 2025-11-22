@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/excalidraw/excalidraw
-              tag: latest@sha256:67c6b93d6155fac09d30759ea5f28e5ce01b4e865a783fb418c878806bf5397d
+              tag: latest@sha256:72a9834950460fd6a6c108a71605ac50a97963a455ec28acfbcf2385d3c42373
               pullPolicy: IfNotPresent
             probes:
               liveness:
