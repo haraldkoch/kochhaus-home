@@ -110,6 +110,10 @@ spec:
             port: 29816
             protocol: TCP
             targetPort: 29816
+          eap-v6-monitoring:
+            port: 29817
+            protocol: TCP
+            targetPort: 29817
           init-check:
             port: 27001
             protocol: UDP
