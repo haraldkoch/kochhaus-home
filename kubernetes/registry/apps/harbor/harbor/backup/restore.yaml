@@ -16,7 +16,7 @@ spec:
             server: mnemosyne.chk.cfrq.net
       containers:
         - name: postgres
-          image: docker.io/goharbor/harbor-db:v2.14.0
+          image: docker.io/goharbor/harbor-db:v2.14.1
           command: ["/bin/sh"]
           args:
             - "-c"
