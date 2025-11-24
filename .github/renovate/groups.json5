@@ -87,5 +87,15 @@
       },
       minimumGroupSize: 2,
     },
+    {
+      description: "Spotify Group",
+      groupName: "spotify",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/your_spotify/"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      minimumGroupSize: 2,
+    },
   ],
 }
