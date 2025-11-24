@@ -10,6 +10,8 @@ spec:
   egress:
     - to:
         - ipBlock:
+            cidr: 192.168.10.0/24
+        - ipBlock:
             cidr: ${SECRET_HOMELAN_IPV4}
         - ipBlock:
             cidr: ${SECRET_HOMELAN_IPV6}

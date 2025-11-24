@@ -26,6 +26,8 @@ spec:
     - to:
         # Only allow egress to LAN
         - ipBlock:
+            cidr: 192.168.10.0/24
+        - ipBlock:
             cidr: ${HOMELAN_IPV4}
         - ipBlock:
             cidr: ${HOMELAN_IPV6}
