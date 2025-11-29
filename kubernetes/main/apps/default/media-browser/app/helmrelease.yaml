@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/filebrowser/filebrowser
-              tag: v2.48.2@sha256:79e7cd8f88b72a8961d09a140dc5351ba2bd729c9dc99fa1328177d5f44a3695
+              tag: v2.49.0@sha256:e9ef7570b2e4110e9842f2e004f2aaac246e54e7fef2b3b9f4352a3a1bb04508
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               FB_DATABASE: /config/filebrowser.db
