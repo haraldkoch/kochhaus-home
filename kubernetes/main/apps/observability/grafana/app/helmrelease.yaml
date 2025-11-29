@@ -280,6 +280,10 @@ spec:
           revision: 8
           datasource: Prometheus
     sidecar:
+      image:
+        registry: ghcr.io
+        repository: home-operations/k8s-sidecar
+        tag: 2.1.4@sha256:438df334bf9b195efc8251967248b9b12e02192a19a65021bee1da408a670383
       dashboards:
         enabled: true
         searchNamespace: ALL
@@ -295,9 +299,10 @@ spec:
       resources:
         requests:
           cpu: 15m
-          memory: 64Mi
+          memory: 240Mi
         limits:
-          memory: 128Mi
+          memory: 320Mi
+
     plugins:
       - grafana-clock-panel
       - grafana-piechart-panel
