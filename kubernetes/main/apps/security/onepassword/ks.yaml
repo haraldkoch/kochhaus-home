@@ -25,4 +25,3 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: security
-  wait: false
