@@ -36,6 +36,9 @@ spec:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
     webhook:
+      replicaCount: 2
+      podDisruptionBudget:
+        enabled: true
       resources:
         requests:
           cpu: 15m
