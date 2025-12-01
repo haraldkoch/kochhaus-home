@@ -5,11 +5,11 @@ kind: HTTPRoute
 metadata:
   name: github-webhook
 spec:
-  hostnames: ["flux-webhook.${CLUSTER_DOMAIN}"]
+  hostnames:
+    - flux-webhook.${CLUSTER_DOMAIN}
   parentRefs:
     - name: envoy-external
       namespace: network
-      sectionName: https
   rules:
     - backendRefs:
         - name: webhook-receiver
