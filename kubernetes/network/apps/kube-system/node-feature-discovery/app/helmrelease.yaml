@@ -5,19 +5,10 @@ kind: HelmRelease
 metadata:
   name: node-feature-discovery
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: node-feature-discovery
-  install:
-    crds: CreateReplace
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    crds: CreateReplace
-    remediation:
-      retries: 3
+  interval: 1h
   values:
     worker:
       config:

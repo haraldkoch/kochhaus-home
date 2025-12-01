@@ -5,17 +5,10 @@ kind: HelmRelease
 metadata:
   name: kube-prometheus-stack
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: kube-prometheus-stack
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
+  interval: 1h
   valuesFrom:
     - kind: ConfigMap
       name: flux-kube-state-metrics-config

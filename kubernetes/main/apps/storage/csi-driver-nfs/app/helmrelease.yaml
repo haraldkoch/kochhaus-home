@@ -5,17 +5,10 @@ kind: HelmRelease
 metadata:
   name: csi-driver-nfs
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: csi-driver-nfs
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
+  interval: 1h
   values:
     controller:
       runOnControlPlane: true

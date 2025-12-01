@@ -5,17 +5,10 @@ kind: HelmRelease
 metadata:
   name: headlamp
 spec:
-  interval: 30m
   chartRef:
     kind: OCIRepository
     name: headlamp
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
+  interval: 1h
   values:
     config:
       pluginsDir: /build/plugins

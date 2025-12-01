@@ -5,17 +5,10 @@ kind: HelmRelease
 metadata:
   name: victoria-logs
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: victoria-logs
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
+  interval: 1h
   values:
     fullnameOverride: victoria-logs
     retentionPeriod: 14d
@@ -23,7 +16,7 @@ spec:
       persistentVolume:
         enabled: true
         storageClassName: ceph-block
-        size: 24Gi
+        size: 20Gi
       route:
         enabled: true
         hostnames:

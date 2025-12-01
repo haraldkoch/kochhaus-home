@@ -5,17 +5,10 @@ kind: HelmRelease
 metadata:
   name: &name home-ops-runner
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: gha-runner-scale-set
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
+  interval: 1h
   values:
     nameOverride: gha-runner-scale-set
     runnerScaleSetName: gha-runner-scale-set

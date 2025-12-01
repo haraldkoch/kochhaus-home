@@ -5,7 +5,6 @@ kind: HelmRelease
 metadata:
   name: goldpinger
 spec:
-  interval: 1h
   chart:
     spec:
       chart: goldpinger
@@ -13,13 +12,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: okgolove
-  install:
-    remediation:
-      retries: -1
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      retries: 3
+  interval: 1h
   values:
     image:
       repository: mirror.gcr.io/bloomberg/goldpinger
