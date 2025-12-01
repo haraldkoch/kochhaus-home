@@ -1,0 +1,29 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "github>haraldkoch/renovate-config",
+    "github>haraldkoch/kochhaus-home//.renovate/allowedVersions.json5",
+    "github>haraldkoch/kochhaus-home//.renovate/autoMerge.json5",
+    "github>haraldkoch/kochhaus-home//.renovate/changelogs.json5",
+    "github>haraldkoch/kochhaus-home//.renovate/clusters.json5",
+    "github>haraldkoch/kochhaus-home//.renovate/customManagers.json5",
+    "github>haraldkoch/kochhaus-home//.renovate/grafanaDashboards.json5",
+    "github>haraldkoch/kochhaus-home//.renovate/groups.json5",
+    "github>haraldkoch/kochhaus-home//.renovate/overrides.json5",
+    "github>haraldkoch/kochhaus-home//.renovate/packageRules.json5",
+  ],
+  ignorePaths: [
+    "**/*.sops.*",
+    "**/.archive/**",
+    "**/resources/**",
+  ],
+  flux: {
+    managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
+  },
+  "helm-values": {
+    managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
+  },
+  kubernetes: {
+    managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
+  },
+}
