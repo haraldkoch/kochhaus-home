@@ -3,7 +3,7 @@ groups:
   - name: zigbee2mqtt
     rules:
       - alert: ZigbeeMQTTUnreachable
-        expr: |
+        expr: |-
           sum(count_over_time({app="zigbee2mqtt"} |~ "(?i)not connected to mqtt server"[2m])) > 0
         for: 2m
         labels:

@@ -3,7 +3,7 @@ groups:
   - name: node-red
     rules:
       - alert: NodeRedUnableToReachHomeAssistant
-        expr: |
+        expr: |-
           sum by (app) (count_over_time({app="node-red"} |~ "(?i)home assistant.*connecting to undefined"[2m])) > 0
         for: 2m
         labels:

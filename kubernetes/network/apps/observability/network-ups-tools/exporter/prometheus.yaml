@@ -12,7 +12,7 @@ spec:
           annotations:
             description: NUT exporter has disappeared from Prometheus target discovery.
             summary: NUT Exporter is down.
-          expr: |
+          expr: |-
             absent(up{job=~".*nut-exporter.*"} == 1)
           for: 5m
           labels:
@@ -30,7 +30,7 @@ spec:
             description: ZPM {{ $labels.instance }} battery is low and the system is getting
               ready to shutdown.
             summary: ZPM battery is low.
-          expr: |
+          expr: |-
             (
               network_ups_tools_ups_status{flag="OB"} == 1
             and
@@ -50,7 +50,7 @@ spec:
           annotations:
             description: UPS {{ $labels.ups }} battery needs to be replaced.
             summary: Replace UPS battery.
-          expr: |
+          expr: |-
             network_ups_tools_ups_status{flag="RB"} == 1
           for: 10s
           labels:
