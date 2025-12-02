@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: ghcr.io/haraldkoch/prometheus-dnssec-exporter
-              tag: 0.7.22@sha256:fe78c17386f7f64b3c2a1e4a2a53211a3107a9f569720cadf78ff5c873573d7f
+              tag: 0.7.24@sha256:4d3d631697de5558d110d0dc35229c19f6e245aed6d5b67e9a30c60bdecb2918
             args:
               - --config
               - /config/dnssec-checks
