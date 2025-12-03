@@ -70,7 +70,7 @@ spec:
     repoServer:
       initContainers:
         - name: download-tools
-          image: docker.io/library/alpine:3.22
+          image: docker.io/library/alpine:3.23
           command: [sh, -c]
           env:
             - name: AVP_VERSION
