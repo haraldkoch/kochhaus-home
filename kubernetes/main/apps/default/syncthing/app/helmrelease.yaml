@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/syncthing/syncthing
-              tag: 2.0.10@sha256:3faeb52baa7de3fbe7007cecc6829a4bc71cc6ac62d3967459a8228979c38943
+              tag: 2.0.12@sha256:7ae77d066e9b81d3d8c312b2f9e1a874a5115680bfde90aff5fc9aece694ec93
             probes:
               liveness:
                 enabled: true
