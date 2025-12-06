@@ -15,7 +15,7 @@ spec:
         initContainers:
           copy-config:
             image:
-              repository: docker.io/alpine
+              repository: mirror.gcr.io/library/alpine
               tag: 3.23.0
             command:
               - /bin/sh

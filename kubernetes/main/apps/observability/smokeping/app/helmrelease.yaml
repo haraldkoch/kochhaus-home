@@ -17,7 +17,7 @@ spec:
         initContainers:
           copy-config:
             image:
-              repository: docker.io/alpine
+              repository: mirror.gcr.io/library/alpine
               tag: 3.23.0
             command:
               - /bin/sh
@@ -58,7 +58,8 @@ spec:
             port: 80
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network

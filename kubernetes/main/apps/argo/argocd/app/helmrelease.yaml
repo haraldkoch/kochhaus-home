@@ -70,8 +70,10 @@ spec:
     repoServer:
       initContainers:
         - name: download-tools
-          image: docker.io/library/alpine:3.23
-          command: [sh, -c]
+          image: mirror.gcr.io/library/alpine:3.23.0
+          command:
+            - sh
+            - -c
           env:
             - name: AVP_VERSION
               # FIXME renovate
@@ -85,7 +87,8 @@ spec:
               name: custom-tools
       extraContainers:
         - name: argocd-vault-plugin
-          command: [/var/run/argocd/argocd-cmp-server]
+          command:
+            - /var/run/argocd/argocd-cmp-server
           image: quay.io/argoproj/argocd:v3.2.1
           envFrom:
             - secretRef:
