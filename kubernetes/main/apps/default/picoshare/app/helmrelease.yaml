@@ -17,7 +17,8 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/mtlynch/picoshare
+              # renovate: datasource=docker depName=docker.io/mtlynch/picoshare
+              repository: mirror.gcr.io/mtlynch/picoshare
               tag: 1.5.1
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
@@ -46,7 +47,8 @@ spec:
             port: 4001
     route:
       app:
-        hostnames: ["share.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "share.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-external
             namespace: network

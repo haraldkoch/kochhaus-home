@@ -18,6 +18,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/excalidraw/excalidraw
+              # renovate: datasource=docker depName=docker.io/excalidraw/excalidraw
               tag: latest@sha256:b2b642fdaca652cf23c20e07d3603bed5b22b2e1c88a15bec5f92e8a38d9041c
               pullPolicy: IfNotPresent
             probes:
@@ -48,7 +49,8 @@ spec:
             port: 80
     route:
       app:
-        hostnames: ["draw.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "draw.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-external
             namespace: network

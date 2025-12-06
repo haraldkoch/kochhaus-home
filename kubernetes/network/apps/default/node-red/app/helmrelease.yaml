@@ -21,7 +21,8 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/nodered/node-red
+              repository: mirror.gcr.io/nodered/node-red
+              # renovate: datasource=docker depName=docker.io/nodered/node-red
               tag: 4.1.2
             env:
               TZ: "${TIMEZONE:=Etc/UTC}"
@@ -46,7 +47,8 @@ spec:
             port: 1880
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network

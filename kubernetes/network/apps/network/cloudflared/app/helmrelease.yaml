@@ -19,6 +19,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/cloudflare/cloudflared
+              # renovate: datasource=docker depName=docker.io/cloudflare/cloudflared
               tag: 2025.11.1@sha256:89ee50efb1e9cb2ae30281a8a404fed95eb8f02f0a972617526f8c5b417acae2
             env:
               NO_AUTOUPDATE: true
@@ -29,7 +30,9 @@ spec:
             envFrom:
               - secretRef:
                   name: cloudflared-secret
-            args: ["tunnel", "run"]
+            args:
+              - "tunnel"
+              - "run"
             probes:
               liveness: &probes
                 enabled: true
@@ -46,7 +49,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
@@ -58,7 +61,7 @@ spec:
             runAsNonRoot: true
             runAsUser: 65534
             runAsGroup: 65534
-            seccompProfile: { type: RuntimeDefault }
+            seccompProfile: {type: RuntimeDefault}
           topologySpreadConstraints:
             - maxSkew: 1
               topologyKey: kubernetes.io/hostname

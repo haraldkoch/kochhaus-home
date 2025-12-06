@@ -18,6 +18,7 @@ spec:
           copy-config:
             image:
               repository: mirror.gcr.io/library/alpine
+              # renovate: datasource=docker depName=docker.io/library/alpine
               tag: 3.23.0
             command:
               - /bin/sh

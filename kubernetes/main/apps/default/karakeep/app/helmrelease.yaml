@@ -109,7 +109,8 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/getmeili/meilisearch
+              repository: mirror.gcr.io/getmeili/meilisearch
+              # renovate: datasource=docker depName=docker.io/getmeili/meilisearch
               tag: v1.28.2@sha256:71cdfc95cbbe20e99e430f9c955a52f6530833ed25041710fa0b04f8128cfbb3
             args:
               - /bin/meilisearch

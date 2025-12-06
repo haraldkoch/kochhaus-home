@@ -16,6 +16,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/filebrowser/filebrowser
+              # renovate: datasource=docker depName=docker.io/filebrowser/filebrowser
               tag: v2.50.0@sha256:4f5eaee70fdd6c5efb1d888b8f22f061b965c9414b12f0208b4446d984e56ce3
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
@@ -39,7 +40,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
@@ -61,7 +62,8 @@ spec:
             port: *port
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network

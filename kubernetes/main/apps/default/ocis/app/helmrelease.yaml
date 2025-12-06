@@ -17,7 +17,8 @@ spec:
         initContainers:
           init-config:
             image:
-              repository: docker.io/owncloud/ocis
+              repository: mirror.gcr.io/owncloud/ocis
+              # renovate: datasource=docker depName=docker.io/owncloud/ocis
               tag: 7.3.1
             command:
               - /bin/sh
@@ -31,7 +32,8 @@ spec:
         containers:
           ocis:
             image:
-              repository: docker.io/owncloud/ocis
+              repository: mirror.gcr.io/owncloud/ocis
+              # renovate: datasource=docker depName=docker.io/owncloud/ocis
               tag: 7.3.1
             env:
               DEMO_USERS: false
@@ -74,7 +76,8 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities:
-                drop: [ALL]
+                drop:
+                  - ALL
         pod:
           securityContext:
             runAsUser: 1000
@@ -98,7 +101,8 @@ spec:
           - port: metrics
     route:
       app:
-        hostnames: ["files.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "files.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network

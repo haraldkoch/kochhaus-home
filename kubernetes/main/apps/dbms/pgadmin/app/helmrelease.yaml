@@ -18,7 +18,8 @@ spec:
         containers:
           main:
             image:
-              repository: docker.io/dpage/pgadmin4
+              repository: mirror.gcr.io/dpage/pgadmin4
+              # renovate: datasource=docker depName=docker.io/dpage/pgadmin4
               tag: 9.10@sha256:8c128407f45f1c582eda69e71da1a393237388469052e3cc1e6ae4a475e12b70
             envFrom:
               - secretRef:
@@ -43,7 +44,8 @@ spec:
             port: 80
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -53,10 +55,10 @@ spec:
         existingClaim: "${VOLSYNC_CLAIM}"
         globalMounts:
           - path: /var/lib/pgadmin
-      # server-json:
-      #   enabled: true
-      #   type: configMap
-      #   name: servers-json
-      #   globalMounts:
-      #     - path: /pgadmin4/servers.json
-      #       subPath: servers.json
+            # server-json:
+            #   enabled: true
+            #   type: configMap
+            #   name: servers-json
+            #   globalMounts:
+            #     - path: /pgadmin4/servers.json
+            #       subPath: servers.json

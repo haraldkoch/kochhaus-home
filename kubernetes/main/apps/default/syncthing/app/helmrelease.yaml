@@ -16,6 +16,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/syncthing/syncthing
+              # renovate: datasource=docker depName=docker.io/syncthing/syncthing
               tag: 2.0.12@sha256:7ae77d066e9b81d3d8c312b2f9e1a874a5115680bfde90aff5fc9aece694ec93
             probes:
               liveness:
@@ -33,6 +34,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/filebrowser/filebrowser
+              # renovate: datasource=docker depName=docker.io/filebrowser/filebrowser
               tag: v2.50.0@sha256:4f5eaee70fdd6c5efb1d888b8f22f061b965c9414b12f0208b4446d984e56ce3
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
@@ -80,7 +82,9 @@ spec:
         annotations:
           lbipam.cilium.io/ips: "${SYNCTHING_IPV4},${SYNCTHING_IPV6}"
         externalTrafficPolicy: Local
-        ipFamilies: [IPv4, IPv6]
+        ipFamilies:
+          - IPv4
+          - IPv6
         ipFamilyPolicy: PreferDualStack
         ports:
           listen:
@@ -100,7 +104,8 @@ spec:
             port: *browserPort
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -110,7 +115,8 @@ spec:
               - identifier: app
                 port: 8384
       browser:
-        hostnames: ["sync.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "sync.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network

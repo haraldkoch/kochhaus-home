@@ -39,7 +39,7 @@ spec:
             securityContext: &securityContext
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
@@ -61,7 +61,7 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/library/mongo
+              repository: mirror.gcr.io/library/mongo
               tag: 6.0.4-focal
             probes: *probes
     service:
@@ -83,7 +83,8 @@ spec:
             port: 27017
     route:
       app:
-        hostnames: ["${GATUS_SUBDOMAIN:=${APP}}.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "${GATUS_SUBDOMAIN:=${APP}}.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-external
             namespace: network
@@ -93,7 +94,8 @@ spec:
               - identifier: web
                 port: *webport
       api:
-        hostnames: ["spotty-api.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "spotty-api.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-external
             namespace: network

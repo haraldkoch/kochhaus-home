@@ -16,6 +16,7 @@ spec:
   values:
     image:
       repository: mirror.gcr.io/bloomberg/goldpinger
+      # renovate: datasource=docker depName=docker.io/bloomberg/goldpinger
       tag: 3.10.2@sha256:3c75265e397a23c8bd3ef01eaf73c4f430ec798e1c0735698408efb47f98fedf
     tolerations:
       - key: node-role.kubernetes.io/control-plane

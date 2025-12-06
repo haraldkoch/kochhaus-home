@@ -25,7 +25,8 @@ spec:
         containers:
           main:
             image:
-              repository: docker.io/vikunja/vikunja
+              repository: mirror.gcr.io/vikunja/vikunja
+              # renovate: datasource=docker depName=docker.io/vikunja/vikunja
               tag: 0.24.6@sha256:ed1f3ed467fecec0b57e9de7bc6607f8bbcbb23ffced6a81f5dfefc794cdbe3b
             env:
               # Proper shell path for cli
@@ -73,7 +74,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 100m
@@ -87,7 +88,7 @@ spec:
             runAsGroup: 1000
             fsGroup: 1000
             fsGroupChangePolicy: Always
-            seccompProfile: { type: RuntimeDefault }
+            seccompProfile: {type: RuntimeDefault}
     service:
       main:
         controller: *app
@@ -96,7 +97,8 @@ spec:
             port: *port
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network

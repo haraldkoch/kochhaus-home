@@ -25,17 +25,18 @@ spec:
         containers:
           app:
             image:
-              repository: docker.io/prodrigestivill/postgres-backup-local
+              repository: mirror.gcr.io/prodrigestivill/postgres-backup-local
+              # renovate: datasource=docker depName=docker.io/prodrigestivill/postgres-backup-local
               tag: 18@sha256:f70742ebe42b2277689b028d1fd15aa80f77cffa01da163cc9f85a6ff1866e7f
             command:
               - /bin/bash
               - -x
               - /backup.sh
             env:
-              - { name: TZ, value: "${TIMEZONE:=Etc/UTC}" }
-              - { name: POSTGRES_DB, value: "authelia,dmarc,docmost,gatus,lldap,miniflux,nextcloud,outline,speedtest,vikunja" }
-              - { name: POSTGRES_HOST, value: "postgres-ro.dbms.svc.cluster.local" }
-              - { name: POSTGRES_PORT, value: 5432 }
+              - {name: TZ, value: "${TIMEZONE:=Etc/UTC}"}
+              - {name: POSTGRES_DB, value: "authelia,dmarc,docmost,gatus,lldap,miniflux,nextcloud,outline,speedtest,vikunja"}
+              - {name: POSTGRES_HOST, value: "postgres-ro.dbms.svc.cluster.local"}
+              - {name: POSTGRES_PORT, value: 5432}
               - name: POSTGRES_USER
                 valueFrom:
                   secretKeyRef:
