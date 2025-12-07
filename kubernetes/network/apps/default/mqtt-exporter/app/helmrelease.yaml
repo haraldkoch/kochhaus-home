@@ -21,6 +21,7 @@ spec:
               TZ: "${TIMEZONE:=Etc/UTC}"
               # LOG_LEVEL: DEBUG
               # LOG_MQTT_MESSAGE: "True"
+              MAX_METRICS: 0
               MQTT_ADDRESS: mosquitto.default.svc.cluster.local
               MQTT_TOPIC: "zigbee2mqtt/#"
               MQTT_V5_PROTOCOL: "True"
@@ -64,5 +65,6 @@ spec:
               - action: labeldrop
                 regex: (pod)
               - action: replace
-                sourceLabels: ["service"]
+                sourceLabels:
+                  - "service"
                 targetLabel: instance
