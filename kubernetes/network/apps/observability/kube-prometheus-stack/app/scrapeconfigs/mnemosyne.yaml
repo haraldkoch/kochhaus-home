@@ -3,11 +3,17 @@
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:
-  name: mnemosyne-minio
+  name: mnemosyne-garage
 spec:
   staticConfigs:
-    - targets: ["mnemosyne.${PRIVATE_STATIC_DOMAIN}:9000"]
-  metricsPath: /minio/v2/metrics/cluster
+    - targets:
+        - "mnemosyne.${PRIVATE_STATIC_DOMAIN}:3903"
+  metricsPath: /metrics
+  authorization:
+    type: Bearer
+    credentials:
+      name: garage-auth
+      key: garage-metrics-token
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/monitoring.coreos.com/scrapeconfig_v1alpha1.json
 apiVersion: monitoring.coreos.com/v1alpha1
@@ -16,7 +22,8 @@ metadata:
   name: mnemosyne-smartctl-exporter
 spec:
   staticConfigs:
-    - targets: ["mnemosyne.${PRIVATE_STATIC_DOMAIN}:9633"]
+    - targets:
+        - "mnemosyne.${PRIVATE_STATIC_DOMAIN}:9633"
   metricsPath: /metrics
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/monitoring.coreos.com/scrapeconfig_v1alpha1.json
@@ -26,5 +33,6 @@ metadata:
   name: mnemosyne-zrepl
 spec:
   staticConfigs:
-    - targets: ["mnemosyne.${PRIVATE_STATIC_DOMAIN}:9811"]
+    - targets:
+        - "mnemosyne.${PRIVATE_STATIC_DOMAIN}:9811"
   metricsPath: /metrics
