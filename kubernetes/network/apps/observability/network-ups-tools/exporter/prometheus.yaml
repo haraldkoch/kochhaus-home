@@ -27,8 +27,7 @@ spec:
             severity: warning
         - alert: UpsLowRuntime
           annotations:
-            description: ZPM {{ $labels.instance }} battery is low and the system is getting
-              ready to shutdown.
+            description: ZPM {{ $labels.instance }} battery is low and the system is getting ready to shutdown.
             summary: ZPM battery is low.
           expr: |-
             (
@@ -75,7 +74,7 @@ spec:
             - instance
           targetLabel: instance
         - action: replace
-          replacement: castor.${PRIVATE_STATIC_DOMAIN}
+          replacement: castor4.${PRIVATE_STATIC_DOMAIN}
           sourceLabels:
             - server
           targetLabel: server
@@ -83,7 +82,7 @@ spec:
           regex: (pod)
       params:
         server:
-          - castor.${PRIVATE_STATIC_DOMAIN}
+          - castor4.${PRIVATE_STATIC_DOMAIN}
       path: /ups_metrics
       port: metrics
       scheme: http
@@ -116,7 +115,7 @@ spec:
             - instance
           targetLabel: instance
         - action: replace
-          replacement: pollux.${PRIVATE_STATIC_DOMAIN}
+          replacement: pollux4.${PRIVATE_STATIC_DOMAIN}
           sourceLabels:
             - server
           targetLabel: server
@@ -124,7 +123,7 @@ spec:
           regex: (pod)
       params:
         server:
-          - pollux.${PRIVATE_STATIC_DOMAIN}
+          - pollux4.${PRIVATE_STATIC_DOMAIN}
       path: /ups_metrics
       port: metrics
       scheme: http
