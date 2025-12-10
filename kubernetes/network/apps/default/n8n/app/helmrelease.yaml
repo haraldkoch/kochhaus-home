@@ -18,6 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/n8n-io/n8n
+              # renovate: datasource=github-releases depName=n8n-io/n8n
               tag: 1.123.4
             env:
               DB_SQLITE_VACUUM_ON_STARTUP: true
@@ -73,7 +74,8 @@ spec:
           - matches:
               - path:
                   value: /webhook
-            backendRefs: [{}]
+            backendRefs:
+              - {}
     persistence:
       data:
         existingClaim: n8n
