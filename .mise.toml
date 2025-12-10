@@ -24,7 +24,7 @@ pipx_uvx = true
 "pipx:flux-local" = "8.0.1"
 
 "aqua:cilium/cilium-cli" = "0.18.9"
-"aqua:cli/cli" = "2.83.1"
+"aqua:cli/cli" = "2.83.2"
 "aqua:cloudflare/cloudflared" = "2025.11.1"
 "aqua:FiloSottile/age" = "1.2.1"
 "aqua:fluxcd/flux2" = "2.7.5"
