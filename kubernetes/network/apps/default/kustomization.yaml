@@ -9,6 +9,7 @@ components:
 
 resources:
   - ./namespace.yaml
+  - ./bentopdf/ks.yaml
   - ./changedetection/ks.yaml
   - ./echo/ks.yaml
   - ./hass/ks.yaml

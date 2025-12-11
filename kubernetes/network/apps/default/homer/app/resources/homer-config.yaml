@@ -1,3 +1,4 @@
+---
 title: Koch Haus
 #subtitle: ""
 #logo: ""
@@ -76,21 +77,21 @@ services:
         url: https://ebooks.${SECRET_DOMAIN}
         subtitle: eBook library
 
-      # - name: "SFTPGo"
-      #   logo: "https://raw.githubusercontent.com/drakkan/sftpgo/main/img/logo.png"
-      #   url: "https://sftpgo.${SECRET_DOMAIN}"
-      # - name: "Immich"
-      #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/immich.png"
-      #   url: "https://immich.${SECRET_DOMAIN}"
-      # - name: "Paperless"
-      #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/paperless-ng.png"
-      #   url: "https://paperless.${SECRET_DOMAIN}"
-      # - name: "Memos"
-      #   logo: "https://raw.githubusercontent.com/usememos/memos/main/web/public/logo.webp"
-      #   url: "https://memos.${SECRET_DOMAIN}"
-      # - name: "Tandoor Recipes"
-      #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/tandoorrecipes.png"
-      #   url: "https://recipes.${SECRET_DOMAIN}"
+    # - name: "SFTPGo"
+    #   logo: "https://raw.githubusercontent.com/drakkan/sftpgo/main/img/logo.png"
+    #   url: "https://sftpgo.${SECRET_DOMAIN}"
+    # - name: "Immich"
+    #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/immich.png"
+    #   url: "https://immich.${SECRET_DOMAIN}"
+    # - name: "Paperless"
+    #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/paperless-ng.png"
+    #   url: "https://paperless.${SECRET_DOMAIN}"
+    # - name: "Memos"
+    #   logo: "https://raw.githubusercontent.com/usememos/memos/main/web/public/logo.webp"
+    #   url: "https://memos.${SECRET_DOMAIN}"
+    # - name: "Tandoor Recipes"
+    #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/tandoorrecipes.png"
+    #   url: "https://recipes.${SECRET_DOMAIN}"
 
   - name: Cloud
     icon: fas fa-cloud
@@ -111,6 +112,10 @@ services:
   - name: Tools
     icon: fas fa-screwdriver-wrench
     items:
+      - name: BentoPDF
+        logo: https://raw.githubusercontent.com/alam00000/bentopdf/refs/heads/main/public/images/favicon.svg
+        url: https://bentopdf.${SECRET_DOMAIN}
+        subtitle: simple PDF generation service
       - name: Change Detection
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/changedetection.png
         url: https://changedetection.${SECRET_DOMAIN}
