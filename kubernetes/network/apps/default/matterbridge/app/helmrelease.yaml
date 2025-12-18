@@ -47,7 +47,7 @@ spec:
       app:
         ports:
           http:
-            port: *port
+            port: &port 8283
     route:
       app:
         hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
