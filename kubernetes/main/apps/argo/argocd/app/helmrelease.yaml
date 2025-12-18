@@ -71,7 +71,7 @@ spec:
       initContainers:
         - name: download-tools
           # renovate: datasource=docker depName=docker.io/library/alpine
-          image: mirror.gcr.io/library/alpine:3.23.0
+          image: mirror.gcr.io/library/alpine:3.23.2
           command:
             - sh
             - -c
