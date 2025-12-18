@@ -15,3 +15,4 @@ resources:
   - ./cloudflared/ks.yaml
   - ./dyndns/ks.yaml
   - ./envoy-gateway/ks.yaml
+  - ./multus/ks.yaml
