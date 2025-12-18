@@ -116,6 +116,7 @@ machine:
           - https://harbor.kochhaus.dev/v2/registry.k8s.io
         overridePath: true
   sysctls:
+    net.ipv6.conf.end0.autoconf: "0"           # disable IPv6 autoconfig on end0 (we still allow it on end0.20)
     fs.inotify.max_user_instances: "8192"      # Watchdog
     fs.inotify.max_user_watches: "1048576"     # Watchdog
     net.core.rmem_max: "7500000"               # Cloudflared / QUIC
