@@ -17,6 +17,7 @@ resources:
   - ./it-tools/ks.yaml
   - ./kochhaus-docs/ks.yaml
   - ./matter-server/ks.yaml
+  - ./matterbridge/ks.yaml
   - ./mosquitto/ks.yaml
   - ./mqtt-exporter/ks.yaml
   - ./n8n/ks.yaml
