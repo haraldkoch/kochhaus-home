@@ -35,6 +35,7 @@ spec:
         grafana_folder: Infrastructure
     # NOTE: devices might need to be set if you have more than one active NIC on your hosts
     # devices: eno+ enp+ eth+
+    devices: end+
     ipv4:
       enabled: true
     ipv6:
