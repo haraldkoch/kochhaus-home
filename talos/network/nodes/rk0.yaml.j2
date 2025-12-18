@@ -6,8 +6,13 @@ machine:
   network:
     hostname: rk0
     interfaces:
-      - dhcp: false
-        interface: end0
+      - interface: bond0
+        bond:
+          deviceSelectors:
+            - driver: rk_gmac-dwmac
+              hardwareAddr: d6:9b:17:0b:26:08
+          mode: active-backup
+        dhcp: false
         mtu: 1500
         vlans:
           - addresses:
@@ -16,7 +21,12 @@ machine:
             routes:
               - gateway: 192.168.20.1
                 network: 0.0.0.0/0
+            dhcp: false
             vlanId: 20
+          - # IOT
+            dhcp: false
+            mtu: 1500
+            vlanId: 30
   type: controlplane
 ---
 apiVersion: v1alpha1
