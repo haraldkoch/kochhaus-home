@@ -19,7 +19,7 @@ spec:
               [{
                 "name":"iot",
                 "namespace": "network",
-                "ips": ["192.168.30.11/24"],
+                "ips": ["192.168.30.22/24"],
                 "mac": "a6:ed:7f:8c:4a:11"
               }]
         containers:
