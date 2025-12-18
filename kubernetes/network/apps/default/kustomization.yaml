@@ -19,6 +19,7 @@ resources:
   - ./mosquitto/ks.yaml
   - ./mqtt-exporter/ks.yaml
   - ./n8n/ks.yaml
+  - ./netshoot-iot/ks.yaml
   - ./node-red/ks.yaml
   - ./omada-controller/ks.yaml
   - ./openspeedtest/ks.yaml
