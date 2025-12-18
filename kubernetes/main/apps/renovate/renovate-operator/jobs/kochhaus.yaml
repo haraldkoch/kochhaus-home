@@ -43,6 +43,7 @@ metadata:
   name: kochhaus
   namespace: renovate
 spec:
+  discoverTopics: renovate
   discoveryFilter: haraldkoch/*
   extraEnv:
     - name: LOG_LEVEL
