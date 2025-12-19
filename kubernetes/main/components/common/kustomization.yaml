@@ -5,4 +5,4 @@ kind: Component
 resources:
   - ./alerts
   - ./repos
-  - ./sops
+  - ./vars
