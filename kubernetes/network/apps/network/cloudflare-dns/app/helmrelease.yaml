@@ -27,10 +27,13 @@ spec:
       - --gateway-name=envoy-external
     triggerLoopOnEvent: true
     policy: sync
-    sources: ["crd", "gateway-httproute"]
+    sources:
+      - crd
+      - gateway-httproute
     txtOwnerId: network
     txtPrefix: k8s.
-    domainFilters: ["${CLUSTER_DOMAIN}"]
+    domainFilters:
+      - ${CLUSTER_DOMAIN}
     logLevel: info
     serviceMonitor:
       enabled: true

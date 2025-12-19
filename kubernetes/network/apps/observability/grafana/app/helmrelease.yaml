@@ -292,10 +292,10 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
     imageRenderer:
       enabled: true
       image:
+        # renovate: datasource=github-releases depName=grafana/grafana-image-renderer
         repository: grafana/grafana-image-renderer
         tag: v5.1.0
         pullPolicy: IfNotPresent

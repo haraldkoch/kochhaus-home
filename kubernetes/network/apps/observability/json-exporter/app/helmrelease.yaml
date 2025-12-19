@@ -47,19 +47,19 @@ spec:
     service:
       app:
         controller: json-exporter
-        ports:
-          metrics:
-            protocol: TCP
-            port: 7979
-        type: LoadBalancer
-        externalTrafficPolicy: Cluster
-        ipFamilies: [IPv4, IPv6]
-        ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: exporters.${CLUSTER_DOMAIN}
           lbipam.cilium.io/ips: "${EXPORTERS_IPV4},${EXPORTERS_IPV6}"
           lbipam.cilium.io/sharing-cross-namespace: default,observability
           lbipam.cilium.io/sharing-key: exporters
+        externalTrafficPolicy: Local
+        ipFamilies: [IPv4, IPv6]
+        ipFamilyPolicy: PreferDualStack
+        ports:
+          metrics:
+            protocol: TCP
+            port: 7979
+        type: LoadBalancer
     serviceMonitor:
       app:
         serviceName: *app

@@ -8,8 +8,8 @@ spec:
   parentRefs:
     - name: envoy-internal
       namespace: network
-      sectionName: https
-  hostnames: ["longhorn.${CLUSTER_DOMAIN}"]
+  hostnames:
+    - longhorn.${CLUSTER_DOMAIN}
   rules:
     - backendRefs:
         - name: longhorn-frontend
