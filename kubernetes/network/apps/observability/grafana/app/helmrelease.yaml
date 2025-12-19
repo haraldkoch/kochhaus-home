@@ -33,26 +33,6 @@ spec:
       news:
         news_feed_enabled: false
     defaultDashboardsTimezone: ${TIMEZONE:=Etc/UTC}
-    datasources:
-      datasources.yaml:
-        apiVersion: 1
-        deleteDatasources:
-          - { name: Alertmanager, orgId: 1 }
-          - { name: Prometheus, orgId: 1 }
-        datasources:
-          - name: Prometheus
-            type: prometheus
-            uid: prometheus
-            access: proxy
-            url: http://prometheus-operated.observability.svc.cluster.local:9090
-            isDefault: true
-          - name: Alertmanager
-            type: alertmanager
-            uid: alertmanager
-            access: proxy
-            url: http://alertmanager-operated.observability.svc.cluster.local:9093
-            jsonData:
-              implementation: prometheus
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1
@@ -97,14 +77,6 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/kubernetes-folder
-          - name: nginx
-            orgId: 1
-            folder: Nginx
-            type: file
-            disableDeletion: false
-            editable: true
-            options:
-              path: /var/lib/grafana/dashboards/nginx-folder
           - name: prometheus
             orgId: 1
             folder: Prometheus
@@ -113,6 +85,26 @@ spec:
             editable: true
             options:
               path: /var/lib/grafana/dashboards/prometheus-folder
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        deleteDatasources:
+          - { name: Alertmanager, orgId: 1 }
+          - { name: Prometheus, orgId: 1 }
+        datasources:
+          - name: Prometheus
+            type: prometheus
+            uid: prometheus
+            access: proxy
+            url: http://prometheus-operated.observability.svc.cluster.local:9090
+            isDefault: true
+          - name: Alertmanager
+            type: alertmanager
+            uid: alertmanager
+            access: proxy
+            url: http://alertmanager-operated.observability.svc.cluster.local:9093
+            jsonData:
+              implementation: prometheus
     dashboards:
       home:
         blocky:
@@ -234,13 +226,6 @@ spec:
           # renovate: depName="K8s / Storage / Volumes / Cluster"
           gnetId: 11454
           revision: 14
-          datasource: Prometheus
-      nginx:
-        nginx:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/nginx.json
-          datasource: Prometheus
-        nginx-request-handling-performance:
-          url: https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/grafana/dashboards/request-handling-performance.json
           datasource: Prometheus
       prometheus:
         prometheus:
