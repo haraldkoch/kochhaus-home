@@ -6,13 +6,15 @@ metadata:
   name: alertmanager
 spec:
   route:
-    groupBy: ["alertname", "job"]
+    groupBy:
+      - alertname
+      - job
     groupInterval: 10m
     groupWait: 1m
     receiver: pushover
     repeatInterval: 12h
     routes:
-      - receiver: "null"
+      - receiver: blackhole
         matchers:
           - name: alertname
             value: InfoInhibitor
@@ -31,7 +33,9 @@ spec:
             value: critical
             matchType: =
   inhibitRules:
-    - equal: ["alertname", "namespace"]
+    - equal:
+        - alertname
+        - namespace
       sourceMatch:
         - name: severity
           value: critical
@@ -41,7 +45,7 @@ spec:
           value: warning
           matchType: =
   receivers:
-    - name: "null"
+    - name: blackhole
     - name: heartbeat-network
       webhookConfigs:
         - urlSecret:

@@ -9,30 +9,24 @@ spec:
     kind: OCIRepository
     name: kube-prometheus-stack
   interval: 1h
-  valuesFrom:
-    - kind: ConfigMap
-      name: flux-kube-state-metrics-config
-      valuesKey: kube-state-metrics-config.yaml
   values:
-    crds:
-      enabled: true
-      upgradeJob:
-        enabled: true
-        forceConflicts: true
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       route:
         main:
           enabled: true
-          hostnames: ["alertmanager.${CLUSTER_DOMAIN}"]
+          hostnames:
+            - alertmanager.${CLUSTER_DOMAIN}
           parentRefs:
             - name: envoy-internal
               namespace: network
-              sectionName: https
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "amcluster-network.${CLUSTER_DOMAIN}"
           lbipam.cilium.io/ips: "${ALERTMANAGER_IPV4}"
+        externalTrafficPolicy: Local
+        ipDualStack:
+          enabled: false
         additionalPorts:
           - name: tcp-mesh
             port: 9094
@@ -67,7 +61,7 @@ spec:
             cpu: 50m
             memory: 64Mi
           limits:
-            memory: 64Mi
+            memory: 96Mi
     kubeEtcd:
       service:
         selector:
@@ -78,11 +72,11 @@ spec:
       route:
         main:
           enabled: true
-          hostnames: ["prometheus.${CLUSTER_DOMAIN}"]
+          hostnames:
+            - prometheus.${CLUSTER_DOMAIN}
           parentRefs:
             - name: envoy-internal
               namespace: network
-              sectionName: https
       prometheusSpec:
         externalUrl: https://prometheus.${CLUSTER_DOMAIN}
         version: v2.55.1 # override 'unsupported Prometheus version' error
@@ -143,11 +137,13 @@ spec:
             - action: replace
               regex: (.*)
               replacement: $1
-              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              sourceLabels:
+                - "__meta_kubernetes_pod_node_name"
               targetLabel: kubernetes_node
             - action: drop
               regex: /var/lib/kubelet/pods.+
-              sourceLabels: ["mountpoint"]
+              sourceLabels:
+                - "mountpoint"
             - action: labeldrop
               regex: (pod)
     kube-state-metrics:
@@ -163,7 +159,39 @@ spec:
             - action: replace
               regex: (.*)
               replacement: $1
-              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              sourceLabels:
+                - "__meta_kubernetes_pod_node_name"
               targetLabel: kubernetes_node
     grafana:
       enabled: false
+    additionalPrometheusRulesMap:
+      dockerhub-rules:
+        groups:
+          - name: dockerhub
+            rules:
+              - alert: DockerhubRateLimitRisk
+                annotations:
+                  summary: There are {{ $value }} containers pulling from Dockerhub. This may lead to rate limiting.
+                expr: count(time() - container_last_seen{image=~"(docker.io).*",container!=""} < 30) > 100
+                labels:
+                  severity: critical
+      oom-rules:
+        groups:
+          - name: oom
+            rules:
+              - alert: OomKilled
+                annotations:
+                  summary: Container {{ $labels.container }} in pod {{ $labels.namespace }}/{{ $labels.pod }} has been OOMKilled {{ $value }} times in the last 10 minutes.
+                expr: (kube_pod_container_status_restarts_total - kube_pod_container_status_restarts_total offset 10m >= 1) and ignoring (reason) min_over_time(kube_pod_container_status_last_terminated_reason{reason="OOMKilled"}[10m]) == 1
+                labels:
+                  severity: critical
+      zfs-rules:
+        groups:
+          - name: zfs
+            rules:
+              - alert: ZfsUnexpectedPoolState
+                annotations:
+                  summary: ZFS pool {{$labels.zpool}} on {{$labels.instance}} is in a unexpected state {{$labels.state}}
+                expr: node_zfs_zpool_state{state!="online"} > 0
+                labels:
+                  severity: critical
