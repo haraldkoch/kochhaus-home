@@ -14,8 +14,8 @@ spec:
     substitute:
       APP: matterbridge
       VOLSYNC_CAPACITY: 5Gi
-      VOLSYNC_PGID: "1000"
-      VOLSYNC_PUID: "1000"
+      VOLSYNC_PGID: "0"
+      VOLSYNC_PUID: "0"
   prune: true
   sourceRef:
     kind: GitRepository

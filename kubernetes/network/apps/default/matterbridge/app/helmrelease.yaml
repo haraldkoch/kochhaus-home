@@ -23,7 +23,7 @@ spec:
               TZ: ${TIMEZONE}
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false # ugh
               capabilities: {add: ["NET_ADMIN", "NET_BIND_SERVICE", "NET_RAW"]}
             resources:
               limits:
@@ -38,10 +38,10 @@ spec:
           }]
       hostUsers: false
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
@@ -63,6 +63,6 @@ spec:
       data:
         existingClaim: "{{ .Release.Name }}"
         globalMounts:
-          - path: /home/node
+          - path: /root
       tmp:
         type: emptyDir
