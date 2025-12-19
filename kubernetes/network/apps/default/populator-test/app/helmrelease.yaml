@@ -37,7 +37,7 @@ spec:
           git-sync:
             image:
               repository: registry.k8s.io/git-sync/git-sync
-              tag: v4.5.0
+              tag: v4.5.1
             env:
               GITSYNC_REPO: https://github.com/haraldkoch/haraldkoch.git
               GITSYNC_ROOT: /data/git
