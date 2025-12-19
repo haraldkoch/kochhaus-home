@@ -31,11 +31,15 @@ spec:
       - --rfc2136-tsig-secret-alg=hmac-sha256
     triggerLoopOnEvent: true
     policy: sync
-    sources: ["crd", "gateway-httproute", "service"]
+    sources:
+      - crd
+      - gateway-httproute
+      - service
     # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
     txtOwnerId: registry
     txtPrefix: k8s.
-    domainFilters: ["${SECRET_DOMAIN}"]
+    domainFilters:
+      - ${SECRET_DOMAIN}
     logLevel: info
     serviceMonitor:
       enabled: true
