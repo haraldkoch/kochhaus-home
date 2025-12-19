@@ -61,7 +61,7 @@ spec:
             cpu: 50m
             memory: 64Mi
           limits:
-            memory: 64Mi
+            memory: 96Mi
     kubeEtcd:
       service:
         selector:
@@ -137,11 +137,13 @@ spec:
             - action: replace
               regex: (.*)
               replacement: $1
-              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              sourceLabels:
+                - "__meta_kubernetes_pod_node_name"
               targetLabel: kubernetes_node
             - action: drop
               regex: /var/lib/kubelet/pods.+
-              sourceLabels: ["mountpoint"]
+              sourceLabels:
+                - "mountpoint"
             - action: labeldrop
               regex: (pod)
     kube-state-metrics:
@@ -157,7 +159,8 @@ spec:
             - action: replace
               regex: (.*)
               replacement: $1
-              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              sourceLabels:
+                - "__meta_kubernetes_pod_node_name"
               targetLabel: kubernetes_node
     grafana:
       enabled: false
