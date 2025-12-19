@@ -21,6 +21,11 @@ spec:
             limits:
               memory: 1Gi
       envoyService:
+        # use Cluster for L2, Local for L3
+        #
+        # Cilium's L2 announce doesn't support Local, since it announces on a
+        # different node than the pod is running on
+        # https://github.com/cilium/cilium/issues/27800
         externalTrafficPolicy: Cluster
   shutdown:
     drainTimeout: 180s
@@ -83,6 +88,8 @@ spec:
   compression:
     - type: Brotli
     - type: Gzip
+  connection:
+    bufferLimit: 8Mi
   targetSelectors:
     - group: gateway.networking.k8s.io
       kind: Gateway
