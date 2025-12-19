@@ -30,14 +30,13 @@ kind: Service
 metadata:
   name: kube-api
   annotations:
+    external-dns.alpha.kubernetes.io/hostname: k8s-registry.${CLUSTER_DOMAIN}
     lbipam.cilium.io/ips: 192.168.20.66
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
   selector:
     k8s-app: kube-apiserver
     tier: control-plane
   ports:
-    - name: https
-      port: 6443
-      protocol: TCP
-      targetPort: 6443
+    - port: 6443
