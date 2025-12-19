@@ -32,7 +32,7 @@ spec:
               - --log-level-sdk=info
             resources:
               limits:
-                memory: 100Mi
+                memory: 256Mi
     defaultPodOptions:
       annotations:
         k8s.v1.cni.cncf.io/networks: |
@@ -44,11 +44,12 @@ spec:
       hostUsers: false
       securityContext:
         runAsNonRoot: false # Must be run as root user
-        runAsUser: 0        # Must be run as root user
+        runAsUser: 0 # Must be run as root user
         runAsGroup: 0
         fsGroup: 0
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [34]
+        supplementalGroups:
+          - 34
     service:
       app:
         ports:
@@ -56,7 +57,8 @@ spec:
             port: *port
     route:
       app:
-        hostnames: [*host]
+        hostnames:
+          - *host
         parentRefs:
           - name: envoy-internal
             namespace: network
