@@ -98,7 +98,6 @@ spec:
         apiVersion: 1
         deleteDatasources:
           - { name: Alertmanager, orgId: 1 }
-          - { name: Loki, orgId: 1 }
           - { name: Prometheus, orgId: 1 }
         datasources:
           - name: Prometheus
@@ -107,13 +106,6 @@ spec:
             access: proxy
             url: http://prometheus-operated.observability.svc.cluster.local:9090
             isDefault: true
-          - name: Loki
-            type: loki
-            uid: loki
-            access: proxy
-            url: http://loki-headless.observability.svc.cluster.local:3100
-            jsonData:
-              maxLines: 250
           - name: Alertmanager
             type: alertmanager
             uid: alertmanager
@@ -126,6 +118,12 @@ spec:
         miniflux:
           url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
           datasource: Prometheus
+        ping:
+          # renovate: depName="Blackbox exporter - ICMP"
+          gnetId: 20338
+          revision: 3
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
       infrastructure:
         cert-manager:
           # renovate: depName="Cert-manager-Kubernetes"
@@ -138,28 +136,22 @@ spec:
           revision: 6
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
+        envoy:
+           # renovate: depName="Envoy Proxy Monitoring gRPC"
+           gnetId: 23239
+           revision: 1
+           datasource:
+             - { name: DS_AFRANET_PROMETHEUS, value: Prometheus }
         external-dns:
           # renovate: depName="External-dns"
           gnetId: 15038
           revision: 3
           datasource: Prometheus
-        minio:
-          # renovate: depName="MinIO Dashboard"
-          gnetId: 13502
-          revision: 26
-          datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
         node-exporter-full:
           # renovate: depName="Node Exporter Full"
           gnetId: 1860
           revision: 42
           datasource: Prometheus
-        ping:
-          # renovate: depName="Blackbox exporter - ICMP"
-          gnetId: 20338
-          revision: 3
-          datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
         smart:
           # renovate: depName="Dashboard for smartctl_exporter"
           gnetId: 20204
@@ -295,7 +287,6 @@ spec:
           memory: 240Mi
         limits:
           memory: 320Mi
-
     plugins:
       - grafana-clock-panel
       - grafana-piechart-panel
@@ -317,29 +308,18 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
-    downloadDashboardsImage:
-      registry: quay.io
-      repository: curl/curl
-      tag: 8.17.0@sha256:f6710cb71617689b9e3522bde531a1a59f3d39e848be4cb450c9f87c5d15c3a5
     imageRenderer:
       enabled: true
       image:
+        # renovate: datasource=github-releases depName=grafana/grafana-image-renderer
         repository: grafana/grafana-image-renderer
         tag: v5.1.0
         pullPolicy: IfNotPresent
       replicas: 1
+      networkPolicy:
+        limitIngress: false
       serviceMonitor:
         enabled: true
-      networkPolicy:
-        extraIngressSelectors:
-          - namespaceSelector:
-              matchLabels:
-                kubernetes.io/metadata.name: observability
-            podSelector:
-              matchLabels:
-                app.kubernetes.io/instance: kube-prometheus-stack
-                app.kubernetes.io/name: prometheus
     persistence:
       enabled: false
     testFramework:
