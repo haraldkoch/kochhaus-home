@@ -36,6 +36,7 @@ spec:
               - /bin/sh
               - -c
               - |-
+                sleep 5
                 printf "\e[1;32m%-6s\e[m\n" "Building initial output tree ..."
                 mdbook build --dest-dir /public /mdbook/book
                 printf "\e[1;32m%-6s\e[m\n" "Watching for changes  ..."
