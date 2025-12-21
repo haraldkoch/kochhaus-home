@@ -75,6 +75,18 @@ spec:
           - name: envoy-internal
             namespace: network
             sectionName: https
+        rules:
+          - filters:
+              - type: RequestRedirect
+                requestRedirect:
+                  path:
+                    type: ReplaceFullPath
+                    replaceFullPath: /html/
+                  statusCode: 302
+            matches:
+              - path:
+                  type: Exact
+                  value: /
     persistence:
       git:
         type: emptyDir
