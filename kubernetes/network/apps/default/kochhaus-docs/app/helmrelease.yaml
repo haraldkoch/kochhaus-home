@@ -31,7 +31,7 @@ spec:
             dependsOn: git-sync
             image:
               repository: ghcr.io/peaceiris/mdbook
-              tag: v0.5.0
+              tag: v0.4.40
             command:
               - /bin/sh
               - -c
@@ -69,7 +69,8 @@ spec:
             port: 80
     route:
       app:
-        hostnames: ["docs.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "docs.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network
