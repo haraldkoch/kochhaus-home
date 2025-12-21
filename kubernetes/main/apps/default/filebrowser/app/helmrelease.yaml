@@ -1,0 +1,88 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: filebrowser
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  interval: 1h
+  values:
+    controllers:
+      filebrowser:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/gtsteffaniak/filebrowser
+              tag: 1.0.3-stable@sha256:ef5b770ee1b9730671cbdd7047bad0ab85c3725b415aa996bbc87fcdf1a61a73
+            env:
+              TZ: ${TIMEZONE:=Etc/UTC}
+              FILEBROWSER_CONFIG: "/data/config.yaml"
+              FILEBROWSER_ADMIN_PASSWORD: "change-me"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: &port 80
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 512Mi
+        pod:
+          securityContext:
+            runAsUser: 2000
+            runAsGroup: 2000
+            fsGroup: 2000
+            fsGroupChangePolicy: "OnRootMismatch"
+    service:
+      app:
+        ipFamilyPolicy: PreferDualStack
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+    configMaps:
+      config:
+        data:
+          config.yaml: |-
+            server:
+              sources:
+                - path: /media
+                  config:
+                    defaultEnabled: true
+    persistence:
+      config-file:
+        type: configMap
+        identifier: config
+      data:
+        existingClaim: filebrowser-data-nfs
+        globalMounts:
+          - path: /home/filebrowser/data
+      media:
+        existingClaim: media-nfs
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /home/filebrowser/tmp
