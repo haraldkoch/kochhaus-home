@@ -13,6 +13,7 @@ resources:
   - ./calibre-web/ks.yaml
   - ./docmost/ks.yaml
   - ./excalidraw/ks.yaml
+  - ./filebrowser/ks.yaml
   - ./jellyfin/ks.yaml
   - ./karakeep/ks.yaml
   - ./media-browser/ks.yaml
