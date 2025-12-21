@@ -51,6 +51,7 @@ spec:
               TZ: ${TIMEZONE:=Etc/UTC}
               SERVER_PORT: 80
               SERVER_ROOT: /public
+              SERVER_LOG_LEVEL: info
             probes:
               liveness:
                 enabled: true
@@ -77,6 +78,13 @@ spec:
             namespace: network
             sectionName: https
         rules:
+          - backendRefs:
+              - name: kochhaus-docs
+                port: 80
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /
           - filters:
               - type: RequestRedirect
                 requestRedirect:
