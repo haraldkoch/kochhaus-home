@@ -50,5 +50,14 @@
       matchPackageNames: ["/external-dns/", "/gateway-api/", "/prometheus-operator/"],
       ignoreTests: true,
     },
+    {
+      description: "Auto-merge Containers",
+      matchDatasources: ["docker"],
+      automerge: true,
+      automergeType: "pr",
+      matchUpdateTypes: ["minor", "patch"],
+      matchPackageNames: ["/renovate/"],
+      ignoreTests: false,
+    },
   ],
 }
