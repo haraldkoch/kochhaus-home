@@ -37,7 +37,8 @@ spec:
                   - matchExpressions:
                       - key: cyberpower.feature.node.kubernetes.io/ups
                         operator: In
-                        values: ["true"]
+                        values:
+                          - "true"
           tolerations:
             - key: node-role.kubernetes.io/control-plane
               operator: Exists
@@ -51,7 +52,9 @@ spec:
             protocol: TCP
         type: LoadBalancer
         externalTrafficPolicy: Local
-        ipFamilies: [IPv4, IPv6]
+        ipFamilies:
+          - IPv4
+          - IPv6
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "network-ups-tools.${CLUSTER_DOMAIN}"
@@ -86,6 +89,10 @@ spec:
               actions = SET
               instcmds = ALL
               upsmon primary
+            [homeassistant]
+              password = "${HASS_NUT_PASSWORD}"
+              actions = SET
+              instcmds = ALL
           ups.conf: |-
             [kubernetes]
               driver = usbhid-ups
