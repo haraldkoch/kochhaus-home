@@ -3,41 +3,8 @@
 machine:
   install:
     disk: /dev/nvme0n1
-  network:
-    hostname: rk1
-    interfaces:
-      - dhcp: false
-        interface: end0
-        mtu: 1500
-        vlans:
-          - addresses:
-              - 192.168.20.34/24
-              - fdd5:aa8:9535:20::34/64
-            routes:
-              - gateway: 192.168.20.1
-                network: 0.0.0.0/0
-            dhcp: false
-            vlanId: 20
-          - # IOT
-            dhcp: false
-            mtu: 1500
-            vlanId: 30
   type: controlplane
 ---
 apiVersion: v1alpha1
-kind: VolumeConfig
-name: EPHEMERAL
-provisioning:
-  maxSize: 250GB
----
-apiVersion: v1alpha1
-kind: UserVolumeConfig
-name: extra
-provisioning:
-  diskSelector:
-    match: system_disk
-  grow: true
-  minSize: 500GB
-  maxSize: 750GB
-filesystem:
-  type: xfs
+kind: HostnameConfig
+hostname: rk1

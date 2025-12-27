@@ -72,12 +72,6 @@ machine:
       validSubnets:
         - 192.168.20.0/24
         - fdd5:aa8:9535:20::/64
-  network:
-    nameservers:
-      - 192.168.10.6
-      - 192.168.10.7
-    searchDomains:
-      - op://homelab/talos-network/private_static_domain
   nodeLabels:
     topology.kubernetes.io/region: network
     node.longhorn.io/create-default-disk: "true"
@@ -116,11 +110,14 @@ machine:
           - https://harbor.kochhaus.dev/v2/registry.k8s.io
         overridePath: true
   sysctls:
-    net.ipv6.conf.end0.autoconf: "0"           # disable IPv6 autoconfig on end0 (we still allow it on end0.20)
     fs.inotify.max_user_instances: "8192"      # Watchdog
     fs.inotify.max_user_watches: "1048576"     # Watchdog
     net.core.rmem_max: "7500000"               # Cloudflared / QUIC
     net.core.wmem_max: "7500000"               # Cloudflared / QUIC
+    net.ipv4.neigh.default.gc_thresh1: "4096"  # Prevent ARP cache overflows
+    net.ipv4.neigh.default.gc_thresh2: "8192"  # Prevent ARP cache overflows
+    net.ipv4.neigh.default.gc_thresh3: "16384" # Prevent ARP cache overflows
+    net.ipv4.ping_group_range: 0 2147483647    # Allow Ping
     net.ipv4.tcp_fastopen: "3"                 # Send and accept data in the opening SYN packet
     user.max_user_namespaces: "11255"          # User Namespaces
   time:
@@ -225,6 +222,42 @@ cluster:
   serviceAccount:
     key: op://homelab/talos-network/CLUSTER_SERVICEACCOUNT_KEY
   {% endif %}
+---
+apiVersion: v1alpha1
+kind: EthernetConfig
+name: end0
+rings:
+  rx: 8160
+  tx: 8160
+---
+apiVersion: v1alpha1
+kind: DHCPv4Config
+name: end0
+clientIdentifier: mac
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: end0.30
+vlanID: 30
+parent: bond0
+---
+apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  maxSize: 250GB
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: extra
+provisioning:
+  diskSelector:
+    match: system_disk
+  grow: true
+  minSize: 500GB
+  maxSize: 750GB
+filesystem:
+  type: xfs
 ---
 apiVersion: v1alpha1
 kind: WatchdogTimerConfig
