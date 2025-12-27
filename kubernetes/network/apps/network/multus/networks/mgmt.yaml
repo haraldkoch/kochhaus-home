@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/k8s.cni.cncf.io/networkattachmentdefinition_v1.json
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: mgmt
+spec:
+  config: |-
+    {
+      "cniVersion": "1.1.0",
+      "name": "mgmt",
+      "plugins": [
+        {
+          "type": "macvlan",
+          "master": "end0.1",
+          "mode": "bridge",
+          "ipam": {
+            "type": "static"
+          }
+        },
+        {
+          "type": "sbr"
+        }
+      ]
+    }

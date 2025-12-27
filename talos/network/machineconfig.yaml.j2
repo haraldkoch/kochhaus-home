@@ -237,9 +237,15 @@ clientIdentifier: mac
 ---
 apiVersion: v1alpha1
 kind: VLANConfig
+name: end0.1
+vlanID: 1
+parent: end0
+---
+apiVersion: v1alpha1
+kind: VLANConfig
 name: end0.30
 vlanID: 30
-parent: bond0
+parent: end0
 ---
 apiVersion: v1alpha1
 kind: VolumeConfig
