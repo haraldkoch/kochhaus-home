@@ -8,6 +8,8 @@ spec:
   dependsOn:
     - name: cert-manager
       namespace: cert-manager
+    - name: longhorn
+      namespace: storage
   interval: 1h
   path: ./kubernetes/network/apps/default/smtp-relay/app
   prune: true
