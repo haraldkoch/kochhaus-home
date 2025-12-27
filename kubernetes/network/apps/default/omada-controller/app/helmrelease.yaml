@@ -41,6 +41,14 @@ spec:
                 memory: 1200Mi
               limits:
                 memory: 2400Mi
+    defaultPodOptions:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: |
+          [{
+            "name": "mgmt",
+            "namespace": "network",
+            "ips": ["192.168.0.8/24"]
+          }]
     service:
       app:
         controller: omada-controller
@@ -57,7 +65,9 @@ spec:
         annotations:
           lbipam.cilium.io/ips: "${OMADA_IPV4},${OMADA_IPV6}"
         externalTrafficPolicy: Local
-        ipFamilies: [IPv4, IPv6]
+        ipFamilies:
+          - IPv4
+          - IPv6
         ipFamilyPolicy: PreferDualStack
         ports:
           # # Docs: https://www.tp-link.com/us/support/faq/3281/
