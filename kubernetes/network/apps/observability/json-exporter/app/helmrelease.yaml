@@ -30,7 +30,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 50m
@@ -52,8 +52,10 @@ spec:
           lbipam.cilium.io/ips: "${EXPORTERS_IPV4},${EXPORTERS_IPV6}"
           lbipam.cilium.io/sharing-cross-namespace: default,observability
           lbipam.cilium.io/sharing-key: exporters
-        externalTrafficPolicy: Local
-        ipFamilies: [IPv4, IPv6]
+        externalTrafficPolicy: Cluster
+        ipFamilies:
+          - IPv4
+          - IPv6
         ipFamilyPolicy: PreferDualStack
         ports:
           metrics:
