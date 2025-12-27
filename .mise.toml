@@ -2,7 +2,7 @@
 KUBECONFIG = "{{config_root}}/kubernetes/main/kubeconfig:{{config_root}}/kubernetes/network/kubeconfig:{{config_root}}/kubernetes/registry/kubeconfig"
 MINIJINJA_CONFIG_FILE = "{{config_root}}/.minijinja.toml"
 SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
-TALOSCONFIG = "{{config_root}}/talos/main/talosconfig"
+TALOSCONFIG = "{{config_root}}/talos/none/talosconfig"
 # File paths
 BOOTSTRAP_DIR = "{{config_root}}/bootstrap"
 KUBERNETES_DIR = "{{config_root}}/kubernetes"
@@ -31,7 +31,7 @@ pipx_uvx = true
 "aqua:getsops/sops" = "3.11.0"
 "aqua:go-task/task" = "3.46.4"
 "aqua:google/yamlfmt" = "0.20.0"
-"aqua:helm/helm" = "4.0.4"
+# "aqua:helm/helm" = "4.0.4"
 "aqua:helmfile/helmfile" = "1.2.3"
 "aqua:jqlang/jq" = "1.8.0"
 "aqua:kubernetes-sigs/kustomize" = "5.6.0"
