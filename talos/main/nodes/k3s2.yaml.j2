@@ -7,17 +7,15 @@ machine:
   network:
     hostname: k3s2
     interfaces:
-      - dhcp: false
+      - addresses:
+          - 192.168.20.23/24
+          - fdd5:aa8:9535:20::23/64
+        dhcp: false
         interface: eno1
         mtu: 1500
-        vlans:
-          - addresses:
-              - 192.168.20.23/24
-              - fdd5:aa8:9535:20::23/64
-            routes:
-              - gateway: 192.168.20.1
-                network: 0.0.0.0/0
-            vlanId: 20
+        routes:
+          - gateway: 192.168.20.1
+            network: 0.0.0.0/0
   type: worker
 ---
 apiVersion: v1alpha1

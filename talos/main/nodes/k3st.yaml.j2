@@ -7,17 +7,15 @@ machine:
   network:
     hostname: k3st
     interfaces:
-      - dhcp: false
+      - addresses:
+          - 192.168.20.19/24
+          - fdd5:aa8:9535:20::19/64
+        dhcp: false
         interface: eno1
         mtu: 1500
-        vlans:
-          - addresses:
-              - 192.168.20.19/24
-              - fdd5:aa8:9535:20::19/64
-            routes:
-              - gateway: 192.168.20.1
-                network: 0.0.0.0/0
-            vlanId: 20
+        routes:
+          - gateway: 192.168.20.1
+            network: 0.0.0.0/0
   nodeTaints:
     node-role.kubernetes.io/control-plane: :NoSchedule
   type: controlplane
