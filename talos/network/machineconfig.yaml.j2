@@ -72,6 +72,12 @@ machine:
       validSubnets:
         - 192.168.20.0/24
         - fdd5:aa8:9535:20::/64
+  network:
+    nameservers:
+      - 192.168.10.6
+      - 192.168.10.7
+    searchDomains:
+      - op://homelab/talos-main/private_static_domain
   nodeLabels:
     topology.kubernetes.io/region: network
     node.longhorn.io/create-default-disk: "true"
@@ -121,8 +127,6 @@ machine:
     net.ipv4.tcp_fastopen: "3"                 # Send and accept data in the opening SYN packet
     net.ipv6.conf.all.autoconf: "0"            # disable IPv6 autoconfig
     net.ipv6.conf.default.autoconf: "0"        # disable IPv6 autoconfig
-    net.ipv6.conf.end0.autoconf: "0"           # disable IPv6 autoconfig on end0
-    net.ipv6.conf.end0.30.autoconf: "0"        # disable IPv6 autoconfig on vlan 30
     user.max_user_namespaces: "11255"          # User Namespaces
   time:
     disabled: false

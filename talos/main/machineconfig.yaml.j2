@@ -119,7 +119,13 @@ machine:
     fs.inotify.max_user_watches: "1048576"     # Watchdog
     net.core.rmem_max: "7500000"               # Cloudflared / QUIC
     net.core.wmem_max: "7500000"               # Cloudflared / QUIC
+    net.ipv4.neigh.default.gc_thresh1: "4096"  # Prevent ARP cache overflows
+    net.ipv4.neigh.default.gc_thresh2: "8192"  # Prevent ARP cache overflows
+    net.ipv4.neigh.default.gc_thresh3: "16384" # Prevent ARP cache overflows
+    net.ipv4.ping_group_range: 0 2147483647    # Allow Ping
     net.ipv4.tcp_fastopen: "3"                 # Send and accept data in the opening SYN packet
+    net.ipv6.conf.all.autoconf: "0"            # disable IPv6 autoconfig
+    net.ipv6.conf.default.autoconf: "0"        # disable IPv6 autoconfig
     user.max_user_namespaces: "11255"          # User Namespaces
     # vm.nr_hugepages: "1024"                  # PostgreSQL
   time:
