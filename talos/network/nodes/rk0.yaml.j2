@@ -3,8 +3,21 @@
 machine:
   install:
     disk: /dev/nvme0n1
+  network:
+    hostname: rk0
+    interfaces:
+      - addresses:
+          - 192.168.20.33/24
+          - fdd5:aa8:9535:20::33/64
+        dhcp: false
+        interface: end0
+        mtu: 1500
+        routes:
+          - gateway: 192.168.20.1
+            network: 0.0.0.0/0
+        vlans:
+          - # IOT
+            dhcp: false
+            mtu: 1500
+            vlanId: 30
   type: controlplane
-#---
-#apiVersion: v1alpha1
-#kind: HostnameConfig
-#hostname: rk0
