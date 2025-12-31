@@ -10,6 +10,7 @@ components:
 resources:
   - ./namespace.yaml
   - ./media-nfs.yaml
+  - ./booklore/ks.yaml
   - ./calibre-web/ks.yaml
   - ./docmost/ks.yaml
   - ./excalidraw/ks.yaml
