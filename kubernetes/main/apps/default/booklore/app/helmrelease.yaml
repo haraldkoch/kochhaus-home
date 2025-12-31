@@ -16,7 +16,7 @@ spec:
           booklore:
             image:
               repository: ghcr.io/booklore-app/booklore
-              tag: v1.16.0
+              tag: v1.16.2
             env:
               TZ: ${TIMEZONE}
               PUID: 1022
