@@ -11,9 +11,9 @@ spec:
   interval: 1h
   values:
     controllers:
-      *app:
+      booklore:
         containers:
-          *app:
+          booklore:
             image:
               repository: ghcr.io/booklore-app/booklore
               tag: v1.16.0
@@ -92,8 +92,8 @@ spec:
       data:
         existingClaim: ${VOLSYNC_CLAIM}
         advancedMounts:
-          *app:
-            *app:
+          booklore:
+            booklore:
               - path: /app/data
       mariadb:
         type: persistentVolumeClaim
@@ -101,10 +101,15 @@ spec:
         size: 5Gi
         storageClass: ceph-block
         advancedMounts:
-          *app:
+          booklore:
             mariadb:
               - path: /config
       media:
         existingClaim: media-nfs
         globalMounts:
           - path: /media
+      bookdrop:
+        existingClaim: media-nfs
+        globalMounts:
+          - path: /bookdrop
+            subPath: books/Booklore/incoming
