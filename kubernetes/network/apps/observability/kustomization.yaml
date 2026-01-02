@@ -15,6 +15,7 @@ resources:
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
   - ./json-exporter/ks.yaml
+  - ./keda/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./network-ups-tools/ks.yaml
   - ./omada-exporter/ks.yaml
