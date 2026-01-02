@@ -127,6 +127,7 @@ machine:
     net.ipv4.tcp_fastopen: "3"                 # Send and accept data in the opening SYN packet
     net.ipv6.conf.all.autoconf: "0"            # disable IPv6 autoconfig
     net.ipv6.conf.default.autoconf: "0"        # disable IPv6 autoconfig
+    net.ipv6.conf.eno1.autoconf: "0"           # disable IPv6 autoconfig
     user.max_user_namespaces: "11255"          # User Namespaces
   time:
     disabled: false
