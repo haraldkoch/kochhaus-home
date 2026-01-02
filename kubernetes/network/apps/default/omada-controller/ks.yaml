@@ -7,6 +7,7 @@ metadata:
 spec:
   components:
     - ../../../../components/gatus/guarded
+    - ../../../../components/nfs-scaler
     - ../../../../components/volsync
   dependsOn:
     - name: volsync
