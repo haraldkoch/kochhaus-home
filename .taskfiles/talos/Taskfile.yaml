@@ -20,7 +20,9 @@ tasks:
       INSECURE:
         sh: talosctl --talosconfig {{.TALOS_DIR}}/talosconfig --nodes {{.NODE}} get machineconfig &> /dev/null || echo true
     requires:
-       vars: [CLUSTER,NODE]
+      vars:
+        - CLUSTER
+        - NODE
     preconditions:
       - op whoami --format=json
       - talosctl --nodes {{.NODE}} get machineconfig
@@ -35,8 +37,8 @@ tasks:
       NODES:
         sh: kubectl --context {{.CLUSTER}} get nodes --output=jsonpath='{.items[*].metadata.name}'
     cmds:
-      - for: { var: NODES }
-        task:  apply-node
+      - for: {var: NODES}
+        task: apply-node
         vars:
           NODE: '{{.ITEM}}'
           CLUSTER: '{{.CLUSTER}}'
@@ -49,7 +51,9 @@ tasks:
       FACTORY_IMAGE:
         sh: minijinja-cli "{{.TALOS_DIR}}/machineconfig.yaml.j2" | yq -e '.machine.install.image // ""'
     requires:
-      vars: [CLUSTER, NODE]
+      vars:
+        - CLUSTER
+        - NODE
     preconditions:
       - talosctl --nodes {{.NODE}} get machineconfig
       - test -f {{.TALOS_MACHINE_FILE}}
@@ -61,7 +65,8 @@ tasks:
     cmds:
       - talosctl dashboard
     requires:
-       vars: [CLUSTER]
+      vars:
+        - CLUSTER
     preconditions:
       - test -f {{.TALOS_DIR}}/talosconfig
       - which talosctl
@@ -73,16 +78,22 @@ tasks:
       CONTROLLER:
         sh: talosctl config info --output yaml | yq --exit-status '.endpoints[0]'
     requires:
-      vars: [CLUSTER,VERSION]
+      vars:
+        - CLUSTER
+        - VERSION
     preconditions:
       - talosctl --nodes {{.CONTROLLER}} get machineconfig
       - which talosctl yq
 
   reboot-node:
-    desc: Reboot a node [CLUSTER=main] [NODE=required]
-    cmd: talosctl --nodes {{.NODE}} reboot --mode=powercycle
+    desc: Reboot a node [CLUSTER=main] [NODE=required] [MODE=powercycle]
+    cmd: talosctl --nodes {{.NODE}} reboot --mode={{.MODE}}
+    vars:
+      MODE: '{{.MODE | default "powercycle"}}'
     requires:
-      vars: [CLUSTER, NODE]
+      vars:
+        - CLUSTER
+        - NODE
     preconditions:
       - talosctl --nodes {{.NODE}} get machineconfig
       - which talosctl
@@ -92,7 +103,8 @@ tasks:
     prompt: Reboot the cluster {{.CLUSTER}} ... continue?
     cmd: talosctl --nodes {{.NODE}} reboot --mode={{.MODE}}
     requires:
-      vars: [CLUSTER]
+      vars:
+        - CLUSTER
     vars:
       NODES:
         sh: talosctl config info --output yaml | yq --exit-status '.nodes | join (",")'
@@ -108,7 +120,8 @@ tasks:
       NODES:
         sh: talosctl config info --output yaml | yq --exit-status '.nodes | join (",")'
     requires:
-      vars: [CLUSTER]
+      vars:
+        - CLUSTER
     preconditions:
       - talosctl --nodes {{.NODES}} get machineconfig
       - which talosctl yq
@@ -118,7 +131,9 @@ tasks:
     prompt: Reset Talos node '{{.NODE}}' ... continue?
     cmd: talosctl reset --nodes {{.NODE}} --system-labels-to-wipe STATE --system-labels-to-wipe EPHEMERAL --graceful=false --reboot
     requires:
-      vars: [CLUSTER,NODE]
+      vars:
+        - CLUSTER
+        - NODE
     preconditions:
       - talosctl --nodes {{.NODE}} get machineconfig
       - which talosctl
@@ -134,7 +149,8 @@ tasks:
       - talosctl --nodes {{.NODES}} get machineconfig
       - which talosctl yq
     requires:
-       vars: [CLUSTER]
+      vars:
+        - CLUSTER
 
   generate-kubeconfig:
     desc: Generate kubeconfig [CLUSTER=main]
@@ -143,7 +159,8 @@ tasks:
       CONTROLLER:
         sh: talosctl config info --output yaml | yq --exit-status '.endpoints[0]'
     requires:
-      vars: [CLUSTER]
+      vars:
+        - CLUSTER
     preconditions:
       - talosctl --nodes {{.CONTROLLER}} get machineconfig
       - which talosctl yq
@@ -158,7 +175,9 @@ tasks:
       SCHEMATIC:
         sh: curl --silent -X POST --data-binary @{{.TALOS_SCHEMATIC_FILE}} https://factory.talos.dev/schematics | jq --raw-output '.id'
     requires:
-      vars: [CLUSTER,VERSION]
+      vars:
+        - CLUSTER
+        - VERSION
     status:
       - test -f {{.TALOS_DIR}}/talos-{{.VERSION}}-{{substr 0 8 .SCHEMATIC}}.iso
     preconditions:
