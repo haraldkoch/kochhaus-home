@@ -1,6 +1,23 @@
 ---
 # Note: Gatus vars should be escaped with $${VAR_NAME} to avoid interpolation by Flux
-
+web:
+  port: $${WEB_PORT}
+metrics: true
+debug: false
+storage:
+  type: postgres
+  path: postgres://$${INIT_POSTGRES_USER}:$${INIT_POSTGRES_PASS}@$${INIT_POSTGRES_HOST}:5432/$${INIT_POSTGRES_DBNAME}?sslmode=disable
+  caching: true
+ui:
+  title: Status | Gatus
+  header: Status
+  logo: https://avatars.githubusercontent.com/u/7131938
+  link: https://github.com/haraldkoch
+  buttons:
+    - name: Github
+      link: https://github.com/haraldkoch
+    - name: Homelab
+      link: https://github.com/haraldkoch/kochhaus-home
 alerting:
   pushover:
     title: Gatus (Kubernetes)
@@ -12,12 +29,10 @@ alerting:
       send-on-resolved: true
       failure-threshold: 3
       success-threshold: 3
-
 connectivity:
   checker:
     target: 1.1.1.1:53
     interval: 1m
-
 endpoints:
   - name: status
     group: guarded
@@ -40,25 +55,39 @@ endpoints:
       - "[STATUS] == 404"
     alerts:
       - type: pushover
-
-metrics: true
-
-storage:
-  type: postgres
-  path: postgres://$${INIT_POSTGRES_USER}:$${INIT_POSTGRES_PASS}@$${INIT_POSTGRES_HOST}:5432/$${INIT_POSTGRES_DBNAME}?sslmode=disable
-  caching: true
-
-ui:
-  title: Status | Gatus
-  header: Status
-  logo: https://avatars.githubusercontent.com/u/7131938
-  link: https://github.com/haraldkoch
-  buttons:
-    - name: Github
-      link: https://github.com/haraldkoch
-
-    - name: Homelab
-      link: https://github.com/haraldkoch/kochhaus-home
-
-web:
-  port: $${WEB_PORT}
+  - name: DNS Primary (castor)
+    group: internal
+    url: "192.168.10.6"
+    interval: 1m
+    dns:
+      query-name: "www.${CLUSTER_DOMAIN}"
+      query-type: "A"
+    conditions:
+      - "[BODY] == 192.168.21.80"
+      - "[DNS_RCODE] == NOERROR"
+    alerts:
+      - type: pushover
+  - name: DNS Secondary (pollux)
+    group: internal
+    url: "192.168.10.7"
+    interval: 1m
+    dns:
+      query-name: "www.${CLUSTER_DOMAIN}"
+      query-type: "A"
+    conditions:
+      - "[BODY] == 192.168.21.80"
+      - "[DNS_RCODE] == NOERROR"
+    alerts:
+      - type: pushover
+  - name: DNS Router
+    group: internal
+    url: "192.168.20.1"
+    interval: 1m
+    dns:
+      query-name: "www.${CLUSTER_DOMAIN}"
+      query-type: "A"
+    conditions:
+      - "[BODY] == 172.64.80.1"
+      - "[DNS_RCODE] == NOERROR"
+    alerts:
+      - type: pushover

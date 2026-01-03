@@ -5,7 +5,7 @@ web:
 metrics: true
 debug: false
 ui:
-  title: Status | Gatus
+  title: Status | Gatus (Network)
   header: Status
   logo: https://avatars.githubusercontent.com/u/7131938
   link: https://github.com/haraldkoch
