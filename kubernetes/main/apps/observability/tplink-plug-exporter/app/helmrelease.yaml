@@ -1,0 +1,39 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tplink-plug-exporter
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  interval: 1h
+  values:
+    controllers:
+      tplink-plug-exporter:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/haraldkoch/tplink-plug-exporter
+              tag: 0.5.0@sha256:a1de6d72ab3283dbeffbb9761e71be6e7447dfae0a13ec6488cd77d5021b38a5
+            env:
+              TZ: ${TIMEZONE:=Etc/UTC}
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 50m
+                memory: 100Mi
+              limits:
+                memory: 100Mi
+    service:
+      app:
+        controller: tplink-plug-exporter
+        ports:
+          metrics:
+            protocol: TCP
+            port: 9233
