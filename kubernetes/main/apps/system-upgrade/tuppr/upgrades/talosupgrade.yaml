@@ -19,3 +19,7 @@ spec:
       kind: CephCluster
       expr: |-
         status.ceph.health in ['HEALTH_OK']
+    - apiVersion: postgresql.cnpg.io/v1
+      kind: Cluster
+      expr: |-
+        status.conditions.filter(c, c.type == "Ready").all(c, c.status == "True")
