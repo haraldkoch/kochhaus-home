@@ -7,11 +7,11 @@ metadata:
 spec:
   components:
     - ../../../../components/gatus/guarded
-    - ../../../../components/nfs-scaler
-    - ../../../../components/volsync
-  dependsOn:
-    - name: volsync
-      namespace: storage
+  #   - ../../../../components/nfs-scaler
+  #   - ../../../../components/volsync
+  # dependsOn:
+  #   - name: volsync
+  #     namespace: storage
   interval: 1h
   path: ./kubernetes/network/apps/default/omada-controller/app
   postBuild:

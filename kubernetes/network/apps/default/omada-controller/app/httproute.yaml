@@ -40,7 +40,7 @@ metadata:
 spec:
   endpoints:
     - fqdn:
-        hostname: omada-controller-app.default.svc.cluster.local
+        hostname: omada.${PRIVATE_STATIC_DOMAIN}
         port: 8043
   tls:
     insecureSkipVerify: true
