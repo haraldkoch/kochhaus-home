@@ -18,7 +18,7 @@ spec:
               repository: ghcr.io/charlie-haley/omada_exporter
               tag: 0.13.1
             env:
-              OMADA_HOST: https://omada-controller.default.svc.cluster.local:8043
+              OMADA_HOST: https://omada.${PRIVATE_STATIC_DOMAIN}:8043
               OMADA_INSECURE: true
               OMADA_REQUEST_TIMEOUT: 60
             envFrom:
@@ -27,7 +27,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 15m
