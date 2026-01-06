@@ -124,10 +124,6 @@ services:
         logo: https://raw.githubusercontent.com/excalidraw/excalidraw/master/public/android-chrome-192x192.png
         url: https://draw.${SECRET_DOMAIN}
         subtitle: simple drawing tool
-      - name: Wallos
-        logo: https://raw.githubusercontent.com/ellite/Wallos/main/images/icon/android-chrome-192x192.png
-        url: https://wallos.${SECRET_DOMAIN}
-        subtitle: track recurring expenses
       - name: Docmost
         logo: https://docmost.com/favicon.ico
         url: https://notes.${SECRET_DOMAIN}
@@ -149,8 +145,54 @@ services:
         url: https://zigbee.${SECRET_DOMAIN}
         subtitle: Manage the Zigbee network of automation devices
       - name: Home Internet Status
+        icon: fas fa-chart-line
         url: https://grafana.${SECRET_DOMAIN}/d/b5VdClAMz/network-status
         subtitle: Current status of the home internet connection
       - name: House Temperatures
+        icon: fas fa-chart-line
         url: https://grafana.${SECRET_DOMAIN}/d/f34c065d-33a8-415a-89f2-0bbfc0a6a4b6/house-sensors
         subtitle: Temperatures in the house
+
+  - name: Management
+    icon: fas fa-robot
+    items:
+      - name: Router
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/router.png
+        url: https://gw.${PRIVATE_STATIC_DOMAIN}
+        subtitle: The router
+      - name: Bell Home Hub
+        logo: https://download.logo.wine/logo/Bell_Internet/Bell_Internet-Logo.wine.png
+        url: http://192.168.2.1/
+        subtitle: Our Internet connnection thingy
+      - name: Network Switch
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/tp-link.png
+        url: http://sg3428.${PRIVATE_STATIC_DOMAIN}/
+        subtitle: The TP-Link SG3428X 24 port switch
+      - name: Omada
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/omada.png
+        url: http://omada.${SECRET_DOMAIN}/
+        subtitle: Network management console
+
+  - name: Observability
+    icon: fas fa-robot
+    items:
+      - name: Grafana (Main)
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/grafana.png
+        url: https://heimdall.${PRIVATE_STATIC_DOMAIN}/grafana/
+        subtitle: Graphs from various systems
+      - name: Grafana (Kubernetes)
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/grafana.png
+        url: https://grafana.${SECRET_DOMAIN}/
+        subtitle: Graphs from various systems
+      - name: DMARC Reports
+        logo: https://dmarc.org/wp-content/uploads/2015/02/DMARC-2015-logo-small-202x110.png
+        url: https://dmarc-report.${SECRET_DOMAIN}/
+        subtitle: DMARC (email security) reports
+      - name: Gatus
+        logo: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/gatus.png
+        url: https://status.${SECRET_DOMAIN}/
+        type: Gatus
+      - name: Uptime Kuma
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/uptime-kuma.png
+        url: https://uptime.kochhaus.net
+        type: UptimeKuma
