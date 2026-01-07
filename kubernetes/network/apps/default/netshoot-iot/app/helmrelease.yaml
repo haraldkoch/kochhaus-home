@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/nicolaka/netshoot
-              tag: v0.14@sha256:7f08c4aff13ff61a35d30e30c5c1ea8396eac6ab4ce19fd02d5a4b3b5d0d09a2
+              tag: v0.15@sha256:47b907d662d139d1e2f22bfe14f4efca1e3f1feed283572f47c970c780c03b61
             command:
               - /bin/bash
               - -c
