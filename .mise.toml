@@ -40,4 +40,4 @@ pipx_uvx = true
 "aqua:mitsuhiko/minijinja" = "2.13.0"
 "aqua:siderolabs/talos" = "1.12.1"
 "aqua:yannh/kubeconform" = "0.7.0"
-"aqua:sigstore/cosign" = "3.0.3"
+"aqua:sigstore/cosign" = "3.0.4"
