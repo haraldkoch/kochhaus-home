@@ -20,7 +20,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/haraldkoch/postgres-init
-              tag: 18.1@sha256:ed06f4b351524185ac8e03948ab7e05b6972ac4e73f430d9fc75f655e0edef1b
+              tag: 18.1@sha256:22f92e227d68774f495180d1d2715c1d41c7e75ec3aa6b73c4caa7efdd650c00
             envFrom: &envFrom
               - secretRef:
                   name: lldap-secret
