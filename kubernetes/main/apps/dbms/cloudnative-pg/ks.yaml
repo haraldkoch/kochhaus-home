@@ -38,7 +38,6 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: dbms
-  wait: true
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
