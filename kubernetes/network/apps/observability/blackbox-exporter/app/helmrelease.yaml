@@ -24,13 +24,19 @@ spec:
           icmp:
             preferred_ip_protocol: "ip6"
             ip_protocol_fallback: false
+        tcp_connect:
+          prober: tcp
+          timeout: 5s
+          tcp:
+            preferred_ip_protocol: ip4
     podAnnotations:
       reloader.stakater.com/auto: "true"
     securityContext:
       readOnlyRootFilesystem: true
       allowPrivilegeEscalation: false
       capabilities:
-        add: ["NET_RAW"]
+        add:
+          - "NET_RAW"
     service:
       ipFamilyPolicy: PreferDualStack
     resources:
