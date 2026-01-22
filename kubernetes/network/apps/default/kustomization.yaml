@@ -14,6 +14,7 @@ resources:
   - ./echo/ks.yaml
   - ./hass/ks.yaml
   - ./homer/ks.yaml
+  - ./hypermind/ks.yaml
   - ./it-tools/ks.yaml
   - ./kochhaus-docs/ks.yaml
   - ./matter-server/ks.yaml
