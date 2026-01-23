@@ -4,7 +4,8 @@ name: Flux Local
 
 on:
   pull_request:
-    branches: ["main"]
+    branches:
+      - "main"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
@@ -30,6 +31,7 @@ jobs:
         uses: JJGadgets/tj-actions-changed-files@9200e69727eb73eb060652b19946b8a2fdfb654b
         with:
           files: kubernetes/**
+          files_ignore: kubernetes/base/**
           dir_names: true
           dir_names_max_depth: 2
           matrix: true
@@ -86,7 +88,9 @@ jobs:
     strategy:
       matrix:
         paths: ${{ fromJSON(needs.filter.outputs.matrix) }}
-        resource: ["helmrelease", "kustomization"]
+        resource:
+          - "helmrelease"
+          - "kustomization"
       max-parallel: 4
       fail-fast: false
     steps:
@@ -145,7 +149,9 @@ jobs:
 
   success:
     if: ${{ !cancelled() }}
-    needs: ["test", "diff"]
+    needs:
+      - "test"
+      - "diff"
     name: Flux Local - Success
     runs-on: ubuntu-latest
     steps:

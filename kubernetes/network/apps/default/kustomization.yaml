@@ -11,7 +11,7 @@ resources:
   - ./namespace.yaml
   - ./bentopdf/ks.yaml
   - ./changedetection/ks.yaml
-  - ./echo/ks.yaml
+  - ./echo.yaml
   - ./hass/ks.yaml
   - ./homer/ks.yaml
   - ./it-tools/ks.yaml

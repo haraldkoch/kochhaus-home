@@ -6,12 +6,13 @@ metadata:
   name: echo
 spec:
   components:
-    - ../../../../components/gatus/external
+    - ../../../components/gatus/external
   interval: 1h
-  path: ./kubernetes/network/apps/default/echo/app
+  path: ./kubernetes/base/apps/default/echo
   postBuild:
     substitute:
       APP: echo
+      SUBDOMAIN: echo
   prune: true
   sourceRef:
     kind: GitRepository
