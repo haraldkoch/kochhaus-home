@@ -1,0 +1,63 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: blackbox-exporter
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: prometheus-blackbox-exporter
+  interval: 1h
+  values:
+    fullnameOverride: blackbox-exporter
+    pspEnabled: false
+    config:
+      modules:
+        icmp:
+          prober: icmp
+          icmp:
+            preferred_ip_protocol: "ip4"
+            ip_protocol_fallback: false
+        icmp6:
+          prober: icmp
+          icmp:
+            preferred_ip_protocol: "ip6"
+            ip_protocol_fallback: false
+        tcp_connect:
+          prober: tcp
+          timeout: 5s
+          tcp:
+            preferred_ip_protocol: ip4
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+    securityContext:
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        add:
+          - "NET_RAW"
+    service:
+      ipFamilyPolicy: PreferDualStack
+    resources:
+      requests:
+        cpu: 15m
+        memory: 64M
+      limits:
+        memory: 64M
+    serviceMonitor:
+      enabled: true
+      defaults:
+        interval: 30s
+        scrapeTimeout: 30s
+    prometheusRule:
+      enabled: true
+      rules:
+        - alert: BlackboxProbeFailed
+          expr: probe_success == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: |-
+              The host {{ $labels.target }} is currently unreachable
