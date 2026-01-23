@@ -4,7 +4,8 @@ name: "Helm Repository Sync"
 
 on:
   pull_request:
-    branches: ["main"]
+    branches:
+      - "main"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
@@ -64,6 +65,7 @@ jobs:
           files: |
             **/helmrelease.yaml
             **/helm-values.yaml
+          files_ignore: kubernetes/base/**
           safe_output: false
 
       - name: Sync Helm Repository

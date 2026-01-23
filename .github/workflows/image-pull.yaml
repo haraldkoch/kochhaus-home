@@ -4,7 +4,8 @@ name: Image Pull
 
 on:
   pull_request:
-    branches: ["main"]
+    branches:
+      - "main"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
@@ -30,7 +31,7 @@ jobs:
         uses: JJGadgets/tj-actions-changed-files@9200e69727eb73eb060652b19946b8a2fdfb654b
         with:
           files: kubernetes/**
-          files_ignore: kubernetes/shared/**
+          files_ignore: kubernetes/base/**
           dir_names: true
           dir_names_max_depth: 2
           matrix: true
@@ -45,7 +46,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        branch: ["default", "pull"]
+        branch:
+          - "default"
+          - "pull"
         clusters: ${{ fromJSON(needs.filter.outputs.clusters) }}
       fail-fast: false
     outputs:
