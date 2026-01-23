@@ -6,7 +6,7 @@ metadata:
   name: echo
 spec:
   components:
-    - ../../../../components/gatus/external
+    - ../../../components/gatus/external
   interval: 1h
   path: ./kubernetes/base/apps/default/echo
   postBuild:
