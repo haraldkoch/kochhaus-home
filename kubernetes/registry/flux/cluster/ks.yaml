@@ -11,8 +11,9 @@ spec:
   deletionPolicy: WaitForTermination
   interval: 1h
   path: ./kubernetes/registry/apps
-  prune: false # reset to true
   postBuild:
+    substitute:
+      CLUSTER: registry
     substituteFrom:
       - name: cluster-settings
         kind: ConfigMap
@@ -20,6 +21,7 @@ spec:
       - name: cluster-secrets
         kind: Secret
         optional: false
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system
