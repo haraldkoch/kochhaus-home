@@ -50,7 +50,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 65534
         runAsGroup: 65534
-        seccompProfile: { type: RuntimeDefault }
+        seccompProfile: {type: RuntimeDefault}
     service:
       app:
         ports:
@@ -63,7 +63,7 @@ spec:
     route:
       app:
         hostnames:
-          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+          - "${SUBDOMAIN}.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-external
             namespace: network

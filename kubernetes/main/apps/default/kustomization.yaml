@@ -12,6 +12,7 @@ resources:
   - ./media-nfs.yaml
   - ./calibre-web/ks.yaml
   - ./docmost/ks.yaml
+  - ./echo.yaml
   - ./excalidraw/ks.yaml
   - ./filebrowser/ks.yaml
   - ./jellyfin/ks.yaml
