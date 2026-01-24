@@ -127,7 +127,7 @@ machine:
     net.ipv4.tcp_fastopen: "3"                 # Send and accept data in the opening SYN packet
     net.ipv6.conf.all.autoconf: "0"            # disable IPv6 autoconfig
     net.ipv6.conf.default.autoconf: "0"        # disable IPv6 autoconfig
-    net.ipv6.conf.eno1.autoconf: "0"           # disable IPv6 autoconfig
+    net.ipv6.conf.end0.autoconf: "0"           # disable IPv6 autoconfig
     user.max_user_namespaces: "11255"          # User Namespaces
   time:
     disabled: false
@@ -254,3 +254,10 @@ apiVersion: v1alpha1
 kind: WatchdogTimerConfig
 device: /dev/watchdog0
 timeout: 5m
+---
+# attempt to reduce / disable the broken Talos OOM "feature"
+apiVersion: v1alpha1
+kind: OOMConfig
+triggerExpression: "false"
+cgroupRankingExpression: "0.0"
+sampleInterval: "5s"
