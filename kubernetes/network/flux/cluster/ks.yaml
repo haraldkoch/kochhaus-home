@@ -74,3 +74,29 @@ spec:
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
+    - # Update CoreDNS replicas, enable IPv6
+      patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: not-used
+        spec:
+          patches:
+            - patch: |-
+                apiVersion: helm.toolkit.fluxcd.io/v2
+                kind: HelmRelease
+                metadata:
+                  name: not-used
+                spec:
+                  values:
+                    replicaCount: 2
+                    service:
+                      clusterIPs: ["10.43.0.10", "fdd5:aa8:9535:43::a"]
+                      ipFamilies: ["IPV4", "IPV6"]
+                      ipFamilyPolicy: PreferDualStack
+              target:
+                kind: HelmRelease
+                name: coredns
+      target:
+        kind: Kustomization
+        name: coredns
