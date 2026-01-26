@@ -10,6 +10,6 @@ components:
 resources:
   - ./namespace.yaml
   - ./cilium/ks.yaml
-  - ./coredns/ks.yaml
+  - ./coredns.yaml
   - ./intel-gpu-resource-driver/ks.yaml
   - ./metrics-server/ks.yaml
