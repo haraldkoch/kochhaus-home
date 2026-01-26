@@ -6,7 +6,7 @@ metadata:
   name: coredns
 spec:
   interval: 1h
-  path: ./kubernetes/main/apps/kube-system/coredns/app
+  path: ./kubernetes/base/apps/kube-system/coredns
   prune: true
   sourceRef:
     kind: GitRepository

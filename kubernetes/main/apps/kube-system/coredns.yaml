@@ -6,8 +6,8 @@ metadata:
   name: coredns
 spec:
   interval: 1h
-  path: ./kubernetes/registry/apps/kube-system/coredns/app
-  prune: false # reset to true
+  path: ./kubernetes/base/apps/kube-system/coredns
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
