@@ -18,7 +18,6 @@ spec:
           init-config:
             image:
               repository: mirror.gcr.io/owncloud/ocis
-              # renovate: datasource=docker depName=docker.io/owncloud/ocis
               tag: 7.3.1
             command:
               - /bin/sh

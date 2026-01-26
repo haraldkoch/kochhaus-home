@@ -22,7 +22,6 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/nodered/node-red
-              # renovate: datasource=docker depName=docker.io/nodered/node-red
               tag: 4.1.4
             env:
               TZ: "${TIMEZONE:=Etc/UTC}"

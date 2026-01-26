@@ -14,4 +14,7 @@
       overridePackageName: "ghcr.io/siderolabs/installer",
     },
   ],
+  registryAliases: {
+    "mirror.gcr.io": "docker.io",
+  },
 }
