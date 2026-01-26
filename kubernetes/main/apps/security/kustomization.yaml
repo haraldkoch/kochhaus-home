@@ -11,6 +11,6 @@ resources:
   - ./namespace.yaml
   - ./authelia/ks.yaml
   - ./dmarc-report/ks.yaml
-  - ./external-secrets/ks.yaml
+  - ./external-secrets.yaml
   - ./lldap/ks.yaml
   - ./onepassword/ks.yaml
