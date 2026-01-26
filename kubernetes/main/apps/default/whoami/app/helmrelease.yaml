@@ -17,7 +17,6 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/traefik/whoami
-              # renovate: datasource=docker depName=docker.io/traefik/whoami
               tag: v1.11.0
             probes:
               liveness:

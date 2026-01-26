@@ -17,7 +17,6 @@ spec:
         containers:
           app:
             image:
-              # renovate: datasource=docker depName=docker.io/mtlynch/picoshare
               repository: mirror.gcr.io/mtlynch/picoshare
               tag: 1.5.1
             env:

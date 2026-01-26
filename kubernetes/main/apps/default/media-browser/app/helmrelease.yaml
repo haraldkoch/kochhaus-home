@@ -16,7 +16,6 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/filebrowser/filebrowser
-              # renovate: datasource=docker depName=docker.io/filebrowser/filebrowser
               tag: v2.56.0@sha256:2c54423548d030a0613e144151d7783eb43321a3a79a1ba291c24b4198c048b1
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
