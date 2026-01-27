@@ -27,15 +27,15 @@ spec:
   resources:
     requests:
       cpu: 50m
-      memory: 256Mi
+      memory: 384Mi
     limits:
-      memory: 640Mi
+      memory: 960Mi
   monitoring:
     enablePodMonitor: true
     # Ref: https://github.com/cloudnative-pg/cloudnative-pg/issues/2501
     podMonitorMetricRelabelings:
-      - { sourceLabels: ["cluster"], targetLabel: cnpg_cluster, action: replace }
-      - { regex: cluster, action: labeldrop }
+      - {sourceLabels: ["cluster"], targetLabel: cnpg_cluster, action: replace}
+      - {regex: cluster, action: labeldrop}
   backup:
     retentionPolicy: 30d
     barmanObjectStore: &barmanObjectStore
@@ -61,16 +61,16 @@ spec:
   bootstrap:
     recovery:
       source: &previousCluster kochhaus-v3
-    # upgrade or recover from another running instance
-    # initdb:
-    #   import:
-    #     type: monolith
-    #     databases:
-    #       - "*"
-    #     roles:
-    #       - "*"
-    #     source:
-    #       externalCluster: kochhaus-v16
+      # upgrade or recover from another running instance
+      # initdb:
+      #   import:
+      #     type: monolith
+      #     databases:
+      #       - "*"
+      #     roles:
+      #       - "*"
+      #     source:
+      #       externalCluster: kochhaus-v16
 
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   externalClusters:
@@ -78,12 +78,12 @@ spec:
       barmanObjectStore:
         <<: *barmanObjectStore
         serverName: *previousCluster
-    # - name: kochhaus-v16
-    #   connectionParameters:
-    #     host: kochhaus-v16-ro.dbms
-    #     user: postgres
-    #     dbname: postgres
-    #     sslmode: require
-    #   password:
-    #     name: cloudnative-pg-secret
-    #     key: password
+        # - name: kochhaus-v16
+        #   connectionParameters:
+        #     host: kochhaus-v16-ro.dbms
+        #     user: postgres
+        #     dbname: postgres
+        #     sslmode: require
+        #   password:
+        #     name: cloudnative-pg-secret
+        #     key: password
