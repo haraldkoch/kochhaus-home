@@ -7,12 +7,15 @@ metadata:
 spec:
   components:
     - ../../../../components/gatus/external
+    - ../../../../components/keda/nfs-scaler
     - ../../../../components/volsync
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: dbms
     - name: dragonfly-cluster
       namespace: dbms
+    - name: keda
+      namespace: observability
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
