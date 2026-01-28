@@ -70,7 +70,7 @@ spec:
     repoServer:
       initContainers:
         - name: download-tools
-          image: mirror.gcr.io/library/alpine:3.23.2
+          image: mirror.gcr.io/library/alpine:3.23.3
           command:
             - sh
             - -c
