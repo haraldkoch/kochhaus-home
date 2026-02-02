@@ -57,12 +57,13 @@ spec:
     - name: RENOVATE_PLATFORM_COMMIT
       value: "true"
   image: ghcr.io/renovatebot/renovate:43.0.6
-  parallelism: 5
+  # we have 3 nodes
+  parallelism: 3
   resources:
     requests:
       cpu: 100m
       memory: 128Mi
-  schedule: 5 * * * *
+  schedule: 5 0-23/4 * * *
   secretRef: doug-piranha
   webhook:
     enabled: true
