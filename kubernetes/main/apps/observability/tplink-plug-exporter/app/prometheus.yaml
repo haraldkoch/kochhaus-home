@@ -37,6 +37,9 @@ spec:
           - 192.168.30.132
       path: /scrape
       port: metrics
+      relabelings:
+        - action: labeldrop
+          regex: (pod)
       scheme: http
       scrapeTimeout: 30s
   jobLabel: tplink-plug-exporter
@@ -76,6 +79,9 @@ spec:
           - 192.168.30.133
       path: /scrape
       port: metrics
+      relabelings:
+        - action: labeldrop
+          regex: (pod)
       scheme: http
       scrapeTimeout: 30s
   jobLabel: tplink-plug-exporter
@@ -115,6 +121,9 @@ spec:
           - 192.168.30.134
       path: /scrape
       port: metrics
+      relabelings:
+        - action: labeldrop
+          regex: (pod)
       scheme: http
       scrapeTimeout: 30s
   jobLabel: tplink-plug-exporter
@@ -149,6 +158,9 @@ spec:
           - 192.168.30.135
       path: /scrape
       port: metrics
+      relabelings:
+        - action: labeldrop
+          regex: (pod)
       scheme: http
       scrapeTimeout: 30s
   jobLabel: tplink-plug-exporter
