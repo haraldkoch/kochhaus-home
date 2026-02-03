@@ -5,6 +5,11 @@ kind: Kustomization
 metadata:
   name: renovate-operator
 spec:
+  components:
+    - ../../../../components/dragonfly
+  dependsOn:
+    - name: dragonfly
+      namespace: dbms
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
@@ -12,6 +17,9 @@ spec:
       namespace: renovate
   interval: 1h
   path: ./kubernetes/main/apps/renovate/renovate-operator/app
+  postBuild:
+    substitute:
+      APP: renovate-operator
   prune: true
   sourceRef:
     kind: GitRepository
