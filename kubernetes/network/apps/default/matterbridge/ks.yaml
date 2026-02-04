@@ -9,6 +9,8 @@ spec:
     - ../../../../components/gatus/guarded
     - ../../../../components/volsync
   dependsOn:
+    - name: multus-networks
+      namespace: network
     - name: volsync
       namespace: storage
   interval: 1h
