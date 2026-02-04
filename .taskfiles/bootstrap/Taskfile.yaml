@@ -5,20 +5,21 @@ version: '3'
 tasks:
 
   talos:
-    desc: Bootstrap Talos
+    desc: Bootstrap Talos [CLUSTER=required]
     summary: |
       Args:
         CLUSTER: Cluster to run command against (required)
     cmd: bash {{.SCRIPTS_DIR}}/bootstrap-talos.sh {{.CLUSTER}}
     requires:
-      vars: [CLUSTER]
+      vars:
+        - CLUSTER
     preconditions:
       - find --version | grep -q GNU
       - test -f {{.SCRIPTS_DIR}}/bootstrap-talos.sh
       - which gum op talosctl yq
 
   apps:
-    desc: Bootstrap apps into the Talos cluster
+    desc: Bootstrap apps into the Talos cluster [CLUSTER=required]
     summary: |
       Args:
         CLUSTER: Cluster to run command against (required)
@@ -33,4 +34,5 @@ tasks:
       - test -f {{.SOPS_AGE_KEY_FILE}}
       - which gum helm helmfile kubectl
     requires:
-      vars: ["CLUSTER"]
+      vars:
+        - "CLUSTER"
