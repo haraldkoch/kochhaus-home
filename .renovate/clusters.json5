@@ -4,7 +4,6 @@
     {
       description: "Separate PRs for main cluster",
       matchFileNames: [
-        "**/bootstrap/main/**",
         "**/kubernetes/main/**",
         "**/talos/main/**"
       ],
@@ -14,7 +13,6 @@
     {
       description: "Separate PRs for network cluster",
       matchFileNames: [
-        "**/bootstrap/network/**",
         "**/kubernetes/network/**",
         "**/talos/network/**"
       ],
@@ -24,12 +22,19 @@
     {
       description: "Separate PRs for registry cluster",
       matchFileNames: [
-        "**/bootstrap/registry/**",
         "**/kubernetes/registry/**",
         "**/talos/registry/**"
       ],
       additionalBranchPrefix: "registry-",
       commitMessageSuffix: " [registry]"
-    }
+    },
+    {
+      description: "Separate PRs for Base",
+      matchFileNames: [
+        "**/kubernetes/base/**",
+      ],
+      additionalBranchPrefix: "base-",
+      commitMessageSuffix: " [base]"
+    },
   ]
 }
