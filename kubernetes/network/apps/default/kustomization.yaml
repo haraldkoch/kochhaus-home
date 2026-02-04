@@ -12,6 +12,7 @@ resources:
   - ./bentopdf/ks.yaml
   - ./changedetection/ks.yaml
   - ./echo.yaml
+  - ./esphome/ks.yaml
   - ./hass/ks.yaml
   - ./homer/ks.yaml
   - ./it-tools/ks.yaml
