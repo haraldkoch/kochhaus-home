@@ -55,7 +55,7 @@ spec:
               storageClassName: ceph-block
               resources:
                 requests:
-                  storage: 10Mi
+                  storage: 50Mi
         resources:
           requests:
             cpu: 50m
