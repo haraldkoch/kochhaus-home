@@ -10,9 +10,6 @@ spec:
     name: longhorn
   interval: 1h
   values:
-    monitoring:
-      enabled: true
-      createPrometheusRules: true
     defaultSettings:
       backupTarget: s3://longhorn@ca-east-1/
       backupTargetCredentialSecret: longhorn-secret
@@ -39,3 +36,6 @@ spec:
           effect: NoSchedule
     longhornManager:
       tolerations: *tolerations
+    metrics:
+      serviceMonitor:
+        enabled: true
