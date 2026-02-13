@@ -40,7 +40,7 @@ spec:
       alertmanagerSpec:
         additionalPeers:
           - amcluster-network.${CLUSTER_DOMAIN}:9094
-          - amcluster-uvt.${CLUSTER_DOMAIN}:9094
+          # - amcluster-uvt.${CLUSTER_DOMAIN}:9094
         alertmanagerConfiguration:
           name: alertmanager
           global:
@@ -105,10 +105,10 @@ spec:
                   - "amcluster-network.${CLUSTER_DOMAIN}:9093"
                 labels:
                   server: amcluster-network.${CLUSTER_DOMAIN}
-              - targets:
-                  - "amcluster-uvt.${CLUSTER_DOMAIN}:9093"
-                labels:
-                  server: amcluster-uvt.${CLUSTER_DOMAIN}
+                  # - targets:
+                  #     - "amcluster-uvt.${CLUSTER_DOMAIN}:9093"
+                  #   labels:
+                  #     server: amcluster-uvt.${CLUSTER_DOMAIN}
         resources:
           requests:
             cpu: 100m
