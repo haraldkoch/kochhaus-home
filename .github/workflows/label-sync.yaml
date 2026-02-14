@@ -5,8 +5,10 @@ name: Label Sync
 on:
   workflow_dispatch:
   push:
-    branches: ["main"]
-    paths: [".github/labels.yaml"]
+    branches:
+      - "main"
+    paths:
+      - ".github/labels.yaml"
   schedule:
     - cron: "0 0 * * *" # Every day at midnight
 
@@ -16,7 +18,7 @@ permissions:
 jobs:
   main:
     name: Label Sync - Sync Labels
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     permissions:
       contents: read
       issues: write

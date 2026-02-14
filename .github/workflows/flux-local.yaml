@@ -17,7 +17,7 @@ permissions:
 jobs:
   filter:
     name: Flux Local - Filter
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     outputs:
       changed-files: ${{ steps.changed-files.outputs.all_changed_files }}
     steps:
@@ -38,10 +38,13 @@ jobs:
     if: ${{ needs.filter.outputs.changed-files != '[]' }}
     needs: filter
     name: Flux Local - Test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     strategy:
       matrix:
-        cluster: ["main", "network", "registry"]
+        cluster:
+          - "main"
+          - "network"
+          - "registry"
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -62,13 +65,16 @@ jobs:
     if: ${{ needs.filter.outputs.changed-files != '[]' }}
     needs: filter
     name: Flux Local - Diff
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     permissions:
       contents: read
       pull-requests: write
     strategy:
       matrix:
-        cluster: ["main", "network", "registry"]
+        cluster:
+          - "main"
+          - "network"
+          - "registry"
         resource:
           - "helmrelease"
           - "kustomization"
@@ -135,7 +141,7 @@ jobs:
       - "test"
       - "diff"
     name: Flux Local - Success
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - name: Any jobs failed?
         if: ${{ contains(needs.*.result, 'failure') }}

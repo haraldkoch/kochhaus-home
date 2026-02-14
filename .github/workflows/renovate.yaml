@@ -4,7 +4,8 @@ name: Renovate
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - "main"
     paths:
       - .github/renovate.json5
       - ./github/renovate/**
@@ -40,7 +41,7 @@ permissions:
 jobs:
   main:
     name: Renovate
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     permissions:
       packages: read
     steps:

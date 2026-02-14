@@ -17,7 +17,7 @@ permissions:
 jobs:
   filter:
     name: Image Pull - Filter
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     outputs:
       clusters: ${{ steps.changed-clusters.outputs.all_changed_and_modified_files }}
     steps:
@@ -43,7 +43,7 @@ jobs:
     if: ${{ needs.filter.outputs.clusters != '[]' }}
     needs: filter
     name: Image Pull - Extract Images
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     strategy:
       matrix:
         branch:
@@ -87,7 +87,7 @@ jobs:
     if: ${{ needs.extract.outputs.default != needs.extract.outputs.pull }}
     needs: extract
     name: Image Pull - Diff Images
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     outputs:
       images: ${{ steps.diff.outputs.images }}
     steps:
@@ -111,7 +111,7 @@ jobs:
     needs: diff
     name: Image Pull - Pull Images
     # runs-on: [gha-runner-scale-set]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     strategy:
       matrix:
         image: ${{ fromJSON(needs.diff.outputs.images) }}
@@ -125,7 +125,7 @@ jobs:
     if: ${{ !cancelled() }}
     needs: pull
     name: Image Pull - Success
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
       - name: Any jobs failed?
         if: ${{ contains(needs.*.result, 'failure') }}
