@@ -54,17 +54,45 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
                 memory: 32Mi
               limits:
                 memory: 128Mi
+          anubis:
+            image:
+              repository: ghcr.io/techarohq/anubis
+              tag: v1.24.0
+            env:
+              TZ: "${TIMEZONE}"
+              BIND: ":8923"
+              DIFFICULTY: "3"
+              ED25519_PRIVATE_KEY_HEX:
+                valueFrom:
+                  secretKeyRef:
+                    name: authelia-anubis-secret
+                    key: ED25519_PRIVATE_KEY_HEX
+              SERVE_ROBOTS_TXT: "true"
+              TARGET: "http://localhost:80"
+            ports:
+              - name: anubis
+                containerPort: &anubisPort 8923
+            resources:
+              requests:
+                cpu: 26m
+                memory: 100Mi
+              limits:
+                memory: 100Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
         pod:
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
+            runAsUser: 1000
+            runAsGroup: 1000
             runAsNonRoot: true
           topologySpreadConstraints:
             - maxSkew: 1
@@ -78,6 +106,8 @@ spec:
         controller: authelia
         ipFamilyPolicy: PreferDualStack
         ports:
+          anubis:
+            port: *anubisPort
           http:
             port: *port
             primary: true
@@ -90,11 +120,16 @@ spec:
           - port: metrics
     route:
       app:
-        hostnames: ["auth.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "auth.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-external
             namespace: network
             sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: anubis
     persistence:
       config:
         type: configMap
