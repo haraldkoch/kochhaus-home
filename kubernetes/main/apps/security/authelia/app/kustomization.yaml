@@ -9,5 +9,8 @@ configMapGenerator:
   - name: authelia-configmap
     files:
       - configuration.yaml=./resources/configuration.yaml
+  - name: anubis-configmap
+    files:
+      - botPolicy.yaml=./resources/anubis.yaml
 generatorOptions:
   disableNameSuffixHash: true

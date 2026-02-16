@@ -1,0 +1,7 @@
+---
+bots:
+  - import: (data)/meta/default-config.yaml
+store:
+  backend: valkey
+  parameters:
+    url: "redis://dragonfly.dbms.svc.cluster.local:6379/9"

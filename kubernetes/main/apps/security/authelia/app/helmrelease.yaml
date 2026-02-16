@@ -25,7 +25,7 @@ spec:
               - secretRef:
                   name: authelia-secret
         containers:
-          app:
+          authelia:
             image:
               repository: ghcr.io/authelia/authelia
               tag: 4.39.15@sha256:d23ee3c721d465b4749cc58541cda4aebe5aa6f19d7b5ce0afebb44ebee69591
@@ -54,17 +54,46 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
                 memory: 32Mi
               limits:
                 memory: 128Mi
+          anubis:
+            image:
+              repository: ghcr.io/techarohq/anubis
+              tag: v1.24.0
+            env:
+              TZ: "${TIMEZONE}"
+              BIND: ":8923"
+              DIFFICULTY: "3"
+              ED25519_PRIVATE_KEY_HEX:
+                valueFrom:
+                  secretKeyRef:
+                    name: authelia-anubis-secret
+                    key: ED25519_PRIVATE_KEY_HEX
+              POLICY_FNAME: /config/botPolicy.yaml
+              SERVE_ROBOTS_TXT: "true"
+              TARGET: "http://localhost:80"
+            ports:
+              - name: anubis
+                containerPort: &anubisPort 8923
+            resources:
+              requests:
+                cpu: 26m
+                memory: 100Mi
+              limits:
+                memory: 100Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
         pod:
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
+            runAsUser: 1000
+            runAsGroup: 1000
             runAsNonRoot: true
           topologySpreadConstraints:
             - maxSkew: 1
@@ -78,6 +107,8 @@ spec:
         controller: authelia
         ipFamilyPolicy: PreferDualStack
         ports:
+          anubis:
+            port: *anubisPort
           http:
             port: *port
             primary: true
@@ -90,16 +121,32 @@ spec:
           - port: metrics
     route:
       app:
-        hostnames: ["auth.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "auth.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-external
             namespace: network
             sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: anubis
     persistence:
       config:
         type: configMap
         name: authelia-configmap
-        globalMounts:
-          - path: /config/configuration.yaml
-            subPath: configuration.yaml
-            readOnly: true
+        advancedMounts:
+          authelia:
+            authelia:
+              - path: /config/configuration.yaml
+                subPath: configuration.yaml
+                readOnly: true
+      anubis:
+        type: configMap
+        name: anubis-configmap
+        advancedMounts:
+          authelia:
+            anubis:
+              - path: /config/botPolicy.yaml
+                subPath: botPolicy.yaml
+                readOnly: true
