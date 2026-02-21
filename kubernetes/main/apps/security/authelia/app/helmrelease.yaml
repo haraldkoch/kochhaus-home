@@ -64,7 +64,7 @@ spec:
           anubis:
             image:
               repository: ghcr.io/techarohq/anubis
-              tag: v1.24.0
+              tag: v1.25.0
             env:
               TZ: "${TIMEZONE}"
               BIND: ":8923"
