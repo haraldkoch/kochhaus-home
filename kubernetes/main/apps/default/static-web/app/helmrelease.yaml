@@ -20,7 +20,7 @@ spec:
           static-web-server:
             image:
               repository: joseluisq/static-web-server
-              tag: 2.40.1-alpine
+              tag: 2.41.0-alpine
             env:
               SERVER_PORT: 80
               SERVER_ROOT: /public
