@@ -46,7 +46,7 @@ spec:
           static-web-server:
             image:
               repository: joseluisq/static-web-server
-              tag: 2.40.1-alpine
+              tag: 2.41.0-alpine
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               SERVER_PORT: 80
