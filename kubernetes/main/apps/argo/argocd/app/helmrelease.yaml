@@ -89,7 +89,7 @@ spec:
         - name: argocd-vault-plugin
           command:
             - /var/run/argocd/argocd-cmp-server
-          image: quay.io/argoproj/argocd:v3.3.1
+          image: quay.io/argoproj/argocd:v3.3.2
           envFrom:
             - secretRef:
                 name: argocd-vault-plugin-credentials
