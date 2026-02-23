@@ -313,7 +313,7 @@ spec:
       image:
         # renovate: datasource=github-releases depName=grafana/grafana-image-renderer
         repository: grafana/grafana-image-renderer
-        tag: v5.5.1
+        tag: v5.6.0
         pullPolicy: IfNotPresent
       replicas: 1
       networkPolicy:
