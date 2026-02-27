@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/main/scheme/tekton.dev/v1beta1_Task.json
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: hello
+spec:
+  steps:
+    - name: echo
+      image: alpine@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659
+      script: |
+        #!/bin/sh
+        echo "Hello World from Tekton"
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/main/scheme/tekton.dev/v1beta1_TaskRun.json
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: hello-task-run
+spec:
+  serviceAccountName: default
+  taskRef:
+    name: hello

@@ -1,0 +1,99 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tekton
+  namespace: flux-system
+spec:
+  interval: 1h
+  path: ./kubernetes/main/apps/tekton-system/tekton/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  # targetNamespace: tekton-system # tekton is managing its own namespaces
+  wait: true
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tekton-tasks
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: tekton
+      namespace: flux-system
+  interval: 1h
+  path: ./kubernetes/main/apps/tekton-system/tekton/tasks
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: tekton-system
+  wait: true
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tekton-pipelines
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: tekton
+      namespace: flux-system
+    - name: tekton-tasks
+      namespace: flux-system
+  interval: 1h
+  path: ./kubernetes/main/apps/tekton-system/tekton/pipelines
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: tekton-system
+  wait: false
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tekton-triggers
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: tekton
+      namespace: flux-system
+  interval: 1h
+  path: ./kubernetes/main/apps/tekton-system/tekton/triggers
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: tekton-system
+  wait: false
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tekton-cleanup
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: tekton
+      namespace: flux-system
+  interval: 1h
+  path: ./kubernetes/main/apps/tekton-system/tekton/cleanup
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: tekton-system
+  wait: false

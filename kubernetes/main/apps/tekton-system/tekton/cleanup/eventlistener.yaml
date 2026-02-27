@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/main/scheme/triggers.tekton.dev/v1beta1_EventListener.json
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: tekton-cleaner
+spec:
+  serviceAccountName: tekton-cleaner
+  triggers:
+    - name: cleanup
+      bindings:
+        - ref: cleanup-details
+      template:
+        ref: cleanup-runs
+      interceptors:
+        - ref:
+            name: cel
+          params:
+            - name: filter
+              value: >-
+                'trigger-template' in body &&
+                body['trigger-template'] == 'cleanup'

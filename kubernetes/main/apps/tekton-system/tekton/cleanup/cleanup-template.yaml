@@ -1,0 +1,47 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/main/scheme/triggers.tekton.dev/v1beta1_TriggerTemplate.json
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: cleanup-runs
+spec:
+  params:
+  - name: namespace
+    description: Namespace to cleanup to in the target cluster
+  - name: keep
+    description: Amount of old resources to keep
+    default: "200"
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: TaskRun
+    metadata:
+      name: cleanup-runs-$(tt.params.namespace)-$(uid)
+    spec:
+      serviceAccountName: tekton-cleaner
+      taskSpec:
+        params:
+        - name: keep
+        - name: namespace
+        steps:
+        - name: cleanup-pr-tr
+          image: ghcr.io/haraldkoch/tekton-cli:0.44.0
+          script: |
+            #!/bin/sh
+            set -ex
+            # temporary
+            PATH="/app/bin:$PATH"
+            # A safety check, to avoid deleting too much!
+            if [[ $(params.keep) -eq 0 || $(params.keep) == "" ]]; then
+              echo "This task cannot be used to delete *all* resources from a cluster" >&2
+              echo "Please specifcy a value for keep > 0"
+              exit 1
+            fi
+            # Cleanup pipelineruns first, as this will delete tasksruns too
+            tkn pr delete -n $(params.namespace) --keep $(params.keep)
+            # Keep double the amount of tr, for standalone trs
+            tkn tr delete -n $(params.namespace) --keep $(( $(params.keep) * 2 ))
+      params:
+      - name: keep
+        value: $(tt.params.keep)
+      - name: namespace
+        value: $(tt.params.namespace)
