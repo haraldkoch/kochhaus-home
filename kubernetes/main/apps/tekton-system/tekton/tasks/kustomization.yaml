@@ -1,0 +1,8 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # - https://raw.githubusercontent.com/tektoncd/catalog/main/task/send-to-webhook-discord/0.1/send-to-webhook-discord.yaml
+  - hello-world.yaml
+  - goodbye.yaml

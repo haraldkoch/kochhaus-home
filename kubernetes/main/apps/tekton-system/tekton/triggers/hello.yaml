@@ -1,0 +1,75 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/main/scheme/triggers.tekton.dev/v1beta1_TriggerTemplate.json
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: hello-template
+spec:
+  params:
+    - name: username
+      default: "Kubernetes"
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: hello-goodbye-run-
+      spec:
+        pipelineRef:
+          name: hello-goodbye
+        params:
+          - name: username
+            value: $(tt.params.username)
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/main/scheme/triggers.tekton.dev/v1beta1_TriggerBinding.json
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: hello-binding
+spec:
+  params:
+    - name: username
+      value: $(body.username)
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/main/scheme/triggers.tekton.dev/v1beta1_EventListener.json
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: hello-listener
+spec:
+  serviceAccountName: tekton-robot
+  triggers:
+    - name: hello-trigger
+      bindings:
+        - ref: hello-binding
+      template:
+        ref: hello-template
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tekton-robot
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: triggers-example-eventlistener-binding
+subjects:
+  - kind: ServiceAccount
+    name: tekton-robot
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tekton-triggers-eventlistener-roles
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: triggers-example-eventlistener-clusterbinding
+subjects:
+  - kind: ServiceAccount
+    name: tekton-robot
+    namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tekton-triggers-eventlistener-clusterroles
