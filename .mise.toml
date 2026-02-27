@@ -20,7 +20,7 @@ _.python.venv = { path = "{{config_root}}/.venv", create = true }
 pipx_uvx = true
 
 [tools]
-"aqua:astral-sh/uv" = "0.10.6"
+"aqua:astral-sh/uv" = "0.10.7"
 "pipx:flux-local" = "8.1.0"
 
 "aqua:cilium/cilium-cli" = "0.19.2"
