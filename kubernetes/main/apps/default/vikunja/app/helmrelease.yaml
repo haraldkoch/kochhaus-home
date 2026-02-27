@@ -18,7 +18,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/haraldkoch/postgres-init
-              tag: 18.2@sha256:e4bb98a286a0856622fc0e99df4df172e6dde78e33293f2a6d74febaab6634fb
+              tag: 18.3@sha256:01c1b0418ad5dba25ceff7a86dbf9bde551464e9670b59820e6d7c32e506d9a7
             envFrom: &envFrom
               - secretRef:
                   name: vikunja-secret
@@ -26,7 +26,7 @@ spec:
           main:
             image:
               repository: mirror.gcr.io/vikunja/vikunja
-              tag: 1.1.0@sha256:84b56920e2860c67cb889bce0e0950aa529e42838b45bdf81eb2422178e90cc7
+              tag: 2.1.0@sha256:f13103b0287aef74a69241fa46e6cac76e14caf643602144ccaca57fc76e587f
             env:
               # Proper shell path for cli
               PATH: /app/vikunja:$${PATH}
