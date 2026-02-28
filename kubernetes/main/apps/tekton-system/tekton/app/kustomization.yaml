@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   # https://github.com/tektoncd/pipeline/releases
   # renovate: depName=tektoncd/pipeline datasource=github-releases
-  - https://github.com/tektoncd/pipeline/releases/download/v1.9.1/release.yaml
+  - https://github.com/tektoncd/pipeline/releases/download/v1.10.0/release.yaml
   # https://github.com/tektoncd/triggers/releases
   # renovate: depName=tektoncd/triggers datasource=github-releases
   - https://github.com/tektoncd/triggers/releases/download/v0.35.0/release.yaml
