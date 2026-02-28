@@ -15,7 +15,6 @@ resources:
   - ./echo.yaml
   - ./excalidraw/ks.yaml
   - ./filebrowser/ks.yaml
-  - ./jellyfin/ks.yaml
   - ./karakeep/ks.yaml
   - ./media-browser/ks.yaml
   - ./miniflux/ks.yaml
