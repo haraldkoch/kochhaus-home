@@ -36,7 +36,7 @@ spec:
             image:
               repository: ghcr.io/cloudnative-pg/postgresql
               # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
-              tag: 17.8
+              tag: 17.9
             env:
               PGHOST: postgres-rw.dbms
               PGPORT: "5432"
