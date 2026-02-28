@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: tekton-cleanup
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+          - name: workspace
+            emptyDir: {}
+          containers:
+          - name: trigger
+            image: mirror.gcr.io/alpine/httpie:3.2.4@sha256:eedc563945f29122c260b828623b872ef31a3e2f8db7eb405177de6d59e988b0
+            command:
+              - /bin/sh
+              - -c
+            args:
+              - /usr/local/bin/http --ignore-stdin $SINK_URL trigger-template=cleanup params[target][namespace]=$NAMESPACE params[cleanup][keep]=$CLEANUP_KEEP
+            volumeMounts:
+            - mountPath: /workspace
+              name: workspace
+            env:
+              - name: SINK_URL
+                value: "http://el-tekton-cleaner.tekton-system.svc.cluster.local:8080"
+              - name: NAMESPACE
+                value: "cicd"
+              - name: CLEANUP_KEEP
+                value: "10"
+          restartPolicy: Never
