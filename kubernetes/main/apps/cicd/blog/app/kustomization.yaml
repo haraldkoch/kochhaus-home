@@ -2,12 +2,5 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: cicd
-
-components:
-  - ../../components/common
-
 resources:
-  - ./namespace.yaml
-  - ./blog/ks.yaml
-  - ./tekton-cleanup/ks.yaml
+  - hugo.yaml

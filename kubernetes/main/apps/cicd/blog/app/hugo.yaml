@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/main/scheme/tekton.dev/v1beta1_Task.json
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: hugo
+spec:
+  steps:
+    - name: echo
+      image: hugomods/hugo:non-root-0.157.0
+      script: |-
+        #!/bin/sh
+        hugo version
