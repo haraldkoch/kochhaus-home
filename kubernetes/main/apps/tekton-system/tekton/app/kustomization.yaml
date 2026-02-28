@@ -13,5 +13,5 @@ resources:
   - https://github.com/tektoncd/triggers/releases/download/v0.34.0/interceptors.yaml
   # https://github.com/tektoncd/dashboard/releases
   # renovate: depName=tektoncd/dashboard datasource=github-releases
-  - https://github.com/tektoncd/dashboard/releases/download/v0.64.0/release-full.yaml
+  - https://github.com/tektoncd/dashboard/releases/download/v0.66.0/release-full.yaml
   - ./httproute.yaml
