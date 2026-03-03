@@ -75,7 +75,7 @@ spec:
       value: enabled
     - name: RENOVATE_CACHE_PRIVATE_PACKAGES
       value: "true"
-  image: ghcr.io/renovatebot/renovate:43.48.4@sha256:63198bacf620cf6280970c1236dcecd43d1b1485535198a7c525cc8ebb76db26
+  image: ghcr.io/renovatebot/renovate:43.49.0@sha256:5f99c531dfb22161e847554a70ef5a91516d960c9a5a7a20019b936d53d4cb2b
   # we have 3 nodes
   parallelism: 3
   resources:
