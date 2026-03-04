@@ -6,8 +6,11 @@ metadata:
   name: tuppr
 spec:
   interval: 1h
-  path: ./kubernetes/registry/apps/system-upgrade/tuppr/app
-  prune: false # reset to true
+  path: ./kubernetes/base/apps/system-upgrade/tuppr
+  postBuild:
+    substitute:
+      REPLICAS: "2"
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -24,8 +27,8 @@ spec:
   dependsOn:
     - name: tuppr
   interval: 1h
-  path: ./kubernetes/registry/apps/system-upgrade/tuppr/upgrades
-  prune: false # reset to true
+  path: ./kubernetes/network/apps/system-upgrade/upgrades
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
