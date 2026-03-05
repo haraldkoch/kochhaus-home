@@ -9,7 +9,7 @@ spec:
     - name: openebs
     - name: snapshot-controller
   interval: 1h
-  path: ./kubernetes/main/apps/storage/volsync/app
+  path: ./kubernetes/base/apps/storage/volsync
   prune: true
   sourceRef:
     kind: GitRepository
