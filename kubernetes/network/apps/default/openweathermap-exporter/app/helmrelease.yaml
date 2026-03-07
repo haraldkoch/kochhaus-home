@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: ghcr.io/haraldkoch/openweathermap-exporter
-              tag: 0.2.55@sha256:0399f3a95f38a18a9390371e809560f12dd71c4e610815fc0a9bd4dc58d814b2
+              tag: 0.2.56@sha256:9069f8587620b0ad2b3af9cdb3bf3a799aa5c95b801baefde1112aa97e190ae8
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               SERVER_PORT: "2112"
