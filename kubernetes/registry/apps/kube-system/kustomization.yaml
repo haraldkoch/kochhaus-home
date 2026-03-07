@@ -12,4 +12,3 @@ resources:
   - ./cilium/ks.yaml
   - ./coredns.yaml
   - ./metrics-server/ks.yaml
-  - ./reloader/ks.yaml
