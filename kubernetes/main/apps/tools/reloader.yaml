@@ -6,11 +6,11 @@ metadata:
   name: reloader
 spec:
   interval: 1h
-  path: ./kubernetes/registry/apps/kube-system/reloader/app
-  prune: false # reset to true
+  path: ./kubernetes/base/apps/tools/reloader
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: kube-system
+  targetNamespace: tools
   wait: false

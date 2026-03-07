@@ -12,5 +12,5 @@ resources:
   - ./descheduler/ks.yaml
   - ./headlamp/ks.yaml
   - ./node-feature-discovery/ks.yaml
-  - ./reloader/ks.yaml
+  - ./reloader.yaml
   - ./webhook/ks.yaml
