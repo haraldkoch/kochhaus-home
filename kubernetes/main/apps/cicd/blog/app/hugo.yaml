@@ -5,6 +5,9 @@ kind: Task
 metadata:
   name: hugo
 spec:
+  params:
+    - name: publish
+      type: string
   steps:
     - name: clone
       image: hugomods/hugo:non-root-0.157.0
@@ -43,6 +46,11 @@ spec:
         hugo build --cleanDestinationDir
 
     - name: publish
+      when:
+        - input: "$(params.publish)"
+          operator: in
+          values:
+            - "true"
       image: ghcr.io/haraldkoch/rsync:3.4.0
       script: |-
         #!/bin/sh
