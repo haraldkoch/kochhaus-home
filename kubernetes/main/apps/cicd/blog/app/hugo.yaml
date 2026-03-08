@@ -6,8 +6,80 @@ metadata:
   name: hugo
 spec:
   steps:
-    - name: echo
+    - name: clone
+      image: hugomods/hugo:non-root-0.157.0
+      script: |
+        #!/bin/bash
+        set -euxo pipefail
+
+        cd /workspace
+        git clone ${GIT_REPOSITORY} blog
+      env:
+        - name: GIT_REPOSITORY
+          valueFrom:
+            secretKeyRef:
+              name: blog-secret
+              key: repository
+      volumeMounts:
+        - name: blog-ssh-secret
+          mountPath: /etc/ssh/ssh_known_hosts
+          subPath: ssh_known_hosts
+        - name: ssh
+          mountPath: /home/hugo/.ssh
+        # - name: blog-ssh-secret
+        #   mountPath: /home/hugo/.ssh/config
+        #   subPath: ssh_config
+        #   readOnly: true
+        - name: blog-ssh-secret
+          mountPath: /home/hugo/.ssh/id_ed25519
+          subPath: id_ed25519
+          readOnly: true
+
+    - name: build
       image: hugomods/hugo:non-root-0.157.0
       script: |-
         #!/bin/sh
-        hugo version
+        cd /workspace/blog
+        hugo build --cleanDestinationDir
+
+    - name: publish
+      image: ghcr.io/haraldkoch/rsync:2.2.0
+      script: |-
+        #!/bin/sh
+        set -euxo pipefail
+
+        rsync --delete -rlpt -i --partial /workspace/blog/public/ $RSYNC_DEST
+      env:
+        - name: RSYNC_DEST
+          valueFrom:
+            secretKeyRef:
+              name: blog-secret
+              key: rsync_dest
+      volumeMounts:
+        - name: blog-ssh-secret
+          mountPath: /etc/ssh/ssh_known_hosts
+          subPath: ssh_known_hosts
+        - name: ssh
+          mountPath: /home/rsync/.ssh
+        # - name: blog-ssh-secret
+        #   mountPath: /home/rsync/.ssh/config
+        #   subPath: ssh_config
+        #   readOnly: true
+        - name: blog-ssh-secret
+          mountPath: /home/rsync/.ssh/id_ed25519
+          subPath: id_ed25519
+          readOnly: true
+
+  workspaces:
+    - name: workspace
+      description: The main workspace
+      mountPath: /workspace
+
+  volumes:
+    - name: blog-ssh-secret
+      secret:
+        secretName: blog-ssh-secret
+        defaultMode: 0600
+    - name: ssh
+      emptyDir:
+        medium: Memory
