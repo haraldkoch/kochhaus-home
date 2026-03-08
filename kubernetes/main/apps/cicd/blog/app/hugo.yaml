@@ -16,7 +16,7 @@ spec:
         set -euxo pipefail
 
         cd /workspace
-        git clone ${GIT_REPOSITORY} blog
+        git clone $${GIT_REPOSITORY} blog
       env:
         - name: GIT_REPOSITORY
           valueFrom:
@@ -56,7 +56,7 @@ spec:
         #!/bin/sh
         set -euxo pipefail
 
-        rsync --delete -rlpt -i --partial /workspace/blog/public/ $RSYNC_DEST
+        rsync --delete -rlpt -i --partial /workspace/blog/public/ $${RSYNC_DEST}
       env:
         - name: RSYNC_DEST
           valueFrom:
