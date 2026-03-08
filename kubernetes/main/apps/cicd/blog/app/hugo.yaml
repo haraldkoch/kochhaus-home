@@ -9,7 +9,7 @@ spec:
     - name: clone
       image: hugomods/hugo:non-root-0.157.0
       script: |
-        #!/bin/bash
+        #!/bin/sh
         set -euxo pipefail
 
         cd /workspace
