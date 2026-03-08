@@ -1,6 +1,6 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/main/scheme/tekton.dev/v1beta1_Task.json
-apiVersion: tekton.dev/v1beta1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/refs/heads/main/scheme/tekton.dev/v1_Task.json
+apiVersion: tekton.dev/v1
 kind: Task
 metadata:
   name: hugo
@@ -10,7 +10,7 @@ spec:
       type: string
   steps:
     - name: clone
-      image: hugomods/hugo:non-root-0.157.0
+      image: alpine/git:2.52.0
       script: |
         #!/bin/sh
         set -euxo pipefail
@@ -28,13 +28,13 @@ spec:
           mountPath: /etc/ssh/ssh_known_hosts
           subPath: ssh_known_hosts
         - name: ssh
-          mountPath: /home/hugo/.ssh
+          mountPath: /root/.ssh
         # - name: blog-ssh-secret
-        #   mountPath: /home/hugo/.ssh/config
+        #   mountPath: /root/.ssh/config
         #   subPath: ssh_config
         #   readOnly: true
         - name: blog-ssh-secret
-          mountPath: /home/hugo/.ssh/id_ed25519
+          mountPath: /root/.ssh/id_ed25519
           subPath: id_ed25519
           readOnly: true
 
@@ -42,8 +42,9 @@ spec:
       image: hugomods/hugo:non-root-0.157.0
       script: |-
         #!/bin/sh
+        mkdir /workspace/public
         cd /workspace/blog
-        hugo build --cleanDestinationDir
+        hugo build --cleanDestinationDir --destination /workspace/public
 
     - name: publish
       when:
@@ -56,7 +57,7 @@ spec:
         #!/bin/sh
         set -euxo pipefail
 
-        rsync --delete -rlpt -i --partial /workspace/blog/public/ $${RSYNC_DEST}
+        rsync --delete -rlpt -i --partial /workspace/public/ $${RSYNC_DEST}
       env:
         - name: RSYNC_DEST
           valueFrom:
