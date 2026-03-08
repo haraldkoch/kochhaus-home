@@ -1,0 +1,67 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/main/scheme/triggers.tekton.dev/v1beta1_TriggerTemplate.json
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: build-weblog
+spec:
+  params:
+    - name: publish
+      description: Whether to publish after build
+      default: "false"
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: TaskRun
+      metadata:
+        generateName: build-weblog-$(uid)
+      spec:
+        params:
+          - name: publish
+            value: $(tt.params.publish)
+        taskRef:
+          name: hugo
+        # v1beta1; v1 moves this under taskRunTemplate
+        podTemplate:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+        workspaces:
+          - name: workspace
+            # we can use emptDir here because there is only one task; no pipelines
+            emptyDir: {}
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/main/scheme/triggers.tekton.dev/v1beta1_TriggerBinding.json
+apiVersion: triggers.tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: build-weblog
+spec:
+  params:
+    - name: publish
+      value: $(body.publish)
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/main/scheme/triggers.tekton.dev/v1beta1_EventListener.json
+apiVersion: triggers.tekton.dev/v1beta1
+kind: EventListener
+metadata:
+  name: build-weblog
+  namespace: cicd
+spec:
+  serviceAccountName: tekton-trigger-build-weblog
+  triggers:
+    - name: build-weblog
+      bindings:
+        - kind: TriggerBinding
+          ref: build-weblog
+      template:
+        ref: build-weblog
+      interceptors:
+        - name: validate-weblog
+          ref:
+            name: "cel"
+          params:
+            - name: "filter"
+              value: "body.publish in ['true', 'false']"

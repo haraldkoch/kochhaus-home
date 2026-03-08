@@ -1,13 +1,89 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/main/scheme/tekton.dev/v1beta1_Task.json
-apiVersion: tekton.dev/v1beta1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/redhat-developer/vscode-tekton/refs/heads/main/scheme/tekton.dev/v1_Task.json
+apiVersion: tekton.dev/v1
 kind: Task
 metadata:
   name: hugo
 spec:
+  params:
+    - name: publish
+      type: string
   steps:
-    - name: echo
+    - name: clone
+      image: ghcr.io/haraldkoch/ubuntu:rolling@sha256:d2d15ce1032692788f863e4ba173f95a34e2afdfa98469429616c4e27a8eeeb0
+      script: |
+        #!/bin/sh
+
+        cd /workspace
+        git clone --recurse-submodules $${GIT_REPOSITORY} blog
+      env:
+        - name: GIT_REPOSITORY
+          valueFrom:
+            secretKeyRef:
+              name: blog-secret
+              key: repository
+      volumeMounts:
+        - name: blog-ssh-secret
+          mountPath: /etc/ssh/ssh_known_hosts
+          subPath: ssh_known_hosts
+        - name: ssh
+          mountPath: /home/ubuntu/.ssh
+        - name: blog-ssh-secret
+          mountPath: /home/ubuntu/.ssh/id_ed25519
+          subPath: id_ed25519
+          readOnly: true
+
+    - name: build
       image: hugomods/hugo:non-root-0.157.0
       script: |-
         #!/bin/sh
-        hugo version
+
+        mkdir /workspace/public
+        cd /workspace/blog
+        hugo build --cleanDestinationDir --destination /workspace/public
+
+    - name: publish
+      when:
+        - input: "$(params.publish)"
+          operator: in
+          values:
+            - "true"
+      image: ghcr.io/haraldkoch/rsync:3.4.1@sha256:05c0538e8605571518dcbb522ef3869651de083f0d225c1b2c01257f676f8f4d
+      script: |-
+        #!/bin/sh
+
+        rsync --delete -rlpt -i --partial /workspace/public/ $${RSYNC_DEST}
+      env:
+        - name: RSYNC_DEST
+          valueFrom:
+            secretKeyRef:
+              name: blog-secret
+              key: rsync_dest
+      volumeMounts:
+        - name: blog-ssh-secret
+          mountPath: /etc/ssh/ssh_known_hosts
+          subPath: ssh_known_hosts
+        # - name: blog-ssh-secret
+        #   mountPath: /etc/ssh/ssh_config
+        #   subPath: ssh_config
+        #   readOnly: true
+        - name: ssh
+          mountPath: /home/rsync/.ssh
+        - name: blog-ssh-secret
+          mountPath: /home/rsync/.ssh/id_ed25519
+          subPath: id_ed25519
+          readOnly: true
+
+  workspaces:
+    - name: workspace
+      description: The main workspace
+      mountPath: /workspace
+
+  volumes:
+    - name: blog-ssh-secret
+      secret:
+        secretName: blog-ssh-secret
+        defaultMode: 0600
+    - name: ssh
+      emptyDir:
+        medium: Memory
