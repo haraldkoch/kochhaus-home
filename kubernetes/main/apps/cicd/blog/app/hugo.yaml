@@ -43,7 +43,7 @@ spec:
         hugo build --cleanDestinationDir
 
     - name: publish
-      image: ghcr.io/haraldkoch/rsync:2.2.0
+      image: ghcr.io/haraldkoch/rsync:3.4.0
       script: |-
         #!/bin/sh
         set -euxo pipefail
