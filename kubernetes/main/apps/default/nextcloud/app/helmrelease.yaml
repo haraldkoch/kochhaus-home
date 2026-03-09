@@ -50,12 +50,14 @@ spec:
         proxy.config.php: |-
           <?php
           $CONFIG = array (
+            'check_data_directory_permissions' => false,
+            'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
+            'skeletondirectory' => '',
             'trusted_proxies' => array(
               0 => '127.0.0.1',
               1 => '${NETWORK_K8S_POD_CIDR}',
               2 => '${NETWORK_K8S_POD_CIDR_V6}',
             ),
-            'forwarded_for_headers' => array('HTTP_X_FORWARDED_FOR'),
           ); ?>
         misc.config.php: |-
           <?php
@@ -75,8 +77,24 @@ spec:
         secretName: nextcloud-secret
         usernameKey: INIT_POSTGRES_USER
         passwordKey: INIT_POSTGRES_PASS
-    ingress:
-      enabled: false
+    httpRoute:
+      enabled: true
+      hostnames:
+        - *host
+      parentRefs:
+        - name: envoy-external
+          namespace: network
+      rules:
+        - matches:
+            - path:
+                type: PathPrefix
+                value: "/"
+          filters:
+            - type: ResponseHeaderModifier
+              responseHeaderModifier:
+                add:
+                  - name: strict-transport-security
+                    value: max-age=31536000
     persistence:
       enabled: true
       existingClaim: ${VOLSYNC_CLAIM}
