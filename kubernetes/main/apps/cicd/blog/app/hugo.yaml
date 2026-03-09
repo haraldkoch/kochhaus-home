@@ -52,7 +52,7 @@ spec:
           operator: in
           values:
             - "true"
-      image: ghcr.io/haraldkoch/rsync:3.4.0
+      image: ghcr.io/haraldkoch/rsync:3.4.1
       script: |-
         #!/bin/sh
         set -euxo pipefail
