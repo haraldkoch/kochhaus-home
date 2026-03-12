@@ -9,4 +9,5 @@ components:
 
 resources:
   - ./namespace.yaml
+  - ./descheduler.yaml
   - ./reloader.yaml
