@@ -71,6 +71,21 @@ spec:
                 cpu: 10m
               limits:
                 memory: 512Mi
+        pod:
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchExpressions:
+                      - key: app.kubernetes.io/name
+                        operator: In
+                        values:
+                          - esphome
+                      - key: app.kubernetes.io/controller
+                        operator: In
+                        values:
+                          - esphome
+                  topologyKey: kubernetes.io/hostname
     defaultPodOptions:
       securityContext:
         fsGroup: 2000
