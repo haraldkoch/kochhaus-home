@@ -6,7 +6,7 @@ metadata:
   name: descheduler
 spec:
   interval: 1h
-  path: ./kubernetes/main/apps/tools/descheduler/app
+  path: ./kubernetes/base/apps/tools/descheduler
   prune: true
   sourceRef:
     kind: GitRepository
