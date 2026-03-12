@@ -50,10 +50,6 @@ spec:
       value: debug
     - name: RENOVATE_ALLOWED_COMMANDS
       value: '["pnpm run bundle"]'
-    - name: RENOVATE_ENDPOINT
-      value: https://api.github.com/
-    - name: RENOVATE_PLATFORM
-      value: github
     - name: RENOVATE_PLATFORM_COMMIT
       value: "true"
     - name: DOCKERHUB_USERNAME
@@ -78,6 +74,8 @@ spec:
   image: ghcr.io/renovatebot/renovate:43.64.4@sha256:df8b9310f26ed3e001fbc5b92a405b70c316b69f017235fd0c8242ad081fe3ed
   # we have 3 nodes
   parallelism: 3
+  provider:
+    name: github
   resources:
     requests:
       cpu: 100m
@@ -86,3 +84,5 @@ spec:
   secretRef: doug-piranha
   webhook:
     enabled: true
+    authentication:
+      enabled: false
