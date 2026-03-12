@@ -45,15 +45,12 @@ metadata:
 spec:
   discoverTopics: renovate
   discoveryFilter: haraldkoch/*
+  platform: github
   extraEnv:
     - name: LOG_LEVEL
       value: debug
     - name: RENOVATE_ALLOWED_COMMANDS
       value: '["pnpm run bundle"]'
-    - name: RENOVATE_ENDPOINT
-      value: https://api.github.com/
-    - name: RENOVATE_PLATFORM
-      value: github
     - name: RENOVATE_PLATFORM_COMMIT
       value: "true"
     - name: DOCKERHUB_USERNAME
