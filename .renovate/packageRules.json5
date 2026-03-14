@@ -8,12 +8,6 @@
       versioning: "loose"
     },
     {
-      description: "Custom versioning for minio",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/minio/"],
-      versioning: "regex:^RELEASE\\.(?<major>\\d+)-(?<minor>\\d+)-(?<patch>\\d+)T.*Z$"
-    },
-    {
       description: "Custom schedule for noisy packages",
       matchDataSources: ["docker"],
       matchPackageNames: ["/cloudnative-pg/", "/n8n/", "/omada-controller/", "/reloader/"],
