@@ -15,7 +15,3 @@ spec:
         - name: flux-operator
           namespace: flux-system
           port: 9080
-      matches:
-        - path:
-            type: PathPrefix
-            value: /
