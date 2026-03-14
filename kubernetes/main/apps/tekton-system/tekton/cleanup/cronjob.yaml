@@ -13,7 +13,7 @@ spec:
             emptyDir: {}
           containers:
           - name: trigger
-            image: mirror.gcr.io/alpine/httpie:3.2.4@sha256:6143c70f94357918ae345e89140eac29199752aa50efeae36f4dab39af536a19
+            image: mirror.gcr.io/alpine/httpie:3.2.4@sha256:1f75b1fd810e773c3c97833e373e20aa378159a265ceefb539abc7a6a06463c7
             command:
               - /bin/sh
               - -c
