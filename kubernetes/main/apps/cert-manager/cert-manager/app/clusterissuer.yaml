@@ -9,6 +9,7 @@ spec:
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-production
+    profile: shortlived
     solvers:
       - dns01:
           cloudflare:
