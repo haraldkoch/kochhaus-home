@@ -5,4 +5,5 @@ kind: ConfigMap
 metadata:
   name: cluster-settings
 data:
+  HARBOR_INT_IPV4: 192.168.23.81
   GATEWAY_INT_IPV4: 192.168.23.80

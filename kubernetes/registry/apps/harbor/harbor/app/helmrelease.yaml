@@ -24,6 +24,7 @@ spec:
         name: harbor
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "harbor.${SECRET_DOMAIN}"
+          lbipam.cilium.io/ips: "${HARBOR_INT_IPV4}"
     externalURL: https://harbor.${SECRET_DOMAIN}
     ipFamily:
       ipv6:
@@ -48,18 +49,18 @@ spec:
     database:
       type: internal
 
-#      imageChartStorage:
-#        type: s3
-#        s3:
-#          bucket: kubernetes-registry
-#          accesskey: ${AWS_SECRET_KEY_ID}
-#          secretkey: ${AWS_SECRET_KEY}
-#          regionendpoint: https://${SECRET_BACKUP_SERVER}
-#          rootdirectory: /prod
+    #      imageChartStorage:
+    #        type: s3
+    #        s3:
+    #          bucket: kubernetes-registry
+    #          accesskey: ${AWS_SECRET_KEY_ID}
+    #          secretkey: ${AWS_SECRET_KEY}
+    #          regionendpoint: https://${SECRET_BACKUP_SERVER}
+    #          rootdirectory: /prod
 
-#    # our CSI does not support ReadWriteMany so we must use Recreate on pods
-#    updateStrategy:
-#      type: Recreate
+    #    # our CSI does not support ReadWriteMany so we must use Recreate on pods
+    #    updateStrategy:
+    #      type: Recreate
 
     harborAdminPassword: "${SECRET_HARBOR_ADMIN_PASSWORD}"
     # The secret key used for encryption. Must be a string of 16 chars.
