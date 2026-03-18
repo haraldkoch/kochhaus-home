@@ -54,7 +54,9 @@ spec:
       tmpfs:
         type: emptyDir
         globalMounts:
-          - path: /var/cache/nginx
-            subPath: cache
           - path: /etc/nginx/tmp
             subPath: tmp
+          - path: /var/cache/nginx
+            subPath: cache
+          - path: /var/lib/nginx
+            subPath: lib
