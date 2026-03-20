@@ -35,8 +35,7 @@ session:
       authelia_url: https://auth.${CLUSTER_DOMAIN}
       default_redirection_url: https://${CLUSTER_DOMAIN}
   redis:
-    database_index: 2
-    host: dragonfly.dbms.svc.cluster.local
+    host: authelia-dragonfly-db.security.svc.cluster.local
 
 notifier:
   disable_startup_check: true
