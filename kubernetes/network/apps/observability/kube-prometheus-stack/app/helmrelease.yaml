@@ -113,6 +113,10 @@ spec:
                   #     - "amcluster-uvt.${CLUSTER_DOMAIN}:9093"
                   #   labels:
                   #     server: amcluster-uvt.${CLUSTER_DOMAIN}
+        podMetadata:
+          labels:
+            # label corresponds to the netpol installed by dragonfly
+            control-plane: controller-manager
         resources:
           requests:
             cpu: 100m
