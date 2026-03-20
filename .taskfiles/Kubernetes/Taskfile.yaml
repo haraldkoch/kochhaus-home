@@ -47,7 +47,9 @@ tasks:
     vars:
       ns: '{{.ns | default "default"}}'
     requires:
-      vars: ["cluster", "claim"]
+      vars:
+        - "cluster"
+        - "claim"
     preconditions:
       - kubectl --context {{.cluster}} --namespace {{.ns}} get persistentvolumeclaims {{.claim}}
       - kubectl browse-pvc --version
@@ -58,7 +60,9 @@ tasks:
     interactive: true
     cmd: kubectl node-shell --context {{.CLUSTER}} -n kube-system -x {{.NODE}}
     requires:
-      vars: [CLUSTER,NODE]
+      vars:
+        - CLUSTER
+        - NODE
     preconditions:
       - kubectl get nodes --context {{.CLUSTER}} {{.NODE}}
       - kubectl node-shell --version
@@ -67,13 +71,14 @@ tasks:
   sync-secrets:
     desc: Sync all ExternalSecrets
     cmds:
-      - for: { var: SECRETS, split: "\n" }
+      - for: {var: SECRETS, split: "\n"}
         cmd: kubectl --context {{.CLUSTER}} --namespace {{splitList "," .ITEM | first}} annotate externalsecret {{splitList "," .ITEM | last}} force-sync="{{now | unixEpoch}}" --overwrite
     vars:
       SECRETS:
         sh: kubectl get externalsecret --context {{.CLUSTER}} --all-namespaces --no-headers --output=jsonpath='{range .items[*]}{.metadata.namespace},{.metadata.name}{"\n"}{end}'
     requires:
-      vars: [CLUSTER]
+      vars:
+        - CLUSTER
     preconditions:
       - which kubectl
 
@@ -82,10 +87,14 @@ tasks:
     cmds:
       - for:
           matrix:
-            PHASE: [Failed, Pending, Succeeded]
-        cmd: kubectl delete pods --context {{.CLUSTER}} --all-namespaces --field-selector status.phase={{.ITEM.PHASE}} --ignore-not-found=true
+            PHASE:
+              - Failed
+              - Pending
+              - Succeeded
+        cmd: kubectl delete pods --context {{.CLUSTER}} --all-namespaces --field-selector status.phase={{.ITEM.PHASE}} --ignore-not-found=true --wait=false
     requires:
-      vars: [CLUSTER]
+      vars:
+        - CLUSTER
     preconditions:
       - which kubectl
 
@@ -97,7 +106,9 @@ tasks:
         node: Node to drain (required)
     cmd: kubectl --context {{.cluster}} drain {{.node}} --ignore-daemonsets --delete-local-data --force
     requires:
-      vars: ["cluster", "node"]
+      vars:
+        - "cluster"
+        - "node"
 
   network:
     desc: Create a netshoot container for a cluster
@@ -107,7 +118,8 @@ tasks:
         ns: Namespace the PVC is in (default: default)
     interactive: true
     requires:
-      vars: ["cluster"]
+      vars:
+        - "cluster"
     cmd: |
       kubectl run --context {{.cluster}} -n {{.ns}} netshoot --rm -i --tty --image ghcr.io/nicolaka/netshoot:latest {{.CLI_ARGS}}
     vars:
@@ -122,13 +134,13 @@ tasks:
     cmd: |
       kubectl --context {{.cluster}} get pods --all-namespaces -o=jsonpath="{range .items[*]}{'\n'}{range .spec.containers[*]}{.image}{'\n'}{end}{end}" | sort | uniq | grep -Ev 'quay|gcr|ghcr|ecr|us-docker|registry.k8s' | grep -Ev 'bitnami|rook|intel|grafana' |  sed -e 's/docker\.io\///g' | sort | uniq
     requires:
-      vars: ["cluster"]
+      vars:
+        - "cluster"
 
   hash-secret:
     desc: Hash a client secret (for Authelia)
     interactive: true
     cmd: podman run --rm -ti authelia/authelia:latest authelia crypto hash generate pbkdf2 --variant sha512
-
 
   # https://docs.github.com/en/enterprise-cloud@latest/actions/hosting-your-own-runners/managing-self-hosted-runners-with-actions-runner-controller/deploying-runner-scale-sets-with-actions-runner-controller#upgrading-arc
   upgrade-arc:
