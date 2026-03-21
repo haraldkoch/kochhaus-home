@@ -2,17 +2,16 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
 machine:
   install:
-    diskSelector:
-      model: Samsung SSD 850
-    image: factory.talos.dev/metal-installer/ecd7f2ca59a064a6cb0c0bbb41ec1d1e017b3d034315c0efc1ac19947e7b6fc4:v1.12.6
+    disk: /dev/vda
+    image: factory.talos.dev/metal-installer/d36031c3e4a95a935eb2a38ebafbe0ce976d438e05c11f3642c34adf404868a1:v1.12.6
   network:
-    hostname: k3st
+    hostname: k3sv
     interfaces:
       - addresses:
-          - 192.168.20.19/24
-          - fdd5:aa8:9535:20::19/64
+          - 192.168.20.20/24
+          - fdd5:aa8:9535:20::20/64
         dhcp: false
-        interface: eno1
+        interface: enp1s0
         mtu: 1500
         routes:
           - gateway: 192.168.20.1
