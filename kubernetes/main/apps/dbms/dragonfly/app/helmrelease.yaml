@@ -21,7 +21,8 @@ spec:
             image:
               repository: ghcr.io/dragonflydb/operator
               tag: v1.5.0@sha256:2ceb0128302cd7756b743cc5d56ec9479fb08163b5c563897045a4e5e1555f02
-            command: ["/manager"]
+            command:
+              - "/manager"
             args:
               - --health-probe-bind-address=:8081
               - --metrics-bind-address=:8080
@@ -56,8 +57,12 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
         pod:
+          labels:
+            # required for the operator to determine a primary in each deployed cluster
+            # ref: https://deepwiki.com/dragonflydb/dragonfly-operator/2.2-manual-installation#namespace-resource
+            control-plane: controller-manager
           securityContext:
             runAsUser: 65534
             runAsGroup: 65534
