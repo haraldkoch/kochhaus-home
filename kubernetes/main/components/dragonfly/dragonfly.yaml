@@ -19,7 +19,6 @@ spec:
     - --dbfilename=
     - --proactor_threads=2
     - --version_check=false
-  networkPolicyEnabled: false
   resources:
     requests:
       cpu: 100m
