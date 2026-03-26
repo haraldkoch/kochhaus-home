@@ -37,6 +37,8 @@ _... managed with [Flux](https://fluxcd.io), [Renovate](https://github.com/renov
 
 [![volkswagen status](https://auchenberg.github.io/volkswagen/volkswargen_ci.svg?v=1)](https://github.com/auchenberg/volkswagen)
 
+<p>fnord</p>
+
 </div>
 
 ---
