@@ -9,6 +9,10 @@ spec:
     - name: flux-operator
   interval: 1h
   path: ./kubernetes/registry/apps/flux-system/flux-instance/app
+  postBuild:
+    substitute:
+      CLUSTER: ${CLUSTER}
+      SUBDOMAIN: flux-webhook-${CLUSTER}
   prune: true
   sourceRef:
     kind: GitRepository

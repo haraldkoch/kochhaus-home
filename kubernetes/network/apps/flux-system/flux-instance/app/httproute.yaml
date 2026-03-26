@@ -6,7 +6,7 @@ metadata:
   name: github-webhook
 spec:
   hostnames:
-    - "${SUBDOMAIN}.${CLUSTER_DOMAIN}"
+    - ${SUBDOMAIN}.${CLUSTER_DOMAIN}
   parentRefs:
     - name: envoy-external
       namespace: network
