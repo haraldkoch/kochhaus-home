@@ -24,7 +24,7 @@ spec:
       - --crd-source-kind=DNSEndpoint
       - --rfc2136-host=${SECRET_DNS_PRIMARY}
       - --rfc2136-port=53
-      - --rfc2136-zone=${SECRET_DOMAIN}
+      - --rfc2136-zone=${CLUSTER_DOMAIN}
       - --rfc2136-min-ttl=0s
       - --rfc2136-tsig-axfr
       - --rfc2136-tsig-keyname=externaldns
@@ -39,7 +39,7 @@ spec:
     txtOwnerId: registry
     txtPrefix: k8s.
     domainFilters:
-      - ${SECRET_DOMAIN}
+      - ${CLUSTER_DOMAIN}
     logLevel: info
     serviceMonitor:
       enabled: true
