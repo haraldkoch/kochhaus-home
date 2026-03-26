@@ -9,7 +9,7 @@ components:
 
 resources:
   - ./namespace.yaml
-  - ./blackbox-exporter/ks.yaml
+  - ./blackbox-exporter.yaml
   - ./dnssec-exporter/ks.yaml
   - ./fluent-bit/ks.yaml
   - ./gatus/ks.yaml
