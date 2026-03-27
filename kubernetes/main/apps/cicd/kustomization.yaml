@@ -9,4 +9,4 @@ components:
 
 resources:
   - ./namespace.yaml
-  #- ./blog/ks.yaml
+  - ./blog/ks.yaml

@@ -6,8 +6,8 @@ metadata:
   name: blog
 spec:
   dependsOn:
-    - name: tekton
-      namespace: tekton-system
+    - name: tekton-operator
+      namespace: tekton-operator
   interval: 1h
   path: ./kubernetes/main/apps/cicd/blog/app
   prune: true
