@@ -9,4 +9,4 @@ components:
 
 resources:
   - ./namespace.yaml
-  - ./tekton/ks.yaml
+  # - ./tekton/ks.yaml
