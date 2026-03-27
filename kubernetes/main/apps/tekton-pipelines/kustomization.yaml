@@ -2,9 +2,11 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: tekton-pipelines
+
+components:
+  - ../../components/common
+
 resources:
-  - ./binding.yaml
-  - ./cleanup-template.yaml
-  - ./cronjob.yaml
-  - ./eventlistener.yaml
-  - ./rbac.yaml
+  - ./namespace.yaml
+  - ./tekton-pipelines/ks.yaml

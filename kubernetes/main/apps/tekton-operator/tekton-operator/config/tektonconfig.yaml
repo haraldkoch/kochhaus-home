@@ -1,0 +1,94 @@
+apiVersion: operator.tekton.dev/v1alpha1
+kind: TektonConfig
+metadata:
+  name: config
+spec:
+  addon: {}
+  chain:
+    artifacts.oci.format: simplesigning
+    artifacts.oci.storage: oci
+    artifacts.pipelinerun.format: in-toto
+    artifacts.pipelinerun.storage: oci
+    artifacts.taskrun.format: in-toto
+    artifacts.taskrun.storage: oci
+    disabled: true
+    options: {}
+    performance:
+      disable-ha: false
+  config: {}
+  dashboard:
+    options: {}
+    readonly: false
+  hub:
+    options: {}
+  multiclusterProxyAAE:
+    options: {}
+  pipeline:
+    await-sidecar-readiness: true
+    coschedule: workspaces
+    disable-creds-init: false
+    enable-api-fields: beta
+    enable-bundles-resolver: true
+    enable-cel-in-whenexpression: false
+    enable-cluster-resolver: true
+    enable-custom-tasks: true
+    enable-git-resolver: true
+    enable-hub-resolver: true
+    enable-param-enum: false
+    enable-provenance-in-status: true
+    enable-step-actions: true
+    enforce-nonfalsifiability: none
+    keep-pod-on-cancel: false
+    max-result-size: 4096
+    metrics.count.enable-reason: false
+    metrics.pipelinerun.duration-type: histogram
+    metrics.pipelinerun.level: pipeline
+    metrics.taskrun.duration-type: histogram
+    metrics.taskrun.level: task
+    options: {}
+    performance:
+      disable-ha: false
+    require-git-ssh-secret-known-hosts: false
+    results-from: termination-message
+    running-in-environment-with-injected-sidecars: true
+    send-cloudevents-for-runs: false
+    set-security-context: false
+    trusted-resources-verification-no-match-policy: ignore
+  platforms:
+    openshift: {}
+  profile: all
+  pruner:
+    disabled: true
+  result:
+    disabled: false
+    is_external_db: true
+    db_host: postgres-rw.dbms.svc.cluster.local
+    db_port: 5432
+    db_secret_name: tekton-results-postgres
+    db_sslmode: disable
+    log_level: debug
+    logging_pvc_name: tekton-logs
+    options: {}
+    performance:
+      disable-ha: false
+    route_enabled: false
+    route_tls_termination: edge
+  scheduler:
+    config.yaml:
+      cel: {}
+      queueName: pipelines-queue
+    disabled: true
+    multi-cluster-disabled: true
+    multi-cluster-role: ""
+    options: {}
+  targetNamespace: tekton-pipelines
+  tektonpruner:
+    disabled: false
+    global-config:
+      enforcedConfigLevel: global
+      historyLimit: 100
+    options: {}
+  trigger:
+    disabled: false
+    enable-api-fields: stable
+    options: {}
