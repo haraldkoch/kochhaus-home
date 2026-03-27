@@ -10,4 +10,3 @@ components:
 resources:
   - ./namespace.yaml
   #- ./blog/ks.yaml
-  #- ./tekton-cleanup/ks.yaml
