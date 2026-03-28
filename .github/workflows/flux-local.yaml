@@ -5,7 +5,7 @@ name: Flux Local
 on:
   pull_request:
     branches:
-      - "main"
+      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
@@ -41,15 +41,28 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        cluster: ["main", "network", "registry"]
+        cluster:
+          - "main"
+          - "network"
+          - "registry"
     steps:
+      - name: Generate Token
+        uses: actions/create-github-app-token@f8d387b68d61c58ab83c6c016672934102569859 # v3.0.0
+        id: app-token
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Run flux-local test
         uses: docker://ghcr.io/allenporter/flux-local:v8.1.0
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         with:
           args: >-
             test
@@ -68,18 +81,29 @@ jobs:
       pull-requests: write
     strategy:
       matrix:
-        cluster: ["main", "network", "registry"]
+        cluster:
+          - "main"
+          - "network"
+          - "registry"
         resource:
-          - "helmrelease"
-          - "kustomization"
+          - helmrelease
+          - kustomization
       max-parallel: 4
       fail-fast: false
     steps:
+      - name: Generate Token
+        uses: actions/create-github-app-token@f8d387b68d61c58ab83c6c016672934102569859 # v3.0.0
+        id: app-token
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
+
       - name: Checkout Pull Request Branch
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           path: pull
           persist-credentials: false
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Checkout Default Branch
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -87,9 +111,12 @@ jobs:
           path: default
           persist-credentials: false
           ref: ${{ github.event.repository.default_branch }}
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Run flux-local diff
         uses: docker://ghcr.io/allenporter/flux-local:v8.1.0
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         with:
           args: >-
             diff ${{ matrix.resource }}
@@ -104,27 +131,18 @@ jobs:
 
       - name: Generate Diff
         id: diff
-        run: |
+        run: |-
           echo 'diff<<EOF' >> $GITHUB_OUTPUT
           cat diff.patch >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
 
       - if: ${{ steps.diff.outputs.diff != '' }}
-        name: Generate Token
-        uses: actions/create-github-app-token@f8d387b68d61c58ab83c6c016672934102569859 # v3.0.0
-        id: app-token
-        with:
-          app-id: ${{ secrets.BOT_APP_ID }}
-          private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
-
-      - if: ${{ steps.diff.outputs.diff != '' }}
         name: Add Comment
-        continue-on-error: true
         uses: marocchino/sticky-pull-request-comment@70d2764d1a7d5d9560b100cbea0077fc8f633987 # v3.0.2
         with:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           header: ${{ github.event.pull_request.number }}/${{ matrix.cluster }}/${{ matrix.resource }}
-          message: |
+          message: |-
             ```diff
             ${{ steps.diff.outputs.diff }}
             ```
@@ -132,8 +150,8 @@ jobs:
   success:
     if: ${{ !cancelled() }}
     needs:
-      - "test"
-      - "diff"
+      - test
+      - diff
     name: Flux Local - Success
     runs-on: ubuntu-latest
     steps:
