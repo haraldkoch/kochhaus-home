@@ -12,5 +12,5 @@ resources:
   - ./certificates/ks.yaml
   - ./bind-dns/ks.yaml
   - ./cloudflare-dns.yaml
-  - ./cloudflared/ks.yaml
+  - ./cloudflare-tunnel.yaml
   - ./envoy-gateway/ks.yaml

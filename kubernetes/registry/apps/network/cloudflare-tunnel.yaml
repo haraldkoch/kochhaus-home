@@ -3,10 +3,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cloudflared
+  name: cloudflare-tunnel
 spec:
   interval: 1h
-  path: ./kubernetes/registry/apps/network/cloudflared/app
+  path: ./kubernetes/base/apps/network/cloudflare-tunnel
   prune: true
   postBuild:
     substitute:
