@@ -8,6 +8,10 @@ spec:
   interval: 1h
   path: ./kubernetes/registry/apps/network/cloudflared/app
   prune: true
+  postBuild:
+    substitute:
+      CLUSTER: ${CLUSTER}
+      EXTERNAL_DOMAIN: registry
   sourceRef:
     kind: GitRepository
     name: flux-system

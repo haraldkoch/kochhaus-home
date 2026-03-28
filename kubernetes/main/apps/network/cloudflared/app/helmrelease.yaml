@@ -12,7 +12,7 @@ spec:
   values:
     controllers:
       cloudflared:
-        replicas: 2
+        replicas: ${REPLICAS:=1}
         strategy: RollingUpdate
         annotations:
           reloader.stakater.com/auto: "true"
@@ -83,7 +83,7 @@ spec:
               - hostname: "*.${CLUSTER_DOMAIN}"
                 originRequest:
                   http2Origin: true
-                  originServerName: external.${CLUSTER_DOMAIN}
+                  originServerName: ${EXTERNAL_DOMAIN}.${CLUSTER_DOMAIN}
                 service: https://envoy-external.{{ .Release.Namespace }}.svc.cluster.local:443
               - service: http_status:404
     persistence:
