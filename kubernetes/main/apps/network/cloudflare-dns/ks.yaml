@@ -15,6 +15,9 @@ spec:
       name: dnsendpoints.externaldns.k8s.io
   interval: 1h
   path: ./kubernetes/main/apps/network/cloudflare-dns/app
+  postBuild:
+    substitute:
+      CLUSTER: ${CLUSTER}
   prune: true
   sourceRef:
     kind: GitRepository

@@ -30,7 +30,7 @@ spec:
     sources:
       - crd
       - gateway-httproute
-    txtOwnerId: homelab
+    txtOwnerId: ${CLUSTER}
     txtPrefix: k8s.
     domainFilters:
       - ${CLUSTER_DOMAIN}
