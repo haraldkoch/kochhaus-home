@@ -9,6 +9,10 @@ spec:
     - name: certificates-import
   interval: 1h
   path: ./kubernetes/main/apps/network/envoy-gateway/app
+  postBuild:
+    substitute:
+      CLUSTER: ${CLUSTER}
+      EXTERNAL_DOMAIN: external-main
   prune: true
   sourceRef:
     kind: GitRepository

@@ -11,7 +11,7 @@ spec:
   postBuild:
     substitute:
       CLUSTER: ${CLUSTER}
-      EXTERNAL_DOMAIN: registry
+      EXTERNAL_DOMAIN: external-registry
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -11,7 +11,7 @@ spec:
   postBuild:
     substitute:
       CLUSTER: ${CLUSTER}
-      EXTERNAL_DOMAIN: network
+      EXTERNAL_DOMAIN: external-network
       REPLICAS: "2"
   sourceRef:
     kind: GitRepository
