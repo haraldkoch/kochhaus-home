@@ -19,7 +19,7 @@ spec:
       failed: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'False')
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
-  path: ./kubernetes/registry/apps/cert-manager/cert-manager/app
+  path: ./kubernetes/base/apps/cert-manager/cert-manager
   prune: true
   sourceRef:
     kind: GitRepository
