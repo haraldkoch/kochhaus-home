@@ -7,7 +7,7 @@ metadata:
 spec:
   chartRef:
     kind: OCIRepository
-    name: app-template
+    name: gatus
   interval: 1h
   values:
     controllers:
@@ -21,7 +21,7 @@ spec:
               tag: 18.3@sha256:01c1b0418ad5dba25ceff7a86dbf9bde551464e9670b59820e6d7c32e506d9a7
             envFrom: &envFrom
               - secretRef:
-                  name: gatus-secret
+                  name: "{{ .Release.Name }}-secret"
           init-config:
             dependsOn: init-db
             image:
@@ -34,23 +34,23 @@ spec:
               RESOURCE: both
               UNIQUE_FILENAMES: true
               METHOD: WATCH
-            restartPolicy: Always
             resources:
               requests:
                 cpu: 10m
                 memory: 240Mi
               limits:
                 memory: 320Mi
+            restartPolicy: Always
         containers:
           app:
             image:
               repository: ghcr.io/twin/gatus
               tag: v5.35.0@sha256:21609f31be8c4e680ce3004b24276305666239c99aff58391503f3fb6142f39d
             env:
-              TZ: ${TIMEZONE:=Etc/UTC}
               GATUS_CONFIG_PATH: /config
               GATUS_DELAY_START_SECONDS: 5
-              WEB_PORT: &port 80
+              GATUS_WEB_PORT: &port 80
+              TZ: ${TIMEZONE:=Etc/UTC}
             envFrom: *envFrom
             probes:
               liveness: &probes
@@ -68,41 +68,38 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 100m
               limits:
                 memory: 128Mi
-        pod:
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 1022
-            runAsGroup: 1022
-            fsGroup: 1022
-            fsGroupChangePolicy: OnRootMismatch
-            sysctls:
-              - name: net.ipv4.ping_group_range
-                value: "0 2147483647"
-        serviceAccount:
-          identifier: gatus
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        sysctls:
+          - name: net.ipv4.ping_group_range
+            value: "0 2147483647"
     service:
       app:
-        controller: gatus
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: *port
     serviceMonitor:
       app:
-        serviceName: gatus
         endpoints:
           - port: http
             metricRelabelings:
               - action: labeldrop
                 regex: (pod)
               - action: replace
-                sourceLabels: ["service"]
+                sourceLabels:
+                  - "service"
                 targetLabel: instance
     route:
       app:
@@ -112,15 +109,20 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
     rbac:
       roles:
         gatus:
           type: ClusterRole
           rules:
-            - apiGroups: [""]
-              resources: ["configmaps", "secrets"]
-              verbs: ["get", "watch", "list"]
+            - apiGroups:
+                - ""
+              resources:
+                - configmaps
+                - secrets
+              verbs:
+                - get
+                - watch
+                - list
       bindings:
         gatus:
           type: ClusterRoleBinding
@@ -135,8 +137,7 @@ spec:
         type: emptyDir
       config-file:
         type: configMap
-        name: gatus-configmap
+        name: "{{ .Release.Name }}-configmap"
         globalMounts:
           - path: /config/config.yaml
             subPath: config.yaml
-            readOnly: true

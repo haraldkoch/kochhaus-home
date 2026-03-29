@@ -1,4 +1,5 @@
 ---
+# Note: Gatus vars should be escaped with $${VAR_NAME} to avoid interpolation by Flux
 alerting:
   pushover:
     title: Gatus (Kubernetes)
@@ -23,6 +24,8 @@ endpoints:
     interval: 1m
     conditions:
       - "[CONNECTED] == true"
+    alerts:
+      - type: pushover
 
   - name: Google
     group: connectivity
@@ -30,6 +33,8 @@ endpoints:
     interval: 1m
     conditions:
       - "[CONNECTED] == true"
+    alerts:
+      - type: pushover
 
   - name: Quad9
     group: connectivity
@@ -37,6 +42,8 @@ endpoints:
     interval: 1m
     conditions:
       - "[CONNECTED] == true"
+    alerts:
+      - type: pushover
 
   - name: status
     group: guarded

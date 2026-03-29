@@ -1,23 +1,5 @@
 ---
 # Note: Gatus vars should be escaped with $${VAR_NAME} to avoid interpolation by Flux
-web:
-  port: $${WEB_PORT}
-metrics: true
-debug: false
-storage:
-  type: postgres
-  path: postgres://$${INIT_POSTGRES_USER}:$${INIT_POSTGRES_PASS}@$${INIT_POSTGRES_HOST}:5432/$${INIT_POSTGRES_DBNAME}?sslmode=disable
-  caching: true
-ui:
-  title: Status | Gatus
-  header: Status
-  logo: https://avatars.githubusercontent.com/u/7131938
-  link: https://github.com/haraldkoch
-  buttons:
-    - name: Github
-      link: https://github.com/haraldkoch
-    - name: Homelab
-      link: https://github.com/haraldkoch/kochhaus-home
 alerting:
   pushover:
     title: Gatus (Kubernetes)
@@ -29,11 +11,40 @@ alerting:
       send-on-resolved: true
       failure-threshold: 3
       success-threshold: 3
+
 connectivity:
   checker:
     target: 1.1.1.1:53
     interval: 1m
+
 endpoints:
+  - name: Cloudflare
+    group: connectivity
+    url: icmp://1.1.1.1
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+    alerts:
+      - type: pushover
+
+  - name: Google
+    group: connectivity
+    url: icmp://8.8.8.8
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+    alerts:
+      - type: pushover
+
+  - name: Quad9
+    group: connectivity
+    url: icmp://9.9.9.9
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+    alerts:
+      - type: pushover
+
   - name: status
     group: guarded
     url: 1.1.1.1
@@ -45,6 +56,7 @@ endpoints:
       - "len([BODY]) == 0"
     alerts:
       - type: pushover
+
   - name: flux-webhook
     group: external
     url: https://flux-webhook.${CLUSTER_DOMAIN}
@@ -55,6 +67,7 @@ endpoints:
       - "[STATUS] == 404"
     alerts:
       - type: pushover
+
   - name: DNS Primary (castor)
     group: internal
     url: "192.168.10.6"
@@ -67,6 +80,7 @@ endpoints:
       - "[DNS_RCODE] == NOERROR"
     alerts:
       - type: pushover
+
   - name: DNS Secondary (pollux)
     group: internal
     url: "192.168.10.7"
@@ -79,6 +93,7 @@ endpoints:
       - "[DNS_RCODE] == NOERROR"
     alerts:
       - type: pushover
+
   - name: DNS Router
     group: internal
     url: "192.168.20.1"
@@ -91,3 +106,24 @@ endpoints:
       - "[DNS_RCODE] == NOERROR"
     alerts:
       - type: pushover
+
+metrics: true
+
+storage:
+  type: postgres
+  path: postgres://$${INIT_POSTGRES_USER}:$${INIT_POSTGRES_PASS}@$${INIT_POSTGRES_HOST}:5432/$${INIT_POSTGRES_DBNAME}?sslmode=disable
+  caching: true
+
+ui:
+  title: Status | Gatus
+  header: Status
+  logo: https://avatars.githubusercontent.com/u/7131938
+  link: https://github.com/haraldkoch
+  buttons:
+    - name: Github
+      link: https://github.com/haraldkoch
+    - name: Homelab
+      link: https://github.com/haraldkoch/kochhaus-home
+
+web:
+  port: $${GATUS_WEB_PORT}
