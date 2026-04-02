@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: blocky-ui
+spec:
+  components:
+    - ../../../../components/gatus/guarded
+  interval: 1h
+  path: ./kubernetes/network/apps/default/blocky-ui/app
+  postBuild:
+    substitute:
+      # FIXME
+      APP: blocky1
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: default
+  wait: false
