@@ -11,10 +11,10 @@ spec:
   interval: 1h
   values:
     controllers:
-      blocky-ui:
+      castor:
         strategy: RollingUpdate
         containers:
-          castor:
+          app:
             image:
               repository: ghcr.io/gabeduartem/blocky-ui
               tag: 1.6.1@sha256:35e67a68a6ef15ad43d3b9913ab7e667deaddcb022e414eacc8070a1450b4441
@@ -42,6 +42,37 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 512Mi
+      pollux:
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: ghcr.io/gabeduartem/blocky-ui
+              tag: 1.6.1@sha256:35e67a68a6ef15ad43d3b9913ab7e667deaddcb022e414eacc8070a1450b4441
+            env:
+              # QUERY_LOG_TYPE: postgresql
+              # QUERY_LOG_TARGET:
+              #   secretKeyRef:
+              #     name: blocky-db-app
+              #     key: uri
+              BLOCKY_API_URL: http://blocky2.${PRIVATE_STATIC_DOMAIN}:4000
+            probes:
+              liveness:
+                enabled: true
+                type: HTTP
+              readiness:
+                enabled: true
+                type: HTTP
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 512Mi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -50,9 +81,15 @@ spec:
         seccompProfile: {type: RuntimeDefault}
     service:
       castor:
+        controller: castor
         ports:
           http:
             port: &port 3000
+      pollux:
+        controller: pollux
+        ports:
+          http:
+            port: *port
     route:
       castor:
         hostnames:
@@ -63,4 +100,14 @@ spec:
         rules:
           - backendRefs:
               - identifier: castor
+                port: *port
+      pollux:
+        hostnames:
+          - blocky2.${CLUSTER_DOMAIN}
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: pollux
                 port: *port
