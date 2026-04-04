@@ -1,0 +1,14 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: &app ${APP}-dragonfly-db
+spec:
+  selector:
+    matchLabels:
+      app: *app
+  podTargetLabels:
+    - app
+  podMetricsEndpoints:
+    - port: admin
+  fallbackScrapeProtocol: PrometheusText1.0.0
