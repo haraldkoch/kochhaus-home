@@ -35,7 +35,7 @@ spec:
           bluestore_slow_ops_warn_lifetime: "300"
           bluestore_slow_ops_warn_threshold: "5"
         mon:
-          mon_data_avail_warn: "20" # quote
+          mon_data_avail_warn: "19" # quote
       cleanupPolicy:
         wipeDevicesFromOtherClusters: true
       crashCollector:
@@ -197,7 +197,8 @@ spec:
           reclaimPolicy: Delete
           allowVolumeExpansion: true
           volumeBindingMode: Immediate
-          mountOptions: ["discard"]
+          mountOptions:
+            - "discard"
           parameters:
             compression_mode: aggressive
             compression_algorithm: zstd
