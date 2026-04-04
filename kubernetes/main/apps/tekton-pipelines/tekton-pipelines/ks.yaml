@@ -6,11 +6,16 @@ metadata:
   name: tekton-pipelines
   namespace: tekton-pipelines
 spec:
+  components:
+    - ../../../../components/gatus/internal
   dependsOn:
     - name: tekton-operator
       namespace: tekton-operator
   interval: 1h
   path: ./kubernetes/main/apps/tekton-pipelines/tekton-pipelines/app
+  postBuild:
+    substitute:
+      APP: tekton
   prune: true
   sourceRef:
     kind: GitRepository
