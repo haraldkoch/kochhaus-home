@@ -16,6 +16,7 @@ spec:
   postBuild:
     substitute:
       APP: tekton
+      GATUS_STATUS: "401"
   prune: true
   sourceRef:
     kind: GitRepository

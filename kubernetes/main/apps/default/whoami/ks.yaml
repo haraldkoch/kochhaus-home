@@ -12,6 +12,7 @@ spec:
   postBuild:
     substitute:
       APP: whoami
+      GATUS_STATUS: "401"
   prune: true
   sourceRef:
     kind: GitRepository
