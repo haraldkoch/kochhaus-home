@@ -53,6 +53,7 @@ spec:
         seccompProfile: {type: RuntimeDefault}
     service:
       app:
+        ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: *port
