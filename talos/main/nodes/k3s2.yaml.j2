@@ -17,6 +17,8 @@ machine:
         routes:
           - gateway: 192.168.20.1
             network: 0.0.0.0/0
+  sysctls:
+    net.ipv6.conf.eno1.autoconf: "0"           # disable IPv6 autoconfig
   type: worker
 ---
 apiVersion: v1alpha1

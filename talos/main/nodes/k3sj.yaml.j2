@@ -19,4 +19,6 @@ machine:
             network: 0.0.0.0/0
   nodeTaints:
     node-role.kubernetes.io/control-plane: :NoSchedule
+  sysctls:
+    net.ipv6.conf.eno1.autoconf: "0"           # disable IPv6 autoconfig
   type: controlplane
