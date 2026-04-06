@@ -58,13 +58,14 @@ endpoints:
       - type: pushover
 
   - name: flux-webhook
-    group: external
-    url: https://flux-webhook.${CLUSTER_DOMAIN}
+    group: guarded
+    url: 1.1.1.1
     interval: 1m
-    client:
-      dns-resolver: tcp://1.1.1.1:53
+    dns:
+      query-name: flux-webhook.${CLUSTER_DOMAIN}
+      query-type: A
     conditions:
-      - "[STATUS] == 404"
+      - "len([BODY]) == 0"
     alerts:
       - type: pushover
 
