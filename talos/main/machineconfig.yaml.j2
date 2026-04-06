@@ -57,6 +57,9 @@ machine:
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
     disableManifestsDirectory: true
+    extraArgs:
+      image-gc-high-threshold: 79
+      image-gc-low-threshold: 70
     extraConfig:
       featureGates:
         ImageVolume: true
