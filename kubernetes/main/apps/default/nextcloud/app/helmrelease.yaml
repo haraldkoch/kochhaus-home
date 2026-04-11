@@ -61,10 +61,6 @@ spec:
           authtype: NONE
           name: ""
           password: ""
-      # securityContext:
-      #   runAsUser: 1022
-      #   runAsGroup: 1022
-      #   runAsNonRoot: true
       configs:
         proxy.config.php: |-
           <?php
@@ -96,24 +92,24 @@ spec:
         secretName: nextcloud-secret
         usernameKey: INIT_POSTGRES_USER
         passwordKey: INIT_POSTGRES_PASS
-        #    httpRoute:
-        #      enabled: true
-        #      hostnames:
-        #        - *host
-        #      parentRefs:
-        #        - name: envoy-external
-        #          namespace: network
-        #      rules:
-        #        - matches:
-        #            - path:
-        #                type: PathPrefix
-        #                value: "/"
-        #          filters:
-        #            - type: ResponseHeaderModifier
-        #              responseHeaderModifier:
-        #                add:
-        #                  - name: strict-transport-security
-        #                    value: max-age=31536000
+    httpRoute:
+      enabled: true
+      hostnames:
+        - *host
+      parentRefs:
+        - name: envoy-external
+          namespace: network
+      rules:
+        - matches:
+            - path:
+                type: PathPrefix
+                value: "/"
+          filters:
+            - type: ResponseHeaderModifier
+              responseHeaderModifier:
+                add:
+                  - name: strict-transport-security
+                    value: max-age=31536000
     persistence:
       enabled: true
       existingClaim: ${VOLSYNC_CLAIM}
