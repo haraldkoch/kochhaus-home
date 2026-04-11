@@ -11,6 +11,25 @@ spec:
     kind: OCIRepository
     name: nextcloud
   values:
+    cronjob:
+      enabled: true
+      type: cronjob
+      cronjob:
+        affinity:
+          podAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/instance
+                      operator: In
+                      values:
+                        - nextcloud
+                    - key: app.kubernetes.io/component
+                      operator: In
+                      values:
+                        - app
+                topologyKey: kubernetes.io/hostname
+        successfulJobsHistoryLimit: 1
     image:
       flavor: fpm-alpine
     nginx:
@@ -42,10 +61,10 @@ spec:
           authtype: NONE
           name: ""
           password: ""
-      securityContext:
-        runAsUser: 1022
-        runAsGroup: 1022
-        runAsNonRoot: true
+      # securityContext:
+      #   runAsUser: 1022
+      #   runAsGroup: 1022
+      #   runAsNonRoot: true
       configs:
         proxy.config.php: |-
           <?php
@@ -110,3 +129,18 @@ spec:
       timeoutSeconds: 5
       failureThreshold: 30
       successThreshold: 1
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: Deployment
+              name: nextcloud
+            patch: |-
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: nextcloud
+              spec:
+                template:
+                  spec:
+                    hostUsers: false
