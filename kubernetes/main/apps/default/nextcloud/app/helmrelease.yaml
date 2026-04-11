@@ -96,31 +96,27 @@ spec:
         secretName: nextcloud-secret
         usernameKey: INIT_POSTGRES_USER
         passwordKey: INIT_POSTGRES_PASS
-    httpRoute:
-      enabled: true
-      hostnames:
-        - *host
-      parentRefs:
-        - name: envoy-external
-          namespace: network
-      rules:
-        - matches:
-            - path:
-                type: PathPrefix
-                value: "/"
-          filters:
-            - type: ResponseHeaderModifier
-              responseHeaderModifier:
-                add:
-                  - name: strict-transport-security
-                    value: max-age=31536000
+        #    httpRoute:
+        #      enabled: true
+        #      hostnames:
+        #        - *host
+        #      parentRefs:
+        #        - name: envoy-external
+        #          namespace: network
+        #      rules:
+        #        - matches:
+        #            - path:
+        #                type: PathPrefix
+        #                value: "/"
+        #          filters:
+        #            - type: ResponseHeaderModifier
+        #              responseHeaderModifier:
+        #                add:
+        #                  - name: strict-transport-security
+        #                    value: max-age=31536000
     persistence:
       enabled: true
       existingClaim: ${VOLSYNC_CLAIM}
-      nextcloudData:
-        enabled: true
-        existingClaim: nextcloud-nfs
-        accessMode: ReadWriteMany
     # this seems to be required for nextcloud initialization which takes a long time
     startupProbe:
       enabled: true

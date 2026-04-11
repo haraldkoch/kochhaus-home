@@ -24,10 +24,10 @@ spec:
     substitute:
       APP: nextcloud
       GATUS_SUBDOMAIN: cloud
-      VOLSYNC_CAPACITY: 5Gi
-      VOLSYNC_CLAIM: nextcloud-config-v2
-      VOLSYNC_GID: "1022"
-      VOLSYNC_UID: "1022"
+      VOLSYNC_CAPACITY: 10Gi
+      VOLSYNC_CLAIM: nextcloud-config-v3
+      VOLSYNC_GID: "0"
+      VOLSYNC_UID: "0"
   prune: true
   sourceRef:
     kind: GitRepository
