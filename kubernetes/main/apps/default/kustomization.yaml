@@ -17,8 +17,6 @@ resources:
   - ./filebrowser/ks.yaml
   - ./karakeep/ks.yaml
   - ./media-browser/ks.yaml
-  - ./miniflux/ks.yaml
-  - ./monica/ks.yaml
   - ./nextcloud/ks.yaml
   - ./ocis/ks.yaml
   - ./onedrive/ks.yaml
@@ -28,6 +26,5 @@ resources:
   - ./static-web/ks.yaml
   - ./tautulli/ks.yaml
   - ./syncthing/ks.yaml
-  - ./vikunja/ks.yaml
   - ./whoami/ks.yaml
   - ./your-spotify/ks.yaml

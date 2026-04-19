@@ -1,151 +1,116 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2beta2.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta2
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app vikunja
-  namespace: default
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: app-template
-      version: 1.5.1
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
-  maxHistory: 2
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  interval: 1h
   values:
-    initContainers:
-      01-init-db:
-        image: ghcr.io/haraldkoch/postgres-init:15.4
-        imagePullPolicy: IfNotPresent
-        envFrom: &envFrom
-          - secretRef:
-              name: *app
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: caddy
-      tag: 2.7.4-alpine
-      pullPolicy: IfNotPresent
-    sidecars:
-      frontend:
-        image: vikunja/frontend:0.21.0@sha256:fdd4582979beee4a6bef2d4d8e3744809b82ab2e198d708a829d7189a0ad9882
-        resources:
-          requests:
-            cpu: 10m
-            memory: 26Mi
-          limits:
-            memory: 28Mi
-      api:
-        image: vikunja/api:0.21.0@sha256:e541ef5599d08f50a24e8de1fd8136f9d0a7ef514916fac6d6bf8ac6c7c16712
-        env:
-          - name: VIKUNJA_SERVICE_TIMEZONE
-            value: ${TIMEZONE}
-          - name: VIKUNJA_DATABASE_TYPE
-            value: "postgres"
-          - name: VIKUNJA_SERVICE_FRONTENDURL
-            value: https://tasks.${CLUSTER_DOMAIN}
-          - name: VIKUNJA_MAILER_FROMEMAIL
-            value: tasks@${CLUSTER_DOMAIN}
-          - name: VIKUNJA_MAILER_ENABLED
-            value: "true"
-          - name: VIKUNJA_MAILER_HOST
-            value: smtp-relay.networking.svc.cluster.local
-          - name: VIKUNJA_MAILER_PORT
-            value: "25"
-          - name: &envjwt VIKUNJA_SERVICE_JWT
-            valueFrom:
-              secretKeyRef:
-                name: *app
-                key: *envjwt
-          - name: &envdbuser VIKUNJA_DATABASE_USER
-            valueFrom:
-              secretKeyRef:
-                name: *app
-                key: *envdbuser
-          - name: &envdbpass VIKUNJA_DATABASE_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: *app
-                key: *envdbpass
-          - name: &envdbhost VIKUNJA_DATABASE_HOST
-            valueFrom:
-              secretKeyRef:
-                name: *app
-                key: *envdbhost
-          - name: &envdbdb VIKUNJA_DATABASE_DATABASE
-            valueFrom:
-              secretKeyRef:
-                name: *app
-                key: *envdbdb
-        resources:
-          requests:
-            cpu: 15m
-            memory: 24Mi
-          limits:
-            memory: 300Mi
-        volumeMounts:
-          - name: files
-            mountPath: /app/vikunja/files
-          - name: config
-            mountPath: /app/vikunja/config.yml
-            subPath: config.yml
-            readOnly: true
+    controllers:
+      vikunja:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/haraldkoch/postgres-init
+              tag: 18.3@sha256:01c1b0418ad5dba25ceff7a86dbf9bde551464e9670b59820e6d7c32e506d9a7
+            envFrom: &envFrom
+              - secretRef:
+                  name: vikunja-secret
+        containers:
+          main:
+            image:
+              repository: mirror.gcr.io/vikunja/vikunja
+              tag: 2.3.0@sha256:f6b80393c1998cd5cd0dc38d24762c59ab4c10000a6f1032ef5b554e262cab93
+            env:
+              # Proper shell path for cli
+              PATH: /app/vikunja:$${PATH}
+              VIKUNJA_SERVICE_PUBLICURL: https://vikunja.${SECRET_DOMAIN}
+              VIKUNJA_SERVICE_TIMEZONE: "${TIMEZONE}"
+              POSTGRES_ENABLED: "true"
+              VIKUNJA_MAILER_ENABLED: true
+              VIKUNJA_METRICS_ENABLED: true
+              VIKUNJA_DEFAULTSETTINGS_DISCOVERABLE_BY_NAME: true
+              VIKUNJA_DEFAULTSETTINGS_EMAIL_REMINDERS_ENABLED: true
+              discoverable_by_email: true
+              overdue_tasks_reminders_time: '11:00'
+              VIKUNJA_DEFAULTSETTINGS_WEEK_START: 1
+
+              # Redis
+              VIKUNJA_REDIS_ENABLED: true
+              VIKUNJA_REDIS_HOST: dragonfly.dbms.svc.cluster.local:6379
+              VIKUNJA_REDIS_DB: 7
+              VIKUNJA_KEYVALUE_TYPE: redis
+
+              # SMTP
+              VIKUNJA_MAILER_HOST: smtp.${SECRET_DOMAIN}
+              VIKUNJA_MAILER_PORT: 25
+              VIKUNJA_MAILER_FROMEMAIL: Vikunja <bot@${SECRET_DOMAIN}>
+
+              # postgres
+              VIKUNJA_DATABASE_TYPE: postgres
+            envFrom:
+              - secretRef:
+                  name: vikunja-secret
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 3456
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 100m
+                memory: 20Mi
+              limits:
+                memory: 150Mi
+        pod:
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: Always
+            seccompProfile: {type: RuntimeDefault}
     service:
       main:
+        controller: *app
         ports:
           http:
-            port: 8080
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: nginx
-        hosts:
-          - host: &host "tasks.${CLUSTER_DOMAIN}"
-            paths:
-              - path: /
-        tls:
-          - hosts:
-              - *host
-    volumeClaimTemplates:
-      - name: files
-        mountPath: /app/vikunja/files
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: ceph-block
+            port: *port
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
     persistence:
+      files:
+        existingClaim: "${VOLSYNC_CLAIM}"
+        globalMounts:
+          - path: /app/vikunja/files
       config:
-        enabled: true
-        type: custom
-        readOnly: true
-        mountPath: "-"
-        volumeSpec:
-          configMap:
-            name: vikunja
-      caddy-config:
-        enabled: "true"
-        mountPath: /etc/caddy/Caddyfile
-        subPath: Caddyfile
-        type: "custom"
-        volumeSpec:
-          configMap:
-            name: vikunja
-    resources:
-      requests:
-        cpu: 15m
-        memory: 22Mi
-      limits:
-        memory: 60Mi
+        type: secret
+        name: vikunja-secret
+        globalMounts:
+          - path: /etc/vikunja/config.yml
+            subPath: config.yml
+            readOnly: true
