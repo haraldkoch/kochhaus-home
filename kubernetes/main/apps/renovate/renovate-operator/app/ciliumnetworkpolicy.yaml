@@ -1,0 +1,43 @@
+---
+# Policy for Renovate bot
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: renovate-bot
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: renovate
+  egress:
+    # Allow DNS
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+
+    # Allow Kubernetes API
+    - toEntities:
+        - kube-apiserver
+
+    # Allow egress to envoy gateways (internal + external)
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: network
+            gateway.envoyproxy.io/owning-gateway-name: internal
+        - matchLabels:
+            io.kubernetes.pod.namespace: network
+            gateway.envoyproxy.io/owning-gateway-name: external
+
+    # Allow internet access (exclude RFC1918 private ranges)
+    - toCIDRSet:
+        - cidr: 0.0.0.0/0
+          except:
+            - 10.0.0.0/8
+            - 172.16.0.0/12
+            - 192.168.0.0/16
