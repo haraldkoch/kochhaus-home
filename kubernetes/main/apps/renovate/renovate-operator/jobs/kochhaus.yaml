@@ -52,8 +52,8 @@ spec:
       value: debug
     - name: RENOVATE_ALLOWED_COMMANDS
       value: '["pnpm run bundle"]'
-    - name: RENOVATE_PLATFORM_COMMIT
-      value: "true"
+    # - name: RENOVATE_PLATFORM_COMMIT
+    #   value: "true"
     - name: DOCKERHUB_USERNAME
       valueFrom:
         secretKeyRef:
