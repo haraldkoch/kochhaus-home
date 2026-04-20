@@ -29,4 +29,5 @@ resources:
   - ./openweathermap-exporter/ks.yaml
   - ./populator-test/ks.yaml
   - ./smtp-relay/ks.yaml
+  - ./tududi/ks.yaml
   - ./zigbee2mqtt/ks.yaml

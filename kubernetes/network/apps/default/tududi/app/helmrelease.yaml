@@ -1,0 +1,61 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tududi
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  interval: 1h
+  values:
+    controllers:
+      tududi:
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-operations/tududi
+              tag: 1.1.0@sha256:f13eff3bc67a43c9d6fc6ecbbd5f2d098b9ec8d40f6f46c98cf2cbfd50d190a0
+            env:
+              TUDUDI_USER_EMAIL: admin@${CLUSTER_DOMAIN}
+              TUDUDI_BASE_URL: https://{{ .Release.Name }}.${CLUSTER_DOMAIN}
+            envFrom:
+              - secretRef:
+                  name: tududi-secret
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 512Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile: {type: RuntimeDefault}
+    service:
+      main:
+        ports:
+          http:
+            port: &port 3002
+    route:
+      main:
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: main
+                port: *port
+    persistence:
+      config:
+        existingClaim: "{{ .Release.Name }}"
