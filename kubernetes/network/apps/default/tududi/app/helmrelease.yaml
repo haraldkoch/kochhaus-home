@@ -19,6 +19,7 @@ spec:
               repository: ghcr.io/home-operations/tududi
               tag: 1.1.0@sha256:f13eff3bc67a43c9d6fc6ecbbd5f2d098b9ec8d40f6f46c98cf2cbfd50d190a0
             env:
+              BASE_URL: https://{{ .Release.Name }}.${CLUSTER_DOMAIN}
               TUDUDI_USER_EMAIL: admin@${CLUSTER_DOMAIN}
               TUDUDI_BASE_URL: https://{{ .Release.Name }}.${CLUSTER_DOMAIN}
             envFrom:
