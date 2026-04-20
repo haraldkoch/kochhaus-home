@@ -220,7 +220,6 @@ identity_providers:
         scopes:
           - "openid"
           - "profile"
-          - "groups"
           - "email"
         redirect_uris:
           - "https://tududi.${CLUSTER_DOMAIN}/api/oidc/callback/authelia"
