@@ -17,7 +17,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/tududi
-              tag: 1.1.0@sha256:f13eff3bc67a43c9d6fc6ecbbd5f2d098b9ec8d40f6f46c98cf2cbfd50d190a0
+              tag: 1.1.0@sha256:c79bb7330aa0a83f81ffe0cd3fe324293ffba449e7fd2e292c458365d8ff8a35
             env:
               BASE_URL: https://{{ .Release.Name }}.${CLUSTER_DOMAIN}
               TUDUDI_USER_EMAIL: admin@${CLUSTER_DOMAIN}
