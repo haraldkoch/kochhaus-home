@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: mirror.gcr.io/bloomberg/goldpinger
-      tag: 3.11.1@sha256:4184aafba406f0769588704445f95a0cef15c447e82f6c7fe74b233006b87379
+      tag: 3.11.2@sha256:a1fb87c2e9d985b227f4a1d67996b4637e0c23068051bbd8cc7e98d55349f70c
     tolerations:
       - key: node-role.kubernetes.io/control-plane
         operator: Exists
