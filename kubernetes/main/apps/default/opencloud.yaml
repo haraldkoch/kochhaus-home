@@ -6,8 +6,8 @@ metadata:
   name: opencloud
 spec:
   components:
-    # - ../../../../components/gatus/external
-    - ../../../../components/volsync
+    # - ../../../components/gatus/external
+    - ../../../../main/components/volsync
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
