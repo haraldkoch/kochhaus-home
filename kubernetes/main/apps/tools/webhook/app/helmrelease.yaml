@@ -19,7 +19,7 @@ spec:
           init-config:
             image:
               repository: ghcr.io/home-operations/k8s-sidecar
-              tag: 2.6.0@sha256:a985f3f4026629cdd9ff6280ec1bcb007e3b554e156374263faba8158f7f6eb2
+              tag: 2.7.1@sha256:11b5f116b05ccc27870df8f9ca61c114a6fd0d3d6672427d67b10b400fe5c931
             env:
               FOLDER: /config
               LABEL: webhook.home.arpa/enabled
