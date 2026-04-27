@@ -24,7 +24,7 @@ pipx_uvx = true
 "pipx:flux-local" = "8.2.0"
 
 "aqua:cilium/cilium-cli" = "0.19.2"
-"aqua:cli/cli" = "2.90.0"
+"aqua:cli/cli" = "2.91.0"
 "aqua:cloudflare/cloudflared" = "2026.3.0"
 "aqua:FiloSottile/age" = "1.3.1"
 "aqua:fluxcd/flux2" = "2.8.6"
@@ -38,6 +38,6 @@ pipx_uvx = true
 "aqua:kubernetes/kubectl" = "1.33.1"
 "aqua:mikefarah/yq" = "4.53.2"
 "aqua:mitsuhiko/minijinja" = "2.19.0"
-"aqua:siderolabs/talos" = "1.12.6"
+"aqua:siderolabs/talos" = "1.12.7"
 "aqua:yannh/kubeconform" = "0.7.0"
 "aqua:sigstore/cosign" = "3.0.6"

@@ -28,7 +28,7 @@ spec:
         # https://github.com/cilium/cilium/issues/27800
         externalTrafficPolicy: Cluster
   shutdown:
-    drainTimeout: 180s
+    drainTimeout: 30s
   telemetry:
     metrics:
       prometheus:
