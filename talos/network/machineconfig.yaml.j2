@@ -66,7 +66,7 @@ machine:
         options: ["bind", "rshared", "rw"]
         source: /var/mnt/extra
         type: bind
-    image: ghcr.io/siderolabs/kubelet:v1.35.4
+    image: ghcr.io/siderolabs/kubelet:v1.36.0
     nodeIP:
       validSubnets:
         - 192.168.20.0/24
@@ -185,12 +185,12 @@ cluster:
     extraArgs:
       enable-aggregator-routing: "true"
       feature-gates: ImageVolume=true
-    image: registry.k8s.io/kube-apiserver:v1.35.4
+    image: registry.k8s.io/kube-apiserver:v1.36.0
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
       node-cidr-mask-size-ipv6: "112"
-    image: registry.k8s.io/kube-controller-manager:v1.35.4
+    image: registry.k8s.io/kube-controller-manager:v1.36.0
   coreDNS:
     disabled: true
   etcd:
@@ -203,7 +203,7 @@ cluster:
       listen-metrics-urls: http://0.0.0.0:2381
   proxy:
     disabled: true
-    image: registry.k8s.io/kube-proxy:v1.35.4
+    image: registry.k8s.io/kube-proxy:v1.36.0
   scheduler:
     config:
       apiVersion: kubescheduler.config.k8s.io/v1
@@ -224,7 +224,7 @@ cluster:
                     whenUnsatisfiable: ScheduleAnyway
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-scheduler:v1.35.4
+    image: registry.k8s.io/kube-scheduler:v1.36.0
   secretboxEncryptionSecret: op://homelab/talos-network/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
     key: op://homelab/talos-network/CLUSTER_SERVICEACCOUNT_KEY
