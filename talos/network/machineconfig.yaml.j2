@@ -137,7 +137,11 @@ machine:
   udev:
     rules:
       # set owner and group on the zigbee USB device
-      - SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d4", OWNER="1022", GROUP="1022"
+      # FIXME: this does not work in Talos 1.13 - gives "ignoring: Unknown user" error
+      # - SUBSYSTEM=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d4", OWNER="1022", GROUP="1022"
+      # try mode instead:
+      - KERNEL=="ttyACM*", MODE="0666"
+
 cluster:
   ca:
     crt: op://homelab/talos-network/CLUSTER_CA_CRT
