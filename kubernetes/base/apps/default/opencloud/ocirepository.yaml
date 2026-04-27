@@ -3,12 +3,12 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: kube-prometheus-stack
+  name: opencloud
 spec:
   interval: 15m
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 84.2.1
-  url: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
+    tag: 4.6.2
+  url: oci://ghcr.io/bjw-s-labs/helm/app-template

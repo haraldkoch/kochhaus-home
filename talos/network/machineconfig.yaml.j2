@@ -39,7 +39,6 @@ machine:
         [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
         [plugins."io.containerd.cri.v1.runtime"]
-          cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
           device_ownership_from_security_context = true
     - op: overwrite
       path: /etc/nfsmount.conf
@@ -53,7 +52,7 @@ machine:
         rsize=1048576
         wsize=1048576
   install:
-    image: factory.talos.dev/metal-installer/82ad5623c0330f01924a1f0233880456129bd2d49c6b2ba190d3211cb10c5bd1:v1.12.6
+    image: factory.talos.dev/metal-installer/82ad5623c0330f01924a1f0233880456129bd2d49c6b2ba190d3211cb10c5bd1:v1.13.0
     wipe: false
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
@@ -67,7 +66,7 @@ machine:
         options: ["bind", "rshared", "rw"]
         source: /var/mnt/extra
         type: bind
-    image: ghcr.io/siderolabs/kubelet:v1.35.4
+    image: ghcr.io/siderolabs/kubelet:v1.36.0
     nodeIP:
       validSubnets:
         - 192.168.20.0/24
@@ -185,14 +184,13 @@ cluster:
     disablePodSecurityPolicy: true
     extraArgs:
       enable-aggregator-routing: "true"
-      feature-gates: ImageVolume=true,MutatingAdmissionPolicy=true
-      runtime-config: admissionregistration.k8s.io/v1beta1=true
-    image: registry.k8s.io/kube-apiserver:v1.35.4
+      feature-gates: ImageVolume=true
+    image: registry.k8s.io/kube-apiserver:v1.36.0
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
       node-cidr-mask-size-ipv6: "112"
-    image: registry.k8s.io/kube-controller-manager:v1.35.4
+    image: registry.k8s.io/kube-controller-manager:v1.36.0
   coreDNS:
     disabled: true
   etcd:
@@ -205,7 +203,7 @@ cluster:
       listen-metrics-urls: http://0.0.0.0:2381
   proxy:
     disabled: true
-    image: registry.k8s.io/kube-proxy:v1.35.4
+    image: registry.k8s.io/kube-proxy:v1.36.0
   scheduler:
     config:
       apiVersion: kubescheduler.config.k8s.io/v1
@@ -226,7 +224,7 @@ cluster:
                     whenUnsatisfiable: ScheduleAnyway
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-scheduler:v1.35.4
+    image: registry.k8s.io/kube-scheduler:v1.36.0
   secretboxEncryptionSecret: op://homelab/talos-network/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
     key: op://homelab/talos-network/CLUSTER_SERVICEACCOUNT_KEY

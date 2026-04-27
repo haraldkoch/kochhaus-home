@@ -176,7 +176,7 @@ spec:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
           datasource: Prometheus
         goldpinger:
-          url: https://raw.githubusercontent.com/bloomberg/goldpinger/v3.11.1/extras/goldpinger-dashboard.json
+          url: https://raw.githubusercontent.com/bloomberg/goldpinger/v3.11.2/extras/goldpinger-dashboard.json
           datasource: Prometheus
         node-feature-discovery:
           url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
@@ -268,7 +268,7 @@ spec:
       image:
         registry: ghcr.io
         repository: home-operations/k8s-sidecar
-        tag: 2.6.0@sha256:a985f3f4026629cdd9ff6280ec1bcb007e3b554e156374263faba8158f7f6eb2
+        tag: 2.7.1@sha256:11b5f116b05ccc27870df8f9ca61c114a6fd0d3d6672427d67b10b400fe5c931
       dashboards:
         enabled: true
         searchNamespace: ALL
