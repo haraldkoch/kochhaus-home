@@ -30,7 +30,7 @@ spec:
         containers:
           app:
             image:
-              repository: driveone/onedrive
+              repository: mirror.gcr.io/driveone/onedrive
               tag: 2.5.10
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
