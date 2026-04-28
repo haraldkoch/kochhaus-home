@@ -25,7 +25,7 @@ spec:
         containers:
           app:
             image:
-              repository: docmost/docmost
+              repository: mirror.gcr.io/docmost/docmost
               tag: 0.80.1
             env:
               TZ: "${TIMEZONE:=Etc/UTC}"
@@ -47,8 +47,8 @@ spec:
               requests:
                 cpu: 25m
                 memory: 105M
-#              limits:
-#                memory: 105M
+                #              limits:
+                #                memory: 105M
         pod:
           securityContext:
             runAsUser: 1000
@@ -65,7 +65,8 @@ spec:
             port: 3000
     route:
       app:
-        hostnames: ["notes.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "notes.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network
