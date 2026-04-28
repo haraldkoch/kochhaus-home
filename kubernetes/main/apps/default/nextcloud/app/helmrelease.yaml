@@ -11,6 +11,9 @@ spec:
     kind: OCIRepository
     name: nextcloud
   values:
+    global:
+      image:
+        registry: mirror.gcr.io
     cronjob:
       enabled: true
       type: cronjob
@@ -34,6 +37,8 @@ spec:
       flavor: fpm-alpine
     nginx:
       enabled: true
+      image:
+        repository: mirror.gcr.io/library/nginx
     nextcloud:
       extraInitContainers:
         - name: init-db
