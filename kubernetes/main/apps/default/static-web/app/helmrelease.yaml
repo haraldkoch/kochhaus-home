@@ -19,7 +19,7 @@ spec:
         containers:
           static-web-server:
             image:
-              repository: joseluisq/static-web-server
+              repository: mirror.gcr.io/joseluisq/static-web-server
               tag: 2.42.0-alpine
             env:
               SERVER_PORT: 80
@@ -52,7 +52,8 @@ spec:
             port: 80
     route:
       app:
-        hostnames: ["www.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "www.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network

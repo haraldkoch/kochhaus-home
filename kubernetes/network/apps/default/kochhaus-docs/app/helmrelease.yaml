@@ -45,7 +45,7 @@ spec:
         containers:
           static-web-server:
             image:
-              repository: joseluisq/static-web-server
+              repository: mirror.gcr.io/joseluisq/static-web-server
               tag: 2.42.0-alpine
             env:
               TZ: ${TIMEZONE:=Etc/UTC}

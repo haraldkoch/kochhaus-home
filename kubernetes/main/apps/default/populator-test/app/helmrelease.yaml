@@ -17,7 +17,7 @@ spec:
         containers:
           main:
             image:
-              repository: joseluisq/static-web-server
+              repository: mirror.gcr.io/joseluisq/static-web-server
               tag: 2.42.0-alpine
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
@@ -34,14 +34,14 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 500Mi
-          # git-sync:
-          #   image:
-          #     repository: registry.k8s.io/git-sync/git-sync
-          #     tag: v4.1.0
-          #   env:
-          #     GITSYNC_REPO: https://github.com/haraldkoch/haraldkoch.git
-          #     GITSYNC_ROOT: /data/git
-          #     GITSYNC_REF: main
+                # git-sync:
+                #   image:
+                #     repository: registry.k8s.io/git-sync/git-sync
+                #     tag: v4.1.0
+                #   env:
+                #     GITSYNC_REPO: https://github.com/haraldkoch/haraldkoch.git
+                #     GITSYNC_ROOT: /data/git
+                #     GITSYNC_REF: main
         pod:
           securityContext:
             runAsUser: 65533
@@ -56,7 +56,8 @@ spec:
             port: 80
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network
