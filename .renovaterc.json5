@@ -17,7 +17,10 @@
     "**/.archive/**",
     "**/resources/**",
   ],
-  flux: {
+  registryAliases: {
+      "mirror.gcr.io": "docker.io",
+  },
+flux: {
     managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
   },
   "helm-values": {
