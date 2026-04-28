@@ -52,8 +52,8 @@ spec:
                   - NET_ADMIN
           openvpn:
             image:
-              repository: dperson/openvpn-client
-              tag: latest
+              repository: mirror.gcr.io/dperson/openvpn-client
+              tag: latest@sha256:d174047b57d51734143325ad7395210643025e6516ba60a937e9319dbb462293
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               IPTABLES_BACKEND: legacy
@@ -78,7 +78,10 @@ spec:
           dnsConfig:
             nameservers:
               - 10.43.0.10
-            searches: ["default.svc.cluster.local", "svc.cluster.local", "cluster.local"]
+            searches:
+              - "default.svc.cluster.local"
+              - "svc.cluster.local"
+              - "cluster.local"
             options:
               - name: ndots
                 value: "5"
