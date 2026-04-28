@@ -13,6 +13,10 @@ spec:
     monitoring:
       enabled: true
       createPrometheusRules: true
+      prometheusRuleOverrides:
+        CephNodeInconsistentMTU:
+          disabled: true
+          # FIXME: CephNodeNetworkPacketDrops / CephNodeNetworkPacketErrors ?
     toolbox:
       enabled: true
     route:
