@@ -10,6 +10,8 @@ spec:
     name: grafana
   interval: 1h
   values:
+    image:
+      registry: mirror.gcr.io
     deploymentStrategy:
       type: Recreate
     admin:
@@ -97,8 +99,8 @@ spec:
       datasources.yaml:
         apiVersion: 1
         deleteDatasources:
-          - { name: Alertmanager, orgId: 1 }
-          - { name: Prometheus, orgId: 1 }
+          - {name: Alertmanager, orgId: 1}
+          - {name: Prometheus, orgId: 1}
         datasources:
           - name: Prometheus
             type: prometheus
@@ -123,7 +125,7 @@ spec:
           gnetId: 20338
           revision: 3
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
+            - {name: DS_PROMETHEUS, value: Prometheus}
       infrastructure:
         cert-manager:
           # renovate: depName="Cert-manager-Kubernetes"
@@ -135,13 +137,13 @@ spec:
           gnetId: 17457
           revision: 6
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
+            - {name: DS_PROMETHEUS, value: Prometheus}
         envoy:
-           # renovate: depName="Envoy Proxy Monitoring gRPC"
-           gnetId: 23239
-           revision: 1
-           datasource:
-             - { name: DS_AFRANET_PROMETHEUS, value: Prometheus }
+          # renovate: depName="Envoy Proxy Monitoring gRPC"
+          gnetId: 23239
+          revision: 1
+          datasource:
+            - {name: DS_AFRANET_PROMETHEUS, value: Prometheus}
         external-dns:
           # renovate: depName="External-dns"
           gnetId: 15038
@@ -157,13 +159,13 @@ spec:
           gnetId: 20204
           revision: 1
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
+            - {name: DS_PROMETHEUS, value: Prometheus}
         smartctl-exporter:
           # renovate: depName="SMARTctl Exporter Dashboard"
           gnetId: 22604
           revision: 2
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
+            - {name: DS_PROMETHEUS, value: Prometheus}
         zfs:
           # renovate: depName="ZFS"
           gnetId: 7845
@@ -186,14 +188,14 @@ spec:
           gnetId: 21113
           revision: 1
           datasource:
-            - { name: DS_PROMETHEUS-K0, value: Prometheus }
+            - {name: DS_PROMETHEUS-K0, value: Prometheus}
         volsync:
           # renovate: depName="VolSync Dashboard"
           gnetId: 21356
           revision: 3
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
-            - { name: VAR_REPLICATIONDESTNAME, value: '.*-dst|.*-bootstrap' }
+            - {name: DS_PROMETHEUS, value: Prometheus}
+            - {name: VAR_REPLICATIONDESTNAME, value: '.*-dst|.*-bootstrap'}
         x509-certificate-exporter:
           # renovate: depName="Certificates Expiration (X509 Certificate Exporter)"
           gnetId: 13922
@@ -264,6 +266,8 @@ spec:
           gnetId: 19105
           revision: 9
           datasource: Prometheus
+    downloadDashboardsImage:
+      registry: mirror.gcr.io
     sidecar:
       image:
         registry: ghcr.io
@@ -304,7 +308,8 @@ spec:
     route:
       main:
         enabled: true
-        hostnames: ["grafana-main.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "grafana-main.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network
@@ -312,6 +317,7 @@ spec:
       enabled: true
       image:
         # renovate: datasource=github-releases depName=grafana/grafana-image-renderer
+        registry: mirror.gcr.io
         repository: grafana/grafana-image-renderer
         tag: v5.8.2
         pullPolicy: IfNotPresent
