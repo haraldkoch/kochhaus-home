@@ -11,5 +11,6 @@ resources:
   - ./namespace.yaml
   - ./cilium/ks.yaml
   - ./coredns.yaml
+  - ./generic-device-plugin.yaml
   - ./intel-gpu-resource-driver.yaml
   - ./metrics-server.yaml
