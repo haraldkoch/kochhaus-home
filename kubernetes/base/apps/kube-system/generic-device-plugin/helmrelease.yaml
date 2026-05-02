@@ -10,8 +10,6 @@ spec:
     name: generic-device-plugin
   interval: 1h
   values:
-    defaultPodOptions:
-      priorityClassName: system-node-critical
     controllers:
       gdp:
         type: daemonset
@@ -37,6 +35,11 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: {drop: ["ALL"]}
+    defaultPodOptions:
+      priorityClassName: system-node-critical
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
     configMaps:
       config:
         data:
