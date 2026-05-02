@@ -12,4 +12,4 @@ resources:
   - ./cilium/ks.yaml
   - ./coredns.yaml
   - ./metrics-server.yaml
-  - ./node-feature-discovery/ks.yaml
+  - ./node-feature-discovery.yaml

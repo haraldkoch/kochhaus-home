@@ -6,7 +6,7 @@ metadata:
   name: node-feature-discovery
 spec:
   interval: 1h
-  path: ./kubernetes/network/apps/kube-system/node-feature-discovery/app
+  path: ./kubernetes/base/apps/kube-system/node-feature-discovery
   prune: true
   sourceRef:
     kind: GitRepository

@@ -13,11 +13,23 @@ spec:
     worker:
       config:
         core:
-          sources: ["custom", "pci", "usb"]
+          sources:
+            - "custom"
+            - "pci"
+            - "usb"
         sources:
           usb:
-            deviceClassWhitelist: ["02", "03", "0a", "ef", "fe", "ff"]
-            deviceLabelFields: ["class", "vendor", "device"]
+            deviceClassWhitelist:
+              - "02"
+              - "03"
+              - "0a"
+              - "ef"
+              - "fe"
+              - "ff"
+            deviceLabelFields:
+              - "class"
+              - "vendor"
+              - "device"
       tolerations:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
@@ -33,6 +45,7 @@ spec:
                 matchExpressions:
                   - key: "node-role.kubernetes.io/control-plane"
                     operator: In
-                    values: [""]
+                    values:
+                      - ""
     prometheus:
       enable: true
