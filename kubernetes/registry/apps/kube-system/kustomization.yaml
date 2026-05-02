@@ -11,4 +11,4 @@ resources:
   - ./namespace.yaml
   - ./cilium/ks.yaml
   - ./coredns.yaml
-  - ./metrics-server/ks.yaml
+  - ./metrics-server.yaml

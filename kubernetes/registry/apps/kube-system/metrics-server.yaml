@@ -6,7 +6,7 @@ metadata:
   name: metrics-server
 spec:
   interval: 1h
-  path: ./kubernetes/main/apps/kube-system/metrics-server/app
+  path: ./kubernetes/base/apps/kube-system/metrics-server
   prune: true
   sourceRef:
     kind: GitRepository

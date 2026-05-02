@@ -12,4 +12,4 @@ resources:
   - ./cilium/ks.yaml
   - ./coredns.yaml
   - ./intel-gpu-resource-driver/ks.yaml
-  - ./metrics-server/ks.yaml
+  - ./metrics-server.yaml
