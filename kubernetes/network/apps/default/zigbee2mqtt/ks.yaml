@@ -9,8 +9,6 @@ spec:
     - ../../../../components/gatus/guarded
     - ../../../../components/volsync
   dependsOn:
-    - name: node-feature-discovery-rules
-      namespace: kube-system
     - name: volsync
       namespace: storage
   interval: 1h

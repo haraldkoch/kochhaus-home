@@ -5,9 +5,6 @@ kind: Kustomization
 metadata:
   name: network-ups-tools
 spec:
-  dependsOn:
-    - name: node-feature-discovery-rules
-      namespace: tools
   interval: 1h
   path: ./kubernetes/main/apps/observability/network-ups-tools/app
   prune: true

@@ -13,4 +13,3 @@ resources:
   - ./coredns.yaml
   - ./generic-device-plugin.yaml
   - ./metrics-server.yaml
-  - ./node-feature-discovery.yaml

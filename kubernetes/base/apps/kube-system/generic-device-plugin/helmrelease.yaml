@@ -43,7 +43,6 @@ spec:
     configMaps:
       config:
         data:
-          # the list here matches the rules in node-feature-discovery.
           config.yaml: |-
             devices:
               - name: tun

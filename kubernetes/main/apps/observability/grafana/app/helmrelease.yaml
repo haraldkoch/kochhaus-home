@@ -180,9 +180,6 @@ spec:
         goldpinger:
           url: https://raw.githubusercontent.com/bloomberg/goldpinger/v3.11.2/extras/goldpinger-dashboard.json
           datasource: Prometheus
-        node-feature-discovery:
-          url: https://raw.githubusercontent.com/kubernetes-sigs/node-feature-discovery/master/examples/grafana-dashboard.json
-          datasource: Prometheus
         opnsense:
           # renovate: depName="OPNsense"
           gnetId: 21113
