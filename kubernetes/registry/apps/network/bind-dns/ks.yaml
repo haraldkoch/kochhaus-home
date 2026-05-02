@@ -7,6 +7,9 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/registry/apps/network/bind-dns/app
+  postBuild:
+    substitute:
+      CLUSTER: ${CLUSTER}
   prune: true
   sourceRef:
     kind: GitRepository

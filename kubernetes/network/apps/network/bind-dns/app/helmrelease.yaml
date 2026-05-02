@@ -33,7 +33,7 @@ spec:
       - gateway-httproute
       - service
     # we cannot create TXT records on hosts with with CNAME records with BIND, so use txtPrefix also.
-    txtOwnerId: network
+    txtOwnerId: ${CLUSTER}
     txtPrefix: k8s.
     domainFilters:
       - ${CLUSTER_DOMAIN}
