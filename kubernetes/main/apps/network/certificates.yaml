@@ -6,7 +6,7 @@ metadata:
   name: certificates-import
 spec:
   interval: 1h
-  path: ./kubernetes/main/apps/network/certificates/import
+  path: ./kubernetes/base/apps/network/certificates/import
   postBuild:
     substitute:
       CLUSTER: ${CLUSTER}
@@ -27,7 +27,7 @@ spec:
   dependsOn:
     - name: certificates-import
   interval: 1h
-  path: ./kubernetes/main/apps/network/certificates/export
+  path: ./kubernetes/base/apps/network/certificates/export
   postBuild:
     substitute:
       CLUSTER: ${CLUSTER}
