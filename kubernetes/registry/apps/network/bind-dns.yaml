@@ -6,7 +6,7 @@ metadata:
   name: bind-dns
 spec:
   interval: 1h
-  path: ./kubernetes/network/apps/network/bind-dns/app
+  path: ./kubernetes/base/apps/network/bind-dns
   postBuild:
     substitute:
       CLUSTER: ${CLUSTER}
