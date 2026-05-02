@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/docmost/docmost
-              tag: 0.80.1
+              tag: 0.80.2
             env:
               TZ: "${TIMEZONE:=Etc/UTC}"
               APP_URL: "https://{{ .Release.Name }}.${CLUSTER_DOMAIN}"
