@@ -6,8 +6,8 @@ metadata:
   name: wildcard
 spec:
   dnsNames:
-    - ${SECRET_DOMAIN}
-    - "*.${SECRET_DOMAIN}"
+    - ${CLUSTER_DOMAIN}
+    - "*.${CLUSTER_DOMAIN}"
   duration: 160h
   issuerRef:
     kind: ClusterIssuer
