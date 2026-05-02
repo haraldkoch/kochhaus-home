@@ -27,18 +27,15 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 32Mi
+                devic.es/cyberpower: 1
         pod:
           annotations:
             configmap.reloader.stakater.com/reload: network-ups-tools-config
-          affinity:
-            nodeAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                  - matchExpressions:
-                      - key: cyberpower.feature.node.kubernetes.io/ups
-                        operator: In
-                        values:
-                          - "true"
           tolerations:
             - key: node-role.kubernetes.io/control-plane
               operator: Exists
