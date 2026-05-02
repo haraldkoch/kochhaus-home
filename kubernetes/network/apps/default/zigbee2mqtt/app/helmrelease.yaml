@@ -73,9 +73,8 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 512Mi
+                devic.es/zigbee: 1
         pod:
-          nodeSelector:
-            zigbee.feature.node.kubernetes.io/sonoff: "true"
           securityContext:
             runAsUser: 1022
             runAsGroup: 1022
@@ -90,7 +89,8 @@ spec:
             port: *port
     route:
       app:
-        hostnames: ["zigbee.${CLUSTER_DOMAIN}"]
+        hostnames:
+          - "zigbee.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network
