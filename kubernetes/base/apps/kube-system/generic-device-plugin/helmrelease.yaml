@@ -80,8 +80,6 @@ spec:
       dev:
         type: hostPath
         hostPath: /dev
-        globalMounts:
-          - readOnly: true
       sys:
         type: hostPath
         hostPath: /sys
