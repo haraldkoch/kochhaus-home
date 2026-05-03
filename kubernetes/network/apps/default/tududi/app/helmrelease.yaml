@@ -20,9 +20,10 @@ spec:
               tag: 1.1.0@sha256:c79bb7330aa0a83f81ffe0cd3fe324293ffba449e7fd2e292c458365d8ff8a35
             env:
               BASE_URL: https://{{ .Release.Name }}.${CLUSTER_DOMAIN}
-              TUDUDI_USER_EMAIL: admin@${CLUSTER_DOMAIN}
-              TUDUDI_BASE_URL: https://{{ .Release.Name }}.${CLUSTER_DOMAIN}
               TUDUDI_ALLOWED_ORIGINS: https://{{ .Release.Name }}.${CLUSTER_DOMAIN}
+              TUDUDI_BASE_URL: https://{{ .Release.Name }}.${CLUSTER_DOMAIN}
+              TUDUDI_TRUST_PROXY: "true"
+              TUDUDI_USER_EMAIL: admin@${CLUSTER_DOMAIN}
             envFrom:
               - secretRef:
                   name: tududi-secret
