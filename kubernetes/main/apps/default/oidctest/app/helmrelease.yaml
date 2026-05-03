@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: oidctest
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: oidctest
+  interval: 1h
+  values:
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/beryju/oidc-test-client
+              tag: 2.6
+            env:
+              TZ: ${TIMEZONE}
+              OIDC_ROOT_URL: https://oidctest.${CLUSTER_DOMAIN}
+              OIDC_PROVIDER: https://auth.${CLUSTER_DOMAIN}
+              OIDC_SCOPES: openid,profile,email,groups
+              OIDC_DO_INTROSPECTION: "false"
+              OIDC_DO_REFRESH: "false"
+            envFrom:
+              - secretRef:
+                  name: oidctest
+            resources:
+              requests:
+                cpu: 100m
+                memory: 50Mi
+              limits:
+                memory: 100Mi
+    service:
+      main:
+        ports:
+          http:
+            port: 9009
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network

@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: oidctest
+spec:
+  components:
+    - ../../../../components/gatus/guarded
+  interval: 1h
+  path: ./kubernetes/main/apps/default/oidctest/app
+  postBuild:
+    substitute:
+      APP: oidctest
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: default
+  wait: false

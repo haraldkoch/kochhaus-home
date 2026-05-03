@@ -224,6 +224,7 @@ identity_providers:
           - "groups"
         redirect_uris:
           - "https://tududi.${CLUSTER_DOMAIN}/api/oidc/callback/authelia"
+        require_pkce: false
         userinfo_signed_response_alg: none
       - client_id: opencloud
         client_name: Opencloud
@@ -241,4 +242,19 @@ identity_providers:
           - "https://opencloud.${CLUSTER_DOMAIN}/oidc-callback.html"
           - "https://opencloud.${CLUSTER_DOMAIN}/oidc-silent-redirect.html"
         token_endpoint_auth_method: client_secret_basic
+        userinfo_signed_response_alg: none
+      - client_id: oidctest
+        client_name: OIDC Test
+        client_secret: "$${OIDCTEST_OAUTH_CLIENT_SECRET_DIGEST}"
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        scopes:
+          - "openid"
+          - "profile"
+          - "email"
+          - "groups"
+        redirect_uris:
+          - "https://oidctest.${CLUSTER_DOMAIN}/auth/callback"
+        token_endpoint_auth_method: client_secret_post
         userinfo_signed_response_alg: none

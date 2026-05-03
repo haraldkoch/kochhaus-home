@@ -19,6 +19,7 @@ resources:
   - ./media-browser/ks.yaml
   - ./nextcloud/ks.yaml
   - ./ocis/ks.yaml
+  - ./oidctest/ks.yaml
   - ./onedrive/ks.yaml
   - ./opencloud.yaml
   - ./opnsense-backup/ks.yaml
