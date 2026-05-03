@@ -22,7 +22,7 @@ spec:
               BASE_URL: https://{{ .Release.Name }}.${CLUSTER_DOMAIN}
               TUDUDI_USER_EMAIL: admin@${CLUSTER_DOMAIN}
               TUDUDI_BASE_URL: https://{{ .Release.Name }}.${CLUSTER_DOMAIN}
-              TUDUDI_TRUST_PROXY: "true"
+              TUDUDI_ALLOWED_ORIGINS: https://{{ .Release.Name }}.${CLUSTER_DOMAIN}
             envFrom:
               - secretRef:
                   name: tududi-secret

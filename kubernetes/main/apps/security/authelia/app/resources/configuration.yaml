@@ -221,6 +221,7 @@ identity_providers:
           - "openid"
           - "profile"
           - "email"
+          - "groups"
         redirect_uris:
           - "https://tududi.${CLUSTER_DOMAIN}/api/oidc/callback/authelia"
         userinfo_signed_response_alg: none
