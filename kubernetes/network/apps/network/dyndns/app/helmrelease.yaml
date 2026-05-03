@@ -25,16 +25,18 @@ spec:
         containers:
           main:
             image:
-              repository: ghcr.io/haraldkoch/kubernetes-kubectl
-              tag: 1.32.3@sha256:d1a6354c063c56ee028a2c9b8fcc98d2bd7f4f890941287b8aae37b0b9542c24
-            command: ["/bin/bash", "/app/dyndns.sh"]
+              repository: ghcr.io/haraldkoch/kubectl
+              tag: 1.36.0@sha256:91d0a13909b2e85c8b3eea4e1c9f318bddff9e88427485a273ab713ed6286031
+            command:
+              - "/bin/bash"
+              - "/app/dyndns.sh"
             envFrom:
               - secretRef:
                   name: *app
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
     persistence:
       script:
         type: configMap
