@@ -21,6 +21,13 @@ spec:
             image:
               repository: ghcr.io/haraldkoch/maddy
               tag: 0.9.4@sha256:c3021a75a709eb08063d30a9238ccaf84ef9c1620a99582de477a94c8756e45c
+            # Docker ENTRYPOINT is missing a dash
+            command:
+              - "/bin/maddy"
+              - "--config"
+              - "/data/maddy.conf"
+            args:
+              - "run"
             env:
               SMTP_RELAY_SMTP_PORT: &port 25
               SMTP_RELAY_METRICS_PORT: &metricsPort 8080
@@ -35,7 +42,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
