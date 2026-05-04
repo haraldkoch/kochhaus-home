@@ -35,7 +35,6 @@ spec:
                 memory: 100Mi
     service:
       app:
-        controller: nut-exporter
         ports:
           metrics:
             protocol: TCP
@@ -53,6 +52,5 @@ spec:
           lbipam.cilium.io/sharing-key: exporters
     serviceMonitor:
       app:
-        serviceName: nut-exporter
         endpoints:
           - port: metrics

@@ -55,10 +55,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-        rules:
-          - backendRefs:
-              - name: "{{ .Release.Name }}"
-                port: *port
     persistence:
       data:
         existingClaim: "{{ .Release.Name }}"

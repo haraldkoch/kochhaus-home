@@ -57,15 +57,14 @@ spec:
                 enabled: true
               readiness:
                 enabled: true
-        pod:
-          securityContext:
-            runAsUser: 65533
-            runAsGroup: 65533
-            fsGroup: 65533
-            fsGroupChangePolicy: OnRootMismatch
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 65533
+        runAsGroup: 65533
+        fsGroup: 65533
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: kochhaus-docs
         ports:
           http:
             port: 80
@@ -76,7 +75,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
         rules:
           - backendRefs:
               - name: kochhaus-docs

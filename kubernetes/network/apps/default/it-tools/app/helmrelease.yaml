@@ -41,7 +41,6 @@ spec:
             fsGroupChangePolicy: "OnRootMismatch"
     service:
       app:
-        controller: it-tools
         ports:
           http:
             port: 8080
@@ -52,7 +51,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
     persistence:
       tmp:
         type: emptyDir

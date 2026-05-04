@@ -43,7 +43,6 @@ spec:
                 memory: 2400Mi
     service:
       app:
-        controller: omada-controller
         primary: true
         ports:
           http:
@@ -52,7 +51,6 @@ spec:
             protocol: TCP
             appProtocol: kubernetes.io/ws
       controller:
-        controller: omada-controller
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: "${OMADA_IPV4},${OMADA_IPV6}"

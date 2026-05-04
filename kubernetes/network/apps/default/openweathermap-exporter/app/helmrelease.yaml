@@ -37,14 +37,13 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: {drop: ["ALL"]}
-        pod:
-          securityContext:
-            runAsUser: 1022
-            runAsGroup: 1022
-            runAsNonRoot: true
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1022
+        runAsGroup: 1022
+        runAsNonRoot: true
     service:
       app:
-        controller: openweathermap-exporter
         ports:
           metrics:
             protocol: HTTP
@@ -62,7 +61,6 @@ spec:
           lbipam.cilium.io/sharing-key: exporters
     serviceMonitor:
       app:
-        serviceName: *app
         endpoints:
           - port: metrics
             metricRelabelings:

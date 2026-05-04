@@ -60,12 +60,12 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 500Mi
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
     service:
       app:
         controller: syncthing
@@ -108,7 +108,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
         rules:
           - backendRefs:
               - identifier: app
@@ -119,7 +118,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
         rules:
           - backendRefs:
               - identifier: browser

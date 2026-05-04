@@ -12,7 +12,8 @@ spec:
   values:
     controllers:
       network-ups-tools:
-        strategy: RollingUpdate
+        # required for devic.es/cyberpower resource
+        strategy: Recreate
         containers:
           app:
             image:
@@ -33,16 +34,14 @@ spec:
               limits:
                 memory: 32Mi
                 devic.es/cyberpower: 1
-        pod:
-          annotations:
-            configmap.reloader.stakater.com/reload: network-ups-tools-config
-          tolerations:
-            - key: node-role.kubernetes.io/control-plane
-              operator: Exists
+    defaultPodOptions:
+      annotations:
+        configmap.reloader.stakater.com/reload: network-ups-tools-config
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
     service:
       app:
-        controller: network-ups-tools
-        primary: true
         ports:
           http:
             port: 3493

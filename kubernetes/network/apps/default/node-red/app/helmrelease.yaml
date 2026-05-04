@@ -12,12 +12,6 @@ spec:
   values:
     controllers:
       node-red:
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
         containers:
           app:
             image:
@@ -38,9 +32,14 @@ spec:
                 memory: 164M
               limits:
                 memory: 262M
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
     service:
       app:
-        controller: node-red
         ports:
           http:
             port: 1880
@@ -51,7 +50,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
     persistence:
       data:
         existingClaim: ${VOLSYNC_CLAIM}

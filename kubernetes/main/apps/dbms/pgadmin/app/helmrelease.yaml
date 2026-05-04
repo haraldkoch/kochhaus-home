@@ -37,7 +37,6 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: pgadmin
         ports:
           http:
             port: 80
@@ -48,7 +47,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
     persistence:
       config:
         existingClaim: "${VOLSYNC_CLAIM}"

@@ -39,16 +39,15 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 100Mi
-        pod:
-          annotations:
-            secret.reloader.stakater.com/reload: dnssec-exporter-secret
-          securityContext:
-            runAsUser: 1022
-            runAsGroup: 1022
-            runAsNonRoot: true
+    defaultPodOptions:
+      annotations:
+        secret.reloader.stakater.com/reload: dnssec-exporter-secret
+      securityContext:
+        runAsUser: 1022
+        runAsGroup: 1022
+        runAsNonRoot: true
     service:
       app:
-        controller: dnssec-exporter
         ports:
           metrics:
             protocol: TCP
@@ -66,7 +65,6 @@ spec:
           lbipam.cilium.io/sharing-key: exporters
     serviceMonitor:
       app:
-        serviceName: *app
         endpoints:
           - port: metrics
             scrapeTimeout: 30s

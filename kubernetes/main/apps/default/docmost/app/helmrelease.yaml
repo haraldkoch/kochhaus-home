@@ -47,18 +47,17 @@ spec:
               requests:
                 cpu: 25m
                 memory: 105M
-                #              limits:
-                #                memory: 105M
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            runAsNonRoot: true
-            fsGroup: 1000
-            fsGroupChangePolicy: OnRootMismatch
+              limits:
+                memory: 512M
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: docmost
         ipFamilyPolicy: SingleStack
         ports:
           http:
@@ -70,7 +69,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
     persistence:
       data:
         existingClaim: ${VOLSYNC_CLAIM}

@@ -37,16 +37,15 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 100Mi
-        pod:
-          annotations:
-            reloader.stakater.com/auto: "true"
-          securityContext:
-            runAsUser: 1022
-            runAsGroup: 1022
-            runAsNonRoot: true
+    defaultPodOptions:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      securityContext:
+        runAsUser: 1022
+        runAsGroup: 1022
+        runAsNonRoot: true
     service:
       app:
-        controller: json-exporter
         annotations:
           external-dns.alpha.kubernetes.io/hostname: exporters.${CLUSTER_DOMAIN}
           lbipam.cilium.io/ips: "${EXPORTERS_IPV4},${EXPORTERS_IPV6}"
@@ -64,7 +63,6 @@ spec:
         type: LoadBalancer
     serviceMonitor:
       app:
-        serviceName: *app
         endpoints:
           - port: metrics
             scrapeTimeout: 30s

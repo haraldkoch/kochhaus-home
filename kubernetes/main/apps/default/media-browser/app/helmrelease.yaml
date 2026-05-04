@@ -46,15 +46,14 @@ spec:
                 memory: 64Mi
               limits:
                 memory: 512Mi
-        pod:
-          securityContext:
-            runAsUser: 2000
-            runAsGroup: 2000
-            fsGroup: 2000
-            fsGroupChangePolicy: "OnRootMismatch"
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 2000
+        runAsGroup: 2000
+        fsGroup: 2000
+        fsGroupChangePolicy: "OnRootMismatch"
     service:
       app:
-        controller: media-browser
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
@@ -66,7 +65,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
     persistence:
       config:
         type: persistentVolumeClaim

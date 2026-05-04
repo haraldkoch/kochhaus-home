@@ -44,13 +44,11 @@ spec:
               app.kubernetes.io/name: *app
     service:
       app:
-        controller: *app
         ports:
           http:
             port: 8080
     serviceMonitor:
       app:
-        serviceName: *app
         endpoints:
           - port: http
             scheme: http
@@ -64,7 +62,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
     persistence:
       config:
         type: emptyDir
