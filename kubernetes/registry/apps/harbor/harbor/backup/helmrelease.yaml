@@ -7,7 +7,7 @@ metadata:
 spec:
   chartRef:
     kind: OCIRepository
-    name: app-template
+    name: harbor-pgdump
   interval: 1h
   values:
     controllers:
@@ -21,7 +21,8 @@ spec:
             image:
               repository: docker.io/goharbor/harbor-db
               tag: v2.15.0
-            command: ["/usr/bin/pg_dumpall"]
+            command:
+              - "/usr/bin/pg_dumpall"
             args:
               - "-f"
               - "/backup/harbor.pgdump"
@@ -29,9 +30,9 @@ spec:
               - "-U"
               - "postgres"
             env:
-              - { name: TZ, value: "${TIMEZONE:=Etc/UTC}" }
-              - { name: PGHOST, value: harbor-database }
-              - { name: PGPORT, value: "5432" }
+              - {name: TZ, value: "${TIMEZONE:=Etc/UTC}"}
+              - {name: PGHOST, value: harbor-database}
+              - {name: PGPORT, value: "5432"}
               - name: PGPASSWORD
                 valueFrom:
                   secretKeyRef:
