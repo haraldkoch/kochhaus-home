@@ -7,5 +7,6 @@ resources:
   - ./configmap.yaml
   - ./helmrelease.yaml
   - ./networkpolicy.yaml
+  - ./ocirepository.yaml
   - ./secret.sops.yaml
   - ./webhook.yaml

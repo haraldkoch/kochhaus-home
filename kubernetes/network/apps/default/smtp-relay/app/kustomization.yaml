@@ -6,6 +6,7 @@ resources:
   - ./certificate.yaml
   - ./gatus.yaml
   - ./helmrelease.yaml
+  - ./ocirepository.yaml
 configMapGenerator:
   - name: smtp-relay
     files:

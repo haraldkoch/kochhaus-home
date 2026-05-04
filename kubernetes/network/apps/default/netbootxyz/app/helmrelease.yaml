@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/tags/app-template-4.3.0/charts/other/app-template/values.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/refs/tags/app-template-5.0.0/charts/other/app-template/values.schema.json
 controllers:
   netbootxyz:
     containers:
@@ -76,7 +76,8 @@ ingress:
               identifier: app
               port: http
     tls:
-      - hosts: [*host]
+      - hosts:
+          - *host
   mgm:
     className: cilium
     annotations:
@@ -91,7 +92,8 @@ ingress:
               identifier: app
               port: mgm
     tls:
-      - hosts: [*hostMgm]
+      - hosts:
+          - *hostMgm
 
 persistence:
   tmp:

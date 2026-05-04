@@ -6,6 +6,7 @@ resources:
   - ./externalsecret.yaml
   - ./gatus.yaml
   - ./helmrelease.yaml
+  - ./ocirepository.yaml
   - ./pvc.yaml
 configMapGenerator:
   - name: mosquitto

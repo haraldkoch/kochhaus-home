@@ -6,3 +6,4 @@ resources:
   - ./dashboard
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./ocirepository.yaml
