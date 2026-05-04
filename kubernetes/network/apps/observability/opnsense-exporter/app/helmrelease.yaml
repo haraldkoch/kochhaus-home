@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app opnsense-exporter
+  name: opnsense-exporter
 spec:
   chartRef:
     kind: OCIRepository
@@ -54,13 +54,11 @@ spec:
         runAsGroup: 568
     service:
       app:
-        controller: *app
         ports:
           http:
             port: 8080
     serviceMonitor:
       app:
-        serviceName: *app
         endpoints:
           - port: http
             scheme: http

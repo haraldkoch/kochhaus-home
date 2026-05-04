@@ -39,7 +39,6 @@ spec:
                 memory: 512Mi
     service:
       app:
-        controller: picoshare
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
@@ -51,7 +50,6 @@ spec:
         parentRefs:
           - name: envoy-external
             namespace: network
-            sectionName: https
     persistence:
       data:
         existingClaim: picoshare-data-v1

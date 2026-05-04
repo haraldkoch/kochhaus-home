@@ -36,30 +36,29 @@ spec:
                 memory: 25Mi
               limits:
                 memory: 100Mi
-        pod:
-          annotations:
-            reloader.stakater.com/auto: "true"
-          affinity:
-            nodeAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-                - weight: 1
-                  preference:
-                    matchExpressions:
-                      - key: node-role.kubernetes.io/control-plane
-                        operator: Exists
-          tolerations:
-            - key: node-role.kubernetes.io/control-plane
-              operator: Exists
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
+    defaultPodOptions:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              preference:
+                matchExpressions:
+                  - key: node-role.kubernetes.io/control-plane
+                    operator: Exists
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: *app
     service:
       app:
-        controller: openssh
         annotations:
           lbipam.cilium.io/ips: "${OPENSSH_IPV4},${OPENSSH_IPV6}"
         type: LoadBalancer

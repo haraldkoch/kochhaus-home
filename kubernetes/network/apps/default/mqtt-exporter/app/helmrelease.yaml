@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app mqtt-exporter
+  name: mqtt-exporter
 spec:
   chartRef:
     kind: OCIRepository
@@ -45,7 +45,6 @@ spec:
                 memory: 200Mi
     service:
       app:
-        controller: mqtt-exporter
         ports:
           metrics:
             protocol: HTTP
@@ -58,7 +57,6 @@ spec:
           lbipam.cilium.io/ips: "${MQTT_EXPORTER_IPV4},${MQTT_EXPORTER_IPV6}"
     serviceMonitor:
       app:
-        serviceName: *app
         endpoints:
           - port: metrics
             metricRelabelings:

@@ -10,14 +10,6 @@ spec:
     name: karakeep
   interval: 1h
   values:
-    defaultPodOptions:
-      securityContext:
-        fsGroup: 1000
-        fsGroupChangePolicy: "OnRootMismatch"
-        runAsGroup: 1000
-        runAsNonRoot: true
-        runAsUser: 1000
-
     controllers:
       karakeep:
         forceRename: karakeep
@@ -59,7 +51,6 @@ spec:
                 cpu: 10m
               limits:
                 memory: 1Gi
-
       chrome:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -87,7 +78,6 @@ spec:
                 cpu: 10m
               limits:
                 memory: 1Gi
-
       meilisearch:
         annotations:
           reloader.stakater.com/auto: "true"
@@ -127,7 +117,13 @@ spec:
                 memory: 256Mi
               limits:
                 memory: 1Gi
-
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
     service:
       app:
         forceRename: karakeep
@@ -146,7 +142,6 @@ spec:
         ports:
           http:
             port: 7700
-
     persistence:
       data:
         existingClaim: karakeep-data
@@ -159,7 +154,6 @@ spec:
             app:
               - path: /meili_data
                 subPath: meilisearch
-
     route:
       app:
         hostnames:
@@ -167,7 +161,6 @@ spec:
         parentRefs:
           - name: envoy-external
             namespace: network
-            sectionName: https
         rules:
           - backendRefs:
               - identifier: app

@@ -45,13 +45,12 @@ spec:
                 memory: 128Mi
               limits:
                 memory: 192Mi
-        pod:
-          securityContext:
-            fsGroup: 101
-            fsGroupChangePolicy: "OnRootMismatch"
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 101
+        fsGroupChangePolicy: "OnRootMismatch"
     service:
       app:
-        controller: smokeping
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
@@ -63,7 +62,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
     persistence:
       config:
         existingClaim: smokeping-config-v1

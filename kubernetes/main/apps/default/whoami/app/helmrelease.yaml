@@ -13,6 +13,7 @@ spec:
     controllers:
       whoami:
         replicas: 2
+        strategy: RollingUpdate
         containers:
           app:
             image:
@@ -29,27 +30,24 @@ spec:
                 memory: 16Mi
               limits:
                 memory: 32Mi
-        pod:
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
+    defaultPodOptions:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: *app
     service:
       app:
-        controller: whoami
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
             port: 80
     route:
-      # FIXME: AUTH
       main:
         parentRefs:
           - name: envoy-external
             namespace: network
-            sectionName: https
         hostnames:
           - whoami.${CLUSTER_DOMAIN}

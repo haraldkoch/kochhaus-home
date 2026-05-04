@@ -61,54 +61,22 @@ spec:
                 memory: 32Mi
               limits:
                 memory: 128Mi
-                # anubis:
-                #   image:
-                #     repository: ghcr.io/techarohq/anubis
-                #     tag: v1.25.0
-                #   env:
-                #     TZ: "${TIMEZONE}"
-                #     BIND: ":8923"
-                #     DIFFICULTY: "3"
-                #     ED25519_PRIVATE_KEY_HEX:
-                #       valueFrom:
-                #         secretKeyRef:
-                #           name: authelia-anubis-secret
-                #           key: ED25519_PRIVATE_KEY_HEX
-                #     POLICY_FNAME: /config/botPolicy.yaml
-                #     SERVE_ROBOTS_TXT: "true"
-                #     TARGET: "http://localhost:80"
-                #   ports:
-                #     - name: anubis
-                #       containerPort: &anubisPort 8923
-                #   resources:
-                #     requests:
-                #       cpu: 26m
-                #       memory: 100Mi
-                #     limits:
-                #       memory: 100Mi
-                #   securityContext:
-                #     allowPrivilegeEscalation: false
-                #     readOnlyRootFilesystem: true
-                #     capabilities: {drop: ["ALL"]}
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            runAsNonRoot: true
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: *app
     service:
       app:
-        controller: authelia
         ipFamilyPolicy: PreferDualStack
         ports:
-          # anubis:
-          #   port: *anubisPort
           http:
             port: *port
             primary: true
@@ -116,7 +84,6 @@ spec:
             port: 8080
     serviceMonitor:
       app:
-        serviceName: authelia
         endpoints:
           - port: metrics
     route:
@@ -126,11 +93,6 @@ spec:
         parentRefs:
           - name: envoy-external
             namespace: network
-            sectionName: https
-            # rules:
-            #   - backendRefs:
-            #       - identifier: app
-            #         port: anubis
     persistence:
       config:
         type: configMap
@@ -141,12 +103,3 @@ spec:
               - path: /config/configuration.yaml
                 subPath: configuration.yaml
                 readOnly: true
-                # anubis:
-                #   type: configMap
-                #   name: anubis-configmap
-                #   advancedMounts:
-                #     authelia:
-                #       anubis:
-                #         - path: /config/botPolicy.yaml
-                #           subPath: botPolicy.yaml
-                #           readOnly: true

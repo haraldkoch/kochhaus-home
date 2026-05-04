@@ -32,7 +32,6 @@ spec:
                 memory: 100Mi
     service:
       app:
-        controller: tplink-plug-exporter
         ports:
           metrics:
             protocol: TCP

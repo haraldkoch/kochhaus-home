@@ -46,7 +46,6 @@ spec:
           type: RuntimeDefault
     service:
       app:
-        controller: homer
         ports:
           http:
             port: 8080
@@ -57,7 +56,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
     persistence:
       config:
         name: homer

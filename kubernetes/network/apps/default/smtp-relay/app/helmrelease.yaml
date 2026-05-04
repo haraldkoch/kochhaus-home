@@ -49,23 +49,22 @@ spec:
                 memory: 32Mi
               limits:
                 memory: 128Mi
-        pod:
-          securityContext:
-            runAsUser: 1022
-            runAsGroup: 1022
-            fsGroup: 1022
-            fsGroupChangePolicy: OnRootMismatch
-            runAsNonRoot: true
-          topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchLabels:
-                  app.kubernetes.io/name: *app
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1022
+        runAsGroup: 1022
+        fsGroup: 1022
+        fsGroupChangePolicy: OnRootMismatch
+        runAsNonRoot: true
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: *app
     service:
       app:
-        controller: smtp-relay
         type: LoadBalancer
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
@@ -80,7 +79,6 @@ spec:
             port: *port
     serviceMonitor:
       app:
-        serviceName: smtp-relay
         endpoints:
           - port: metrics
     persistence:

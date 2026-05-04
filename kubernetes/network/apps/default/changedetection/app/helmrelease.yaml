@@ -40,7 +40,6 @@ spec:
               - {name: DEFAULT_STEALTH, value: "true"}
     service:
       app:
-        controller: changedetection
         ports:
           http:
             port: *port
@@ -51,7 +50,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
     persistence:
       config:
         enabled: true

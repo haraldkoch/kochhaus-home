@@ -74,15 +74,14 @@ spec:
               limits:
                 memory: 512Mi
                 devic.es/zigbee: 1
-        pod:
-          securityContext:
-            runAsUser: 1022
-            runAsGroup: 1022
-            fsGroup: 1022
-            fsGroupChangePolicy: OnRootMismatch
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1022
+        runAsGroup: 1022
+        fsGroup: 1022
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: zigbee2mqtt
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
@@ -94,7 +93,6 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
-            sectionName: https
     persistence:
       config:
         existingClaim: zigbee2mqtt

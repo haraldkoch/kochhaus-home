@@ -26,7 +26,6 @@ spec:
                   name: rtr-secret
     service:
       app:
-        controller: ridetoremember
         ipFamilyPolicy: PreferDualStack
         ports:
           http:
@@ -38,7 +37,6 @@ spec:
         parentRefs:
           - name: envoy-external
             namespace: network
-            sectionName: https
     persistence:
       data:
         existingClaim: rtr-data-v1
