@@ -12,7 +12,6 @@ spec:
   values:
     controllers:
       netshoot:
-        strategy: RollingUpdate
         pod:
           annotations:
             k8s.v1.cni.cncf.io/networks: |
