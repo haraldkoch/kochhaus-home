@@ -55,6 +55,7 @@ spec:
       app:
         ports:
           http:
+            primary: true
             port: *port
           health:
             port: *healthPort
@@ -65,10 +66,6 @@ spec:
         parentRefs:
           - name: envoy-external
             namespace: network
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: *port
     persistence:
       config-file:
         type: configMap

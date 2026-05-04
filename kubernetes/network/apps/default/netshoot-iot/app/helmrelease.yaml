@@ -12,6 +12,7 @@ spec:
   values:
     controllers:
       netshoot:
+        strategy: Recreate
         pod:
           annotations:
             k8s.v1.cni.cncf.io/networks: |
