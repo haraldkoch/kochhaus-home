@@ -17,7 +17,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gabeduartem/blocky-ui
-              tag: 1.6.1@sha256:35e67a68a6ef15ad43d3b9913ab7e667deaddcb022e414eacc8070a1450b4441
+              tag: 1.7.0@sha256:51b3fdc5c3d4d184e0a06126e1761df6b4ca948b9788ab3944dda3c07da287b5
             env:
               # QUERY_LOG_TYPE: postgresql
               # QUERY_LOG_TARGET:
@@ -48,7 +48,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gabeduartem/blocky-ui
-              tag: 1.6.1@sha256:35e67a68a6ef15ad43d3b9913ab7e667deaddcb022e414eacc8070a1450b4441
+              tag: 1.7.0@sha256:51b3fdc5c3d4d184e0a06126e1761df6b4ca948b9788ab3944dda3c07da287b5
             env:
               # QUERY_LOG_TYPE: postgresql
               # QUERY_LOG_TARGET:
