@@ -57,6 +57,7 @@ spec:
         serviceAccount:
           identifier: webhook
     defaultPodOptions:
+      automountServiceAccountToken: true
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
