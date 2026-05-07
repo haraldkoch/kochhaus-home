@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: radar
+spec:
+  chart:
+    spec:
+      chart: radar
+      version: 1.5.9
+      sourceRef:
+        kind: HelmRepository
+        name: radar
+        namespace: radar
+  interval: 1h
+  values:
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+    rbac:
+      helm: true
+      podLogs: true
+      additionalCrdGroups:
+        - cilium.io
+        - dragonflydb.io
+        - policy
+        - policy.networking.k8s.io
+        - postgresql.cnpg.io
+        - volsync.backube
+    resources:
+      limits:
+        memory: 1Gi
+      requests:
+        memory: 512Mi
