@@ -5,7 +5,7 @@
       description: "ArgoCD Group",
       groupName: "argocd",
       matchDatasources: ["docker"],
-      matchPackageNames: ["/argocd/"],
+      matchPackageNames: ["/argocd/", "/argo-cd/"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
