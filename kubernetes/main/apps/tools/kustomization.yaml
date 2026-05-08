@@ -10,6 +10,5 @@ components:
 resources:
   - ./namespace.yaml
   - ./descheduler.yaml
-  - ./headlamp/ks.yaml
   - ./reloader.yaml
   - ./webhook/ks.yaml
