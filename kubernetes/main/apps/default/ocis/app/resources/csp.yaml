@@ -1,0 +1,52 @@
+---
+# https://github.com/owncloud/ocis/issues/9441#issuecomment-2186412759
+directives:
+  child-src:
+    # yamllint disable-line rule:quoted-strings
+    - "'self'"
+  connect-src:
+    # yamllint disable-line rule:quoted-strings
+    - "'self'"
+    - 'blob:'
+    - 'https://raw.githubusercontent.com/owncloud/awesome-ocis/'
+    - 'https://auth.${CLUSTER_DOMAIN}/'
+  default-src:
+    # yamllint disable-line rule:quoted-strings
+    - "'none'"
+  font-src:
+    # yamllint disable-line rule:quoted-strings
+    - "'self'"
+  frame-ancestors:
+    # yamllint disable-line rule:quoted-strings
+    - "'none'"
+  frame-src:
+    # yamllint disable-line rule:quoted-strings
+    - "'self'"
+    - 'blob:'
+    - 'https://embed.diagrams.net/'
+  img-src:
+    # yamllint disable-line rule:quoted-strings
+    - "'self'"
+    - 'data:'
+    - 'blob:'
+    - 'https://raw.githubusercontent.com/owncloud/awesome-ocis/'
+  manifest-src:
+    # yamllint disable-line rule:quoted-strings
+    - "'self'"
+  media-src:
+    # yamllint disable-line rule:quoted-strings
+    - "'self'"
+  object-src:
+    # yamllint disable-line rule:quoted-strings
+    - "'self'"
+    - 'blob:'
+  script-src:
+    # yamllint disable-line rule:quoted-strings
+    - "'self'"
+    # yamllint disable-line rule:quoted-strings
+    - "'unsafe-inline'"
+  style-src:
+    # yamllint disable-line rule:quoted-strings
+    - "'self'"
+    # yamllint disable-line rule:quoted-strings
+    - "'unsafe-inline'"

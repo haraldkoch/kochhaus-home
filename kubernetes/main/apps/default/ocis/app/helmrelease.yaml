@@ -43,6 +43,7 @@ spec:
               OCIS_LOG_LEVEL: info
               OCIS_LOG_PRETTY: true
               OCIS_URL: https://files.${CLUSTER_DOMAIN}
+              PROXY_CSP_CONFIG_FILE_LOCATION: /etc/ocis/csp.yaml
               PROXY_DEBUG_ADDR: 0.0.0.0:9205
               PROXY_HTTP_ADDR: 0.0.0.0:9200
               PROXY_TLS: false
@@ -124,12 +125,15 @@ spec:
             subPath: config
           - path: /var/lib/ocis
             subPath: data
-      config-proxy:
+      config:
         type: configMap
         name: ocis-configmap
         globalMounts:
           - path: /etc/ocis/proxy.yaml
             subPath: proxy.yaml
+            readOnly: true
+          - path: /etc/ocis/csp.yaml
+            subPath: csp.yaml
             readOnly: true
       tmpfs:
         type: emptyDir
