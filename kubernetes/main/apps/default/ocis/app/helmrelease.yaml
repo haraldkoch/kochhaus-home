@@ -34,10 +34,16 @@ spec:
               tag: 8.0.1
             env:
               DEMO_USERS: false
+              GRAPH_ASSIGN_DEFAULT_USER_ROLE: false
+              GRAPH_USERNAME_MATCH: none
+              SETTINGS_SETUP_DEFAULT_ASSIGNMENTS: false
               NOTIFICATIONS_SMTP_HOST: smtp.${CLUSTER_DOMAIN}
               NOTIFICATIONS_SMTP_INSECURE: true
               NOTIFICATIONS_SMTP_PORT: "25"
               NOTIFICATIONS_SMTP_SENDER: "ocis@${CLUSTER_DOMAIN:=fnord}"
+              OCIS_EXCLUDE_RUN_SERVICES: idp
+              IDM_CREATE_DEMO_USERS: false
+              OCIS_ENABLE_OCM: false
               OCIS_INSECURE: true
               OCIS_LOG_COLOR: true
               OCIS_LOG_LEVEL: info
