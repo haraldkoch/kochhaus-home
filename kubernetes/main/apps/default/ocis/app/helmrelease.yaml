@@ -52,9 +52,15 @@ spec:
               # Auto role assignment:
               # docs: https://doc.owncloud.com/ocis/next/deployment/services/s-list/proxy.html#automatic-role-assignments
               OCIS_OIDC_ISSUER: https://auth.${CLUSTER_DOMAIN}
+              PROXY_OIDC_ISSUER: https://auth.${CLUSTER_DOMAIN}
               PROXY_AUTOPROVISION_ACCOUNTS: true
+              PROXY_AUTOPROVISION_CLAIM_USERNAME: preferred_username
+              PROXY_AUTOPROVISION_CLAIM_EMAIL: email
+              PROXY_AUTOPROVISION_CLAIM_DISPLAYNAME: name
+              PROXY_AUTOPROVISION_CLAIM_GROUPS: groups
               PROXY_OIDC_ACCESS_TOKEN_VERIFY_METHOD: none
               PROXY_OIDC_REWRITE_WELLKNOWN: true
+              PROXY_OIDC_SKIP_USER_INFO: false
               PROXY_ROLE_ASSIGNMENT_DRIVER: oidc
               PROXY_ROLE_ASSIGNMENT_OIDC_CLAIM: groups
               PROXY_USER_OIDC_CLAIM: "preferred_username"
