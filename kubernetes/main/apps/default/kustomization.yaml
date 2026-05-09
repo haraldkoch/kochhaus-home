@@ -14,7 +14,7 @@ resources:
   - ./docmost.yaml
   - ./echo.yaml
   - ./excalidraw.yaml
-  - ./filebrowser/ks.yaml
+  - ./filebrowser.yaml
   - ./karakeep/ks.yaml
   - ./media-browser/ks.yaml
   - ./nextcloud/ks.yaml
