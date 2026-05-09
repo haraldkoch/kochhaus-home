@@ -8,7 +8,7 @@ spec:
   components:
     - ../../../../components/gatus/guarded
   interval: 1h
-  path: ./kubernetes/network/apps/default/it-tools/app
+  path: ./kubernetes/apps/base/default/it-tools
   postBuild:
     substitute:
       APP: it-tools

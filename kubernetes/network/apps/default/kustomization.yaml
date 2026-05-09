@@ -16,7 +16,7 @@ resources:
   - ./esphome.yaml
   - ./hassproxy.yaml
   - ./homer.yaml
-  - ./it-tools/ks.yaml
+  - ./it-tools.yaml
   - ./kochhaus-docs/ks.yaml
   - ./matter-server/ks.yaml
   - ./matterbridge/ks.yaml
