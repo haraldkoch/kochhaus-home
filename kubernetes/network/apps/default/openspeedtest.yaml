@@ -8,7 +8,7 @@ spec:
   components:
     - ../../../../components/gatus/external
   interval: 1h
-  path: ./kubernetes/network/apps/default/openspeedtest/app
+  path: ./kubernetes/apps/base/default/openspeedtest
   postBuild:
     substitute:
       APP: openspeedtest

@@ -25,7 +25,7 @@ resources:
   - ./netshoot-iot.yaml
   - ./node-red.yaml
   - ./omada-controller-proxy.yaml
-  - ./openspeedtest/ks.yaml
+  - ./openspeedtest.yaml
   - ./openweathermap-exporter/ks.yaml
   - ./populator-test/ks.yaml
   - ./smtp-relay/ks.yaml
