@@ -24,7 +24,7 @@ resources:
   - ./picoshare.yaml
   - ./populator-test/ks.yaml
   - ./static-web.yaml
-  - ./tautulli/ks.yaml
   - ./syncthing.yaml
+  - ./tautulli.yaml
   - ./whoami/ks.yaml
   - ./your-spotify/ks.yaml
