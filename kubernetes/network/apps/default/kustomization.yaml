@@ -17,7 +17,7 @@ resources:
   - ./hassproxy.yaml
   - ./homer.yaml
   - ./it-tools.yaml
-  - ./kochhaus-docs/ks.yaml
+  - ./kochhaus-docs.yaml
   - ./matter-server/ks.yaml
   - ./matterbridge/ks.yaml
   - ./mosquitto/ks.yaml

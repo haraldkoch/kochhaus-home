@@ -8,7 +8,7 @@ spec:
   components:
     - ../../../../components/gatus/guarded
   interval: 1h
-  path: ./kubernetes/network/apps/default/kochhaus-docs/app
+  path: ./kubernetes/apps/base/default/kochhaus-docs
   postBuild:
     substitute:
       APP: kochhaus-docs
