@@ -16,7 +16,7 @@ resources:
   - ./excalidraw.yaml
   - ./filebrowser.yaml
   - ./karakeep.yaml
-  - ./media-browser/ks.yaml
+  - ./media-browser.yaml
   - ./nextcloud/ks.yaml
   - ./oidctest/ks.yaml
   - ./onedrive/ks.yaml

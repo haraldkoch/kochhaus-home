@@ -6,13 +6,13 @@ metadata:
   name: media-browser
 spec:
   components:
-    - ../../../../components/gatus/guarded
-    - ../../../../components/keda/nfs-scaler
+    - ../../../../main/components/gatus/guarded
+    - ../../../../main/components/keda/nfs-scaler
   dependsOn:
     - name: keda
       namespace: observability
   interval: 1h
-  path: ./kubernetes/main/apps/default/media-browser/app
+  path: ./kubernetes/base/apps/default/media-browser
   postBuild:
     substitute:
       APP: media-browser
