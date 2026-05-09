@@ -25,6 +25,6 @@ resources:
   - ./populator-test/ks.yaml
   - ./static-web.yaml
   - ./tautulli/ks.yaml
-  - ./syncthing/ks.yaml
+  - ./syncthing.yaml
   - ./whoami/ks.yaml
   - ./your-spotify/ks.yaml
