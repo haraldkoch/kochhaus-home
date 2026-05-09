@@ -8,7 +8,7 @@ spec:
   components:
     - ../../../../components/gatus/guarded
   interval: 1h
-  path: ./kubernetes/network/apps/default/bentopdf/app
+  path: ./kubernetes/apps/base/default/bentopdf
   postBuild:
     substitute:
       APP: bentopdf
