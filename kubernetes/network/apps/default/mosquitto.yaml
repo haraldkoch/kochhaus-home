@@ -9,7 +9,7 @@ spec:
     - name: longhorn
       namespace: storage
   interval: 1h
-  path: ./kubernetes/network/apps/default/mosquitto/app
+  path: ./kubernetes/apps/base/default/mosquitto
   prune: true
   sourceRef:
     kind: GitRepository

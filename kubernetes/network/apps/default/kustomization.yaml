@@ -20,7 +20,7 @@ resources:
   - ./kochhaus-docs.yaml
   - ./matter-server.yaml
   - ./matterbridge.yaml
-  - ./mosquitto/ks.yaml
+  - ./mosquitto.yaml
   - ./mqtt-exporter/ks.yaml
   - ./netshoot-iot/ks.yaml
   - ./node-red/ks.yaml
