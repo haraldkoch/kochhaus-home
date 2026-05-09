@@ -11,7 +11,7 @@ resources:
   - ./namespace.yaml
   - ./bentopdf.yaml
   - ./blocky-ui.yaml
-  - ./changedetection/ks.yaml
+  - ./changedetection.yaml
   - ./echo.yaml
   - ./esphome/ks.yaml
   - ./hass/ks.yaml

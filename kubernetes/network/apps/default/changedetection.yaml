@@ -7,12 +7,12 @@ metadata:
 spec:
   components:
     - ../../../../components/gatus/guarded
-    - ../../../../components/volsync
+    - ../../../../network/components/volsync
   dependsOn:
     - name: volsync
       namespace: storage
   interval: 1h
-  path: ./kubernetes/network/apps/default/changedetection/app
+  path: ./kubernetes/apps/base/default/changedetection
   postBuild:
     substitute:
       APP: changedetection
