@@ -28,5 +28,5 @@ resources:
   - ./openspeedtest.yaml
   - ./openweathermap-exporter.yaml
   - ./populator-test/ks.yaml
-  - ./smtp-relay/ks.yaml
+  - ./smtp-relay.yaml
   - ./zigbee2mqtt/ks.yaml

@@ -11,7 +11,7 @@ spec:
     - name: longhorn
       namespace: storage
   interval: 1h
-  path: ./kubernetes/network/apps/default/smtp-relay/app
+  path: ./kubernetes/apps/base/default/smtp-relay
   prune: true
   sourceRef:
     kind: GitRepository
