@@ -6,13 +6,13 @@ metadata:
   name: docmost
 spec:
   components:
-    - ../../../../components/gatus/guarded
-    - ../../../../components/volsync
+    - ../../../../main/components/gatus/guarded
+    - ../../../../main/components/volsync
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: dbms
   interval: 1h
-  path: ./kubernetes/main/apps/default/docmost/app
+  path: ./kubernetes/base/apps/default/docmost
   postBuild:
     substitute:
       APP: docmost
