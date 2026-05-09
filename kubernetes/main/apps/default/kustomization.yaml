@@ -23,7 +23,7 @@ resources:
   - ./opnsense-backup.yaml
   - ./picoshare.yaml
   - ./populator-test/ks.yaml
-  - ./static-web/ks.yaml
+  - ./static-web.yaml
   - ./tautulli/ks.yaml
   - ./syncthing/ks.yaml
   - ./whoami/ks.yaml

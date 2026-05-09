@@ -6,7 +6,7 @@ metadata:
   name: static-web
 spec:
   interval: 1h
-  path: ./kubernetes/main/apps/default/static-web/app
+  path: ./kubernetes/apps/base/default/static-web
   prune: true
   sourceRef:
     kind: GitRepository
