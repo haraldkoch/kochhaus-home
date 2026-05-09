@@ -8,7 +8,7 @@ spec:
   components:
     - ../../../../components/gatus/guarded
   interval: 1h
-  path: ./kubernetes/main/apps/default/oidctest/app
+  path: ./kubernetes/apps/base/default/oidctest
   postBuild:
     substitute:
       APP: oidctest
