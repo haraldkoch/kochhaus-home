@@ -13,7 +13,7 @@ resources:
   - ./blocky-ui.yaml
   - ./changedetection.yaml
   - ./echo.yaml
-  - ./esphome/ks.yaml
+  - ./esphome.yaml
   - ./hass/ks.yaml
   - ./homer/ks.yaml
   - ./it-tools/ks.yaml
