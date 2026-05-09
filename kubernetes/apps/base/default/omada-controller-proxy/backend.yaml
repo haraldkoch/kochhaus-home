@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/gateway.envoyproxy.io/backend_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: Backend
+metadata:
+  labels:
+    app.kubernetes.io/instance: omada-controller-proxy
+    app.kubernetes.io/name: omada-controller-proxy
+  name: omada-controller-proxy
+spec:
+  endpoints:
+    - fqdn:
+        hostname: omada.${PRIVATE_STATIC_DOMAIN}
+        port: 8043
+  tls:
+    insecureSkipVerify: true

@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: internal-network.${SECRET_DOMAIN}
+  labels:
+    app.kubernetes.io/instance: omada-controller-proxy
+    app.kubernetes.io/name: omada-controller-proxy
+  name: omada-controller-proxy
+spec:
+  hostnames:
+    - ${GATUS_SUBDOMAIN}.${CLUSTER_DOMAIN}
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-internal
+      namespace: network
+  rules:
+    - backendRefs:
+        - group: gateway.envoyproxy.io
+          kind: Backend
+          name: omada-controller-proxy
+          weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /

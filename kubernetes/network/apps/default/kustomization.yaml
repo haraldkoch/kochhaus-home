@@ -24,7 +24,7 @@ resources:
   - ./mqtt-exporter.yaml
   - ./netshoot-iot.yaml
   - ./node-red.yaml
-  - ./omada-controller/ks.yaml
+  - ./omada-controller-proxy.yaml
   - ./openspeedtest/ks.yaml
   - ./openweathermap-exporter/ks.yaml
   - ./populator-test/ks.yaml
