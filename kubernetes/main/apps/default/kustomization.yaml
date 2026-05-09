@@ -21,7 +21,7 @@ resources:
   - ./oidctest.yaml
   - ./onedrive.yaml
   - ./opnsense-backup.yaml
-  - ./picoshare/ks.yaml
+  - ./picoshare.yaml
   - ./populator-test/ks.yaml
   - ./static-web/ks.yaml
   - ./tautulli/ks.yaml

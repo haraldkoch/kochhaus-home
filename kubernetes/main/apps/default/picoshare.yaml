@@ -7,12 +7,12 @@ metadata:
 spec:
   components:
     - ../../../../components/gatus/external
-    - ../../../../components/volsync
+    - ../../../../main/components/volsync
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
-  path: ./kubernetes/main/apps/default/picoshare/app
+  path: ./kubernetes/apps/base/default/picoshare
   postBuild:
     substitute:
       APP: picoshare
