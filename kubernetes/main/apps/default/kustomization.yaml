@@ -27,4 +27,4 @@ resources:
   - ./syncthing.yaml
   - ./tautulli.yaml
   - ./whoami.yaml
-  - ./your-spotify/ks.yaml
+  - ./your-spotify.yaml
