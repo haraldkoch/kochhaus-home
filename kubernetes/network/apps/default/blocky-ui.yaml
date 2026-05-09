@@ -8,7 +8,7 @@ spec:
   components:
     - ../../../../components/gatus/guarded
   interval: 1h
-  path: ./kubernetes/network/apps/default/blocky-ui/app
+  path: ./kubernetes/apps/base/default/blocky-ui
   postBuild:
     substitute:
       # FIXME

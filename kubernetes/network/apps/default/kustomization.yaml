@@ -10,7 +10,7 @@ components:
 resources:
   - ./namespace.yaml
   - ./bentopdf.yaml
-  - ./blocky-ui/ks.yaml
+  - ./blocky-ui.yaml
   - ./changedetection/ks.yaml
   - ./echo.yaml
   - ./esphome/ks.yaml
