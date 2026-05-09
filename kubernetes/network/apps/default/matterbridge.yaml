@@ -7,14 +7,14 @@ metadata:
 spec:
   components:
     - ../../../../components/gatus/guarded
-    - ../../../../components/volsync
+    - ../../../../network/components/volsync
   dependsOn:
     - name: multus-networks
       namespace: network
     - name: volsync
       namespace: storage
   interval: 1h
-  path: ./kubernetes/network/apps/default/matterbridge/app
+  path: ./kubernetes/apps/base/default/matterbridge
   postBuild:
     substitute:
       APP: matterbridge
