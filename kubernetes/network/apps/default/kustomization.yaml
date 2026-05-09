@@ -14,7 +14,7 @@ resources:
   - ./changedetection.yaml
   - ./echo.yaml
   - ./esphome.yaml
-  - ./hass/ks.yaml
+  - ./hassproxy.yaml
   - ./homer/ks.yaml
   - ./it-tools/ks.yaml
   - ./kochhaus-docs/ks.yaml
