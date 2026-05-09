@@ -6,15 +6,15 @@ metadata:
   name: onedrive
 spec:
   components:
-    - ../../../../components/volsync
-    - ../../../../../components/keda/nfs-scaler
+    - ../../../../components/keda/nfs-scaler
+    - ../../../../main/components/volsync
   dependsOn:
     - name: keda
       namespace: observability
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
-  path: ./kubernetes/main/apps/default/onedrive/app
+  path: ./kubernetes/apps/base/default/onedrive
   postBuild:
     substitute:
       APP: onedrive

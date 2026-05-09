@@ -19,7 +19,7 @@ resources:
   - ./media-browser.yaml
   - ./nextcloud.yaml
   - ./oidctest.yaml
-  - ./onedrive/ks.yaml
+  - ./onedrive.yaml
   - ./opnsense-backup/ks.yaml
   - ./picoshare/ks.yaml
   - ./populator-test/ks.yaml

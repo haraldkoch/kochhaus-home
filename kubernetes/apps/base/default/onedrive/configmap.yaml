@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: onedrive
     app.kubernetes.io/instance: onedrive
 data:
-  config: |
+  config: |-
     # Configuration for OneDrive Linux Client
     # This file contains the list of supported configuration fields
     # with their default values.
