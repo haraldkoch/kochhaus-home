@@ -6,7 +6,7 @@ metadata:
   name: mqtt-exporter
 spec:
   interval: 1h
-  path: ./kubernetes/network/apps/default/mqtt-exporter/app
+  path: ./kubernetes/apps/base/default/mqtt-exporter
   prune: true
   sourceRef:
     kind: GitRepository

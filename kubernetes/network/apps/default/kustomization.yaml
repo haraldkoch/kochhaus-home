@@ -21,7 +21,7 @@ resources:
   - ./matter-server.yaml
   - ./matterbridge.yaml
   - ./mosquitto.yaml
-  - ./mqtt-exporter/ks.yaml
+  - ./mqtt-exporter.yaml
   - ./netshoot-iot/ks.yaml
   - ./node-red/ks.yaml
   - ./omada-controller/ks.yaml
