@@ -6,16 +6,16 @@ metadata:
   name: calibre-web
 spec:
   components:
-    - ../../../../components/gatus/external
-    - ../../../../components/keda/nfs-scaler
-    - ../../../../components/volsync
+    - ../../../../main/components/gatus/external
+    - ../../../../main/components/keda/nfs-scaler
+    - ../../../../main/components/volsync
   dependsOn:
     - name: keda
       namespace: observability
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
-  path: ./kubernetes/main/apps/default/calibre-web/app
+  path: ./kubernetes/base/apps/default/calibre-web
   postBuild:
     substitute:
       APP: calibre-web
