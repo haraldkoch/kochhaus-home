@@ -17,7 +17,7 @@ resources:
   - ./filebrowser.yaml
   - ./karakeep.yaml
   - ./media-browser.yaml
-  - ./nextcloud/ks.yaml
+  - ./nextcloud.yaml
   - ./oidctest/ks.yaml
   - ./onedrive/ks.yaml
   - ./opnsense-backup/ks.yaml
