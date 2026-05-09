@@ -18,7 +18,7 @@ resources:
   - ./homer.yaml
   - ./it-tools.yaml
   - ./kochhaus-docs.yaml
-  - ./matter-server/ks.yaml
+  - ./matter-server.yaml
   - ./matterbridge.yaml
   - ./mosquitto/ks.yaml
   - ./mqtt-exporter/ks.yaml
