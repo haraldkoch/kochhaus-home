@@ -15,7 +15,7 @@ resources:
   - ./echo.yaml
   - ./excalidraw.yaml
   - ./filebrowser.yaml
-  - ./karakeep/ks.yaml
+  - ./karakeep.yaml
   - ./media-browser/ks.yaml
   - ./nextcloud/ks.yaml
   - ./oidctest/ks.yaml
