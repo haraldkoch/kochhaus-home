@@ -6,14 +6,14 @@ metadata:
   name: filebrowser
 spec:
   components:
-    - ../../../../main/components/gatus/guarded
+    - ../../../../components/gatus/guarded
     - ../../../../main/components/keda/nfs-scaler
     - ../../../../main/components/volsync
   dependsOn:
     - name: keda
       namespace: observability
   interval: 1h
-  path: ./kubernetes/base/apps/default/filebrowser
+  path: ./kubernetes/apps/base/default/filebrowser
   postBuild:
     substitute:
       APP: filebrowser

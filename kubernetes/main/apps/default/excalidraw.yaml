@@ -6,9 +6,9 @@ metadata:
   name: excalidraw
 spec:
   components:
-    - ../../../../main/components/gatus/external
+    - ../../../../components/gatus/external
   interval: 1h
-  path: ./kubernetes/base/apps/default/excalidraw
+  path: ./kubernetes/apps/base/default/excalidraw
   postBuild:
     substitute:
       APP: excalidraw

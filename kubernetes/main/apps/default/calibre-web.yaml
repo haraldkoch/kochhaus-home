@@ -6,7 +6,7 @@ metadata:
   name: calibre-web
 spec:
   components:
-    - ../../../../main/components/gatus/external
+    - ../../../../components/gatus/external
     - ../../../../main/components/keda/nfs-scaler
     - ../../../../main/components/volsync
   dependsOn:
@@ -15,7 +15,7 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
-  path: ./kubernetes/base/apps/default/calibre-web
+  path: ./kubernetes/apps/base/default/calibre-web
   postBuild:
     substitute:
       APP: calibre-web

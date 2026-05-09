@@ -6,7 +6,7 @@ metadata:
   name: reloader
 spec:
   interval: 1h
-  path: ./kubernetes/base/apps/tools/reloader
+  path: ./kubernetes/apps/base/tools/reloader
   prune: true
   sourceRef:
     kind: GitRepository

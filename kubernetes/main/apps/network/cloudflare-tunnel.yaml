@@ -6,7 +6,7 @@ metadata:
   name: cloudflare-tunnel
 spec:
   interval: 1h
-  path: ./kubernetes/base/apps/network/cloudflare-tunnel
+  path: ./kubernetes/apps/base/network/cloudflare-tunnel
   prune: true
   postBuild:
     substitute:

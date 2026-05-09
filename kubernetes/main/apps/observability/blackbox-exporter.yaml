@@ -6,7 +6,7 @@ metadata:
   name: blackbox-exporter
 spec:
   interval: 1h
-  path: ./kubernetes/base/apps/observability/blackbox-exporter
+  path: ./kubernetes/apps/base/observability/blackbox-exporter
   prune: true
   sourceRef:
     kind: GitRepository

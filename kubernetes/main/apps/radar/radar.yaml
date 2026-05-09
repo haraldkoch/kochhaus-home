@@ -6,9 +6,9 @@ metadata:
   name: radar
 spec:
   components:
-    - ../../../components/gatus/guarded
+    - ../../../../components/gatus/guarded
   interval: 1h
-  path: ./kubernetes/base/apps/radar/radar
+  path: ./kubernetes/apps/base/radar/radar
   postBuild:
     substitute:
       APP: radar

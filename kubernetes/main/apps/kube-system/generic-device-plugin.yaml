@@ -6,7 +6,7 @@ metadata:
   name: generic-device-plugin
 spec:
   interval: 1h
-  path: ./kubernetes/base/apps/kube-system/generic-device-plugin
+  path: ./kubernetes/apps/base/kube-system/generic-device-plugin
   prune: true
   sourceRef:
     kind: GitRepository

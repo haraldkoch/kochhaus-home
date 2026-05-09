@@ -6,13 +6,13 @@ metadata:
   name: karakeep
 spec:
   components:
-    - ../../../../main/components/gatus/external
+    - ../../../../components/gatus/external
     - ../../../../main/components/volsync
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
-  path: ./kubernetes/base/apps/default/karakeep
+  path: ./kubernetes/apps/base/default/karakeep
   postBuild:
     substitute:
       APP: karakeep

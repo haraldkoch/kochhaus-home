@@ -6,7 +6,7 @@ metadata:
   name: tuppr
 spec:
   interval: 1h
-  path: ./kubernetes/base/apps/system-upgrade/tuppr
+  path: ./kubernetes/apps/base/system-upgrade/tuppr
   postBuild:
     substitute:
       REPLICAS: "2"
