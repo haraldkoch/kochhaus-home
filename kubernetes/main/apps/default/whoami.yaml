@@ -8,7 +8,7 @@ spec:
   components:
     - ../../../../components/gatus/external
   interval: 1h
-  path: ./kubernetes/main/apps/default/whoami/app
+  path: ./kubernetes/apps/base/default/whoami
   postBuild:
     substitute:
       APP: whoami
