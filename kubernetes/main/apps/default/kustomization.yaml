@@ -10,6 +10,7 @@ components:
 resources:
   - ./namespace.yaml
   - ./media-nfs.yaml
+  - ./bookboss.yaml
   - ./calibre-web.yaml
   - ./docmost.yaml
   - ./echo.yaml
