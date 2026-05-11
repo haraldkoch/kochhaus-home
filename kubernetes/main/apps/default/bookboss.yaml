@@ -6,7 +6,7 @@ metadata:
   name: bookboss
 spec:
   components:
-    - ../../../../components/gatus/external
+    - ../../../../components/gatus/guarded
     - ../../../../components/keda/nfs-scaler
     - ../../../../main/components/volsync
   dependsOn:
