@@ -14,8 +14,13 @@ spec:
   path: ./kubernetes/main/apps/observability/kube-prometheus-stack/app
   postBuild:
     substitute:
+      CLUSTER: ${CLUSTER}
       APP: kube-prometheus-stack
-      GATUS_SUBDOMAIN: prometheus
+      GATUS_SUBDOMAIN: prometheus-main
+      ALERTMANAGER_SUBDOMAIN: alertmanager-main
+      ALERTMANAGER_PEER: amcluster-network
+      PROMETHEUS_SUBDOMAIN: prometheus-main
+      STORAGECLASS: ceph-block
   prune: true
   sourceRef:
     kind: GitRepository

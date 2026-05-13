@@ -3,12 +3,15 @@
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:
-  name: node-exporter
+  name: blocky
 spec:
   staticConfigs:
     - targets:
-        - ${BACKUP_SERVER}:9100
-        - 192.168.20.1:9100
-        - pikvm1.home.arpa:9100
-        - pikvm2.home.arpa:9100
+        - blocky1.${PRIVATE_STATIC_DOMAIN}:4000
+        - blocky2.${PRIVATE_STATIC_DOMAIN}:4000
   metricsPath: /metrics
+  relabelings:
+  - sourceLabels: [__address__]
+    targetLabel: alias
+    regex: ([^\.]*)\..*
+    replacement: $1

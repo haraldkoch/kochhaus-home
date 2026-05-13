@@ -20,7 +20,7 @@ spec:
           - name: alertname
             value: InfoInhibitor
             matchType: =
-      - receiver: heartbeat-main
+      - receiver: heartbeat-${CLUSTER}
         groupInterval: 5m
         groupWait: 0s
         repeatInterval: 1h
@@ -47,7 +47,7 @@ spec:
           matchType: =
   receivers:
     - name: blackhole
-    - name: heartbeat-main
+    - name: heartbeat-${CLUSTER}
       webhookConfigs:
         - urlSecret:
             name: &secret alertmanager-secret

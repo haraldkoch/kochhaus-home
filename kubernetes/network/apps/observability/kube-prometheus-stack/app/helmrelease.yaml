@@ -20,13 +20,13 @@ spec:
         main:
           enabled: true
           hostnames:
-            - alertmanager.${CLUSTER_DOMAIN}
+            - ${ALERTMANAGER_SUBDOMAIN}.${CLUSTER_DOMAIN}
           parentRefs:
             - name: envoy-internal
               namespace: network
       service:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "amcluster-network.${CLUSTER_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: "amcluster-${CLUSTER}.${CLUSTER_DOMAIN}"
           lbipam.cilium.io/ips: "${ALERTMANAGER_IPV4}"
         externalTrafficPolicy: Local
         ipDualStack:
@@ -43,20 +43,19 @@ spec:
         type: LoadBalancer
       alertmanagerSpec:
         additionalPeers:
-          - amcluster-main.${CLUSTER_DOMAIN}:9094
-          # - amcluster-uvt.${CLUSTER_DOMAIN}:9094
+          - ${ALERTMANAGER_PEER}.${CLUSTER_DOMAIN}:9094
         alertmanagerConfiguration:
           name: alertmanager
           global:
             resolveTimeout: 5m
         clusterAdvertiseAddress: "${ALERTMANAGER_IPV4}:9094"
         clusterLabel: kochhaus
-        externalUrl: https://alertmanager.${CLUSTER_DOMAIN}
+        externalUrl: https://${ALERTMANAGER_SUBDOMAIN}.${CLUSTER_DOMAIN}
         forceEnableClusterMode: true
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: longhorn
+              storageClassName: ${STORAGECLASS}
               resources:
                 requests:
                   storage: 50Mi
@@ -77,12 +76,12 @@ spec:
         main:
           enabled: true
           hostnames:
-            - prometheus.${CLUSTER_DOMAIN}
+            - ${PROMETHEUS_SUBDOMAIN}.${CLUSTER_DOMAIN}
           parentRefs:
             - name: envoy-internal
               namespace: network
       prometheusSpec:
-        externalUrl: https://prometheus.${CLUSTER_DOMAIN}
+        externalUrl: https://${PROMETHEUS_SUBDOMAIN}.${CLUSTER_DOMAIN}
         version: v2.55.1 # override 'unsupported Prometheus version' error
         image:
           registry: mirror.gcr.io
@@ -99,36 +98,32 @@ spec:
         scrapeConfigSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         retention: 14d
-        retentionSize: 25GB
+        retentionSize: 50GB
         externalLabels:
-          cluster: network
+          cluster: ${CLUSTER}
         additionalAlertManagerConfigs:
           - scheme: http
             static_configs:
               - targets:
-                  - "amcluster-main.${CLUSTER_DOMAIN}:9093"
+                  - "${ALERTMANAGER_PEER}.${CLUSTER_DOMAIN}:9093"
                 labels:
-                  server: amcluster-main.${CLUSTER_DOMAIN}
+                  server: ${ALERTMANAGER_PEER}.${CLUSTER_DOMAIN}
                   # - targets:
                   #     - "amcluster-uvt.${CLUSTER_DOMAIN}:9093"
                   #   labels:
                   #     server: amcluster-uvt.${CLUSTER_DOMAIN}
-        podMetadata:
-          labels:
-            # label corresponds to the netpol installed by dragonfly
-            control-plane: controller-manager
         resources:
           requests:
             cpu: 100m
           limits:
-            memory: 1Gi
+            memory: 1500Mi
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: longhorn
+              storageClassName: ${STORAGECLASS}
               resources:
                 requests:
-                  storage: 25Gi
+                  storage: 50Gi
     prometheusOperator:
       resources:
         requests:
@@ -172,6 +167,14 @@ spec:
               targetLabel: kubernetes_node
     grafana:
       enabled: false
+      forceDeployDashboards: true
+      sidecar:
+        dashboards:
+          annotations:
+            grafana_folder: Prometheus
+          multicluster:
+            etcd:
+              enabled: true
     additionalPrometheusRulesMap:
       dockerhub-rules:
         groups:

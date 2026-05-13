@@ -20,13 +20,13 @@ spec:
         main:
           enabled: true
           hostnames:
-            - alertmanager-main.${CLUSTER_DOMAIN}
+            - ${ALERTMANAGER_SUBDOMAIN}.${CLUSTER_DOMAIN}
           parentRefs:
             - name: envoy-internal
               namespace: network
       service:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "amcluster-main.${CLUSTER_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: "amcluster-${CLUSTER}.${CLUSTER_DOMAIN}"
           lbipam.cilium.io/ips: "${ALERTMANAGER_IPV4}"
         externalTrafficPolicy: Local
         ipDualStack:
@@ -43,20 +43,19 @@ spec:
         type: LoadBalancer
       alertmanagerSpec:
         additionalPeers:
-          - amcluster-network.${CLUSTER_DOMAIN}:9094
-          # - amcluster-uvt.${CLUSTER_DOMAIN}:9094
+          - ${ALERTMANAGER_PEER}.${CLUSTER_DOMAIN}:9094
         alertmanagerConfiguration:
           name: alertmanager
           global:
             resolveTimeout: 5m
         clusterAdvertiseAddress: "${ALERTMANAGER_IPV4}:9094"
         clusterLabel: kochhaus
-        externalUrl: https://alertmanager-main.${CLUSTER_DOMAIN}
+        externalUrl: https://${ALERTMANAGER_SUBDOMAIN}.${CLUSTER_DOMAIN}
         forceEnableClusterMode: true
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: ceph-block
+              storageClassName: ${STORAGECLASS}
               resources:
                 requests:
                   storage: 50Mi
@@ -77,12 +76,12 @@ spec:
         main:
           enabled: true
           hostnames:
-            - prometheus-main.${CLUSTER_DOMAIN}
+            - ${PROMETHEUS_SUBDOMAIN}.${CLUSTER_DOMAIN}
           parentRefs:
             - name: envoy-internal
               namespace: network
       prometheusSpec:
-        externalUrl: https://prometheus-main.${CLUSTER_DOMAIN}
+        externalUrl: https://${PROMETHEUS_SUBDOMAIN}.${CLUSTER_DOMAIN}
         version: v2.55.1 # override 'unsupported Prometheus version' error
         image:
           registry: mirror.gcr.io
@@ -101,14 +100,14 @@ spec:
         retention: 14d
         retentionSize: 50GB
         externalLabels:
-          cluster: main
+          cluster: ${CLUSTER}
         additionalAlertManagerConfigs:
           - scheme: http
             static_configs:
               - targets:
-                  - "amcluster-network.${CLUSTER_DOMAIN}:9093"
+                  - "${ALERTMANAGER_PEER}.${CLUSTER_DOMAIN}:9093"
                 labels:
-                  server: amcluster-network.${CLUSTER_DOMAIN}
+                  server: ${ALERTMANAGER_PEER}.${CLUSTER_DOMAIN}
                   # - targets:
                   #     - "amcluster-uvt.${CLUSTER_DOMAIN}:9093"
                   #   labels:
@@ -121,7 +120,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: ceph-block
+              storageClassName: ${STORAGECLASS}
               resources:
                 requests:
                   storage: 50Gi
