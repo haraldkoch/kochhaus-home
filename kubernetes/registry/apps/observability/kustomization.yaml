@@ -10,3 +10,4 @@ components:
 resources:
   - ./namespace.yaml
   - ./node-exporter/ks.yaml
+  - ./smartctl-exporter.yaml
