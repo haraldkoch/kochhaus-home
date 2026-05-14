@@ -65,7 +65,7 @@ releases:
   - name: onepassword
     namespace: security
     chart: oci://ghcr.io/bjw-s-labs/helm/app-template
-    version: 5.0.0
+    version: 5.0.1
     values:
       - ./templates/values.yaml.gotmpl
     hooks:
