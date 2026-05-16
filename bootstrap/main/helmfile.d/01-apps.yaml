@@ -18,7 +18,7 @@ releases:
         command: bash
         args:
           - -c
-          - until kubectl get crd ciliumloadbalancerippools.cilium.io ciliuml2announcementpolicies.cilium.io ciliumbgpadvertisements.cilium.io ciliumbgppeerconfigs.cilium.io ciliumbgpclusterconfigs.cilium.io &>/dev/null; do sleep 5; done
+          - until kubectl --context main get crd ciliumloadbalancerippools.cilium.io ciliuml2announcementpolicies.cilium.io ciliumbgpadvertisements.cilium.io ciliumbgppeerconfigs.cilium.io ciliumbgpclusterconfigs.cilium.io &>/dev/null; do sleep 5; done
         events:
           - postsync
         showlogs: true
@@ -26,6 +26,7 @@ releases:
         command: kubectl
         args:
           - apply
+          - --context=main
           - --namespace=kube-system
           - --server-side
           - --field-manager=kustomize-controller
@@ -39,7 +40,7 @@ releases:
     chart: oci://ghcr.io/coredns/charts/coredns
     version: 1.45.2
     values:
-      - ./templates/values.yaml.gotmpl
+      - ./templates/values-base.yaml.gotmpl
     needs:
       - kube-system/cilium
 
@@ -48,21 +49,21 @@ releases:
     chart: oci://quay.io/jetstack/charts/cert-manager
     version: v1.20.2
     values:
-      - ./templates/values.yaml.gotmpl
+      - ./templates/values-base.yaml.gotmpl
     needs:
       - kube-system/coredns
 
   - name: external-secrets
-    namespace: external-secrets
+    namespace: security
     chart: oci://ghcr.io/external-secrets/charts/external-secrets
     version: 2.5.0
     values:
-      - ./templates/values.yaml.gotmpl
+      - ./templates/values-base.yaml.gotmpl
     needs:
       - cert-manager/cert-manager
 
   - name: onepassword
-    namespace: external-secrets
+    namespace: security
     chart: oci://ghcr.io/bjw-s-labs/helm/app-template
     version: 5.0.1
     values:
@@ -72,7 +73,7 @@ releases:
         command: bash
         args:
           - -c
-          - until kubectl get crd clustersecretstores.external-secrets.io &>/dev/null; do sleep 5; done
+          - until kubectl --context main get crd clustersecretstores.external-secrets.io &>/dev/null; do sleep 5; done
         events:
           - postsync
         showlogs: true
@@ -80,14 +81,15 @@ releases:
         command: kubectl
         args:
           - apply
+          - --context=main
           - --server-side
           - --field-manager=kustomize-controller
-          - --filename=../../../kubernetes/main/apps/external-secrets/onepassword/app/clustersecretstore.yaml
+          - --filename=../../../kubernetes/main/apps/security/onepassword/app/clustersecretstore.yaml
         events:
           - postsync
         showlogs: true
     needs:
-      - external-secrets/external-secrets
+      - security/external-secrets
 
   - name: flux-operator
     namespace: flux-system
@@ -96,7 +98,7 @@ releases:
     values:
       - ./templates/values.yaml.gotmpl
     needs:
-      - external-secrets/onepassword
+      - security/onepassword
 
   - name: flux-instance
     namespace: flux-system
