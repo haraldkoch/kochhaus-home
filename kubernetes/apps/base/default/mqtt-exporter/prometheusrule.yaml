@@ -10,7 +10,7 @@ spec:
       rules:
         - alert: ZigbeeDeviceAbsent
           expr: |-
-            (time() - mqtt_linkquality_ts) > 86400
+            mqtt_zigbee_availability < 1 AND (time() - mqtt_linkquality_ts) > 86400
           annotations:
             summary: >-
               Device {{ $labels.topic }} has not been seen in over a day.
