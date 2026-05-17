@@ -14,30 +14,7 @@ TALOS_DIR = "{{config_root}}/talos"
 TASK_X_ENV_PRECEDENCE = 1
 TASK_X_MAP_VARIABLES = 0
 
-_.python.venv = { path = "{{config_root}}/.venv", create = true }
-
-[settings]
-pipx_uvx = true
-
 [tools]
-"aqua:astral-sh/uv" = "0.11.14"
-"pipx:flux-local" = "8.2.0"
+"uv" = "latest"
+"pipx:flux-local" = "latest"
 
-"aqua:cilium/cilium-cli" = "0.19.2"
-"aqua:cli/cli" = "2.92.0"
-"aqua:cloudflare/cloudflared" = "2026.5.0"
-"aqua:FiloSottile/age" = "1.3.1"
-"aqua:fluxcd/flux2" = "2.8.7"
-"aqua:getsops/sops" = "3.13.0"
-"aqua:go-task/task" = "3.50.0"
-"aqua:google/yamlfmt" = "0.21.0"
-"aqua:helm/helm" = "4.2.0"
-"aqua:helmfile/helmfile" = "1.5.1"
-"aqua:jqlang/jq" = "1.8.0"
-"aqua:kubernetes-sigs/kustomize" = "5.6.0"
-"aqua:kubernetes/kubectl" = "1.33.1"
-"aqua:mikefarah/yq" = "4.53.2"
-"aqua:mitsuhiko/minijinja" = "2.19.0"
-"aqua:siderolabs/talos" = "1.13.2"
-"aqua:yannh/kubeconform" = "0.7.0"
-"aqua:sigstore/cosign" = "3.0.6"
