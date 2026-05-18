@@ -11,7 +11,7 @@ spec:
       - envFrom:
           - secretRef:
               name: tekton-results-postgres
-        image: ghcr.io/haraldkoch/postgres-init:18.3@sha256:01c1b0418ad5dba25ceff7a86dbf9bde551464e9670b59820e6d7c32e506d9a7
+        image: ghcr.io/haraldkoch/postgres-init:18.4@sha256:2afd59dcc153c6ff909a20bb0f76a97dae8973c0d4061b96087254bb30a5fcce
         name: init-db
         securityContext:
           allowPrivilegeEscalation: false
