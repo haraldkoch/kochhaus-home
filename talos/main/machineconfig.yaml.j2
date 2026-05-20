@@ -183,6 +183,13 @@ cluster:
       enable-aggregator-routing: "true"
       feature-gates: ImageVolume=true
     image: registry.k8s.io/kube-apiserver:v1.36.1
+    #
+    # This might avoid the new talos OOM killer - which I have disabled.
+    # resources:
+    #   requests:
+    #     memory: 3Gi
+    #   limits:
+    #     memory: 3Gi
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
