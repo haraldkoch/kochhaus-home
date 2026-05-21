@@ -2,12 +2,6 @@
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   packageRules: [
     {
-      description: "Loose versioning for non-semver packages",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/plex/"],
-      versioning: "loose"
-    },
-    {
       description: "Custom schedule for noisy packages",
       matchDataSources: ["docker"],
       matchPackageNames: ["/cloudnative-pg/", "/n8n/", "/omada-controller/", "/reloader/"],
