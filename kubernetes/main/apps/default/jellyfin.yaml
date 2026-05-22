@@ -8,7 +8,7 @@ spec:
   components:
     - ../../../../components/gatus/guarded
     - ../../../../components/keda/nfs-scaler
-    - ../../../../components/volsync
+    - ../../../../main/components/volsync
   dependsOn:
     - name: intel-gpu-resource-driver
       namespace: kube-system
@@ -17,13 +17,13 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
-  path: ./kubernetes/main/apps/default/jellyfin/app
+  path: ./kubernetes/apps/base/default/jellyfin
   postBuild:
     substitute:
       APP: jellyfin
       GATUS_SUBDOMAIN: jellyfin
       VOLSYNC_CAPACITY: 10Gi
-      VOLSYNC_CLAIM: jellyfin-config-v1
+      VOLSYNC_CLAIM: jellyfin
       VOLSYNC_GID: "2000"
       VOLSYNC_UID: "2000"
   prune: true

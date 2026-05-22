@@ -16,6 +16,7 @@ resources:
   - ./echo.yaml
   - ./excalidraw.yaml
   - ./filebrowser.yaml
+  - ./jellyfin.yaml
   - ./karakeep.yaml
   - ./media-browser.yaml
   - ./nextcloud.yaml
