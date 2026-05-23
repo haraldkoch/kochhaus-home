@@ -11,7 +11,7 @@ resources:
   - ./namespace.yaml
   - ./blackbox-exporter.yaml
   - ./dnssec-exporter/ks.yaml
-  - ./fluent-bit/ks.yaml
+  - ./fluent-bit.yaml
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
   - ./json-exporter/ks.yaml

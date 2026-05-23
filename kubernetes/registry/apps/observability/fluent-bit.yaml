@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: fluent-bit
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/base/observability/fluent-bit
+  postBuild:
+    substitute:
+      CLUSTER: ${CLUSTER}
+      CLUSTER_DOMAIN: ${CLUSTER_DOMAIN}
+      OUTPUT_HOST: victoria-logs.${CLUSTER_DOMAIN}
+      OUTPUT_PORT: "443"
+      OUTPUT_TLS: "on"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: observability
+  wait: false

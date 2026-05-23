@@ -9,5 +9,6 @@ components:
 
 resources:
   - ./namespace.yaml
+  - ./fluent-bit.yaml
   - ./node-exporter/ks.yaml
   - ./smartctl-exporter.yaml

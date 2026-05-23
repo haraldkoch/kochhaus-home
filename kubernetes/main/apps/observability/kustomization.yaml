@@ -10,7 +10,7 @@ components:
 resources:
   - ./namespace.yaml
   - ./blackbox-exporter.yaml
-  - ./fluent-bit/ks.yaml
+  - ./fluent-bit.yaml
   - ./gatus/ks.yaml
   - ./goldpinger/ks.yaml
   - ./grafana/ks.yaml
