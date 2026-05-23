@@ -274,6 +274,11 @@ spec:
     route:
       main:
         enabled: true
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Server Monitoring Dashboards
+          gethomepage.dev/group: Monitoring
+          gethomepage.dev/icon: grafana
         hostnames:
           - "grafana.${CLUSTER_DOMAIN}"
         parentRefs:
