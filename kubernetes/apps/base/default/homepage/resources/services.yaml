@@ -53,3 +53,12 @@
           type: plex
           url: http://${MEDIA_SERVER}:32400
           key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
+- Monitoring:
+    - Uptime-Kuma:
+        href: https://uptime.${SECRET_INTERNAL_DOMAIN}
+        siteMonitor: https://uptime.${SECRET_INTERNAL_DOMAIN}
+        description: External Monitoring
+        widget:
+          type: uptimekuma
+          url: https://uptime.${SECRET_INTERNAL_DOMAIN}
+          slug: default

@@ -105,6 +105,11 @@ spec:
                 targetLabel: instance
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Cluster Status
+          gethomepage.dev/group: Monitoring
+          gethomepage.dev/icon: gatus
         hostnames:
           - status-network.${CLUSTER_DOMAIN}
         parentRefs:
