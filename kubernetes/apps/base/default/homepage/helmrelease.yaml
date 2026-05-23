@@ -22,7 +22,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gethomepage/homepage
-              tag: v1.4.2
+              tag: v1.13.1
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               HOMEPAGE_ALLOWED_HOSTS: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
