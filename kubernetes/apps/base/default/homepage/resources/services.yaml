@@ -2,6 +2,7 @@
 - Home:
     - HomeAssistant:
         href: https://ha.${CLUSTER_DOMAIN}
+        siteMonitor: https://ha.${CLUSTER_DOMAIN}
         icon: home-assistant.png
         description: Home Assistant
         widget:
@@ -26,6 +27,22 @@
         href: https://pikvm2.home.arpa
         siteMonitor: https://pikvm2.home.arpa
         icon: pikvm.png
+    - Omada:
+        href: https://omada.${CLUSTER_DOMAIN}
+        siteMonitor: https://omada.${CLUSTER_DOMAIN}
+        icon: omada.png
+        description: Omada Controller
+        widget:
+          type: omada
+          url: https://omada.${PRIVATE_STATIC_DOMAIN}:8043/
+          username: "{{HOMEPAGE_VAR_OMADA_USERNAME}}"
+          password: "{{HOMEPAGE_VAR_OMADA_PASSWORD}}"
+          site: Kochhaus
+          fields:
+            - "connectedSwitches"
+            - "connectedAp"
+            - "activeUser"
+            - "alerts"
 - Media:
     - Plex:
         href: https://${MEDIA_SERVER}
