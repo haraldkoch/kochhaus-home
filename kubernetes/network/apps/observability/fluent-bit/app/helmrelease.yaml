@@ -67,7 +67,7 @@ spec:
           rename k_labels_app.kubernetes.io/name app
           rename k_labels_app app
           rename k_labels_k8s-app app
-          set cluster network
+          set cluster ${CLUSTER}
 
       customParsers: |-
         [PARSER]
@@ -81,9 +81,9 @@ spec:
         [OUTPUT]
           name http
           match kubernetes.*
-          host victoria-logs.${CLUSTER_DOMAIN}
-          port 443
-          tls on
+          host ${OUTPUT_HOST}
+          port ${OUTPUT_PORT}
+          tls ${OUTPUT_TLS}
           uri /insert/jsonline?_stream_fields=stream,k_namespace_name,k_pod_name,app&_msg_field=log&_time_field=date
           format json_lines
           json_date_format iso8601

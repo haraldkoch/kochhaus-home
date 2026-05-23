@@ -7,6 +7,12 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/main/apps/observability/fluent-bit/app
+  postBuild:
+    substitute:
+      CLUSTER: ${CLUSTER}
+      OUTPUT_HOST: victoria-logs.observability.svc.cluster.local
+      OUTPUT_PORT: "9428"
+      OUTPUT_TLS: "off"
   prune: true
   sourceRef:
     kind: GitRepository
