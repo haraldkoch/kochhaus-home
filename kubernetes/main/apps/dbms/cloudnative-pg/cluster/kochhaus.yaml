@@ -8,7 +8,7 @@ metadata:
     kyverno.io/ignore: "true"
 spec:
   # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.7
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.10
   instances: 3
   primaryUpdateStrategy: unsupervised
   storage:
