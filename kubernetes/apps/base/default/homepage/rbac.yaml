@@ -45,6 +45,14 @@ rules:
       - customresourcedefinitions/status
     verbs:
       - get
+  - apiGroups:
+      - gateway.networking.k8s.io
+    resources:
+      - httproutes
+      - gateways
+    verbs:
+      - get
+      - list
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

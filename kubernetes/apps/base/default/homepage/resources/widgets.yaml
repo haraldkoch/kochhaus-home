@@ -2,7 +2,9 @@
 #- logo:
 #    icon: https://raw.githubusercontent.com/LilDrunkenSmurf/k3s-home-cluster/main/icons/lds-transparent.png
 - search:
-    provider: [duckduckgo, google]
+    provider:
+      - duckduckgo
+      - google
     focus: false
     target: _blank
 - greeting:
@@ -27,9 +29,13 @@
     timezone: America/Toronto
     units: metric
     cache: 5
+    format:
+      maximumFractionDigits: 0
 - datetime:
+    locale: en-CA
     text_size: l
     format:
       dateStyle: long
       timeStyle: short
       hourCycle: h23
+      timeZone: America/Toronto

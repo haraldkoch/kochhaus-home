@@ -4,21 +4,27 @@ favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
 theme: dark
 color: slate
 headerStyle: clean
+statusStyle: dot
+useEqualHeights: false
+fiveColumns: true
+quickLaunch:
+  searchDescriptions: true
+  hideInternetSearch: true
+  showSearchSuggestions: true
+  hideVisitURL: true
 layout:
   Calendar:
     style: column
     icon: mdi-calendar
+    initiallyCollapsed: false
   Media:
-    style: row
-    columns: 2
+    style: column
     icon: mdi-play-circle
   Infrastructure:
-    style: row
-    columns: 3
+    style: column
     icon: mdi-server
   Storage:
-    style: row
-    columns: 2
+    style: column
     icon: mdi-desktop-tower
   Home:
     style: column
@@ -27,6 +33,5 @@ layout:
     style: column
     icon: mdi-chart-line
   Downloads:
-    style: row
-    columns: 3
+    style: column
     icon: mdi-download-circle

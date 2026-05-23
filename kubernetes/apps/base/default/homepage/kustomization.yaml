@@ -5,15 +5,19 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./ocirepository.yaml
   - ./rbac.yaml
 configMapGenerator:
   - name: homepage-config
     files:
-      - bookmarks.yaml=./resources/bookmarks.yaml.txt
+      - bookmarks.yaml=./resources/bookmarks.yaml
       - docker.yaml=./resources/docker.yaml
       - kubernetes.yaml=./resources/kubernetes.yaml
-      - services.yaml=./resources/services.yaml.txt
+      - proxmox.yaml=./resources/proxmox.yaml
+      - services.yaml=./resources/services.yaml
       - settings.yaml=./resources/settings.yaml
-      - widgets.yaml=./resources/widgets.yaml.txt
+      - widgets.yaml=./resources/widgets.yaml
+      - custom.css=./resources/custom.css
+      - custom.js=./resources/custom.js
 generatorOptions:
   disableNameSuffixHash: true

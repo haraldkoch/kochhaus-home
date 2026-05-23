@@ -1,0 +1,38 @@
+---
+- Home:
+    - HomeAssistant:
+        href: https://ha.${CLUSTER_DOMAIN}
+        icon: home-assistant.png
+        description: Home Assistant
+        widget:
+          type: homeassistant
+          url: http://homeassistant.home.arpa:8123
+          key: "{{HOMEPAGE_VAR_HASS_TOKEN}}"
+- Infrastructure:
+    # - Cloudflared:
+    #     href: https://dash.cloudflare.com/
+    #     icon: cloudflare-zero-trust.png
+    #     description: Cloudflared Tunnel
+    #     widget:
+    #       type: cloudflared
+    #       accountid: {{HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID}}
+    #       tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
+    #       key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
+    - PiKVM (Jezebel):
+        href: https://pikvm1.home.arpa
+        siteMonitor: https://pikvm1.home.arpa
+        icon: pikvm.png
+    - PiKVM (Mnemosyne):
+        href: https://pikvm2.home.arpa
+        siteMonitor: https://pikvm2.home.arpa
+        icon: pikvm.png
+- Media:
+    - Plex:
+        href: https://${MEDIA_SERVER}
+        siteMonitor: https://${MEDIA_SERVER}
+        icon: plex.png
+        description: Kochhaus Media Server
+        widget:
+          type: plex
+          url: http://${MEDIA_SERVER}:32400
+          key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
