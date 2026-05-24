@@ -185,7 +185,7 @@ services:
     icon: fas fa-robot
     items:
       - name: Siren
-        logo: https://github.com/shamubernetes/siren/blob/main/public/favicon.svg
+        logo: https://raw.githubusercontent.com/shamubernetes/siren/refs/heads/main/public/favicon.svg
         url: https://siren.${SECRET_DOMAIN}
         subtitle: Alerts Dashboard
       - name: Gatus
