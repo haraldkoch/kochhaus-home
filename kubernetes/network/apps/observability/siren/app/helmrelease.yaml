@@ -68,12 +68,6 @@ spec:
             port: *port
     route:
       app:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Siren - Prometheus Alerts
-          gethomepage.dev/group: Observability
-          gethomepage.dev/icon: alertmanager
-          gethomepage.dev/name: Prometheus Alerts UI
         hostnames:
           - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
         parentRefs:

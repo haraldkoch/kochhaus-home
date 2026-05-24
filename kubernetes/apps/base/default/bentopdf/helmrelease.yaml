@@ -46,12 +46,6 @@ spec:
             port: 8080
     route:
       app:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: PDF Manipulation Tools
-          gethomepage.dev/group: Tools
-          gethomepage.dev/icon: sh-bentopdf
-          gethomepage.dev/name: Bento PDF
         hostnames:
           - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
         parentRefs:

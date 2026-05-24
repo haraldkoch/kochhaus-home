@@ -19,12 +19,6 @@ spec:
       route:
         main:
           enabled: true
-          annotations:
-            gethomepage.dev/enabled: "true"
-            gethomepage.dev/description: Prometheus Alerts
-            gethomepage.dev/group: Observability
-            gethomepage.dev/icon: alertmanager
-            gethomepage.dev/name: Prometheus Alert Manager
           hostnames:
             - ${ALERTMANAGER_SUBDOMAIN}.${CLUSTER_DOMAIN}
           parentRefs:
@@ -80,14 +74,6 @@ spec:
     prometheus:
       route:
         main:
-          annotations:
-            gethomepage.dev/enabled: "true"
-            gethomepage.dev/description: Prometheus Metrics
-            gethomepage.dev/group: Observability
-            gethomepage.dev/icon: prometheus
-            gethomepage.dev/name: Prometheus Metrics
-            gethomepage.dev/widget.type: prometheus
-            gethomepage.dev/widget.url: http://prometheus.observability.svc.cluster.local:9090
           enabled: true
           hostnames:
             - ${PROMETHEUS_SUBDOMAIN}.${CLUSTER_DOMAIN}

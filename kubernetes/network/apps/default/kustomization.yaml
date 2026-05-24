@@ -15,7 +15,6 @@ resources:
   - ./echo.yaml
   - ./esphome.yaml
   - ./hassproxy.yaml
-  - ./homepage.yaml
   - ./homer.yaml
   - ./it-tools.yaml
   - ./kochhaus-docs.yaml

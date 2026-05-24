@@ -106,12 +106,6 @@ spec:
             port: 12321
     route:
       app:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: ESP32 Device Management
-          gethomepage.dev/group: Home
-          gethomepage.dev/icon: sh-esphome
-          gethomepage.dev/name: ESPHome
         hostnames:
           - esphome.${CLUSTER_DOMAIN}
         parentRefs:
@@ -121,12 +115,6 @@ spec:
           - backendRefs:
               - identifier: app
       code-server:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: ESPHome Code Editor
-          gethomepage.dev/group: Home
-          gethomepage.dev/icon: vscode
-          gethomepage.dev/name: ESPHome Code Editor
         hostnames:
           - esphome-code.${CLUSTER_DOMAIN}
         parentRefs:

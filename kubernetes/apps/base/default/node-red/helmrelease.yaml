@@ -45,12 +45,6 @@ spec:
             port: 1880
     route:
       app:
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/description: Node-RED Flow Editor
-          gethomepage.dev/group: Home
-          gethomepage.dev/icon: sh-node-red
-          gethomepage.dev/name: Node-RED
         hostnames:
           - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
         parentRefs:
