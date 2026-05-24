@@ -88,6 +88,12 @@ spec:
             port: *port
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Zigbee Dashboard and Configuration
+          gethomepage.dev/group: Home
+          gethomepage.dev/icon: zigbee2mqtt
+          gethomepage.dev/name: Zigbee2MQTT
         hostnames:
           - "zigbee.${CLUSTER_DOMAIN}"
         parentRefs:

@@ -70,6 +70,12 @@ spec:
             port: 80
     route:
       app:
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/description: Kochhaus Documentation
+          gethomepage.dev/group: Home
+          gethomepage.dev/icon: mdi-book-open-outline
+          gethomepage.dev/name: Kochhaus Docs
         hostnames:
           - "docs.${CLUSTER_DOMAIN}"
         parentRefs:
