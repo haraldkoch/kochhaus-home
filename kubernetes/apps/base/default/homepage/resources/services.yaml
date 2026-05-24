@@ -1,4 +1,14 @@
 ---
+- Development:
+    - ArgoCD:
+        href: https://argocd.${CLUSTER_DOMAIN}
+        siteMonitor: https://argocd.${CLUSTER_DOMAIN}
+        icon: argocd.png
+        description: ArgoCD GitOps
+        widget:
+          type: argocd
+          url: https://argocd.${CLUSTER_DOMAIN}
+          key: "{{HOMEPAGE_VAR_ARGOCD_APIKEY}}"
 - Home:
     - HomeAssistant:
         href: https://ha.${CLUSTER_DOMAIN}
@@ -53,7 +63,7 @@
           type: plex
           url: http://${MEDIA_SERVER}:32400
           key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
-- Monitoring:
+- Observability:
     - Uptime-Kuma:
         href: https://uptime.${SECRET_INTERNAL_DOMAIN}
         siteMonitor: https://uptime.${SECRET_INTERNAL_DOMAIN}

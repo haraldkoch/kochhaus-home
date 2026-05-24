@@ -20,12 +20,6 @@ layout:
   Media:
     style: column
     icon: mdi-play-circle
-  Infrastructure:
-    style: column
-    icon: mdi-server
-  Storage:
-    style: column
-    icon: mdi-desktop-tower
   Home:
     style: column
     icon: mdi-home-analytics
@@ -35,3 +29,12 @@ layout:
   Downloads:
     style: column
     icon: mdi-download-circle
+  Infrastructure:
+    style: column
+    icon: mdi-server
+  Storage:
+    style: column
+    icon: mdi-desktop-tower
+  Development:
+    style: column
+    icon: mdi-laptop-code
