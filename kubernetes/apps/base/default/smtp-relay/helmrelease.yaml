@@ -20,7 +20,7 @@ spec:
           app:
             image:
               repository: ghcr.io/haraldkoch/maddy
-              tag: 0.9.4@sha256:c3021a75a709eb08063d30a9238ccaf84ef9c1620a99582de477a94c8756e45c
+              tag: 0.9.5@sha256:b4b5af56a9b5d2e818d85f94e7f35a0490b6cf6a8790ea1455872077703d166d
             # Docker ENTRYPOINT is missing a dash
             command:
               - "/bin/maddy"
