@@ -39,16 +39,16 @@
     #       accountid: {{HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID}}
     #       tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
     #       key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
-    - LDAP:
-        href: https://lldap.${CLUSTER_DOMAIN}
-        siteMonitor: https://lldap.${CLUSTER_DOMAIN}
-        icon: lldap
-        description: LDAP Directory Service
-    - Longhorn:
-        href: https://longhorn.${CLUSTER_DOMAIN}
-        siteMonitor: https://longhorn.${CLUSTER_DOMAIN}
-        icon: longhorn
-        description: Longhorn Storage Management
+    - Router:
+        href: https://gw.${PRIVATE_STATIC_DOMAIN}
+        siteMonitor: https://gw.${PRIVATE_STATIC_DOMAIN}
+        icon: sh-opnsense
+        description: Internet Router Dashboard
+    - HomeHUB:
+        href: https://192.168.2.1
+        siteMonitor: https://192.168.2.1
+        icon: mdi-hub-outline
+        description: Bell Fibe Gateway
     - PiKVM (Jezebel):
         href: https://pikvm1.home.arpa
         siteMonitor: https://pikvm1.home.arpa
@@ -73,6 +73,11 @@
         #     - "connectedAp"
         #     - "activeUser"
         #     - "alerts"
+    - LDAP:
+        href: https://lldap.${CLUSTER_DOMAIN}
+        siteMonitor: https://lldap.${CLUSTER_DOMAIN}
+        icon: lldap
+        description: LDAP Directory Service
     - Renovate:
         href: https://renovate.${CLUSTER_DOMAIN}
         siteMonitor: https://renovate.${CLUSTER_DOMAIN}
@@ -82,7 +87,12 @@
         href: https://rook.${CLUSTER_DOMAIN}
         siteMonitor: https://rook.${CLUSTER_DOMAIN}
         icon: rook
-        description: Rook-Ceph Dashboard
+        description: Rook-Ceph Storage Dashboard
+    - Longhorn:
+        href: https://longhorn.${CLUSTER_DOMAIN}
+        siteMonitor: https://longhorn.${CLUSTER_DOMAIN}
+        icon: longhorn
+        description: Longhorn Storage Dashboard
 - Media:
     - eBooks:
         href: https://ebooks.${CLUSTER_DOMAIN}
