@@ -13,6 +13,7 @@ spec:
     configs:
       cm:
         admin.enabled: false
+        accounts.readonly: apiKey
         application.resourceTrackingMethod: annotation
         kustomize.buildOptions: --enable-alpha-plugins --enable-helm
         url: https://argocd.${CLUSTER_DOMAIN}
@@ -43,6 +44,7 @@ spec:
 
           g, admins, role:admin
           g, people, role:devs
+          g, readonly, role:readonly
       params:
         application.namespaces: argo,cicd,default
         applicationsetcontroller.namespaces: argo,cicd,default
