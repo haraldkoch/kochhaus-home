@@ -23,12 +23,15 @@ layout:
   Home:
     style: column
     icon: mdi-home-analytics
-  Observability:
+  Tools:
     style: column
-    icon: mdi-chart-line
+    icon: mdi-tools
   Downloads:
     style: column
     icon: mdi-download-circle
+  Observability:
+    style: column
+    icon: mdi-chart-line
   Infrastructure:
     style: column
     icon: mdi-server

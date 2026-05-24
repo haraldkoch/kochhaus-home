@@ -3,17 +3,27 @@
     - ArgoCD:
         href: https://argocd.${CLUSTER_DOMAIN}
         siteMonitor: https://argocd.${CLUSTER_DOMAIN}
-        icon: argocd.png
+        icon: argo-cd
         description: ArgoCD GitOps
         widget:
           type: argocd
           url: https://argocd.${CLUSTER_DOMAIN}
           key: "{{HOMEPAGE_VAR_ARGOCD_APIKEY}}"
+    - PGAdmin:
+        href: https://pgadmin.${CLUSTER_DOMAIN}
+        siteMonitor: https://pgadmin.${CLUSTER_DOMAIN}
+        icon: pgadmin
+        description: PGAdmin Database Management
+    - Tekton:
+        href: https://tekton.${CLUSTER_DOMAIN}
+        siteMonitor: https://tekton.${CLUSTER_DOMAIN}
+        icon: si-tekton-icon
+        description: Tekton Dashboard
 - Home:
     - HomeAssistant:
         href: https://ha.${CLUSTER_DOMAIN}
         siteMonitor: https://ha.${CLUSTER_DOMAIN}
-        icon: home-assistant.png
+        icon: home-assistant
         description: Home Assistant
         widget:
           type: homeassistant
@@ -22,25 +32,35 @@
 - Infrastructure:
     # - Cloudflared:
     #     href: https://dash.cloudflare.com/
-    #     icon: cloudflare-zero-trust.png
+    #     icon: cloudflare-zero-trust
     #     description: Cloudflared Tunnel
     #     widget:
     #       type: cloudflared
     #       accountid: {{HOMEPAGE_VAR_CLOUDFLARED_ACCOUNTID}}
     #       tunnelid: {{HOMEPAGE_VAR_CLOUDFLARED_TUNNELID}}
     #       key: {{HOMEPAGE_VAR_CLOUDFLARED_API_TOKEN}}
+    - LDAP:
+        href: https://lldap.${CLUSTER_DOMAIN}
+        siteMonitor: https://lldap.${CLUSTER_DOMAIN}
+        icon: lldap
+        description: LDAP Directory Service
+    - Longhorn:
+        href: https://longhorn.${CLUSTER_DOMAIN}
+        siteMonitor: https://longhorn.${CLUSTER_DOMAIN}
+        icon: longhorn
+        description: Longhorn Storage Management
     - PiKVM (Jezebel):
         href: https://pikvm1.home.arpa
         siteMonitor: https://pikvm1.home.arpa
-        icon: pikvm.png
+        icon: pikvm
     - PiKVM (Mnemosyne):
         href: https://pikvm2.home.arpa
         siteMonitor: https://pikvm2.home.arpa
-        icon: pikvm.png
+        icon: pikvm
     - Omada:
         href: https://omada.${CLUSTER_DOMAIN}
         siteMonitor: https://omada.${CLUSTER_DOMAIN}
-        icon: omada.png
+        icon: omada
         description: Omada Controller
         # widget:
         #   type: omada
@@ -53,22 +73,112 @@
         #     - "connectedAp"
         #     - "activeUser"
         #     - "alerts"
+    - Renovate:
+        href: https://renovate.${CLUSTER_DOMAIN}
+        siteMonitor: https://renovate.${CLUSTER_DOMAIN}
+        icon: renovate
+        description: Renovate Bot
+    - Rook-Ceph:
+        href: https://rook.${CLUSTER_DOMAIN}
+        siteMonitor: https://rook.${CLUSTER_DOMAIN}
+        icon: rook
+        description: Rook-Ceph Dashboard
 - Media:
+    - eBooks:
+        href: https://ebooks.${CLUSTER_DOMAIN}
+        siteMonitor: https://ebooks.${CLUSTER_DOMAIN}
+        icon: calibre
+        description: Calibre (Web) eBook Management
+    - Jellyfin:
+        href: https://jellyfin.${CLUSTER_DOMAIN}
+        siteMonitor: https://jellyfin.${CLUSTER_DOMAIN}
+        icon: jellyfin
+        description: Jellyfin Media Server
+        widget:
+          type: jellyfin
+          url: https://jellyfin.${CLUSTER_DOMAIN}
+          key: "{{HOMEPAGE_VAR_JELLYFIN_TOKEN}}"
+          enableBlocks: true
+          enableNowPlaying: true
+    - Media-Browser:
+        href: https://media-browser.${CLUSTER_DOMAIN}
+        siteMonitor: https://media-browser.${CLUSTER_DOMAIN}
+        icon: filebrowser
+        description: Browse Media Files
     - Plex:
         href: https://${MEDIA_SERVER}
         siteMonitor: https://${MEDIA_SERVER}
-        icon: plex.png
+        icon: plex
         description: Kochhaus Media Server
         widget:
           type: plex
           url: http://${MEDIA_SERVER}:32400
           key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
+    - Spotify:
+        href: https://spotty.${CLUSTER_DOMAIN}
+        siteMonitor: https://spotty.${CLUSTER_DOMAIN}
+        icon: spotify
+        description: Spotify Listening History
+    - Tautulli:
+        href: https://tautulli.${CLUSTER_DOMAIN}/plexpy/home
+        siteMonitor: https://tautulli.${CLUSTER_DOMAIN}/plexpy/home
+        icon: tautulli
+        description: Plex Media Analytics
 - Observability:
+    - DMARC-Report:
+        href: https://dmarc-report.${CLUSTER_DOMAIN}
+        siteMonitor: https://dmarc-report.${CLUSTER_DOMAIN}
+        icon: mdi-table
+        description: DMARC Email Security Reports
+    - Karma:
+        href: https://karma.${CLUSTER_DOMAIN}
+        siteMonitor: https://karma.${CLUSTER_DOMAIN}
+        icon: mdi-alert-box
+        description: Alert Dashboard
     - Uptime-Kuma:
         href: https://uptime.${SECRET_INTERNAL_DOMAIN}
         siteMonitor: https://uptime.${SECRET_INTERNAL_DOMAIN}
         description: External Monitoring
+        icon: uptime-kuma
         widget:
           type: uptimekuma
           url: https://uptime.${SECRET_INTERNAL_DOMAIN}
           slug: default
+    - Victoria-Logs:
+        href: https://victoria-logs.${CLUSTER_DOMAIN}
+        siteMonitor: https://victoria-logs.${CLUSTER_DOMAIN}
+        icon: victorialogs
+        description: Victoria Metrics Log Visualization
+- Storage:
+    - FileBrowser:
+        href: https://filebrowser.${CLUSTER_DOMAIN}
+        siteMonitor: https://filebrowser.${CLUSTER_DOMAIN}
+        icon: filebrowser
+        description: File Browser
+    - Nextcloud:
+        href: https://cloud.${CLUSTER_DOMAIN}
+        siteMonitor: https://cloud.${CLUSTER_DOMAIN}
+        icon: nextcloud
+        description: Nextcloud Storage
+    - Picoshare:
+        href: https://share.${CLUSTER_DOMAIN}
+        siteMonitor: https://share.${CLUSTER_DOMAIN}
+        icon: mtlynch-picoshare
+        description: Picoshare Temporary File Sharing
+    - Syncthing:
+        href: https://syncthing.${CLUSTER_DOMAIN}
+        siteMonitor: https://syncthing.${CLUSTER_DOMAIN}
+        icon: syncthing
+        description: Syncthing File Synchronization
+- Tools:
+    - Excalidraw:
+        href: https://draw.${CLUSTER_DOMAIN}
+        siteMonitor: https://draw.${CLUSTER_DOMAIN}
+        icon: excalidraw
+        description: Excalidraw Whiteboard
+- Tools:
+    - Karakeep:
+        href: https://karakeep.${CLUSTER_DOMAIN}
+        siteMonitor: https://karakeep.${CLUSTER_DOMAIN}
+        icon: karakeep
+        description: Link / Bookmark Management
