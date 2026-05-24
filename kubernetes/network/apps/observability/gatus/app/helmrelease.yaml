@@ -108,8 +108,11 @@ spec:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Cluster Status
-          gethomepage.dev/group: Monitoring
+          gethomepage.dev/group: Observability
           gethomepage.dev/icon: gatus
+          gethomepage.dev/name: Gatus (Network)
+          gethomepage.dev/widget.type: gatus
+          gethomepage.dev/widget.url: https://status-network.${CLUSTER_DOMAIN}
         hostnames:
           - status-network.${CLUSTER_DOMAIN}
         parentRefs:

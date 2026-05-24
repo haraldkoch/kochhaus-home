@@ -277,8 +277,9 @@ spec:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/description: Server Monitoring Dashboards
-          gethomepage.dev/group: Monitoring
+          gethomepage.dev/group: Observability
           gethomepage.dev/icon: grafana
+          gethomepage.dev/name: Grafana
         hostnames:
           - "grafana.${CLUSTER_DOMAIN}"
         parentRefs:

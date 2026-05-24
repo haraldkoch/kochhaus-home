@@ -100,6 +100,10 @@
           key: "{{HOMEPAGE_VAR_JELLYFIN_TOKEN}}"
           enableBlocks: true
           enableNowPlaying: true
+          fields:
+            - movies
+            - series
+            - episodes
     - Media-Browser:
         href: https://media-browser.${CLUSTER_DOMAIN}
         siteMonitor: https://media-browser.${CLUSTER_DOMAIN}
@@ -114,22 +118,38 @@
           type: plex
           url: http://${MEDIA_SERVER}:32400
           key: "{{HOMEPAGE_VAR_PLEX_TOKEN}}"
+          fields:
+            - streams
+            - movies
+            - tv
     - Spotify:
         href: https://spotty.${CLUSTER_DOMAIN}
         siteMonitor: https://spotty.${CLUSTER_DOMAIN}
         icon: spotify
         description: Spotify Listening History
     - Tautulli:
-        href: https://tautulli.${CLUSTER_DOMAIN}/plexpy/home
-        siteMonitor: https://tautulli.${CLUSTER_DOMAIN}/plexpy/home
+        href: https://tautulli.${CLUSTER_DOMAIN}/plexpy
+        siteMonitor: https://tautulli.${CLUSTER_DOMAIN}/plexpy
         icon: tautulli
         description: Plex Media Analytics
+        widget:
+          type: tautulli
+          url: https://tautulli.${CLUSTER_DOMAIN}/plexpy
+          key: "{{HOMEPAGE_VAR_TAUTULLI_TOKEN}}"
 - Observability:
     - DMARC-Report:
         href: https://dmarc-report.${CLUSTER_DOMAIN}
         siteMonitor: https://dmarc-report.${CLUSTER_DOMAIN}
         icon: mdi-table
         description: DMARC Email Security Reports
+    - Gatus:
+        href: https://gatus.${CLUSTER_DOMAIN}
+        siteMonitor: https://gatus.${CLUSTER_DOMAIN}
+        icon: gatus
+        description: Internal Service Monitoring
+        widget:
+          type: gatus
+          url: https://gatus.${CLUSTER_DOMAIN}
     - Karma:
         href: https://karma.${CLUSTER_DOMAIN}
         siteMonitor: https://karma.${CLUSTER_DOMAIN}
