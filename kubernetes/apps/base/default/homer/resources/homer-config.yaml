@@ -128,7 +128,11 @@ services:
         logo: https://docmost.com/favicon.ico
         url: https://notes.${SECRET_DOMAIN}
         subtitle: simple documentation / notes app with wiki features
-      - name: Docs
+      - name: IT Tools
+        logo: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/it-tools.png
+        url: https://it-tools.${SECRET_DOMAIN}
+        subtitle: A collection of useful IT Tools
+      - name: Kochhaus Documentation
         icon: fas fa-book
         url: https://docs.${SECRET_DOMAIN}
         subtitle: Detailed KochHaus documentation
@@ -164,10 +168,14 @@ services:
         logo: https://download.logo.wine/logo/Bell_Internet/Bell_Internet-Logo.wine.png
         url: http://192.168.2.1/
         subtitle: Our Internet connnection thingy
-      - name: Network Switch
-        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/tp-link.png
-        url: http://sg3428.${PRIVATE_STATIC_DOMAIN}/
-        subtitle: The TP-Link SG3428X 24 port switch
+      - name: PiKVM (Jezebel)
+        logo: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/pikvm.png
+        url: https://pikvm1.${PRIVATE_STATIC_DOMAIN}
+        subtitle: Jezebel KVM Console
+      - name: PiKVM (Mnemosyne)
+        logo: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/pikvm.png
+        url: https://pikvm2.${PRIVATE_STATIC_DOMAIN}
+        subtitle: Mnemosyne KVM Console
       - name: Omada
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/omada.png
         url: http://omada.${SECRET_DOMAIN}/
@@ -176,18 +184,10 @@ services:
   - name: Observability
     icon: fas fa-robot
     items:
-      - name: Grafana (Main)
-        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/grafana.png
-        url: https://heimdall.${PRIVATE_STATIC_DOMAIN}/grafana/
-        subtitle: Graphs from various systems
-      - name: Grafana (Kubernetes)
-        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/grafana.png
-        url: https://grafana.${SECRET_DOMAIN}/
-        subtitle: Graphs from various systems
-      - name: DMARC Reports
-        logo: https://dmarc.org/wp-content/uploads/2015/02/DMARC-2015-logo-small-202x110.png
-        url: https://dmarc-report.${SECRET_DOMAIN}/
-        subtitle: DMARC (email security) reports
+      - name: Siren
+        logo: https://github.com/shamubernetes/siren/blob/main/public/favicon.svg
+        url: https://siren.${SECRET_DOMAIN}
+        subtitle: Alerts Dashboard
       - name: Gatus
         logo: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/gatus.png
         url: https://status.${SECRET_DOMAIN}/
@@ -196,3 +196,19 @@ services:
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/uptime-kuma.png
         url: https://uptime.kochhaus.net
         type: UptimeKuma
+      - name: Grafana (Main)
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/grafana.png
+        url: https://heimdall.${PRIVATE_STATIC_DOMAIN}/grafana/
+        subtitle: Graphs from various systems
+      - name: Grafana (Kubernetes)
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/grafana.png
+        url: https://grafana.${SECRET_DOMAIN}/
+        subtitle: Graphs from various systems
+      - name: Victoria Logs
+        logo: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/victorialogs.png
+        url: https://victoria-logs.${SECRET_DOMAIN}
+        subtitle: Kubernetes Log Dashboard
+      - name: DMARC Reports
+        logo: https://dmarc.org/wp-content/uploads/2015/02/DMARC-2015-logo-small-202x110.png
+        url: https://dmarc-report.${SECRET_DOMAIN}/
+        subtitle: DMARC (email security) reports
