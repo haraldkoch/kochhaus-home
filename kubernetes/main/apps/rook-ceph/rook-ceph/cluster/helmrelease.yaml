@@ -135,10 +135,10 @@ spec:
         mgr:
           limits:
             cpu: 500m
-            memory: 640Mi
+            memory: 720Mi
           requests:
             cpu: 50m
-            memory: 320Mi
+            memory: 360Mi
         mon:
           limits:
             cpu: 500m
@@ -149,10 +149,10 @@ spec:
         osd:
           limits:
             cpu: 500m
-            memory: 1600Mi
+            memory: 2Gi
           requests:
             cpu: 150m
-            memory: 800Mi
+            memory: 1Gi
         prepareosd:
           limits:
             cpu: 1000m
