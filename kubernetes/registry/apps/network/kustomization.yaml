@@ -11,6 +11,4 @@ resources:
   - ./namespace.yaml
   - ./certificates.yaml
   - ./bind-dns.yaml
-  - ./cloudflare-dns.yaml
-  - ./cloudflare-tunnel.yaml
   - ./envoy-gateway/ks.yaml
