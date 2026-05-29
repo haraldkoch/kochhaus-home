@@ -11,7 +11,6 @@ resources:
   - ./namespace.yaml
   - ./blackbox-exporter.yaml
   - ./dnssec-exporter/ks.yaml
-  - ./fluent-bit.yaml
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
   - ./json-exporter/ks.yaml
@@ -26,3 +25,4 @@ resources:
   - ./smartctl-exporter.yaml
   - ./snmp-exporter/ks.yaml
   - ./tplink-plug-exporter/ks.yaml
+  - ./victoria-logs.yaml
