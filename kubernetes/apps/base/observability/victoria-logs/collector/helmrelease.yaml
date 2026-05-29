@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: victoria-logs-collector
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: victoria-logs-collector
+  interval: 1h
+  values:
+    fullnameOverride: victoria-logs-collector
+    collector:
+      extraFields: '{"cluster":"${CLUSTER}"}'
+    global:
+      image:
+        registry: quay.io
+    podMonitor:
+      enabled: true
+    remoteWrite:
+      - url: ${VICTORIA_LOGS_URL}
+    tolerations:
+      - operator: Exists
+        effect: NoSchedule
