@@ -13,6 +13,11 @@ spec:
     fullnameOverride: victoria-logs-collector
     collector:
       extraFields: '{"cluster":"${CLUSTER}"}'
+      streamFields:
+        - kubernetes.pod_name # Included by default
+        - kubernetes.pod_namespace # Included by default
+        - kubernetes.container_name # Included by default
+        - kubernetes.pod_labels.app.kubernetes.io/name # Helps to filter on workload level across pods
     global:
       image:
         registry: quay.io
