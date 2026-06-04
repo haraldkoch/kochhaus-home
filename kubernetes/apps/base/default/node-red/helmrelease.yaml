@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/nodered/node-red
-              tag: 4.1.10
+              tag: 4.1.11
             env:
               TZ: "${TIMEZONE:=Etc/UTC}"
               NODE_RED_ENABLE_SAFE_MODE: "false"
