@@ -9,4 +9,4 @@ components:
 
 resources:
   - ./namespace.yaml
-  - ./openebs/ks.yaml
+  - ./openebs.yaml

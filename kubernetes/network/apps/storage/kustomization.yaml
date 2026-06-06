@@ -10,6 +10,6 @@ components:
 resources:
   - ./namespace.yaml
   - ./longhorn/ks.yaml
-  - ./openebs/ks.yaml
+  - ./openebs.yaml
   - ./snapshot-controller/ks.yaml
   - ./volsync.yaml

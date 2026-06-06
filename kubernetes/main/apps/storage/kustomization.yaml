@@ -10,6 +10,6 @@ components:
 resources:
   - ./namespace.yaml
   - ./csi-driver-nfs/ks.yaml
-  - ./openebs/ks.yaml
+  - ./openebs.yaml
   - ./snapshot-controller/ks.yaml
   - ./volsync.yaml
