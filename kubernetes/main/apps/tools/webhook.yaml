@@ -8,7 +8,7 @@ spec:
   components:
     - ../../../../components/gatus/guarded
   interval: 1h
-  path: ./kubernetes/main/apps/tools/webhook/app
+  path: ./kubernetes/apps/base/tools/webhook
   postBuild:
     substitute:
       APP: webhook
