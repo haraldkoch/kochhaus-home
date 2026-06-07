@@ -13,6 +13,8 @@ spec:
     substitute:
       CLUSTER: ${CLUSTER}
       EXTERNAL_DOMAIN: external-registry
+      INTERNAL_DOMAIN: registry-internal
+      REPLICAS: "1"
   prune: true
   sourceRef:
     kind: GitRepository

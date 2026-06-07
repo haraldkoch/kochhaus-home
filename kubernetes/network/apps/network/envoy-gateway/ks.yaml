@@ -13,6 +13,8 @@ spec:
     substitute:
       CLUSTER: ${CLUSTER}
       EXTERNAL_DOMAIN: external-network
+      INTERNAL_DOMAIN: internal-network
+      REPLICAS: "2"
   prune: true
   sourceRef:
     kind: GitRepository

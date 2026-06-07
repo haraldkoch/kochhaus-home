@@ -13,7 +13,7 @@ spec:
     type: Kubernetes
     kubernetes:
       envoyDeployment:
-        replicas: 2
+        replicas: ${REPLICAS}
         container:
           imageRepository: mirror.gcr.io/envoyproxy/envoy
           resources:
@@ -86,7 +86,7 @@ kind: Gateway
 metadata:
   name: envoy-internal
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname internal-network.${SECRET_DOMAIN}
+    external-dns.alpha.kubernetes.io/target: &hostname ${INTERNAL_DOMAIN}.${CLUSTER_DOMAIN}
 spec:
   gatewayClassName: envoy
   infrastructure:
