@@ -2,12 +2,15 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: '3'
 
-set: [pipefail]
-shopt: [globstar]
+set:
+  - pipefail
+shopt:
+  - globstar
 
 vars:
   BOOTSTRAP_DIR: '{{.ROOT_DIR}}/bootstrap'
   CLUSTER: '{{.CLUSTER | default "none"}}'
+  CLUSTER_APPS: '{{.ROOT_DIR}}/kubernetes/{{.CLUSTER}}/apps'
   CLUSTER_DIR: '{{.ROOT_DIR}}/kubernetes/{{.CLUSTER}}'
   KUBERNETES_DIR: '{{.ROOT_DIR}}/kubernetes'
   SCRIPTS_DIR: '{{.ROOT_DIR}}/scripts'
@@ -25,18 +28,23 @@ env:
 includes:
   bootstrap: .taskfiles/bootstrap
   database:
-    aliases: ["db"]
+    aliases:
+      - "db"
     taskfile: .taskfiles/Database/Taskfile.yaml
   flux:
-    aliases: ["fx"]
+    aliases:
+      - "fx"
     taskfile: .taskfiles/Flux/Taskfile.yaml
   kubernetes:
-    aliases: ["k8s", "ku"]
+    aliases:
+      - "k8s"
+      - "ku"
     taskfile: .taskfiles/Kubernetes/Taskfile.yaml
   rook: .taskfiles/Rook/Taskfile.yaml
   talos: .taskfiles/talos
   volsync:
-    aliases: ["vs"]
+    aliases:
+      - "vs"
     taskfile: .taskfiles/VolSync
 
 tasks:

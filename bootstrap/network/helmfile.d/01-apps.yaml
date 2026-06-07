@@ -18,7 +18,7 @@ releases:
         command: bash
         args:
           - -c
-          - until kubectl --context network get crd ciliumloadbalancerippools.cilium.io ciliuml2announcementpolicies.cilium.io ciliumbgpadvertisements.cilium.io ciliumbgppeerconfigs.cilium.io ciliumbgpclusterconfigs.cilium.io &>/dev/null; do sleep 5; done
+          - until kubectl --context={{ requiredEnv "CLUSTER" }} get crd ciliumloadbalancerippools.cilium.io ciliuml2announcementpolicies.cilium.io ciliumbgpadvertisements.cilium.io ciliumbgppeerconfigs.cilium.io ciliumbgpclusterconfigs.cilium.io &>/dev/null; do sleep 5; done
         events:
           - postsync
         showlogs: true
@@ -26,11 +26,11 @@ releases:
         command: kubectl
         args:
           - apply
-          - --context=network
+          - --context=={{ requiredEnv "CLUSTER" }}
           - --namespace=kube-system
           - --server-side
           - --field-manager=kustomize-controller
-          - --filename=../../../kubernetes/network/apps/kube-system/cilium/app/networking.yaml
+          - --filename={{ requiredEnv "CLUSTER_APPS" }}/kube-system/cilium/app/networking.yaml
         events:
           - postsync
         showlogs: true
@@ -73,7 +73,7 @@ releases:
         command: bash
         args:
           - -c
-          - until kubectl --context network get crd clustersecretstores.external-secrets.io &>/dev/null; do sleep 5; done
+          - until kubectl --context={{ requiredEnv "CLUSTER" }} get crd clustersecretstores.external-secrets.io &>/dev/null; do sleep 5; done
         events:
           - postsync
         showlogs: true
@@ -81,10 +81,10 @@ releases:
         command: kubectl
         args:
           - apply
-          - --context=network
+          - --context={{ requiredEnv "CLUSTER" }}
           - --server-side
           - --field-manager=kustomize-controller
-          - --filename=../../../kubernetes/network/apps/security/onepassword/app/clustersecretstore.yaml
+          - --filename={{ requiredEnv "CLUSTER_APPS" }}/security/onepassword/app/clustersecretstore.yaml
         events:
           - postsync
         showlogs: true
