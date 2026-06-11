@@ -18,7 +18,7 @@ spec:
           main:
             image:
               repository: mirror.gcr.io/joseluisq/static-web-server
-              tag: 2.42.0-alpine
+              tag: 2.43.0-alpine
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               SERVER_PORT: 80
