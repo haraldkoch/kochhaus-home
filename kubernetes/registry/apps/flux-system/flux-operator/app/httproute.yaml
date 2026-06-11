@@ -6,7 +6,7 @@ metadata:
   name: flux-operator
 spec:
   hostnames:
-    - flux-registry.${SECRET_DOMAIN}
+    - flux-${CLUSTER}.${CLUSTER_DOMAIN}
   parentRefs:
     - name: envoy-internal
       namespace: network
@@ -15,7 +15,3 @@ spec:
         - name: flux-operator
           namespace: flux-system
           port: 9080
-      matches:
-        - path:
-            type: PathPrefix
-            value: /

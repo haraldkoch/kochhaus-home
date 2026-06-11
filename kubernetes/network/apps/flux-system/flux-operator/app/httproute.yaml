@@ -6,7 +6,7 @@ metadata:
   name: flux-operator
 spec:
   hostnames:
-    - flux-network.${CLUSTER_DOMAIN}
+    - flux-${CLUSTER}.${CLUSTER_DOMAIN}
   parentRefs:
     - name: envoy-internal
       namespace: network
