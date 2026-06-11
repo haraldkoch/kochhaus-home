@@ -316,7 +316,7 @@ spec:
         # renovate: datasource=github-releases depName=grafana/grafana-image-renderer
         registry: mirror.gcr.io
         repository: grafana/grafana-image-renderer
-        tag: v5.8.8
+        tag: v5.8.9
         pullPolicy: IfNotPresent
       replicas: 1
       networkPolicy:
