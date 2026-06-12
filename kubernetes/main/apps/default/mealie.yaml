@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: mealie
+spec:
+  components:
+    - ../../../../components/gatus/internal
+    - ../../../../main/components/volsync
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  interval: 1h
+  path: ./kubernetes/apps/base/default/mealie
+  postBuild:
+    substitute:
+      APP: mealie
+      VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_CLAIM: mealie
+      VOLSYNC_GID: "911"
+      VOLSYNC_UID: "911"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: default
+  wait: false

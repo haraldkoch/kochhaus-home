@@ -18,6 +18,7 @@ resources:
   - ./filebrowser.yaml
   - ./jellyfin.yaml
   - ./karakeep.yaml
+  - ./mealie.yaml
   - ./media-browser.yaml
   - ./nextcloud.yaml
   - ./oidctest.yaml
