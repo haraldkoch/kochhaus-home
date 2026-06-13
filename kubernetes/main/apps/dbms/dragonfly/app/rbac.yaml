@@ -26,6 +26,7 @@ rules:
   - apiGroups:
       - ""
     resources:
+      - "configmaps"
       - "pods"
       - "services"
     verbs:
@@ -36,6 +37,14 @@ rules:
       - "patch"
       - "update"
       - "watch"
+  - apiGroups:
+      - ""
+    resources:
+      - "pods/status"
+    verbs:
+      - "get"
+      - "patch"
+      - "update"
   - apiGroups:
       - "apps"
     resources:
