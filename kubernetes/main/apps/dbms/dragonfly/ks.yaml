@@ -14,21 +14,3 @@ spec:
     namespace: flux-system
   targetNamespace: dbms
   wait: true
----
-# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: dragonfly-cluster
-spec:
-  dependsOn:
-    - name: dragonfly
-  interval: 1h
-  path: ./kubernetes/main/apps/dbms/dragonfly/cluster
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  targetNamespace: dbms
-  wait: false
