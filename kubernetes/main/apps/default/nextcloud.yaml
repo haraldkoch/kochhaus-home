@@ -6,6 +6,7 @@ metadata:
   name: nextcloud
 spec:
   components:
+    - ../../../../components/dragonfly
     - ../../../../components/gatus/external
     - ../../../../components/keda/nfs-scaler
     - ../../../../main/components/volsync
