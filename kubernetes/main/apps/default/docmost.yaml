@@ -6,6 +6,7 @@ metadata:
   name: docmost
 spec:
   components:
+    - ../../../../components/dragonfly
     - ../../../../components/gatus/guarded
     - ../../../../main/components/volsync
   dependsOn:

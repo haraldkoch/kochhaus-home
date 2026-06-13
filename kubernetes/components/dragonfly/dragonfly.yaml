@@ -17,6 +17,7 @@ spec:
     - --maxmemory=$(MAX_MEMORY)Mi
     - --dbnum=1
     - --dbfilename=
+    - --default_lua_flags=allow-undeclared-keys
     - --proactor_threads=2
     - --version_check=false
   resources:

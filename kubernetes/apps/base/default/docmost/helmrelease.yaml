@@ -34,7 +34,7 @@ spec:
               MAIL_FROM_ADDRESS: docmost@${CLUSTER_DOMAIN}
               MAIL_FROM_NAME: Docmost
               PORT: "3000"
-              REDIS_URL: "redis://dragonfly.dbms:6379"
+              REDIS_URL: "redis://docmost-dragonfly-db.default.svc.cluster.local:6379"
               SMTP_HOST: smtp.${CLUSTER_DOMAIN}
               SMTP_PORT: 25
             envFrom: *envFrom
