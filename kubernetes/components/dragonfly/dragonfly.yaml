@@ -6,7 +6,7 @@ metadata:
   name: &app ${APP}-dragonfly-db
 spec:
   image: ghcr.io/dragonflydb/dragonfly:v1.39.0@sha256:0fa01a2b929e704c7a9300d23e7f52002ebd39e90996fb8bb63826aed92fa06f
-  replicas: 3
+  replicas: ${DRAGONFLY_REPLICAS:=1}
   env:
     - name: MAX_MEMORY
       valueFrom:
@@ -15,6 +15,7 @@ spec:
           divisor: 1Mi
   args:
     - --maxmemory=$(MAX_MEMORY)Mi
+    - --cluster_mode=emulated
     - --dbnum=1
     - --dbfilename=
     - --default_lua_flags=allow-undeclared-keys
@@ -22,7 +23,7 @@ spec:
     - --version_check=false
   resources:
     requests:
-      cpu: 100m
+      cpu: 25m
       memory: 128Mi
     limits:
       memory: 512Mi
