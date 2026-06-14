@@ -120,7 +120,7 @@ identity_providers:
         require_pkce: true
         pkce_challenge_method: S256
         redirect_uris:
-          - "https://forgejo.${CLUSTER_DOMAIN}/user/oauth2/authelia/callback"
+          - "https://git.${CLUSTER_DOMAIN}/user/oauth2/authelia/callback"
         scopes:
           - "openid"
           - "email"
