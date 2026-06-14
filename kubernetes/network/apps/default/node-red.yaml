@@ -9,6 +9,8 @@ spec:
     - ../../../../components/gatus/guarded
     - ../../../../network/components/volsync
   dependsOn:
+    - name: longhorn
+      namespace: storage
     - name: volsync
       namespace: storage
   interval: 1h

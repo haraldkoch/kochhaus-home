@@ -19,6 +19,8 @@ spec:
       namespace: observability
     - name: rook-ceph-cluster
       namespace: rook-ceph
+    - name: volsync
+      namespace: storage
   interval: 1h
   healthCheckExprs:
     - apiVersion: dragonflydb.io/v1alpha1

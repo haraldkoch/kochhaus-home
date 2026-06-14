@@ -10,6 +10,10 @@ spec:
     - ../../../../components/volsync
   dependsOn:
     - name: cloudnative-pg-cluster
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: storage
   interval: 1h
   path: ./kubernetes/main/apps/dbms/pgadmin/app
   postBuild:

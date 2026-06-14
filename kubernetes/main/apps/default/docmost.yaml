@@ -14,6 +14,10 @@ spec:
       namespace: dbms
     - name: dragonfly
       namespace: dbms
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: storage
   healthCheckExprs:
     - apiVersion: dragonflydb.io/v1alpha1
       kind: Dragonfly

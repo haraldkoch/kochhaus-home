@@ -11,6 +11,8 @@ spec:
   dependsOn:
     - name: multus-networks
       namespace: network
+    - name: longhorn
+      namespace: storage
     - name: volsync
       namespace: storage
   interval: 1h

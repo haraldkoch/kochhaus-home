@@ -8,6 +8,11 @@ spec:
   components:
     - ../../../../components/gatus/external
     - ../../../../main/components/volsync
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: storage
   interval: 1h
   path: ./kubernetes/apps/base/default/your-spotify
   postBuild:
