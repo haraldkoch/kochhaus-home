@@ -74,6 +74,10 @@ spec:
           mealie:
             mealie:
               - path: /app/data
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
     route:
       mealie:
         hostnames:
