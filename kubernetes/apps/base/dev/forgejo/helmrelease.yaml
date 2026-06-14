@@ -1,0 +1,121 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: forgejo
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: forgejo
+  interval: 1h
+  values:
+    gitea:
+      admin:
+        username: ""
+      config:
+        cache:
+          ENABLED: true
+          ADAPTER: redis
+          HOST: redis://forgejo-dragonfly-db:6379?pool_size=100&idle_timeout=180s
+        cron.archive_cleanup:
+          ENABLED: true
+          RUN_AT_START: true
+          SCHEDULE: "@every 1h"
+          OLDER_THAN: 2h
+        indexer:
+          ISSUE_INDEXER_TYPE: bleve
+          REPO_INDEXER_ENABLED: true
+        lfs:
+          PATH: /data/git/lfs
+        mailer:
+          ENABLED: true
+          FROM: forgejo@${CLUSTER_DOMAIN}
+          SMTP_ADDR: smtp.${CLUSTER_DOMAIN}
+          SMTP_PORT: 25
+        openid:
+          ENABLE_OPENID_SIGNIN: false
+          ENABLE_OPENID_SIGNUP: false
+        queue:
+          TYPE: redis
+          CONN_STR: redis://forgejo-dragonfly-db:6379?pool_size=100&idle_timeout=180s
+        repository:
+          DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls,repo.actions
+          DISABLED_REPO_UNITS: repo.ext_wiki,repo.ext_issues
+          ROOT: /data/git/repositories
+        repository.pull-request:
+          DEFAULT_MERGE_STYLE: squash
+        repository.signing:
+          FORMAT: ssh
+          SIGNING_KEY: /data/signing/ed25519.pub
+          SIGNING_NAME: git.${CLUSTER_DOMAIN} Instance
+          SIGNING_EMAIL: noreply@git.${CLUSTER_DOMAIN}
+          INITIAL_COMMIT: pubkey
+          CRUD_ACTIONS: pubkey, parentsigned
+          WIKI: never
+          MERGES: pubkey
+        security:
+          REVERSE_PROXY_TRUSTED_PROXIES: 10.42.0.0/16
+        server:
+          APP_DATA_PATH: /data/gitea
+          ROOT_URL: https://git.${CLUSTER_DOMAIN}
+          SSH_DOMAIN: git.${CLUSTER_DOMAIN}
+          SSH_PORT: &sshPort 22
+          SSH_SERVER_HOST_KEYS: ssh/ssh_host_ed25519_key
+        service:
+          ALLOW_ONLY_EXTERNAL_REGISTRATION: true
+          DEFAULT_ENABLE_TIMETRACKING: false
+          ENABLE_INTERNAL_SIGNIN: false
+          ENABLE_PASSWORD_SIGNIN_FORM: false
+          SHOW_REGISTRATION_BUTTON: false
+        service.explore:
+          DISABLE_CODE_PAGE: false
+          DISABLE_ORGANIZATIONS_PAGE: true
+          DISABLE_USERS_PAGE: true
+          REQUIRE_SIGNIN_VIEW: false
+        session:
+          PROVIDER: redis
+          PROVIDER_CONFIG: redis://forgejo-dragonfly-db:6379?pool_size=100&idle_timeout=180s
+          SESSION_LIFE_TIME: "1209600"
+        webhook:
+          ALLOWED_HOST_LIST: "*"
+      oauth:
+        - name: authelia
+          adminGroup: forgejo_admins
+          autoDiscoverUrl: https://auth.${CLUSTER_DOMAIN}/.well-known/openid-configuration
+          existingSecret: forgejo-oidc
+          groupClaimName: groups
+          provider: openidConnect
+          scopes: profile email groups
+    extraContainerVolumeMounts:
+      - name: signing-key
+        mountPath: /data/signing
+        readOnly: true
+    extraInitVolumeMounts:
+      - name: signing-key
+        mountPath: /data/signing
+        readOnly: true
+    extraVolumes:
+      - name: signing-key
+        secret:
+          secretName: forgejo-signing-key
+          defaultMode: 0400
+    httpRoute:
+      enabled: false
+    image:
+      rootless: true
+      registry: code.forgejo.org
+      repository: forgejo/forgejo
+      tag: 15.0.3-rootless
+    persistence:
+      create: false
+      claimName: forgejo
+    service:
+      ssh:
+        port: *sshPort
+    tcpRoute:
+      enabled: true
+      parentRefs:
+        - name: envoy-internal
+          namespace: network
+          sectionName: ssh
