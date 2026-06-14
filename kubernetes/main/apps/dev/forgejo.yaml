@@ -1,0 +1,58 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: forgejo
+spec:
+  components:
+    # - ../../../../components/anubis
+    - ../../../../components/dragonfly
+    - ../../../../components/gatus/guarded
+    - ../../../../main/components/volsync
+  dependsOn:
+    - name: dragonfly
+      namespace: dbms
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: volsync
+      namespace: storage
+  healthCheckExprs:
+    - apiVersion: dragonflydb.io/v1alpha1
+      kind: Dragonfly
+      failed: status.phase != 'ready'
+      current: status.phase == 'ready'
+  interval: 1h
+  path: ./kubernetes/apps/base/dev/forgejo/app
+  postBuild:
+    substitute:
+      APP: forgejo
+      GATUS_SUBDOMAIN: git
+      VOLSYNC_UID: "1000"
+      VOLSYNC_GID: "1000"
+      VOLSYNC_CAPACITY: 10Gi
+      # ANUBIS_TARGET: http://forgejo-http.dev.svc.cluster.local:3000
+      # ANUBIS_MEM_LIMIT: 384Mi
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: dev
+  wait: false
+  # ---
+  # # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+  # apiVersion: kustomize.toolkit.fluxcd.io/v1
+  # kind: Kustomization
+  # metadata:
+  #   name: forgejo-runner
+  # spec:
+  #   interval: 1h
+  #   path: ./kubernetes/apps/base/dev/forgejo/runner
+  #   prune: true
+  #   sourceRef:
+  #     kind: GitRepository
+  #     name: flux-system
+  #     namespace: flux-system
+  #   targetNamespace: dev
+  #   wait: false
