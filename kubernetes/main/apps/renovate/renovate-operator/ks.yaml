@@ -10,11 +10,11 @@ spec:
   dependsOn:
     - name: dragonfly
       namespace: dbms
-  healthChecks:
-    - apiVersion: helm.toolkit.fluxcd.io/v2
-      kind: HelmRelease
-      name: renovate-operator
-      namespace: renovate
+  healthCheckExprs:
+    - apiVersion: dragonflydb.io/v1alpha1
+      kind: Dragonfly
+      failed: status.phase != 'ready'
+      current: status.phase == 'ready'
   interval: 1h
   path: ./kubernetes/main/apps/renovate/renovate-operator/app
   postBuild:
@@ -26,6 +26,7 @@ spec:
     name: flux-system
     namespace: flux-system
   targetNamespace: renovate
+  wait: false
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1

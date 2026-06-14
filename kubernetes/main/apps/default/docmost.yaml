@@ -12,6 +12,13 @@ spec:
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: dbms
+    - name: dragonfly
+      namespace: dbms
+  healthCheckExprs:
+    - apiVersion: dragonflydb.io/v1alpha1
+      kind: Dragonfly
+      failed: status.phase != 'ready'
+      current: status.phase == 'ready'
   interval: 1h
   path: ./kubernetes/apps/base/default/docmost
   postBuild:

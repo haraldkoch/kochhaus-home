@@ -13,13 +13,18 @@ spec:
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: dbms
-    - name: dragonfly-cluster
+    - name: dragonfly
       namespace: dbms
     - name: keda
       namespace: observability
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
+  healthCheckExprs:
+    - apiVersion: dragonflydb.io/v1alpha1
+      kind: Dragonfly
+      failed: status.phase != 'ready'
+      current: status.phase == 'ready'
   path: ./kubernetes/apps/base/default/nextcloud
   postBuild:
     substitute:
