@@ -7,4 +7,5 @@ resources:
   - ./httproute.yaml
   - ./ocirepository.yaml
   - ./secret.sops.yaml
-  - ./snapshot.yaml
+  - ./storageclass-volsync.yaml
+  - ./volumesnapshotclass.yaml

@@ -7,7 +7,6 @@ metadata:
 spec:
   dependsOn:
     - name: openebs
-    - name: longhorn
     - name: snapshot-controller
   interval: 1h
   path: ./kubernetes/apps/base/storage/volsync

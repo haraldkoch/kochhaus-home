@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/snapshot.storage.k8s.io/volumesnapshotclass_v1.json
+apiVersion: snapshot.storage.k8s.io/v1
+kind: VolumeSnapshotClass
+metadata:
+  annotations:
+    snapshot.storage.kubernetes.io/is-default-class: "true"
+  name: longhorn
+deletionPolicy: Delete
+driver: driver.longhorn.io
+parameters:
+  # needed for successful VolumeSnapshots
+  # see: https://github.com/longhorn/longhorn/issues/2534#issuecomment-1010508714
+  type: snap
