@@ -11,5 +11,5 @@ resources:
   - ./namespace.yaml
   - ./longhorn/ks.yaml
   - ./openebs.yaml
-  - ./snapshot-controller/ks.yaml
+  - ./snapshot-controller.yaml
   - ./volsync.yaml
