@@ -33,6 +33,8 @@ spec:
           FROM: forgejo@${CLUSTER_DOMAIN}
           SMTP_ADDR: smtp.${CLUSTER_DOMAIN}
           SMTP_PORT: 25
+        migrations:
+          ALLOW_LOCALNETWORKS: true
         openid:
           ENABLE_OPENID_SIGNIN: false
           ENABLE_OPENID_SIGNUP: false
