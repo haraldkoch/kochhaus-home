@@ -22,3 +22,9 @@ Brewfile.lock.json
 # Bootstrap
 /config.yaml
 cloudflared.json
+# Terraform
+.terraform
+.terraform.tfstate*
+.terraform.lock.hcl
+terraform.tfstate*
+*.tfvars
