@@ -148,6 +148,30 @@ identity_providers:
           - "https://grafana.${CLUSTER_DOMAIN}/login/generic_oauth"
         token_endpoint_auth_method: client_secret_post
         userinfo_signed_response_alg: none
+      - client_id: harbor
+        client_name: Harbor
+        client_secret: "$${HARBOR_OAUTH_CLIENT_SECRET_DIGEST}"
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        require_pkce: false
+        pkce_challenge_method: ''
+        scopes:
+          - "openid"
+          - "profile"
+          - "email"
+          - "groups"
+          - "offline_access"
+        redirect_uris:
+          - "https://harbor.${CLUSTER_DOMAIN}/c/oidc/callback"
+        response_types:
+          - code
+        grant_types:
+          - authorization_code
+          - refresh_token
+        access_token_signed_response_alg: none
+        userinfo_signed_response_alg: none
+        token_endpoint_auth_method: client_secret_basic
       - client_id: kyoo
         client_name: Kyoo
         client_secret: "$${KYOO_OAUTH_CLIENT_SECRET_DIGEST}"
