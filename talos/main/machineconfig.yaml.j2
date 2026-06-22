@@ -83,37 +83,61 @@ machine:
     topology.kubernetes.io/region: main
   registries:
     mirrors:
+      code.forgejo.org:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-forgejo
+        overridePath: true
+      codeberg.org:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-codeberg
+        overridePath: true
+      cgr.dev:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-cgr
+        overridePath: true
       docker.io:
         endpoints:
-          - https://harbor.kochhaus.dev/v2/docker.io
+          - https://harbor.kochhaus.dev/v2/proxy-dockerhub
         overridePath: true
       gcr.io:
         endpoints:
-          - https://harbor.kochhaus.dev/v2/gcr.io
+          - https://harbor.kochhaus.dev/v2/proxy-gcr
         overridePath: true
       ghcr.io:
         endpoints:
-          - https://harbor.kochhaus.dev/v2/ghcr.io
+          - https://harbor.kochhaus.dev/v2/proxy-ghcr
         overridePath: true
       gsoci.azurecr.io:
         endpoints:
-          - https://harbor.kochhaus.dev/v2/gsoci.azurecr.io
+          - https://harbor.kochhaus.dev/v2/proxy-gsoci
+        overridePath: true
+      mcr.microsoft.com:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-mcr
         overridePath: true
       mirror.gcr.io:
         endpoints:
-          - https://harbor.kochhaus.dev/v2/mirror.gcr.io
+          - https://harbor.kochhaus.dev/v2/proxy-mirror-gcr
+        overridePath: true
+      nvcr.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-nvcr
         overridePath: true
       public.ecr.aws:
         endpoints:
-          - https://harbor.kochhaus.dev/v2/public.ecr.aws
+          - https://harbor.kochhaus.dev/v2/proxy-ecr-public
         overridePath: true
       quay.io:
         endpoints:
-          - https://harbor.kochhaus.dev/v2/quay.io
+          - https://harbor.kochhaus.dev/v2/proxy-quay
+        overridePath: true
+      registry.access.redhat.com:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-redhat
         overridePath: true
       registry.k8s.io:
         endpoints:
-          - https://harbor.kochhaus.dev/v2/registry.k8s.io
+          - https://harbor.kochhaus.dev/v2/proxy-k8s
         overridePath: true
   sysctls:
     fs.inotify.max_user_instances: "8192"      # Watchdog
