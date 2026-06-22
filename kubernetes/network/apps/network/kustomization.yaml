@@ -13,6 +13,6 @@ resources:
   - ./bind-dns.yaml
   - ./cloudflare-dns.yaml
   - ./cloudflare-tunnel.yaml
-  - ./dyndns/ks.yaml
+  - ./dyndns.yaml
   - ./envoy-gateway/ks.yaml
   - ./multus/ks.yaml

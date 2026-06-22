@@ -6,7 +6,7 @@ metadata:
   name: dyndns
 spec:
   interval: 1h
-  path: ./kubernetes/network/apps/network/dyndns/app
+  path: ./kubernetes/apps/base/network/dyndns
   prune: true
   sourceRef:
     kind: GitRepository
