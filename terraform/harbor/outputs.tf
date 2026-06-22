@@ -12,12 +12,3 @@ output "harbor_url" {
 #     k => "${trimprefix(var.harbor_url, "https://")}/${p.name}"
 #   }
 # }
-
-# output "robot_paths" {
-#   value = {
-#     containers     = "/kubernetes/harbor/robots/containers"
-#     home_ops       = "/kubernetes/harbor/robots/home-ops"
-#     cluster_puller = "/kubernetes/harbor/robots/cluster-puller"
-#     vroxide        = "/kubernetes/harbor/robots/vroxide"
-#   }
-# }
