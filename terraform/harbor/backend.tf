@@ -2,7 +2,7 @@ terraform {
   backend "s3" {
     bucket = "terraform-state"
     key    = "harbor/harbor.tfstate"
-    region = "ca-central-1"
+    region = "garage"
 
     endpoints = {
       s3 = "http://mnemosyne:3900"

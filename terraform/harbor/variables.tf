@@ -18,5 +18,5 @@ variable "onepassword_vault_id" {
 variable "harbor_url" {
   type        = string
   description = "Harbor external URL"
-  default     = "https://registry.kochhaus.dev"
+  default     = "https://harbor.kochhaus.dev"
 }

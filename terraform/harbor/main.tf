@@ -25,7 +25,7 @@ provider "onepassword" {
 
 data "onepassword_item" "harbor_admin" {
   vault = var.onepassword_vault_id
-  title = "harbor.kochhaus.dev"
+  title = "harbor"
 }
 
 # data "onepassword_item" "oidc" {
@@ -36,5 +36,5 @@ data "onepassword_item" "harbor_admin" {
 provider "harbor" {
   url      = var.harbor_url
   username = "admin"
-  password = data.onepassword_item.harbor_admin.secrets["password"].value
+  password = data.onepassword_item.harbor_admin.section_map[""].field_map["admin_password"].value
 }
