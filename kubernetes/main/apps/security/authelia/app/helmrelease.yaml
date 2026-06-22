@@ -20,7 +20,7 @@ spec:
           init-db:
             image:
               repository: ghcr.io/haraldkoch/postgres-init
-              tag: 18.4@sha256:2afd59dcc153c6ff909a20bb0f76a97dae8973c0d4061b96087254bb30a5fcce
+              tag: 18.4@sha256:632c31c178240a811496586553f5ae9baa08e26841da7dd59aaa086ae5284316
             envFrom: &envFrom
               - secretRef:
                   name: authelia-secret
