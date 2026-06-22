@@ -1,6 +1,7 @@
 resource "onepassword_item" "harbor_containers_ci" {
   vault = var.onepassword_vault_id
   title = "harbor-containers-ci"
+  category = "secure_note"
 
   section_map = {
     "robots" = {
