@@ -47,7 +47,7 @@ locals {
     # ── Forgejo / dev / VCS-hosted images ─────────────────────────────
     "forgejo"    = { endpoint_url = "https://code.forgejo.org",    provider_name = "docker-registry" }  # forgejo server image
     "codeberg"   = { endpoint_url = "https://codeberg.org",        provider_name = "docker-registry" }  # towonel-agent
-    "eleboucher" = { endpoint_url = "https://git.erwanleboucher.dev", provider_name = "docker-registry" }  # 3rd-party forgejo-runner-k8s-plugin
+    # "eleboucher" = { endpoint_url = "https://git.erwanleboucher.dev", provider_name = "docker-registry" }  # 3rd-party forgejo-runner-k8s-plugin
 
     # ── App-specific upstreams ────────────────────────────────────────
     "fluentbit"  = { endpoint_url = "https://cr.fluentbit.io",     provider_name = "docker-registry" }  # fluent-bit official
