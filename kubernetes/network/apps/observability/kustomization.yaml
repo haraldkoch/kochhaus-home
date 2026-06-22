@@ -22,7 +22,7 @@ resources:
   - ./opnsense-exporter/ks.yaml
   # silence-operator does not yet support arm64
   # - ./silence-operator/ks.yaml
-  - ./siren/ks.yaml
+  - ./siren.yaml
   - ./smartctl-exporter.yaml
   - ./snmp-exporter/ks.yaml
   - ./tplink-plug-exporter/ks.yaml

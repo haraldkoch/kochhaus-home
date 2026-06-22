@@ -19,6 +19,7 @@ resources:
   - ./kube-prometheus-stack.yaml
   - ./network-ups-tools/ks.yaml
   - ./silence-operator/ks.yaml
+  - ./siren.yaml
   - ./smartctl-exporter.yaml
   - ./smokeping/ks.yaml
   - ./speedtest-exporter/ks.yaml

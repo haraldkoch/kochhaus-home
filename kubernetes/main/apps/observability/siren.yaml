@@ -8,10 +8,12 @@ spec:
   components:
     - ../../../../components/gatus/guarded
   interval: 1h
-  path: ./kubernetes/network/apps/observability/siren/app
+  path: ./kubernetes/apps/base/observability/siren
   postBuild:
     substitute:
       APP: siren
+      CLUSTER: ${CLUSTER}
+      SUBDOMAIN: siren-${CLUSTER}
   prune: true
   sourceRef:
     kind: GitRepository
