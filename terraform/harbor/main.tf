@@ -4,6 +4,7 @@ terraform {
   required_providers {
     onepassword = {
       source = "1Password/onepassword"
+      version = "3.3.1"
     }
 
     harbor = {
@@ -27,11 +28,6 @@ data "onepassword_item" "harbor_admin" {
   vault = var.onepassword_vault_id
   title = "harbor"
 }
-
-# data "onepassword_item" "oidc" {
-#   vault = var.onepassword_vault_id
-#   title = "oidc"
-# }
 
 provider "harbor" {
   url      = var.harbor_url
