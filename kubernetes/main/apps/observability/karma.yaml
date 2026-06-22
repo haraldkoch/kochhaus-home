@@ -8,10 +8,12 @@ spec:
   components:
     - ../../../../components/gatus/guarded
   interval: 1h
-  path: ./kubernetes/main/apps/observability/karma/app
+  path: ./kubernetes/apps/base/observability/karma
   postBuild:
     substitute:
       APP: karma
+      CLUSTER: ${CLUSTER}
+      SUBDOMAIN: karma-${CLUSTER}
   prune: true
   sourceRef:
     kind: GitRepository
