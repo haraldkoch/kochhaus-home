@@ -10,7 +10,7 @@ spec:
       type: string
   steps:
     - name: clone
-      image: ghcr.io/haraldkoch/ubuntu:rolling@sha256:d2d15ce1032692788f863e4ba173f95a34e2afdfa98469429616c4e27a8eeeb0
+      image: ghcr.io/haraldkoch/ubuntu:rolling@sha256:0cadbba24ea3ca670dc803ada84da4f4b9c25d3208dceacff8c409a4fa752834
       script: |
         #!/bin/sh
 
