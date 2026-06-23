@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: etcd-defrag
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/base/kube-system/etcd-defrag
+  prune: true
+  postBuild:
+    substitute:
+      ETCD_NODES: k3sj k3sm k3st
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: kube-system
+  wait: false

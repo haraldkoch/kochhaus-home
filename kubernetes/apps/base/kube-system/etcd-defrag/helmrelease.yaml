@@ -1,0 +1,54 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app etcd-defrag
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: etcd-defrag
+  interval: 1h
+  values:
+    controllers:
+      main:
+        type: cronjob
+        cronjob:
+          concurrencyPolicy: Forbid
+          schedule: "2 2 * * 0"
+        pod:
+          restartPolicy: OnFailure
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
+        containers:
+          main:
+            image:
+              repository: ghcr.io/haraldkoch/kubectl
+              tag: 1.36.2@sha256:beeeda976b863a09bcd4962908343668562d93f5ac9b1bb60b54cf01be8a59ef
+            command:
+              - /bin/sh
+              - -xc
+              - |-
+                for node in $NODES ; do
+                    /talosctl/talosctl etcd status -n $node
+                    /talosctl/talosctl etcd defrag -n $node
+                    /talosctl/talosctl etcd status -n $node
+                done
+            env:
+              NODES: ${ETCD_NODES}
+              TALOSCONFIG: /var/run/secrets/talos.dev/config
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+    persistence:
+      talosctl:
+        type: image
+        image: ghcr.io/siderolabs/talosctl:v1.13.5
+      talosconfig:
+        type: secret
+        name: etcd-defrag-talosconfig
+        globalMounts:
+          - path: /var/run/secrets/talos.dev
