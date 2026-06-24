@@ -1,0 +1,93 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: trek
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: trek
+  interval: 1h
+  values:
+    controllers:
+      trek:
+        pod:
+          hostUsers: false
+          securityContext:
+            runAsUser: 65532
+            runAsGroup: 65532
+            fsGroup: 65532
+            fsGroupChangePolicy: OnRootMismatch
+            runAsNonRoot: true
+            seccompProfile: {type: RuntimeDefault}
+        containers:
+          app:
+            image:
+              repository: mirror.gcr.io/mauriceboe/trek
+              tag: 3.1.2@sha256:9a541b6c40fb382ed51f7409a2dad01130075dd69cf7e85ec4963bbabf09512d
+            command:
+              - /bin/sh
+              - -c
+              - |-
+                cd /app/server
+                node --require tsconfig-paths/register dist/index.js
+            env:
+              APP_URL: https://{{ .Release.Name }}.${CLUSTER_DOMAIN}
+              ALLOWED_ORIGINS: https://{{ .Release.Name }}.${CLUSTER_DOMAIN}
+              ALLOW_INTERNAL_NETWORK: true
+              TRUST_PROXY: true
+              FORCE_HTTPS: true
+              TZ: ${TIMEZONE}
+              OIDC_ONLY: true
+              OIDC_ADMIN_CLAIM: groups
+              OIDC_ADMIN_VALUE: admins
+              OIDC_SCOPE: openid email profile groups
+              OIDC_DISPLAY_NAME: Authelia
+              OIDC_ISSUER: https://auth.${CLUSTER_DOMAIN}
+              SMTP_HOST: smtp.${CLUSTER_DOMAIN}
+              SMTP_PORT: 25
+              SMTP_FROM: TREK <trek@${CLUSTER_DOMAIN}>
+            envFrom:
+              - secretRef:
+                  name: trek-secret
+            probes:
+              readiness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    port: &port 3000
+                    path: /api/health
+              liveness: *probes
+            resources:
+              requests:
+                cpu: 12m
+                memory: 128M
+              limits:
+                memory: 512M
+            securityContext:
+              runAsNonRoot: true
+              allowPrivilegeEscalation: false
+              seccompProfile: {type: RuntimeDefault}
+              capabilities: {drop: ["ALL"]}
+    service:
+      main:
+        ports:
+          http:
+            port: *port
+    route:
+      main:
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+    persistence:
+      data:
+        existingClaim: trek-data
+        globalMounts:
+          - path: /app/data
+            subPath: data
+          - path: /app/uploads
+            subPath: uploads

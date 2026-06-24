@@ -29,5 +29,6 @@ resources:
   - ./static-web.yaml
   - ./syncthing.yaml
   - ./tautulli.yaml
+  - ./trek.yaml
   - ./whoami.yaml
   - ./your-spotify.yaml
