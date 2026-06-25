@@ -5,3 +5,11 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./kochhaus.yaml
+configMapGenerator:
+  - name: renovate-entrypoint
+    files:
+      - renovate-entrypoint.sh=./renovate-entrypoint.sh
+generatorOptions:
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+  disableNameSuffixHash: true

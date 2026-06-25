@@ -77,6 +77,15 @@ spec:
       value: enabled
     - name: RENOVATE_CACHE_PRIVATE_PACKAGES
       value: "true"
+  extraVolumes:
+    - name: renovate-entrypoint
+      configMap:
+        name: renovate-entrypoint
+  extraVolumeMounts:
+    - name: renovate-entrypoint
+      mountPath: /usr/local/containerbase/bin/docker-entrypoint.sh
+      subPath: renovate-entrypoint.sh
+      readOnly: true
   image: ghcr.io/renovatebot/renovate:43.242.2@sha256:9f9a0b9a4b5da3d9634493635e9fc4bcc196a9fcd45299af68d015ddd3f3987f
   # we have 3 nodes
   parallelism: 3
