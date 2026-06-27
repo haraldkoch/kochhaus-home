@@ -48,7 +48,7 @@ spec:
           operator: in
           values:
             - "true"
-      image: ghcr.io/haraldkoch/rsync:3.4.3@sha256:317572f091e38efd15d001018c1ff13b267df17f04f9e91950e087117d6f19fc
+      image: ghcr.io/haraldkoch/rsync:3.4.3@sha256:35894a7ffda6124d9d5be0afc62578e68497cc9079c319301848bb75156f86d7
       script: |-
         #!/bin/sh
 
