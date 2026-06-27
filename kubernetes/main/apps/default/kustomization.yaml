@@ -12,6 +12,7 @@ resources:
   - ./media-nfs.yaml
   - ./bookboss.yaml
   - ./calibre-web.yaml
+  - ./chaski.yaml
   - ./docmost.yaml
   - ./echo.yaml
   - ./excalidraw.yaml
