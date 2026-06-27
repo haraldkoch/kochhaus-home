@@ -11,4 +11,3 @@ resources:
   - ./namespace.yaml
   - ./descheduler.yaml
   - ./reloader.yaml
-  - ./webhook.yaml
