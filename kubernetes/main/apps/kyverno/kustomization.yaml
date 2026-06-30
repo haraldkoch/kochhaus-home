@@ -9,4 +9,4 @@ components:
 
 resources:
   - ./namespace.yaml
-  - ./kyverno/ks.yaml
+  - ./kyverno.yaml

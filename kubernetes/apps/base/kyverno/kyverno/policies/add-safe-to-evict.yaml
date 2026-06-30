@@ -18,7 +18,8 @@ spec:
       match:
         all:
           - resources:
-              kinds: [Pod]
+              kinds:
+                - Pod
       exclude:
         any:
           - resources:
@@ -36,11 +37,13 @@ spec:
       match:
         all:
           - resources:
-              kinds: [Pod]
+              kinds:
+                - Pod
       exclude:
         any:
           - resources:
-              kinds: [Pod]
+              kinds:
+                - Pod
               annotations:
                 kyverno.io/ignore: "true"
       mutate:

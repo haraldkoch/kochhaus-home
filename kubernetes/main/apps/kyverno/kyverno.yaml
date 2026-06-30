@@ -10,7 +10,7 @@ spec:
       kind: CustomResourceDefinition
       name: clusterpolicies.kyverno.io
   interval: 1h
-  path: ./kubernetes/main/apps/kyverno/kyverno/app
+  path: ./kubernetes/apps/base/kyverno/kyverno/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -29,7 +29,7 @@ spec:
     - name: kyverno
       namespace: kyverno
   interval: 1h
-  path: ./kubernetes/main/apps/kyverno/kyverno/policies
+  path: ./kubernetes/apps/base/kyverno/kyverno/policies
   prune: true
   sourceRef:
     kind: GitRepository

@@ -15,8 +15,10 @@ spec:
       match:
         any:
           - resources:
-              kinds: ["batch/v1/Job"]
-              namespaces: ["downloads"]
+              kinds:
+                - "batch/v1/Job"
+              namespaces:
+                - "downloads"
               selector:
                 matchLabels:
                   app.kubernetes.io/created-by: volsync
