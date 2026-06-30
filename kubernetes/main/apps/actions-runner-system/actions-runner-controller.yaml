@@ -6,7 +6,7 @@ metadata:
   name: actions-runner-controller
 spec:
   interval: 1h
-  path: ./kubernetes/main/apps/actions-runner-system/actions-runner-controller/app
+  path: ./kubernetes/apps/base/actions-runner-system/actions-runner-controller/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -26,7 +26,11 @@ spec:
     - name: openebs
       namespace: storage
   interval: 1h
-  path: ./kubernetes/main/apps/actions-runner-system/actions-runner-controller/runners
+  path: ./kubernetes/apps/base/actions-runner-system/actions-runner-controller/runners
+  postBuild:
+    substitute:
+      CLUSTER: ${CLUSTER}
+      maxRunners: "6" # 2 per node
   prune: true
   sourceRef:
     kind: GitRepository

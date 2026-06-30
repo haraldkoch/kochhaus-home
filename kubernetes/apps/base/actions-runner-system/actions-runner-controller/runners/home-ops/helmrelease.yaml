@@ -3,24 +3,25 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name java-runner
+  name: &name home-ops-runner-${CLUSTER}
 spec:
   chartRef:
     kind: OCIRepository
     name: gha-runner-scale-set
   interval: 1h
   values:
-    nameOverride: java-runner
-    runnerScaleSetName: java-runner
-    githubConfigUrl: https://github.com/haraldkoch/blacklist-camel
-    githubConfigSecret: java-runner-auth
-    minRunners: 1
-    maxRunners: 3
+    nameOverride: gha-runner-scale-set
+    runnerScaleSetName: gha-runner-scale-set
+    githubConfigUrl: https://github.com/haraldkoch/kochhaus-home
+    githubConfigSecret: home-ops-runner-secret
+    minRunners: ${minRunners:=1}
+    maxRunners: ${maxRunners:=2} # Double total nodes
     containerMode:
       type: kubernetes
       kubernetesModeWorkVolumeClaim:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: ceph-block
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: openebs-hostpath
         resources:
           requests:
             storage: 25Gi
@@ -32,7 +33,8 @@ spec:
         containers:
           - name: runner
             image: ghcr.io/haraldkoch/actions-runner:2.335.1@sha256:2d4eaca502786de08aec422723f2a5a45e122c592cf4aab746d77ed78119bf4a
-            command: ["/home/runner/run.sh"]
+            command:
+              - /home/runner/run.sh
             env:
               - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
                 value: "false"
@@ -44,9 +46,6 @@ spec:
               - mountPath: /var/run/secrets/talos.dev
                 name: talos
                 readOnly: true
-        dnsConfig:
-          searches:
-            - "${PRIVATE_STATIC_DOMAIN}"
         serviceAccountName: *name
         volumes:
           - name: talos

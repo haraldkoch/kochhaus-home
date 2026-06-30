@@ -22,4 +22,5 @@ kind: ServiceAccount
 metadata:
   name: java-runner
 spec:
-  roles: ["os:admin"]
+  roles:
+    - "os:admin"

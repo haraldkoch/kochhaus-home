@@ -146,11 +146,11 @@ tasks:
   upgrade-arc:
     desc: Upgrade the ARC
     cmds:
-      - helm -n actions-runner-system uninstall home-ops-runner
+      - helm -n actions-runner-system uninstall home-ops-runner-main
       - helm -n actions-runner-system uninstall actions-runner-controller
       - sleep 5
       - flux -n actions-runner-system reconcile hr actions-runner-controller
-      - flux -n actions-runner-system reconcile hr home-ops-runner
+      - flux -n actions-runner-system reconcile hr home-ops-runner-main
     preconditions:
       - which flux helm
 
