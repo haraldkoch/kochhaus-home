@@ -6,7 +6,7 @@ metadata:
   name: renovate-operator
 spec:
   components:
-    - ../../../../../components/dragonfly
+    - ../../../../components/dragonfly
   dependsOn:
     - name: dragonfly
       namespace: dbms
@@ -16,7 +16,7 @@ spec:
       failed: status.phase != 'ready'
       current: status.phase == 'ready'
   interval: 1h
-  path: ./kubernetes/main/apps/renovate/renovate-operator/app
+  path: ./kubernetes/apps/base/renovate/renovate-operator
   postBuild:
     substitute:
       APP: renovate-operator
@@ -40,7 +40,7 @@ spec:
   dependsOn:
     - name: renovate-operator
   interval: 1h
-  path: ./kubernetes/main/apps/renovate/renovate-operator/jobs
+  path: ./kubernetes/main/apps/renovate/jobs
   prune: true
   sourceRef:
     kind: GitRepository

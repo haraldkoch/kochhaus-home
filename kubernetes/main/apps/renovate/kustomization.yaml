@@ -9,4 +9,4 @@ components:
 
 resources:
   - ./namespace.yaml
-  - ./renovate-operator/ks.yaml
+  - ./renovate-operator.yaml
