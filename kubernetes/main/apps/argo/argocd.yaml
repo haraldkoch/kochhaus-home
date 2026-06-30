@@ -6,7 +6,7 @@ metadata:
   name: argocd
 spec:
   interval: 1h
-  path: ./kubernetes/main/apps/argo/argocd/app
+  path: ./kubernetes/apps/base/argo/argocd
   prune: true
   sourceRef:
     kind: GitRepository
@@ -24,7 +24,7 @@ spec:
   dependsOn:
     - name: argocd
   interval: 1h
-  path: ./kubernetes/main/apps/argo/argocd/projects
+  path: ./kubernetes/main/apps/argo/projects
   prune: true
   sourceRef:
     kind: GitRepository
