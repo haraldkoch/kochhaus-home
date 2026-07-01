@@ -11,7 +11,7 @@ spec:
   interval: 1h
   values:
     config:
-      clusterPath: ./kubernetes/${CLUSTER}/flux/cluster
+      clusterPath: ./kubernetes/${CLUSTER}/apps/flux-system/flux-instance
       statusChecks: true
       prComments: true
       publicUrl: "https://${SUBDOMAIN}.${CLUSTER_DOMAIN}"
