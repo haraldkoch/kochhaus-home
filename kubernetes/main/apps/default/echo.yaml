@@ -12,7 +12,7 @@ spec:
   postBuild:
     substitute:
       APP: echo
-      SUBDOMAIN: echo-main
+      SUBDOMAIN: echo-${CLUSTER}
   prune: true
   sourceRef:
     kind: GitRepository
