@@ -6,7 +6,7 @@ metadata:
   name: silence-operator
 spec:
   interval: 1h
-  path: ./kubernetes/network/apps/observability/silence-operator/app
+  path: ./kubernetes/apps/base/observability/silence-operator/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -23,7 +23,7 @@ spec:
   dependsOn:
     - name: silence-operator
   interval: 1h
-  path: ./kubernetes/network/apps/observability/silence-operator/silences
+  path: ./kubernetes/apps/base/observability/silence-operator/silences
   prune: true
   sourceRef:
     kind: GitRepository

@@ -24,9 +24,9 @@ resources:
   - ./omada-exporter.yaml
   - ./opnsense-exporter.yaml
   # silence-operator does not yet support arm64
-  # - ./silence-operator/ks.yaml
+  # - ./silence-operator.yaml
   - ./siren.yaml
   - ./smartctl-exporter.yaml
-  - ./snmp-exporter/ks.yaml
+  - ./snmp-exporter.yaml
   - ./tplink-plug-exporter.yaml
   - ./victoria-logs.yaml

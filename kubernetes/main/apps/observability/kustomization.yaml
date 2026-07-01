@@ -21,7 +21,7 @@ resources:
   - ./kromgo.yaml
   - ./kube-prometheus-stack.yaml
   - ./network-ups-tools/ks.yaml
-  - ./silence-operator/ks.yaml
+  - ./silence-operator.yaml
   - ./siren.yaml
   - ./smartctl-exporter.yaml
   - ./smokeping/ks.yaml
