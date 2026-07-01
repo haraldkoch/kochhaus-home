@@ -53,7 +53,7 @@ jobs:
             github:home-operations/flate latest
 
       - name: Extract Images
-        run: flate diff images -p ./kubernetes/clusters/${{ matrix.cluster }} -o json > images.json
+        run: flate diff images -p ./kubernetes/${{ matrix.cluster }}/flux/cluster -o json > images.json
 
       - name: Upload Image List
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
