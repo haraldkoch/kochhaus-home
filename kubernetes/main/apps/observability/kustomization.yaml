@@ -17,7 +17,7 @@ resources:
   - ./goldpinger/ks.yaml
   - ./grafana/ks.yaml
   - ./karma.yaml
-  - ./keda/ks.yaml
+  - ./keda.yaml
   - ./kromgo/ks.yaml
   - ./kube-prometheus-stack.yaml
   - ./network-ups-tools/ks.yaml
