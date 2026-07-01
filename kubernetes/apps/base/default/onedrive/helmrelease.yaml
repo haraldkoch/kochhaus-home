@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/driveone/onedrive
-              tag: 2.5.10
+              tag: 2.5.11
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               ONEDRIVE_DOWNLOADONLY: "1"
