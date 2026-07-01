@@ -25,7 +25,7 @@ resources:
   - ./siren.yaml
   - ./smartctl-exporter.yaml
   - ./smokeping.yaml
-  - ./speedtest-exporter/ks.yaml
+  - ./speedtest-exporter.yaml
   - ./tplink-plug-exporter.yaml
   - ./victoria-logs/ks.yaml
   - ./victoria-logs.yaml

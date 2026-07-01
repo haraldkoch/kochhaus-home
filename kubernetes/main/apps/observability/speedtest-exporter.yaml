@@ -6,7 +6,7 @@ metadata:
   name: speedtest-exporter
 spec:
   interval: 1h
-  path: ./kubernetes/main/apps/observability/speedtest-exporter/app
+  path: ./kubernetes/apps/base/observability/speedtest-exporter
   prune: true
   sourceRef:
     kind: GitRepository
