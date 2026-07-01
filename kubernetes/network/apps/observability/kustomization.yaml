@@ -16,7 +16,7 @@ resources:
   - ./dnssec-exporter.yaml
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
-  - ./json-exporter/ks.yaml
+  - ./json-exporter.yaml
   - ./karma.yaml
   - ./keda.yaml
   - ./kube-prometheus-stack.yaml
