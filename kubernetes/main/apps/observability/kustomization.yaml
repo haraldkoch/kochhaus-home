@@ -24,7 +24,7 @@ resources:
   - ./silence-operator.yaml
   - ./siren.yaml
   - ./smartctl-exporter.yaml
-  - ./smokeping/ks.yaml
+  - ./smokeping.yaml
   - ./speedtest-exporter/ks.yaml
   - ./tplink-plug-exporter.yaml
   - ./victoria-logs/ks.yaml

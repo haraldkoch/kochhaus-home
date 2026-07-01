@@ -7,14 +7,14 @@ metadata:
 spec:
   components:
     - ../../../../components/gatus/guarded
-    - ../../../../components/volsync
+    - ../../../../main/components/volsync
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
     - name: volsync
       namespace: storage
   interval: 1h
-  path: ./kubernetes/main/apps/observability/smokeping/app
+  path: ./kubernetes/apps/base/observability/smokeping
   postBuild:
     substitute:
       APP: smokeping
