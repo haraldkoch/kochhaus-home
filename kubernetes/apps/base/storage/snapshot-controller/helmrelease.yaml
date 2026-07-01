@@ -11,7 +11,7 @@ spec:
   interval: 1h
   values:
     controller:
-      replicaCount: 2
+      replicaCount: ${REPLICAS:=1}
       serviceMonitor:
         create: true
     webhook:

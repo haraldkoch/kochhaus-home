@@ -18,6 +18,7 @@ spec:
       - --kubelet-request-timeout=2s
     metrics:
       enabled: true
+    replicas: ${REPLICAS:=1}
     serviceMonitor:
       enabled: true
     resources:
