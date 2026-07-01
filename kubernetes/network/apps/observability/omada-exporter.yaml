@@ -6,7 +6,7 @@ metadata:
   name: omada-exporter
 spec:
   interval: 1h
-  path: ./kubernetes/network/apps/observability/omada-exporter/app
+  path: ./kubernetes/apps/base/observability/omada-exporter
   prune: true
   sourceRef:
     kind: GitRepository
