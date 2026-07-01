@@ -3,19 +3,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name home-ops-runner-${CLUSTER}
+  name: &name kochhaus-home-runner-${CLUSTER}
 spec:
   chartRef:
     kind: OCIRepository
     name: gha-runner-scale-set
   interval: 1h
   values:
-    nameOverride: gha-runner-scale-set
-    runnerScaleSetName: gha-runner-scale-set
-    githubConfigUrl: https://github.com/haraldkoch/kochhaus-home
-    githubConfigSecret: home-ops-runner-secret
-    minRunners: ${minRunners:=1}
-    maxRunners: ${maxRunners:=2} # Double total nodes
     containerMode:
       type: kubernetes
       kubernetesModeWorkVolumeClaim:
@@ -28,6 +22,10 @@ spec:
     controllerServiceAccount:
       name: actions-runner-controller
       namespace: actions-runner-system
+    githubConfigSecret: kochhaus-home-runner-secret
+    githubConfigUrl: https://github.com/haraldkoch/kochhaus-home
+    maxRunners: ${maxRunners:=2} # Double total nodes
+    minRunners: ${minRunners:=1}
     template:
       spec:
         containers:
