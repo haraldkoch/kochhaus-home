@@ -7,6 +7,9 @@ namespace: storage
 components:
   - ../../components/common
 
+replacements:
+  - path: ../../../components/replacements/ks.yaml
+
 resources:
   - ./namespace.yaml
   - ./longhorn/ks.yaml

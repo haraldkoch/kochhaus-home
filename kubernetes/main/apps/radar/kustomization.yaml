@@ -7,6 +7,9 @@ namespace: radar
 components:
   - ../../components/common
 
+replacements:
+  - path: ../../../components/replacements/ks.yaml
+
 resources:
   - ./namespace.yaml
   - ./radar.yaml

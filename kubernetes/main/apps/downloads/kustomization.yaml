@@ -7,6 +7,9 @@ namespace: downloads
 components:
   - ../../components/common
 
+replacements:
+  - path: ../../../components/replacements/ks.yaml
+
 resources:
   - ./namespace.yaml
   # - ./policy.yaml

@@ -7,6 +7,9 @@ namespace: tekton-operator
 components:
   - ../../components/common
 
+replacements:
+  - path: ../../../components/replacements/ks.yaml
+
 resources:
   - ./namespace.yaml
   - ./tekton-operator/ks.yaml

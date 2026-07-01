@@ -7,6 +7,9 @@ namespace: tekton-pipelines
 components:
   - ../../components/common
 
+replacements:
+  - path: ../../../components/replacements/ks.yaml
+
 resources:
   - ./namespace.yaml
   - ./tekton-pipelines/ks.yaml
