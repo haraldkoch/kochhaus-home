@@ -64,6 +64,8 @@ spec:
                 group: helm.toolkit.fluxcd.io
                 kind: HelmRelease
           postBuild:
+            substitute:
+              CLUSTER: ${CLUSTER}
             substituteFrom:
               - name: cluster-settings
                 kind: ConfigMap
