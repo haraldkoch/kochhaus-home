@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: konflate
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: konflate
+  interval: 1h
+  values:
+    config:
+      clusterPath: ./kubernetes/${CLUSTER}/flux/cluster
+      statusChecks: true
+      prComments: true
+      publicUrl: "https://${SUBDOMAIN}.${CLUSTER_DOMAIN}"
+      repo: github://haraldkoch/kochhaus-home
+      mcp: true
+    persistence:
+      enabled: false
+    secret:
+      existingSecret: konflate
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+    httpRoute:
+      enabled: true
+      annotations:
+        gatus.home-operations.com/endpoint: |-
+          conditions: ["[STATUS] == 200"]
+      parentRefs:
+        - name: envoy-external
+          namespace: network
+      hostnames:
+        - "${SUBDOMAIN}.${CLUSTER_DOMAIN}"
+    monitoring:
+      serviceMonitor:
+        enabled: true
+    resources:
+      requests:
+        cpu: 50m
+      limits:
+        cpu: 4000m
+        memory: 4Gi
