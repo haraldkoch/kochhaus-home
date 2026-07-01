@@ -6,7 +6,10 @@ metadata:
   name: tplink-plug-exporter
 spec:
   interval: 1h
-  path: ./kubernetes/network/apps/observability/tplink-plug-exporter/app
+  path: ./kubernetes/apps/base/observability/tplink-plug-exporter
+  postBuild:
+    substitute:
+      SUBDOMAIN: exporters-${CLUSTER}
   prune: true
   sourceRef:
     kind: GitRepository

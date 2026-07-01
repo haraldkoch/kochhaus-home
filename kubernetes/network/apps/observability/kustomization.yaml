@@ -28,5 +28,5 @@ resources:
   - ./siren.yaml
   - ./smartctl-exporter.yaml
   - ./snmp-exporter/ks.yaml
-  - ./tplink-plug-exporter/ks.yaml
+  - ./tplink-plug-exporter.yaml
   - ./victoria-logs.yaml

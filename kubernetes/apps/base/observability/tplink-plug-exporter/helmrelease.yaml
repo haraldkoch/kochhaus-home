@@ -36,3 +36,14 @@ spec:
           metrics:
             protocol: TCP
             port: 9233
+        type: LoadBalancer
+        externalTrafficPolicy: Cluster
+        ipFamilies:
+          - IPv4
+          - IPv6
+        ipFamilyPolicy: PreferDualStack
+        annotations:
+          external-dns.alpha.kubernetes.io/hostname: ${SUBDOMAIN}.${CLUSTER_DOMAIN}
+          lbipam.cilium.io/ips: "${EXPORTERS_IPV4},${EXPORTERS_IPV6}"
+          lbipam.cilium.io/sharing-cross-namespace: default,observability
+          lbipam.cilium.io/sharing-key: exporters

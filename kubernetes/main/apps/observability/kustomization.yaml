@@ -26,6 +26,6 @@ resources:
   - ./smartctl-exporter.yaml
   - ./smokeping/ks.yaml
   - ./speedtest-exporter/ks.yaml
-  - ./tplink-plug-exporter/ks.yaml
+  - ./tplink-plug-exporter.yaml
   - ./victoria-logs/ks.yaml
   - ./victoria-logs.yaml
