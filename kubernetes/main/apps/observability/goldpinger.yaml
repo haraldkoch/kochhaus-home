@@ -8,7 +8,7 @@ spec:
   components:
     - ../../../../components/gatus/guarded
   interval: 1h
-  path: ./kubernetes/main/apps/observability/goldpinger/app
+  path: ./kubernetes/apps/base/observability/goldpinger
   postBuild:
     substitute:
       APP: goldpinger

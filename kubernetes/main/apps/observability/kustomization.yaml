@@ -14,7 +14,7 @@ resources:
   - ./namespace.yaml
   - ./blackbox-exporter.yaml
   - ./gatus/ks.yaml
-  - ./goldpinger/ks.yaml
+  - ./goldpinger.yaml
   - ./grafana/ks.yaml
   - ./karma.yaml
   - ./keda.yaml

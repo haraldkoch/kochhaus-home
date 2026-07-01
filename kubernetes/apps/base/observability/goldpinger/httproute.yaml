@@ -5,7 +5,8 @@ kind: HTTPRoute
 metadata:
   name: goldpinger
 spec:
-  hostnames: ["goldpinger.${CLUSTER_DOMAIN}"]
+  hostnames:
+    - "goldpinger.${CLUSTER_DOMAIN}"
   parentRefs:
     - name: envoy-internal
       namespace: network
