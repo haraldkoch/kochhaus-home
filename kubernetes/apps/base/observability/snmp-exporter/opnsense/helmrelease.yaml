@@ -13,7 +13,8 @@ spec:
     fullnameOverride: *app
     image:
       repository: quay.io/prometheus/snmp-exporter
-    extraArgs: ["--config.file=/config/snmp.yaml"]
+    extraArgs:
+      - "--config.file=/config/snmp.yaml"
     extraConfigmapMounts:
       - name: *app
         mountPath: /config/snmp.yaml
@@ -37,12 +38,14 @@ spec:
       interval: 5s
       params:
         - name: gw
-          module: ["if_mib"]
+          module:
+            - "if_mib"
           target: ${PRIVATE_GATEWAY}
-          auth: ["public_v2"]
+          auth:
+            - "public_v2"
       path: /snmp
       scrapeTimeout: 5s
       relabelings:
-        - { sourceLabels: ["__param_target"], targetLabel: instance }
+        - {sourceLabels: ["__param_target"], targetLabel: instance}
       additionalMetricsRelabelConfigs:
-        - { regex: (pod), action: labeldrop }
+        - {regex: (pod), action: labeldrop}
