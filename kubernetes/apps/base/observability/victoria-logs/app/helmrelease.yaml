@@ -19,13 +19,13 @@ spec:
       fullnameOverride: victoria-logs
       persistentVolume:
         enabled: true
-        storageClassName: ceph-block
+        storageClassName: ${STORAGECLASS:=ceph-block}
         size: 20Gi
       retentionPeriod: 14d
       route:
         enabled: true
         hostnames:
-          - victoria-logs.${SECRET_DOMAIN}
+          - ${SUBDOMAIN}.${SECRET_DOMAIN}
         parentRefs:
           - name: envoy-internal
             namespace: network

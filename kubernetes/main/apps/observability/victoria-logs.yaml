@@ -1,22 +1,25 @@
-#---
-## yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-#apiVersion: kustomize.toolkit.fluxcd.io/v1
-#kind: Kustomization
-#metadata:
-#  name: victoria-logs
-#spec:
-#  dependsOn:
-#    - name: rook-ceph-cluster
-#      namespace: rook-ceph
-#  interval: 1h
-#  path: ./kubernetes/main/apps/observability/victoria-logs/app
-#  prune: true
-#  sourceRef:
-#    kind: GitRepository
-#    name: flux-system
-#    namespace: flux-system
-#  targetNamespace: observability
-#  wait: false
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: victoria-logs
+spec:
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  interval: 1h
+  path: ./kubernetes/apps/base/observability/victoria-logs/app
+  postBuild:
+    substitute:
+      STORAGECLASS: ceph-block
+      SUBDOMAIN: victoria-logs
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: true
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
