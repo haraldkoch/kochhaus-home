@@ -11,7 +11,7 @@ spec:
   interval: 1h
   values:
     commonAnnotations:
-      fluxcd.controlplane.io/reconcileArtifactEvery: 1h
+      fluxcd.controlplane.io/reconcileArtifactEvery: 0s
     instance:
       cluster:
         networkPolicy: false
@@ -20,6 +20,8 @@ spec:
         - kustomize-controller
         - helm-controller
         - notification-controller
+      distribution:
+        artifact: oci://ghcr.io/controlplaneio-fluxcd/flux-operator-manifests:v0.53.0
       sync:
         kind: GitRepository
         url: https://github.com/haraldkoch/kochhaus-home
