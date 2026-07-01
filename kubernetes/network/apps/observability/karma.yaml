@@ -12,7 +12,6 @@ spec:
   postBuild:
     substitute:
       APP: karma
-      CLUSTER: ${CLUSTER}
       SUBDOMAIN: karma
   prune: true
   sourceRef:

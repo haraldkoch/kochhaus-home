@@ -30,7 +30,6 @@ spec:
   path: ./kubernetes/apps/base/observability/victoria-logs/collector
   postBuild:
     substitute:
-      CLUSTER: ${CLUSTER}
       VICTORIA_LOGS_URL: http://victoria-logs-server.observability.svc.cluster.local:9428
   prune: true
   sourceRef:

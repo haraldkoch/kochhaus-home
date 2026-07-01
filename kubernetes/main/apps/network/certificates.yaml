@@ -7,9 +7,6 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/base/network/certificates/import
-  postBuild:
-    substitute:
-      CLUSTER: ${CLUSTER}
   prune: true
   sourceRef:
     kind: GitRepository
@@ -28,9 +25,6 @@ spec:
     - name: certificates-import
   interval: 1h
   path: ./kubernetes/apps/base/network/certificates/export
-  postBuild:
-    substitute:
-      CLUSTER: ${CLUSTER}
   prune: true
   sourceRef:
     kind: GitRepository

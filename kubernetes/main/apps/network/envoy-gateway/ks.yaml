@@ -11,8 +11,7 @@ spec:
   path: ./kubernetes/main/apps/network/envoy-gateway/app
   postBuild:
     substitute:
-      CLUSTER: ${CLUSTER}
-      EXTERNAL_DOMAIN: external-main
+      EXTERNAL_DOMAIN: external-${CLUSTER}
       # FIXME - internal-main
       INTERNAL_DOMAIN: internal
       REPLICAS: "2"

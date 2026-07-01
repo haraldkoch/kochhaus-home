@@ -7,9 +7,6 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/registry/apps/flux-system/flux-operator/app
-  postBuild:
-    substitute:
-      CLUSTER: ${CLUSTER}
   prune: true
   sourceRef:
     kind: GitRepository

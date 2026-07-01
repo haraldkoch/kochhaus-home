@@ -14,7 +14,6 @@ spec:
   path: ./kubernetes/apps/base/observability/kube-prometheus-stack
   postBuild:
     substitute:
-      CLUSTER: ${CLUSTER}
       APP: kube-prometheus-stack
       GATUS_SUBDOMAIN: prometheus
       ALERTMANAGER_SUBDOMAIN: alertmanager

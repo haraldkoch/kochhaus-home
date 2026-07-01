@@ -10,8 +10,7 @@ spec:
   prune: true
   postBuild:
     substitute:
-      CLUSTER: ${CLUSTER}
-      EXTERNAL_DOMAIN: external-network
+      EXTERNAL_DOMAIN: external-${CLUSTER}
       REPLICAS: "2"
   sourceRef:
     kind: GitRepository

@@ -11,7 +11,6 @@ spec:
   path: ./kubernetes/network/apps/flux-system/flux-instance/app
   postBuild:
     substitute:
-      CLUSTER: ${CLUSTER}
       SUBDOMAIN: flux-webhook-${CLUSTER}
   prune: true
   sourceRef:

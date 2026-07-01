@@ -12,7 +12,6 @@ spec:
   postBuild:
     substitute:
       APP: siren
-      CLUSTER: ${CLUSTER}
       SUBDOMAIN: siren-${CLUSTER}
   prune: true
   sourceRef:

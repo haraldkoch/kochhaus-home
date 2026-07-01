@@ -9,7 +9,6 @@ spec:
   path: ./kubernetes/apps/base/observability/fluent-bit
   postBuild:
     substitute:
-      CLUSTER: ${CLUSTER}
       OUTPUT_HOST: victoria-logs.observability.svc.cluster.local
       OUTPUT_PORT: "9428"
       OUTPUT_TLS: "off"
