@@ -9,7 +9,8 @@ spec:
     - name: envoy-internal
       namespace: network
       sectionName: https
-  hostnames: ["blackbox.${CLUSTER_DOMAIN}"]
+  hostnames:
+    - ${SUBDOMAIN}.${CLUSTER_DOMAIN}
   rules:
     - backendRefs:
         - name: blackbox-exporter
