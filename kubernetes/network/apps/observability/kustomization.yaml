@@ -22,7 +22,7 @@ resources:
   - ./kube-prometheus-stack.yaml
   - ./network-ups-tools/ks.yaml
   - ./omada-exporter.yaml
-  - ./opnsense-exporter/ks.yaml
+  - ./opnsense-exporter.yaml
   # silence-operator does not yet support arm64
   # - ./silence-operator/ks.yaml
   - ./siren.yaml
