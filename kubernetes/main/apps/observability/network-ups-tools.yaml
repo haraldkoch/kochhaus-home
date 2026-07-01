@@ -3,10 +3,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: network-ups-tools-exporter
+  name: network-ups-tools
 spec:
   interval: 1h
-  path: ./kubernetes/network/apps/observability/network-ups-tools/exporter
+  path: ./kubernetes/apps/base/observability/network-ups-tools/app
   prune: true
   sourceRef:
     kind: GitRepository

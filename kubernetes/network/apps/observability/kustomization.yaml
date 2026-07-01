@@ -20,7 +20,7 @@ resources:
   - ./karma.yaml
   - ./keda.yaml
   - ./kube-prometheus-stack.yaml
-  - ./network-ups-tools/ks.yaml
+  - ./network-ups-tools.yaml
   - ./omada-exporter.yaml
   - ./opnsense-exporter.yaml
   # silence-operator does not yet support arm64
