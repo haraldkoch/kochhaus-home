@@ -24,15 +24,15 @@ spec:
     - ../../../../../components/gatus/guarded
   dependsOn:
     - name: grafana
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+    - name: longhorn
+      namespace: storage
   interval: 1h
   path: ./kubernetes/apps/base/observability/grafana/instance
   postBuild:
     substitute:
       APP: grafana
-      GATUS_SUBDOMAIN: grafana-main-op
-      SUBDOMAIN: grafana-main-op
+      GATUS_SUBDOMAIN: grafana-op
+      SUBDOMAIN: grafana-op
   prune: true
   sourceRef:
     kind: GitRepository
