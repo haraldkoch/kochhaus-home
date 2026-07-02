@@ -16,6 +16,7 @@ resources:
   - ./gatus/ks.yaml
   - ./goldpinger.yaml
   - ./grafana/ks.yaml
+  - ./grafana.yaml
   - ./karma.yaml
   - ./keda.yaml
   - ./kromgo.yaml
