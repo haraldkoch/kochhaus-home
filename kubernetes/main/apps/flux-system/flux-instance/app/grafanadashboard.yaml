@@ -3,51 +3,62 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: grafana-operator
+  name: flux-k8s-api-performance
 spec:
   allowCrossNamespaceImport: true
+  folder: flux
   instanceSelector:
     matchLabels:
       dashboards: grafana
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  configMapRef:
-    name: grafana-operator-dashboard
-    key: grafana-operator.json
+  url: https://raw.githubusercontent.com/controlplaneio-fluxcd/flux-operator/refs/heads/main/config/monitoring/dashboards/flux-k8s-api-performance.json
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: etcd-fixed
+  name: flux-performance
 spec:
   allowCrossNamespaceImport: true
+  folder: flux
   instanceSelector:
     matchLabels:
       dashboards: grafana
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folder: kubernetes
-  configMapRef:
-    name: etcd-dashboard
-    key: etcd.json
+  url: https://raw.githubusercontent.com/controlplaneio-fluxcd/flux-operator/refs/heads/main/config/monitoring/dashboards/flux-performance.json
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: node-aggregate
+  name: flux-cluster
 spec:
   allowCrossNamespaceImport: true
+  folder: flux
   instanceSelector:
     matchLabels:
       dashboards: grafana
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folder: kubernetes
-  configMapRef:
-    name: node-aggregate-dashboard
-    key: node-aggregate.json
+  url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/refs/heads/main/monitoring/configs/dashboards/cluster.json
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: flux-control-plane
+spec:
+  allowCrossNamespaceImport: true
+  folder: flux
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/refs/heads/main/monitoring/configs/dashboards/control-plane.json

@@ -3,7 +3,7 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: grafana-operator
+  name: blackbox-exporter-ping
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
@@ -12,15 +12,14 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  configMapRef:
-    name: grafana-operator-dashboard
-    key: grafana-operator.json
+  folder: Infrastructure
+  url: https://grafana.com/api/dashboards/20338/revisions/3/download
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: etcd-fixed
+  name: blackbox-exporter-icmp
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
@@ -29,25 +28,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folder: kubernetes
+  folder: Infrastructure
   configMapRef:
-    name: etcd-dashboard
-    key: etcd.json
----
-# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/grafana.integreatly.org/grafanadashboard_v1beta1.json
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  name: node-aggregate
-spec:
-  allowCrossNamespaceImport: true
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folder: kubernetes
-  configMapRef:
-    name: node-aggregate-dashboard
-    key: node-aggregate.json
+    name: blackbox-exporter-icmp-dashboard
+    key: icmp.json

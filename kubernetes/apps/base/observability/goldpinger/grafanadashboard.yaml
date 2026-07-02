@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: goldpinger
+spec:
+  allowCrossNamespaceImport: true
+  folder: infrastructure
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  url: https://raw.githubusercontent.com/bloomberg/goldpinger/v3.11.2/extras/goldpinger-dashboard.json

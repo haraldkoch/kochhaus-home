@@ -1,3 +1,4 @@
+---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/grafana.integreatly.org/grafanadatasource_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
@@ -13,6 +14,9 @@ spec:
     access: proxy
     isDefault: true
     url: http://prometheus-operated.observability.svc.cluster.local:9090
+  plugins:
+    - name: grafana-clock-panel
+      version: 3.2.2
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/grafana.integreatly.org/grafanadatasource_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1

@@ -3,7 +3,7 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: grafana-operator
+  name: envoy-overview
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
@@ -12,15 +12,14 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  configMapRef:
-    name: grafana-operator-dashboard
-    key: grafana-operator.json
+  folder: infrastructure
+  url: https://grafana.com/api/dashboards/24459/revisions/3/download
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: etcd-fixed
+  name: envoy-upstream
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
@@ -29,16 +28,14 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folder: kubernetes
-  configMapRef:
-    name: etcd-dashboard
-    key: etcd.json
+  folder: infrastructure
+  url: https://grafana.com/api/dashboards/24457/revisions/4/download
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: node-aggregate
+  name: envoy-downstream
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
@@ -47,7 +44,5 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folder: kubernetes
-  configMapRef:
-    name: node-aggregate-dashboard
-    key: node-aggregate.json
+  folder: infrastructure
+  url: https://grafana.com/api/dashboards/24458/revisions/3/download

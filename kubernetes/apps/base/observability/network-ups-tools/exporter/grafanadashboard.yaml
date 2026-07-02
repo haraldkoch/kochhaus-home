@@ -3,7 +3,7 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: grafana-operator
+  name: ups-aggregate
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
@@ -12,15 +12,16 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
+  folder: home
   configMapRef:
-    name: grafana-operator-dashboard
-    key: grafana-operator.json
+    name: ups-aggregate-dashboard
+    key: ups-aggregate.json
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: etcd-fixed
+  name: ups-status
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
@@ -29,25 +30,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folder: kubernetes
+  folder: home
   configMapRef:
-    name: etcd-dashboard
-    key: etcd.json
----
-# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/grafana.integreatly.org/grafanadashboard_v1beta1.json
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDashboard
-metadata:
-  name: node-aggregate
-spec:
-  allowCrossNamespaceImport: true
-  instanceSelector:
-    matchLabels:
-      dashboards: grafana
-  datasources:
-    - datasourceName: prometheus
-      inputName: DS_PROMETHEUS
-  folder: kubernetes
-  configMapRef:
-    name: node-aggregate-dashboard
-    key: node-aggregate.json
+    name: ups-status-dashboard
+    key: ups-status.json
