@@ -111,6 +111,10 @@ spec:
         ports:
           http:
             port: *apiPort
+    serviceMonitor:
+      app:
+        endpoints:
+          - port: http
     route:
       app:
         hostnames:

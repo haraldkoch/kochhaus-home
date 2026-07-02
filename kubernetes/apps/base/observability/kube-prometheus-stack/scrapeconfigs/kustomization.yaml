@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./blocky.yaml
   - ./externalsecret.yaml
+  - ./garage.yaml
   - ./gatus.yaml
   - ./jezebel.yaml
   - ./mnemosyne.yaml

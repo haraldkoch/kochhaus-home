@@ -16,6 +16,9 @@ spec:
       enabled: true
       annotations:
         grafana_folder: Infrastructure
+      grafanaDashboard:
+        create: true
+        folder: infrastructure
     global:
       image:
         registry: ghcr.io
