@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/bjw-s-labs/calibre-web
-              tag: 0.6.26@sha256:ce359b0c3a3ec5625e845aeefd3729298bdacee4b74838729ec4035bcef7aafc
+              tag: 0.6.26@sha256:87a0d524582303d1dbe399c9b6bce603e0bdcc4d9bd7732d105c0a37e4736ce8
             env:
               CACHE_DIR: /cache
             probes:
