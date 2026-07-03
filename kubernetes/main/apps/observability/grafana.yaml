@@ -23,7 +23,7 @@ spec:
   components:
     - ../../../../../components/gatus/guarded
   dependsOn:
-    - name: grafana
+    - name: grafana-operator
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
@@ -31,8 +31,8 @@ spec:
   postBuild:
     substitute:
       APP: grafana
-      GATUS_SUBDOMAIN: grafana-main-op
-      SUBDOMAIN: grafana-main-op
+      GATUS_SUBDOMAIN: grafana-main
+      SUBDOMAIN: grafana-main
   prune: true
   sourceRef:
     kind: GitRepository

@@ -23,7 +23,7 @@ spec:
   components:
     - ../../../../../components/gatus/guarded
   dependsOn:
-    - name: grafana
+    - name: grafana-operator
     - name: longhorn
       namespace: storage
   interval: 1h
@@ -31,8 +31,8 @@ spec:
   postBuild:
     substitute:
       APP: grafana
-      GATUS_SUBDOMAIN: grafana-op
-      SUBDOMAIN: grafana-op
+      GATUS_SUBDOMAIN: grafana
+      SUBDOMAIN: grafana
   prune: true
   sourceRef:
     kind: GitRepository

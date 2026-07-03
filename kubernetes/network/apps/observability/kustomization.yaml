@@ -14,8 +14,6 @@ resources:
   - ./namespace.yaml
   - ./blackbox-exporter.yaml
   - ./dnssec-exporter.yaml
-  - ./gatus/ks.yaml
-  - ./grafana/ks.yaml
   - ./grafana.yaml
   - ./json-exporter.yaml
   - ./karma.yaml
