@@ -28,7 +28,7 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  folder: Infrastructure
+  folder: home
   configMapRef:
     name: blackbox-exporter-icmp-dashboard
     key: icmp.json
