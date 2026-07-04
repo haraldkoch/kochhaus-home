@@ -12,7 +12,7 @@ spec:
   postBuild:
     substitute:
       APP: kromgo
-      GATUS_PATH: /talos_version
+      GATUS_PATH: /badges/talos_version
   prune: true
   sourceRef:
     kind: GitRepository
