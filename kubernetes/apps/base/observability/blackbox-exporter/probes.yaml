@@ -16,7 +16,7 @@ spec:
       static:
         - gw.${PRIVATE_STATIC_DOMAIN}
         - penelope.${PRIVATE_STATIC_DOMAIN}
-        - peresephone.${PRIVATE_STATIC_DOMAIN}
+        - persephone.${PRIVATE_STATIC_DOMAIN}
         - pikvm1.home.arpa
         - pikvm2.home.arpa
         - ${BACKUP_SERVER}
