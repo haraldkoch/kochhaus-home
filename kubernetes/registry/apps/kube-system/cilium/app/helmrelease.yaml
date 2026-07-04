@@ -32,7 +32,6 @@ spec:
       enabled: true
       annotations:
         grafana_folder: Infrastructure
-    defaultLBServiceIPAM: none
     # NOTE: devices might need to be set if you have more than one active NIC on your hosts
     # devices: eno+ enp+ eth+
     ipv4:
