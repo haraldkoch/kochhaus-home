@@ -7,6 +7,9 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/main/apps/kube-system/cilium/app
+  postBuild:
+    substitute:
+      DEVICES: eno+ enp+
   prune: true
   sourceRef:
     kind: GitRepository

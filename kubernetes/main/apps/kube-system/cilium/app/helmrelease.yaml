@@ -34,6 +34,7 @@ spec:
         grafana_folder: Infrastructure
     # NOTE: devices might need to be set if you have more than one active NIC on your hosts
     # devices: eno+ enp+ eth+
+    devices: ${DEVICES:=end+ eno+ enp+}
     ipv4:
       enabled: true
     ipv6:
@@ -45,31 +46,7 @@ spec:
     envoy:
       enabled: false
     hubble:
-      enabled: true
-      metrics:
-        enabled:
-          - dns:query
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
-        serviceMonitor:
-          enabled: true
-        dashboards:
-          enabled: true
-          annotations:
-            grafana_folder: Infrastructure
-      relay:
-        enabled: true
-        rollOutPods: true
-        prometheus:
-          serviceMonitor:
-            enabled: true
-      ui:
-        enabled: true
-        rollOutPods: true
+      enabled: false
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: 10.42.0.0/16
@@ -92,7 +69,7 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: true
-      replicas: 2
+      replicas: 1
       rollOutPods: true
     pmtuDiscovery:
       enabled: true

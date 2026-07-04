@@ -34,7 +34,7 @@ spec:
         grafana_folder: Infrastructure
     # NOTE: devices might need to be set if you have more than one active NIC on your hosts
     # devices: eno+ enp+ eth+
-    devices: end+
+    devices: ${DEVICES:=end+ eno+ enp+}
     ipv4:
       enabled: true
     ipv6:
@@ -69,7 +69,7 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: true
-      replicas: 2
+      replicas: 1
       rollOutPods: true
     pmtuDiscovery:
       enabled: true
