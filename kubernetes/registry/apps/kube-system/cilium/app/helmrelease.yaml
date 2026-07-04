@@ -34,9 +34,13 @@ spec:
         grafana_folder: Infrastructure
     # NOTE: devices might need to be set if you have more than one active NIC on your hosts
     # devices: eno+ enp+ eth+
+    devices: ${DEVICES:=end+ eno+ enp+}
     ipv4:
       enabled: true
+    ipv6:
+      enabled: true
     enableIPv4BIGTCP: true
+    enableIPv6BIGTCP: true
     endpointRoutes:
       enabled: true
     envoy:
@@ -46,6 +50,7 @@ spec:
     ipam:
       mode: kubernetes
     ipv4NativeRoutingCIDR: 10.42.0.0/16
+    ipv6NativeRoutingCIDR: fdd5:aa8:9535:42::/108
     k8sServiceHost: 127.0.0.1
     k8sServicePort: 7445
     kubeProxyReplacement: true
