@@ -8,6 +8,7 @@ spec:
   allowFirstLastIPs: "No"
   blocks:
     - cidr: 192.168.23.0/24
+    - cidr: fdd5:aa8:9535:23::/64
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/cilium.io/ciliumbgpadvertisement_v2.json
 apiVersion: cilium.io/v2

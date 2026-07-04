@@ -60,7 +60,7 @@ spec:
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
-      lbipam.cilium.io/ips: "${GATEWAY_INT_IPV4}"
+      lbipam.cilium.io/ips: "${GATEWAY_INT_IPV4},${GATEWAY_INT_IPV6}"
   listeners:
     - name: http
       protocol: HTTP
