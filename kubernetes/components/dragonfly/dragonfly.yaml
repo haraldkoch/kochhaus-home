@@ -29,8 +29,9 @@ spec:
       memory: 512Mi
   topologySpreadConstraints:
     - maxSkew: 1
-      topologyKey: "kubernetes.io/hostname"
-      whenUnsatisfiable: "DoNotSchedule"
+      topologyKey: kubernetes.io/hostname
+      whenUnsatisfiable: DoNotSchedule
+      nodeTaintsPolicy: Honor
       labelSelector:
         matchLabels:
           app.kubernetes.io/part-of: dragonfly
