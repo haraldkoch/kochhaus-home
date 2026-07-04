@@ -75,10 +75,14 @@ metadata:
   name: kube-api
   annotations:
     external-dns.alpha.kubernetes.io/hostname: k8s-registry.${CLUSTER_DOMAIN}
-    lbipam.cilium.io/ips: 192.168.23.65
+    lbipam.cilium.io/ips: 192.168.23.65,fdd5:aa8:9535:23::65
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
+  ipFamilies:
+    - IPv4
+    - IPv6
+  ipFamilyPolicy: PreferDualStack
   selector:
     k8s-app: kube-apiserver
     tier: control-plane
