@@ -9,7 +9,7 @@ spec:
   path: ./kubernetes/apps/base/flux-system/konflate
   postBuild:
     substitute:
-      SUBDOMAIN: konflate
+      SUBDOMAIN: konflate-${CLUSTER}
   prune: true
   sourceRef:
     kind: GitRepository
