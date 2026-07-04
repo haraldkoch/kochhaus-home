@@ -12,7 +12,7 @@ replacements:
 
 resources:
   - ./namespace.yaml
-  - ./cilium/ks.yaml
+  - ./cilium.yaml
   - ./coredns.yaml
   - ./descheduler.yaml
   - ./etcd-defrag.yaml
