@@ -14,13 +14,13 @@ spec:
     bandwidthManager:
       enabled: true
       bbr: true
+    bgpControlPlane:
+      enabled: true
     bpf:
       datapathMode: netkit
       masquerade: true
       preallocateMaps: true
     bpfClockProbe: true
-    bgpControlPlane:
-      enabled: true
     cgroup:
       automount:
         enabled: false
@@ -60,6 +60,7 @@ spec:
     loadBalancer:
       algorithm: maglev
       mode: dsr
+      serviceTopology: true
     localRedirectPolicies:
       enabled: true
     operator:
