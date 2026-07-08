@@ -21,7 +21,7 @@ spec:
         - helm-controller
         - notification-controller
       distribution:
-        artifact: oci://ghcr.io/controlplaneio-fluxcd/flux-operator-manifests:v0.53.0
+        artifact: oci://ghcr.io/controlplaneio-fluxcd/flux-operator-manifests:v0.54.1
       sync:
         kind: GitRepository
         url: https://github.com/haraldkoch/kochhaus-home
