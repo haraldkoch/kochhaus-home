@@ -9,6 +9,7 @@ spec:
     kind: OCIRepository
     name: rook-ceph
   interval: 1h
+  timeout: 10m
   values:
     csi:
       serviceMonitor:
