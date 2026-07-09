@@ -59,7 +59,7 @@ spec:
                 capabilities: {drop: ["ALL"]}
             - name: image-renderer
               # renovate: datasource=github-releases depName=grafana/grafana-image-renderer
-              image: v5.10.0
+              image: mirror.gcr.io/grafana/grafana-image-renderer:v5.10.0
               env:
                 - name: AUTH_TOKEN
                   value: fnord
