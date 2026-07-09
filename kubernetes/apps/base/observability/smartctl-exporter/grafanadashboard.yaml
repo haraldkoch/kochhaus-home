@@ -13,4 +13,4 @@ spec:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
   folder: infrastructure
-  url: https://grafana.com/api/dashboards/22604/revisions/2/download
+  url: https://grafana.com/api/dashboards/22604/revisions/3/download
