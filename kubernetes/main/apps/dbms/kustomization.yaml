@@ -13,6 +13,6 @@ replacements:
 resources:
   - ./namespace.yaml
   - ./cloudnative-pg.yaml
-  - ./dragonfly/ks.yaml
+  - ./dragonfly.yaml
   - ./pgadmin/ks.yaml
   - ./postgres-backup/ks.yaml
