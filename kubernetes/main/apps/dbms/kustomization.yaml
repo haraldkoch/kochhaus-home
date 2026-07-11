@@ -12,7 +12,7 @@ replacements:
 
 resources:
   - ./namespace.yaml
-  - ./cloudnative-pg/ks.yaml
+  - ./cloudnative-pg.yaml
   - ./dragonfly/ks.yaml
   - ./pgadmin/ks.yaml
   - ./postgres-backup/ks.yaml

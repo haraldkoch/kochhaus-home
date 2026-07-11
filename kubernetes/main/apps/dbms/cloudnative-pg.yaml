@@ -6,7 +6,7 @@ metadata:
   name: cloudnative-pg
 spec:
   interval: 1h
-  path: ./kubernetes/main/apps/dbms/cloudnative-pg/app
+  path: ./kubernetes/apps/base/dbms/cloudnative-pg
   prune: true
   sourceRef:
     kind: GitRepository
