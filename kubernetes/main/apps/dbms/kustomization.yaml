@@ -15,4 +15,4 @@ resources:
   - ./cloudnative-pg.yaml
   - ./dragonfly.yaml
   - ./pgadmin.yaml
-  - ./postgres-backup/ks.yaml
+  - ./postgres-backup.yaml

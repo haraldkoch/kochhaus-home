@@ -6,7 +6,10 @@ metadata:
   name: postgres-backup
 spec:
   interval: 1h
-  path: ./kubernetes/main/apps/dbms/postgres-backup/app
+  path: ./kubernetes/apps/base/dbms/postgres-backup
+  postBuild:
+    substitute:
+      DATABASES: authelia,dmarc,docmost,gatus,lldap,nextcloud,speedtest,tekton-results
   prune: true
   sourceRef:
     kind: GitRepository
