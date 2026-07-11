@@ -5,7 +5,8 @@ kind: HTTPRoute
 metadata:
   name: rook-ceph-dashboard
 spec:
-  hostnames: ["rook.${CLUSTER_DOMAIN}"]
+  hostnames:
+    - "rook.${CLUSTER_DOMAIN}"
   parentRefs:
     - name: envoy-internal
       namespace: network

@@ -6,7 +6,7 @@ metadata:
   name: ceph-csi-drivers
 spec:
   interval: 1h
-  path: ./kubernetes/main/apps/rook-ceph/rook-ceph/ceph-csi-drivers
+  path: ./kubernetes/apps/base/rook-ceph/rook-ceph/ceph-csi-drivers
   prune: true
   sourceRef:
     kind: GitRepository
@@ -24,7 +24,7 @@ spec:
     - name: ceph-csi-drivers
       namespace: rook-ceph
   interval: 1h
-  path: ./kubernetes/main/apps/rook-ceph/rook-ceph/app
+  path: ./kubernetes/apps/base/rook-ceph/rook-ceph/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -39,7 +39,7 @@ metadata:
   name: rook-ceph-cluster
 spec:
   components:
-    - ../../../../components/gatus/guarded
+    - ../../../../../components/gatus/guarded
   dependsOn:
     - name: rook-ceph
     - name: volsync
@@ -59,7 +59,7 @@ spec:
       failed: status.ceph.health == 'HEALTH_ERR'
       current: status.ceph.health in ['HEALTH_OK', 'HEALTH_WARN']
   interval: 1h
-  path: ./kubernetes/main/apps/rook-ceph/rook-ceph/cluster
+  path: ./kubernetes/apps/base/rook-ceph/rook-ceph/cluster
   postBuild:
     substitute:
       APP: rook-ceph-cluster

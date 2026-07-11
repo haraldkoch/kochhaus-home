@@ -12,4 +12,4 @@ replacements:
 
 resources:
   - ./namespace.yaml
-  - ./rook-ceph/ks.yaml
+  - ./rook-ceph.yaml
