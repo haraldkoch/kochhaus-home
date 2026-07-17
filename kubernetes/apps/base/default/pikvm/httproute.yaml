@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  labels:
+    app.kubernetes.io/instance: ${INSTANCE}
+    app.kubernetes.io/name: pikvm
+  name: ${INSTANCE}
+spec:
+  hostnames:
+    - ${INSTANCE}.${CLUSTER_DOMAIN}
+  parentRefs:
+    - name: envoy-external
+      namespace: network
+  rules:
+    - backendRefs:
+        - group: gateway.envoyproxy.io
+          kind: Backend
+          name: ${INSTANCE}
+      matches:
+        - path:
+            type: PathPrefix
+            value: /

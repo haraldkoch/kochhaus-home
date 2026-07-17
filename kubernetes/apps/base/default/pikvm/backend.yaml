@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/gateway.envoyproxy.io/backend_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: Backend
+metadata:
+  labels:
+    app.kubernetes.io/instance: ${INSTANCE}
+    app.kubernetes.io/name: pikvm
+  name: ${INSTANCE}
+spec:
+  appProtocols:
+    - gateway.envoyproxy.io/ws
+    - gateway.envoyproxy.io/wss
+  endpoints:
+    - fqdn:
+        hostname: ${INSTANCE}.home.arpa
+        port: 443
+  tls:
+    insecureSkipVerify: true

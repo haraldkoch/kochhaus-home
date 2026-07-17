@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: pikvm1
+spec:
+  components:
+    - ../../../../components/gatus/external
+  interval: 1h
+  path: ./kubernetes/apps/base/default/pikvm
+  postBuild:
+    substitute:
+      APP: pikvm1
+      GATUS_SUBDOMAIN: pikvm1
+      INSTANCE: pikvm1
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: false
