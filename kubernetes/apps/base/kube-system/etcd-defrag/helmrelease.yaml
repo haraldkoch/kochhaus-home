@@ -46,7 +46,7 @@ spec:
     persistence:
       talosctl:
         type: image
-        image: ghcr.io/siderolabs/talosctl:v1.13.6
+        image: ghcr.io/siderolabs/talosctl:v1.13.7
       talosconfig:
         type: secret
         name: etcd-defrag-talosconfig
