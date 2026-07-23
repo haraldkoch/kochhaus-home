@@ -17,6 +17,8 @@ spec:
       enabled: true
       grafanaOperator:
         enabled: true
+        spec:
+          folder: infrastructure
     server:
       fullnameOverride: victoria-logs
       persistentVolume:
