@@ -47,7 +47,7 @@
       automerge: true,
       automergeType: "branch",
       matchUpdateTypes: ["minor", "patch"],
-      matchPackageNames: ["/external-dns/", "/gateway-api/", "/prometheus-operator/"],
+      matchPackageNames: ["/external-dns/", "/gateway-api/", "/grafana-image-renderer/", "/prometheus-operator/"],
       ignoreTests: true,
     },
     {
