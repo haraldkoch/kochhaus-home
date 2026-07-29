@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/traefik/whoami
-              tag: v1.11.0
+              tag: v1.12.0
             probes:
               liveness:
                 enabled: true
