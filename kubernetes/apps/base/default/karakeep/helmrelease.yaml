@@ -15,6 +15,20 @@ spec:
         forceRename: karakeep
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          wait-for-meilisearch:
+            image:
+              repository: ghcr.io/containerd/busybox
+              tag: 1.36
+            command:
+              - sh
+              - -c
+              - |
+                until wget -q --spider http://karakeep-meilisearch.default.svc.cluster.local:7700/health; do
+                  echo "Waiting for meilisearch..."
+                  sleep 2
+                done
+                echo "Meilisearch is ready!"
         containers:
           app:
             image:
@@ -65,7 +79,13 @@ spec:
               - --headless
               - --no-sandbox
               - --disable-gpu
+              - --disable-background-timer-throttling
+              - --disable-extensions
+              - --disable-default-apps
               - --disable-dev-shm-usage
+              - --no-first-run
+              - --no-default-browser-check
+              - --mute-audio
               - --remote-debugging-address=0.0.0.0
               - --remote-debugging-port=9222
               - --hide-scrollbars
@@ -101,11 +121,9 @@ spec:
             image:
               repository: mirror.gcr.io/getmeili/meilisearch
               tag: v1.52.0@sha256:d36e713e8f89483af1ab0d72011bbd503f5ab100b68ccbfad51c39e3f0a0567d
-            args:
-              - /bin/meilisearch
-              - --experimental-dumpless-upgrade
             env:
               MEILI_NO_ANALYTICS: true
+              MEILI_UPGRADE_DB: true
               MEILI_MASTER_KEY:
                 valueFrom:
                   secretKeyRef:
