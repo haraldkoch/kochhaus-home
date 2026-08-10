@@ -118,7 +118,7 @@ spec:
     route:
       app:
         hostnames:
-          - "1pwconnect.${CLUSTER_DOMAIN}"
+          - "1pwconnect.kochhaus.dev"
         parentRefs:
           - name: envoy-internal
             namespace: network
