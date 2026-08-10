@@ -46,7 +46,7 @@ function apply_namespaces() {
         fi
 
         # Apply the namespace resources
-        if kustomize build ${app} | yq ea -e 'select(.kind == "Namespace")' \
+        if kustomize build --load-restrictor LoadRestrictionsNone ${app} | yq ea -e 'select(.kind == "Namespace")' \
             | kubectl --context ${CLUSTER} apply --server-side --field-manager bootstrap --force-conflicts --filename - &>/dev/null;
         then
             log info "Namespace resource applied" "resource=${namespace}"
@@ -93,6 +93,7 @@ function apply_sops_secrets() {
         "${ROOT_DIR}/bootstrap/${CLUSTER}/github-deploy-key.sops.yaml"
         "${ROOT_DIR}/bootstrap/${CLUSTER}/age-key.sops.yaml"
         "${ROOT_DIR}/kubernetes/${CLUSTER}/components/common/vars/cluster-secrets.sops.yaml"
+        "${ROOT_DIR}/kubernetes/${CLUSTER}/apps/security/onepassword/app/secret.sops.yaml"
     )
 
     for secret in "${secrets[@]}"; do

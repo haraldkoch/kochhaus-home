@@ -9,7 +9,9 @@ tasks:
     summary: |
       Args:
         CLUSTER: Cluster to run command against (required)
-    cmd: bash {{.SCRIPTS_DIR}}/bootstrap-talos.sh {{.CLUSTER}}
+    cmds:
+      - bash {{.SCRIPTS_DIR}}/bootstrap-talos.sh {{.CLUSTER}}
+      - kubectl config set-cluster {{.CLUSTER}} --server https://{{.RANDOM_CONTROLLER}}:6443
     requires:
       vars:
         - CLUSTER
@@ -17,14 +19,23 @@ tasks:
       - find --version | grep -q GNU
       - test -f {{.SCRIPTS_DIR}}/bootstrap-talos.sh
       - which gum op talosctl yq
+    vars:
+      RANDOM_CONTROLLER:
+        sh: talosctl --talosconfig {{.TALOS_DIR}}/talosconfig config info --output yaml | yq --exit-status '.endpoints[0]'
 
   apps:
-    desc: Bootstrap apps into the Talos cluster [CLUSTER=required]
+    desc: Bootstrap Kubernetes Apps [CLUSTER=required]
     summary: |
       Args:
         CLUSTER: Cluster to run command against (required)
     # FIXME: per-cluster script?
-    cmd: bash {{.SCRIPTS_DIR}}/bootstrap-apps.sh {{.CLUSTER}}
+    cmds:
+      - kubectl config set-cluster {{.CLUSTER}} --server https://{{.RANDOM_CONTROLLER}}:6443
+      - bash {{.SCRIPTS_DIR}}/bootstrap-apps.sh {{.CLUSTER}}
+    env:
+      CLUSTER: "{{.CLUSTER}}"
+      CLUSTER_APPS: "{{.CLUSTER_APPS}}"
+      CLUSTER_DIR: "{{.CLUSTER_DIR}}"
     preconditions:
       - msg: Unsupported bash version, run `brew install bash` to upgrade
         sh: '{{if eq OS "darwin"}}test -f /opt/homebrew/bin/bash || test -f /usr/local/bin/bash{{end}}'
@@ -36,3 +47,6 @@ tasks:
     requires:
       vars:
         - "CLUSTER"
+    vars:
+      RANDOM_CONTROLLER:
+        sh: talosctl --talosconfig {{.TALOS_DIR}}/talosconfig config info --output yaml | yq --exit-status '.endpoints[0]'

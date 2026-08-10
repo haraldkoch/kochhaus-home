@@ -1,23 +1,30 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
 machine:
   install:
     disk: /dev/nvme0n1
-  network:
-    hostname: rk1
-    interfaces:
-      - addresses:
-          - 192.168.20.34/24
-          - fdd5:aa8:9535:20::34/64
-        dhcp: false
-        interface: end0
-        mtu: 1500
-        routes:
-          - gateway: 192.168.20.1
-            network: 0.0.0.0/0
-        vlans:
-          - # IOT
-            dhcp: false
-            mtu: 1500
-            vlanId: 30
   type: controlplane
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: rk1
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+# FIXME: copy bjw-s net0 config
+links:
+  - end0
+bondMode: active-backup
+miimon: 100
+mtu: 1500
+addresses:
+  - address: 192.168.20.34/24
+  - address: fdd5:aa8:9535:20::34/64
+routes:
+  - gateway: 192.168.20.1
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: bond0.30
+vlanID: 30
+parent: bond0
