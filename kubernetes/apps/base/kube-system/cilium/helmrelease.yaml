@@ -22,7 +22,7 @@ spec:
       preallocateMaps: true
     bpfClockProbe: true
     cgroup:
-      automount:
+      autoMount:
         enabled: false
       hostRoot: /sys/fs/cgroup
     cni:
@@ -34,7 +34,7 @@ spec:
         grafana_folder: Infrastructure
     # NOTE: devices might need to be set if you have more than one active NIC on your hosts
     # devices: eno+ enp+ eth+
-    devices: ${DEVICES:=bond+ eno+ enp+}
+    devices: bond+
     ipv4:
       enabled: true
     ipv6:
@@ -55,8 +55,6 @@ spec:
     k8sServicePort: 7445
     kubeProxyReplacement: true
     kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
-    l2announcements:
-      enabled: true
     loadBalancer:
       algorithm: maglev
       mode: dsr
@@ -103,6 +101,8 @@ spec:
           - NET_ADMIN
           - SYS_ADMIN
           - SYS_RESOURCE
+          - PERFMON
+          - BPF
     socketLB:
       enabled: true
       hostNamespaceOnly: true
