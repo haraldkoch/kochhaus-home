@@ -9,7 +9,7 @@ machine:
     {% endif %}
   certSANs:
     - 127.0.0.1
-    - 192.168.20.32
+    - 192.168.22.32
   features:
     apidCheckExtKeyUsage: true
     diskQuotaSupport: true
@@ -31,7 +31,6 @@ machine:
       enabled: true
     {% endif %}
     rbac: true
-    stableHostname: true
   files:
     - op: create
       path: /etc/cri/conf.d/20-customization.part
@@ -53,7 +52,7 @@ machine:
         rsize=1048576
         wsize=1048576
   install:
-    image: factory.talos.dev/metal-installer/82ad5623c0330f01924a1f0233880456129bd2d49c6b2ba190d3211cb10c5bd1:v1.13.8
+    image: factory.talos.dev/metal-installer/82ad5623c0330f01924a1f0233880456129bd2d49c6b2ba190d3211cb10c5bd1:v1.13.7
     wipe: false
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
@@ -175,7 +174,7 @@ cluster:
     {% endif %}
   clusterName: network
   controlPlane:
-    endpoint: https://192.168.20.32:6443
+    endpoint: https://192.168.22.32:6443
   discovery:
     enabled: true
     registries:
@@ -208,7 +207,7 @@ cluster:
       rules:
         - level: Metadata
     certSANs:
-      - 192.168.20.32
+      - 192.168.22.32
       - 127.0.0.1
     disablePodSecurityPolicy: true
     extraArgs:
