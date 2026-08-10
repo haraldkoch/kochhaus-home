@@ -9,7 +9,7 @@ spec:
   path: ./kubernetes/apps/base/kube-system/cilium
   postBuild:
     substitute:
-      DEVICES: end+
+      DEVICES: bond+
   prune: true
   sourceRef:
     kind: GitRepository
