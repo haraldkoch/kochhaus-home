@@ -38,6 +38,12 @@ spec:
           device_failure_prediction_mode: local # requires mgr module
           bluestore_slow_ops_warn_lifetime: "300"
           bluestore_slow_ops_warn_threshold: "5"
+        # Ceph v20.2.2: rook module logs full list_namespaced_pod bodies into
+        # log_max_recent (daemon default 10000), which OOMs the active mgr.
+        # Bound the ring buffer until fixed in a later Ceph release.
+        # https://github.com/rook/rook/issues/17786
+        mgr:
+          log_max_recent: "100" # quote
         mon:
           mon_data_avail_warn: "19" # quote
       cleanupPolicy:
