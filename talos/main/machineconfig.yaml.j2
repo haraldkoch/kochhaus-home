@@ -9,7 +9,7 @@ machine:
     {% endif %}
   certSANs:
     - 127.0.0.1
-    - 192.168.20.16
+    - 192.168.21.16
   features:
     apidCheckExtKeyUsage: true
     diskQuotaSupport: true
@@ -169,7 +169,7 @@ cluster:
     {% endif %}
   clusterName: main
   controlPlane:
-    endpoint: https://192.168.20.16:6443
+    endpoint: https://192.168.21.16:6443
   discovery:
     enabled: true
     registries:
@@ -202,7 +202,7 @@ cluster:
       rules:
         - level: Metadata
     certSANs:
-      - 192.168.20.16
+      - 192.168.21.16
       - 127.0.0.1
     disablePodSecurityPolicy: true
     extraArgs:
