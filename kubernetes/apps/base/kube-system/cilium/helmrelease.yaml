@@ -21,10 +21,11 @@ spec:
       masquerade: true
       preallocateMaps: true
     bpfClockProbe: true
-    cgroup:
-      autoMount:
-        enabled: false
-      hostRoot: /sys/fs/cgroup
+    # FIXME: cannot change this on a running cluster. uncomment at next cluster rebuild.
+    #cgroup:
+    #  autoMount:
+    #    enabled: false
+    #  hostRoot: /sys/fs/cgroup
     cni:
       # Required for pairing with Multus CNI
       exclusive: false
