@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: ghcr.io/haraldkoch/tplink-plug-exporter
-              tag: 0.5.2@sha256:35d87eb9b546ac4fa762853c1e50cead141aabc42462826f567be3bebaf72155
+              tag: 0.6.0@sha256:73dd09d37578e13bdec3a400c2439eaf70b545ee2f6b487289dd72034e7b1edb
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
             probes:
