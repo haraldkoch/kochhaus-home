@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gtsteffaniak/filebrowser
-              tag: 1.5.1-stable@sha256:e82e3bb6d03d4c9e6d5b6ded452b202f79bad335490889591580bf350b601133
+              tag: 1.5.2-stable@sha256:adc48bbc85a7f3ab3994cf2cc721159ad82046ea9edcaf22fdc41ef4be6466f7
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               FILEBROWSER_CONFIG: "/config/config.yaml"
