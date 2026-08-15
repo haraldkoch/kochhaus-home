@@ -4,21 +4,28 @@ machine:
   install:
     diskSelector:
       model: P3-512
-  network:
-    hostname: k3s0
-    interfaces:
-      - addresses:
-          - 192.168.20.21/24
-          - fdd5:aa8:9535:20::21/64
-        dhcp: false
-        interface: enp0s31f6
-        mtu: 1500
-        routes:
-          - gateway: 192.168.20.1
-            network: 0.0.0.0/0
   sysctls:
     net.ipv6.conf.enp0s31f6.autoconf: "0"           # disable IPv6 autoconfig
   type: worker
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: k3s0
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links:
+  - enp0s31f6
+bondMode: active-backup
+miimon: 100
+mtu: 1500
+addresses:
+  - address: 192.168.20.21/24
+  - address: fdd5:aa8:9535:20::21/64
+routes:
+  - gateway: 192.168.20.1
+  - gateway: fdd5:aa8:9535:20::1
 ---
 apiVersion: v1alpha1
 kind: VolumeConfig

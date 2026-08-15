@@ -4,20 +4,27 @@ machine:
   install:
     diskSelector:
       model: P3-256
-  network:
-    hostname: k3st
-    interfaces:
-      - addresses:
-          - 192.168.20.19/24
-          - fdd5:aa8:9535:20::19/64
-        dhcp: false
-        interface: eno1
-        mtu: 1500
-        routes:
-          - gateway: 192.168.20.1
-            network: 0.0.0.0/0
   nodeTaints:
     node-role.kubernetes.io/control-plane: :NoSchedule
   sysctls:
     net.ipv6.conf.eno1.autoconf: "0"           # disable IPv6 autoconfig
   type: controlplane
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: k3st
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links:
+  - eno1
+bondMode: active-backup
+miimon: 100
+mtu: 1500
+addresses:
+  - address: 192.168.20.19/24
+  - address: fdd5:aa8:9535:20::19/64
+routes:
+  - gateway: 192.168.20.1
+  - gateway: fdd5:aa8:9535:20::1

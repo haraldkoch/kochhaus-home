@@ -31,7 +31,6 @@ machine:
       enabled: true
     {% endif %}
     rbac: true
-    stableHostname: true
   files:
     - op: create
       path: /etc/cri/conf.d/20-customization.part
@@ -153,6 +152,7 @@ machine:
     net.ipv4.tcp_fastopen: "3"                 # Send and accept data in the opening SYN packet
     net.ipv6.conf.all.autoconf: "0"            # disable IPv6 autoconfig
     net.ipv6.conf.default.autoconf: "0"        # disable IPv6 autoconfig
+    net.ipv6.conf.bond0.autoconf: "0"          # disable IPv6 autoconfig
     user.max_user_namespaces: "11255"          # User Namespaces
     # vm.nr_hugepages: "1024"                  # PostgreSQL
   time:
