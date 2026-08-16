@@ -1,0 +1,23 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: longhorn-manager-observability
+spec:
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: observability
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: prometheus
+              app.kubernetes.io/instance: kube-prometheus-stack
+      ports:
+        - port: 9500
+          protocol: TCP
+  podSelector:
+    matchLabels:
+      app: longhorn-manager
+  policyTypes:
+    - Ingress
