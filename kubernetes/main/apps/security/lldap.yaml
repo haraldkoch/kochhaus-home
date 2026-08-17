@@ -11,7 +11,7 @@ spec:
     - name: cloudnative-pg-cluster
       namespace: dbms
   interval: 1h
-  path: ./kubernetes/main/apps/security/lldap/app
+  path: ./kubernetes/apps/base/security/lldap
   postBuild:
     substitute:
       APP: lldap

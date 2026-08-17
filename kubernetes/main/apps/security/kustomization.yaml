@@ -14,5 +14,5 @@ resources:
   - ./namespace.yaml
   - ./authelia.yaml
   - ./external-secrets.yaml
-  - ./lldap/ks.yaml
+  - ./lldap.yaml
   - ./onepassword.yaml
