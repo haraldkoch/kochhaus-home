@@ -11,7 +11,7 @@ spec:
     - name: cloudnative-pg-cluster
       namespace: dbms
   interval: 1h
-  path: ./kubernetes/main/apps/security/dmarc-report/app
+  path: ./kubernetes/apps/base/default/dmarc-report
   postBuild:
     substitute:
       APP: dmarc-report

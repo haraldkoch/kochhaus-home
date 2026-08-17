@@ -16,6 +16,7 @@ resources:
   - ./bookboss.yaml
   - ./calibre-web.yaml
   - ./chaski.yaml
+  - ./dmarc-report.yaml
   - ./docmost.yaml
   - ./echo.yaml
   - ./excalidraw.yaml

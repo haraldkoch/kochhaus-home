@@ -13,7 +13,6 @@ replacements:
 resources:
   - ./namespace.yaml
   - ./authelia.yaml
-  - ./dmarc-report/ks.yaml
   - ./external-secrets.yaml
   - ./lldap/ks.yaml
   - ./onepassword.yaml
