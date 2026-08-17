@@ -16,4 +16,4 @@ resources:
   - ./dmarc-report/ks.yaml
   - ./external-secrets.yaml
   - ./lldap/ks.yaml
-  - ./onepassword/ks.yaml
+  - ./onepassword.yaml

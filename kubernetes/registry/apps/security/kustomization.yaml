@@ -13,4 +13,4 @@ replacements:
 resources:
   - ./namespace.yaml
   - ./external-secrets.yaml
-  - ./onepassword/ks.yaml
+  - ./onepassword.yaml

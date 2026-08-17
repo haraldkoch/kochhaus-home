@@ -118,7 +118,7 @@ spec:
     route:
       app:
         hostnames:
-          - "1pwconnect-backup.${CLUSTER_DOMAIN}"
+          - "${SUBDOMAIN}.${CLUSTER_DOMAIN}"
         parentRefs:
           - name: envoy-internal
             namespace: network
