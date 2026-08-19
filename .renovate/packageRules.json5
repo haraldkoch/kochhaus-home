@@ -4,7 +4,7 @@
     {
       description: "Custom schedule for noisy packages",
       matchDataSources: ["docker"],
-      matchPackageNames: ["/cloudnative-pg/", "/n8n/", "/omada-controller/", "/reloader/"],
+      matchPackageNames: ["/omada-controller/", "/reloader/"],
       schedule: ["on saturday"]
     }
   ]

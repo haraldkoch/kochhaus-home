@@ -2,12 +2,13 @@
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: [
     "github>haraldkoch/renovate-config",
+    "github>home-operations/renovate-presets//apps/cnpg.json5",
+    "github>home-operations/renovate-presets//apps/grafanaDashboards.json5",
+    "github>home-operations/renovate-presets//apps/talosFactory.json5",
     "github>haraldkoch/kochhaus-home//.renovate/allowedVersions.json5",
     "github>haraldkoch/kochhaus-home//.renovate/autoMerge.json5",
     "github>haraldkoch/kochhaus-home//.renovate/clusters.json5",
-    "github>haraldkoch/kochhaus-home//.renovate/grafanaDashboards.json5",
     "github>haraldkoch/kochhaus-home//.renovate/groups.json5",
-    "github>haraldkoch/kochhaus-home//.renovate/overrides.json5",
     "github>haraldkoch/kochhaus-home//.renovate/packageRules.json5",
   ],
   ignorePaths: [
