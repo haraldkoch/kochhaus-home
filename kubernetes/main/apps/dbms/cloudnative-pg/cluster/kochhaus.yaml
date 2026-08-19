@@ -8,7 +8,7 @@ metadata:
     kyverno.io/ignore: "true"
 spec:
   # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.10
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.6
   instances: 3
   primaryUpdateStrategy: unsupervised
   storage:
@@ -48,7 +48,7 @@ spec:
       endpointURL: http://${SECRET_BACKUP_SERVER}:3900
       # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster kochhaus-v4
+      serverName: &currentCluster kochhaus-v5
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -60,7 +60,7 @@ spec:
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
     recovery:
-      source: &previousCluster kochhaus-v3
+      source: &previousCluster kochhaus-v4
       # upgrade or recover from another running instance
       # initdb:
       #   import:
