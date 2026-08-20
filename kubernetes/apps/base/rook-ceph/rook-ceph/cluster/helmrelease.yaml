@@ -9,6 +9,7 @@ spec:
     kind: OCIRepository
     name: rook-ceph-cluster
   interval: 1h
+  timeout: 10m
   values:
     monitoring:
       enabled: true
@@ -52,7 +53,7 @@ spec:
         disable: false
       csi:
         readAffinity:
-          enabled: true
+          enabled: false # https://github.com/ceph/ceph-csi/issues/5772
       dashboard:
         enabled: true
         urlPrefix: /
@@ -72,6 +73,13 @@ spec:
         provider: host
         connections:
           requireMsgr2: true
+      security:
+        cephx:
+          daemon:
+            keyRotationPolicy: KeyGeneration
+            keyGeneration: 2
+          csi:
+            keyType: aes # aes256k requires kernel 7.0+
       storage:
         useAllNodes: false
         useAllDevices: false
@@ -105,6 +113,15 @@ spec:
         mon: *placement
       # FIXME: do I still need these
       healthCheck:
+        muteHealthWarning:
+          AUTH_INSECURE_ROTATING_SERVICE_KEY_TYPE:
+            policy: mute
+          AUTH_INSECURE_CLIENT_KEY_TYPE:
+            policy: mute
+          AUTH_INSECURE_KEYS_ALLOWED:
+            policy: mute
+          AUTH_INSECURE_KEYS_CREATABLE:
+            policy: mute
         livenessProbe:
           mon:
             probe:
