@@ -14,8 +14,6 @@ spec:
       namespace: kube-system
     - name: keda
       namespace: observability
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
     - name: volsync
       namespace: storage
   interval: 1h

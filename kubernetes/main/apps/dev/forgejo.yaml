@@ -13,8 +13,6 @@ spec:
   dependsOn:
     - name: dragonfly
       namespace: dbms
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
     - name: volsync
       namespace: storage
   healthCheckExprs:

@@ -24,8 +24,6 @@ spec:
     - ../../../../../components/gatus/guarded
   dependsOn:
     - name: grafana-operator
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   interval: 1h
   path: ./kubernetes/apps/base/observability/grafana/instance
   postBuild:
