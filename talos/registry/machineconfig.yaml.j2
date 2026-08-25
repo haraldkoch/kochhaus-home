@@ -31,7 +31,6 @@ machine:
       enabled: true
     {% endif %}
     rbac: true
-    stableHostname: true
   files:
     - op: create
       path: /etc/cri/conf.d/20-customization.part
@@ -93,6 +92,7 @@ machine:
     net.ipv6.conf.all.autoconf: "0"            # disable IPv6 autoconfig
     net.ipv6.conf.default.autoconf: "0"        # disable IPv6 autoconfig
     net.ipv6.conf.eno1.autoconf: "0"           # disable IPv6 autoconfig
+    net.ipv6.conf.bond0.autoconf: "0"          # disable IPv6 autoconfig
     user.max_user_namespaces: "11255"          # User Namespaces
   time:
     disabled: false

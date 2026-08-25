@@ -4,16 +4,23 @@ machine:
   install:
     diskSelector:
       model: SanDisk SD8SB8U1
-  network:
-    hostname: harbor
-    interfaces:
-      - addresses:
-          - 192.168.20.65/24
-          - fdd5:aa8:9535:20::65/64
-        dhcp: false
-        interface: eno1
-        mtu: 1500
-        routes:
-          - gateway: 192.168.20.1
-            network: 0.0.0.0/0
   type: controlplane
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: harbor
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links:
+  - eno1
+bondMode: active-backup
+miimon: 100
+mtu: 1500
+addresses:
+  - address: 192.168.20.65/24
+  - address: fdd5:aa8:9535:20::65/64
+routes:
+  - gateway: 192.168.20.1
+  - gateway: fdd5:aa8:9535:20::1
