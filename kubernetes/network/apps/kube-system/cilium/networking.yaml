@@ -79,7 +79,12 @@ metadata:
     lbipam.cilium.io/ips: 192.168.22.32
 spec:
   type: LoadBalancer
-  externalTrafficPolicy: Cluster
+  # use Cluster for L2, Local for L3
+  #
+  # Cilium's L2 announce doesn't support Local, since it announces on a
+  # different node than the pod is running on
+  # https://github.com/cilium/cilium/issues/27800
+  externalTrafficPolicy: Local
   selector:
     k8s-app: kube-apiserver
     tier: control-plane

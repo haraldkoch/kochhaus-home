@@ -78,6 +78,11 @@ metadata:
     lbipam.cilium.io/ips: 192.168.23.65,fdd5:aa8:9535:23::65
 spec:
   type: LoadBalancer
+  # use Cluster for L2, Local for L3
+  #
+  # Cilium's L2 announce doesn't support Local, since it announces on a
+  # different node than the pod is running on
+  # https://github.com/cilium/cilium/issues/27800
   externalTrafficPolicy: Local
   ipFamilies:
     - IPv4
