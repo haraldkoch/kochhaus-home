@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/mauriceboe/trek
-              tag: 4.0.0@sha256:ae64a5ce6cf510e4e3757667b4a8dc8b3951ded8a18204a819243eee8461835a
+              tag: 4.1.1@sha256:01d217fa047414b73e2132f7737703d7d39b1f468f670f804e801f5e327837f4
             command:
               - /bin/sh
               - -c
