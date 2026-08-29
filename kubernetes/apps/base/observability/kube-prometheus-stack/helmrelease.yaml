@@ -42,6 +42,11 @@ spec:
             targetPort: 9094
         type: LoadBalancer
       alertmanagerSpec:
+        containers:
+          - name: alertmanager
+            env:
+              - name: GODEBUG
+                value: "netdns=go+ipv4"
         additionalPeers:
           - ${ALERTMANAGER_PEER}.${CLUSTER_DOMAIN}:9094
         alertmanagerConfiguration:
