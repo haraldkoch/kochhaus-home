@@ -47,6 +47,11 @@ spec:
               fallthrough in-addr.arpa ip6.arpa
           - name: autopath
             parameters: "@kubernetes"
+          - name: template
+            parameters: ANY AAAA
+            configBlock: |-
+              rcode NOERROR
+              authority "{{ .Zone }} 3600 {{ .Class }} SOA alexandra.ns.cloudflare.com. dnsadmin.cloudflare.com. (2026082900 14400 3600 604800 30)"
           - name: forward
             parameters: . /etc/resolv.conf
           - name: cache
