@@ -8,6 +8,7 @@ resources:
   - ./externalsecret.yaml
   - ./grafanadashboard.yaml
   - ./helmrelease.yaml
+  - ./networkpolicy.yaml
   - ./ocirepository.yaml
   - ./scrapeconfigs
 configMapGenerator:
