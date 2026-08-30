@@ -30,4 +30,3 @@ spec:
     # Allow IPv4; IPv6 is implicitly denied
     - toCIDR:
         - "0.0.0.0/0"
-        - "fdd5:aa8:9535::/48"
