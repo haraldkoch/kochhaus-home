@@ -10,7 +10,7 @@ spec:
     - name: snapshot-controller
   interval: 1h
   path: ./kubernetes/apps/base/storage/volsync
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

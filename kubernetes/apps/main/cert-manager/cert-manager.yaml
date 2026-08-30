@@ -24,7 +24,7 @@ spec:
     substitute:
       REPLICAS: "2"
       PDB: "true"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

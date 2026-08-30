@@ -17,7 +17,7 @@ spec:
       ALERTMANAGER_PEER: amcluster-network
       PROMETHEUS_SUBDOMAIN: prometheus-main
       STORAGECLASS: ceph-block
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

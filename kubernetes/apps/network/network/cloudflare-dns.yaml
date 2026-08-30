@@ -15,7 +15,7 @@ spec:
       name: dnsendpoints.externaldns.k8s.io
   interval: 1h
   path: ./kubernetes/apps/base/network/cloudflare-dns
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

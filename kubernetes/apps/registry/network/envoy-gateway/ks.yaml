@@ -15,7 +15,7 @@ spec:
       # FIXME
       INTERNAL_DOMAIN: ${CLUSTER}-internal
       REPLICAS: "1"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -12,7 +12,7 @@ spec:
   postBuild:
     substitute:
       APP: openweathermap-exporter
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

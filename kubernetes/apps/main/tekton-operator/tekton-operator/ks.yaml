@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/${CLUSTER}/tekton-operator/tekton-operator/app
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -26,7 +26,7 @@ spec:
     - name: tekton-operator
   interval: 1h
   path: ./kubernetes/apps/${CLUSTER}/tekton-operator/tekton-operator/config
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

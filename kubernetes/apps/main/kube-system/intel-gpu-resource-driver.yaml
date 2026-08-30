@@ -12,7 +12,7 @@ spec:
       namespace: kube-system
   interval: 1h
   path: ./kubernetes/apps/base/kube-system/intel-gpu-resource-driver
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

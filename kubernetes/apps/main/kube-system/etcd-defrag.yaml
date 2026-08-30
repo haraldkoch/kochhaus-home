@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/base/kube-system/etcd-defrag
-  prune: false # reset to true
+  prune: true
   postBuild:
     substitute:
       ETCD_NODES: k3sj k3sm k3st

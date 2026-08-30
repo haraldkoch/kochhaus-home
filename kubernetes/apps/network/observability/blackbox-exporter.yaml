@@ -14,7 +14,7 @@ spec:
       APP: blackbox-exporter
       GATUS_SUBDOMAIN: blackbox
       SUBDOMAIN: blackbox
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

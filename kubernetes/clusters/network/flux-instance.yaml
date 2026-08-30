@@ -10,7 +10,7 @@ spec:
     - name: flux-operator
   interval: 1h
   path: ./kubernetes/clusters/network/flux-instance
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

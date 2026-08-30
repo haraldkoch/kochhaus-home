@@ -10,7 +10,7 @@ spec:
       namespace: tekton-operator
   interval: 1h
   path: ./kubernetes/apps/${CLUSTER}/cicd/blog/app
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

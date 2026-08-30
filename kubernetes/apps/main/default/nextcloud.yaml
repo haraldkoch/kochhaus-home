@@ -34,7 +34,7 @@ spec:
       VOLSYNC_CLAIM: nextcloud-config-v3
       VOLSYNC_GID: "0"
       VOLSYNC_UID: "0"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

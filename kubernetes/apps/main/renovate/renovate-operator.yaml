@@ -20,7 +20,7 @@ spec:
   postBuild:
     substitute:
       APP: renovate-operator
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -40,7 +40,7 @@ spec:
     - name: renovate-operator
   interval: 1h
   path: ./kubernetes/apps/${CLUSTER}/renovate/jobs
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

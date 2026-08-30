@@ -13,7 +13,7 @@ spec:
     substitute:
       APP: whoami
       GATUS_STATUS: "401"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

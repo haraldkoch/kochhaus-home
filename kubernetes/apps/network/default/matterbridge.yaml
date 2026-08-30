@@ -23,7 +23,7 @@ spec:
       VOLSYNC_CAPACITY: 5Gi
       VOLSYNC_PGID: "0"
       VOLSYNC_PUID: "0"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

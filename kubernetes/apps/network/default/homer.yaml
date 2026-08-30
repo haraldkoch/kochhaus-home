@@ -13,7 +13,7 @@ spec:
     substitute:
       APP: homer
       GATUS_SUBDOMAIN: landing
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

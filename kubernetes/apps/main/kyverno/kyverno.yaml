@@ -11,7 +11,7 @@ spec:
       name: clusterpolicies.kyverno.io
   interval: 1h
   path: ./kubernetes/apps/base/kyverno/kyverno/app
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -29,7 +29,7 @@ spec:
       namespace: kyverno
   interval: 1h
   path: ./kubernetes/apps/base/kyverno/kyverno/policies
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -22,7 +22,7 @@ spec:
       VOLSYNC_CLAIM: node-red-config-v2
       VOLSYNC_GID: "1000"
       VOLSYNC_UID: "1000"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -10,7 +10,7 @@ spec:
       namespace: joomla
   interval: 1h
   path: ./kubernetes/apps/${CLUSTER}/joomla/rtr/app
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

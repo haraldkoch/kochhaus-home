@@ -10,7 +10,7 @@ spec:
   postBuild:
     substitute:
       REPLICAS: "2"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -27,7 +27,7 @@ spec:
     - name: tuppr
   interval: 1h
   path: ./kubernetes/apps/${CLUSTER}/system-upgrade/upgrades
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

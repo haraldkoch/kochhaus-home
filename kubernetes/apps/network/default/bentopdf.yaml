@@ -12,7 +12,7 @@ spec:
   postBuild:
     substitute:
       APP: bentopdf
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/base/network/cloudflare-tunnel
-  prune: false # reset to true
+  prune: true
   postBuild:
     substitute:
       EXTERNAL_DOMAIN: external-${CLUSTER}

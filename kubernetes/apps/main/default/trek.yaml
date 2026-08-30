@@ -20,7 +20,7 @@ spec:
       VOLSYNC_CLAIM: trek-data
       VOLSYNC_GID: "65532"
       VOLSYNC_UID: "65532"
-  prune: false # reset to true
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
