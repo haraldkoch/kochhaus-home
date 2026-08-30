@@ -12,5 +12,6 @@ replacements:
 
 resources:
   - ./namespace.yaml
+  - ./addons.yaml
   - ./flux-operator.yaml
   - ./konflate.yaml
