@@ -115,13 +115,6 @@ spec:
       app:
         endpoints:
           - port: http
-    route:
-      app:
-        hostnames:
-          - "${SUBDOMAIN}.${CLUSTER_DOMAIN}"
-        parentRefs:
-          - name: envoy-internal
-            namespace: network
     persistence:
       config:
         type: emptyDir
