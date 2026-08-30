@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/bastienwirtz/homer
-              tag: v26.08.2@sha256:83e40d1b7c9d4be4b9b9081e7151543ceb081576301b33b38615ae3f1d6b3e92
+              tag: v26.08.3@sha256:febc8967c9f7648ec37633ef3ae1ec90dbe8b7c46fecab80299f08f05be7ecb6
             probes:
               liveness:
                 enabled: true
