@@ -10,7 +10,7 @@ spec:
     provider: sops
   deletionPolicy: WaitForTermination
   interval: 1h
-  path: ./kubernetes/main/apps
+  path: ./kubernetes/apps/main
   postBuild:
     substitute:
       CLUSTER: main

@@ -1,0 +1,28 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: tekton-results-db-job
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      containers:
+        - envFrom:
+            - secretRef:
+                name: tekton-results-postgres
+          image: ghcr.io/haraldkoch/postgres-init:18.6@sha256:3f1d734b05f605ef06a1a9ccda9c358658381f4cc825919e400521f943f9931b
+          name: init-db
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsGroup: 65534
+            runAsNonRoot: true
+            runAsUser: 65534
+            seccompProfile:
+              type: RuntimeDefault
+      restartPolicy: OnFailure

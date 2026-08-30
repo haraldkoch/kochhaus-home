@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tekton-pipelines
+  namespace: tekton-pipelines
+spec:
+  components:
+    - ../../../../components/gatus/internal
+  dependsOn:
+    - name: tekton-operator
+      namespace: tekton-operator
+  interval: 1h
+  path: ./kubernetes/apps/main/tekton-pipelines/tekton-pipelines/app
+  postBuild:
+    substitute:
+      APP: tekton
+      GATUS_STATUS: "401"
+  prune: false # reset to true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: false

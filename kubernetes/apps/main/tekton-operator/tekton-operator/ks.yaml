@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tekton-operator
+  namespace: tekton-operator
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/main/tekton-operator/tekton-operator/app
+  prune: false # reset to true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: true
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tekton-operator-config
+  namespace: tekton-operator
+spec:
+  dependsOn:
+    - name: tekton-operator
+  interval: 1h
+  path: ./kubernetes/apps/main/tekton-operator/tekton-operator/config
+  prune: false # reset to true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: false
