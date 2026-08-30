@@ -11,8 +11,9 @@ spec:
   interval: 1h
   values:
     config:
-      clusterPath: ./kubernetes/${CLUSTER}/apps/flux-system/flux-instance
+      clusterPath: ./kubernetes/clusters/${CLUSTER}
       statusChecks: true
+      statusCheckName: "Konflate (${CLUSTER})"
       prComments: true
       publicUrl: "https://${SUBDOMAIN}.${CLUSTER_DOMAIN}"
       repo: github://haraldkoch/kochhaus-home
