@@ -5,13 +5,13 @@ kind: Kustomization
 namespace: network
 
 components:
-  - ../../../components/registry/common
+  - ../../../components/namespace
+  - ../../../components/registry/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./namespace.yaml
   - ./certificates.yaml
   - ./bind-dns.yaml
   - ./envoy-gateway/ks.yaml

@@ -5,12 +5,12 @@ kind: Kustomization
 namespace: security
 
 components:
-  - ../../../components/registry/common
+  - ../../../components/namespace
+  - ../../../components/registry/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./namespace.yaml
   - ./external-secrets.yaml
   - ./onepassword.yaml
