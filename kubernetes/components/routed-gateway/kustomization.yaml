@@ -1,0 +1,12 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+patches:
+  - target:
+      kind: Namespace
+      name: _
+    patch: |-
+      - op: add
+        path: /metadata/labels/routed-gateway
+        value: "true"

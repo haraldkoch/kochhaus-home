@@ -7,6 +7,7 @@ namespace: downloads
 components:
   - ../../../components/namespace
   - ../../../components/main/cluster-settings
+  - ../../../components/routed-gateway
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
@@ -15,17 +16,3 @@ resources:
   # - ./policy.yaml
   - ./vpnconfig.yaml
   - ./linode-backup/ks.yaml
-
-# FIXME: replace with a component patch
-transformers:
-  - |-
-    apiVersion: builtin
-    kind: LabelTransformer
-    metadata:
-      name: not-used
-    labels:
-      routed-gateway: "true"
-    fieldSpecs:
-      - kind: Namespace
-        path: metadata/labels
-        create: true
