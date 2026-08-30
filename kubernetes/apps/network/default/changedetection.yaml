@@ -1,0 +1,30 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: changedetection
+spec:
+  components:
+    - ../../../../components/gatus/guarded
+    - ../../../../components/network/volsync
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+    - name: volsync
+      namespace: storage
+  interval: 1h
+  path: ./kubernetes/apps/base/default/changedetection
+  postBuild:
+    substitute:
+      APP: changedetection
+      APP_UID: "2000"
+      APP_GID: "2000"
+      VOLSYNC_CLAIM: changedetection-config
+      VOLSYNC_CAPACITY: 1Gi
+  prune: false # reset to true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: false

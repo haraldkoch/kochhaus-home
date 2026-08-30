@@ -1,0 +1,31 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: observability
+
+components:
+  - ../../../components/network/common
+
+replacements:
+  - path: ../../../components/replacements/ks.yaml
+
+resources:
+  - ./namespace.yaml
+  - ./blackbox-exporter.yaml
+  - ./dnssec-exporter.yaml
+  - ./grafana.yaml
+  - ./json-exporter.yaml
+  - ./karma.yaml
+  - ./keda.yaml
+  - ./kube-prometheus-stack.yaml
+  - ./network-ups-tools.yaml
+  - ./omada-exporter.yaml
+  - ./opnsense-exporter.yaml
+  # silence-operator does not yet support arm64
+  # - ./silence-operator.yaml
+  - ./siren.yaml
+  - ./smartctl-exporter.yaml
+  - ./snmp-exporter.yaml
+  - ./tplink-plug-exporter.yaml
+  - ./victoria-logs.yaml
