@@ -92,6 +92,9 @@ spec:
           - name: k3s2
             devices:
               - name: /dev/disk/by-id/nvme-NE-512_2280_0027843000089
+          - name: k3s3
+            devices:
+              - name: /dev/disk/by-id/nvme-Patriot_M.2_P300_512GB_P300NDCB26011008759
       placement:
         osd:
           tolerations:
