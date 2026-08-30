@@ -8,7 +8,7 @@ spec:
   components:
     - ../../../../components/gatus/guarded
     - ../../../../components/keda/nfs-scaler
-    - ../../../../main/components/volsync
+    - ../../../../components/main/volsync
   dependsOn:
     - name: intel-gpu-resource-driver
       namespace: kube-system

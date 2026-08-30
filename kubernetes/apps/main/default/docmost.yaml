@@ -8,7 +8,7 @@ spec:
   components:
     - ../../../../components/dragonfly
     - ../../../../components/gatus/guarded
-    - ../../../../main/components/volsync
+    - ../../../../components/main/volsync
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: dbms

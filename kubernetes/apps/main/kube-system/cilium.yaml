@@ -24,7 +24,7 @@ metadata:
   name: cilium-config
 spec:
   interval: 15m
-  path: ./kubernetes/${CLUSTER}/apps/kube-system/cilium
+  path: ./kubernetes/apps/${CLUSTER}/kube-system/cilium
   prune: false # reset to true
   sourceRef:
     kind: GitRepository

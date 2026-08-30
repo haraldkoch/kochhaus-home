@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: actions-runner-system
 
 components:
-  - ../../components/common
+  - ../../../components/main/common
 
 replacements:
   - path: ../../../components/replacements/ks.yaml

@@ -7,7 +7,7 @@ metadata:
 spec:
   components:
     - ../../../../components/gatus/guarded
-    - ../../../../main/components/volsync
+    - ../../../../components/main/volsync
   dependsOn:
     - name: cloudnative-pg-cluster
     - name: volsync

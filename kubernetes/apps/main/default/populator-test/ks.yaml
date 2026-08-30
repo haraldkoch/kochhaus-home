@@ -6,7 +6,7 @@ metadata:
   name: populator-test
 spec:
   components:
-    - ../../../../components/volsync
+    - ../../../../../components/main/volsync
   dependsOn:
     - name: volsync
       namespace: storage

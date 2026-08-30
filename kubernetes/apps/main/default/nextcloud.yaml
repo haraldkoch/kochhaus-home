@@ -9,7 +9,7 @@ spec:
     - ../../../../components/dragonfly
     - ../../../../components/gatus/external
     - ../../../../components/keda/nfs-scaler
-    - ../../../../main/components/volsync
+    - ../../../../components/main/volsync
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: dbms

@@ -9,7 +9,7 @@ spec:
     - ../../../../components/anubis
     - ../../../../components/dragonfly
     - ../../../../components/gatus/guarded
-    - ../../../../main/components/volsync
+    - ../../../../components/main/volsync
   dependsOn:
     - name: dragonfly
       namespace: dbms
