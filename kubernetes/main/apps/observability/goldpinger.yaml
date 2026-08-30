@@ -12,7 +12,7 @@ spec:
   postBuild:
     substitute:
       APP: goldpinger
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

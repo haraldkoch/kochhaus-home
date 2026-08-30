@@ -11,7 +11,7 @@ spec:
     substitute:
       APP: gatus
       GATUS_SUBDOMAIN: status-network
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -26,7 +26,7 @@ spec:
       VOLSYNC_CLAIM: jellyfin
       VOLSYNC_GID: "2000"
       VOLSYNC_UID: "2000"
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -13,7 +13,7 @@ spec:
     substitute:
       APP: echo
       SUBDOMAIN: echo
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

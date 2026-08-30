@@ -10,7 +10,7 @@ spec:
   postBuild:
     substitute:
       DATABASES: authelia,dmarc,docmost,gatus,lldap,nextcloud,speedtest,tekton-results
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

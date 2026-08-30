@@ -10,7 +10,7 @@ spec:
       namespace: storage
   interval: 1h
   path: ./kubernetes/apps/base/default/mosquitto
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

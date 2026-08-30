@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/base/kube-system/generic-device-plugin
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -17,7 +17,7 @@ spec:
     substitute:
       APP: media-browser
       GATUS_SUBDOMAIN: media
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

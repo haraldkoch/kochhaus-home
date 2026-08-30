@@ -10,7 +10,7 @@ spec:
   postBuild:
     substitute:
       SUBDOMAIN: konflate-${CLUSTER}
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

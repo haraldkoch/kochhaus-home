@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/base/dbms/cloudnative-pg
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -31,7 +31,7 @@ spec:
       current: status.conditions.filter(e, e.type == 'Ready').all(e, e.status == 'True')
   interval: 1h
   path: ./kubernetes/main/apps/dbms/cloudnative-pg/cluster
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -47,7 +47,7 @@ spec:
     - name: cloudnative-pg-cluster
   interval: 1h
   path: ./kubernetes/main/apps/dbms/cloudnative-pg/backup
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

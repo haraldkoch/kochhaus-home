@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/base/actions-runner-system/actions-runner-controller/app
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -29,7 +29,7 @@ spec:
   postBuild:
     substitute:
       maxRunners: "6" # 2 per node
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

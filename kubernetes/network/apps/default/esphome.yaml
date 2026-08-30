@@ -24,7 +24,7 @@ spec:
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_PUID: "2000"
       VOLSYNC_PGID: "2000"
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

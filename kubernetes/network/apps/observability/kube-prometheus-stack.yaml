@@ -20,7 +20,7 @@ spec:
       ALERTMANAGER_PEER: amcluster-main
       PROMETHEUS_SUBDOMAIN: prometheus
       STORAGECLASS: longhorn
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

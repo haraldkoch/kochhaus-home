@@ -10,7 +10,7 @@ spec:
   postBuild:
     substitute:
       VICTORIA_LOGS_URL: https://victoria-logs.${CLUSTER_DOMAIN}
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -13,7 +13,7 @@ spec:
     substitute:
       APP: kromgo
       GATUS_PATH: /badges/talos_version
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

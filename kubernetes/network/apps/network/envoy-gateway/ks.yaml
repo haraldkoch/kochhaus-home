@@ -14,7 +14,7 @@ spec:
       EXTERNAL_DOMAIN: external-${CLUSTER}
       INTERNAL_DOMAIN: internal-${CLUSTER}
       REPLICAS: "2"
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

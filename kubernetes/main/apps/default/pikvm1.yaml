@@ -14,7 +14,7 @@ spec:
       APP: pikvm1
       GATUS_SUBDOMAIN: pikvm1
       INSTANCE: pikvm1
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

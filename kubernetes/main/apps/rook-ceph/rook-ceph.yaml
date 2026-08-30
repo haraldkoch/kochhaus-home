@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/base/rook-ceph/rook-ceph/ceph-csi-drivers
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -25,7 +25,7 @@ spec:
       namespace: rook-ceph
   interval: 1h
   path: ./kubernetes/apps/base/rook-ceph/rook-ceph/app
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -64,7 +64,7 @@ spec:
     substitute:
       APP: rook-ceph-cluster
       GATUS_SUBDOMAIN: rook
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

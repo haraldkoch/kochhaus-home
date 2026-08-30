@@ -21,7 +21,7 @@ spec:
       VOLSYNC_CLAIM: populator-test-data
       VOLSYNC_PGID: "65533"
       VOLSYNC_PUID: "65533"
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

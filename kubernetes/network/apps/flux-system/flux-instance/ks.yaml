@@ -12,7 +12,7 @@ spec:
   postBuild:
     substitute:
       SUBDOMAIN: flux-webhook-${CLUSTER}
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

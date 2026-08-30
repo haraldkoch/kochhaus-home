@@ -20,7 +20,7 @@ spec:
       VOLSYNC_CLAIM: mealie
       VOLSYNC_GID: "911"
       VOLSYNC_UID: "911"
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

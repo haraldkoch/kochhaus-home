@@ -11,7 +11,7 @@ spec:
     substitute:
       STORAGECLASS: ceph-block
       SUBDOMAIN: victoria-logs
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -31,7 +31,7 @@ spec:
   postBuild:
     substitute:
       VICTORIA_LOGS_URL: http://victoria-logs-server.observability.svc.cluster.local:9428
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system

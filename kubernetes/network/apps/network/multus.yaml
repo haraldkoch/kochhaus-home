@@ -15,7 +15,7 @@ spec:
       name: network-attachment-definitions.k8s.cni.cncf.io
   interval: 1h
   path: ./kubernetes/apps/base/network/multus
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -31,7 +31,7 @@ spec:
     - name: multus
   interval: 1h
   path: ./kubernetes/${CLUSTER}/apps/network/multus
-  prune: true
+  prune: false # reset to true
   sourceRef:
     kind: GitRepository
     name: flux-system
