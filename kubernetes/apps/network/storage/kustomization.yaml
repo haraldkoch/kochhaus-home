@@ -5,13 +5,13 @@ kind: Kustomization
 namespace: storage
 
 components:
-  - ../../../components/network/common
+  - ../../../components/namespace
+  - ../../../components/network/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./namespace.yaml
   - ./longhorn/ks.yaml
   - ./openebs.yaml
   - ./snapshot-controller.yaml

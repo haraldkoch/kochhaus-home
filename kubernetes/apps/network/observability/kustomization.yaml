@@ -5,13 +5,13 @@ kind: Kustomization
 namespace: observability
 
 components:
-  - ../../../components/network/common
+  - ../../../components/namespace
+  - ../../../components/network/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./namespace.yaml
   - ./blackbox-exporter.yaml
   - ./dnssec-exporter.yaml
   - ./grafana.yaml

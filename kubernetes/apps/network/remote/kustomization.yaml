@@ -5,11 +5,11 @@ kind: Kustomization
 namespace: remote
 
 components:
-  - ../../../components/network/common
+  - ../../../components/namespace
+  - ../../../components/network/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./namespace.yaml
   - ./openssh.yaml

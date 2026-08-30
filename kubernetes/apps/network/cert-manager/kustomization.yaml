@@ -5,11 +5,11 @@ kind: Kustomization
 namespace: cert-manager
 
 components:
-  - ../../../components/network/common
+  - ../../../components/namespace
+  - ../../../components/network/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./namespace.yaml
   - ./cert-manager.yaml
