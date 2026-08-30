@@ -5,13 +5,13 @@ kind: Kustomization
 namespace: observability
 
 components:
-  - ../../../components/main/common
+  - ../../../components/namespace
+  - ../../../components/main/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./namespace.yaml
   - ./blackbox-exporter.yaml
   - ./gatus/ks.yaml
   - ./goldpinger.yaml

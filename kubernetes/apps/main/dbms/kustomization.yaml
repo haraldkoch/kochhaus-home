@@ -5,13 +5,13 @@ kind: Kustomization
 namespace: dbms
 
 components:
-  - ../../../components/main/common
+  - ../../../components/namespace
+  - ../../../components/main/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./namespace.yaml
   - ./cloudnative-pg.yaml
   - ./dragonfly.yaml
   - ./pgadmin.yaml

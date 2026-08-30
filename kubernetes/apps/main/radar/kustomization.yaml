@@ -5,11 +5,11 @@ kind: Kustomization
 namespace: radar
 
 components:
-  - ../../../components/main/common
+  - ../../../components/namespace
+  - ../../../components/main/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./namespace.yaml
   - ./radar.yaml

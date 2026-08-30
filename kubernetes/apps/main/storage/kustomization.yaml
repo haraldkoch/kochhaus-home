@@ -5,13 +5,13 @@ kind: Kustomization
 namespace: storage
 
 components:
-  - ../../../components/main/common
+  - ../../../components/namespace
+  - ../../../components/main/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./namespace.yaml
   - ./csi-driver-nfs.yaml
   - ./openebs.yaml
   - ./snapshot-controller.yaml

@@ -5,17 +5,18 @@ kind: Kustomization
 namespace: downloads
 
 components:
-  - ../../../components/main/common
+  - ../../../components/namespace
+  - ../../../components/main/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./namespace.yaml
   # - ./policy.yaml
   - ./vpnconfig.yaml
   - ./linode-backup/ks.yaml
 
+# FIXME: replace with a component patch
 transformers:
   - |-
     apiVersion: builtin
