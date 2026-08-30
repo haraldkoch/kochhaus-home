@@ -6,7 +6,7 @@ metadata:
   name: downloads-gateway
 spec:
   interval: 1h
-  path: ./kubernetes/apps/main/vpn/downloads-gateway/app
+  path: ./kubernetes/apps/${CLUSTER}/vpn/downloads-gateway/app
   prune: false # reset to true
   sourceRef:
     kind: GitRepository

@@ -39,7 +39,7 @@ spec:
   dependsOn:
     - name: renovate-operator
   interval: 1h
-  path: ./kubernetes/apps/main/renovate/jobs
+  path: ./kubernetes/apps/${CLUSTER}/renovate/jobs
   prune: false # reset to true
   sourceRef:
     kind: GitRepository

@@ -6,7 +6,7 @@ metadata:
   name: harbor
 spec:
   interval: 1h
-  path: ./kubernetes/apps/registry/harbor/harbor/app
+  path: ./kubernetes/apps/${CLUSTER}/harbor/harbor/app
   prune: false # reset to true
   sourceRef:
     kind: GitRepository
@@ -21,7 +21,7 @@ metadata:
   name: harbor-backup
 spec:
   interval: 1h
-  path: ./kubernetes/apps/registry/harbor/harbor/backup
+  path: ./kubernetes/apps/${CLUSTER}/harbor/harbor/backup
   prune: false # reset to true
   sourceRef:
     kind: GitRepository

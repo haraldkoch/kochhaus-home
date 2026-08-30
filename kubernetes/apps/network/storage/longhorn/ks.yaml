@@ -10,7 +10,7 @@ spec:
   dependsOn:
     - name: volsync
   interval: 1h
-  path: ./kubernetes/apps/network/storage/longhorn/app
+  path: ./kubernetes/apps/${CLUSTER}/storage/longhorn/app
   postBuild:
     substitute:
       APP: longhorn

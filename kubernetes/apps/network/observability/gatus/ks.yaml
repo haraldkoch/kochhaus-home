@@ -6,7 +6,7 @@ metadata:
   name: gatus
 spec:
   interval: 1h
-  path: ./kubernetes/apps/network/observability/gatus/app
+  path: ./kubernetes/apps/${CLUSTER}/observability/gatus/app
   postBuild:
     substitute:
       APP: gatus

@@ -6,7 +6,7 @@ metadata:
   name: joomla-mariadb
 spec:
   interval: 1h
-  path: ./kubernetes/apps/main/joomla/mariadb/app
+  path: ./kubernetes/apps/${CLUSTER}/joomla/mariadb/app
   prune: false # reset to true
   sourceRef:
     kind: GitRepository

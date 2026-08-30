@@ -26,7 +26,7 @@ spec:
   dependsOn:
     - name: tuppr
   interval: 1h
-  path: ./kubernetes/apps/registry/system-upgrade/upgrades
+  path: ./kubernetes/apps/${CLUSTER}/system-upgrade/upgrades
   prune: false # reset to true
   sourceRef:
     kind: GitRepository

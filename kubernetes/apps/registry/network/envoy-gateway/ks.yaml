@@ -8,7 +8,7 @@ spec:
   dependsOn:
     - name: certificates-import
   interval: 1h
-  path: ./kubernetes/apps/registry/network/envoy-gateway/app
+  path: ./kubernetes/apps/${CLUSTER}/network/envoy-gateway/app
   postBuild:
     substitute:
       EXTERNAL_DOMAIN: external-${CLUSTER}

@@ -12,7 +12,7 @@ spec:
     - name: tekton-operator
       namespace: tekton-operator
   interval: 1h
-  path: ./kubernetes/apps/main/tekton-pipelines/tekton-pipelines/app
+  path: ./kubernetes/apps/${CLUSTER}/tekton-pipelines/tekton-pipelines/app
   postBuild:
     substitute:
       APP: tekton

@@ -6,7 +6,7 @@ metadata:
   name: node-exporter
 spec:
   interval: 1h
-  path: ./kubernetes/apps/registry/observability/node-exporter/app
+  path: ./kubernetes/apps/${CLUSTER}/observability/node-exporter/app
   prune: false # reset to true
   sourceRef:
     kind: GitRepository

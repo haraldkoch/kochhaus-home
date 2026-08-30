@@ -9,7 +9,7 @@ spec:
     - name: cloudnative-pg-cluster
       namespace: dbms
   interval: 1h
-  path: ./kubernetes/apps/main/observability/gatus/app
+  path: ./kubernetes/apps/${CLUSTER}/observability/gatus/app
   postBuild:
     substitute:
       APP: gatus

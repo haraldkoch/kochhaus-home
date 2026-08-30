@@ -9,7 +9,7 @@ spec:
     - name: mariadb
       namespace: joomla
   interval: 1h
-  path: ./kubernetes/apps/main/joomla/rtr/app
+  path: ./kubernetes/apps/${CLUSTER}/joomla/rtr/app
   prune: false # reset to true
   sourceRef:
     kind: GitRepository

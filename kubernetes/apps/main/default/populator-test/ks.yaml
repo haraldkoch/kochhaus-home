@@ -11,7 +11,7 @@ spec:
     - name: volsync
       namespace: storage
   interval: 1h
-  path: ./kubernetes/apps/main/default/populator-test/app
+  path: ./kubernetes/apps/${CLUSTER}/default/populator-test/app
   postBuild:
     substitute:
       APP: populator-test

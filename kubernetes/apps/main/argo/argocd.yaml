@@ -23,7 +23,7 @@ spec:
   dependsOn:
     - name: argocd
   interval: 1h
-  path: ./kubernetes/apps/main/argo/projects
+  path: ./kubernetes/apps/${CLUSTER}/argo/projects
   prune: false # reset to true
   sourceRef:
     kind: GitRepository
