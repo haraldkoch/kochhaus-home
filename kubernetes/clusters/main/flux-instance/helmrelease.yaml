@@ -4,6 +4,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: flux-instance
+  namespace: flux-system
 spec:
   chartRef:
     kind: OCIRepository
@@ -26,7 +27,7 @@ spec:
         kind: GitRepository
         url: https://github.com/haraldkoch/kochhaus-home
         ref: refs/heads/main
-        path: kubernetes/main/flux/cluster
+        path: kubernetes/clusters/main
         interval: 1h
       kustomize:
         patches:
