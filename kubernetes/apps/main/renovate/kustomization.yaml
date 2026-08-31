@@ -12,4 +12,4 @@ replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./renovate-operator.yaml
+  - ./renovate.yaml

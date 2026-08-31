@@ -56,8 +56,8 @@ spec:
     - name: RENOVATE_ALLOWED_UNSAFE_EXECUTIONS
       value: |-
         ["mise"]
-    # - name: RENOVATE_PLATFORM_COMMIT
-    #   value: "true"
+    - name: RENOVATE_PLATFORM_COMMIT_ENABLED
+      value: "true"
     - name: DOCKERHUB_USERNAME
       valueFrom:
         secretKeyRef:
@@ -70,7 +70,14 @@ spec:
           key: DOCKERHUB_TOKEN
     - name: RENOVATE_HOST_RULES
       value: >-
-        [{"hostType":"docker","matchHost":"docker.io","username":"$(DOCKERHUB_USERNAME)","password":"$(DOCKERHUB_TOKEN)"}]
+        [
+          {
+            "hostType": "docker",
+            "matchHost": "docker.io",
+            "username": "$(DOCKERHUB_USERNAME)",
+            "password": "$(DOCKERHUB_TOKEN)"
+          }
+        ]
     - name: RENOVATE_REDIS_URL
       value: redis://renovate-operator-dragonfly-db:6379
     - name: RENOVATE_REPOSITORY_CACHE

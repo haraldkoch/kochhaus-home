@@ -33,13 +33,10 @@ kind: Kustomization
 metadata:
   name: renovate-operator-jobs
 spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: renovate-operator
   dependsOn:
     - name: renovate-operator
   interval: 1h
-  path: ./kubernetes/apps/${CLUSTER}/renovate/jobs
+  path: ./kubernetes/apps/base/renovate/renovate-jobs
   prune: true
   sourceRef:
     kind: GitRepository
