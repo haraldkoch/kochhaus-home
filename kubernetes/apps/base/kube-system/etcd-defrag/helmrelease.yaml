@@ -3,52 +3,70 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app etcd-defrag
+  name: etcd-defrag
 spec:
   chartRef:
     kind: OCIRepository
     name: etcd-defrag
   interval: 1h
   values:
+    defaultPodOptions:
+      hostNetwork: true
+      hostPID: true
+      nodeSelector:
+        node-role.kubernetes.io/control-plane: ""
+      securityContext:
+        runAsGroup: 0
+        runAsNonRoot: false
+        runAsUser: 0
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
     controllers:
-      main:
+      etcd-defrag:
         type: cronjob
         cronjob:
           concurrencyPolicy: Forbid
-          schedule: "2 2 * * 0"
-        pod:
-          restartPolicy: OnFailure
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 65534
-            runAsGroup: 65534
+          failedJobsHistory: 1
+          schedule: "0 3 * * 0"
+          successfulJobsHistory: 1
+          timeZone: America/Edmonton
         containers:
-          main:
+          app:
             image:
-              repository: ghcr.io/haraldkoch/kubectl
-              tag: 1.36.4@sha256:abe09fe3fb149ac1a6085cc79a4872fc006af0f302ae7ae6a9a583916f13cdcf
-            command:
-              - /bin/sh
-              - -xc
-              - |-
-                for node in $NODES ; do
-                    /talosctl/talosctl etcd status -n $node
-                    /talosctl/talosctl etcd defrag -n $node
-                    /talosctl/talosctl etcd status -n $node
-                done
-            env:
-              NODES: ${ETCD_NODES}
-              TALOSCONFIG: /var/run/secrets/talos.dev/config
+              repository: ghcr.io/ahrtr/etcd-defrag
+              tag: v0.44.0@sha256:7b0f66e51e484a635cc82a0656f9db67974c0d4f570eb3e90b929d3a2a3dc91f
+            args:
+              - --auto-disalarm
+              - --cacert=/certs/ca.crt
+              - --cert=/certs/server.crt
+              - --cluster
+              - --defrag-rule=dbQuotaUsage > 0.5 || dbSizeFree > 100*1024*1024
+              - --disalarm-threshold=0.8
+              - --endpoints=https://127.0.0.1:2379
+              - --key=/certs/server.key
+              - --move-leader
+              - --wait-between-defrags=30s
+            resources:
+              requests:
+                cpu: 25m
+                memory: 128Mi
+              limits:
+                memory: 128Mi
             securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
+              privileged: true
     persistence:
-      talosctl:
-        type: image
-        image: ghcr.io/siderolabs/talosctl:v1.13.9
-      talosconfig:
-        type: secret
-        name: etcd-defrag-talosconfig
+      certs:
+        type: hostPath
+        hostPath: /system/secrets/etcd
         globalMounts:
-          - path: /var/run/secrets/talos.dev
+          - path: /certs
+            readOnly: true
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          etcd-defrag:
+            app:
+              - path: /tmp
+                subPath: tmp
