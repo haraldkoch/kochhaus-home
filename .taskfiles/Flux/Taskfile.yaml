@@ -25,7 +25,9 @@ tasks:
       kubectl --context {{.cluster}} apply --server-side \
           --field-manager=kustomize-controller -f -
     requires:
-      vars: ["cluster", "path"]
+      vars:
+        - "cluster"
+        - "path"
     vars:
       ns: '{{.ns | default "flux-system"}}'
       ks:
@@ -38,15 +40,17 @@ tasks:
     summary: |
       Args:
         cluster: Cluster to run command against (required)
-    cmd: flux --context {{.cluster}} reconcile --namespace flux-system kustomization flux-system --with-source
+    cmd: flux reconcile --namespace flux-system kustomization flux-system --with-source
     requires:
-      vars: ["cluster"]
+      vars:
+        - "CLUSTER"
 
   monitor:
     desc: Monitor the progress of Kustomizations and Helm Releases
     summary: |
       Args:
         cluster: Cluster to run command against (required)
-    cmd: watch "flux --context {{.cluster}} get kustomizations -A|grep -v Applied;flux --context {{.cluster}} get helmrelease -A|grep -v succeeded"
+    cmd: watch "flux get kustomizations -A|grep -v Applied;flux get helmrelease -A|grep -v succeeded"
     requires:
-      vars: ["cluster"]
+      vars:
+        - "CLUSTER"
