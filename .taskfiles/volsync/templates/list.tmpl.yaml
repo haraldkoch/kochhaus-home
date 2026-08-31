@@ -17,7 +17,8 @@ spec:
       containers:
         - name: main
           image: docker.io/restic/restic:0.19.1
-          args: ["snapshots"]
+          args:
+            - "snapshots"
           envFrom:
             - secretRef:
                 name: ${app}-volsync

@@ -17,7 +17,10 @@ spec:
       containers:
         - name: main
           image: docker.io/library/alpine:latest
-          command: ["/bin/sh", "-c", "cd /config; find . -delete"]
+          command:
+            - "/bin/sh"
+            - "-c"
+            - "cd /config; find . -delete"
           volumeMounts:
             - name: config
               mountPath: /config

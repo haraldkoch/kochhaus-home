@@ -19,8 +19,8 @@ x-env: &env
   puid: "{{.puid}}"
 
 vars:
-  VOLSYNC_SCRIPTS_DIR: "{{.ROOT_DIR}}/.taskfiles/VolSync/scripts"
-  VOLSYNC_TEMPLATES_DIR: "{{.ROOT_DIR}}/.taskfiles/VolSync/templates"
+  VOLSYNC_SCRIPTS_DIR: "{{.ROOT_DIR}}/.taskfiles/volsync/scripts"
+  VOLSYNC_TEMPLATES_DIR: "{{.ROOT_DIR}}/.taskfiles/volsync/templates"
 
 tasks:
 
@@ -39,7 +39,8 @@ tasks:
       ns: '{{.ns | default "volsync-system"}}'
       state: '{{index .MATCH 0}}'
     requires:
-      vars: ["cluster"]
+      vars:
+        - "cluster"
 
   list:
     desc: List snapshots for an application
@@ -56,7 +57,9 @@ tasks:
       - kubectl --context {{.cluster}} -n {{.ns}} delete job {{.job}}
     env: *env
     requires:
-      vars: ["cluster", "app"]
+      vars:
+        - "cluster"
+        - "app"
     vars:
       ns: '{{.ns | default "default"}}'
       job: volsync-list-{{.app}}
@@ -80,7 +83,9 @@ tasks:
       - kubectl --context {{.cluster}} -n {{.ns}} delete job {{.job}}
     env: *env
     requires:
-      vars: ["cluster", "app"]
+      vars:
+        - "cluster"
+        - "app"
     vars:
       ns: '{{.ns | default "default"}}'
       job: volsync-unlock-{{.app}}
@@ -104,7 +109,9 @@ tasks:
       - kubectl --context {{.cluster}} -n {{.ns}} wait job/{{.job}} --for condition=complete --timeout=120m
     env: *env
     requires:
-      vars: ["cluster", "app"]
+      vars:
+        - "cluster"
+        - "app"
     vars:
       now: '{{now | date "150405"}}'
       ns: '{{.ns | default "default"}}'
@@ -127,13 +134,15 @@ tasks:
         app: Application to restore (required)
         previous: Previous number of snapshots to restore (default: 0)
     cmds:
-      - { task: .suspend, vars: *env }
-      - { task: .wipe, vars: *env }
-      - { task: .restore, vars: *env }
-      - { task: .resume, vars: *env }
+      - {task: .suspend, vars: *env}
+      - {task: .wipe, vars: *env}
+      - {task: .restore, vars: *env}
+      - {task: .resume, vars: *env}
     env: *env
     requires:
-      vars: ["cluster", "app"]
+      vars:
+        - "cluster"
+        - "app"
     vars:
       ns: '{{.ns | default "default"}}'
       previous: '{{.previous | default 0}}'
@@ -157,21 +166,22 @@ tasks:
       Args:
         cluster: Cluster to run command against (required)
     cmds:
-      - for: { var: dest }
+      - for: {var: dest}
         cmd: |
           {{- $items := (split "/" .ITEM) }}
           kubectl --context {{.cluster}} delete pvc -n {{ $items._0 }} {{ $items._1 }}
-      - for: { var: cache }
+      - for: {var: cache}
         cmd: |
           {{- $items := (split "/" .ITEM) }}
           kubectl --context {{.cluster}} delete pvc -n {{ $items._0 }} {{ $items._1 }}
-      - for: { var: snaps }
+      - for: {var: snaps}
         cmd: |
           {{- $items := (split "/" .ITEM) }}
           kubectl --context {{.cluster}} delete volumesnapshot -n {{ $items._0 }} {{ $items._1 }}
     env: *env
     requires:
-      vars: ["cluster"]
+      vars:
+        - "cluster"
     vars:
       dest:
         sh: kubectl --context {{.cluster}} get pvc --all-namespaces --no-headers | grep "bootstrap-dest" | awk '{print $1 "/" $2}'

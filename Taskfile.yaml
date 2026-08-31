@@ -30,22 +30,22 @@ includes:
   database:
     aliases:
       - "db"
-    taskfile: .taskfiles/Database/Taskfile.yaml
+    taskfile: .taskfiles/database
   flux:
     aliases:
       - "fx"
-    taskfile: .taskfiles/Flux/Taskfile.yaml
+    taskfile: .taskfiles/flux
   kubernetes:
     aliases:
       - "k8s"
       - "ku"
-    taskfile: .taskfiles/Kubernetes/Taskfile.yaml
-  rook: .taskfiles/Rook/Taskfile.yaml
+    taskfile: .taskfiles/kubernetes
+  rook: .taskfiles/rook
   talos: .taskfiles/talos
   volsync:
     aliases:
       - "vs"
-    taskfile: .taskfiles/VolSync
+    taskfile: .taskfiles/volsync
 
 tasks:
 
