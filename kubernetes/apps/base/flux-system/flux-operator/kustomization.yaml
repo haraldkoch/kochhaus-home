@@ -6,6 +6,5 @@ resources:
   - ./clusterrolebinding.yaml
   - ./grafanadashboard.yaml
   - ./helmrelease.yaml
-  - ./networkpolicy.yaml
   - ./ocirepository.yaml
   - ./podmonitor.yaml
