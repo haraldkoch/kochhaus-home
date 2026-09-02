@@ -5,13 +5,14 @@ kind: Component
 patches:
   - target:
       kind: Namespace
-      name: not-used
+      name: _
     patch: |-
-      apiVersion: v1
-      kind: Namespace
-      metadata:
-        name: not-used
-        labels:
-          pod-security.kubernetes.io/enforce: baseline
-          pod-security.kubernetes.io/warn: baseline
-          pod-security.kubernetes.io/audit: baseline
+      - op: add
+        path: /metadata/labels/pod-security.kubernetes.io~1enforce
+        value: baseline
+      - op: add
+        path: /metadata/labels/pod-security.kubernetes.io~1warn
+        value: baseline
+      - op: add
+        path: /metadata/labels/pod-security.kubernetes.io~1audit
+        value: baseline
