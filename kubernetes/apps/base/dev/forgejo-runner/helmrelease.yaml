@@ -49,7 +49,7 @@ spec:
               - env:
                   - name: DEBIAN_FRONTEND
                     value: noninteractive
-                image: ghcr.io/haraldkoch/forgejo-runner:ubuntu-24.04@sha256:df903f280f2c4ca56a6c5e65e0537f990babf4cf857cf5a57cd6ba53f6d77d26
+                image: ghcr.io/haraldkoch/forgejo-runner:ubuntu-24.04@sha256:83b014e0938a955e18dc45e55fdab1e78b2b1fce67fcdb70a7b80223565c3635
                 imagePullPolicy: IfNotPresent
                 name: main
                 resources:
@@ -99,7 +99,7 @@ spec:
                     value: "1"
                   - name: DOCKER_CERT_PATH
                     value: /certs/client
-                image: ghcr.io/haraldkoch/forgejo-runner:ubuntu-24.04@sha256:df903f280f2c4ca56a6c5e65e0537f990babf4cf857cf5a57cd6ba53f6d77d26
+                image: ghcr.io/haraldkoch/forgejo-runner:ubuntu-24.04@sha256:83b014e0938a955e18dc45e55fdab1e78b2b1fce67fcdb70a7b80223565c3635
                 imagePullPolicy: IfNotPresent
                 name: main
                 resources:
