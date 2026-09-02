@@ -8,9 +8,6 @@ patches:
       name: _
     patch: |-
       - op: add
-        path: /metadata/labels/pod-security.kubernetes.io~1enforce
-        value: baseline
-      - op: add
         path: /metadata/labels/pod-security.kubernetes.io~1warn
         value: baseline
       - op: add
