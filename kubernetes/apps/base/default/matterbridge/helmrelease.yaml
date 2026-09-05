@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/luligu/matterbridge
-              tag: 3.10.7@sha256:568d9fae6342aadbd62aa72560b6e6c070c33b1c0c5224fe2925a28c1cb4ebc6
+              tag: 3.10.8@sha256:1ec50ecd0694adfdd781a13c5df8ab6f9712925f0b5ecea9662c308b6bc35062
             env:
               TZ: ${TIMEZONE}
             securityContext:
