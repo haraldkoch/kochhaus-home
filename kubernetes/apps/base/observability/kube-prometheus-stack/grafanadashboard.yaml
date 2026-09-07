@@ -94,6 +94,19 @@ spec:
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
+  name: kubernetes-overview
+spec:
+  allowCrossNamespaceImport: true
+  folder: kubernetes
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  url: https://grafana.com/api/dashboards/15661/revisions/2/download
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
   name: node-exporter-full
 spec:
   allowCrossNamespaceImport: true
