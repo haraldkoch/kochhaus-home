@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/v1/configmap_v1.json
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-info
+  namespace: flux-system
+  labels:
+    reconcile.fluxcd.io/watch: Enabled
+data:
+  CLUSTER: test
+  SNAPSHOTCLASS: csi-local-hostpath
+  STORAGECLASS: local-hostpath
+  STORAGE_HR: democratic-csi
+  STORAGE_NS: storage
+  SUBDOMAIN_SUFFIX: "-test"

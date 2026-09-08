@@ -1,0 +1,46 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/cilium.io/ciliumloadbalancerippool_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumLoadBalancerIPPool
+metadata:
+  name: pool
+spec:
+  allowFirstLastIPs: "No"
+  blocks:
+    - cidr: 192.168.24.0/24
+    - cidr: 192.168.20.96/32
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/cilium.io/ciliuml2announcementpolicy_v2alpha1.json
+apiVersion: cilium.io/v2alpha1
+kind: CiliumL2AnnouncementPolicy
+metadata:
+  name: l2-policy
+spec:
+  loadBalancerIPs: true
+  interfaces:
+    - bond0
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/os: linux
+---
+# yaml-language-server: $schema=https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#service-v1-core
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-api
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: k8s.${CLUSTER_DOMAIN}
+    io.cilium/lb-ipam-ips: 192.168.20.97
+spec:
+  type: LoadBalancer
+  # use Cluster for L2, Local for L3
+  #
+  # Cilium's L2 announce doesn't support Local, since it announces on a
+  # different node than the pod is running on
+  # https://github.com/cilium/cilium/issues/27800
+  externalTrafficPolicy: Cluster
+  selector:
+    k8s-app: kube-apiserver
+    tier: control-plane
+  ports:
+    - port: 6443
