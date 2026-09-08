@@ -54,7 +54,9 @@ machine:
       imageMaximumGCAge: 24h
     image: ghcr.io/siderolabs/kubelet:v1.36.2
     nodeIP:
-      validSubnets: ["192.168.20.0/24"]
+      validSubnets:
+        - 192.168.20.0/24
+        - fdd5:aa8:9535:20::/64
   nodeLabels:
     topology.kubernetes.io/region: k8s
     topology.kubernetes.io/zone: {{ 'm' if ENV.MACHINE_TYPE == 'controlplane' else 'w' }}
@@ -115,8 +117,12 @@ cluster:
     cni:
       name: none
     dnsDomain: cluster.local
-    podSubnets: ["10.42.0.0/16"]
-    serviceSubnets: ["10.43.0.0/16"]
+    podSubnets:
+      - 10.42.0.0/16
+      - fdd5:aa8:9535:42::/108
+    serviceSubnets:
+      - 10.43.0.0/16
+      - fdd5:aa8:9535:43::/108
   secret: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRET
   token: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_TOKEN
   {% if ENV.MACHINE_TYPE == 'controlplane' %}
