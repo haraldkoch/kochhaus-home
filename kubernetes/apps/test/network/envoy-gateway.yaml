@@ -25,7 +25,7 @@ spec:
     - name: certificates-import
     - name: envoy-gateway
   interval: 1h
-  path: ./kubernetes/apps/base/network/envoy-gateway/config
+  path: ./kubernetes/apps/test/network/envoy-gateway
   postBuild:
     substitute:
       EXTERNAL_DOMAIN: ${CLUSTER}-external

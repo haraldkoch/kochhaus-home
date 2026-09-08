@@ -11,7 +11,7 @@
 {{- $overrides := dict
       "network/envoy-gateway" "../../kubernetes/apps/base/network/envoy-gateway/app/ocirepository.yaml"
       "observability/grafana-operator" "../../kubernetes/apps/base/observability/grafana/operator/ocirepository.yaml"
-      "flux-system/flux-instance" (printf "../../kubernetes/clusters/%s/flux-instance/helmrelease.yaml" (requiredEnv "CLUSTER"))
+      "flux-system/flux-instance" (printf "../../kubernetes/clusters/%s/flux-instance/ocirepository.yaml" (requiredEnv "CLUSTER"))
 -}}
 {{- $path := index $overrides (printf "%s/%s" .Release.Namespace .Release.Name) | default (printf "../../kubernetes/apps/base/%s/%s/ocirepository.yaml" .Release.Namespace .Release.Name) -}}
 {{- $oci := dict -}}

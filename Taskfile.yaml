@@ -57,3 +57,8 @@ tasks:
     internal: true
     silent: true
     cmd: noop() { :; }
+
+  env:
+    cmd: "env | grep CLUSTER"
+    env:
+      CLUSTER: "{{.CLUSTER}}"

@@ -6,7 +6,7 @@ tasks:
   cluster:
     desc: Bootstrap a Talos & Kubernetes cluster end-to-end [CLUSTER=main]
     cmds:
-      - task: nodes
+      # - task: nodes
       - task: k8s
       - task: kubeconfig
       - task: base
@@ -15,13 +15,13 @@ tasks:
       vars:
         - CLUSTER
     preconditions:
-      - op account get
+      - op whoami --format=json
       - test -d {{.BOOTSTRAP_DIR}}/helmfile
       - test -d {{.BOOTSTRAP_DIR}}/kustomize
       - which kubectl helmfile minijinja-cli op talosctl yq
 
   nodes:
-    internal: true
+    # internal: true
     desc: Apply Talos configuration to all nodes
     cmds:
       - for: {var: NODES, split: " "}
@@ -43,7 +43,7 @@ tasks:
       - talosctl --talosconfig {{.TALOS_DIR}}/talosconfig config info
 
   k8s:
-    internal: true
+    # internal: true
     desc: Bootstrap Kubernetes via Talos
     cmd: |
       until out=$(talosctl --talosconfig {{.TALOS_DIR}}/talosconfig --nodes {{.CONTROLLER}} bootstrap 2>&1 || true) && [[ "$out" == *"AlreadyExists"* ]]; do
@@ -58,7 +58,7 @@ tasks:
         - CLUSTER
 
   kubeconfig:
-    internal: true
+    # internal: true
     desc: Fetch kubeconfig from the cluster
     cmds:
       - talosctl --talosconfig {{.TALOS_DIR}}/talosconfig kubeconfig --nodes {{.CONTROLLER}} -f --force-context-name {{.CLUSTER}} {{.CLUSTER_DIR}}
@@ -72,7 +72,7 @@ tasks:
         - CLUSTER
 
   base:
-    internal: true
+    # internal: true
     desc: Apply base manifests (namespaces + secrets + CRDs)
     cmds:
       # Wait for nodes to be registered
@@ -82,7 +82,7 @@ tasks:
           sleep 5
         done
       # Namespaces + secrets (templated + op inject)
-      - minijinja-cli {{.BOOTSTRAP_DIR}}/kustomize/secrets.yaml.tpl --cl-arg CLUSTER={{.CLUSTER}} | op inject | kubectl --context {{.CLUSTER}} apply --server-side --force-conflicts --filename -
+      - minijinja-cli {{.BOOTSTRAP_DIR}}/kustomize/secrets.yaml.tpl | op inject | kubectl --context {{.CLUSTER}} apply --server-side --force-conflicts --filename -
       # CRDs from helmfile (render only, extract CRDs, apply)
       - |
         helmfile --file {{.BOOTSTRAP_DIR}}/helmfile/crds.yaml template \
@@ -94,14 +94,15 @@ tasks:
     env:
       CLUSTER: "{{.CLUSTER}}"
     preconditions:
-      - op account get
+      - op whoami --format=json
       - test -f {{.BOOTSTRAP_DIR}}/kustomize/secrets.yaml.tpl
       - test -f {{.BOOTSTRAP_DIR}}/helmfile/crds.yaml
 
   apps:
-    internal: true
+    # internal: true
     desc: Sync bootstrap applications via helmfile
     cmd: |
+      env | grep CLUSTER
       helmfile --kube-context {{.CLUSTER}} --file {{.BOOTSTRAP_DIR}}/helmfile/apps.yaml sync --hide-notes
     requires:
       vars:
@@ -121,7 +122,7 @@ tasks:
       vars:
         - CLUSTER
     preconditions:
-      - op account get
+      - op whoami --format=json
 
   kubernetes:
     internal: true

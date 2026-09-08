@@ -59,12 +59,12 @@ releases:
       - kube-system/coredns
 
   - name: external-secrets
-    namespace: external-secrets
+    namespace: security
     needs:
       - cert-manager/cert-manager
 
-  - name: onepassword-connect
-    namespace: external-secrets
+  - name: onepassword
+    namespace: security
     hooks:
       - # Wait for CRDs to be available
         command: kubectl
@@ -87,12 +87,12 @@ releases:
           - postsync
         showlogs: true
     needs:
-      - external-secrets/external-secrets
+      - security/external-secrets
 
   - name: flux-operator
     namespace: flux-system
     needs:
-      - external-secrets/onepassword-connect
+      - security/onepassword
 
   - name: flux-instance
     namespace: flux-system

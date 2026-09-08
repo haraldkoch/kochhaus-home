@@ -25,7 +25,7 @@ releases:
     namespace: network
 
   - name: external-secrets
-    namespace: external-secrets
+    namespace: security
 
   - name: envoy-gateway
     namespace: network

@@ -82,6 +82,9 @@ machine:
     net.ipv4.tcp_slow_start_after_idle: "0"    # Allow Ping
     net.ipv4.tcp_window_scaling: "1"           # 10Gb/s
     net.ipv4.tcp_max_syn_backlog: "8192"       # Larger SYN queue for bursty connection rates
+    net.ipv6.conf.all.autoconf: "0"            # disable IPv6 autoconfig
+    net.ipv6.conf.default.autoconf: "0"        # disable IPv6 autoconfig
+    net.ipv6.conf.bond0.autoconf: "0"          # disable IPv6 autoconfig
     sunrpc.tcp_slot_table_entries: "128"       # 10Gb/s | NFS
     sunrpc.tcp_max_slot_table_entries: "128"   # 10Gb/s | NFS
     user.max_user_namespaces: "11255"          # User Namespaces
@@ -99,7 +102,7 @@ cluster:
     {% endif %}
   clusterName: test
   controlPlane:
-    endpoint: https://k8s.test.home.arpa:6443
+    endpoint: https://192.168.20.97:6443
   discovery:
     enabled: true
     registries:
@@ -191,6 +194,12 @@ name: bond0
 clientIdentifier: mac
 ---
 apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  maxSize: 24Gi
+---
+apiVersion: v1alpha1
 kind: UserVolumeConfig
 name: extra
 provisioning:
@@ -200,7 +209,7 @@ provisioning:
   minSize: 60Gi
   maxSize: 128Gi
 filesystem:
-  type: xf
+  type: xfs
 ---
 apiVersion: v1alpha1
 kind: WatchdogTimerConfig

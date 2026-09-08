@@ -63,7 +63,7 @@ tasks:
         - CLUSTER
         - NODE
     preconditions:
-      - op account get
+      - op whoami --format=json
       - talosctl config info --talosconfig {{.TALOS_DIR}}/talosconfig
       - test -f {{.TALOS_DIR}}/machineconfig.yaml.j2
       - test -f {{.TALOS_DIR}}/{{.MACHINE_TYPE}}/{{.NODE}}.yaml
@@ -110,7 +110,7 @@ tasks:
         - CLUSTER
         - NODE
     preconditions:
-      - op account get
+      - op whoami --format=json
       - test -f {{.TALOS_DIR}}/machineconfig.yaml.j2
       - test -f {{.TALOS_DIR}}/{{.MACHINE_TYPE}}/{{.NODE}}.yaml
       - which jq minijinja-cli op talosctl yq
@@ -184,7 +184,7 @@ tasks:
       vars:
         - CLUSTER
     preconditions:
-      - op account get
+      - op whoami --format=json
       - test -f {{.TALOS_DIR}}/machineconfig.yaml.j2
       - test -f {{.TALOS_DIR}}/talosconfig
       - which jq minijinja-cli op talosctl
@@ -232,7 +232,7 @@ tasks:
         - CLUSTER
         - NODE
     preconditions:
-      - talosctl config info
+      - talosctl --talosconfig {{.TALOS_DIR}}/talosconfig config info
       # - talosctl --talosconfig {{.TALOS_DIR}}/talosconfig --nodes {{.NODE}} get machineconfig
       - which talosctl
 
@@ -254,10 +254,8 @@ tasks:
   reboot-node:
     desc: Reboot Talos on a single node [CLUSTER=main] [NODE=required]
     cmds:
-      - task: down
       - talosctl --nodes {{.NODE}} reboot --talosconfig {{.TALOS_DIR}}/talosconfig
       - talosctl --nodes {{.NODE}} health --talosconfig {{.TALOS_DIR}}/talosconfig
-      - task: up
     requires:
       vars:
         - CLUSTER
@@ -375,19 +373,3 @@ tasks:
     preconditions:
       - test -f {{.SCHEMATIC_FILE}}
       - which curl jq yq
-
-  down:
-    internal: true
-    cmds:
-      - '{{if eq .CLUSTER "main"}}until kubectl wait cephcluster --for=jsonpath=.status.ceph.health=HEALTH_OK --timeout=10m --all --all-namespaces &>/dev/null; do sleep 5; done{{end}}'
-      - until kubectl wait jobs --all --all-namespaces --for=condition=complete --timeout=5m &>/dev/null; do sleep 5; done
-    preconditions:
-      - which kubectl
-
-  up:
-    internal: true
-    cmds:
-      - '{{if eq .CLUSTER "main"}}until kubectl wait cephcluster --for=jsonpath=.status.ceph.health=HEALTH_OK --timeout=10m --all --all-namespaces &>/dev/null; do sleep 5; done{{end}}'
-      - until kubectl wait jobs --all --all-namespaces --for=condition=complete --timeout=5m &>/dev/null; do sleep 5; done
-    preconditions:
-      - which kubectl
