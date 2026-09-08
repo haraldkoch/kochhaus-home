@@ -18,10 +18,15 @@ machine:
       port: 7445
     {% if ENV.MACHINE_TYPE == 'controlplane' %}
     kubernetesTalosAPIAccess:
+      allowedKubernetesNamespaces:
+        - actions-runner-system
+        - kube-system
+        - system-upgrade
+      allowedRoles:
+        - os:admin
       enabled: true
-      allowedRoles: ["os:admin"]
-      allowedKubernetesNamespaces: ["actions-runner-system", "kube-tools"]
     {% endif %}
+    rbac: true
   files:
     - op: create
       path: /etc/cri/conf.d/20-customization.part
@@ -39,6 +44,8 @@ machine:
         hard=True
         nconnect=16
         noatime=True
+        rsize=1048576
+        wsize=1048576
   install:
     image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.13.9
   kernel:
@@ -50,22 +57,27 @@ machine:
     extraArgs:
       max-pods: "200"
     extraConfig:
-      serializeImagePulls: false
       imageMaximumGCAge: 24h
-    image: ghcr.io/siderolabs/kubelet:v1.36.2
+      serializeImagePulls: false
+    extraMounts:
+      - destination: /var/mnt/extra
+        options: ["bind", "rshared", "rw"]
+        source: /var/mnt/extra
+        type: bind
+    image: ghcr.io/siderolabs/kubelet:v1.36.4
     nodeIP:
       validSubnets:
         - 192.168.20.0/24
         - fdd5:aa8:9535:20::/64
   nodeLabels:
-    topology.kubernetes.io/region: k8s
+    topology.kubernetes.io/region: test
     topology.kubernetes.io/zone: {{ 'm' if ENV.MACHINE_TYPE == 'controlplane' else 'w' }}
-  sysfs:
-    devices.system.cpu.cpufreq.policy0.scaling_governor: powersave
-    devices.system.cpu.cpufreq.policy0.energy_performance_preference: balance_power
+  #sysfs:
+  #  devices.system.cpu.cpufreq.policy0.scaling_governor: powersave
+  #  devices.system.cpu.cpufreq.policy0.energy_performance_preference: balance_power
   sysctls:
-    fs.inotify.max_user_watches: "1048576"     # Watchdog
     fs.inotify.max_user_instances: "8192"      # Watchdog
+    fs.inotify.max_user_watches: "1048576"     # Watchdog
     net.core.default_qdisc: fq                 # 10Gb/s
     net.core.somaxconn: "8192"                # Raise listen backlog for burst handling
     net.core.netdev_max_backlog: "16384"      # Raise kernel ingress queue depth
@@ -94,6 +106,11 @@ machine:
     vm.dirty_ratio: "20"                      # Cap dirty page buildup
     vm.dirty_expire_centisecs: "3000"         # Expire dirty data after 30s
     vm.dirty_writeback_centisecs: "500"       # Flush dirty pages every 5s
+  time:
+    disabled: false
+    servers:
+      - 192.168.10.3
+      - 192.168.10.11
   token: op://Homelab/talos-{{ ENV.CLUSTER }}/MACHINE_TOKEN
   type: {{ ENV.MACHINE_TYPE }}
 cluster:
@@ -131,19 +148,23 @@ cluster:
     key: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_AGGREGATORCA_KEY
   allowSchedulingOnControlPlanes: true
   apiServer:
-    certSANs: ["192.168.20.97", "127.0.0.1"]
+    certSANs:
+      - 192.168.20.97
+      - 127.0.0.1
     extraArgs:
       enable-aggregator-routing: true
       feature-gates: HPAScaleToZero=true
-    image: registry.k8s.io/kube-apiserver:v1.36.2
+    image: registry.k8s.io/kube-apiserver:v1.36.4
   controllerManager:
     extraArgs:
       bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-controller-manager:v1.36.2
+      node-cidr-mask-size-ipv6: "112"
+    image: registry.k8s.io/kube-controller-manager:v1.36.4
   coreDNS:
     disabled: true
   etcd:
-    advertisedSubnets: ["192.168.20.0/24"]
+    advertisedSubnets:
+      - 192.168.20.0/24
     ca:
       crt: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_ETCD_CA_CRT
       key: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_ETCD_CA_KEY
@@ -151,8 +172,7 @@ cluster:
       listen-metrics-urls: http://0.0.0.0:2381
   proxy:
     disabled: true
-    image: registry.k8s.io/kube-proxy:v1.36.2
-  secretboxEncryptionSecret: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRETBOXENCRYPTIONSECRET
+    image: registry.k8s.io/kube-proxy:v1.36.4
   scheduler:
     config:
       apiVersion: kubescheduler.config.k8s.io/v1
@@ -171,13 +191,13 @@ cluster:
                   - maxSkew: 1
                     topologyKey: kubernetes.io/hostname
                     whenUnsatisfiable: ScheduleAnyway
-    image: registry.k8s.io/kube-scheduler:v1.36.2
     extraArgs:
       bind-address: 0.0.0.0
+    image: registry.k8s.io/kube-scheduler:v1.36.4
+  secretboxEncryptionSecret: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
     key: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SERVICEACCOUNT_KEY
   {% endif %}
-
 ---
 apiVersion: v1alpha1
 kind: BondConfig
