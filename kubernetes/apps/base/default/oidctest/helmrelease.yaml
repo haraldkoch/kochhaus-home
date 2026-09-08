@@ -19,7 +19,7 @@ spec:
           main:
             image:
               repository: ghcr.io/beryju/oidc-test-client
-              tag: 2.6
+              tag: 2.7
             env:
               TZ: ${TIMEZONE}
               OIDC_ROOT_URL: https://oidctest.${CLUSTER_DOMAIN}
