@@ -6,7 +6,7 @@ tasks:
   cluster:
     desc: Bootstrap a Talos & Kubernetes cluster end-to-end [CLUSTER=main]
     cmds:
-      # - task: nodes
+      - task: nodes
       - task: k8s
       - task: kubeconfig
       - task: base
@@ -25,14 +25,9 @@ tasks:
     desc: Apply Talos configuration to all nodes
     cmds:
       - for: {var: NODES, split: " "}
-        cmd: |
-          if ! out=$(talosctl --talosconfig {{.TALOS_DIR}}/talosconfig --nodes {{.ITEM}} apply-config --insecure 2>&1); then
-            if [[ "$out" == *"certificate required"* ]]; then
-              echo "Talos already configured, skipping {{.ITEM}}"
-            else
-              echo "$out" && exit 1
-            fi
-          fi
+        task: ":talos:apply-node"
+        vars:
+          NODE: "{{.ITEM}}"
     vars:
       NODES:
         sh: talosctl --talosconfig {{.TALOS_DIR}}/talosconfig config info --output yaml | yq -r '.nodes | join(" ")'
@@ -43,7 +38,7 @@ tasks:
       - talosctl --talosconfig {{.TALOS_DIR}}/talosconfig config info
 
   k8s:
-    # internal: true
+    internal: true
     desc: Bootstrap Kubernetes via Talos
     cmd: |
       until out=$(talosctl --talosconfig {{.TALOS_DIR}}/talosconfig --nodes {{.CONTROLLER}} bootstrap 2>&1 || true) && [[ "$out" == *"AlreadyExists"* ]]; do
@@ -58,7 +53,7 @@ tasks:
         - CLUSTER
 
   kubeconfig:
-    # internal: true
+    internal: true
     desc: Fetch kubeconfig from the cluster
     cmds:
       - talosctl --talosconfig {{.TALOS_DIR}}/talosconfig kubeconfig --nodes {{.CONTROLLER}} -f --force-context-name {{.CLUSTER}} {{.CLUSTER_DIR}}
@@ -72,7 +67,7 @@ tasks:
         - CLUSTER
 
   base:
-    # internal: true
+    internal: true
     desc: Apply base manifests (namespaces + secrets + CRDs)
     cmds:
       # Wait for nodes to be registered
@@ -99,7 +94,7 @@ tasks:
       - test -f {{.BOOTSTRAP_DIR}}/helmfile/crds.yaml
 
   apps:
-    # internal: true
+    internal: true
     desc: Sync bootstrap applications via helmfile
     cmd: |
       env | grep CLUSTER
