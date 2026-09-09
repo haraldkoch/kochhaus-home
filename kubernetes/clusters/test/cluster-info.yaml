@@ -10,7 +10,7 @@ metadata:
 data:
   CLUSTER: test
   SNAPSHOTCLASS: csi-local-hostpath
-  STORAGECLASS: local-hostpath
-  STORAGE_HR: democratic-csi
+  STORAGECLASS: openebs-hostpath
+  STORAGE_HR: openebs
   STORAGE_NS: storage
   SUBDOMAIN_SUFFIX: "-test"

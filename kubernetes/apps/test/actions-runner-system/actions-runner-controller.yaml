@@ -24,7 +24,7 @@ metadata:
 spec:
   dependsOn:
     - name: actions-runner-controller
-    - name: democratic-csi
+    - name: openebs
       namespace: storage
   interval: 1h
   path: ./kubernetes/apps/base/actions-runner-system/actions-runner-controller/runners
