@@ -9,7 +9,6 @@ spec:
   blocks:
     - cidr: 192.168.24.0/24
     - cidr: fdd5:aa8:9535:24::/64
-    - cidr: 192.168.20.97/32
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/cilium.io/ciliuml2announcementpolicy_v2alpha1.json
 apiVersion: cilium.io/v2alpha1
@@ -31,7 +30,7 @@ metadata:
   name: kube-api
   annotations:
     external-dns.alpha.kubernetes.io/hostname: k8s.${CLUSTER_DOMAIN}
-    io.cilium/lb-ipam-ips: 192.168.20.97
+    io.cilium/lb-ipam-ips: 192.168.20.96
 spec:
   type: LoadBalancer
   # use Cluster for L2, Local for L3
