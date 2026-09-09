@@ -36,6 +36,14 @@ spec:
         interval: 1h
       kustomize:
         patches:
+          - # sops
+            patch:
+              - op: add
+                path: /spec/decryption
+                value:
+                  provider: sops
+            target:
+              kind: Kustomization
           - # Increase the number of workers
             patch: |-
               - op: add
