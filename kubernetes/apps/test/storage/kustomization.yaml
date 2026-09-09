@@ -8,5 +8,5 @@ components:
 replacements:
   - path: ../../../components/replacements/ks.yaml
 resources:
-  - ./democratic-csi.yaml
+  - ./openebs.yaml
   - ./snapshot-controller.yaml
