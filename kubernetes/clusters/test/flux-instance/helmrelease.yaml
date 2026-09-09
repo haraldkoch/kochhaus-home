@@ -37,7 +37,7 @@ spec:
       kustomize:
         patches:
           - # sops
-            patch:
+            patch: |
               - op: add
                 path: /spec/decryption
                 value:
