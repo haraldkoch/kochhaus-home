@@ -13,10 +13,8 @@ spec:
     substituteFrom:
       - kind: ConfigMap
         name: cluster-info
-        namespace: flux-system
       - kind: Secret
         name: cluster-secrets
-        namespace: flux-system
   prune: true
   sourceRef:
     kind: GitRepository
