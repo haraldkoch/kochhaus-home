@@ -205,14 +205,6 @@ cluster:
   {% endif %}
 ---
 apiVersion: v1alpha1
-kind: BondConfig
-name: bond0
-links:
-  - enp1s0
-bondMode: active-backup
-miimon: 100
----
-apiVersion: v1alpha1
 kind: VLANConfig
 name: bond0.30
 vlanID: 30
