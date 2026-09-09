@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.13/website/content/v1.13/schemas/config.schema.json
 version: v1alpha1
 machine:
   ca:
@@ -11,7 +11,6 @@ machine:
     - 127.0.0.1
     - 192.168.23.65
   features:
-    apidCheckExtKeyUsage: true
     diskQuotaSupport: true
     hostDNS:
       enabled: true
@@ -34,7 +33,6 @@ machine:
   files:
     - op: create
       path: /etc/cri/conf.d/20-customization.part
-      permissions: 0o644
       content: |
         [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
@@ -58,8 +56,6 @@ machine:
     defaultRuntimeSeccompProfileEnabled: true
     disableManifestsDirectory: true
     extraConfig:
-      featureGates:
-        ImageVolume: true
       serializeImagePulls: false
     extraMounts:
       - destination: /var/mnt/extra
@@ -82,8 +78,8 @@ machine:
   sysctls:
     fs.inotify.max_user_instances: "8192"      # Watchdog
     fs.inotify.max_user_watches: "1048576"     # Watchdog
-    net.core.rmem_max: "7500000"               # Cloudflared / QUIC
-    net.core.wmem_max: "7500000"               # Cloudflared / QUIC
+    net.core.rmem_max: "67108864"              # 10Gb/s | Cloudflared / QUIC
+    net.core.wmem_max: "67108864"              # 10Gb/s | Cloudflared / QUIC
     net.ipv4.neigh.default.gc_thresh1: "4096"  # Prevent ARP cache overflows
     net.ipv4.neigh.default.gc_thresh2: "8192"  # Prevent ARP cache overflows
     net.ipv4.neigh.default.gc_thresh3: "16384" # Prevent ARP cache overflows
@@ -135,18 +131,13 @@ cluster:
     key: op://homelab/talos-registry/CLUSTER_AGGREGATORCA_KEY
   allowSchedulingOnControlPlanes: true
   apiServer:
-    auditPolicy:
-      apiVersion: audit.k8s.io/v1
-      kind: Policy
-      rules:
-        - level: Metadata
     certSANs:
       - 192.168.23.65
       - 127.0.0.1
     disablePodSecurityPolicy: true
     extraArgs:
       enable-aggregator-routing: "true"
-      feature-gates: ImageVolume=true
+      feature-gates: HPAScaleToZero=true
     image: registry.k8s.io/kube-apiserver:v1.36.4
   controllerManager:
     extraArgs:

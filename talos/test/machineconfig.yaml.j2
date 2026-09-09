@@ -57,7 +57,6 @@ machine:
     extraArgs:
       max-pods: "200"
     extraConfig:
-      imageMaximumGCAge: 24h
       serializeImagePulls: false
     extraMounts:
       - destination: /var/mnt/extra
@@ -69,6 +68,12 @@ machine:
       validSubnets:
         - 192.168.20.0/24
         - fdd5:aa8:9535:20::/64
+  network:
+    nameservers:
+      - 192.168.10.6
+      - 192.168.10.7
+    searchDomains:
+      - op://homelab/talos-test/private_static_domain
   nodeLabels:
     topology.kubernetes.io/region: test
     topology.kubernetes.io/zone: {{ 'm' if ENV.MACHINE_TYPE == 'controlplane' else 'w' }}
@@ -121,7 +126,7 @@ cluster:
     {% endif %}
   clusterName: test
   controlPlane:
-    endpoint: https://192.168.20.97:6443
+    endpoint: https://192.168.20.96:6443
   discovery:
     enabled: true
     registries:
@@ -149,7 +154,7 @@ cluster:
   allowSchedulingOnControlPlanes: true
   apiServer:
     certSANs:
-      - 192.168.20.97
+      - 192.168.20.96
       - 127.0.0.1
     extraArgs:
       enable-aggregator-routing: true
