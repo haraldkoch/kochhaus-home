@@ -2,6 +2,11 @@
 apiVersion: v1
 kind: Namespace
 metadata:
+  name: flux-system
+---
+apiVersion: v1
+kind: Namespace
+metadata:
   name: security
 ---
 apiVersion: v1
