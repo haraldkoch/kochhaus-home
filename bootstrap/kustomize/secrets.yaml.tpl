@@ -7,15 +7,16 @@ metadata:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: onepassword-connect-credentials-secret
+  name: onepassword-secret
   namespace: security
-data:
+stringData:
   1password-credentials.json: op://Homelab/1password/OP_CREDENTIALS_JSON
+  token: op://Homelab/1password/OP_CONNECT_TOKEN
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: onepassword-connect-vault-secret
-  namespace: security
-stringData:
-  OP_CONNECT_TOKEN: op://Homelab/1password/OP_CONNECT_TOKEN
+  name: sops-age
+  namespace: flux-system
+data:
+  age.agekey: op://Homelab/agekey/encoded

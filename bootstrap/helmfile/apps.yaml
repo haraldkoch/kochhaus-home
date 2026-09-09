@@ -11,6 +11,7 @@
 helmDefaults:
   cleanupOnFail: true
   forceConflicts: true
+  takeOwnership: true
   wait: true
   waitForJobs: true
 
