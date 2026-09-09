@@ -28,6 +28,7 @@ spec:
   path: ./kubernetes/apps/test/network/envoy-gateway
   postBuild:
     substitute:
+      REPLICAS: "1"
       EXTERNAL_DOMAIN: ${CLUSTER}-external
       INTERNAL_DOMAIN: ${CLUSTER}-internal
       SVC_GATEWAY_EXTERNAL: 10.69.10.232
