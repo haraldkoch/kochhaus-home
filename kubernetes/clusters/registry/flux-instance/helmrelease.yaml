@@ -9,6 +9,10 @@ spec:
   chartRef:
     kind: OCIRepository
     name: flux-instance
+    namespace: flux-system
+  dependsOn:
+    - name: flux-operator
+      namespace: flux-system
   interval: 1h
   values:
     commonAnnotations:
@@ -25,6 +29,7 @@ spec:
         artifact: oci://ghcr.io/controlplaneio-fluxcd/flux-operator-manifests:v0.59.0
       sync:
         kind: GitRepository
+        name: flux-system
         url: https://github.com/haraldkoch/kochhaus-home
         ref: refs/heads/main
         path: kubernetes/clusters/registry
