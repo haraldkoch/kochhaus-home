@@ -36,6 +36,14 @@ spec:
         interval: 1h
       kustomize:
         patches:
+          - # add sops to flux-managed kustomizations
+            patch: |
+              - op: add
+                path: /spec/decryption
+                value:
+                  provider: sops
+            target:
+              kind: Kustomization
           - # allow flux components to run on the control-plane.
             patch: |-
               apiVersion: apps/v1

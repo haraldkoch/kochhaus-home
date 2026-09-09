@@ -36,7 +36,7 @@ spec:
         interval: 1h
       kustomize:
         patches:
-          - # sops
+          - # add sops to flux-managed kustomizations
             patch: |
               - op: add
                 path: /spec/decryption
@@ -44,6 +44,28 @@ spec:
                   provider: sops
             target:
               kind: Kustomization
+          - # allow flux components to run on the control-plane.
+            patch: |-
+              apiVersion: apps/v1
+              kind: Deployment
+              metadata:
+                name: not-used
+              spec:
+                template:
+                  spec:
+                    affinity:
+                      nodeAffinity:
+                        requiredDuringSchedulingIgnoredDuringExecution:
+                          nodeSelectorTerms:
+                          - matchExpressions:
+                            - key: node-role.kubernetes.io/control-plane
+                              operator: Exists
+                    tolerations:
+                    - key: node-role.kubernetes.io/control-plane
+                      operator: Exists
+            target:
+              kind: Deployment
+              labelSelector: control-plane=controller
           - # Increase the number of workers
             patch: |-
               - op: add

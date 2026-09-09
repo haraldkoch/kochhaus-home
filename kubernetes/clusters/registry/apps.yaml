@@ -15,18 +15,18 @@ spec:
     substitute:
       CLUSTER: registry
     substituteFrom:
-      - name: cluster-settings
-        kind: ConfigMap
+      - kind: ConfigMap
+        name: cluster-info
         optional: false
-      - name: cluster-secrets
-        kind: Secret
+      - kind: Secret
+        name: cluster-secrets
         optional: false
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false
+  wait: true
   patches:
     - # Add Kustomization defaults for all child Kustomizations
       patch: |-
@@ -47,8 +47,6 @@ spec:
                 spec:
                   install:
                     crds: CreateReplace
-                    strategy:
-                      name: RetryOnFailure
                   rollback:
                     cleanupOnFail: true
                     recreate: true

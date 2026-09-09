@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/v1/configmap_v1.json
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-info
+  namespace: flux-system
+  labels:
+    reconcile.fluxcd.io/watch: Enabled
+data:
+  CLUSTER: registry
+  SNAPSHOTCLASS: csi-local-hostpath
+  STORAGECLASS: openebs-hostpath
+  STORAGE_HR: openebs
+  STORAGE_NS: storage
+  SUBDOMAIN_SUFFIX: "-registry"
