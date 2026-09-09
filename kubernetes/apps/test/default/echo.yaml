@@ -6,7 +6,7 @@ metadata:
   name: echo
 spec:
   interval: 1h
-  path: ./kubernetes/apps/base/network/echo
+  path: ./kubernetes/apps/base/default/echo
   postBuild:
     substitute:
       SUBDOMAIN: echo
