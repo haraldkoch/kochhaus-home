@@ -10,6 +10,6 @@ metadata:
 data:
   CLUSTER: test
   SNAPSHOTCLASS: csi-local-hostpath
-  STORAGECLASS: openebs-hostpath
-  STORAGE_HR: openebs
+  STORAGECLASS: local-hostpath
+  STORAGE_HR: democratic-csi
   STORAGE_NS: storage
