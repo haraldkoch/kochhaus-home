@@ -44,7 +44,6 @@ spec:
               STORAGECLASS: ${STORAGECLASS}
               STORAGE_HR: ${STORAGE_HR}
               STORAGE_NS: ${STORAGE_NS}
-              SUBDOMAIN_SUFFIX: ${SUBDOMAIN_SUFFIX} # not injected on main: an empty value renders as null and fails admission
           patches:
             - patch: |-
                 apiVersion: helm.toolkit.fluxcd.io/v2

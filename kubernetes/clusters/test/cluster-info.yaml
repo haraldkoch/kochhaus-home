@@ -13,4 +13,3 @@ data:
   STORAGECLASS: openebs-hostpath
   STORAGE_HR: openebs
   STORAGE_NS: storage
-  SUBDOMAIN_SUFFIX: "-test"

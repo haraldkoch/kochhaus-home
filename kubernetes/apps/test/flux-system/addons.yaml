@@ -9,7 +9,8 @@ spec:
   path: ./kubernetes/apps/base/flux-system/addons
   postBuild:
     substitute:
-      SUBDOMAIN: flux-webhook
+      WEBHOOK_SUBDOMAIN: flux-webhook
+      DASHBOARD_SUBDOMAIN: flux
   prune: true
   sourceRef:
     kind: GitRepository
