@@ -9,6 +9,8 @@ spec:
     - ../../../../components/keda/nfs-scaler
     - ../../../../components/kopiur/backup
   dependsOn:
+    - name: keda
+      namespace: observability
     - name: kopiur
       namespace: storage
   interval: 1h
