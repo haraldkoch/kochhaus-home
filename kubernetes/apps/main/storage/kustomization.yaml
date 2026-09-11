@@ -13,6 +13,7 @@ replacements:
 
 resources:
   - ./csi-driver-nfs.yaml
+  - ./democratic-csi.yaml
   - ./openebs.yaml
   - ./snapshot-controller.yaml
   - ./volsync.yaml
