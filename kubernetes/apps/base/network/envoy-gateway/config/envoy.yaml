@@ -13,7 +13,7 @@ spec:
     type: Kubernetes
     kubernetes:
       envoyDeployment:
-        replicas: ${REPLICAS}
+        replicas: ${REPLICAS:=1}
         container:
           imageRepository: mirror.gcr.io/envoyproxy/envoy
           resources:
@@ -21,6 +21,15 @@ spec:
               cpu: 100m
             limits:
               memory: 1Gi
+        pod:
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              matchLabelKeys: ["pod-template-hash"]
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/managed-by: envoy-gateway
       envoyService:
         # use Cluster for L2, Local for L3
         #
@@ -61,7 +70,7 @@ spec:
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
-      lbipam.cilium.io/ips: "${GATEWAY_EXT_IPV4},${GATEWAY_EXT_IPV6}"
+      lbipam.cilium.io/ips: ${SVC_GATEWAY_EXTERNAL}
   listeners:
     - name: http
       protocol: HTTP
@@ -92,7 +101,7 @@ spec:
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
-      lbipam.cilium.io/ips: "${GATEWAY_INT_IPV4},${GATEWAY_INT_IPV6}"
+      lbipam.cilium.io/ips: ${SVC_GATEWAY_INTERNAL}
   listeners:
     - name: http
       protocol: HTTP
@@ -110,6 +119,17 @@ spec:
         certificateRefs:
           - kind: Secret
             name: wildcard-tls
+    - name: ssh
+      protocol: TCP
+      port: 22
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: dev
+        kinds:
+          - kind: TCPRoute
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/envoyproxy/gateway/refs/heads/main/charts/gateway-helm/charts/crds/crds/generated/gateway.envoyproxy.io_clienttrafficpolicies.yaml
 apiVersion: gateway.envoyproxy.io/v1alpha1
@@ -149,7 +169,8 @@ spec:
         - 10.42.0.0/16
   http2:
     onInvalidMessage: TerminateStream
-  http3: {}
+  proxyProtocol:
+    optional: true
   targetSelectors:
     - group: gateway.networking.k8s.io
       kind: Gateway
