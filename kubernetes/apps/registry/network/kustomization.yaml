@@ -14,4 +14,4 @@ replacements:
 resources:
   - ./certificates.yaml
   - ./bind-dns.yaml
-  - ./envoy-gateway/ks.yaml
+  - ./envoy-gateway.yaml

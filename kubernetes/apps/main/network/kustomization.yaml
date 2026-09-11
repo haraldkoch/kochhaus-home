@@ -16,4 +16,4 @@ resources:
   - ./bind-dns.yaml
   - ./cloudflare-dns.yaml
   - ./cloudflare-tunnel.yaml
-  - ./envoy-gateway/ks.yaml
+  - ./envoy-gateway.yaml
