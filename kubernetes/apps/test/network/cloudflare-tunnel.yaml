@@ -12,6 +12,11 @@ spec:
     substitute:
       EXTERNAL_DOMAIN: external-${CLUSTER}
       REPLICAS: "1"
+    substituteFrom:
+      # The ExternalSecret is created by this Kustomization; allow it to bootstrap.
+      - kind: Secret
+        name: cloudflare-tunnel-secret
+        optional: true
   sourceRef:
     kind: GitRepository
     name: flux-system
