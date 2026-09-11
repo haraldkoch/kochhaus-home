@@ -31,6 +31,6 @@ resources:
   - ./omada-controller-proxy.yaml
   - ./openspeedtest.yaml
   - ./openweathermap-exporter.yaml
-  - ./populator-test/ks.yaml
+  - ./populator-test.yaml
   - ./smtp-relay.yaml
   - ./zigbee2mqtt.yaml

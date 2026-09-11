@@ -22,7 +22,7 @@ spec:
             env:
               TZ: ${TIMEZONE:=Etc/UTC}
               SERVER_PORT: 80
-              SERVER_ROOT: /data/git/haraldkoch.git
+              SERVER_ROOT: /data/git/.github
             probes:
               liveness:
                 enabled: true
@@ -34,14 +34,14 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 500Mi
-                # git-sync:
-                #   image:
-                #     repository: registry.k8s.io/git-sync/git-sync
-                #     tag: v4.1.0
-                #   env:
-                #     GITSYNC_REPO: https://github.com/haraldkoch/haraldkoch.git
-                #     GITSYNC_ROOT: /data/git
-                #     GITSYNC_REF: main
+          git-sync:
+            image:
+              repository: registry.k8s.io/git-sync/git-sync
+              tag: v4.7.1
+            env:
+              GITSYNC_REPO: https://github.com/haraldkoch/.github
+              GITSYNC_ROOT: /data/git
+              GITSYNC_REF: main
     defaultPodOptions:
       securityContext:
         runAsUser: 65533
@@ -62,4 +62,4 @@ spec:
             namespace: network
     persistence:
       data:
-        existingClaim: ${VOLSYNC_CLAIM}
+        existingClaim: "{{ .Release.Name }}"

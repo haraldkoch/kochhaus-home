@@ -6,21 +6,18 @@ metadata:
   name: populator-test
 spec:
   components:
-    - ../../../../../components/network/volsync
+    - ../../../../components/main/volsync
   dependsOn:
-    - name: longhorn
-      namespace: storage
     - name: volsync
       namespace: storage
   interval: 1h
-  path: ./kubernetes/apps/${CLUSTER}/default/populator-test/app
+  path: ./kubernetes/apps/base/default/populator-test
   postBuild:
     substitute:
       APP: populator-test
       VOLSYNC_CAPACITY: 2Gi
-      VOLSYNC_CLAIM: populator-test-data
-      VOLSYNC_PGID: "65533"
-      VOLSYNC_PUID: "65533"
+      VOLSYNC_GID: "65533"
+      VOLSYNC_UID: "65533"
   prune: true
   sourceRef:
     kind: GitRepository
