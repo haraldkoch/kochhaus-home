@@ -11,11 +11,12 @@ spec:
   path: ./kubernetes/apps/base/observability/kube-prometheus-stack
   postBuild:
     substitute:
+      ALERTMANAGER_PEER: amcluster-network
+      ALERTMANAGER_SUBDOMAIN: alertmanager-main
       APP: kube-prometheus-stack
       GATUS_SUBDOMAIN: prometheus-main
-      ALERTMANAGER_SUBDOMAIN: alertmanager-main
-      ALERTMANAGER_PEER: amcluster-network
       PROMETHEUS_SUBDOMAIN: prometheus-main
+      PVC_CAPACITY: "50"
       STORAGECLASS: ceph-block
   prune: true
   sourceRef:

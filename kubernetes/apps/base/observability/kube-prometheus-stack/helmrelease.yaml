@@ -103,7 +103,7 @@ spec:
         scrapeConfigSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         retention: 14d
-        retentionSize: 50GB
+        retentionSize: ${PVC_CAPACITY}GB
         externalLabels:
           cluster: ${CLUSTER}
         additionalAlertManagerConfigs:
@@ -128,7 +128,7 @@ spec:
               storageClassName: ${STORAGECLASS}
               resources:
                 requests:
-                  storage: 50Gi
+                  storage: ${PVC_CAPACITY}Gi
     prometheusOperator:
       resources:
         requests:
