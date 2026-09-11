@@ -40,6 +40,7 @@ spec:
             substitute:
               CLUSTER: ${CLUSTER}
               CLUSTER_DOMAIN: ${CLUSTER_DOMAIN}
+              PRIVATE_STATIC_DOMAIN: ${PRIVATE_STATIC_DOMAIN}
               SNAPSHOTCLASS: ${SNAPSHOTCLASS}
               STORAGECLASS: ${STORAGECLASS}
               STORAGE_HR: ${STORAGE_HR}

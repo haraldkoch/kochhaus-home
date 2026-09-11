@@ -9,4 +9,5 @@ replacements:
   - path: ../../../components/replacements/ks.yaml
 resources:
   - ./democratic-csi.yaml
+  - ./kopiur.yaml
   - ./snapshot-controller.yaml
