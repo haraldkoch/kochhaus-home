@@ -8,6 +8,9 @@ spec:
   components:
     - ../../../../components/keda/nfs-scaler
     - ../../../../components/kopiur/backup
+  dependsOn:
+    - name: kopiur
+      namespace: storage
   interval: 1h
   path: ./kubernetes/apps/base/default/populator-test
   postBuild:
