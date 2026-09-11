@@ -176,3 +176,11 @@ spec:
             target:
               kind: Deployment
               name: kustomize-controller
+          - # Allow undefined variables in substitutions (needed to solve chicken/egg problem using external secrets and kustomize)
+            patch: |-
+              - op: add
+                path: /spec/template/spec/containers/0/args/-
+                value: --feature-gates=StrictPostBuildSubstitutions=false
+            target:
+              kind: Deployment
+              name: kustomize-controller
