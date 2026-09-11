@@ -46,67 +46,67 @@ services:
     items:
       - name: Plex
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/plex.png
-        url: https://${MEDIA_SERVER}/web/
+        url: https://media.${PRIVATE_STATIC_DOMAIN}/web/
         subtitle: Watch Movies and TV
       - name: Jellyseerr
         logo: https://raw.githubusercontent.com/Fallenbagel/jellyseerr/refs/heads/develop/public/os_logo_square.png
-        url: https://requests.${SECRET_DOMAIN}
+        url: https://requests.${CLUSTER_DOMAIN}
         subtitle: Request new movies and shows
       - name: Radarr
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/radarr.png
-        url: https://radarr.${SECRET_DOMAIN}
+        url: https://radarr.${CLUSTER_DOMAIN}
         subtitle: the movie downloader
       - name: Sonarr
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/sonarr.png
-        url: https://sonarr.${SECRET_DOMAIN}
+        url: https://sonarr.${CLUSTER_DOMAIN}
         subtitle: the series downloader
       - name: Bazarr
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/bazarr.png
-        url: https://bazarr.${SECRET_DOMAIN}
+        url: https://bazarr.${CLUSTER_DOMAIN}
         subtitle: subtitle downloader
       - name: Tautulli
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/tautulli.png
-        url: https://tautulli.${SECRET_DOMAIN}
+        url: https://tautulli.${CLUSTER_DOMAIN}
         subtitle: track watched movies and shows
       - name: Your Spotify
         logo: https://raw.githubusercontent.com/Yooooomi/your_spotify/master/apps/client/public/logo192.png
-        url: https://spotty.${SECRET_DOMAIN}
+        url: https://spotty.${CLUSTER_DOMAIN}
         subtitle: all the Spotify listening statistics you could ever want
       - name: Calibre Web
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/calibreweb.png
-        url: https://ebooks.${SECRET_DOMAIN}
+        url: https://ebooks.${CLUSTER_DOMAIN}
         subtitle: eBook library
 
     # - name: "SFTPGo"
     #   logo: "https://raw.githubusercontent.com/drakkan/sftpgo/main/img/logo.png"
-    #   url: "https://sftpgo.${SECRET_DOMAIN}"
+    #   url: "https://sftpgo.${CLUSTER_DOMAIN}"
     # - name: "Immich"
     #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/immich.png"
-    #   url: "https://immich.${SECRET_DOMAIN}"
+    #   url: "https://immich.${CLUSTER_DOMAIN}"
     # - name: "Paperless"
     #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/paperless-ng.png"
-    #   url: "https://paperless.${SECRET_DOMAIN}"
+    #   url: "https://paperless.${CLUSTER_DOMAIN}"
     # - name: "Memos"
     #   logo: "https://raw.githubusercontent.com/usememos/memos/main/web/public/logo.webp"
-    #   url: "https://memos.${SECRET_DOMAIN}"
+    #   url: "https://memos.${CLUSTER_DOMAIN}"
     # - name: "Tandoor Recipes"
     #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/tandoorrecipes.png"
-    #   url: "https://recipes.${SECRET_DOMAIN}"
+    #   url: "https://recipes.${CLUSTER_DOMAIN}"
 
   - name: Cloud
     icon: fas fa-cloud
     items:
       - name: Hoarder
         logo: https://raw.githubusercontent.com/karakeep-app/karakeep/main/docs/static/img/logo.png
-        url: https://karakeep.${SECRET_DOMAIN}
+        url: https://karakeep.${CLUSTER_DOMAIN}
         subtitle: store links, snippets, and full web pages
       - name: NextCloud
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/nextcloud.png
-        url: https://cloud.${SECRET_DOMAIN}
+        url: https://cloud.${CLUSTER_DOMAIN}
         subtitle: personal file storage with desktop, web, and mobile clients
       - name: PicoShare
         icon: fas fa-share
-        url: https://share.${SECRET_DOMAIN}
+        url: https://share.${CLUSTER_DOMAIN}
         subtitle: simple and secure file sharing portal
 
   - name: Tools
@@ -114,27 +114,27 @@ services:
     items:
       - name: BentoPDF
         logo: https://raw.githubusercontent.com/alam00000/bentopdf/refs/heads/main/public/images/favicon.svg
-        url: https://bentopdf.${SECRET_DOMAIN}
+        url: https://bentopdf.${CLUSTER_DOMAIN}
         subtitle: simple PDF generation service
       - name: Change Detection
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/changedetection.png
-        url: https://changedetection.${SECRET_DOMAIN}
+        url: https://changedetection.${CLUSTER_DOMAIN}
         subtitle: monitor any website for changes and send notifications
       - name: Exaclidraw
         logo: https://raw.githubusercontent.com/excalidraw/excalidraw/master/public/android-chrome-192x192.png
-        url: https://draw.${SECRET_DOMAIN}
+        url: https://draw.${CLUSTER_DOMAIN}
         subtitle: simple drawing tool
       - name: Docmost
         logo: https://docmost.com/favicon.ico
-        url: https://notes.${SECRET_DOMAIN}
+        url: https://notes.${CLUSTER_DOMAIN}
         subtitle: simple documentation / notes app with wiki features
       - name: IT Tools
         logo: https://cdn.jsdelivr.net/gh/selfhst/icons@main/png/it-tools.png
-        url: https://it-tools.${SECRET_DOMAIN}
+        url: https://it-tools.${CLUSTER_DOMAIN}
         subtitle: A collection of useful IT Tools
       - name: Kochhaus Documentation
         icon: fas fa-book
-        url: https://docs.${SECRET_DOMAIN}
+        url: https://docs.${CLUSTER_DOMAIN}
         subtitle: Detailed KochHaus documentation
 
   - name: Home Automation
@@ -142,19 +142,19 @@ services:
     items:
       - name: Home Assistant
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/home-assistant.png
-        url: https://ha.${SECRET_DOMAIN}
+        url: https://ha.${CLUSTER_DOMAIN}
         subtitle: Primary home automation controller
       - name: Zigbee2MQTT
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/zigbee2mqtt.png
-        url: https://zigbee.${SECRET_DOMAIN}
+        url: https://zigbee.${CLUSTER_DOMAIN}
         subtitle: Manage the Zigbee network of automation devices
       - name: Home Internet Status
         icon: fas fa-chart-line
-        url: https://grafana.${SECRET_DOMAIN}/d/b5VdClAMz/network-status
+        url: https://grafana.${CLUSTER_DOMAIN}/d/b5VdClAMz/network-status
         subtitle: Current status of the home internet connection
       - name: House Temperatures
         icon: fas fa-chart-line
-        url: https://grafana.${SECRET_DOMAIN}/d/f34c065d-33a8-415a-89f2-0bbfc0a6a4b6/house-sensors
+        url: https://grafana.${CLUSTER_DOMAIN}/d/f34c065d-33a8-415a-89f2-0bbfc0a6a4b6/house-sensors
         subtitle: Temperatures in the house
 
   - name: Management
@@ -178,7 +178,7 @@ services:
         subtitle: Mnemosyne KVM Console
       - name: Omada
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/omada.png
-        url: http://omada.${SECRET_DOMAIN}/
+        url: http://omada.${CLUSTER_DOMAIN}/
         subtitle: Network management console
 
   - name: Observability
@@ -186,11 +186,11 @@ services:
     items:
       - name: Siren
         logo: https://raw.githubusercontent.com/shamubernetes/siren/refs/heads/main/public/favicon.svg
-        url: https://siren.${SECRET_DOMAIN}
+        url: https://siren.${CLUSTER_DOMAIN}
         subtitle: Alerts Dashboard
       - name: Gatus
         logo: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/gatus.png
-        url: https://status.${SECRET_DOMAIN}/
+        url: https://status.${CLUSTER_DOMAIN}/
         type: Gatus
       - name: Uptime Kuma
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/uptime-kuma.png
@@ -202,13 +202,13 @@ services:
         subtitle: Graphs from various systems
       - name: Grafana (Kubernetes)
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/grafana.png
-        url: https://grafana.${SECRET_DOMAIN}/
+        url: https://grafana.${CLUSTER_DOMAIN}/
         subtitle: Graphs from various systems
       - name: Victoria Logs
         logo: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/victorialogs.png
-        url: https://victoria-logs.${SECRET_DOMAIN}
+        url: https://victoria-logs.${CLUSTER_DOMAIN}
         subtitle: Kubernetes Log Dashboard
       - name: DMARC Reports
         logo: https://dmarc.org/wp-content/uploads/2015/02/DMARC-2015-logo-small-202x110.png
-        url: https://dmarc-report.${SECRET_DOMAIN}/
+        url: https://dmarc-report.${CLUSTER_DOMAIN}/
         subtitle: DMARC (email security) reports

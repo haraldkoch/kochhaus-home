@@ -19,7 +19,7 @@ spec:
         - persephone.${PRIVATE_STATIC_DOMAIN}
         - pikvm1.home.arpa
         - pikvm2.home.arpa
-        - ${BACKUP_SERVER}
+        - mnemosyne.home.arpa
 ---
 # yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/monitoring.coreos.com/probe_v1.json
 apiVersion: monitoring.coreos.com/v1
@@ -33,7 +33,7 @@ spec:
   targets:
     staticConfig:
       static:
-        - ${BACKUP_SERVER}:2049
+        - mnemosyne.home.arpa:2049
   metricRelabelings:
     - targetLabel: service
       replacement: blackbox-exporter

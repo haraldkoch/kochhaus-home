@@ -28,14 +28,12 @@ spec:
         - ipBlock:
             cidr: 0.0.0.0/0
             except:
-              - ${SECRET_HOMELAN_IPV4}
               - ${NETWORK_K8S_POD_CIDR}
               - ${NETWORK_K8S_SERVICE_CIDR}
               - 192.168.0.0/16
         - ipBlock:
             cidr: ::/0
             except:
-              - ${SECRET_HOMELAN_IPV6}
               - ${NETWORK_K8S_POD_CIDR_V6}
               - ${NETWORK_K8S_SERVICE_CIDR_V6}
               - fdd5:aa8:9535::/48

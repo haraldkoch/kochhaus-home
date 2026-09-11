@@ -142,7 +142,7 @@ spec:
           - path: /opt/tplink/EAPController/logs
       backup:
         type: nfs
-        server: "${BACKUP_SERVER:=fnord}"
+        server: mnemosyne.home.arpa
         path: /backup/data/k8s/omada
         globalMounts:
           - path: /opt/tplink/EAPController/data/autobackup

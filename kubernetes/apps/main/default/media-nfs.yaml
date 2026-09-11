@@ -11,7 +11,7 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: "${SECRET_MEDIA_SERVER}"
+    server: mnemosyne.${PRIVATE_STATIC_DOMAIN}
     path: /media
   mountOptions:
     - nfsvers=4.2

@@ -31,9 +31,9 @@ spec:
             env:
               SMTP_RELAY_SMTP_PORT: &port 25
               SMTP_RELAY_METRICS_PORT: &metricsPort 8080
-              SMTP_RELAY_HOSTNAME: ${SECRET_DOMAIN:=fnord}
-              SMTP_RELAY_SERVER: ${SMTP_SMARTHOST:=fnord}
-              SMTP_RELAY_SERVER_PORT: ${SMTP_SMARTHOST_PORT:=fnord}
+              SMTP_RELAY_HOSTNAME: ${CLUSTER_DOMAIN}
+              SMTP_RELAY_SERVER: 192.168.0.251
+              SMTP_RELAY_SERVER_PORT: "10025"
             probes:
               liveness:
                 enabled: true
@@ -70,7 +70,7 @@ spec:
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: smtp.${SECRET_DOMAIN}
+          external-dns.alpha.kubernetes.io/hostname: smtp.${CLUSTER_DOMAIN}
           lbipam.cilium.io/ips: "${SMTP_RELAY_IPV4},${SMTP_RELAY_IPV6}"
         ports:
           metrics:

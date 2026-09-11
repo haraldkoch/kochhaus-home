@@ -33,7 +33,7 @@ spec:
               repository: public.ecr.aws/docker/library/eclipse-mosquitto
               tag: 2.0.22
             env:
-              TZ: ${TIMEZONE}
+              TZ: America/Toronto
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true

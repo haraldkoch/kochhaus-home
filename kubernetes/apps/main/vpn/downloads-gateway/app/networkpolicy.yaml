@@ -15,7 +15,7 @@ spec:
     - Egress
   egress:
     - ports:
-        - port: ${DOWNLOADS_VPN_PORT}
+        - port: 1194
           protocol: UDP
       to:
         - ipBlock:

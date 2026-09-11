@@ -20,7 +20,7 @@ spec:
               repository: ghcr.io/shamubernetes/siren
               tag: 1.4.40@sha256:b322bb92b4f0746266e9a73fa36820a16987d32026279d6e180c2ff1836e272c
             env:
-              TZ: ${TIMEZONE}
+              TZ: America/Toronto
               ALERTMANAGER_BASE_URL: http://alertmanager-operated.observability.svc.cluster.local:9093
               PORT: &port 3000
             probes:

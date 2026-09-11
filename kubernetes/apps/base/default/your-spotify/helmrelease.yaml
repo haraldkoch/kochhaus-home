@@ -20,7 +20,7 @@ spec:
               repository: ghcr.io/yooooomi/your_spotify_server
               tag: 1.20.0@sha256:624ea009f2ef9d877989bee9c7913ac66840449f566517871696c31a8ea13ddf
             env:
-              TIMEZONE: ${TIMEZONE}
+              TIMEZONE: America/Toronto
               # Caveat if it includes Spotify in name: https://github.com/Yooooomi/your_spotify/pull/254
               API_ENDPOINT: &api_endpoint https://spotty-api.${CLUSTER_DOMAIN}
               CLIENT_ENDPOINT: https://spotty.${CLUSTER_DOMAIN}

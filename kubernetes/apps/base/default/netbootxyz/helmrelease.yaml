@@ -8,7 +8,7 @@ controllers:
           repository: ghcr.io/netbootxyz/netbootxyz
           tag: 0.7.6-nbxyz6@sha256:d39d956fb5afbfab01f450eb09a88cfdf10c94245fae07e91e4db3acd1681e16
         env:
-          TZ: ${TIMEZONE}
+          TZ: America/Toronto
           TFTPD_OPTS: --tftp-single-port
         probes:
           liveness: &probe
@@ -69,7 +69,7 @@ ingress:
     labels:
       service.cilium/announcement: l2
     hosts:
-      - host: &host "{{ .Release.Name }}.${SECRET_DOMAIN}"
+      - host: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
         paths:
           - path: /
             service:
@@ -85,7 +85,7 @@ ingress:
     labels:
       service.cilium/announcement: l2
     hosts:
-      - host: &hostMgm "{{ .Release.Name }}-mgm.${SECRET_DOMAIN}"
+      - host: &hostMgm "{{ .Release.Name }}-mgm.${CLUSTER_DOMAIN}"
         paths:
           - path: /
             service:

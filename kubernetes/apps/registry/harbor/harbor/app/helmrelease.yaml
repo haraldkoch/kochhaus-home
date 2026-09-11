@@ -23,9 +23,9 @@ spec:
       loadBalancer:
         name: harbor
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "harbor.${SECRET_DOMAIN}"
+          external-dns.alpha.kubernetes.io/hostname: "harbor.${CLUSTER_DOMAIN}"
           lbipam.cilium.io/ips: "${HARBOR_INT_IPV4},${HARBOR_INT_IPV6}"
-    externalURL: https://harbor.${SECRET_DOMAIN}
+    externalURL: https://harbor.${CLUSTER_DOMAIN}
     ipFamily:
       ipv6:
         enabled: false
@@ -55,7 +55,7 @@ spec:
     #          bucket: kubernetes-registry
     #          accesskey: ${AWS_SECRET_KEY_ID}
     #          secretkey: ${AWS_SECRET_KEY}
-    #          regionendpoint: https://${SECRET_BACKUP_SERVER}
+    #          regionendpoint: https://mnemosyne.home.arpa
     #          rootdirectory: /prod
 
     #    # our CSI does not support ReadWriteMany so we must use Recreate on pods

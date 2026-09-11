@@ -21,7 +21,7 @@ spec:
               repository: ghcr.io/beryju/oidc-test-client
               tag: 2.7
             env:
-              TZ: ${TIMEZONE}
+              TZ: America/Toronto
               OIDC_ROOT_URL: https://oidctest.${CLUSTER_DOMAIN}
               OIDC_PROVIDER: https://auth.${CLUSTER_DOMAIN}
               OIDC_SCOPES: openid,profile,email,groups

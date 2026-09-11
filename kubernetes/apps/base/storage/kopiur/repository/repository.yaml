@@ -13,7 +13,7 @@ spec:
       volume:
         nfs:
           path: /backup/data/k8s/kopiur
-          server: mnemosyne.${PRIVATE_STATIC_DOMAIN}
+          server: mnemosyne.home.arpa
   catalog:
     fallbackNamespace: storage
     periodicRefresh: true

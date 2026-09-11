@@ -20,7 +20,7 @@ spec:
               repository: ghcr.io/home-assistant-libs/python-matter-server
               tag: 8.1.0@sha256:170aa093ce91c76cde4cc390918307590f0f5558fcec93f913af3cb019e6562a
             env:
-              TZ: ${TIMEZONE}
+              TZ: America/Toronto
               MATTER_SERVER__INSTANCE_NAME: "{{ .Release.Name }}"
               MATTER_SERVER__PORT: &port 5580
               MATTER_SERVER__APPLICATION_URL: &host "{{ .Release.Name }}.${CLUSTER_DOMAIN}"

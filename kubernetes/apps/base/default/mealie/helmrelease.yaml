@@ -43,7 +43,7 @@ spec:
               SMTP_HOST: smtp.${CLUSTER_DOMAIN}
               SMTP_PORT: "25"
               SMTP_FROM_EMAIL: mealie@${CLUSTER_DOMAIN}
-              TZ: ${TIMEZONE}
+              TZ: America/Toronto
             envFrom:
               - secretRef:
                   name: mealie-secret

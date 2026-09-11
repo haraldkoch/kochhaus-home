@@ -12,7 +12,7 @@ spec:
       volumes:
         - name: backup
           nfs:
-            server: ${SECRET_BACKUP_SERVER}
+            server: mnemosyne.home.arpa
             path: /backup/data/k8s/postgres
 
       securityContext:

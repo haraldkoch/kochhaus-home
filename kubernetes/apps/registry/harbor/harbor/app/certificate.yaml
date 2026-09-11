@@ -6,7 +6,7 @@ metadata:
   name: tls.harbor
 spec:
   dnsNames:
-    - harbor.${SECRET_DOMAIN}
+    - harbor.${CLUSTER_DOMAIN}
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer

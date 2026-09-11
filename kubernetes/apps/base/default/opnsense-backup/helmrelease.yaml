@@ -42,7 +42,7 @@ spec:
     persistence:
       data:
         type: nfs
-        server: ${SECRET_BACKUP_SERVER:=fnord}
+        server: mnemosyne.home.arpa
         path: /backup/data/k8s/opnsense-backup
       script:
         type: configMap

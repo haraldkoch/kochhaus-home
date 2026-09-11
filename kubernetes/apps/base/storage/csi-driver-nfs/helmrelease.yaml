@@ -20,8 +20,8 @@ spec:
       create: true
       name: nfs-direct
       parameters:
-        server: ${SECRET_NFS_SERVER}
-        share: ${SECRET_NFS_PATH}
+        server: jezebel.${PRIVATE_STATIC_DOMAIN}
+        share: /tank/k8s/nfs
       mountOptions:
         - nfsvers=4.2
         - nconnect=16

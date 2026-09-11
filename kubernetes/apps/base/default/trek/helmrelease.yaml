@@ -38,7 +38,7 @@ spec:
               ALLOW_INTERNAL_NETWORK: true
               TRUST_PROXY: 1
               FORCE_HTTPS: true
-              TZ: ${TIMEZONE}
+              TZ: America/Toronto
               OIDC_ONLY: true
               OIDC_ADMIN_CLAIM: groups
               OIDC_ADMIN_VALUE: admins

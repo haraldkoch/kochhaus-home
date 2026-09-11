@@ -49,7 +49,7 @@ spec:
     persistence:
       nas:
         type: nfs
-        server: ${SECRET_BACKUP_SERVER:=fnord}
+        server: mnemosyne.home.arpa
         path: /backup/data/k8s/postgres
         globalMounts:
           - path: /backups

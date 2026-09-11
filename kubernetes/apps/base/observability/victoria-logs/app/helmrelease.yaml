@@ -29,7 +29,7 @@ spec:
       route:
         enabled: true
         hostnames:
-          - ${SUBDOMAIN}.${SECRET_DOMAIN}
+          - ${SUBDOMAIN}.${CLUSTER_DOMAIN}
         parentRefs:
           - name: envoy-internal
             namespace: network

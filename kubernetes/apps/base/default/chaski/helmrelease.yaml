@@ -14,7 +14,7 @@ spec:
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
     env:
-      TZ: ${TIMEZONE}
+      TZ: America/Toronto
     envFrom:
       - secretRef:
           name: chaski-secret

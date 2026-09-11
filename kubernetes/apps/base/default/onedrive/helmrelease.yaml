@@ -35,7 +35,7 @@ spec:
               TZ: ${TIMEZONE:=Etc/UTC}
               ONEDRIVE_DOWNLOADONLY: "1"
               ONEDRIVE_RESYNC: "0"
-              ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE:=fnord}"
+              ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE}"
               ONEDRIVE_UID: "1000"
               ONEDRIVE_GID: "1000"
             resources:
@@ -51,7 +51,7 @@ spec:
           - path: /onedrive/conf
       data:
         type: nfs
-        server: ${SECRET_BACKUP_SERVER:=fnord}
+        server: mnemosyne.home.arpa
         path: /backup/data/k8s/onedrive-backup
         globalMounts:
           - path: /onedrive/data

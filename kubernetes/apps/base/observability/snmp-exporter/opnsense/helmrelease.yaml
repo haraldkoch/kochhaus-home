@@ -40,7 +40,7 @@ spec:
         - name: gw
           module:
             - "if_mib"
-          target: ${PRIVATE_GATEWAY}
+          target: 192.168.20.1
           auth:
             - "public_v2"
       path: /snmp
