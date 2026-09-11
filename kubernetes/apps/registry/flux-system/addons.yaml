@@ -7,9 +7,6 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/base/flux-system/addons
-  postBuild:
-    substitute:
-      SUBDOMAIN: flux-webhook-${CLUSTER}
   prune: true
   sourceRef:
     kind: GitRepository
