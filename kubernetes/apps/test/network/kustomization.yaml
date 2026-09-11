@@ -10,4 +10,5 @@ replacements:
 resources:
   - ./certificates.yaml
   - ./cloudflare-dns.yaml
+  - ./cloudflare-tunnel.yaml
   - ./envoy-gateway.yaml
