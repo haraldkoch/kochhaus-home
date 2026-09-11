@@ -31,8 +31,8 @@ spec:
       REPLICAS: "1"
       EXTERNAL_DOMAIN: external-${CLUSTER}
       INTERNAL_DOMAIN: internal-${CLUSTER}
-      SVC_GATEWAY_EXTERNAL: 192.168.24.81
-      SVC_GATEWAY_INTERNAL: 192.168.24.80
+      SVC_GATEWAY_EXTERNAL: 192.168.19.81
+      SVC_GATEWAY_INTERNAL: 192.168.19.80
   wait: false
   prune: true
   sourceRef:

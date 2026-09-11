@@ -61,7 +61,7 @@ spec:
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
-      lbipam.cilium.io/ips: 192.168.24.81
+      lbipam.cilium.io/ips: ${SVC_GATEWAY_EXTERNAL}
   listeners:
     - name: http
       protocol: HTTP
@@ -92,7 +92,7 @@ spec:
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
-      lbipam.cilium.io/ips: 192.168.24.80
+      lbipam.cilium.io/ips: ${SVC_GATEWAY_INTERNAL}
   listeners:
     - name: http
       protocol: HTTP
