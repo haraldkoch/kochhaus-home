@@ -1,0 +1,55 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kopiur.home-operations.com/clusterrepository_v1alpha1.json
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: ClusterRepository
+metadata:
+  name: mnemosyne
+spec:
+  allowedNamespaces:
+    all: true
+  backend:
+    filesystem:
+      path: /repository
+      volume:
+        nfs:
+          path: /backup/data/k8s/kopiur
+          server: mnemosyne.${PRIVATE_STATIC_DOMAIN}
+  catalog:
+    fallbackNamespace: storage
+    periodicRefresh: true
+    refreshInterval: 1h
+  create:
+    enabled: true
+  credentialProjection:
+    allowed: true
+  encryption:
+    passwordSecretRef:
+      key: KOPIA_PASSWORD
+      name: kopiur-repository-secret
+      namespace: storage
+  identityDefaults:
+    hostnameExpr: "'${CLUSTER}'"
+    usernameExpr: "namespace + '-' + policyName"
+  maintenance:
+    enabled: true
+    namespace: storage
+    schedule:
+      full:
+        cron: "0 3 * * *"
+        jitter: 1h
+      quick:
+        cron: "0 * * * *"
+        jitter: 10m
+      timezone: America/Toronto
+    takeoverPolicy: Force
+  mode: ReadWrite
+  moverDefaults:
+    podSecurityContext:
+      fsGroup: 1022
+      fsGroupChangePolicy: OnRootMismatch
+    securityContext:
+      runAsGroup: 1022
+      runAsUser: 1022
+  parameters:
+    epoch:
+      minDuration: 1h
