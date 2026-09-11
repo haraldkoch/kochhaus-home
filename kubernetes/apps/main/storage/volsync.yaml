@@ -6,7 +6,7 @@ metadata:
   name: volsync
 spec:
   dependsOn:
-    - name: openebs
+    - name: democratic-csi
     - name: snapshot-controller
   interval: 1h
   path: ./kubernetes/apps/base/storage/volsync

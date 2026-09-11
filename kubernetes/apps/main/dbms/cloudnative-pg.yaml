@@ -22,8 +22,6 @@ metadata:
 spec:
   dependsOn:
     - name: cloudnative-pg
-    - name: openebs
-      namespace: storage
   healthCheckExprs:
     - apiVersion: &postgresVersion postgresql.cnpg.io/v1
       kind: &postgresKind Cluster
