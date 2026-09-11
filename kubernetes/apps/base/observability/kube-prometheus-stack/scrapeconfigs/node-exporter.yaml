@@ -7,7 +7,7 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - ${BACKUP_SERVER}:9100
+        - mnemosyne.${PRIVATE_STATIC_DOMAIN}:9100
         - 192.168.20.1:9100
         - pikvm1.home.arpa:9100
         - pikvm2.home.arpa:9100

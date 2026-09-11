@@ -10,8 +10,8 @@ spec:
     - action: labeldrop
       regex: (pod)
   prober:
-    url: ${BLACKBOX_EXPORTER_WIFI}:9115
+    url: 192.168.10.2:9115
   targets:
     staticConfig:
       static:
-        - ${NETWORK_STATUS_TARGET}
+        - captive.apple.com
