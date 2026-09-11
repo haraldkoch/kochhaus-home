@@ -15,7 +15,7 @@ spec:
       kubernetesModeWorkVolumeClaim:
         accessModes:
           - ReadWriteOnce
-        storageClassName: openebs-hostpath
+        storageClassName: local-hostpath
         resources:
           requests:
             storage: 25Gi

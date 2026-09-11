@@ -13,3 +13,5 @@ data:
   GATEWAY_INT_IPV6: fdd5:aa8:9535:23::80
   GATEWAY_EXT_IPV4: 192.168.23.90
   GATEWAY_EXT_IPV6: fdd5:aa8:9535:23::90
+  # FIXME: democratic-csi and local-hostpath on next cluster rebuild
+  STORAGECLASS: openebs-hostpath

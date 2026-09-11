@@ -34,17 +34,17 @@ spec:
       persistentVolumeClaim:
         registry:
           existingClaim: harbor-registry-v1
-          storageClass: openebs-hostpath
+          storageClass: ${STORAGECLASS}
           subPath: registry
         jobservice:
           jobLog:
-            storageClass: openebs-hostpath
+            storageClass: ${STORAGECLASS}
         database:
-          storageClass: openebs-hostpath
+          storageClass: ${STORAGECLASS}
         redis:
-          storageClass: openebs-hostpath
+          storageClass: ${STORAGECLASS}
         trivy:
-          storageClass: openebs-hostpath
+          storageClass: ${STORAGECLASS}
 
     database:
       type: internal
