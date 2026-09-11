@@ -11,11 +11,11 @@ spec:
   policy:
     rebootMode: powercycle
   healthChecks:
-    - apiVersion: volsync.backube/v1alpha1
-      kind: ReplicationSource
+    - apiVersion: kopiur.home-operations.com/v1alpha1
+      kind: Snapshot
       expr: |-
-        status.conditions.filter(c, c.type == "Synchronizing").all(c, c.status == "False")
-    - apiVersion: longhorn.io/v1beta2
-      kind: Volume
+        status.phase != 'Running'
+    - apiVersion: kopiur.home-operations.com/v1alpha1
+      kind: Restore
       expr: |-
-        !(status.robustness in ['degraded'])
+        !(status.phase in ['Resolving', 'Restoring'])
