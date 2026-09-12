@@ -26,7 +26,7 @@ spec:
           main:
             image:
               repository: ghcr.io/haraldkoch/kubectl
-              tag: 1.36.4@sha256:abe09fe3fb149ac1a6085cc79a4872fc006af0f302ae7ae6a9a583916f13cdcf
+              tag: 1.37.0@sha256:44d49a5ae49ca9cebc0f07ddc122a6df41f4a6ee4e16e1e36696671d7a1d6841
             command:
               - "/bin/bash"
               - "/app/opnsense-backup.sh"
