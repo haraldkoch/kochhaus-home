@@ -1,20 +1,19 @@
 [env]
-KUBECONFIG = "{{config_root}}/kubernetes/clusters/main/kubeconfig:{{config_root}}/kubernetes/clusters/network/kubeconfig:{{config_root}}/kubernetes/clusters/registry/kubeconfig"
+# File paths
+KUBECONFIG = "{{config_root}}/kubernetes/clusters/main/kubeconfig:{{config_root}}/kubernetes/clusters/network/kubeconfig:{{config_root}}/kubernetes/clusters/registry/kubeconfig:{{config_root}}/kubernetes/clusters/test/kubeconfig"
 MINIJINJA_CONFIG_FILE = "{{config_root}}/.minijinja.toml"
 SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
-TALOSCONFIG = "{{config_root}}/talos/none/talosconfig"
 # File paths
 BOOTSTRAP_DIR = "{{config_root}}/bootstrap"
 KUBERNETES_DIR = "{{config_root}}/kubernetes"
 ROOT_DIR = "{{config_root}}"
-SCRIPTS_DIR = "{{config_root}}/scripts"
 TALOS_DIR = "{{config_root}}/talos"
+
+_.file = ["{{config_root}}/.secrets.env"]
 
 # I think I still need this for some tasks
 TASK_X_ENV_PRECEDENCE = 1
 TASK_X_MAP_VARIABLES = 0
 
 [tools]
-"uv" = "latest"
-"pipx:flux-local" = "latest"
-
+"github:home-operations/flate" = "0.6.5"

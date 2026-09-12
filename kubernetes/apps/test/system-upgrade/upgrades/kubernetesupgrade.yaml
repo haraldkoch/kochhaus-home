@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/tuppr.home-operations.com/kubernetesupgrade_v1alpha1.json
+apiVersion: tuppr.home-operations.com/v1alpha1
+kind: KubernetesUpgrade
+metadata:
+  name: kubernetes
+spec:
+  kubernetes:
+    # renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+    version: v1.36.4
+  healthChecks:
+    - apiVersion: kopiur.home-operations.com/v1alpha1
+      kind: Snapshot
+      expr: |-
+        status.phase != 'Running'
+    - apiVersion: kopiur.home-operations.com/v1alpha1
+      kind: Restore
+      expr: |-
+        !(status.phase in ['Resolving', 'Restoring'])
