@@ -31,7 +31,7 @@ spec:
         kind: GitRepository
         name: flux-system
         url: https://github.com/haraldkoch/kochhaus-home
-        ref: refs/heads/new-bootstrap
+        ref: refs/heads/main
         path: kubernetes/clusters/test
         interval: 1h
       kustomize:
