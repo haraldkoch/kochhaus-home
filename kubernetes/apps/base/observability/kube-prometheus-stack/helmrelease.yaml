@@ -55,6 +55,7 @@ spec:
             resolveTimeout: 5m
         clusterAdvertiseAddress: "${ALERTMANAGER_IPV4}:9094"
         clusterLabel: kochhaus
+        clusterPeerName: alertmanager-${CLUSTER}
         externalUrl: https://${ALERTMANAGER_SUBDOMAIN}.${CLUSTER_DOMAIN}
         forceEnableClusterMode: true
         storage:
