@@ -73,19 +73,74 @@ machine:
       - 192.168.10.6
       - 192.168.10.7
     searchDomains:
-      - op://homelab/talos-test/private_static_domain
+      - op://homelab/talos-{{ ENV.CLUSTER }}/private_static_domain
   nodeLabels:
-    topology.kubernetes.io/region: test
+    topology.kubernetes.io/region: {{ ENV.CLUSTER }}
     topology.kubernetes.io/zone: {{ 'm' if ENV.MACHINE_TYPE == 'controlplane' else 'w' }}
-  #sysfs:
-  #  devices.system.cpu.cpufreq.policy0.scaling_governor: powersave
-  #  devices.system.cpu.cpufreq.policy0.energy_performance_preference: balance_power
+  registries:
+    mirrors:
+      code.forgejo.org:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-forgejo
+        overridePath: true
+      codeberg.org:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-codeberg
+        overridePath: true
+      cgr.dev:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-cgr
+        overridePath: true
+      docker.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-dockerhub
+        overridePath: true
+      gcr.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-gcr
+        overridePath: true
+      ghcr.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-ghcr
+        overridePath: true
+      gsoci.azurecr.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-gsoci
+        overridePath: true
+      mcr.microsoft.com:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-mcr
+        overridePath: true
+      mirror.gcr.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-mirror-gcr
+        overridePath: true
+      nvcr.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-nvcr
+        overridePath: true
+      public.ecr.aws:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-ecr-public
+        overridePath: true
+      quay.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-quay
+        overridePath: true
+      registry.access.redhat.com:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-redhat
+        overridePath: true
+      registry.k8s.io:
+        endpoints:
+          - https://harbor.kochhaus.dev/v2/proxy-k8s
+        overridePath: true
   sysctls:
     fs.inotify.max_user_instances: "8192"      # Watchdog
     fs.inotify.max_user_watches: "1048576"     # Watchdog
     net.core.default_qdisc: fq                 # 10Gb/s
-    net.core.somaxconn: "8192"                # Raise listen backlog for burst handling
-    net.core.netdev_max_backlog: "16384"      # Raise kernel ingress queue depth
+    net.core.somaxconn: "8192"                 # Raise listen backlog for burst handling
+    net.core.netdev_max_backlog: "16384"       # Raise kernel ingress queue depth
     net.core.rmem_max: "67108864"              # 10Gb/s | Cloudflared / QUIC
     net.core.wmem_max: "67108864"              # 10Gb/s | Cloudflared / QUIC
     net.ipv4.neigh.default.gc_thresh1: "4096"  # Prevent ARP cache overflows
@@ -107,10 +162,10 @@ machine:
     sunrpc.tcp_slot_table_entries: "128"       # 10Gb/s | NFS
     sunrpc.tcp_max_slot_table_entries: "128"   # 10Gb/s | NFS
     user.max_user_namespaces: "11255"          # User Namespaces
-    vm.dirty_background_ratio: "5"            # Start writeback earlier
-    vm.dirty_ratio: "20"                      # Cap dirty page buildup
-    vm.dirty_expire_centisecs: "3000"         # Expire dirty data after 30s
-    vm.dirty_writeback_centisecs: "500"       # Flush dirty pages every 5s
+    vm.dirty_background_ratio: "5"             # Start writeback earlier
+    vm.dirty_ratio: "20"                       # Cap dirty page buildup
+    vm.dirty_expire_centisecs: "3000"          # Expire dirty data after 30s
+    vm.dirty_writeback_centisecs: "500"        # Flush dirty pages every 5s
   time:
     disabled: false
     servers:
@@ -124,7 +179,7 @@ cluster:
     {% if ENV.MACHINE_TYPE == 'controlplane' %}
     key: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_CA_KEY
     {% endif %}
-  clusterName: test
+  clusterName: {{ ENV.CLUSTER }}
   controlPlane:
     endpoint: https://192.168.20.96:6443
   discovery:

@@ -4,9 +4,6 @@ machine:
   install:
     diskSelector:
       model: SAMSUNG MZ7LH512
-  sysctls:
-    net.ipv6.conf.eno1.autoconf: "0"           # disable IPv6 autoconfig
-  type: worker
 ---
 apiVersion: v1alpha1
 kind: HostnameConfig

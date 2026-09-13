@@ -3,19 +3,26 @@
 machine:
   install:
     disk: /dev/vda
+    # special for this node, which is a qemu VM
     image: factory.talos.dev/metal-installer/d36031c3e4a95a935eb2a38ebafbe0ce976d438e05c11f3642c34adf404868a1:v1.13.9
-  network:
-    hostname: k3sv
-    interfaces:
-      - addresses:
-          - 192.168.20.20/24
-          - fdd5:aa8:9535:20::20/64
-        dhcp: false
-        interface: enp1s0
-        mtu: 1500
-        routes:
-          - gateway: 192.168.20.1
-            network: 0.0.0.0/0
   nodeTaints:
     node-role.kubernetes.io/control-plane: :NoSchedule
-  type: controlplane
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: k3sv
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links:
+  - enp1s0
+bondMode: active-backup
+miimon: 100
+mtu: 1500
+addresses:
+  - address: 192.168.20.20/24
+  - address: fdd5:aa8:9535:20::20/64
+routes:
+  - gateway: 192.168.20.1
+  - gateway: fdd5:aa8:9535:20::1

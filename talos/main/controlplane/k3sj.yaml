@@ -1,14 +1,11 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.13/website/content/v1.13/schemas/config.schema.json
 machine:
   install:
     diskSelector:
       model: Samsung SSD 860
   nodeTaints:
     node-role.kubernetes.io/control-plane: :NoSchedule
-  sysctls:
-    net.ipv6.conf.eno1.autoconf: "0"           # disable IPv6 autoconfig
-  type: controlplane
 ---
 apiVersion: v1alpha1
 kind: HostnameConfig

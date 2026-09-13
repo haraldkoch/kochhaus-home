@@ -1,0 +1,27 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.13/website/content/v1.13/schemas/config.schema.json
+machine:
+  install:
+    diskSelector:
+      model: Samsung SSD 860
+  nodeTaints:
+    node-role.kubernetes.io/control-plane: :NoSchedule
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: k3sm
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links:
+  - eno1
+bondMode: active-backup
+miimon: 100
+mtu: 1500
+addresses:
+  - address: 192.168.20.18/24
+  - address: fdd5:aa8:9535:20::18/64
+routes:
+  - gateway: 192.168.20.1
+  - gateway: fdd5:aa8:9535:20::1
