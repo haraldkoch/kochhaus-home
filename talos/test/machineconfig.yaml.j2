@@ -3,15 +3,15 @@
 version: v1alpha1
 machine:
   ca:
-    crt: op://Homelab/talos-{{ ENV.CLUSTER }}/MACHINE_CA_CRT
+    crt: op://homelab/talos-{{ ENV.CLUSTER }}/MACHINE_CA_CRT
     {% if ENV.MACHINE_TYPE == 'controlplane' %}
-    key: op://Homelab/talos-{{ ENV.CLUSTER }}/MACHINE_CA_KEY
+    key: op://homelab/talos-{{ ENV.CLUSTER }}/MACHINE_CA_KEY
     {% endif %}
   features:
     diskQuotaSupport: true
     hostDNS:
       enabled: true
-      forwardKubeDNSToHost: true
+      forwardKubeDNSToHost: true # Requires Cilium socketLB features
       resolveMemberNames: true
     kubePrism:
       enabled: true
@@ -116,13 +116,13 @@ machine:
     servers:
       - 192.168.10.3
       - 192.168.10.11
-  token: op://Homelab/talos-{{ ENV.CLUSTER }}/MACHINE_TOKEN
+  token: op://homelab/talos-{{ ENV.CLUSTER }}/MACHINE_TOKEN
   type: {{ ENV.MACHINE_TYPE }}
 cluster:
   ca:
-    crt: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_CA_CRT
+    crt: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_CA_CRT
     {% if ENV.MACHINE_TYPE == 'controlplane' %}
-    key: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_CA_KEY
+    key: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_CA_KEY
     {% endif %}
   clusterName: test
   controlPlane:
@@ -134,7 +134,7 @@ cluster:
         disabled: true
       service:
         disabled: false
-  id: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_ID
+  id: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_ID
   network:
     cni:
       name: none
@@ -145,12 +145,12 @@ cluster:
     serviceSubnets:
       - 10.43.0.0/16
       - fdd5:aa8:9535:43::/108
-  secret: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRET
-  token: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_TOKEN
+  secret: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRET
+  token: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_TOKEN
   {% if ENV.MACHINE_TYPE == 'controlplane' %}
   aggregatorCA:
-    crt: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_AGGREGATORCA_CRT
-    key: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_AGGREGATORCA_KEY
+    crt: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_AGGREGATORCA_CRT
+    key: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_AGGREGATORCA_KEY
   allowSchedulingOnControlPlanes: true
   apiServer:
     certSANs:
@@ -171,8 +171,8 @@ cluster:
     advertisedSubnets:
       - 192.168.20.0/24
     ca:
-      crt: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_ETCD_CA_CRT
-      key: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_ETCD_CA_KEY
+      crt: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_ETCD_CA_CRT
+      key: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_ETCD_CA_KEY
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
   proxy:
@@ -199,9 +199,9 @@ cluster:
     extraArgs:
       bind-address: 0.0.0.0
     image: registry.k8s.io/kube-scheduler:v1.36.4
-  secretboxEncryptionSecret: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRETBOXENCRYPTIONSECRET
+  secretboxEncryptionSecret: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
-    key: op://Homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SERVICEACCOUNT_KEY
+    key: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SERVICEACCOUNT_KEY
   {% endif %}
 ---
 apiVersion: v1alpha1
@@ -210,11 +210,6 @@ name: bond0.30
 vlanID: 30
 parent: bond0
 mtu: 1500
----
-apiVersion: v1alpha1
-kind: DHCPv4Config
-name: bond0
-clientIdentifier: mac
 ---
 apiVersion: v1alpha1
 kind: VolumeConfig
@@ -239,6 +234,9 @@ kind: WatchdogTimerConfig
 device: /dev/watchdog0
 timeout: 5m
 ---
+# attempt to reduce / disable the broken Talos OOM "feature"
 apiVersion: v1alpha1
 kind: OOMConfig
 triggerExpression: "false"
+cgroupRankingExpression: "0.0"
+sampleInterval: "5s"
