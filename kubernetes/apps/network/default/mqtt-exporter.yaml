@@ -7,6 +7,9 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/base/default/mqtt-exporter
+  postBuild:
+    substitute:
+      SVC_MQTT_EXPORTER: 192.168.22.105,fdd5:aa8:9535:22::105
   prune: true
   sourceRef:
     kind: GitRepository

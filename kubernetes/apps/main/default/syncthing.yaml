@@ -16,6 +16,8 @@ spec:
   postBuild:
     substitute:
       APP: syncthing
+      SYNCTHING_IPV4: 192.168.21.103
+      SYNCTHING_IPV6: fdd5:aa8:9535:21::103
   prune: true
   sourceRef:
     kind: GitRepository

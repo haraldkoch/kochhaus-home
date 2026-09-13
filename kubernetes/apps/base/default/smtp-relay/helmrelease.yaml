@@ -71,7 +71,7 @@ spec:
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: smtp.${CLUSTER_DOMAIN}
-          lbipam.cilium.io/ips: "${SMTP_RELAY_IPV4},${SMTP_RELAY_IPV6}"
+          lbipam.cilium.io/ips: ${SVC_SMTP_RELAY}
         ports:
           metrics:
             port: *metricsPort

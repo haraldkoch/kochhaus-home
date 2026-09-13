@@ -7,6 +7,9 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/base/remote/openssh
+  postBuild:
+    substitute:
+      SVC_OPENSSH: 192.168.22.22,fdd5:aa8:9535:22::22
   prune: true
   sourceRef:
     kind: GitRepository

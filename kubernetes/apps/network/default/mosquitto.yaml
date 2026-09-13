@@ -10,6 +10,9 @@ spec:
       namespace: storage
   interval: 1h
   path: ./kubernetes/apps/base/default/mosquitto
+  postBuild:
+    substitute:
+      SVC_MOSQUITTO: 192.168.22.101,fdd5:aa8:9535:22::101
   prune: true
   sourceRef:
     kind: GitRepository

@@ -20,7 +20,7 @@ spec:
               repository: ghcr.io/koenkk/zigbee2mqtt
               tag: 2.14.1
             env:
-              TZ: ${TIMEZONE:=Etc/UTC}
+              TZ: America/Toronto
               ZIGBEE2MQTT_DATA: /config
               ZIGBEE2MQTT_CONFIG_ADVANCED_HOMEASSISTANT_DISCOVERY_TOPIC: homeassistant
               ZIGBEE2MQTT_CONFIG_ADVANCED_HOMEASSISTANT_LEGACY_ENTITY_ATTRIBUTES: "false"

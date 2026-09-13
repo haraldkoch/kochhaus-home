@@ -75,8 +75,8 @@ spec:
             'skeletondirectory' => '',
             'trusted_proxies' => array(
               0 => '127.0.0.1',
-              1 => '${NETWORK_K8S_POD_CIDR}',
-              2 => '${NETWORK_K8S_POD_CIDR_V6}',
+              1 => '10.42.0.0/16',
+              2 => 'fdd5:aa8:9535:42::/108',
             ),
           ); ?>
         misc.config.php: |-

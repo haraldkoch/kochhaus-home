@@ -32,7 +32,7 @@ spec:
               - -x
               - /backup.sh
             env:
-              - {name: TZ, value: "${TIMEZONE:=Etc/UTC}"}
+              - {name: TZ, value: "America/Toronto"}
               - {name: POSTGRES_DB, value: "${DATABASES}"}
               - {name: POSTGRES_HOST, value: "postgres-ro.dbms.svc.cluster.local"}
               - {name: POSTGRES_PORT, value: 5432}

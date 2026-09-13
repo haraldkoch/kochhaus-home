@@ -55,7 +55,7 @@ spec:
               repository: mirror.gcr.io/dperson/openvpn-client
               tag: latest@sha256:d174047b57d51734143325ad7395210643025e6516ba60a937e9319dbb462293
             env:
-              TZ: ${TIMEZONE:=Etc/UTC}
+              TZ: America/Toronto
               IPTABLES_BACKEND: legacy
               KILLSWITCH: "false"
             envFrom:

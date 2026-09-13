@@ -48,7 +48,7 @@ spec:
               repository: mirror.gcr.io/joseluisq/static-web-server
               tag: 2.44.0-alpine
             env:
-              TZ: ${TIMEZONE:=Etc/UTC}
+              TZ: America/Toronto
               SERVER_PORT: 80
               SERVER_ROOT: /public
               SERVER_LOG_LEVEL: info

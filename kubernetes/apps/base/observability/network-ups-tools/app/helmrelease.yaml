@@ -20,7 +20,7 @@ spec:
               repository: ghcr.io/jr0dd/network-ups-tools
               tag: v2.8.3@sha256:9f8e14d155c6ef05940cee6f8861e259e951eb11750aeddd02539d986dac1ca0
             env:
-              TZ: "${TIMEZONE:=Etc/UTC}"
+              TZ: "America/Toronto"
             securityContext:
               privileged: true
             probes:
@@ -54,7 +54,7 @@ spec:
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "network-ups-tools.${CLUSTER_DOMAIN}"
-          lbipam.cilium.io/ips: "${EXPORTERS_IPV4}, ${EXPORTERS_IPV6}"
+          lbipam.cilium.io/ips: ${SVC_EXPORTERS}
           lbipam.cilium.io/sharing-cross-namespace: default,observability
           lbipam.cilium.io/sharing-key: exporters
     persistence:

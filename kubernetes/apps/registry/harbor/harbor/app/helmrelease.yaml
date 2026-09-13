@@ -24,7 +24,7 @@ spec:
         name: harbor
         annotations:
           external-dns.alpha.kubernetes.io/hostname: "harbor.${CLUSTER_DOMAIN}"
-          lbipam.cilium.io/ips: "${HARBOR_INT_IPV4},${HARBOR_INT_IPV6}"
+          lbipam.cilium.io/ips: "192.168.23.90,fdd5:aa8:9535:23::90"
     externalURL: https://harbor.${CLUSTER_DOMAIN}
     ipFamily:
       ipv6:

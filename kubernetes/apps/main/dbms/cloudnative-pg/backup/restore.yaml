@@ -42,7 +42,7 @@ spec:
                   name: cloudnative-pg-secret
                   key: password
             - name: TZ
-              value: ${TIMEZONE:=Etc/UTC}
+              value: America/Toronto
           volumeMounts:
             - name: backup
               mountPath: /backup

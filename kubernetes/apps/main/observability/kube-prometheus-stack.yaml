@@ -11,6 +11,7 @@ spec:
   path: ./kubernetes/apps/base/observability/kube-prometheus-stack
   postBuild:
     substitute:
+      ALERTMANAGER_IPV4: 192.168.21.108
       ALERTMANAGER_PEER: amcluster-network
       ALERTMANAGER_SUBDOMAIN: alertmanager-main
       APP: kube-prometheus-stack

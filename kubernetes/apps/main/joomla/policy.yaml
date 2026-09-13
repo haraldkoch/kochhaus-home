@@ -28,14 +28,14 @@ spec:
         - ipBlock:
             cidr: 0.0.0.0/0
             except:
-              - ${NETWORK_K8S_POD_CIDR}
-              - ${NETWORK_K8S_SERVICE_CIDR}
+              - 10.42.0.0/16
+              - 10.43.0.0/16
               - 192.168.0.0/16
         - ipBlock:
             cidr: ::/0
             except:
-              - ${NETWORK_K8S_POD_CIDR_V6}
-              - ${NETWORK_K8S_SERVICE_CIDR_V6}
+              - fdd5:aa8:9535:42::/108
+              - fdd5:aa8:9535:43::/108
               - fdd5:aa8:9535::/48
         # and the database
         - podSelector:

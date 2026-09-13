@@ -18,7 +18,7 @@ spec:
               repository: ghcr.io/druggeri/nut_exporter
               tag: "3.3.0"
             env:
-              TZ: ${TIMEZONE:=Etc/UTC}
+              TZ: America/Toronto
             args:
               # the first time I set this, the first and last entries were ignored, so I have doubled them.
               - --nut.vars_enable="battery.charge,battery.charge,battery.runtime,battery.voltage,battery.voltage.nominal,input.voltage,input.voltage.nominal,ups.load,ups.status,ups.status"
@@ -47,7 +47,7 @@ spec:
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.alpha.kubernetes.io/hostname: exporters.${CLUSTER_DOMAIN}
-          lbipam.cilium.io/ips: "${EXPORTERS_IPV4},${EXPORTERS_IPV6}"
+          lbipam.cilium.io/ips: ${SVC_EXPORTERS}
           lbipam.cilium.io/sharing-cross-namespace: default,observability
           lbipam.cilium.io/sharing-key: exporters
     serviceMonitor:

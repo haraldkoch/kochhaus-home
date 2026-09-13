@@ -30,7 +30,7 @@ spec:
               repository: ghcr.io/lldap/lldap
               tag: v0.6.3
             env:
-              TZ: ${TIMEZONE:=Etc/UTC}
+              TZ: America/Toronto
               LLDAP_HTTP_PORT: &port 80
               LLDAP_HTTP_URL: https://lldap.${CLUSTER_DOMAIN}
               LLDAP_LDAP_PORT: &ldapPort 389

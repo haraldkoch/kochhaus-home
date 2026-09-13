@@ -18,7 +18,7 @@ spec:
               repository: ghcr.io/kpetremann/mqtt-exporter
               tag: 1.12.1
             env:
-              TZ: "${TIMEZONE:=Etc/UTC}"
+              TZ: "America/Toronto"
               # LOG_LEVEL: DEBUG
               # LOG_MQTT_MESSAGE: "True"
               MAX_METRICS: 0
@@ -53,8 +53,9 @@ spec:
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         annotations:
+          # FIXME: move to exporters.${CLUSTER_DOMAIN} and use shared IP?
           external-dns.alpha.kubernetes.io/hostname: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
-          lbipam.cilium.io/ips: "${MQTT_EXPORTER_IPV4},${MQTT_EXPORTER_IPV6}"
+          lbipam.cilium.io/ips: ${SVC_MQTT_EXPORTER}
     serviceMonitor:
       app:
         endpoints:

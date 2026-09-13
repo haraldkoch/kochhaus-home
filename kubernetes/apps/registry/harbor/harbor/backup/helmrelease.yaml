@@ -30,7 +30,7 @@ spec:
               - "-U"
               - "postgres"
             env:
-              - {name: TZ, value: "${TIMEZONE:=Etc/UTC}"}
+              - {name: TZ, value: "America/Toronto"}
               - {name: PGHOST, value: harbor-database}
               - {name: PGPORT, value: "5432"}
               - name: PGPASSWORD

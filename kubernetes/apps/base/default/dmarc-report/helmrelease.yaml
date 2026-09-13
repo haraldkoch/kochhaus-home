@@ -28,7 +28,7 @@ spec:
               repository: ghcr.io/haraldkoch/dmarc-report
               tag: 1.4.5@sha256:9717142bb879e5622362419fd411aa27b83fcf49ce20908e9e5763a93d9bb3c1
             env:
-              TZ: ${TIMEZONE:=Etc/UTC}
+              TZ: America/Toronto
               REPORT_DB_TYPE: pgsql
             envFrom: *envFrom
             probes:

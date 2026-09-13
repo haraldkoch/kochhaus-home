@@ -20,7 +20,7 @@ spec:
               repository: joomla
               tag: 3.10.12
             env:
-              TZ: ${TIMEZONE:=Etc/UTC}
+              TZ: America/Toronto
             envFrom:
               - secretRef:
                   name: rtr-secret

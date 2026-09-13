@@ -20,7 +20,7 @@ spec:
               repository: mirror.gcr.io/mtlynch/picoshare
               tag: v1.5.4
             env:
-              TZ: ${TIMEZONE:=Etc/UTC}
+              TZ: America/Toronto
               PORT: "4001"
               PS_BEHIND_PROXY: "true"
             envFrom:

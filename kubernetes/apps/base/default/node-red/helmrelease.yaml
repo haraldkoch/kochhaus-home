@@ -18,7 +18,7 @@ spec:
               repository: mirror.gcr.io/nodered/node-red
               tag: 5.0.7
             env:
-              TZ: "${TIMEZONE:=Etc/UTC}"
+              TZ: "America/Toronto"
               NODE_RED_ENABLE_SAFE_MODE: "false"
               NODE_RED_ENABLE_PROJECTS: "true"
             probes:

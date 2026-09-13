@@ -22,7 +22,7 @@ spec:
               repository: ghcr.io/linuxserver/openssh-server
               tag: version-8.6_p1-r3
             env:
-              TZ: ${TIMEZONE:=Etc/UTC}
+              TZ: America/Toronto
               PUBLIC_KEY_FILE: /sshd/authorized_keys
               USER_NAME: chk
             probes:
@@ -61,7 +61,7 @@ spec:
     service:
       app:
         annotations:
-          lbipam.cilium.io/ips: "${OPENSSH_IPV4},${OPENSSH_IPV6}"
+          lbipam.cilium.io/ips: ${SVC_OPENSSH}
         type: LoadBalancer
         externalTrafficPolicy: Local
         ipFamilies:

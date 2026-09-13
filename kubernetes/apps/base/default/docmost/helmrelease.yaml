@@ -28,7 +28,7 @@ spec:
               repository: mirror.gcr.io/docmost/docmost
               tag: 0.96.0
             env:
-              TZ: "${TIMEZONE:=Etc/UTC}"
+              TZ: "America/Toronto"
               APP_URL: "https://{{ .Release.Name }}.${CLUSTER_DOMAIN}"
               MAIL_DRIVER: smtp
               MAIL_FROM_ADDRESS: docmost@${CLUSTER_DOMAIN}
