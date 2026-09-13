@@ -14,4 +14,4 @@ spec:
   targets:
     staticConfig:
       static:
-        - captive.apple.com
+        - phaedra.cfrq.net
