@@ -15,7 +15,7 @@ apiVersion: v1alpha1
 kind: BondConfig
 name: bond0
 links:
-  - eno1
+  - net0
 bondMode: active-backup
 miimon: 100
 mtu: 1500
@@ -25,3 +25,9 @@ addresses:
 routes:
   - gateway: 192.168.20.1
   - gateway: fdd5:aa8:9535:20::1
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net0
+selector:
+  match: link.driver == "e1000e" && mac(link.permanent_addr) == "c8:d3:ff:a5:8a:c8"

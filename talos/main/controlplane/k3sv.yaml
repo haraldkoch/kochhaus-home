@@ -26,3 +26,10 @@ addresses:
 routes:
   - gateway: 192.168.20.1
   - gateway: fdd5:aa8:9535:20::1
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net0
+selector:
+  # FIXME mac addr
+  match: link.driver == "virtio_net"
