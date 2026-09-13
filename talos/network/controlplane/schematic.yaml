@@ -22,6 +22,6 @@ customization:
       - siderolabs/iscsi-tools # Longhorn
       - siderolabs/util-linux-tools # Longhorn
 
-# Your image schematic ID is: 82ad5623c0330f01924a1f0233880456129bd2d49c6b2ba190d3211cb10c5bd1
+# Your image schematic ID is: f3a00c3bd9954bed4efda4767ddfa3029b261eb90fbeabb87d9ec0aa5c02ec32
 # Disk Image
-#   https://factory.talos.dev/image/82ad5623c0330f01924a1f0233880456129bd2d49c6b2ba190d3211cb10c5bd1/v1.13.9/metal-arm64.raw.xz
+#   https://factory.talos.dev/image/f3a00c3bd9954bed4efda4767ddfa3029b261eb90fbeabb87d9ec0aa5c02ec32/v1.13.9/metal-arm64.raw.xz

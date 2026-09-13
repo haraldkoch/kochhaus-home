@@ -373,3 +373,20 @@ tasks:
     preconditions:
       - test -f {{.SCHEMATIC_FILE}}
       - which curl jq yq
+
+  dashboard:
+    desc: Display the Talos dashboard
+    cmd: talosctl dashboard
+    requires:
+      vars:
+        - CLUSTER
+    preconditions:
+      - test -f {{.TALOS_DIR}}/talosconfig
+      - which talosctl
+
+  test:
+    cmds:
+      - echo CLUSTER={{.CLUSTER}}
+      - echo TALOS_DIR={{.TALOS_DIR}}
+      - echo TALOSCONFIG={{.TALOSCONFIG}}
+      - echo \$TALOSCONFIG=${TALOSCONFIG}

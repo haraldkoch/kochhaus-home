@@ -23,7 +23,7 @@ env:
   MINIJINJA_CONFIG_FILE: "{{.ROOT_DIR}}/.minijinja.toml"
   # SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
   SOPS_AGE_KEY_FILE: "{{.ROOT_DIR}}/age.key"
-  TALOSCONFIG: "{{.TALOS_DIR}}/clusterconfig/talosconfig"
+  TALOSCONFIG: "{{.TALOS_DIR}}/talosconfig"
 
 includes:
   bootstrap: .taskfiles/bootstrap
