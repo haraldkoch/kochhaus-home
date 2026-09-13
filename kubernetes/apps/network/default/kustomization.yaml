@@ -18,6 +18,7 @@ resources:
   - ./changedetection.yaml
   - ./echo.yaml
   - ./esphome.yaml
+  - ./garage-ui.yaml
   - ./hassproxy.yaml
   - ./homer.yaml
   - ./it-tools.yaml
