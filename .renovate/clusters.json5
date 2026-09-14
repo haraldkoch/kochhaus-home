@@ -4,7 +4,8 @@
     {
       description: "Separate PRs for main cluster",
       matchFileNames: [
-        "**/kubernetes/main/**",
+        "**/kubernetes/apps/main/**",
+        "**/kubernetes/clusters/main/**",
         "**/talos/main/**"
       ],
       additionalBranchPrefix: "main-",
@@ -13,7 +14,8 @@
     {
       description: "Separate PRs for network cluster",
       matchFileNames: [
-        "**/kubernetes/network/**",
+        "**/kubernetes/apps/network/**",
+        "**/kubernetes/cluster/network/**",
         "**/talos/network/**"
       ],
       additionalBranchPrefix: "network-",
@@ -22,16 +24,27 @@
     {
       description: "Separate PRs for registry cluster",
       matchFileNames: [
-        "**/kubernetes/registry/**",
+        "**/kubernetes/apps/registry/**",
+        "**/kubernetes/clusters/registry/**",
         "**/talos/registry/**"
       ],
       additionalBranchPrefix: "registry-",
       commitMessageSuffix: " [registry]"
     },
     {
+      description: "Separate PRs for test cluster",
+      matchFileNames: [
+        "**/kubernetes/apps/test/**",
+        "**/kubernetes/clusters/test/**",
+        "**/talos/test/**"
+      ],
+      additionalBranchPrefix: "test-",
+      commitMessageSuffix: " [test]"
+    },
+    {
       description: "Separate PRs for Base",
       matchFileNames: [
-        "**/kubernetes/base/**",
+        "**/kubernetes/apps/base/**",
       ],
       additionalBranchPrefix: "base-",
       commitMessageSuffix: " [base]"
