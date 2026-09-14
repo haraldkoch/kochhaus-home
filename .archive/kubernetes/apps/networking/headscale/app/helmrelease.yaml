@@ -108,7 +108,7 @@ spec:
       headscale:
         className: external
         annotations:
-          external-dns.alpha.kubernetes.io/target: network.${CLUSTER_DOMAIN}
+          external-dns.kubernetes.io/target: network.${CLUSTER_DOMAIN}
           # websockets?
           nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
           nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"

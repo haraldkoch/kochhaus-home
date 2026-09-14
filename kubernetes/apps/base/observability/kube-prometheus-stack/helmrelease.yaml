@@ -26,7 +26,7 @@ spec:
               namespace: network
       service:
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "amcluster-${CLUSTER}.${CLUSTER_DOMAIN}"
+          external-dns.kubernetes.io/hostname: "amcluster-${CLUSTER}.${CLUSTER_DOMAIN}"
           lbipam.cilium.io/ips: "${ALERTMANAGER_IPV4}"
         externalTrafficPolicy: Local
         ipDualStack:

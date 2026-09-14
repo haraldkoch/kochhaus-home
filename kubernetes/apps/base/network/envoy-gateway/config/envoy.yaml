@@ -64,12 +64,12 @@ kind: Gateway
 metadata:
   name: envoy-external
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname ${EXTERNAL_DOMAIN}.${CLUSTER_DOMAIN}
+    external-dns.kubernetes.io/target: &hostname ${EXTERNAL_DOMAIN}.${CLUSTER_DOMAIN}
 spec:
   gatewayClassName: envoy
   infrastructure:
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: *hostname
+      external-dns.kubernetes.io/hostname: *hostname
       lbipam.cilium.io/ips: ${SVC_GATEWAY_EXTERNAL}
   listeners:
     - name: http
@@ -95,12 +95,12 @@ kind: Gateway
 metadata:
   name: envoy-internal
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname ${INTERNAL_DOMAIN}.${CLUSTER_DOMAIN}
+    external-dns.kubernetes.io/target: &hostname ${INTERNAL_DOMAIN}.${CLUSTER_DOMAIN}
 spec:
   gatewayClassName: envoy
   infrastructure:
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: *hostname
+      external-dns.kubernetes.io/hostname: *hostname
       lbipam.cilium.io/ips: ${SVC_GATEWAY_INTERNAL}
   listeners:
     - name: http
@@ -187,7 +187,7 @@ kind: HTTPRoute
 metadata:
   name: https-redirect
   annotations:
-    external-dns.alpha.kubernetes.io/controller: none
+    external-dns.kubernetes.io/controller: none
 spec:
   parentRefs:
     - name: envoy-external

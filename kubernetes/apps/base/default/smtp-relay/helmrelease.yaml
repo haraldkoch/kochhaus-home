@@ -70,7 +70,7 @@ spec:
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: smtp.${CLUSTER_DOMAIN}
+          external-dns.kubernetes.io/hostname: smtp.${CLUSTER_DOMAIN}
           lbipam.cilium.io/ips: ${SVC_SMTP_RELAY}
         ports:
           metrics:

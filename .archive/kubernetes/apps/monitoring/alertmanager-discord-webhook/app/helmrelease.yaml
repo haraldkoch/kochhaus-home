@@ -45,7 +45,7 @@ spec:
         externalTrafficPolicy: Cluster
         ipFamilyPolicy: PreferDualStack
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: exporters.${CLUSTER_DOMAIN}
+          external-dns.kubernetes.io/hostname: exporters.${CLUSTER_DOMAIN}
     ingress:
       main:
         enabled: false
