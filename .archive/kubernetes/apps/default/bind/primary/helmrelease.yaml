@@ -97,7 +97,7 @@ spec:
         controller: bind-primary
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: bind.${SECRET_DOMAIN}
+          external-dns.kubernetes.io/hostname: bind.${SECRET_DOMAIN}
         externalIPs: ["${BIND_PRIMARY_IPV4}", "${BIND_PRIMARY_IPV6}"]
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack

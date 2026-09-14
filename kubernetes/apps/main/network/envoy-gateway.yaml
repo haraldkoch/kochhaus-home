@@ -31,8 +31,7 @@ spec:
   postBuild:
     substitute:
       EXTERNAL_DOMAIN: external-${CLUSTER}
-      # FIXME - internal-main
-      INTERNAL_DOMAIN: internal
+      INTERNAL_DOMAIN: internal-${CLUSTER}
       REPLICAS: "2"
       SVC_GATEWAY_EXTERNAL: 192.168.21.81,fdd5:aa8:9535:21::81
       SVC_GATEWAY_INTERNAL: 192.168.21.80,fdd5:aa8:9535:21::80

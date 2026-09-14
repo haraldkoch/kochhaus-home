@@ -66,7 +66,7 @@ spec:
       type: LoadBalancer
       ipFamilyPolicy: PreferDualStack
       annotations:
-        external-dns.alpha.kubernetes.io/hostname: *hostname
+        external-dns.kubernetes.io/hostname: *hostname
     extraVolumes:
       - name: tls
         secret:

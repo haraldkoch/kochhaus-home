@@ -78,7 +78,7 @@ spec:
         controller: bind-secondary
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: bind-secondary.${SECRET_DOMAIN}
+          external-dns.kubernetes.io/hostname: bind-secondary.${SECRET_DOMAIN}
         externalIPs: ["${BIND_SECONDARY_IPV4}", "${BIND_SECONDARY_IPV6}"]
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
