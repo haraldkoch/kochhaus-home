@@ -12,6 +12,8 @@ spec:
   values:
     controllers:
       cloudflare-tunnel:
+        podDisruptionBudget:
+          maxUnavailable: 1
         replicas: ${REPLICAS:=1}
         strategy: RollingUpdate
         annotations:

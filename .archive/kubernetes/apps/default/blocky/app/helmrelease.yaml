@@ -83,7 +83,7 @@ spec:
         controller: blocky
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: dns.${SECRET_DOMAIN}
+          external-dns.kubernetes.io/hostname: dns.${SECRET_DOMAIN}
         externalIPs: ["${BLOCKY_IPV4}", "${BLOCKY_IPV6}"]
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack

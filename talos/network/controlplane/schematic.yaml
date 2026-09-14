@@ -7,21 +7,9 @@ customization:
     - -console
     - console=ttyS9,115200
     - console=tty1
-    - -init_on_alloc # Less security, faster puter
-    - -init_on_free # Less security, faster puter
     - -selinux # Less security, faster puter
-    - apparmor=0 # Less security, faster puter
-    - init_on_alloc=0 # Less security, faster puter
-    - init_on_free=0 # Less security, faster puter
-    - mitigations=off # Less security, faster puter
-    - security=none # Less security, faster puter
-    - talos.auditd.disabled=1 # Less security, faster puter
-
+    - selinux=0 # Less security, faster puter
   systemExtensions:
     officialExtensions:
       - siderolabs/iscsi-tools # Longhorn
       - siderolabs/util-linux-tools # Longhorn
-
-# Your image schematic ID is: f3a00c3bd9954bed4efda4767ddfa3029b261eb90fbeabb87d9ec0aa5c02ec32
-# Disk Image
-#   https://factory.talos.dev/image/f3a00c3bd9954bed4efda4767ddfa3029b261eb90fbeabb87d9ec0aa5c02ec32/v1.13.9/metal-arm64.raw.xz

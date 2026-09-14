@@ -53,7 +53,7 @@ spec:
           - IPv6
         ipFamilyPolicy: PreferDualStack
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: "network-ups-tools.${CLUSTER_DOMAIN}"
+          external-dns.kubernetes.io/hostname: "network-ups-tools.${CLUSTER_DOMAIN}"
           lbipam.cilium.io/ips: ${SVC_EXPORTERS}
           lbipam.cilium.io/sharing-cross-namespace: default,observability
           lbipam.cilium.io/sharing-key: exporters

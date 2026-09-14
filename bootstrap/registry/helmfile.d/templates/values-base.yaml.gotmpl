@@ -1,1 +1,0 @@
-{{ (fromYaml (readFile (printf "../../../../kubernetes/apps/base/%s/%s/helmrelease.yaml" .Release.Namespace .Release.Name))).spec.values | toYaml }}
