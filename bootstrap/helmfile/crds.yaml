@@ -33,5 +33,8 @@ releases:
   - name: grafana-operator
     namespace: observability
 
+  - name: keda
+    namespace: observability
+
   - name: kube-prometheus-stack
     namespace: observability
