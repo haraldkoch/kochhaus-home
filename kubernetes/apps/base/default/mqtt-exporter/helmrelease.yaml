@@ -53,7 +53,7 @@ spec:
         externalTrafficPolicy: Local
         ipFamilyPolicy: PreferDualStack
         annotations:
-          external-dns.kubernetes.ioSTER_DOMAIN} and use shared IP?
+          # FIXME: move to exporters.${CLUSTER_DOMAIN} and use shared IP?
           external-dns.alpha.kubernetes.io/hostname: "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
           lbipam.cilium.io/ips: ${SVC_MQTT_EXPORTER}
     serviceMonitor:
