@@ -27,7 +27,8 @@ spec:
       engineVersion: v2
       data:
         GITHUB_COM_TOKEN: "{{ .token }}"
-        GITHUB_COM_USER: aGFyYWxka29jaA==
+        # GITHUB_COM_USER: aGFyYWxka29jaA==
+        GITHUB_COM_USER: ZG91Zy1waXJhbmhhLWJvdA==
         RENOVATE_TOKEN: "{{ .token }}"
   dataFrom:
     - sourceRef:
