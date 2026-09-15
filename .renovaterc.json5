@@ -10,6 +10,7 @@
     "github>haraldkoch/kochhaus-home//.renovate/clusters.json5",
     "github>haraldkoch/kochhaus-home//.renovate/groups.json5",
     "github>haraldkoch/kochhaus-home//.renovate/packageRules.json5",
+    "github>haraldkoch/kochhaus-home//.renovate/talosFactory.json5",
   ],
   ignorePaths: [
     "**/*.sops.*",
