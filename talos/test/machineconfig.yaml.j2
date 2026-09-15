@@ -166,8 +166,12 @@ image: ghcr.io/siderolabs/kubelet:v1.36.4
 apiVersion: v1alpha1
 kind: KubeNetworkConfig
 dnsDomain: cluster.local
-podSubnets: ["10.42.0.0/16"]
-serviceSubnets: ["10.43.0.0/16"]
+podSubnets: 
+  - 10.42.0.0/16
+  - fdd5:aa8:9535:42::/108
+serviceSubnets:
+  - 10.43.0.0/16
+  - fdd5:aa8:9535:43::/108
 nodeCIDRMaskSizeIPv6: 112
 ---
 apiVersion: v1alpha1
