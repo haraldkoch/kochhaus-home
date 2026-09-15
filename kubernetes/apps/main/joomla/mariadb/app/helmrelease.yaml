@@ -19,7 +19,7 @@ spec:
           app:
             image:
               repository: ghcr.io/linuxserver/mariadb
-              tag: 11.8.8@sha256:f10560e128acaa2054a9acb0c4862f97a857d7dbe86870f3afb5c7daea1c8363
+              tag: 11.8.8@sha256:75ffa39d652653e73848328a667d169a20a1e084fd51a66c4be3eb754a2492c9
             env:
               TZ: America/Toronto
               PUID: "1000"
