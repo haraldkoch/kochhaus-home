@@ -48,8 +48,8 @@ hostDNS:
   forwardKubeDNSToHost: true
   resolveMemberNames: true
 nameservers:
-  - 192.168.10.6
-  - 192.168.10.7
+  - address: 192.168.10.6
+  - address: 192.168.10.7
 searchDomains:
   domains:
     - op://homelab/talos-{{ ENV.CLUSTER }}/private_static_domain
@@ -61,13 +61,12 @@ endpoint: https://discovery.talos.dev/
 ---
 apiVersion: v1alpha1
 kind: DiscoveryIdentityConfig
-clusterID: op://Kubernetes/talos-{{ ENV.CLUSTER }}/CLUSTER_ID
-clusterSecret: op://Kubernetes/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRET
+clusterID: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_ID
+clusterSecret: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRET
 ---
 apiVersion: v1alpha1
 kind: UnattendedInstallConfig
 installer:
-  grubUseUKICmdline: true
   image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.14.0
 provisioning:
   wipe: false
@@ -83,12 +82,12 @@ interval: 168h0m0s
 apiVersion: v1alpha1
 kind: KernelModuleConfig
 name: nbd
----
-apiVersion: v1alpha1
-kind: SysfsConfig
-params:
-  devices.system.cpu.cpufreq.policy0.scaling_governor: powersave
-  devices.system.cpu.cpufreq.policy0.energy_performance_preference: balance_power
+#---
+#apiVersion: v1alpha1
+#kind: SysfsConfig
+#params:
+#  devices.system.cpu.cpufreq.policy0.scaling_governor: powersave
+#  devices.system.cpu.cpufreq.policy0.energy_performance_preference: balance_power
 ---
 apiVersion: v1alpha1
 kind: SysctlConfig
@@ -169,7 +168,7 @@ kind: KubeNetworkConfig
 dnsDomain: cluster.local
 podSubnets: ["10.42.0.0/16"]
 serviceSubnets: ["10.43.0.0/16"]
-NodeCIDRMaskSizeIPv6: 112
+nodeCIDRMaskSizeIPv6: 112
 ---
 apiVersion: v1alpha1
 kind: KubePrismConfig
@@ -363,7 +362,7 @@ config:
         - secretbox:
             keys:
               - name: key2
-                secret: op://Kubernetes/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRETBOXENCRYPTIONSECRET
+                secret: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRETBOXENCRYPTIONSECRET
         - identity: {}
       resources:
         - secrets
