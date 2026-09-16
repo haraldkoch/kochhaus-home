@@ -31,18 +31,22 @@ area/taskfile:
           - ".taskfiles/**/*"
           - "Taskfile.yaml"
 # Clusters
+cluster/base:
+  - changed-files:
+      - any-glob-to-any-file: kubernetes/apps/base/**/*
 cluster/main:
   - changed-files:
-      - any-glob-to-any-file: bootstrap/main/**/*
-      - any-glob-to-any-file: kubernetes/main/**/*
+      - any-glob-to-any-file: kubernetes/apps/main/**/*
       - any-glob-to-any-file: talos/main/**/*
 cluster/network:
   - changed-files:
-      - any-glob-to-any-file: bootstrap/network/**/*
-      - any-glob-to-any-file: kubernetes/network/**/*
+      - any-glob-to-any-file: kubernetes/apps/network/**/*
       - any-glob-to-any-file: talos/network/**/*
 cluster/registry:
   - changed-files:
-      - any-glob-to-any-file: bootstrap/registry/**/*
-      - any-glob-to-any-file: kubernetes/registry/**/*
+      - any-glob-to-any-file: kubernetes/apps/registry/**/*
       - any-glob-to-any-file: talos/registry/**/*
+cluster/test:
+  - changed-files:
+      - any-glob-to-any-file: kubernetes/apps/test/**/*
+      - any-glob-to-any-file: talos/test/**/*
