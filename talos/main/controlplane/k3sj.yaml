@@ -1,11 +1,15 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.13/website/content/v1.13/schemas/config.schema.json
-machine:
-  install:
-    diskSelector:
-      model: Samsung SSD 860
-  nodeTaints:
-    node-role.kubernetes.io/control-plane: :NoSchedule
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.14/website/content/v1.14/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+provisioning:
+  diskSelector:
+    match: disk.model == "Samsung SSD 860"
+---
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+taints:
+  node-role.kubernetes.io/control-plane: :NoSchedule
 ---
 apiVersion: v1alpha1
 kind: HostnameConfig
