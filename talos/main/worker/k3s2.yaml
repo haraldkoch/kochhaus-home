@@ -1,9 +1,10 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.11/website/content/v1.11/schemas/config.schema.json
-machine:
-  install:
-    diskSelector:
-      model: SAMSUNG MZ7LH512
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.14/website/content/v1.14/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+provisioning:
+  diskSelector:
+    match: disk.model == "SAMSUNG MZ7LH512"
 ---
 apiVersion: v1alpha1
 kind: HostnameConfig
@@ -46,3 +47,4 @@ provisioning:
   minSize: 200GB
   maxSize: 300GB
 filesystem:
+  type: xfs

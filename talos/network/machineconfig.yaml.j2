@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.13/website/content/v1.13/schemas/config.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.14/website/content/v1.14/schemas/config.schema.json
 version: v1alpha1
 machine:
   ca:
@@ -9,175 +9,8 @@ machine:
     {% endif %}
   features:
     diskQuotaSupport: true
-    hostDNS:
-      enabled: true
-      forwardKubeDNSToHost: true # Requires Cilium socketLB features
-      resolveMemberNames: true
-    kubePrism:
-      enabled: true
-      port: 7445
-    {% if ENV.MACHINE_TYPE == 'controlplane' %}
-    kubernetesTalosAPIAccess:
-      allowedKubernetesNamespaces:
-        - actions-runner-system
-        - kube-system
-        - system-upgrade
-      allowedRoles:
-        - os:admin
-      enabled: true
-    {% endif %}
-    rbac: true
-  files:
-    - op: create
-      path: /etc/cri/conf.d/20-customization.part
-      content: |
-        [plugins."io.containerd.cri.v1.images"]
-          discard_unpacked_layers = false
-        [plugins."io.containerd.cri.v1.runtime"]
-          device_ownership_from_security_context = true
-    - op: overwrite
-      path: /etc/nfsmount.conf
-      permissions: 0o644
-      content: |
-        [ NFSMount_Global_Options ]
-        nfsvers=4.2
-        hard=True
-        nconnect=16
-        noatime=True
-        rsize=1048576
-        wsize=1048576
-  install:
-    grubUseUKICmdline: true
-    image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.14.1
-  kubelet:
-    defaultRuntimeSeccompProfileEnabled: true
-    disableManifestsDirectory: true
-    extraConfig:
-      serializeImagePulls: false
-    extraMounts:
-      - destination: /var/mnt/extra
-        options: ["bind", "rshared", "rw"]
-        source: /var/mnt/extra
-        type: bind
-    image: ghcr.io/siderolabs/kubelet:v1.36.4
-    nodeIP:
-      validSubnets:
-        - 192.168.20.0/24
-        - fdd5:aa8:9535:20::/64
-  network:
-    nameservers:
-      - 192.168.10.6
-      - 192.168.10.7
-    searchDomains:
-      - op://homelab/talos-{{ ENV.CLUSTER }}/private_static_domain
-  nodeLabels:
-    node.longhorn.io/create-default-disk: "true"
-    topology.kubernetes.io/region: {{ ENV.CLUSTER }}
-    topology.kubernetes.io/zone: {{ 'm' if ENV.MACHINE_TYPE == 'controlplane' else 'w' }}
-  registries:
-    mirrors:
-      code.forgejo.org:
-        endpoints:
-          - https://harbor.kochhaus.dev/v2/proxy-forgejo
-        overridePath: true
-      codeberg.org:
-        endpoints:
-          - https://harbor.kochhaus.dev/v2/proxy-codeberg
-        overridePath: true
-      cgr.dev:
-        endpoints:
-          - https://harbor.kochhaus.dev/v2/proxy-cgr
-        overridePath: true
-      docker.io:
-        endpoints:
-          - https://harbor.kochhaus.dev/v2/proxy-dockerhub
-        overridePath: true
-      gcr.io:
-        endpoints:
-          - https://harbor.kochhaus.dev/v2/proxy-gcr
-        overridePath: true
-      ghcr.io:
-        endpoints:
-          - https://harbor.kochhaus.dev/v2/proxy-ghcr
-        overridePath: true
-      gsoci.azurecr.io:
-        endpoints:
-          - https://harbor.kochhaus.dev/v2/proxy-gsoci
-        overridePath: true
-      mcr.microsoft.com:
-        endpoints:
-          - https://harbor.kochhaus.dev/v2/proxy-mcr
-        overridePath: true
-      mirror.gcr.io:
-        endpoints:
-          - https://harbor.kochhaus.dev/v2/proxy-mirror-gcr
-        overridePath: true
-      nvcr.io:
-        endpoints:
-          - https://harbor.kochhaus.dev/v2/proxy-nvcr
-        overridePath: true
-      public.ecr.aws:
-        endpoints:
-          - https://harbor.kochhaus.dev/v2/proxy-ecr-public
-        overridePath: true
-      quay.io:
-        endpoints:
-          - https://harbor.kochhaus.dev/v2/proxy-quay
-        overridePath: true
-      registry.access.redhat.com:
-        endpoints:
-          - https://harbor.kochhaus.dev/v2/proxy-redhat
-        overridePath: true
-      registry.k8s.io:
-        endpoints:
-          - https://harbor.kochhaus.dev/v2/proxy-k8s
-        overridePath: true
-  sysctls:
-    fs.inotify.max_user_instances: "8192"      # Watchdog
-    fs.inotify.max_user_watches: "1048576"     # Watchdog
-    net.core.default_qdisc: fq                 # 10Gb/s
-    net.core.somaxconn: "8192"                 # Raise listen backlog for burst handling
-    net.core.netdev_max_backlog: "16384"       # Raise kernel ingress queue depth
-    net.core.rmem_max: "67108864"              # 10Gb/s | Cloudflared / QUIC
-    net.core.wmem_max: "67108864"              # 10Gb/s | Cloudflared / QUIC
-    net.ipv4.neigh.default.gc_thresh1: "4096"  # Prevent ARP cache overflows
-    net.ipv4.neigh.default.gc_thresh2: "8192"  # Prevent ARP cache overflows
-    net.ipv4.neigh.default.gc_thresh3: "16384" # Prevent ARP cache overflows
-    net.ipv4.ping_group_range: 0 2147483647    # Allow Ping
-    net.ipv4.tcp_congestion_control: bbr       # 10Gb/s
-    net.ipv4.tcp_fastopen: "3"                 # Send and accept data in the opening SYN packet
-    net.ipv4.tcp_mtu_probing: "1"              # 10Gb/s | Jumbo frames
-    net.ipv4.tcp_notsent_lowat: "131072"       # Allow Ping
-    net.ipv4.tcp_rmem: 4096 87380 33554432     # 10Gb/s
-    net.ipv4.tcp_wmem: 4096 65536 33554432     # 10Gb/s
-    net.ipv4.tcp_slow_start_after_idle: "0"    # Allow Ping
-    net.ipv4.tcp_window_scaling: "1"           # 10Gb/s
-    net.ipv4.tcp_max_syn_backlog: "8192"       # Larger SYN queue for bursty connection rates
-    net.ipv6.conf.all.autoconf: "0"            # disable IPv6 autoconfig
-    net.ipv6.conf.default.autoconf: "0"        # disable IPv6 autoconfig
-    net.ipv6.conf.bond0.autoconf: "0"          # disable IPv6 autoconfig
-    sunrpc.tcp_slot_table_entries: "128"       # 10Gb/s | NFS
-    sunrpc.tcp_max_slot_table_entries: "128"   # 10Gb/s | NFS
-    user.max_user_namespaces: "11255"          # User Namespaces
-    vm.dirty_background_ratio: "5"             # Start writeback earlier
-    vm.dirty_ratio: "20"                       # Cap dirty page buildup
-    vm.dirty_expire_centisecs: "3000"          # Expire dirty data after 30s
-    vm.dirty_writeback_centisecs: "500"        # Flush dirty pages every 5s
-  time:
-    disabled: false
-    servers:
-      - 192.168.10.3
-      - 192.168.10.11
   token: op://homelab/talos-{{ ENV.CLUSTER }}/MACHINE_TOKEN
   type: {{ ENV.MACHINE_TYPE }}
-  udev:
-    rules:
-      # set owner and group on the zigbee USB device
-      # FIXME: this does not work in Talos 1.13 - gives "ignoring: Unknown user" error
-      # - SUBSYSTEM=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d4", OWNER="1022", GROUP="1022"
-      # try mode instead:
-      - KERNEL=="ttyACM*", MODE="0666"
-
 cluster:
   ca:
     crt: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_CA_CRT
@@ -187,46 +20,11 @@ cluster:
   clusterName: {{ ENV.CLUSTER }}
   controlPlane:
     endpoint: https://192.168.22.32:6443
-  discovery:
-    enabled: true
-    registries:
-      kubernetes:
-        disabled: true
-      service:
-        disabled: false
-  id: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_ID
-  network:
-    cni:
-      name: none
-    dnsDomain: cluster.local
-    podSubnets:
-      - 10.42.0.0/16
-      - fdd5:aa8:9535:42::/108
-    serviceSubnets:
-      - 10.43.0.0/16
-      - fdd5:aa8:9535:43::/108
-  secret: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRET
   token: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_TOKEN
   {% if ENV.MACHINE_TYPE == 'controlplane' %}
   aggregatorCA:
     crt: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_AGGREGATORCA_CRT
     key: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_AGGREGATORCA_KEY
-  allowSchedulingOnControlPlanes: true
-  apiServer:
-    certSANs:
-      - 192.168.22.32
-      - 127.0.0.1
-    extraArgs:
-      enable-aggregator-routing: true
-      feature-gates: HPAScaleToZero=true
-    image: registry.k8s.io/kube-apiserver:v1.36.4
-  controllerManager:
-    extraArgs:
-      bind-address: 0.0.0.0
-      node-cidr-mask-size-ipv6: "112"
-    image: registry.k8s.io/kube-controller-manager:v1.36.4
-  coreDNS:
-    disabled: true
   etcd:
     advertisedSubnets:
       - 192.168.20.0/24
@@ -235,34 +33,354 @@ cluster:
       key: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_ETCD_CA_KEY
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
-  proxy:
-    disabled: true
-    image: registry.k8s.io/kube-proxy:v1.36.4
-  scheduler:
-    config:
-      apiVersion: kubescheduler.config.k8s.io/v1
-      kind: KubeSchedulerConfiguration
-      profiles:
-        - schedulerName: default-scheduler
-          plugins:
-            score:
-              disabled:
-                - name: ImageLocality
-          pluginConfig:
-            - name: PodTopologySpread
-              args:
-                defaultingType: List
-                defaultConstraints:
-                  - maxSkew: 1
-                    topologyKey: kubernetes.io/hostname
-                    whenUnsatisfiable: ScheduleAnyway
-    extraArgs:
-      bind-address: 0.0.0.0
-    image: registry.k8s.io/kube-scheduler:v1.36.4
-  secretboxEncryptionSecret: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRETBOXENCRYPTIONSECRET
   serviceAccount:
     key: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SERVICEACCOUNT_KEY
   {% endif %}
+---
+apiVersion: v1alpha1
+kind: SecurityProfileConfig
+workloadIsolation: true
+---
+apiVersion: v1alpha1
+kind: ResolverConfig
+hostDNS:
+  enabled: true
+  forwardKubeDNSToHost: true
+  resolveMemberNames: true
+nameservers:
+  - address: 192.168.10.6
+  - address: 192.168.10.7
+searchDomains:
+  domains:
+    - op://homelab/talos-{{ ENV.CLUSTER }}/private_static_domain
+---
+apiVersion: v1alpha1
+kind: DiscoveryServiceConfig
+name: default
+endpoint: https://discovery.talos.dev/
+---
+apiVersion: v1alpha1
+kind: DiscoveryIdentityConfig
+clusterID: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_ID
+clusterSecret: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRET
+---
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+installer:
+  image: factory.talos.dev/metal-installer/{{ ENV.SCHEMATIC }}:v1.14.1
+provisioning:
+  wipe: false
+---
+apiVersion: v1alpha1
+kind: FilesystemTrimConfig
+interval: 168h0m0s
+---
+apiVersion: v1alpha1
+kind: FilesystemScrubConfig
+interval: 168h0m0s
+---
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: nbd
+#---
+#apiVersion: v1alpha1
+#kind: SysfsConfig
+#params:
+#  devices.system.cpu.cpufreq.policy0.scaling_governor: powersave
+#  devices.system.cpu.cpufreq.policy0.energy_performance_preference: balance_power
+---
+apiVersion: v1alpha1
+kind: SysctlConfig
+params:
+  fs.inotify.max_user_instances: "8192"      # Watchdog
+  fs.inotify.max_user_watches: "1048576"     # Watchdog
+  net.core.default_qdisc: fq                 # 10Gb/s
+  net.core.somaxconn: "8192"                 # Raise listen backlog for burst handling
+  net.core.netdev_max_backlog: "16384"       # Raise kernel ingress queue depth
+  net.core.rmem_max: "67108864"              # 10Gb/s | Cloudflared / QUIC
+  net.core.wmem_max: "67108864"              # 10Gb/s | Cloudflared / QUIC
+  net.ipv4.neigh.default.gc_thresh1: "4096"  # Prevent ARP cache overflows
+  net.ipv4.neigh.default.gc_thresh2: "8192"  # Prevent ARP cache overflows
+  net.ipv4.neigh.default.gc_thresh3: "16384" # Prevent ARP cache overflows
+  net.ipv4.ping_group_range: 0 2147483647    # Allow Ping
+  net.ipv4.tcp_congestion_control: bbr       # 10Gb/s
+  net.ipv4.tcp_fastopen: "3"                 # Send and accept data in the opening SYN packet
+  net.ipv4.tcp_mtu_probing: "1"              # 10Gb/s | Jumbo frames
+  net.ipv4.tcp_notsent_lowat: "131072"       # Allow Ping
+  net.ipv4.tcp_rmem: 4096 87380 33554432     # 10Gb/s
+  net.ipv4.tcp_wmem: 4096 65536 33554432     # 10Gb/s
+  net.ipv4.tcp_slow_start_after_idle: "0"    # Allow Ping
+  net.ipv4.tcp_window_scaling: "1"           # 10Gb/s
+  net.ipv4.tcp_max_syn_backlog: "8192"       # Larger SYN queue for bursty connection rates
+  net.ipv6.conf.all.autoconf: "0"            # disable IPv6 autoconfig
+  net.ipv6.conf.default.autoconf: "0"        # disable IPv6 autoconfig
+  net.ipv6.conf.bond0.autoconf: "0"          # disable IPv6 autoconfig
+  sunrpc.tcp_slot_table_entries: "128"       # 10Gb/s | NFS
+  sunrpc.tcp_max_slot_table_entries: "128"   # 10Gb/s | NFS
+  user.max_user_namespaces: "11255"          # User Namespaces
+  vm.dirty_background_ratio: "5"             # Start writeback earlier
+  vm.dirty_ratio: "20"                       # Cap dirty page buildup
+  vm.dirty_expire_centisecs: "3000"          # Expire dirty data after 30s
+  vm.dirty_writeback_centisecs: "500"        # Flush dirty pages every 5s
+  # vm.nr_hugepages: "1024"                  # PostgreSQL
+---
+apiVersion: v1alpha1
+kind: EtcFileConfig
+name: nfsmount.conf
+mode: 0o644
+contents: |
+  [ NFSMount_Global_Options ]
+  nfsvers=4.2
+  hard=True
+  nconnect=16
+  noatime=True
+---
+apiVersion: v1alpha1
+kind: CRICustomizationConfig
+name: containerd
+content: |
+  [plugins."io.containerd.cri.v1.images"]
+    discard_unpacked_layers = false
+  [plugins."io.containerd.cri.v1.runtime"]
+    device_ownership_from_security_context = true
+---
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+nodeIP:
+  validSubnets:
+        - 192.168.20.0/24
+        - fdd5:aa8:9535:20::/64
+labels:
+  node.longhorn.io/create-default-disk: "true"
+  topology.kubernetes.io/region: {{ ENV.CLUSTER }}
+  topology.kubernetes.io/zone: {{ 'm' if ENV.MACHINE_TYPE == 'controlplane' else 'w' }}
+  {% if ENV.MACHINE_TYPE == 'controlplane' %}
+  node-role.kubernetes.io/control-plane: ""
+  {% endif %}
+---
+apiVersion: v1alpha1
+kind: KubeletConfig
+defaultRuntimeSeccompProfileEnabled: true
+extraArgs:
+  max-pods: "200"
+image: ghcr.io/siderolabs/kubelet:v1.36.4
+---
+apiVersion: v1alpha1
+kind: KubeNetworkConfig
+dnsDomain: cluster.local
+podSubnets:
+  - 10.42.0.0/16
+  - fdd5:aa8:9535:42::/108
+serviceSubnets:
+  - 10.43.0.0/16
+  - fdd5:aa8:9535:43::/108
+nodeCIDRMaskSizeIPv6: 112
+---
+apiVersion: v1alpha1
+kind: KubePrismConfig
+port: 7445
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: code.forgejo.org
+endpoints:
+  - url: https://harbor.kochhaus.dev/v2/proxy-forgejo
+    overridePath: true
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: codeberg.org
+endpoints:
+  - url: https://harbor.kochhaus.dev/v2/proxy-codeberg
+    overridePath: true
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: cgr.dev
+endpoints:
+  - url: https://harbor.kochhaus.dev/v2/proxy-cgr
+    overridePath: true
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: docker.io
+endpoints:
+  - url: https://harbor.kochhaus.dev/v2/proxy-dockerhub
+    overridePath: true
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: gcr.io
+endpoints:
+  - url: https://harbor.kochhaus.dev/v2/proxy-gcr
+    overridePath: true
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: ghcr.io
+endpoints:
+  - url: https://harbor.kochhaus.dev/v2/proxy-ghcr
+    overridePath: true
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: gsoci.azurecr.io
+endpoints:
+  - url: https://harbor.kochhaus.dev/v2/proxy-gsoci
+    overridePath: true
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: mcr.microsoft.com
+endpoints:
+  - url: https://harbor.kochhaus.dev/v2/proxy-mcr
+    overridePath: true
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: mirror.gcr.io
+endpoints:
+  - url: https://harbor.kochhaus.dev/v2/proxy-mirror-gcr
+    overridePath: true
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: nvcr.io
+endpoints:
+  - url: https://harbor.kochhaus.dev/v2/proxy-nvcr
+    overridePath: true
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: public.ecr.aws
+endpoints:
+  - url: https://harbor.kochhaus.dev/v2/proxy-ecr-public
+    overridePath: true
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: quay.io
+endpoints:
+  - url: https://harbor.kochhaus.dev/v2/proxy-quay
+    overridePath: true
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: registry.access.redhat.com
+endpoints:
+  - url: https://harbor.kochhaus.dev/v2/proxy-redhat
+    overridePath: true
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: registry.k8s.io
+endpoints:
+  - url: https://harbor.kochhaus.dev/v2/proxy-k8s
+    overridePath: true
+---
+apiVersion: v1alpha1
+kind: TimeSyncConfig
+ntp:
+  servers:
+    - 192.168.10.3
+    - 192.168.10.11
+---
+apiVersion: v1alpha1
+kind: UdevRulesConfig
+rules:
+  # set owner and group on the zigbee USB device
+  # FIXME: this does not work in Talos 1.13 - gives "ignoring: Unknown user" error
+  # - SUBSYSTEM=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d4", OWNER="1022", GROUP="1022"
+  # try mode instead:
+  - KERNEL=="ttyACM*", MODE="0666"
+{% if ENV.MACHINE_TYPE == 'controlplane' %}
+---
+apiVersion: v1alpha1
+kind: KubeAPIServerConfig
+extraArgs:
+  enable-aggregator-routing: "true"
+  feature-gates: HPAScaleToZero=true
+image: registry.k8s.io/kube-apiserver:v1.36.4
+---
+apiVersion: v1alpha1
+kind: KubeTalosAPIAccessConfig
+allowedKubernetesNamespaces:
+  - actions-runner-system
+  - kube-system
+  - system-upgrade
+allowedRoles:
+  - os:admin
+---
+apiVersion: v1alpha1
+kind: KubeAuthenticationConfig
+configuration:
+  anonymous:
+    conditions:
+      - path: /livez
+      - path: /readyz
+      - path: /healthz
+    enabled: true
+  jwt: []
+---
+apiVersion: v1alpha1
+kind: KubeAuthorizerConfig
+name: node
+type: Node
+---
+apiVersion: v1alpha1
+kind: KubeAuthorizerConfig
+name: rbac
+type: RBAC
+---
+apiVersion: v1alpha1
+kind: KubeControllerManagerConfig
+extraArgs:
+  bind-address: 0.0.0.0
+image: registry.k8s.io/kube-controller-manager:v1.36.4
+---
+apiVersion: v1alpha1
+kind: KubeSchedulerConfig
+config:
+  profiles:
+    - schedulerName: default-scheduler
+      plugins:
+        score:
+          disabled:
+            - name: ImageLocality
+      pluginConfig:
+        - name: PodTopologySpread
+          args:
+            defaultingType: List
+            defaultConstraints:
+              - maxSkew: 1
+                topologyKey: kubernetes.io/hostname
+                whenUnsatisfiable: ScheduleAnyway
+extraArgs:
+  bind-address: 0.0.0.0
+image: registry.k8s.io/kube-scheduler:v1.36.4
+---
+apiVersion: v1alpha1
+kind: KubeProxyConfig
+enabled: false
+image: registry.k8s.io/kube-proxy:v1.36.4
+---
+apiVersion: v1alpha1
+kind: KubeCoreDNSConfig
+enabled: false
+---
+apiVersion: v1alpha1
+kind: KubeEtcdEncryptionConfig
+config:
+  resources:
+    - providers:
+        - secretbox:
+            keys:
+              - name: key2
+                secret: op://homelab/talos-{{ ENV.CLUSTER }}/CLUSTER_SECRETBOXENCRYPTIONSECRET
+        - identity: {}
+      resources:
+        - secrets
+{% endif %}
 ---
 apiVersion: v1alpha1
 kind: VLANConfig
