@@ -71,6 +71,24 @@ spec:
         parentRefs:
           - name: envoy-internal
             namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+      ldap:
+        enabled: true
+        kind: TCPRoute
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: ldap
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *ldapPort
+
     persistence:
       data:
         type: emptyDir
