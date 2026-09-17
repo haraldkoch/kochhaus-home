@@ -13,6 +13,19 @@ spec:
         kind: HelmRepository
         name: harbor
   interval: 1h
+  valuesFrom:
+    - targetPath: database.internal.password
+      kind: Secret
+      name: harbor-secret
+      valuesKey: harbor_postgres_password
+    - targetPath: harborAdminPassword
+      kind: Secret
+      name: harbor-secret
+      valuesKey: harbor_admin_password
+    - targetPath: secretKey
+      kind: Secret
+      name: harbor-secret
+      valuesKey: harbor_encryption_key
   values:
     expose:
       type: loadBalancer
@@ -62,9 +75,10 @@ spec:
     #    updateStrategy:
     #      type: Recreate
 
-    harborAdminPassword: "${SECRET_HARBOR_ADMIN_PASSWORD}"
+    # replaced by valuesFrom
+    # harborAdminPassword: "${SECRET_HARBOR_ADMIN_PASSWORD}"
     # The secret key used for encryption. Must be a string of 16 chars.
-    secretKey: "${SECRET_HARBOR_ENCRPYTION_KEY}"
+    # secretKey: "${SECRET_HARBOR_ENCRPYTION_KEY}"
 
     notary:
       enabled: false
