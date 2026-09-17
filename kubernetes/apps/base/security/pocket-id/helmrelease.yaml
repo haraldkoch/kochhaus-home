@@ -34,10 +34,12 @@ spec:
               UI_CONFIG_DISABLED: "true"
               LDAP_ENABLED: "true"
               LDAP_ADMIN_GROUP_NAME: "admins"
+              LDAP_ATTRIBUTE_GROUP_MEMBER: "memberOf"
               LDAP_ATTRIBUTE_GROUP_NAME: "cn"
               LDAP_ATTRIBUTE_USER_EMAIL: "mail"
               LDAP_ATTRIBUTE_USER_FIRST_NAME: "givenName"
               LDAP_ATTRIBUTE_USER_LAST_NAME: "sn"
+              LDAP_ATTRIBUTE_USER_UNIQUE_IDENTIFIER: "uuid"
               LDAP_ATTRIBUTE_USER_USERNAME: "uid"
               LDAP_BASE: "dc=home,dc=arpa"
               LDAP_URL: ldap://lldap.${CLUSTER_DOMAIN}:389
