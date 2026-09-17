@@ -31,7 +31,7 @@ spec:
               UPLOAD_PATH: /data/uploads
               VERSION_CHECK_DISABLED: true
               #
-              UI_CONFIG_DISABLED: "false"
+              UI_CONFIG_DISABLED: "true"
               LDAP_ENABLED: "true"
               LDAP_ADMIN_GROUP_NAME: "admins"
               LDAP_ATTRIBUTE_GROUP_MEMBER: "memberOf"
@@ -43,8 +43,8 @@ spec:
               LDAP_ATTRIBUTE_USER_USERNAME: "uid"
               LDAP_BASE: "dc=home,dc=arpa"
               LDAP_URL: ldap://lldap.${CLUSTER_DOMAIN}:389
-              LDAP_USER_SEARCH_FILTER: "(&({username_attribute}={input})(objectClass=person))"
-              LDAP_USER_GROUP_SEARCH_FILTER: "(member={dn})"
+              LDAP_USER_SEARCH_FILTER: "(objectClass=person)"
+              LDAP_USER_GROUP_SEARCH_FILTER: "(objectClass=groupOfNames)"
               SMTP_HOST: smtp-relay.default.svc.cluster.local.
               SMTP_PORT: "25"
               SMTP_FROM: "no-reply@${CLUSTER_DOMAIN}"
