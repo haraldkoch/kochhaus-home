@@ -31,7 +31,7 @@ spec:
               UPLOAD_PATH: /data/uploads
               VERSION_CHECK_DISABLED: true
               #
-              UI_CONFIG_DISABLED: "true"
+              UI_CONFIG_DISABLED: "false"
               LDAP_ENABLED: "true"
               LDAP_ADMIN_GROUP_NAME: "admins"
               LDAP_ATTRIBUTE_GROUP_MEMBER: "memberOf"
