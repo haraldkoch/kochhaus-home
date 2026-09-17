@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://crd.kantai.xyz/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app pocket-id
+spec:
+  components:
+    - ../../../../components/gatus/external
+    - ../../../../components/network/volsync
+  dependsOn:
+    - name: longhorn
+      namespace: storage
+    - name: volsync
+      namespace: storage
+  interval: 1h
+  path: ./kubernetes/apps/base/security/pocket-id
+  postBuild:
+    substitute:
+      APP: pocket-id
+      VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_PUID: "1000"
+      VOLSYNC_PGID: "1000"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: false

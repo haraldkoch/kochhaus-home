@@ -1,0 +1,102 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pocket-id
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: pocket-id
+  interval: 1h
+  values:
+    controllers:
+      pocket-id:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          pocket-id:
+            image:
+              repository: ghcr.io/pocket-id/pocket-id
+              tag: v2.14.0-distroless@sha256:e0f83a42a78d0759b6d2d8c7380ef0fa8a4c95dfa01ad88740a073ae9cc4ba94
+            env:
+              ANALYTICS_DISABLED: "true"
+              APP_URL: https://${APP_SUBDOMAIN:-${APP}}.${CLUSTER_DOMAIN}
+              DB_CONNECTION_STRING: file:/data/pocket-id.db?_pragma=journal_mode(WAL)&_pragma=busy_timeout(2500)&_txlock=immediate
+              GEOLITE_DB_PATH: /data/GeoLite2-City.mmdb
+              METRICS_ENABLED: "true"
+              OTEL_METRICS_EXPORTER: prometheus
+              TRUST_PROXY: 10.42.0.0/16
+              TZ: America/Toronto
+              UPLOAD_PATH: /data/uploads
+              VERSION_CHECK_DISABLED: true
+              #
+              UI_CONFIG_DISABLED: "true"
+              LDAP_ENABLED: "true"
+              LDAP_ADMIN_GROUP_NAME: "admins"
+              LDAP_ATTRIBUTE_GROUP_NAME: "cn"
+              LDAP_ATTRIBUTE_USER_EMAIL: "mail"
+              LDAP_ATTRIBUTE_USER_FIRST_NAME: "givenName"
+              LDAP_ATTRIBUTE_USER_LAST_NAME: "sn"
+              LDAP_ATTRIBUTE_USER_USERNAME: "uid"
+              LDAP_BASE: "dc=home,dc=arpa"
+              LDAP_URL: ldap://lldap.${CLUSTER_DOMAIN}:389
+              LDAP_USER_SEARCH_FILTER: "(&({username_attribute}={input})(objectClass=person))"
+              LDAP_USER_GROUP_SEARCH_FILTER: "(member={dn})"
+              SMTP_HOST: smtp-relay.default.svc.cluster.local.
+              SMTP_PORT: "25"
+              SMTP_FROM: "no-reply@${CLUSTER_DOMAIN}"
+            envFrom:
+              - secretRef:
+                  name: pocket-id-secret
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 1411
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: {drop: ["ALL"]}
+              readOnlyRootFilesystem: true
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups:
+          - 100
+    service:
+      pocket-id:
+        controller: pocket-id
+        ports:
+          http:
+            port: *port
+            primary: true
+          metrics:
+            port: 9464
+    serviceMonitor:
+      pocket-id:
+        endpoints:
+          - port: metrics
+    route:
+      pocket-id:
+        hostnames:
+          - "${APP_SUBDOMAIN:-${APP}}.${CLUSTER_DOMAIN}"
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+    persistence:
+      data:
+        existingClaim: ${APP}
+        globalMounts:
+          - path: /data
+          - path: /app/backend/data
+            subPath: backend
+      var:
+        type: emptyDir
+        sizeLimit: 1Gi
