@@ -10,6 +10,7 @@ metadata:
 data:
   CLUSTER: registry
   SNAPSHOTCLASS: csi-local-hostpath
+  # change to local-hostpath on next cluster rebuild
   STORAGECLASS: openebs-hostpath
   STORAGE_HR: openebs
   STORAGE_NS: storage

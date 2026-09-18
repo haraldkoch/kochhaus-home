@@ -6,7 +6,6 @@ namespace: flux-system
 
 components:
   - ../../../components/namespace
-  - ../../../components/registry/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml

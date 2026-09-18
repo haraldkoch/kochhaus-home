@@ -6,12 +6,11 @@ namespace: network
 
 components:
   - ../../../components/namespace
-  - ../../../components/registry/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./certificates.yaml
   - ./bind-dns.yaml
+  - ./certificates.yaml
   - ./envoy-gateway.yaml

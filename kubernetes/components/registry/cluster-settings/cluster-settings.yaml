@@ -1,9 +1,0 @@
----
-# yaml-language-server: $schema=https://kubernetesjsonschema.dev/v1.18.1-standalone-strict/configmap-v1.json
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: cluster-settings
-data:
-  # FIXME: democratic-csi and local-hostpath on next cluster rebuild
-  STORAGECLASS: openebs-hostpath

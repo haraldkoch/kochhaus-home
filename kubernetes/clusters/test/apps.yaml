@@ -38,9 +38,11 @@ spec:
           deletionPolicy: WaitForTermination
           postBuild:
             substitute:
-              CLUSTER: ${CLUSTER}
+              # secret
               CLUSTER_DOMAIN: ${CLUSTER_DOMAIN}
               PRIVATE_STATIC_DOMAIN: ${PRIVATE_STATIC_DOMAIN}
+              # configmap
+              CLUSTER: ${CLUSTER}
               SNAPSHOTCLASS: ${SNAPSHOTCLASS}
               STORAGECLASS: ${STORAGECLASS}
               STORAGE_HR: ${STORAGE_HR}

@@ -7,9 +7,6 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/apps/base/kube-system/cilium
-  postBuild:
-    substitute:
-      DEVICES: eno+
   prune: true
   sourceRef:
     kind: GitRepository
@@ -23,6 +20,8 @@ kind: Kustomization
 metadata:
   name: cilium-config
 spec:
+  dependsOn:
+    - name: cilium
   interval: 15m
   path: ./kubernetes/apps/${CLUSTER}/kube-system/cilium
   prune: true
