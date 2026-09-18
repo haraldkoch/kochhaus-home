@@ -3,12 +3,17 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app openweathermap-exporter
+  name: openweathermap-exporter
 spec:
   chartRef:
     kind: OCIRepository
     name: openweathermap-exporter
   interval: 1h
+  valuesFrom:
+    - targetPath: controllers.openweathermap-exporter.containers.app.env.OWM_API_KEY
+      kind: Secret
+      name: openweathermap-secret
+      valuesKey: openweathermap_api_key
   values:
     controllers:
       openweathermap-exporter:
@@ -21,7 +26,8 @@ spec:
               TZ: America/Toronto
               SERVER_PORT: "2112"
               OWM_LOCATION: Toronto,CA
-              OWM_API_KEY: ${OPENWEATHERMAP_API_KEY}
+              # replaced by valuesFrom
+              # OWM_API_KEY: ${OPENWEATHERMAP_API_KEY}
             probes:
               liveness:
                 enabled: true

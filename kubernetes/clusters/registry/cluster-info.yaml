@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/v1/configmap_v1.json
+# yaml-language-server: $schema=https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#configmap-v1-core
 apiVersion: v1
 kind: ConfigMap
 metadata:
