@@ -6,7 +6,6 @@ namespace: security
 
 components:
   - ../../../components/namespace
-  - ../../../components/network/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml

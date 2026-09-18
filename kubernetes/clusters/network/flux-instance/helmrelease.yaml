@@ -9,6 +9,10 @@ spec:
   chartRef:
     kind: OCIRepository
     name: flux-instance
+    namespace: flux-system
+  dependsOn:
+    - name: flux-operator
+      namespace: flux-system
   interval: 1h
   values:
     commonAnnotations:
@@ -25,12 +29,21 @@ spec:
         artifact: oci://ghcr.io/controlplaneio-fluxcd/flux-operator-manifests:v0.60.0
       sync:
         kind: GitRepository
+        name: flux-system
         url: https://github.com/haraldkoch/kochhaus-home
         ref: refs/heads/main
         path: kubernetes/clusters/network
         interval: 1h
       kustomize:
         patches:
+          - # add sops to flux-managed kustomizations
+            patch: |
+              - op: add
+                path: /spec/decryption
+                value:
+                  provider: sops
+            target:
+              kind: Kustomization
           - # allow flux components to run on the control-plane.
             patch: |-
               apiVersion: apps/v1

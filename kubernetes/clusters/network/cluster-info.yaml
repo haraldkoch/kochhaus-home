@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#configmap-v1-core
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-info
+  namespace: flux-system
+  labels:
+    reconcile.fluxcd.io/watch: Enabled
+data:
+  CLUSTER: network
+  SNAPSHOTCLASS: longhorn
+  STORAGECLASS: longhorn
+  STORAGE_HR: longhorn
+  STORAGE_NS: storage
+  SUBDOMAIN_SUFFIX: "-network"
+  SVC_EXPORTERS: 192.168.22.102,fdd5:aa8:9535:22::102

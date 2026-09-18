@@ -6,7 +6,6 @@ namespace: actions-runner-system
 
 components:
   - ../../../components/namespace
-  - ../../../components/network/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
