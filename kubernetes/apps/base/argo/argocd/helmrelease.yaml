@@ -9,6 +9,12 @@ spec:
     kind: OCIRepository
     name: argocd
   interval: 1h
+  valuesFrom:
+    - targetPath: configs.cm.oidc\.config
+      kind: Secret
+      name: argocd-oidc-secret
+      valuesKey: argocd_oidc_config
+      literal: true
   values:
     configs:
       cm:
@@ -17,14 +23,6 @@ spec:
         application.resourceTrackingMethod: annotation
         kustomize.buildOptions: --enable-alpha-plugins --enable-helm
         url: https://argocd.${CLUSTER_DOMAIN}
-        oidc.config: |
-          name: Authelia
-          issuer: https://auth.${CLUSTER_DOMAIN}
-          clientID: argocd
-          clientSecret: ${ARGOCD_OAUTH_CLIENT_SECRET}
-          cliClientID: argocd
-          requestedScopes: ["openid", "profile", "email", "groups"]
-          requestedIDTokenClaims: {"groups": {"essential": true}}
       rbac:
         scopes: "[groups, email]"
         policy.default: ""
