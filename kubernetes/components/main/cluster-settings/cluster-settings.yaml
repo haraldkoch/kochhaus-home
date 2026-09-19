@@ -1,8 +1,0 @@
----
-# yaml-language-server: $schema=https://kubernetesjsonschema.dev/v1.18.1-standalone-strict/configmap-v1.json
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: cluster-settings
-data:
-  SVC_EXPORTERS: 192.168.21.100,fdd5:aa8:9535:21::100

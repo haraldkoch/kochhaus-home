@@ -12,21 +12,19 @@ spec:
   interval: 1h
   path: ./kubernetes/apps/main
   postBuild:
-    substitute:
-      CLUSTER: main
     substituteFrom:
-      - name: cluster-settings
-        kind: ConfigMap
+      - kind: ConfigMap
+        name: cluster-info
         optional: false
-      - name: cluster-secrets
-        kind: Secret
+      - kind: Secret
+        name: cluster-secrets
         optional: false
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  wait: false
+  wait: true
   patches:
     - # Add Kustomization defaults for all child Kustomizations
       patch: |-
@@ -38,6 +36,21 @@ spec:
           decryption:
             provider: sops
           deletionPolicy: WaitForTermination
+          postBuild:
+            substitute:
+              # secret
+              CLOUDFLARE_TUNNEL_ID: ${CLOUDFLARE_TUNNEL_ID}
+              CLUSTER_DOMAIN: ${CLUSTER_DOMAIN}
+              NETWORK_VPN_GATEWAY: ${NETWORK_VPN_GATEWAY}
+              PRIVATE_STATIC_DOMAIN: ${PRIVATE_STATIC_DOMAIN}
+              # configmap
+              CLUSTER: ${CLUSTER}
+              SNAPSHOTCLASS: ${SNAPSHOTCLASS}
+              STORAGECLASS: ${STORAGECLASS}
+              STORAGE_HR: ${STORAGE_HR}
+              STORAGE_NS: ${STORAGE_NS}
+              SUBDOMAIN_SUFFIX: ${SUBDOMAIN_SUFFIX}
+              SVC_EXPORTERS: ${SVC_EXPORTERS}
           patches:
             - patch: |-
                 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -47,8 +60,6 @@ spec:
                 spec:
                   install:
                     crds: CreateReplace
-                    strategy:
-                      name: RetryOnFailure
                   rollback:
                     cleanupOnFail: true
                     recreate: true
@@ -63,20 +74,63 @@ spec:
               target:
                 group: helm.toolkit.fluxcd.io
                 kind: HelmRelease
-          postBuild:
-            substitute:
-              CLUSTER: ${CLUSTER}
-            substituteFrom:
-              - name: cluster-settings
-                kind: ConfigMap
-                optional: false
-              - name: cluster-secrets
-                kind: Secret
-                optional: false
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
-    - # Update CoreDNS replicas, enable IPv6
+    - # Net-new CNPG cluster: plain initdb (no Barman recovery).
+      # Use the `components.postgres/cnpg=init` label on an app's Flux Kustomization
+      # to mark it as a brand-new cluster with no existing data. The component
+      # default is bootstrap.recovery from Barman; this label opts out for net-new
+      # apps that have no backup yet to recover from.
+      # $${...} escape preserves the variable through outer (cluster-apps) substitution
+      # so the inner (app) Kustomization's postBuild can resolve APP/POSTGRES_USERNAME.
+      patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: not-used
+        spec:
+          patches:
+            - target:
+                group: postgresql.cnpg.io
+                version: v1
+                kind: Cluster
+              patch: |-
+                - op: replace
+                  path: /spec/bootstrap
+                  value:
+                    initdb:
+                      database: $${POSTGRES_USERNAME:=$${APP}}
+                      owner: $${POSTGRES_USERNAME:=$${APP}}
+                - op: remove
+                  path: /spec/externalClusters
+      target:
+        kind: Kustomization
+        labelSelector: "components.postgres/cnpg=init"
+    - # Configure Dragonfly for ToolHive's Redis auth-storage Lua scripts.
+      # Replication remains enabled; standalone mode and undeclared-key access
+      # are required by ToolHive's scripts.
+      patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: not-used
+        spec:
+          patches:
+            - target:
+                group: dragonflydb.io
+                version: v1alpha1
+                kind: Dragonfly
+              patch: |-
+                - op: remove
+                  path: /spec/args/2
+                - op: add
+                  path: /spec/args/-
+                  value: --default_lua_flags=allow-undeclared-keys
+      target:
+        kind: Kustomization
+        labelSelector: "components.dragonfly/cluster-mode=non-cluster"
+    - # Fix ARC Runner perms for D-CSI
       patch: |-
         apiVersion: kustomize.toolkit.fluxcd.io/v1
         kind: Kustomization
@@ -91,14 +145,37 @@ spec:
                   name: not-used
                 spec:
                   values:
-                    replicaCount: 2
-                    service:
-                      clusterIPs: ["10.43.0.10", "fdd5:aa8:9535:43::a"]
-                      ipFamilies: ["IPV4", "IPV6"]
-                      ipFamilyPolicy: PreferDualStack
+                    template:
+                      spec:
+                        securityContext:
+                          fsGroup: 123
               target:
                 kind: HelmRelease
-                name: coredns
       target:
         kind: Kustomization
-        name: coredns
+        name: actions-runner-controller-runners
+        labelSelector: "components.storage/driver=democratic-csi"
+    - # Set Snapshot controller value for D-CSI
+      patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: not-used
+        spec:
+          patches:
+            - patch: |-
+                apiVersion: helm.toolkit.fluxcd.io/v2
+                kind: HelmRelease
+                metadata:
+                  name: not-used
+                spec:
+                  values:
+                    controller:
+                      args:
+                        enableDistributedSnapshotting: true
+              target:
+                kind: HelmRelease
+      target:
+        kind: Kustomization
+        name: snapshot-controller
+        labelSelector: "components.storage/driver=democratic-csi"

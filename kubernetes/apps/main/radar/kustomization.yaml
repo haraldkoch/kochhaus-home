@@ -6,7 +6,6 @@ namespace: radar
 
 components:
   - ../../../components/namespace
-  - ../../../components/main/cluster-settings
 
 replacements:
   - path: ../../../components/replacements/ks.yaml

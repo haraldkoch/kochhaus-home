@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.31/#configmap-v1-core
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-info
+  namespace: flux-system
+  labels:
+    reconcile.fluxcd.io/watch: Enabled
+data:
+  CLUSTER: main
+  SNAPSHOTCLASS: csi-ceph-blockpool
+  STORAGECLASS: ceph-block
+  STORAGE_HR: rook-ceph-cluster
+  STORAGE_NS: rook-ceph
+  SUBDOMAIN_SUFFIX: "-main"
+  SVC_EXPORTERS: 192.168.21.100,fdd5:aa8:9535:21::100

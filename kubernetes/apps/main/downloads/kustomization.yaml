@@ -6,7 +6,6 @@ namespace: downloads
 
 components:
   - ../../../components/namespace
-  - ../../../components/main/cluster-settings
   - ../../../components/routed-gateway
 
 replacements:
