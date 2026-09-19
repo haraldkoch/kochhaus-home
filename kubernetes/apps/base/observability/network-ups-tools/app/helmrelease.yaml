@@ -81,28 +81,20 @@ spec:
             MAXAGE 20
             LISTEN 0.0.0.0
             LISTEN ::
-          upsd.users: |
-            [upsmon]
-              password  = "${NUT_PASSWORD}"
-              actions = SET
-              instcmds = ALL
-              upsmon primary
-            [homeassistant]
-              password = "${HASS_NUT_PASSWORD}"
-              actions = SET
-              instcmds = ALL
           ups.conf: |
             [kubernetes]
               driver = usbhid-ups
               port = auto
               desc = "Cyber Power System, Inc. PR1500LCDRT2U UPS"
               pollinterval = 10
-          upsmon.conf: |
-            MONITOR kubernetes@localhost:3493 1 upsmon "${NUT_PASSWORD}" primary
-            SHUTDOWNCMD "/sbin/shutdown -h +0"
-            POWERDOWNFLAG /etc/killpower
-            POLLFREQ 15
-            POLLFREQALERT 5
-            HOSTSYNC 15
-          fnord: |-
-            fnord
+  valuesFrom:
+    - targetPath: configMaps.config.data.upsd\.users
+      kind: Secret
+      name: network-ups-tools-secret
+      valuesKey: upsd.users
+      literal: true
+    - targetPath: configMaps.config.data.upsmon\.conf
+      kind: Secret
+      name: network-ups-tools-secret
+      valuesKey: upsmon.conf
+      literal: true
