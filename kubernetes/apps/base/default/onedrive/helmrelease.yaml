@@ -9,6 +9,11 @@ spec:
     kind: OCIRepository
     name: onedrive
   interval: 1h
+  valuesFrom:
+    - targetPath: controllers.onedrive.containers.app.env.ONEDRIVE_AUTHRESPONSE
+      kind: Secret
+      name: onedrive-secret
+      valuesKey: ONEDRIVE_AUTHRESPONSE
   values:
     controllers:
       onedrive:
@@ -35,7 +40,7 @@ spec:
               TZ: America/Toronto
               ONEDRIVE_DOWNLOADONLY: "1"
               ONEDRIVE_RESYNC: "0"
-              ONEDRIVE_AUTHRESPONSE: "${SECRET_ONEDRIVE_AUTHRESPONSE}"
+              # ONEDRIVE_AUTHRESPONSE is now injected via HelmRelease valuesFrom
               ONEDRIVE_UID: "1000"
               ONEDRIVE_GID: "1000"
             resources:
