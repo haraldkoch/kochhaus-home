@@ -5,8 +5,6 @@ kind: Kustomization
 metadata:
   name: excalidraw
 spec:
-  components:
-    - ../../../../components/gatus/external
   interval: 1h
   path: ./kubernetes/apps/base/default/excalidraw
   postBuild:

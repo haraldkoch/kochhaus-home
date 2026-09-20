@@ -2,14 +2,10 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-  - ./certificate.yaml
-  - ./helmrelease.yaml
-  - ./ocirepository.yaml
 configMapGenerator:
-  - name: smtp-relay
+  - name: gatus-dashboard
     files:
-      - maddy.conf=./resources/maddy.conf
+      - gatus.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:

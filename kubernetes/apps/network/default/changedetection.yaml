@@ -6,7 +6,6 @@ metadata:
   name: changedetection
 spec:
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/network/volsync
   dependsOn:
     - name: longhorn

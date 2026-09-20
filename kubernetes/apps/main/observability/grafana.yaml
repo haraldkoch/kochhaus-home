@@ -20,8 +20,6 @@ kind: Kustomization
 metadata:
   name: grafana-instance
 spec:
-  components:
-    - ../../../../../components/gatus/guarded
   dependsOn:
     - name: grafana-operator
   interval: 1h

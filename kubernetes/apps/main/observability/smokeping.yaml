@@ -6,7 +6,6 @@ metadata:
   name: smokeping
 spec:
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/main/volsync
   dependsOn:
     - name: volsync

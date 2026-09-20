@@ -71,6 +71,9 @@ spec:
         ipFamilyPolicy: PreferDualStack
         annotations:
           external-dns.kubernetes.io/hostname: smtp.${CLUSTER_DOMAIN}
+          gatus.home-operations.com/endpoint: |-
+            url: starttls://smtp.${CLUSTER_DOMAIN}:25
+            conditions: ["[CONNECTED] == true"]
           lbipam.cilium.io/ips: ${SVC_SMTP_RELAY}
         ports:
           metrics:

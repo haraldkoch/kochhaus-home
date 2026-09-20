@@ -12,7 +12,7 @@ replacements:
 
 resources:
   - ./blackbox-exporter.yaml
-  - ./gatus/ks.yaml
+  - ./gatus.yaml
   - ./goldpinger.yaml
   - ./grafana.yaml
   - ./karma.yaml

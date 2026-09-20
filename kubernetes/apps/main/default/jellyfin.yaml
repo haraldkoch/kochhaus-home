@@ -6,7 +6,6 @@ metadata:
   name: jellyfin
 spec:
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/keda/nfs-scaler
     - ../../../../components/main/volsync
   dependsOn:

@@ -5,8 +5,6 @@ kind: Kustomization
 metadata:
   name: radar
 spec:
-  components:
-    - ../../../../components/gatus/guarded
   interval: 1h
   path: ./kubernetes/apps/base/radar/radar
   postBuild:

@@ -5,8 +5,6 @@ kind: Kustomization
 metadata:
   name: whoami
 spec:
-  components:
-    - ../../../../components/gatus/external
   interval: 1h
   path: ./kubernetes/apps/base/default/whoami
   postBuild:

@@ -9,7 +9,7 @@ spec:
   path: ./kubernetes/apps/base/dbms/postgres-backup
   postBuild:
     substitute:
-      DATABASES: authelia,dmarc,docmost,gatus,lldap,nextcloud,speedtest,tekton-results
+      DATABASES: authelia,dmarc,docmost,lldap,nextcloud,speedtest,tekton-results
   prune: true
   sourceRef:
     kind: GitRepository

@@ -1,10 +1,9 @@
 ---
-# Note: Gatus vars should be escaped with $${VAR_NAME} to avoid interpolation by Flux
 alerting:
   pushover:
     title: Gatus (Kubernetes)
-    application-token: $${PUSHOVER_TOKEN}
-    user-key: $${PUSHOVER_USER_KEY}
+    application-token: ${PUSHOVER_TOKEN}
+    user-key: ${PUSHOVER_USER_KEY}
     priority: 1
     default-alert:
       description: health-check failed
@@ -50,22 +49,63 @@ endpoints:
     url: 1.1.1.1
     interval: 1m
     dns:
-      query-name: "status-network.${CLUSTER_DOMAIN}"
+      query-name: "status-main.${CLUSTER_DOMAIN}"
       query-type: A
     conditions:
       - "len([BODY]) == 0"
     alerts:
       - type: pushover
 
+  - name: DNS Primary (castor)
+    group: internal
+    url: "192.168.10.6"
+    interval: 1m
+    dns:
+      query-name: "www.${CLUSTER_DOMAIN}"
+      query-type: "A"
+    conditions:
+      - "[BODY] == 192.168.21.80"
+      - "[DNS_RCODE] == NOERROR"
+    alerts:
+      - type: pushover
+
+  - name: DNS Secondary (pollux)
+    group: internal
+    url: "192.168.10.7"
+    interval: 1m
+    dns:
+      query-name: "www.${CLUSTER_DOMAIN}"
+      query-type: "A"
+    conditions:
+      - "[BODY] == 192.168.21.80"
+      - "[DNS_RCODE] == NOERROR"
+    alerts:
+      - type: pushover
+
+  - name: haraldkoch.ca
+    url: https://haraldkoch.ca/
+    conditions:
+      - '[STATUS] == 200'
+    group: static
+    alerts:
+      - {type: pushover}
+  - name: phaedra.cfrq.net
+    url: https://phaedra.cfrq.net/
+    conditions:
+      - '[STATUS] == 200'
+    group: static
+    alerts:
+      - {type: pushover,}
+
 metrics: true
 
 storage:
   type: sqlite
   caching: true
-  path: $${GATUS_CONFIG_PATH}/gatus.db
+  path: ${GATUS_CONFIG_PATH}/gatus.db
 
 ui:
-  title: Status | Gatus (Network)
+  title: Status | Gatus (Main)
   header: Status
   logo: https://avatars.githubusercontent.com/u/7131938
   link: https://github.com/haraldkoch
@@ -76,4 +116,4 @@ ui:
       link: https://github.com/haraldkoch/kochhaus-home
 
 web:
-  port: $${GATUS_WEB_PORT}
+  port: ${GATUS_WEB_PORT}

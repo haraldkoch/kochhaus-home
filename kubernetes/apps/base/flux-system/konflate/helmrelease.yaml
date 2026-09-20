@@ -26,9 +26,6 @@ spec:
       reloader.stakater.com/auto: "true"
     httpRoute:
       enabled: true
-      annotations:
-        gatus.home-operations.com/endpoint: |-
-          conditions: ["[STATUS] == 200"]
       parentRefs:
         - name: envoy-external
           namespace: network

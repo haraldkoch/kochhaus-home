@@ -5,8 +5,6 @@ kind: Kustomization
 metadata:
   name: kromgo
 spec:
-  components:
-    - ../../../../components/gatus/external
   interval: 1h
   path: ./kubernetes/apps/base/observability/kromgo
   postBuild:

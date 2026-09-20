@@ -6,7 +6,6 @@ metadata:
   name: tautulli
 spec:
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/keda/nfs-scaler
     - ../../../../components/main/volsync
   dependsOn:

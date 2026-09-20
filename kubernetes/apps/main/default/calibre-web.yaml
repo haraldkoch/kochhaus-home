@@ -6,7 +6,6 @@ metadata:
   name: calibre-web
 spec:
   components:
-    - ../../../../components/gatus/external
     - ../../../../components/keda/nfs-scaler
     - ../../../../components/main/volsync
   dependsOn:

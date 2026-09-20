@@ -99,6 +99,9 @@ spec:
         passwordKey: INIT_POSTGRES_PASS
     httpRoute:
       enabled: true
+      annotations:
+        gatus.home-operations.com/endpoint: |-
+          path: /status.php
       hostnames:
         - *host
       parentRefs:

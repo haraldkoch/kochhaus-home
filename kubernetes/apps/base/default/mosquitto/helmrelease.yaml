@@ -55,6 +55,9 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.kubernetes.io/hostname: mqtt.${CLUSTER_DOMAIN}
+          gatus.home-operations.com/endpoint: |-
+            url: tcp://mqtt.${CLUSTER_DOMAIN}:1883
+            conditions: ["[CONNECTED] == true"]
           lbipam.cilium.io/ips: ${SVC_MOSQUITTO}
         externalTrafficPolicy: Local
         ipFamilies:

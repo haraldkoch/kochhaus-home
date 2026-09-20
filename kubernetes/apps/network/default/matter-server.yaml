@@ -6,7 +6,6 @@ metadata:
   name: matter-server
 spec:
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/network/volsync
   dependsOn:
     - name: multus-networks

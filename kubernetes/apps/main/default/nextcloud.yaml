@@ -7,7 +7,6 @@ metadata:
 spec:
   components:
     - ../../../../components/dragonfly
-    - ../../../../components/gatus/external
     - ../../../../components/keda/nfs-scaler
     - ../../../../components/main/volsync
   dependsOn:

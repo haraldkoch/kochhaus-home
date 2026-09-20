@@ -6,7 +6,6 @@ metadata:
   name: pgadmin
 spec:
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/main/volsync
   dependsOn:
     - name: cloudnative-pg-cluster

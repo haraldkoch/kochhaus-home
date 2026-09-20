@@ -6,7 +6,6 @@ metadata:
   name: mealie
 spec:
   components:
-    - ../../../../components/gatus/internal
     - ../../../../components/main/volsync
   dependsOn:
     - name: volsync

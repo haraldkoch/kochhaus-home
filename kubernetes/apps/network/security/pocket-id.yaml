@@ -6,7 +6,6 @@ metadata:
   name: &app pocket-id
 spec:
   components:
-    - ../../../../components/gatus/external
     - ../../../../components/network/volsync
   dependsOn:
     - name: longhorn

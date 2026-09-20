@@ -6,7 +6,6 @@ metadata:
   name: picoshare
 spec:
   components:
-    - ../../../../components/gatus/external
     - ../../../../components/main/volsync
   dependsOn:
     - name: volsync

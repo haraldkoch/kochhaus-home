@@ -6,7 +6,6 @@ metadata:
   name: node-red
 spec:
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/network/volsync
   dependsOn:
     - name: longhorn

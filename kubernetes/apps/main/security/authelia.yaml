@@ -6,7 +6,6 @@ metadata:
   name: authelia
 spec:
   components:
-    - ../../../../components/gatus/external
     - ../../../../components/dragonfly
   dependsOn:
     - name: cloudnative-pg-cluster

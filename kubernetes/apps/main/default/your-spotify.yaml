@@ -6,7 +6,6 @@ metadata:
   name: your-spotify
 spec:
   components:
-    - ../../../../components/gatus/external
     - ../../../../components/main/volsync
   dependsOn:
     - name: volsync

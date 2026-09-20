@@ -5,8 +5,6 @@ kind: Kustomization
 metadata:
   name: lldap
 spec:
-  components:
-    - ../../../../components/gatus/guarded
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: dbms

@@ -78,6 +78,9 @@ spec:
             port: *httpPort
     route:
       app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            path: /readyz
         hostnames:
           - bookboss.${CLUSTER_DOMAIN}
         parentRefs:

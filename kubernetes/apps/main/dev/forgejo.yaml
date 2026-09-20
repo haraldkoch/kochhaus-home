@@ -8,7 +8,6 @@ spec:
   components:
     - ../../../../components/anubis
     - ../../../../components/dragonfly
-    - ../../../../components/gatus/guarded
     - ../../../../components/main/volsync
   dependsOn:
     - name: dragonfly

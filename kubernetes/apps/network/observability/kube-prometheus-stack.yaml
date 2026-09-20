@@ -5,8 +5,6 @@ kind: Kustomization
 metadata:
   name: kube-prometheus-stack
 spec:
-  components:
-    - ../../../../components/gatus/guarded
   dependsOn:
     - name: longhorn
       namespace: storage

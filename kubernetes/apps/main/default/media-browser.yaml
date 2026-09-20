@@ -6,7 +6,6 @@ metadata:
   name: media-browser
 spec:
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/keda/nfs-scaler
   dependsOn:
     - name: keda
