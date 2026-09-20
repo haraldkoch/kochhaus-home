@@ -26,6 +26,8 @@ spec:
               GEOLITE_DB_PATH: /data/GeoLite2-City.mmdb
               METRICS_ENABLED: "true"
               OTEL_METRICS_EXPORTER: prometheus
+              OTEL_EXPORTER_PROMETHEUS_HOST: 0.0.0.0
+              OTEL_EXPORTER_PROMETHEUS_PORT: &metricsPort 9464
               TRUST_PROXY: 10.42.0.0/16
               TZ: America/Toronto
               UPLOAD_PATH: /data/uploads
@@ -80,7 +82,7 @@ spec:
             port: *port
             primary: true
           metrics:
-            port: 9464
+            port: *metricsPort
     serviceMonitor:
       pocket-id:
         endpoints:
