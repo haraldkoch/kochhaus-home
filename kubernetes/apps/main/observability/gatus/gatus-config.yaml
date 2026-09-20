@@ -1,10 +1,9 @@
 ---
-# Note: Gatus vars should be escaped with $${VAR_NAME} to avoid interpolation by Flux
 alerting:
   pushover:
     title: Gatus (Kubernetes)
-    application-token: $${PUSHOVER_TOKEN}
-    user-key: $${PUSHOVER_USER_KEY}
+    application-token: ${PUSHOVER_TOKEN}
+    user-key: ${PUSHOVER_USER_KEY}
     priority: 1
     default-alert:
       description: health-check failed
@@ -57,18 +56,6 @@ endpoints:
     alerts:
       - type: pushover
 
-  - name: flux-webhook
-    group: guarded
-    url: 1.1.1.1
-    interval: 1m
-    dns:
-      query-name: flux-webhook.${CLUSTER_DOMAIN}
-      query-type: A
-    conditions:
-      - "len([BODY]) == 0"
-    alerts:
-      - type: pushover
-
   - name: DNS Primary (castor)
     group: internal
     url: "192.168.10.6"
@@ -95,6 +82,21 @@ endpoints:
     alerts:
       - type: pushover
 
+  - name: haraldkoch.ca
+    url: https://haraldkoch.ca/
+    conditions:
+      - '[STATUS] == 200'
+    group: static
+    alerts:
+      - {type: pushover}
+  - name: phaedra.cfrq.net
+    url: https://phaedra.cfrq.net/
+    conditions:
+      - '[STATUS] == 200'
+    group: static
+    alerts:
+      - {type: pushover}
+
 # - name: DNS Router
 #   group: internal
 #   url: "192.168.20.1"
@@ -111,9 +113,9 @@ endpoints:
 metrics: true
 
 storage:
-  type: postgres
-  path: postgres://$${INIT_POSTGRES_USER}:$${INIT_POSTGRES_PASS}@$${INIT_POSTGRES_HOST}:5432/$${INIT_POSTGRES_DBNAME}?sslmode=disable
+  type: sqlite
   caching: true
+  path: ${GATUS_CONFIG_PATH}/gatus.db
 
 ui:
   title: Status | Gatus
@@ -127,4 +129,4 @@ ui:
       link: https://github.com/haraldkoch/kochhaus-home
 
 web:
-  port: $${GATUS_WEB_PORT}
+  port: ${GATUS_WEB_PORT}

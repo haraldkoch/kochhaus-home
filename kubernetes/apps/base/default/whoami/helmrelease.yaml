@@ -47,6 +47,9 @@ spec:
             port: 80
     route:
       main:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 302"]
         parentRefs:
           - name: envoy-external
             namespace: network
