@@ -27,8 +27,6 @@ controllers:
             memory: 1Gi
 
 defaultPodOptions:
-  automountServiceAccountToken: false
-  enableServiceLinks: false
   securityContext:
     runAsNonRoot: false
     runAsUser: &uid 0

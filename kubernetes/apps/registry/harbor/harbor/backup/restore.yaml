@@ -7,7 +7,7 @@ spec:
   ttlSecondsAfterFinished: 86400
   template:
     spec:
-      automountServiceAccountToken: true
+      automountServiceAccountToken: false
       restartPolicy: OnFailure
       volumes:
         - name: backup
