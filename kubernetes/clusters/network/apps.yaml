@@ -48,7 +48,6 @@ spec:
               STORAGECLASS: ${STORAGECLASS}
               STORAGE_HR: ${STORAGE_HR}
               STORAGE_NS: ${STORAGE_NS}
-              SUBDOMAIN_SUFFIX: ${SUBDOMAIN_SUFFIX}
               SVC_EXPORTERS: ${SVC_EXPORTERS}
           patches:
             - patch: |-

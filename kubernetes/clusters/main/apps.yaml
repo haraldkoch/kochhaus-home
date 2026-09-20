@@ -49,7 +49,7 @@ spec:
               STORAGECLASS: ${STORAGECLASS}
               STORAGE_HR: ${STORAGE_HR}
               STORAGE_NS: ${STORAGE_NS}
-              SUBDOMAIN_SUFFIX: ${SUBDOMAIN_SUFFIX}
+              SUBDOMAIN_SUFFIX: ${SUBDOMAIN_SUFFIX} # not injected on network: an empty value renders as null and fails admission
               SVC_EXPORTERS: ${SVC_EXPORTERS}
           patches:
             - patch: |-

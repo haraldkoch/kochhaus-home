@@ -9,7 +9,7 @@ spec:
   path: ./kubernetes/apps/base/observability/goldpinger
   postBuild:
     substitute:
-      APP: goldpinger
+      SUBDOMAIN: goldpinger
   prune: true
   sourceRef:
     kind: GitRepository
