@@ -6,7 +6,7 @@ metadata:
   name: goldpinger
 spec:
   hostnames:
-    - "${SUBDOMAIN}${SUBDOMAIN_SUFFIX:=}.${CLUSTER_DOMAIN}"
+    - "${SUBDOMAIN}.${CLUSTER_DOMAIN}"
   parentRefs:
     - name: envoy-internal
       namespace: network
