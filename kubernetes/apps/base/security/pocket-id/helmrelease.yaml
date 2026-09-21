@@ -18,7 +18,7 @@ spec:
           pocket-id:
             image:
               repository: ghcr.io/pocket-id/pocket-id
-              tag: v2.15.0-distroless@sha256:61890eb62fafc56e188a3a92f94f8654f1549ab5deef412e877ad01bec8eb43f
+              tag: v2.16.0-distroless@sha256:f5ce1e58392f48a8fb8a1ff22a714272a49a52b8582d87deb530823f95359204
             env:
               ANALYTICS_DISABLED: "true"
               APP_URL: https://${APP_SUBDOMAIN:-${APP}}.${CLUSTER_DOMAIN}
