@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: mirror.gcr.io/noooste/garage-ui
-              tag: v0.12.1@sha256:0b68a9237da67a705f9bdb9127c8d56f38df7810f844bd6c25c3cd0d19d89795
+              tag: v0.13.0@sha256:a1444fa10585a0efc8ce3c33ebda873e5714d51dbc8f7f49d00143ff3b72fcc2
             env:
               GARAGE_UI_GARAGE_ENDPOINT: http://mnemosyne.home.arpa:3900
               GARAGE_UI_GARAGE_ADMIN_ENDPOINT: http://mnemosyne.home.arpa:3903
