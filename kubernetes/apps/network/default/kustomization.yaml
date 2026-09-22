@@ -12,6 +12,7 @@ replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
+  - ./media-nfs.yaml
   - ./bentopdf.yaml
   - ./blocky-ui.yaml
   - ./changedetection.yaml

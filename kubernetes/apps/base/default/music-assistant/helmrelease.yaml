@@ -70,5 +70,7 @@ spec:
                 subPath: data
               - path: /cache
                 subPath: cache
+      media:
+        existingClaim: media-nfs
       tmp:
         type: emptyDir
