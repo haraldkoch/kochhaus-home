@@ -1,0 +1,78 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: music-assistant
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: music-assistant
+  interval: 1h
+  values:
+    controllers:
+      music-assistant:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/music-assistant/server
+              tag: 2.10.4@sha256:37a9a2776e838a754c9f5b38c432567389952304e7cb8f6b44b6cd28043de6de
+            env:
+              TZ: America/Toronto
+              LOG_LEVEL: info
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"], add: ["SYS_ADMIN", "DAC_READ_SEARCH"] }
+            resources: {}
+    defaultPodOptions:
+      automountServiceAccountToken: true
+      annotations:
+        k8s.v1.cni.cncf.io/networks: |-
+          [{
+            "name": "iot",
+            "namespace": "networking",
+            "ips": ["192.168.30.25/24"]
+            "mac": "93:b9:f4:4e:69:bf"
+          }]
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: music-assistant
+        ports:
+          http:
+            port: 8095
+          stream:
+            port: 8097
+    route:
+      app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 200"]
+        hostnames:
+          - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
+          - music.${CLUSTER_DOMAIN}
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+    persistence:
+      data:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        advancedMounts:
+          music-assistant:
+            app:
+              - path: /data
+                subPath: data
+              - path: /cache
+                subPath: cache
+      tmp:
+        type: emptyDir
