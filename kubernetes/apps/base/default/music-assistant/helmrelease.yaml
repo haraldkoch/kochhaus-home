@@ -25,7 +25,7 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"], add: ["SYS_ADMIN", "DAC_READ_SEARCH"] }
+              capabilities: {drop: ["ALL"], add: ["SYS_ADMIN", "DAC_READ_SEARCH"]}
             resources: {}
     defaultPodOptions:
       automountServiceAccountToken: true
@@ -52,9 +52,6 @@ spec:
             port: 8097
     route:
       app:
-        annotations:
-          gatus.home-operations.com/endpoint: |-
-            conditions: ["[STATUS] == 200"]
         hostnames:
           - "{{ .Release.Name }}.${CLUSTER_DOMAIN}"
           - music.${CLUSTER_DOMAIN}
