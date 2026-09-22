@@ -58,8 +58,7 @@ spec:
                 readOnlyRootFilesystem: true
                 capabilities: {drop: ["ALL"]}
             - name: image-renderer
-              # renovate: datasource=github-releases depName=grafana/grafana-image-renderer
-              image: v5.12.4
+              image: mirror.gcr.io/grafana/grafana-image-renderer:v5.12.4
               env:
                 - name: AUTH_TOKEN
                   value: fnord
