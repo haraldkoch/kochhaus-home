@@ -26,6 +26,7 @@ resources:
   - ./matterbridge.yaml
   - ./mosquitto.yaml
   - ./mqtt-exporter.yaml
+  - ./music-assistant.yaml
   - ./netshoot-iot.yaml
   - ./node-red.yaml
   - ./omada-controller-proxy.yaml
