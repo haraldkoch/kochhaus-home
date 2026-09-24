@@ -26,7 +26,7 @@ spec:
           main:
             image:
               repository: ghcr.io/haraldkoch/kubectl
-              tag: 1.37.0@sha256:44d49a5ae49ca9cebc0f07ddc122a6df41f4a6ee4e16e1e36696671d7a1d6841
+              tag: 1.37.1@sha256:e98cc81d6e3502827933cd30a16da302f1e5991e309e6fc74b4fbca92e84eb16
             command:
               - "/bin/bash"
               - "/app/dyndns.sh"
