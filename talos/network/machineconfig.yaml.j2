@@ -163,7 +163,7 @@ kind: KubeletConfig
 defaultRuntimeSeccompProfileEnabled: true
 extraArgs:
   max-pods: "200"
-image: ghcr.io/siderolabs/kubelet:v1.37.0
+image: ghcr.io/siderolabs/kubelet:v1.37.1
 ---
 apiVersion: v1alpha1
 kind: KubeNetworkConfig
@@ -300,7 +300,7 @@ kind: KubeAPIServerConfig
 extraArgs:
   enable-aggregator-routing: "true"
   feature-gates: HPAScaleToZero=true
-image: registry.k8s.io/kube-apiserver:v1.37.0
+image: registry.k8s.io/kube-apiserver:v1.37.1
 ---
 apiVersion: v1alpha1
 kind: KubeTalosAPIAccessConfig
@@ -336,7 +336,7 @@ apiVersion: v1alpha1
 kind: KubeControllerManagerConfig
 extraArgs:
   bind-address: 0.0.0.0
-image: registry.k8s.io/kube-controller-manager:v1.37.0
+image: registry.k8s.io/kube-controller-manager:v1.37.1
 ---
 apiVersion: v1alpha1
 kind: KubeSchedulerConfig
@@ -357,12 +357,12 @@ config:
                 whenUnsatisfiable: ScheduleAnyway
 extraArgs:
   bind-address: 0.0.0.0
-image: registry.k8s.io/kube-scheduler:v1.37.0
+image: registry.k8s.io/kube-scheduler:v1.37.1
 ---
 apiVersion: v1alpha1
 kind: KubeProxyConfig
 enabled: false
-image: registry.k8s.io/kube-proxy:v1.37.0
+image: registry.k8s.io/kube-proxy:v1.37.1
 ---
 apiVersion: v1alpha1
 kind: KubeCoreDNSConfig
