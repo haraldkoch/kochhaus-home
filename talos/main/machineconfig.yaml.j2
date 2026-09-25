@@ -294,6 +294,11 @@ rules:
   # - SUBSYSTEM=="usb", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="55d4", OWNER="1022", GROUP="1022"
   # try mode instead:
   - KERNEL=="ttyACM*", MODE="0666"
+  # The NVMe drives accept 2 TiB per discard, so the weekly trim above sends 300-600 GiB in requests
+  # that take many seconds. Cap each request at 256 MiB so other I/O can interleave.
+  # (Matches no device on virtual nodes.)
+  - ACTION=="add|change", SUBSYSTEM=="block", ENV{DEVTYPE}=="disk", KERNEL=="nvme[0-9]*n[0-9]*", ATTR{queue/discard_max_bytes}="268435456"
+
 {% if ENV.MACHINE_TYPE == 'controlplane' %}
 ---
 apiVersion: v1alpha1
