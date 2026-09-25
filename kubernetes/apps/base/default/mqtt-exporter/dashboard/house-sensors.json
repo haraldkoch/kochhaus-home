@@ -2,7 +2,7 @@
   "__inputs": [
     {
       "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
+      "label": "prometheus",
       "description": "",
       "type": "datasource",
       "pluginId": "prometheus",
@@ -21,7 +21,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "11.0.0"
+      "version": "13.0.1"
     },
     {
       "type": "datasource",
@@ -61,7 +61,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -75,13 +74,12 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -105,6 +103,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -116,7 +115,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -152,7 +151,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -165,6 +163,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -181,6 +180,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -190,13 +190,12 @@
               "mode": "off"
             }
           },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -216,6 +215,10 @@
       },
       "id": 3,
       "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "calcs": [],
           "displayMode": "list",
@@ -223,11 +226,13 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -236,7 +241,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "mqtt_temperature{topic=~\".*(Upstairs|Office|Thermostat|Downstairs).*\"}",
+          "expr": "mqtt_temperature{topic!~\".*Garage.*\"}",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -263,7 +268,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -276,6 +280,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -292,6 +297,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -301,13 +307,12 @@
               "mode": "off"
             }
           },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -327,6 +332,10 @@
       },
       "id": 1,
       "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "calcs": [],
           "displayMode": "list",
@@ -334,11 +343,13 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -378,7 +389,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -391,6 +401,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -407,6 +418,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -416,13 +428,12 @@
               "mode": "off"
             }
           },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -442,6 +453,10 @@
       },
       "id": 4,
       "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "calcs": [],
           "displayMode": "list",
@@ -449,11 +464,13 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -462,7 +479,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "mqtt_humidity{topic=~\".*(Upstairs|Office|Thermostat|Downstairs).*\"}",
+          "expr": "mqtt_humidity{topic!~\".*Garage.*\"}",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -489,7 +506,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -502,6 +518,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -518,6 +535,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -527,13 +545,12 @@
               "mode": "off"
             }
           },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -553,6 +570,10 @@
       },
       "id": 2,
       "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "calcs": [],
           "displayMode": "list",
@@ -560,11 +581,13 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -618,6 +641,7 @@
             "axisSoftMax": 1023,
             "axisSoftMin": 999,
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -634,6 +658,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -643,13 +668,12 @@
               "mode": "line"
             }
           },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "blue",
@@ -673,6 +697,10 @@
       },
       "id": 5,
       "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
         "legend": {
           "calcs": [],
           "displayMode": "list",
@@ -680,11 +708,13 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -725,12 +755,12 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "red"
+                "color": "red",
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -754,6 +784,14 @@
       },
       "id": 16,
       "options": {
+        "barShape": "flat",
+        "barWidthFactor": 0.5,
+        "effects": {
+          "barGlow": false,
+          "centerGlow": false,
+          "gradient": false
+        },
+        "endpointMarker": "point",
         "minVizHeight": 75,
         "minVizWidth": 75,
         "orientation": "auto",
@@ -764,14 +802,19 @@
           "fields": "",
           "values": false
         },
+        "segmentCount": 1,
+        "segmentSpacing": 0.3,
+        "shape": "gauge",
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
         "sizing": "auto",
+        "sparkline": false,
         "text": {
           "titleSize": 14
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "10.4.0",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -803,27 +846,22 @@
       "type": "gauge"
     }
   ],
+  "preload": false,
   "refresh": "5m",
-  "schemaVersion": 39,
+  "schemaVersion": 42,
   "tags": [],
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": false,
-          "text": "Prometheus",
-          "value": "prometheus"
-        },
+        "allowCustomValue": true,
+        "current": {},
         "hide": 2,
         "includeAll": false,
-        "multi": false,
         "name": "DS_PROMETHEUS",
         "options": [],
         "query": "prometheus",
-        "queryValue": "",
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
         "type": "datasource"
       }
     ]
@@ -832,11 +870,23 @@
     "from": "now-24h",
     "to": "now"
   },
-  "timeRangeUpdatedDuringEditOrView": false,
-  "timepicker": {},
-  "timezone": "",
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "browser",
   "title": "House Sensors",
   "uid": "f34c065d-33a8-415a-89f2-0bbfc0a6a4b6",
-  "version": 175,
+  "version": 2,
   "weekStart": ""
 }
