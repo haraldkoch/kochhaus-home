@@ -58,7 +58,7 @@ spec:
           cloud:
             image:
               repository: ghcr.io/dongdongbh/mindwtr-cloud
-              tag: 1.2.8@sha256:d4785da5e0cbb187ffe9277af58ed57a809ff3490c5e5191b489387577b36812
+              tag: 1.3.2@sha256:63cf7b6caadfd48e067fcfa3d06c35644307fb19cdabe9bbf9598656ad84ada3
             env:
               MINDWTR_CLOUD_CORS_ORIGIN: "https://mindwtr.${CLUSTER_DOMAIN}"
               MINDWTR_CLOUD_DATA_DIR: /config
