@@ -1,0 +1,186 @@
+---
+# yaml-language-server: $schema=https://schemas.rzegocki.dev/other/app-template-hr.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mindwtr
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: mindwtr
+  interval: 1h
+  values:
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/dongdongbh/mindwtr-app
+              tag: 1.2.8@sha256:460fd86e9c9b3af16ae3990a8d4fbc0623f89b1eeac327a7554cd7924777991c
+            ports:
+              - containerPort: &appPort 5173
+            probes:
+              liveness:
+                enabled: true
+                spec:
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: *appPort
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
+          cloud:
+            image:
+              repository: ghcr.io/dongdongbh/mindwtr-cloud
+              tag: 1.2.8@sha256:d4785da5e0cbb187ffe9277af58ed57a809ff3490c5e5191b489387577b36812
+            env:
+              MINDWTR_CLOUD_CORS_ORIGIN: "https://mindwtr.${CLUSTER_DOMAIN}"
+              MINDWTR_CLOUD_DATA_DIR: /config
+              MINDWTR_CLOUD_DOMAIN: "mindwtr.${CLUSTER_DOMAIN}"
+              TZ: America/Toronto
+            envFrom:
+              - secretRef:
+                  name: "mindwtr-secret"
+            ports:
+              - containerPort: &cloudPort 8787
+            probes:
+              liveness:
+                enabled: true
+                spec:
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *cloudPort
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 512Mi
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+    service:
+      app:
+        ports:
+          http:
+            port: 80
+            targetPort: *appPort
+      cloud:
+        ports:
+          http:
+            port: 80
+            targetPort: *cloudPort
+    route:
+      app:
+        hostnames:
+          - "mindwtr.${CLUSTER_DOMAIN}"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - name: app
+            backendRefs:
+              - kind: Service
+                name: mindwtr-app
+                port: 80
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            filters:
+              - type: ResponseHeaderModifier
+                responseHeaderModifier:
+                  set:
+                    - name: Content-Security-Policy
+                      value: >-
+                        default-src 'self';
+                        img-src 'self' data:;
+                        object-src 'none';
+                        script-src 'self' 'unsafe-inline' 'unsafe-eval';
+                        style-src 'self' 'unsafe-inline';
+          - name: cloud
+            backendRefs:
+              - kind: Service
+                name: mindwtr-cloud
+                port: 80
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /v1
+    persistence:
+      config:
+        existingClaim: mindwtr
+        advancedMounts:
+          main:
+            cloud:
+              - path: /config
+      tmp:
+        type: emptyDir
+        medium: Memory
+        sizeLimit: 32Mi
+        advancedMounts:
+          main:
+            app:
+              - subPath: run
+                path: /run
+              - subPath: var-cache-nginx
+                path: /var/cache/nginx
+              - subPath: etc-nginx-tmp
+                path: /etc/nginx/tmp
+              - subPath: var-lib-nginx-tmp
+                path: /var/lib/nginx/tmp

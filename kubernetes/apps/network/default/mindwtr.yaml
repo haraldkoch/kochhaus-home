@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: mindwtr
+spec:
+  components:
+    - ../../../../components/network/volsync
+  interval: 1h
+  path: ./kubernetes/apps/base/default/mindwtr
+  postBuild:
+    substitute:
+      APP: mindwtr
+      VOLSYNC_CAPACITY: 2Gi
+      VOLSYNC_PGID: "1000"
+      VOLSYNC_PUID: "1000"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: false

@@ -25,6 +25,7 @@ resources:
   - ./kochhaus-docs.yaml
   - ./matter-server.yaml
   - ./matterbridge.yaml
+  - ./mindwtr.yaml
   - ./mosquitto.yaml
   - ./mqtt-exporter.yaml
   - ./music-assistant.yaml
