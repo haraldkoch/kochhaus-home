@@ -78,6 +78,16 @@
       minimumGroupSize: 5,
     },
     {
+      description: "Mindwtr Group",
+      groupName: "mindwtr",
+      matchDatasources: ["docker"],
+      matchPackageNames: ["/mindwtr/"]
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+      minimumGroupSize: 2,
+    },
+    {
       description: "Mise Tools Group",
       matchManagers: ["mise"],
       groupName: "mise tools",
