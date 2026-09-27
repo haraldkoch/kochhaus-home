@@ -11,7 +11,7 @@ replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./kopiur/ks.yaml
+  - ./kopiur.yaml
   - ./longhorn/ks.yaml
   - ./openebs.yaml
   - ./snapshot-controller.yaml
