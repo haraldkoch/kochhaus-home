@@ -81,7 +81,7 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /health
+                    path: /ready
                     port: *cloudPort
                   periodSeconds: 10
                   timeoutSeconds: 5
@@ -163,12 +163,12 @@ spec:
                   type: PathPrefix
                   value: /v1
     persistence:
-      config:
+      data:
         existingClaim: mindwtr
         advancedMounts:
           main:
             cloud:
-              - path: /config
+              - path: /app/cloud_data
       tmp:
         type: emptyDir
         medium: Memory
