@@ -16,11 +16,22 @@ spec:
     installScope: cluster
     monitoring:
       dashboards:
-        enabled: false
+        enabled: true
+        grafanaOperator:
+          enabled: true
+          matchLabels:
+            dashboards: grafana
+          folder: infrastructure
       prometheusRule:
-        enabled: false
+        enabled: true
       serviceMonitor:
         enabled: false
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 1022
+      runAsGroup: 1022
+      fsGroup: 1022
+      fsGroupChangePolicy: OnRootMismatch
     resources:
       requests:
         cpu: 50m
