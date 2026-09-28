@@ -47,6 +47,9 @@ spec:
     podSecurityContext:
       fsGroup: 1022
       fsGroupChangePolicy: OnRootMismatch
+      # fsGroup does not work on in-tree NFS
+      supplementalGroups:
+        - 1022
     securityContext:
       runAsGroup: 1022
       runAsUser: 1022
