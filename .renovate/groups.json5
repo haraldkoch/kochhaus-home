@@ -81,7 +81,7 @@
       description: "Mindwtr Group",
       groupName: "mindwtr",
       matchDatasources: ["docker"],
-      matchPackageNames: ["/mindwtr/"]
+      matchPackageNames: ["/mindwtr/"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
