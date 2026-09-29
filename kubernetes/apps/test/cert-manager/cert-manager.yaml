@@ -22,7 +22,7 @@ spec:
   path: ./kubernetes/apps/base/cert-manager/cert-manager
   postBuild:
     substitute:
-      REPLICAS: "1"
+      REPLICAS: "2"
       PDB: "false"
   prune: true
   sourceRef:
