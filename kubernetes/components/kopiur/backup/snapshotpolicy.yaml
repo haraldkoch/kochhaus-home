@@ -12,6 +12,10 @@ spec:
   credentialProjection:
     enabled: true
   mover:
+    cache:
+      capacity: ${KOPIUR_CAPACITY:=5Gi}
+      mode: Persistent
+      storageClassName: ${KOPIUR_STORAGECLASS:=${STORAGECLASS}}
     securityContext:
       runAsGroup: ${KOPIUR_PGID:=100}
       runAsUser: ${KOPIUR_PUID:=1000}
