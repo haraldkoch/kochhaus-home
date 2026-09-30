@@ -8,12 +8,15 @@ spec:
   allowedNamespaces:
     all: true
   backend:
-    filesystem:
-      path: /repository
-      volume:
-        nfs:
-          path: /backup/data/k8s/kopiur
-          server: mnemosyne.home.arpa
+    s3:
+      auth:
+        secretRef:
+          name: kopiur-repository-secret
+          namespace: storage
+      bucket: kopiur
+      endpoint: mnemosyne.home.arpa:3900
+      tls:
+        disableTls: true
   catalog:
     fallbackNamespace: storage
     periodicRefresh: true
