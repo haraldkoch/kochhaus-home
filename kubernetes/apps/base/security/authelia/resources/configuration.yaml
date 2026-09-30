@@ -49,7 +49,11 @@ totp:
   issuer: authelia.com
 
 webauthn:
-  disable: true
+  disable: false
+  enable_passkey_login: true
+  display_name: Kochhaus
+  experimental_enable_passkey_uv_two_factors: true
+  attestation_conveyance_preference: "indirect"
 
 duo_api:
   disable: true
