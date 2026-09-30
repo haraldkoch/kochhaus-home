@@ -10,7 +10,7 @@ apiVersion: v1alpha1
 kind: UnattendedInstallConfig
 installer:
   # special for this node, which is a qemu VM
-  image: factory.talos.dev/metal-installer/6b112ffe277f7b5001f9f6b4c1a8947618ec552d0f8fe73a0ebe45710e4423de:v1.14.1
+  image: factory.talos.dev/metal-installer/6b112ffe277f7b5001f9f6b4c1a8947618ec552d0f8fe73a0ebe45710e4423de:v1.14.2
 ---
 apiVersion: v1alpha1
 kind: KubeNodeConfig
