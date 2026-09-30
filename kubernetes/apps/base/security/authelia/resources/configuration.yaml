@@ -258,11 +258,11 @@ identity_providers:
           - "email"
           - "groups"
         redirect_uris:
-          - "https://tududi.${CLUSTER_DOMAIN}/api/oidc/callback/authelia"
+          - "https://todo.${CLUSTER_DOMAIN}/api/oidc/callback/authelia"
         response_types:
           - code
         grant_types:
           - authorization_code
         access_token_signed_response_alg: none
         userinfo_signed_response_alg: none
-        token_endpoint_auth_method: client_secret_post
+        token_endpoint_auth_method: client_secret_basic

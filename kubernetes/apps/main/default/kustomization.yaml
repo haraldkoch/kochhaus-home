@@ -34,5 +34,6 @@ resources:
   - ./syncthing.yaml
   - ./tautulli.yaml
   - ./trek.yaml
+  - ./tududi.yaml
   - ./whoami.yaml
   - ./your-spotify.yaml
