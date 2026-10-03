@@ -36,3 +36,29 @@ spec:
       requests:
         cpu: 50m
         memory: 128Mi
+    ui:
+      enabled: true
+      auth:
+        userHeader: Remote-User
+        groupsHeader: Remote-Groups
+        groupsSeparator: ","
+        emailHeader: Remote-Email
+        # this token must appear in the X-Kopiur-Proxy-Token header
+        proxySecret:
+          existingSecret: kopiur-ui-proxy-token
+          key: credential
+      rbac:
+        userRoles: true
+      networkPolicy:
+        enabled: true
+        proxySelector:
+          namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: network
+          podSelector:
+            matchLabels:
+              gateway.networking.k8s.io/gateway-name: envoy-internal
+        monitoringSelector:
+          namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: observability

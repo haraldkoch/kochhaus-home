@@ -10,6 +10,9 @@ spec:
       namespace: storage
   interval: 1h
   path: ./kubernetes/apps/base/storage/kopiur/app
+  postBuild:
+    substitute:
+      KOPIUR_UI_SUBDOMAIN: kopiur
   prune: true
   sourceRef:
     kind: GitRepository

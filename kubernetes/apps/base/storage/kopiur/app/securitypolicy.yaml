@@ -1,0 +1,40 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: Backend
+metadata:
+  name: external-auth-backend
+spec:
+  endpoints:
+    - fqdn:
+        hostname: auth.kochhaus.dev
+        port: 443
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: kopiur-auth
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: kopiur-ui
+  extAuth:
+    failOpen: false
+    headersToExtAuth:
+      - accept
+      - authorization
+      - cookie
+      - proxy-authorization
+      - X-Forwarded-Proto
+    http:
+      backendRefs:
+        - group: gateway.envoyproxy.io
+          kind: Backend
+          name: external-auth-backend
+          port: 443
+      path: /api/authz/ext-authz/
+      headersToBackend:
+        - Remote-User
+        - Remote-Groups
+        - Remote-Name
+        - Remote-Email
