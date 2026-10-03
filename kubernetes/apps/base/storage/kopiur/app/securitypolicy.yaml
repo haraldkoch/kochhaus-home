@@ -1,5 +1,15 @@
 ---
 apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: Backend
+metadata:
+  name: external-auth-backend
+spec:
+  endpoints:
+    - fqdn:
+        hostname: auth.kochhaus.dev
+        port: 443
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: SecurityPolicy
 metadata:
   name: kopiur-auth
@@ -18,11 +28,10 @@ spec:
       - X-Forwarded-Proto
     http:
       backendRefs:
-        - group: ''
-          kind: Service
-          name: authelia
-          namespace: security
-          port: 80
+        - group: gateway.envoyproxy.io
+          kind: Backend
+          name: external-auth-backend
+          port: 443
       path: /api/authz/ext-authz/
       headersToBackend:
         - Remote-User
