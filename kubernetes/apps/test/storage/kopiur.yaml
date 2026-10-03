@@ -33,6 +33,9 @@ spec:
       kind: ClusterRepository
   interval: 1h
   path: ./kubernetes/apps/base/storage/kopiur/repository
+  postBuild:
+    substitute:
+      KOPIUR_MAINTENANCE: "false"
   prune: true
   sourceRef:
     kind: GitRepository

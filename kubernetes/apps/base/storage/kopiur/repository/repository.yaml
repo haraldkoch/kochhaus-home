@@ -34,7 +34,7 @@ spec:
     hostnameExpr: "'${CLUSTER}'"
     usernameExpr: "namespace + '-' + policyName"
   maintenance:
-    enabled: true
+    enabled: ${KOPIUR_MAINTENANCE}
     namespace: storage
     schedule:
       full:
