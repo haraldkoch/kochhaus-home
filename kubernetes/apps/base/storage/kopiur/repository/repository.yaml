@@ -59,3 +59,8 @@ spec:
   parameters:
     epoch:
       minDuration: 1h
+  server:
+    auth:
+      insecure:
+        acknowledgeInsecure: true
+    namespace: storage
