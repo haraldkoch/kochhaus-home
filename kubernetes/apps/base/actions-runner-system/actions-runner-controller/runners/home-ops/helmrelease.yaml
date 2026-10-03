@@ -30,7 +30,7 @@ spec:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/haraldkoch/actions-runner:2.337.0@sha256:25eb03f226660ca2b7869507cff0f56fd05f64cc3778cd82b72487f280aca06e
+            image: ghcr.io/haraldkoch/actions-runner:2.337.0@sha256:791fa2a03309f7daed825bf61f92a73901b1833adb2aebcfc994a9709f4c9ab2
             command:
               - /home/runner/run.sh
             env:
