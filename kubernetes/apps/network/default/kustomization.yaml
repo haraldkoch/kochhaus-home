@@ -23,7 +23,6 @@ resources:
   - ./homer.yaml
   - ./it-tools.yaml
   - ./kochhaus-docs.yaml
-  - ./matter-server.yaml
   - ./matterbridge.yaml
   - ./mindwtr.yaml
   - ./mosquitto.yaml
