@@ -36,6 +36,7 @@ spec:
   postBuild:
     substitute:
       KOPIUR_MAINTENANCE: "false"
+      KOPIA_UI_SUBDOMAIN: kopia
   prune: true
   sourceRef:
     kind: GitRepository
