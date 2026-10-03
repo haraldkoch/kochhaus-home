@@ -24,7 +24,7 @@ spec:
           tududi:
             image:
               repository: ghcr.io/home-operations/tududi
-              tag: 1.6.3@sha256:f51ab677d0e33359f1f234fa06db40758cfa6b8aadf70a6d3b854066ff0668c4
+              tag: 1.7.1@sha256:ce25069d3e9b5524d797307eadf7493dc50df1c1ed82f412fc153cf74316e515
             # docker-entrypoint.sh only exists to chown /app and su-exec down; it
             # needs root, so skip straight to the start script it would exec.
             command:
