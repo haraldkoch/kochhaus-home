@@ -12,7 +12,6 @@ replacements:
 
 resources:
   - ./media-nfs.yaml
-  - ./bookboss.yaml
   - ./calibre-web.yaml
   - ./chaski.yaml
   - ./dmarc-report.yaml
