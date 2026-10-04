@@ -69,6 +69,14 @@ access_control:
   rules:
     # This just reduces logging noise in authelia
     - domain:
+        - tekton.${CLUSTER_DOMAIN}
+      resources:
+        - ^/health$
+        - ^/health/
+      policy: bypass
+
+    # This just reduces logging noise in authelia
+    - domain:
         - whoami.${CLUSTER_DOMAIN}
       resources:
         - ^/health$
