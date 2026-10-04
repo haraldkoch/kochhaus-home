@@ -23,7 +23,6 @@ resources:
   - ./homer.yaml
   - ./it-tools.yaml
   - ./kochhaus-docs.yaml
-  - ./mindwtr.yaml
   - ./mosquitto.yaml
   - ./mqtt-exporter.yaml
   - ./music-assistant.yaml
