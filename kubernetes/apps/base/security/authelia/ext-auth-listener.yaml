@@ -1,0 +1,28 @@
+# envoy-gateway extAuth does not change the Host: header on authorization
+# requests, even when using an fqdn Backend to reach an authenticator on an
+# external cluster. See https://github.com/envoyproxy/gateway/issues/9074.
+#
+# This HTTPRoute uses a separate Gateway configured in envoy config. It allows
+# us to send Auth requests to a special hostname/IP from the other clusters,
+# while still allowing the routing to preserve the client's Host: header.
+#
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: envoy-auth
+spec:
+  parentRefs:
+    - name: envoy-auth
+      namespace: network
+      sectionName: https-ext-auth
+  hostnames:
+    - "*.${CLUSTER_DOMAIN}"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/authz/ext-authz
+      backendRefs:
+        - name: authelia
+          port: 80

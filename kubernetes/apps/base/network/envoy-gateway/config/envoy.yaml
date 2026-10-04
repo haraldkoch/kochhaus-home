@@ -153,6 +153,37 @@ spec:
         kinds:
           - kind: TCPRoute
 ---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/gateway.networking.k8s.io/gateway_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: envoy-auth
+  annotations:
+    external-dns.kubernetes.io/target: &hostname envoy-auth.${CLUSTER_DOMAIN}
+    gatus.home-operations.com/endpoint: |
+      group: ${CLUSTER}-internal
+      guarded: true
+      ui:
+        hide-hostname: true
+        hide-url: true
+spec:
+  gatewayClassName: envoy
+  infrastructure:
+    annotations:
+      external-dns.kubernetes.io/hostname: *hostname
+      # lbipam.cilium.io/ips: ${SVC_ENVOY_AUTH}
+  listeners:
+    - name: https-ext-auth
+      protocol: HTTPS
+      port: 443
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: wildcard-tls
+---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/envoyproxy/gateway/refs/heads/main/charts/gateway-helm/charts/crds/crds/generated/gateway.envoyproxy.io_clienttrafficpolicies.yaml
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
