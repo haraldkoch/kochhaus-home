@@ -13,4 +13,3 @@ replacements:
 resources:
   - ./external-secrets.yaml
   - ./onepassword.yaml
-  - ./pocket-id.yaml
