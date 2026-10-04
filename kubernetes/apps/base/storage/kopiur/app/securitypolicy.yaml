@@ -31,7 +31,6 @@ spec:
         - group: gateway.envoyproxy.io
           kind: Backend
           name: authelia
-          port: 443
       path: /api/authz/ext-authz/
       headersToBackend:
         - Remote-User
