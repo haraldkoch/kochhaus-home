@@ -35,3 +35,4 @@ resources:
   - ./trek.yaml
   - ./whoami.yaml
   - ./your-spotify.yaml
+  - ./zipline.yaml
