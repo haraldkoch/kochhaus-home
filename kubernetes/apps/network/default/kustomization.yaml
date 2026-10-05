@@ -34,3 +34,4 @@ resources:
   - ./populator-test.yaml
   - ./smtp-relay.yaml
   - ./zigbee2mqtt.yaml
+  - ./zipline.yaml
