@@ -108,6 +108,10 @@ services:
         icon: fas fa-share
         url: https://share.${CLUSTER_DOMAIN}
         subtitle: simple and secure file sharing portal
+      - name: Zipline
+        icon: fas fa-share
+        url: https://zipline.${CLUSTER_DOMAIN}
+        subtitle: complex and powerful file sharing portal
 
   - name: Tools
     icon: fas fa-screwdriver-wrench
