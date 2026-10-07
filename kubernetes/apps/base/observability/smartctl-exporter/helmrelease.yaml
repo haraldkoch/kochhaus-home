@@ -12,8 +12,8 @@ spec:
   values:
     fullnameOverride: *app
     image:
-      repository: ghcr.io/haraldkoch/smartctl_exporter
-      tag: 0.14.0@sha256:a35acd3782e239298d28ddf8963b1e215ce70a13f17e68ece9f2878d6f72781a
+      repository: ghcr.io/prometheus-community/smartctl-exporter
+      tag: v0.15.0@sha256:a76e08dbf5db4781fefd1ed81c65ad46ae8d2849dae6b6d3acebcde2fc4e59d6
     config:
       devices:
         - /dev/sda
