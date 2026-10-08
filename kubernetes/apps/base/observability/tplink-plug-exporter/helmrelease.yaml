@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: ghcr.io/haraldkoch/tplink-plug-exporter
-              tag: 0.7.1@sha256:b3360e3ed694c3634426524cb30bcc239d8cacc408f188c1d5f99293e1fbbeaf
+              tag: 0.9.0@sha256:156a05e3599eeaa423b9c258d398e95de60a8b54d5a212f7db106de1785cc7e6
             env:
               TZ: America/Toronto
             probes:
