@@ -220,6 +220,11 @@ spec:
     xForwardedFor:
       trustedCIDRs:
         - 10.42.0.0/16
+  headers:
+    earlyRequestHeaders:
+      set:
+        - name: X-Real-Ip
+          value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
   http2:
     onInvalidMessage: TerminateStream
   proxyProtocol:
