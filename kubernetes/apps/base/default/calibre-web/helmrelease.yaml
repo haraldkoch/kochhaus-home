@@ -51,6 +51,10 @@ spec:
         parentRefs:
           - name: envoy-external
             namespace: network
+        rules:
+          - backendRefs:
+              - name: calibre-web-anubis
+                port: 8080
     persistence:
       cache:
         type: emptyDir

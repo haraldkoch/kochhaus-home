@@ -6,6 +6,7 @@ metadata:
   name: calibre-web
 spec:
   components:
+    - ../../../../components/anubis
     - ../../../../components/keda/nfs-scaler
     - ../../../../components/main/volsync
   dependsOn:
@@ -17,6 +18,7 @@ spec:
   path: ./kubernetes/apps/base/default/calibre-web
   postBuild:
     substitute:
+      ANUBIS_TARGET: http://calibre-web.default.svc.cluster.local:8083
       APP: calibre-web
       GATUS_SUBDOMAIN: ebooks
       VOLSYNC_CAPACITY: 1Gi
