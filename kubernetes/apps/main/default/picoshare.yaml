@@ -6,6 +6,7 @@ metadata:
   name: picoshare
 spec:
   components:
+    - ../../../../components/anubis
     - ../../../../components/main/volsync
   dependsOn:
     - name: volsync
@@ -14,6 +15,7 @@ spec:
   path: ./kubernetes/apps/base/default/picoshare
   postBuild:
     substitute:
+      ANUBIS_TARGET: http://picoshare.default.svc.cluster.local:4001
       APP: picoshare
       GATUS_SUBDOMAIN: share
       VOLSYNC_CAPACITY: 25Gi

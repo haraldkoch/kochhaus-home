@@ -50,6 +50,10 @@ spec:
         parentRefs:
           - name: envoy-external
             namespace: network
+        rules:
+          - backendRefs:
+              - name: picoshare-anubis
+                port: 8080
     persistence:
       data:
         existingClaim: picoshare-data-v1
