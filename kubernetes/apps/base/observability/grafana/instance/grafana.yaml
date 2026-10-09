@@ -58,7 +58,7 @@ spec:
                 readOnlyRootFilesystem: true
                 capabilities: {drop: ["ALL"]}
             - name: image-renderer
-              image: mirror.gcr.io/grafana/grafana-image-renderer:v5.12.5
+              image: mirror.gcr.io/grafana/grafana-image-renderer:v5.12.6
               env:
                 - name: AUTH_TOKEN
                   value: fnord
