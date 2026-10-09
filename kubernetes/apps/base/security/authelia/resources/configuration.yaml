@@ -67,6 +67,16 @@ access_control:
         - "172.16.0.0/12"
         - "192.168.0.0/16"
   rules:
+    ### Olivetin
+    - domain:
+        - olivetin.${CLUSTER_DOMAIN}
+      policy: one_factor
+      subject:
+        - 'group:admins'
+    - domain:
+        - olivetin.${CLUSTER_DOMAIN}
+      policy: deny
+
     # This just reduces logging noise in authelia
     - domain:
         - tekton.${CLUSTER_DOMAIN}
