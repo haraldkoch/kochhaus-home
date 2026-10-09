@@ -35,6 +35,7 @@ includes:
     aliases:
       - "fx"
     taskfile: .taskfiles/flux
+  kopiur: .taskfiles/kopiur
   kubernetes:
     aliases:
       - "k8s"
