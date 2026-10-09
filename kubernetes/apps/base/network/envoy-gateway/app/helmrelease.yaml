@@ -23,13 +23,14 @@ spec:
       replicas: ${REPLICAS:=1}
       pod:
         topologySpreadConstraints:
-          - maxSkew: 1
-            topologyKey: kubernetes.io/hostname
-            whenUnsatisfiable: DoNotSchedule
-            matchLabelKeys:
-              - pod-template-hash
-            labelSelector:
+          - labelSelector:
               matchLabels:
                 control-plane: envoy-gateway
+            maxSkew: 1
+            matchLabelKeys:
+              - pod-template-hash
+            nodeTaintsPolicy: Honor
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
     global:
       imageRegistry: mirror.gcr.io

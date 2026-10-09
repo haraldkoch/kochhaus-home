@@ -33,13 +33,15 @@ spec:
                 memory: 50Mi
     defaultPodOptions:
       topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          nodeTaintsPolicy: Honor
-          labelSelector:
+        - labelSelector:
             matchLabels:
               app.kubernetes.io/name: *app
+          maxSkew: 1
+          matchLabelKeys:
+            - "pod-template-hash"
+          nodeTaintsPolicy: Honor
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
     service:
       app:
         ipFamilyPolicy: PreferDualStack

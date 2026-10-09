@@ -23,14 +23,15 @@ spec:
               memory: 1Gi
         pod:
           topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              matchLabelKeys:
-                - "pod-template-hash"
-              labelSelector:
+            - labelSelector:
                 matchLabels:
                   app.kubernetes.io/managed-by: envoy-gateway
+              matchLabelKeys:
+                - "pod-template-hash"
+              maxSkew: 1
+              nodeTaintsPolicy: Honor
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
       envoyService:
         # use Cluster for L2, Local for L3
         #

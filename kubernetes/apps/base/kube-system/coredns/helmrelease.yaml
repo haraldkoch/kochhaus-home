@@ -73,10 +73,13 @@ spec:
         operator: Exists
         effect: NoSchedule
     topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        nodeTaintsPolicy: Honor
-        labelSelector:
+      - labelSelector:
           matchLabels:
             app.kubernetes.io/instance: coredns
+            app.kubernetes.io/name: coredns
+          matchLabelKeys:
+          - "pod-template-hash"
+        maxSkew: 1
+        nodeTaintsPolicy: Honor
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule

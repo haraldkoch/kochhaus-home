@@ -36,13 +36,15 @@ spec:
         runAsGroup: 65534
         seccompProfile: {type: RuntimeDefault}
       topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          nodeTaintsPolicy: Honor
-          labelSelector:
+        - labelSelector:
             matchLabels:
               app.kubernetes.io/name: *app
+          matchLabelKeys:
+            - "pod-template-hash"
+          maxSkew: 1
+          nodeTaintsPolicy: Honor
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
     service:
       app:
         ports:

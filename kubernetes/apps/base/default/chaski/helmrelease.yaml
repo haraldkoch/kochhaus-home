@@ -84,10 +84,12 @@ spec:
       limits:
         memory: 128Mi
     topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        nodeTaintsPolicy: Honor
-        labelSelector:
+      - labelSelector:
           matchLabels:
             app.kubernetes.io/name: chaski
+        matchLabelKeys:
+          - "pod-template-hash"
+        maxSkew: 1
+        nodeTaintsPolicy: Honor
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule

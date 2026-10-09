@@ -88,14 +88,16 @@ spec:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
       topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          nodeTaintsPolicy: Honor
-          labelSelector:
+        - labelSelector:
             matchLabels:
               app.kubernetes.io/instance: kyverno
               app.kubernetes.io/component: kyverno
+          matchLabelKeys:
+            - "pod-template-hash"
+          maxSkew: 1
+          nodeTaintsPolicy: Honor
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
       container:
         resources:
           requests:

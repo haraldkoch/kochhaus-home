@@ -75,12 +75,15 @@ spec:
             runAsGroup: 1022
             runAsNonRoot: true
           topologySpreadConstraints:
-            - maxSkew: 1
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
+            - labelSelector:
                 matchLabels:
                   app.kubernetes.io/name: *app
+              matchLabelKeys:
+                - "pod-template-hash"
+              maxSkew: 1
+              nodeTaintsPolicy: Honor
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
     service:
       app:
         controller: miniflux
