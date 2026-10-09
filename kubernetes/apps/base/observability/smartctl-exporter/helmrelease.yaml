@@ -13,7 +13,7 @@ spec:
     fullnameOverride: *app
     image:
       repository: ghcr.io/haraldkoch/smartctl_exporter
-      tag: 0.14.0@sha256:a35acd3782e239298d28ddf8963b1e215ce70a13f17e68ece9f2878d6f72781a
+      tag: 0.15.0@sha256:e9aff885312dc3a437625f5bdb18c9127f1ba7cd7c965e622a86f8ca12a0caba
     config:
       devices:
         - /dev/sda
