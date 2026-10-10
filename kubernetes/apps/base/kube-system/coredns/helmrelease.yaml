@@ -77,7 +77,7 @@ spec:
           matchLabels:
             app.kubernetes.io/instance: coredns
             app.kubernetes.io/name: coredns
-          matchLabelKeys:
+        matchLabelKeys:
           - "pod-template-hash"
         maxSkew: 1
         nodeTaintsPolicy: Honor
