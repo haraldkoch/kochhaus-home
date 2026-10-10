@@ -42,4 +42,4 @@ spec:
       backup:
         type: nfs
         server: mnemosyne.home.arpa
-        path: /backup/data/k8s/harbor
+        path: /k8s/harbor

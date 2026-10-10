@@ -88,7 +88,7 @@ spec:
       backup:
         type: nfs
         server: mnemosyne.home.arpa
-        path: /backup/data/k8s/tautulli
+        path: /k8s/tautulli
         globalMounts:
           - path: /config/backups
       tmpfs:

@@ -12,7 +12,7 @@ spec:
       volumes:
         - name: backup
           nfs:
-            path: /backup/data/k8s/harbor
+            path: /k8s/harbor
             server: mnemosyne.chk.cfrq.net
       containers:
         - name: postgres

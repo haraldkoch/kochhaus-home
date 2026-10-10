@@ -50,6 +50,6 @@ spec:
       nas:
         type: nfs
         server: mnemosyne.home.arpa
-        path: /backup/data/k8s/postgres
+        path: /k8s/postgres
         globalMounts:
           - path: /backups

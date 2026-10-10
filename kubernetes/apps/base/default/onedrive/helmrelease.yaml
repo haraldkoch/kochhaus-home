@@ -57,7 +57,7 @@ spec:
       data:
         type: nfs
         server: mnemosyne.home.arpa
-        path: /backup/data/k8s/onedrive-backup
+        path: /k8s/onedrive
         globalMounts:
           - path: /onedrive/data
       onedrive-settings:
