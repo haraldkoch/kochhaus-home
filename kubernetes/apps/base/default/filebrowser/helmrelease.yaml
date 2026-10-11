@@ -78,13 +78,23 @@ spec:
                   scopes: email openid profile groups
                   userIdentifier: preferred_username
                   createUser: true
+            http:
+              trustProxyHeaders: true
             server:
-              database: /home/filebrowser/data/filebrowser.db
+              database:
+                path: /home/filebrowser/data/filebrowser.sqlite
+                migrateFrom: /home/filebrowser/data/filebrowser.db.old
               cacheDir: /home/filebrowser/tmp/.cache
               sources:
                 - path: /media
                   config:
                     defaultEnabled: true
+            userDefaults:
+              account:
+                permissions:
+                  admin: false
+                  api: true
+                  share: true
     persistence:
       config:
         type: configMap
