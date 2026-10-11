@@ -4,29 +4,32 @@ kind: PersistentVolume
 metadata:
   name: media-nfs
 spec:
-  storageClassName: media-nfs
-  capacity:
-    storage: 17Ti
   accessModes:
     - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  nfs:
-    server: mnemosyne.${PRIVATE_STATIC_DOMAIN}
-    path: /media
+  capacity:
+    storage: 17Ti
+  csi:
+    driver: nfs.csi.k8s.io
+    # volumeHandle must be unique: server#share#subdir
+    volumeHandle: "mnemosyne.home.arpa#media#"
+    volumeAttributes:
+      server: mnemosyne.home.arpa
+      share: /media
   mountOptions:
     - nfsvers=4.2
     - nconnect=8
     - hard
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: media-nfs
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: media-nfs
-  namespace: media
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: media-nfs
   resources:
     requests:
       storage: 17Ti
+  storageClassName: media-nfs
