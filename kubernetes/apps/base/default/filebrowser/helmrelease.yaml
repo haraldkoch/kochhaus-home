@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: ghcr.io/gtsteffaniak/filebrowser
-              tag: 1.5.8-stable@sha256:68455d4953bad8e984e1bc5d112ed1e9c918a0a04f104c13c9ece50790308894
+              tag: 2.0.0-stable@sha256:9d42f635e32913d7daf05259428b6c70061cfdca3affc9602b4c31717e0a4bae
             env:
               TZ: America/Toronto
               FILEBROWSER_CONFIG: "/config/config.yaml"
@@ -50,8 +50,6 @@ spec:
       securityContext:
         runAsUser: 2000
         runAsGroup: 2000
-        fsGroup: 2000
-        fsGroupChangePolicy: "OnRootMismatch"
     service:
       app:
         ipFamilyPolicy: PreferDualStack
@@ -78,13 +76,23 @@ spec:
                   scopes: email openid profile groups
                   userIdentifier: preferred_username
                   createUser: true
+            http:
+              trustProxyHeaders: true
             server:
-              database: /home/filebrowser/data/filebrowser.db
+              database:
+                path: /home/filebrowser/data/filebrowser.sqlite
+                migrateFrom: /home/filebrowser/data/filebrowser.db.old
               cacheDir: /home/filebrowser/tmp/.cache
               sources:
                 - path: /media
                   config:
                     defaultEnabled: true
+            userDefaults:
+              account:
+                permissions:
+                  admin: false
+                  api: true
+                  share: true
     persistence:
       config:
         type: configMap
