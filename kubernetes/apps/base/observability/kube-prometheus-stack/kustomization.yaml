@@ -9,6 +9,7 @@ resources:
   - ./grafanadashboard.yaml
   - ./helmrelease.yaml
   - ./ocirepository.yaml
+  - ./rules
   - ./scrapeconfigs
 configMapGenerator:
   - name: flux-metrics-configmap

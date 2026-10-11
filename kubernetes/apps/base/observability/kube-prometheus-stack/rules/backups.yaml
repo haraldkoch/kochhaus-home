@@ -1,0 +1,46 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: backups-rules
+spec:
+  groups:
+    - name: backups.rules
+      rules:
+        - record: directory:check_backup_last_success:newest
+          expr: max without (file) (check_backup_last_success)
+
+        - alert: NoBackupFiles
+          expr: check_backup_file_count == 0
+          labels:
+            severity: warning
+          annotations:
+            description: the backup directory {{ $labels.directory }} on {{ $labels.host }} has no files.
+            summary: a backup directory has no files.
+
+        - alert: BackupNoRecentSuccess
+          expr: time() - directory:check_backup_last_success:newest > 3600 * 36
+          labels:
+            severity: warning
+          annotations:
+            description: A backup writing to {{ $labels.directory }} on {{ $labels.host }} has not been completed successfully in over 36 hours.
+            summary: A backup is out-of-date.
+            lastsuccess: "{{humanizeDuration $value}}"
+
+        - alert: BorgBackupNoRecentSuccess
+          expr: time() - backup_last_success > 3600 * 36
+          labels:
+            severity: warning
+          annotations:
+            description: A borg backup on {{ $labels.host }} has not been completed successfully in over 36 hours.
+            summary: A backup is out-of-date.
+            lastsuccess: "{{humanizeDuration $value}}"
+
+        - alert: MySQLBackupNoRecentSuccess
+          expr: time() - mysqldump_last_success > 3600 * 36
+          labels:
+            severity: warning
+          annotations:
+            description: mysqldump of {{ $labels.database }} on host {{ $labels.host }} has not been completed successfully in over 36 hours.
+            summary: A mysql backup is out-of-date.
