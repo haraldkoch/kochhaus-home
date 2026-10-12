@@ -21,7 +21,7 @@ spec:
       name: nfs-direct
       parameters:
         server: jezebel.${PRIVATE_STATIC_DOMAIN}
-        share: /tank/k8s/nfs
+        share: /k8s/nfs-${CLUSTER}
       mountOptions:
         - nfsvers=4.2
         - nconnect=16
