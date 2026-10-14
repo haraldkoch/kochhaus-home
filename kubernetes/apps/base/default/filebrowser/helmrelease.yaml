@@ -81,7 +81,6 @@ spec:
             server:
               database:
                 path: /home/filebrowser/data/filebrowser.sqlite
-                migrateFrom: /home/filebrowser/data/filebrowser.db.old
               cacheDir: /home/filebrowser/tmp/.cache
               sources:
                 - path: /media
