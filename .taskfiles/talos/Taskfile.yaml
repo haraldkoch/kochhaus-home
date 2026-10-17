@@ -121,7 +121,7 @@ tasks:
       NODES:
         sh: kubectl get nodes --output=jsonpath='{.items[*].metadata.name}' --context {{.CLUSTER}}
     cmds:
-      - for: { var: NODES }
+      - for: {var: NODES}
         task: apply-node
         vars:
           NODE: "{{.ITEM}}"
@@ -223,6 +223,17 @@ tasks:
       - talosctl --talosconfig {{.TALOS_DIR}}/talosconfig --nodes {{.RANDOM_CONTROLLER}} get machineconfig
       - which jq talosctl
 
+  upgrade-restart:
+    desc: Restart a Talos / Kubernetes upgrade
+    cmds:
+      - kubectl --context {{.CLUSTER}} annotate talosupgrade talos tuppr.home-operations.com/reset="$(date)"
+      - kubectl --context {{.CLUSTER}} annotate kubernetesupgrade kubernetes tuppr.home-operations.com/reset="$(date)"
+    requires:
+      vars:
+        - CLUSTER
+    preconditions:
+      - which kubectl
+
   reset-node:
     desc: Reset Talos on a single node [CLUSTER=main] [NODE=required]
     prompt: Reset Talos node '{{.NODE}}' ... continue?
@@ -275,7 +286,7 @@ tasks:
       NODES:
         sh: kubectl get nodes --output=jsonpath='{.items[*].metadata.name}' --context {{.CLUSTER}}
     cmds:
-      - for: { var: NODES }
+      - for: {var: NODES}
         task: reboot-node
         vars:
           NODE: "{{.ITEM}}"
