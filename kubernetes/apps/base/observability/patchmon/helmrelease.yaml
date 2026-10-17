@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/patchmon/patchmon-server
-              tag: 2.1.3@sha256:9eba4008c8e25f72929752bba7499b5deda26cf5de3e4678dbf760d16822b2f2
+              tag: 2.1.4@sha256:c6b2a932fc29bfa4a87cd2d2dd1bfeceb84919cb8975eb6aa53a8797523b7128
             env:
               TZ: America/Toronto
               CORS_ORIGIN: https://patchmon.${CLUSTER_DOMAIN}
