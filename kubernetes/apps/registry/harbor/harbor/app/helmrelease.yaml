@@ -58,7 +58,7 @@ spec:
           storageClass: ${STORAGECLASS}
         trivy:
           storageClass: ${STORAGECLASS}
-
+          size: 10Gi
     database:
       type: internal
 
