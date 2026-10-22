@@ -1,0 +1,285 @@
+---
+# Adapted from upstream deploy/observability/silo.rules.yml. Shared-queue gauges
+# are sampled by every API replica, so they're deduplicated with max, never summed.
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: silo-rules
+spec:
+  groups:
+    - name: silo.rules
+      rules:
+        - record: silo:queue_items:max
+          expr: |-
+            max by (cluster, queue, state) (silo_queue_items)
+
+        - record: silo:queue_oldest_requested_timestamp_seconds:min
+          expr: |-
+            min by (cluster, queue, state) (silo_queue_oldest_requested_timestamp_seconds)
+
+        - alert: SiloTargetUnavailable
+          expr: |-
+            up{job="silo"} == 0
+          for: 2m
+          annotations:
+            summary: >-
+              Silo {{ $labels.process_role }} target {{ $labels.pod }} is unavailable
+            description: >-
+              Check process/container health and network access before
+              interpreting missing metrics as idle work.
+          labels:
+            severity: warning
+
+        - alert: SiloResourceSampleStale
+          expr: |-
+            silo_resource_sample_stale == 1
+          for: 1m
+          annotations:
+            summary: >-
+              Silo resource sampling stopped advancing on {{ $labels.pod }}
+            description: >-
+              Inspect source availability and the local profiler for blocked
+              sampling; check mount and GPU probe health.
+          labels:
+            severity: warning
+
+        - alert: SiloQueueSamplingFailed
+          expr: |-
+            silo_queue_sample_available == 0
+          for: 2m
+          annotations:
+            summary: >-
+              Silo cannot measure the {{ $labels.queue }} queue
+            description: >-
+              Check PostgreSQL pool waits and dependency errors; absent queue
+              values do not mean an empty queue.
+          labels:
+            severity: warning
+
+        - alert: SiloQueueAgeHigh
+          expr: |-
+            (time() - silo:queue_oldest_requested_timestamp_seconds:min{state="queued"}) > 1800
+          for: 10m
+          annotations:
+            summary: >-
+              Oldest queued {{ $labels.queue }} work is {{ $value | humanizeDuration }} old
+            description: >-
+              Includes delayed retries. Inspect queue retry gates, worker
+              attempts and admin job progress before treating this as a stall.
+          labels:
+            severity: warning
+
+        - alert: SiloCgroupMemoryHigh
+          # Upstream divides memory.current, which includes page cache: transcode
+          # pods streaming media off NFS idle at ~100% of their limit. The working
+          # set excludes reclaimable cache and is what the OOM killer acts on.
+          expr: |-
+            silo_cgroup_memory_working_set_bytes / silo_cgroup_memory_limit_bytes > 0.9
+          for: 5m
+          annotations:
+            summary: >-
+              {{ $labels.pod }} working set is {{ $value | humanizePercentage }} of its memory limit
+            description: >-
+              Compare Go heap, process RSS, children and cache; these
+              populations overlap. Check cgroup events and container history.
+          labels:
+            severity: warning
+
+        - alert: SiloCgroupOOM
+          expr: |-
+            increase(silo_cgroup_memory_oom_kills_total[5m]) > 0
+          annotations:
+            summary: >-
+              An OOM kill occurred in {{ $labels.pod }}'s cgroup
+            description: >-
+              The killed process may be a child (FFmpeg). Also check pod
+              restart/OOM status because a dead Silo cannot scrape its own event.
+          labels:
+            severity: warning
+
+        - alert: SiloCPUThrottled
+          expr: |-
+            rate(silo_cgroup_cpu_throttled_periods_total[5m])
+              / clamp_min(rate(silo_cgroup_cpu_periods_total[5m]), 0.001)
+              > 0.2
+          for: 10m
+          annotations:
+            summary: >-
+              {{ $labels.pod }} is CPU throttled in {{ $value | humanizePercentage }} of periods
+            description: >-
+              Compare quota cores, request latency and task demand; capture CPU
+              for one process and inspect owned FFmpeg usage separately.
+          labels:
+            severity: warning
+
+        - alert: SiloOTLPExportFailure
+          expr: |-
+            sum by (cluster, pod, signal) (increase(silo_otel_export_records_total{outcome="error"}[5m])) > 0
+          for: 2m
+          annotations:
+            summary: >-
+              Silo {{ $labels.signal }} exports from {{ $labels.pod }} are failing
+            description: >-
+              Check collector health and bounded queue loss after drain.
+              Telemetry failure must not block requests.
+          labels:
+            severity: warning
+
+        - alert: SiloScrapeSlow
+          expr: |-
+            scrape_duration_seconds{job="silo"} > 1
+          for: 5m
+          annotations:
+            summary: >-
+              Scraping {{ $labels.pod }} takes {{ $value | humanizeDuration }}
+            description: >-
+              Inspect sample count and collector contention before increasing
+              the timeout.
+          labels:
+            severity: warning
+
+        - alert: SiloPostgresPoolSaturated
+          expr: |-
+            sum without (state) (silo_postgres_pool_connections{state="acquired"})
+              / sum without (state) (silo_postgres_pool_connections{state="maximum"})
+              > 0.9
+          for: 2m
+          annotations:
+            summary: >-
+              Silo {{ $labels.role }} PostgreSQL pool on {{ $labels.pod }} is
+              {{ $value | humanizePercentage }} utilized
+            description: >-
+              Compare postgres acquire duration and timeout/error outcomes by
+              pool role, then inspect long transactions and query spans before
+              increasing the connection limit.
+          labels:
+            severity: warning
+
+    # Local additions, not in upstream's catalog. Thresholds backtested against
+    # Oct 2026 history: each either never fired or only fired on a real incident.
+    - name: silo.local.rules
+      rules:
+        - alert: SiloLibraryMountStale
+          # A hung NFS mount keeps its last numbers marked stale rather than
+          # failing, so the nfsGate scale-down never sees it. A single stale
+          # sample at pod start is normal.
+          expr: |-
+            streamapp_node_disk_stale == 1
+              or
+            silo_resource_disk_available{mount=~"library-.*"} == 0
+          for: 5m
+          annotations:
+            summary: >-
+              {{ $labels.mount }} on {{ $labels.pod }} is stale or unavailable
+            description: >-
+              The statfs probe has stopped returning or the path is not
+              visible; check the NFS server and the pod's mount.
+          labels:
+            severity: warning
+
+        - alert: SiloTranscodeGPUMissing
+          # GPU series only exist while the device is visible; without it
+          # transcodes silently fall back to software.
+          expr: |-
+            (up{job="silo",process_role="transcode"} == 1)
+              unless on (pod)
+            streamapp_node_gpu_sessions
+          for: 10m
+          annotations:
+            summary: >-
+              {{ $labels.pod }} is up but reports no GPU
+            description: >-
+              Check the pod's DRA ResourceClaim, /dev/dri inside the container
+              and the intel-gpu-resource-driver on its node.
+          labels:
+            severity: warning
+
+        - alert: SiloWorkStalled
+          expr: |-
+            (time() - silo_work_last_progress_timestamp_seconds > 1800)
+              and on (pod, workload)
+            (silo_work_active > 0)
+          for: 15m
+          annotations:
+            summary: >-
+              {{ $labels.workload }} work on {{ $labels.pod }} has made no progress
+              for {{ $value | humanizeDuration }}
+            description: >-
+              Aggregate progress only; one advancing job hides another stuck
+              one. Use the admin job view to find the stalled attempt.
+          labels:
+            severity: warning
+
+        - alert: SiloAPIErrorRate
+          # Volume floor keeps a single failing admin poll on an idle server
+          # from tripping it.
+          expr: |-
+            sum by (cluster) (rate(streamapp_apiv2_requests_total{status_class="5xx"}[15m]))
+              / sum by (cluster) (rate(streamapp_apiv2_requests_total[15m]))
+              > 0.05
+            and on (cluster)
+            sum by (cluster) (rate(streamapp_apiv2_requests_total[15m])) > 0.05
+          for: 15m
+          annotations:
+            summary: >-
+              {{ $value | humanizePercentage }} of Silo API requests are failing
+            description: >-
+              Break down streamapp_apiv2_requests_total by operation_id and
+              error_code to find the failing route.
+          labels:
+            severity: warning
+
+        - alert: SiloJellyfinAPIErrorRate
+          expr: |-
+            sum by (cluster) (rate(silo_jellycompat_requests_total{status_class="5xx"}[15m]))
+              / sum by (cluster) (rate(silo_jellycompat_requests_total[15m]))
+              > 0.05
+            and on (cluster)
+            sum by (cluster) (rate(silo_jellycompat_requests_total[15m])) > 0.05
+          for: 15m
+          annotations:
+            summary: >-
+              {{ $value | humanizePercentage }} of Jellyfin-compat requests are failing
+            description: >-
+              Jellyfin/Emby clients (TVs, Infuse, Findroid) are getting 5xx;
+              break down silo_jellycompat_requests_total by route.
+          labels:
+            severity: warning
+
+        - alert: SiloSubprocessFailing
+          # Per-workload FFmpeg exit ratio; daily totals hide bursts where
+          # nearly every thumbnail attempt fails.
+          expr: |-
+            sum by (cluster, workload) (increase(silo_subprocess_exits_total{outcome="error"}[30m]))
+              / sum by (cluster, workload) (increase(silo_subprocess_exits_total[30m]))
+              > 0.5
+            and on (cluster, workload)
+            sum by (cluster, workload) (increase(silo_subprocess_exits_total[30m])) >= 10
+          for: 15m
+          annotations:
+            summary: >-
+              {{ $value | humanizePercentage }} of {{ $labels.workload }} subprocesses are failing
+            description: >-
+              Check the logs for the FFmpeg error; bursts usually point at
+              specific files, a steady rate at the binary, GPU or scratch space.
+          labels:
+            severity: warning
+
+        - alert: SiloDependencyErrors
+          # Postgres times out a query or two per 10m during heavy scans; the
+          # floor only lets bursts through.
+          expr: |-
+            sum by (cluster, dependency, operation, outcome) (
+              increase(silo_dependency_operations_total{dependency=~"postgres|redis",outcome=~"error|timeout"}[10m])
+            ) > 10
+          for: 5m
+          annotations:
+            summary: >-
+              Silo {{ $labels.dependency }} {{ $labels.operation }} has
+              {{ $value | humanize }} {{ $labels.outcome }}s in 10m
+            description: >-
+              Check the CNPG pooler / dragonfly health and silo logs for the
+              failing statement.
+          labels:
+            severity: warning

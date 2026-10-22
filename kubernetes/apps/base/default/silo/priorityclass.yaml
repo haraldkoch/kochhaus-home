@@ -1,0 +1,10 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.37.1-standalone-strict/priorityclass-scheduling-v1.json
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: silo-transcode
+value: -1000
+globalDefault: false
+preemptionPolicy: Never
+description: "Optional silo transcode node; the server preempts it when only one GPU host is left."

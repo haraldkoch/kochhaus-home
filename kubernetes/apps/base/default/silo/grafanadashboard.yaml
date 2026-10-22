@@ -1,0 +1,15 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/grafana.integreatly.org/grafanadashboard_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: silo
+spec:
+  allowCrossNamespaceImport: true
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasources:
+    - datasourceName: prometheus
+      inputName: DS_PROMETHEUS
+  url: https://raw.githubusercontent.com/Silo-Server/silo-server/refs/heads/main/deploy/observability/grafana-dashboard.json

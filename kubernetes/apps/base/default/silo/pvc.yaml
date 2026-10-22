@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.37.1-standalone-strict/persistentvolumeclaim-v1.json
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: silo-trickplay
+spec:
+  storageClassName: nfs-direct
+  resources:
+    requests:
+      storage: 100Gi
+  accessModes:
+    - ReadWriteMany

@@ -1,0 +1,315 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: silo
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: silo
+  interval: 1h
+  values:
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: {type: RuntimeDefault}
+      resourceClaims:
+        - name: gpu
+          resourceClaimTemplateName: silo-gpu
+      # Server and transcode node never share a GPU host
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/instance: silo
+                matchExpressions:
+                  - key: app.kubernetes.io/controller
+                    operator: In
+                    values:
+                      - silo
+                      - transcode
+    controllers:
+      silo:
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: 18.6.0@sha256:87627baaddb0cabed4ebe033e75038e5c7b6b081c18e86514c99067179a90719
+            envFrom:
+              - secretRef:
+                  name: silo-secret
+        containers:
+          silo:
+            image: &image
+              repository: ghcr.io/silo-server/silo-server
+              tag: latest@sha256:279ff220712b60f7caa2c3f4db71bff56f1e6e668f11b2cf6e435f77d49f2aaa
+            env: &env
+              PORT: &port 8080
+              # Jellyfin/Emby compatibility listener
+              JF_PORT: &jfPort 8096
+              SILO_METRICS_LISTEN: :9091
+              # Plugins stored in postgres
+              SILO_PLUGIN_CACHE_DIR: /tmp/silo-plugins
+              SILO_TRUSTED_PROXIES: 10.42.0.0/16
+              # Image has no passwd entry
+              HOME: /tmp
+              REDIS_URL: redis://silo-dragonfly-db:6379
+              DATABASE_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: silo-secret
+                    key: DATABASE_URL
+              SECRET_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: silo-secret
+                    key: SECRET_KEY
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    port: *port
+                    path: /api/v1/health
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    port: *port
+                    path: /api/v1/ready
+            securityContext: &containerSecurity
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 12Gi
+              claims:
+                - name: gpu
+      transcode:
+        type: statefulset
+        replicas: 1
+        statefulset:
+          podManagementPolicy: Parallel
+          serviceName:
+            identifier: transcode
+        pod:
+          # Below default so the server can evict it when it needs this host
+          priorityClassName: silo-transcode
+        containers:
+          transcode:
+            image: *image
+            env:
+              <<: *env
+              MODE: transcode
+              POD_NAME:
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              NODE_NAME:
+                value: $(POD_NAME)
+                dependsOn: POD_NAME
+              # Must match the URL the node is registered under in the admin UI.
+              NODE_URL:
+                value: http://$(POD_NAME).silo-transcode.silo.svc.cluster.local:8080
+                dependsOn: POD_NAME
+            probes:
+              liveness: &nodeProbes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    port: *port
+                    path: /api/v1/health
+              readiness: *nodeProbes
+            securityContext: *containerSecurity
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                memory: 4Gi
+              claims:
+                - name: gpu
+    service:
+      silo:
+        controller: silo
+        ports:
+          http:
+            port: *port
+          jellyfin:
+            port: *jfPort
+          metrics:
+            port: 9091
+      # Headless for the stable per-pod NODE_URLs
+      transcode:
+        controller: transcode
+        clusterIP: None
+        ports:
+          http:
+            port: *port
+    serviceMonitor:
+      silo:
+        serviceName: silo
+        endpoints:
+          - port: metrics
+            # Target labels the upstream rules/dashboard aggregate on; the
+            # dashboard legends are {{instance}}, so name targets by pod not IP
+            relabelings:
+              - sourceLabels:
+                  - __meta_kubernetes_pod_name
+                targetLabel: instance
+              - targetLabel: cluster
+                replacement: home
+              - targetLabel: process_role
+                replacement: api
+      transcode:
+        serviceName: silo-transcode
+        endpoints:
+          - port: http
+            relabelings:
+              - sourceLabels:
+                  - __meta_kubernetes_pod_name
+                targetLabel: instance
+              - targetLabel: cluster
+                replacement: home
+              - targetLabel: process_role
+                replacement: transcode
+    route:
+      silo:
+        hostnames:
+          - silo.${CLUSTER_DOMAIN}
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: silo
+                port: *port
+      jellyfin:
+        hostnames:
+          - jellyfin.${CLUSTER_DOMAIN}
+        parentRefs:
+          - name: envoy-external
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: silo
+                port: *jfPort
+                #    networkpolicies:
+                #      silo:
+                #        type: cilium
+                #        controller: silo
+                #        ingress:
+                #          - fromEndpoints:
+                #              - matchLabels:
+                #                  k8s:io.kubernetes.pod.namespace: envoy-gateway
+                #                  gateway.envoyproxy.io/owning-gateway-name: internal
+                #            toPorts:
+                #              - ports:
+                #                  - {port: "8080", protocol: TCP}
+                #                  - {port: "8096", protocol: TCP}
+                #          # Sonarr/Radarr webhooks, Bazarr+ item/library refresh
+                #          - fromEndpoints:
+                #              - matchLabels:
+                #                  k8s:io.kubernetes.pod.namespace: downloads
+                #                  app.kubernetes.io/instance: sonarr
+                #              - matchLabels:
+                #                  k8s:io.kubernetes.pod.namespace: downloads
+                #                  app.kubernetes.io/instance: radarr
+                #              - matchLabels:
+                #                  k8s:io.kubernetes.pod.namespace: downloads
+                #                  app.kubernetes.io/instance: bazarr
+                #            toPorts:
+                #              - ports:
+                #                  - {port: "8080", protocol: TCP}
+                #          # Seerr library sync + media-server login, dashbrr health checks
+                #          - fromEndpoints:
+                #              - matchLabels:
+                #                  k8s:io.kubernetes.pod.namespace: downloads
+                #                  app.kubernetes.io/instance: seerr
+                #            toPorts:
+                #              - ports:
+                #                  - {port: "8096", protocol: TCP}
+                #        egress:
+                #          - toControllers:
+                #              - transcode
+                #            toPorts:
+                #              - ports:
+                #                  - {port: "8080", protocol: TCP}
+                #          # postgresql
+                #          - toEndpoints:
+                #              - matchLabels:
+                #                  k8s:io.kubernetes.pod.namespace: dbms
+                #                  app.kubernetes.io/name: postgresql
+                #                  app.kubernetes.io/instance: kochhaus
+                #            toPorts:
+                #              - ports:
+                #                  - {port: "5432", protocol: TCP}
+                #          # Seerr requests plugin
+                #          - toEndpoints:
+                #              - matchLabels:
+                #                  k8s:io.kubernetes.pod.namespace: downloads
+                #                  app.kubernetes.io/instance: seerr
+                #            toPorts:
+                #              - ports:
+                #                  - {port: "5055", protocol: TCP}
+                #          # Metadata providers, plugin catalog, jellyfin-web source + npm registry
+                #          - toEntities:
+                #              - world
+                #            toPorts:
+                #              - ports:
+                #                  - {port: "443", protocol: TCP}
+                #        egressDeny:
+                #          # Keep the LAN out of reach; in-cluster peers above are pod identities
+                #          - toCIDRSet:
+                #              - cidrGroupRef: private-networks
+                #      transcode:
+                #        type: cilium
+                #        controller: transcode
+                #        ingress:
+                #          - fromControllers:
+                #              - silo
+                #            toPorts:
+                #              - ports:
+                #                  - {port: "8080", protocol: TCP}
+                #        egress:
+                #          - {}
+    persistence:
+      data:
+        existingClaim: silo
+        advancedMounts:
+          silo:
+            silo:
+              - path: /var/lib/silo/artwork
+                subPath: artwork
+              - path: /var/lib/silo/compat
+                subPath: compat
+      trickplay:
+        existingClaim: silo-trickplay
+        advancedMounts:
+          silo:
+            silo:
+              - path: /var/lib/silo/artwork/trickplay
+      media:
+        existingClaim: media-nfs
+        globalMounts:
+          - path: /mnt/media
+            readOnly: true
+      # Transcodes, download artifacts, uploads and the plugin cache
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp

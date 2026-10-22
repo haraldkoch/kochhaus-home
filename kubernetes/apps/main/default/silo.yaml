@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: silo
+spec:
+  components:
+    - ../../../../components/dragonfly
+    - ../../../../components/keda/nfs-scaler
+    - ../../../../components/main/volsync
+  interval: 1h
+  path: ./kubernetes/apps/base/default/silo
+  postBuild:
+    substitute:
+      APP: silo
+      VOLSYNC_CAPACITY: 20Gi
+      VOLSYNC_GID: "1000"
+      VOLSYNC_UID: "1000"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: false

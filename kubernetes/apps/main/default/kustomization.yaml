@@ -29,6 +29,7 @@ resources:
   - ./opnsense-backup.yaml
   - ./picoshare.yaml
   - ./populator-test.yaml
+  - ./silo.yaml
   - ./static-web.yaml
   - ./syncthing.yaml
   - ./tautulli.yaml
