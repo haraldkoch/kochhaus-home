@@ -21,7 +21,7 @@ spec:
           copy-config:
             image:
               repository: mirror.gcr.io/library/alpine
-              tag: 3.24.2
+              tag: 3.24.3
             command:
               - /bin/sh
               - -c
