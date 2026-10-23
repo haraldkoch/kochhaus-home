@@ -14,6 +14,10 @@ spec:
       runOnControlPlane: true
     externalSnapshotter:
       enabled: false
+    feature:
+      # this removes fsGroupPolicy: File from the CSIDriver, which makes
+      # mounting faster (even with fsGroupChangePolicy: OnRootMismatch)
+      enableFSGroupPolicy: false
     node:
       tolerations: []
     storageClass:
