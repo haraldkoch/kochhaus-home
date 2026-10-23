@@ -306,7 +306,7 @@ spec:
       media:
         existingClaim: media-nfs
         globalMounts:
-          - path: /mnt/media
+          - path: /media
             readOnly: true
       # Transcodes, download artifacts, uploads and the plugin cache
       tmpfs:
