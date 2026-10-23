@@ -2,20 +2,17 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.14/website/content/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: UnattendedInstallConfig
+installer:
+# special for this node, which is a qemu VM
+# image: factory.talos.dev/metal-installer/6b112ffe277f7b5001f9f6b4c1a8947618ec552d0f8fe73a0ebe45710e4423de:v1.14.4
 provisioning:
   diskSelector:
     match: disk.dev_path == "/dev/vda"
 ---
 apiVersion: v1alpha1
-kind: UnattendedInstallConfig
-installer:
-  # special for this node, which is a qemu VM
-  image: factory.talos.dev/metal-installer/6b112ffe277f7b5001f9f6b4c1a8947618ec552d0f8fe73a0ebe45710e4423de:v1.14.4
----
-apiVersion: v1alpha1
 kind: KubeNodeConfig
 taints:
-  node-role.kubernetes.io/control-plane: :NoSchedule
+  kochhaus.home.arpa/silo: :NoSchedule
 ---
 apiVersion: v1alpha1
 kind: HostnameConfig
