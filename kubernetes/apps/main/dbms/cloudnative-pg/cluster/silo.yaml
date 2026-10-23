@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: silo-vector
+spec:
+  name: silo
+  owner: silo
+  cluster:
+    name: kochhaus
+  extensions:
+    - name: vector

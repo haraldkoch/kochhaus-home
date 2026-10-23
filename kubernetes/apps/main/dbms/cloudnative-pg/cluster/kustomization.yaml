@@ -7,3 +7,4 @@ resources:
   - ./scheduledbackup.yaml
   - ./prometheusrule.yaml
   - ./service.yaml
+  - ./silo.yaml
