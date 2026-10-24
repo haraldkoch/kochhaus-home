@@ -102,6 +102,12 @@ identity_providers:
         - "revocation"
         - "introspection"
       allowed_origins_from_client_redirect_uris: true
+    lifespans:
+      custom:
+        long_lived_profile:
+          access_token: '1 day'
+          refresh_token: '7 days'
+          id_token: '1 hour'
     clients:
       - client_id: argocd
         client_name: Argo CD
@@ -259,6 +265,30 @@ identity_providers:
           - "https://patchmon.${CLUSTER_DOMAIN}/api/v1/auth/oidc/callback"
         token_endpoint_auth_method: client_secret_post
         userinfo_signed_response_alg: none
+      - client_id: silo
+        client_name: Silo
+        client_secret: "$${SILO_OAUTH_CLIENT_SECRET_DIGEST}"
+        public: false
+        authorization_policy: two_factor
+        lifespan: long_lived_profile
+        pre_configured_consent_duration: 1y
+        require_pkce: false
+        pkce_challenge_method: ''
+        scopes:
+          - openid
+          - profile
+          - email
+          - groups
+          - offline_access
+        redirect_uris:
+          - https://silo.${CLUSTER_DOMAIN}/api/v2/auth/oauth/35/callback
+        response_types:
+          - code
+        grant_types:
+          - authorization_code
+        access_token_signed_response_alg: none
+        userinfo_signed_response_alg: none
+        token_endpoint_auth_method: client_secret_post
       - client_id: trek
         client_name: TREK
         client_secret: "$${TREK_OAUTH_CLIENT_SECRET_DIGEST}"
