@@ -105,7 +105,7 @@ spec:
       hostnames:
         - *host
       parentRefs:
-        - name: envoy-internal
+        - name: envoy-external
           namespace: network
       rules:
         - matches:
