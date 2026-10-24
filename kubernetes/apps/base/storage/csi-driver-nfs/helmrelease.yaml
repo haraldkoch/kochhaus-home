@@ -19,7 +19,10 @@ spec:
       # mounting faster (even with fsGroupChangePolicy: OnRootMismatch)
       enableFSGroupPolicy: false
     node:
-      tolerations: []
+      tolerations:
+        - key: kochhaus.home.arpa/silo
+          operator: Exists
+          effect: NoSchedule
     storageClass:
       create: true
       name: nfs-direct
