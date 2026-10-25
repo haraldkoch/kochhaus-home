@@ -26,6 +26,10 @@ routes:
   - gateway: fdd5:aa8:9535:20::1
 ---
 apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: binfmt_misc
+---
+apiVersion: v1alpha1
 kind: LinkAliasConfig
 name: net0
 selector:
