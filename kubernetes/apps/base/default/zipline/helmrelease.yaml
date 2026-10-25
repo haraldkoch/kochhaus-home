@@ -26,7 +26,7 @@ spec:
           zipline:
             image:
               repository: ghcr.io/diced/zipline
-              tag: 4.8.1@sha256:c6ec6d72ff3d2d96cafaf673d64b17e709d0abdae20db218bd13a29348fb212f
+              tag: 4.8.2@sha256:cb3769f50a5887e38d678ab466656bd2a56f3ce96bc8a4d0788cc479d19c05c9
             env:
               CORE_DEFAULT_DOMAIN: zipline.${CLUSTER_DOMAIN}
               CORE_HOSTNAME: 0.0.0.0
