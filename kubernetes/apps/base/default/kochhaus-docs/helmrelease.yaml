@@ -14,39 +14,12 @@ spec:
       kochhaus-docs:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          git-sync:
-            image:
-              repository: registry.k8s.io/git-sync/git-sync
-              tag: v4.8.0
-            env:
-              GITSYNC_ROOT: /git
-              GITSYNC_LINK: /mdbook/book
-              GITSYNC_REF: HEAD
-            envFrom:
-              - secretRef:
-                  name: kochhaus-docs
-            restartPolicy: Always
-          mdbook:
-            dependsOn: git-sync
-            image:
-              repository: ghcr.io/peaceiris/mdbook
-              tag: v0.4.40
-            command:
-              - /bin/sh
-              - -c
-              - |-
-                sleep 5
-                printf "\e[1;32m%-6s\e[m\n" "Building initial output tree ..."
-                mdbook build --dest-dir /public /mdbook/book
-                printf "\e[1;32m%-6s\e[m\n" "Watching for changes  ..."
-                mdbook watch --dest-dir /public /mdbook/book
-            restartPolicy: Always
         containers:
-          static-web-server:
+          kochhaus-docs:
             image:
-              repository: mirror.gcr.io/joseluisq/static-web-server
-              tag: 2.44.1-alpine
+              repository: harbor.${CLUSTER_DOMAIN}/kochhaus/kochhaus-docs
+              tag: zensical
+              pullPolicy: Always
             env:
               TZ: America/Toronto
               SERVER_PORT: 80
@@ -83,21 +56,3 @@ spec:
               - path:
                   type: PathPrefix
                   value: /
-          - filters:
-              - type: RequestRedirect
-                requestRedirect:
-                  path:
-                    type: ReplaceFullPath
-                    replaceFullPath: /html/
-                  statusCode: 302
-            matches:
-              - path:
-                  type: Exact
-                  value: /
-    persistence:
-      git:
-        type: emptyDir
-      mdbook:
-        type: emptyDir
-      public:
-        type: emptyDir

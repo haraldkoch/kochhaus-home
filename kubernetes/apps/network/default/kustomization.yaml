@@ -22,7 +22,7 @@ resources:
   - ./hassproxy.yaml
   - ./homer.yaml
   - ./it-tools.yaml
-  # - ./kochhaus-docs.yaml
+  - ./kochhaus-docs.yaml
   - ./mosquitto.yaml
   - ./mqtt-exporter.yaml
   - ./music-assistant.yaml
