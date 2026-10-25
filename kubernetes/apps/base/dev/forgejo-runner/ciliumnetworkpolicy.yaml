@@ -11,35 +11,53 @@ spec:
   enableDefaultDeny:
     ingress: true
   egress:
-    - # DNS
-      toEndpoints:
-        - matchLabels:
-            io.kubernetes.pod.namespace: kube-system
-            k8s-app: kube-dns
-      toPorts:
-        - ports:
-            - port: "53"
-              protocol: UDP
-            - port: "53"
-              protocol: TCP
     - # Forgejo server
       toEndpoints:
         - matchLabels:
             app.kubernetes.io/name: forgejo
       toPorts:
         - ports:
-            - protocol: TCP
-              port: "3000"
-    - # Forgejo (External URL)
-      toFQDNs:
-        - matchName: git.${CLUSTER_DOMAIN}
+            - port: "3000"
+              protocol: TCP
+    - # DNS resolution (kube-dns)
+      toEndpoints:
+        - matchLabels:
+            k8s-app: kube-dns
+            k8s:io.kubernetes.pod.namespace: kube-system
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+    - # Forgejo runner cache & proxy (job pods → runner pod)
+      toEndpoints:
+        - matchExpressions:
+            - key: app.kubernetes.io/instance
+              operator: In
+              values:
+                - forgejo-runner
+            - key: k8s:io.kubernetes.pod.namespace
+              operator: In
+              values:
+                - dev
+      toPorts:
+        - ports:
+            - port: "8088"
+              protocol: TCP
+            - port: "8089"
+              protocol: TCP
+    - # Own services via ingress gateways (e.g. git.${CLUSTER_DOMAIN})
+      toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/managed-by: envoy-gateway
+            k8s:io.kubernetes.pod.namespace: network
     - # Internet egress
       toCIDRSet:
-        # Internet egress
         - cidrGroupRef: internet
       toPorts:
         - ports:
-            - protocol: TCP
-              port: "80"
-            - protocol: TCP
-              port: "443"
+            - port: "80"
+              protocol: TCP
+            - port: "443"
+              protocol: TCP
