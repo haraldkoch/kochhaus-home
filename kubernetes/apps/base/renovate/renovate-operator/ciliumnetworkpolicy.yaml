@@ -34,10 +34,6 @@ spec:
             io.kubernetes.pod.namespace: network
             gateway.envoyproxy.io/owning-gateway-name: external
 
-    # Allow internet access (exclude RFC1918 private ranges)
+    # Allow internet access
     - toCIDRSet:
-        - cidr: 0.0.0.0/0
-          except:
-            - 10.0.0.0/8
-            - 172.16.0.0/12
-            - 192.168.0.0/16
+        - cidrGroupRef: internet
