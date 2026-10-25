@@ -20,6 +20,7 @@ resources:
   - ./esphome.yaml
   - ./garage-ui.yaml
   - ./hassproxy.yaml
+  - ./homelable.yaml
   - ./homer.yaml
   - ./it-tools.yaml
   - ./kochhaus-docs.yaml
