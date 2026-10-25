@@ -4,7 +4,14 @@
     {
       description: "Custom schedule for noisy packages",
       matchDataSources: ["docker"],
-      matchPackageNames: ["/omada-controller/", "/reloader/"],
+      matchPackageNames: ["/reloader/"],
+      schedule: ["on saturday"]
+    },
+    {
+      description: "Custom schedule for noisy digests",
+      matchDataSources: ["docker"],
+      matchPackageNames: ["/omada-controller/", "/silo-server/"],
+      matchUpdateTypes: ["digest"],
       schedule: ["on saturday"]
     }
   ]
