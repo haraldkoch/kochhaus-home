@@ -52,6 +52,15 @@ spec:
         - matchLabels:
             app.kubernetes.io/managed-by: envoy-gateway
             k8s:io.kubernetes.pod.namespace: network
+    - # harbor registry
+      toFQDNs:
+        - matchName: git.${CLUSTER_DOMAIN}
+      toPorts:
+        - ports:
+            - port: "80"
+              protocol: TCP
+            - port: "443"
+              protocol: TCP
     - # Internet egress
       toCIDRSet:
         - cidrGroupRef: internet
