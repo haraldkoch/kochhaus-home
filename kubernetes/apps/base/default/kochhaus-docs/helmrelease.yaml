@@ -18,12 +18,11 @@ spec:
           kochhaus-docs:
             image:
               repository: harbor.${CLUSTER_DOMAIN}/kochhaus/kochhaus-docs
-              tag: zensical
+              tag: main
               pullPolicy: Always
             env:
               TZ: America/Toronto
               SERVER_PORT: 80
-              SERVER_ROOT: /public
               SERVER_LOG_LEVEL: info
             probes:
               liveness:

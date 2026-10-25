@@ -54,7 +54,16 @@ spec:
             k8s:io.kubernetes.pod.namespace: network
     - # harbor registry
       toFQDNs:
-        - matchName: git.${CLUSTER_DOMAIN}
+        - matchName: harbor.${CLUSTER_DOMAIN}
+      toPorts:
+        - ports:
+            - port: "80"
+              protocol: TCP
+            - port: "443"
+              protocol: TCP
+    - # harbor registry (IP address version)
+      toCIDR:
+        - 192.168.23.0/24
       toPorts:
         - ports:
             - port: "80"
