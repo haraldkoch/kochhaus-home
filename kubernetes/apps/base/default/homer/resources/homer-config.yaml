@@ -41,33 +41,17 @@ colors:
 links: []
 
 services:
-  - name: Media
+  - name: Media I
     icon: fas fa-film
     items:
       - name: Plex
         logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/plex.png
         url: https://media.${PRIVATE_STATIC_DOMAIN}/web/
         subtitle: Watch Movies and TV
-      - name: Jellyseerr
-        logo: https://raw.githubusercontent.com/Fallenbagel/jellyseerr/refs/heads/develop/public/os_logo_square.png
+      - name: Seerr
+        logo: https://requests.kochhaus.dev/logo_full.svg
         url: https://requests.${CLUSTER_DOMAIN}
         subtitle: Request new movies and shows
-      - name: Radarr
-        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/radarr.png
-        url: https://radarr.${CLUSTER_DOMAIN}
-        subtitle: the movie downloader
-      - name: Sonarr
-        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/sonarr.png
-        url: https://sonarr.${CLUSTER_DOMAIN}
-        subtitle: the series downloader
-      - name: Bazarr
-        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/bazarr.png
-        url: https://bazarr.${CLUSTER_DOMAIN}
-        subtitle: subtitle downloader
-      - name: Tautulli
-        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/tautulli.png
-        url: https://tautulli.${CLUSTER_DOMAIN}
-        subtitle: track watched movies and shows
       - name: Your Spotify
         logo: https://raw.githubusercontent.com/Yooooomi/your_spotify/master/apps/client/public/logo192.png
         url: https://spotty.${CLUSTER_DOMAIN}
@@ -168,6 +152,26 @@ services:
         icon: fas fa-chart-line
         url: https://grafana.${CLUSTER_DOMAIN}/d/f34c065d-33a8-415a-89f2-0bbfc0a6a4b6/house-sensors
         subtitle: Temperatures in the house
+
+  - name: Media II
+    icon: fas fa-film
+    items:
+      - name: Radarr
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/radarr.png
+        url: https://radarr.${CLUSTER_DOMAIN}
+        subtitle: the movie downloader
+      - name: Sonarr
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/sonarr.png
+        url: https://sonarr.${CLUSTER_DOMAIN}
+        subtitle: the series downloader
+      - name: Bazarr
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/bazarr.png
+        url: https://bazarr.${CLUSTER_DOMAIN}
+        subtitle: subtitle downloader
+      - name: Tautulli
+        logo: https://raw.githubusercontent.com/NX211/homer-icons/master/png/tautulli.png
+        url: https://tautulli.${CLUSTER_DOMAIN}
+        subtitle: track watched movies and shows
 
   - name: Management
     icon: fas fa-robot
