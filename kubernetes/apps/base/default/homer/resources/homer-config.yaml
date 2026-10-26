@@ -113,6 +113,14 @@ services:
         url: https://zipline.${CLUSTER_DOMAIN}
         subtitle: complex and powerful file sharing portal
 
+  - name: Kochhaus Hosted Applications
+    icon: fas fa-bookmark
+    items:
+      - name: TREK
+        icon: fas fa-plane
+        url: https://trek.${CLUSTER_DOMAIN}
+        subtitle: Travel planning and tracking
+
   - name: Tools
     icon: fas fa-screwdriver-wrench
     items:
