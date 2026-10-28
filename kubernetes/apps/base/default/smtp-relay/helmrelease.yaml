@@ -10,6 +10,37 @@ spec:
     name: smtp-relay
   interval: 1h
   values:
+    configMaps:
+      smtp-relay:
+        data:
+          maddy.conf: |
+            state_dir /var/lib/maddy
+            runtime_dir /run/maddy
+
+            openmetrics tcp://0.0.0.0:{env:SMTP_RELAY_METRICS_PORT} { }
+
+            tls file /tls/tls.crt /tls/tls.key {
+                protocols tls1.2 tls1.3
+                curves X25519
+            }
+
+            hostname {env:SMTP_RELAY_HOSTNAME}
+
+            smtp tcp://0.0.0.0:{env:SMTP_RELAY_SMTP_PORT} {
+                default_source {
+                    deliver_to &remote_queue
+                }
+            }
+
+            target.queue remote_queue {
+                target &remote_smtp
+            }
+
+            target.smtp remote_smtp {
+                starttls no
+                auth off
+                targets tcp://{env:SMTP_RELAY_SERVER}:{env:SMTP_RELAY_SERVER_PORT}
+            }
     controllers:
       smtp-relay:
         # FIXME: convert to two replicas and statefulset
@@ -90,7 +121,7 @@ spec:
     persistence:
       config:
         type: configMap
-        name: smtp-relay
+        identifier: smtp-relay
         globalMounts:
           - path: /data/maddy.conf
             subPath: maddy.conf
