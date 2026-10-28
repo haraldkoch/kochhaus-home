@@ -34,6 +34,8 @@ spec:
                       - transcode
     controllers:
       silo:
+        labels:
+          egress.home.arpa/custom-egress: "true"
         pod:
           affinity:
             nodeAffinity:
@@ -108,6 +110,8 @@ spec:
               limits:
                 memory: 12Gi
       transcode:
+        labels:
+          egress.home.arpa/custom-egress: "true"
         type: statefulset
         replicas: 1
         statefulset:
