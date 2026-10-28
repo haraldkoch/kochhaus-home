@@ -11,6 +11,8 @@ spec:
   interval: 1h
   values:
     fullnameOverride: renovate-operator
+    podLabels:
+      app.kubernetes.io/name: renovate-operator
     route:
       enabled: true
       hostnames:

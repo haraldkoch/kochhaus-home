@@ -86,6 +86,9 @@ spec:
     - name: RENOVATE_CACHE_PRIVATE_PACKAGES
       value: "true"
   image: ghcr.io/renovatebot/renovate:44.190.0-full@sha256:211f2da40eaae47b3110cd8ccaf0edc62fd0bbf7d106b2c21e215ed3339cee0f
+  metadata:
+    labels:
+      app.kubernetes.io/name: renovate-jobs
   # we have 3 nodes
   parallelism: 3
   provider:
