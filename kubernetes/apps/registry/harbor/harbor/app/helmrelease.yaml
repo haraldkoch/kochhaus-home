@@ -26,6 +26,14 @@ spec:
       kind: Secret
       name: harbor-secret
       valuesKey: harbor_encryption_key
+    - targetPath: persistence.imageChartStorage.s3.accesskey
+      kind: Secret
+      name: harbor-secret
+      valuesKey: harbor_aws_access_key_id
+    - targetPath: persistence.imageChartStorage.s3.secretkey
+      kind: Secret
+      name: harbor-secret
+      valuesKey: harbor_aws_secret_access_key
   values:
     expose:
       type: loadBalancer
@@ -45,10 +53,6 @@ spec:
     persistence:
       enabled: true
       persistentVolumeClaim:
-        registry:
-          existingClaim: harbor-registry-v1
-          storageClass: ${STORAGECLASS}
-          subPath: registry
         jobservice:
           jobLog:
             storageClass: ${STORAGECLASS}
@@ -59,21 +63,19 @@ spec:
         trivy:
           storageClass: ${STORAGECLASS}
           size: 10Gi
+      imageChartStorage:
+        type: s3
+        s3:
+          bucket: harbor
+          # replaced by valuesFrom
+          # accesskey: ${AWS_SECRET_KEY_ID}
+          # secretkey: ${AWS_SECRET_KEY}
+          region: garage
+          regionendpoint: http://mnemosyne.home.arpa:3900
+          rootdirectory: /prod
+
     database:
       type: internal
-
-    #      imageChartStorage:
-    #        type: s3
-    #        s3:
-    #          bucket: kubernetes-registry
-    #          accesskey: ${AWS_SECRET_KEY_ID}
-    #          secretkey: ${AWS_SECRET_KEY}
-    #          regionendpoint: https://mnemosyne.home.arpa
-    #          rootdirectory: /prod
-
-    #    # our CSI does not support ReadWriteMany so we must use Recreate on pods
-    #    updateStrategy:
-    #      type: Recreate
 
     # replaced by valuesFrom
     # harborAdminPassword: "${SECRET_HARBOR_ADMIN_PASSWORD}"
