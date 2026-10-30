@@ -7,6 +7,7 @@
     "github>home-operations/renovate-presets//apps/talosFactory.json5",
     "github>haraldkoch/kochhaus-home//.renovate/allowedVersions.json5",
     "github>haraldkoch/kochhaus-home//.renovate/autoMerge.json5",
+    "github>haraldkoch/kochhaus-home//.renovate/changelogs.json5",
     "github>haraldkoch/kochhaus-home//.renovate/clusters.json5",
     "github>haraldkoch/kochhaus-home//.renovate/groups.json5",
     "github>haraldkoch/kochhaus-home//.renovate/packageRules.json5",
