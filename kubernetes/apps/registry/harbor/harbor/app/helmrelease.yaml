@@ -53,6 +53,11 @@ spec:
     persistence:
       enabled: true
       persistentVolumeClaim:
+        # replace local PVC with S3 until we can get a bigger disk
+        # registry:
+        #   existingClaim: harbor-registry-v1
+        #   storageClass: ${STORAGECLASS}
+        #   subPath: registry
         jobservice:
           jobLog:
             storageClass: ${STORAGECLASS}
@@ -82,6 +87,10 @@ spec:
     # The secret key used for encryption. Must be a string of 16 chars.
     # secretKey: "${SECRET_HARBOR_ENCRPYTION_KEY}"
 
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
     notary:
       enabled: false
 
