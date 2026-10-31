@@ -20,7 +20,6 @@ resources:
   - ./kromgo.yaml
   - ./kube-prometheus-stack.yaml
   - ./network-ups-tools.yaml
-  - ./patchmon.yaml
   - ./silence-operator.yaml
   - ./siren.yaml
   - ./smartctl-exporter.yaml

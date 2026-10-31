@@ -240,7 +240,3 @@ services:
         logo: https://dmarc.org/wp-content/uploads/2015/02/DMARC-2015-logo-small-202x110.png
         url: https://dmarc-report.${CLUSTER_DOMAIN}/
         subtitle: DMARC (email security) reports
-      - name: Patchmon
-        logo: https://patchmon.net/assets/logo_square_default.svg
-        url: https://patchmon.${CLUSTER_DOMAIN}/
-        subtitle: Monitor (and remediate) server patches
