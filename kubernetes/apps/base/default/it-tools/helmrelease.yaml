@@ -20,7 +20,7 @@ spec:
           app:
             image:
               repository: ghcr.io/sharevb/it-tools
-              tag: 2025.10.12@sha256:e2335e2bd14d533f1e252964fd3deb8daea6cdebf83b55be5aedbd3f32151b2e
+              tag: 2026.10.25@sha256:c6e68a94af10c73cb4e53eaa78726d8abbbb4ad1a89a3f127a69f85a9ae029ab
             resources:
               requests:
                 cpu: 5m
