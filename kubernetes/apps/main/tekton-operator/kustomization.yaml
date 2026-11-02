@@ -11,4 +11,4 @@ replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./tekton-operator/ks.yaml
+  - ./tekton-operator.yaml

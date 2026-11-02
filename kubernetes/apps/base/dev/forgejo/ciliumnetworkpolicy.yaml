@@ -1,0 +1,104 @@
+---
+# Policy for the main Forgejo application
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: forgejo-app
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: forgejo
+  ingress:
+    # Forgejo is publicly exposed - allow all ingress
+    - fromEntities:
+        - all
+
+  egress:
+    # Allow DNS
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+
+    # Allow Kubernetes API
+    - toEntities:
+        - kube-apiserver
+
+    # Allow egress within the namespace (to dragonfly)
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: forgejo
+
+    # Allow egress to postgres (database namespace)
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: dbms
+            cnpg.io/cluster: kochhaus
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+
+    # Allow egress to internal envoy gateway (for S3 object storage)
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: network
+            gateway.envoyproxy.io/owning-gateway-name: internal
+
+    # Allow egress to external envoy gateway
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: network
+            gateway.envoyproxy.io/owning-gateway-name: external
+
+    # Allow egress to S3-compatible object storage for Kopia backups
+    - toEntities:
+        - world
+
+    # Keep internal VolSync egress for legacy restores/debugging
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: storage
+
+    # Allow egress to chaski (webhook delivery)
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: default
+            app.kubernetes.io/name: chaski
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+---
+# Policy for volsync backup jobs
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: forgejo-volsync
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/created-by: volsync
+  egress:
+    # Allow DNS
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+
+    # Allow egress to volsync-system (for backups)
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: volsync-system

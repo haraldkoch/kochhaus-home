@@ -4,6 +4,7 @@ kind: TektonConfig
 metadata:
   name: config
 spec:
+  targetNamespace: tekton-pipelines
   addon: {}
   chain:
     artifacts.oci.format: simplesigning
