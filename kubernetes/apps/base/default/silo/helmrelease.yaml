@@ -142,7 +142,7 @@ spec:
                 dependsOn: POD_NAME
               # Must match the URL the node is registered under in the admin UI.
               NODE_URL:
-                value: http://$(POD_NAME).silo-transcode.silo.svc.cluster.local:8080
+                value: http://$(POD_NAME).silo-transcode.default.svc.cluster.local:8080
                 dependsOn: POD_NAME
             probes:
               liveness: &nodeProbes
