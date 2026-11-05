@@ -330,8 +330,34 @@ spec:
             toPorts:
               - ports:
                   - {port: "8080", protocol: TCP}
+          # return traffic? eh?
+          - fromEndpoints:
+              - matchLabels:
+                  k8s:io.kubernetes.pod.namespace: dbms
+                  app.kubernetes.io/name: postgresql
+                  app.kubernetes.io/instance: kochhaus
+          - fromEndpoints:
+              - matchLabels:
+                  app.kubernetes.io/name: dragonfly
+                  app: silo-dragonfly-db
         egress:
-          - {}
+          # redis / dragonfly
+          - toEndpoints:
+              - matchLabels:
+                  app.kubernetes.io/name: dragonfly
+                  app: silo-dragonfly-db
+            toPorts:
+              - ports:
+                  - {port: "6379", protocol: TCP}
+          # postgresql
+          - toEndpoints:
+              - matchLabels:
+                  k8s:io.kubernetes.pod.namespace: dbms
+                  app.kubernetes.io/name: postgresql
+                  app.kubernetes.io/instance: kochhaus
+            toPorts:
+              - ports:
+                  - {port: "5432", protocol: TCP}
     persistence:
       config:
         type: emptyDir
