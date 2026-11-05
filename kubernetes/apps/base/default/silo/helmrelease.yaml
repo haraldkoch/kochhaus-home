@@ -286,6 +286,14 @@ spec:
             toPorts:
               - ports:
                   - {port: "5432", protocol: TCP}
+          # redis / dragonfly
+          - toEndpoints:
+              - matchLabels:
+                  app.kubernetes.io/name: dragonfly
+                  app: silo-dragonfly-db
+            toPorts:
+              - ports:
+                  - {port: "6379", protocol: TCP}
           # Seerr requests plugin
           - toEndpoints:
               - matchLabels:
