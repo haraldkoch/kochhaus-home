@@ -65,6 +65,7 @@ spec:
     disabled: false
     is_external_db: true
     db_host: postgres-rw.dbms.svc.cluster.local
+    db_name: tekton-results
     db_port: 5432
     db_secret_name: tekton-results-postgres
     db_sslmode: disable
