@@ -2,51 +2,47 @@
 # Areas
 area/bootstrap:
   - changed-files:
-      - any-glob-to-any-file: "bootstrap/**/*"
+      - any-glob-to-any-file: bootstrap/**/*
 area/docs:
   - changed-files:
       - any-glob-to-any-file:
-          - "docs/**/*"
+          - docs/**/*
           - "README.md"
 area/github:
   - changed-files:
-      - any-glob-to-any-file: ".github/**/*"
+      - any-glob-to-any-file: .github/**/*
 area/kubernetes:
   - changed-files:
-      - any-glob-to-any-file: "kubernetes/**/*"
+      - any-glob-to-any-file: kubernetes/**/*
 area/renovate:
   - changed-files:
       - any-glob-to-any-file:
-          - ".github/renovate/**/*"
-          - ".github/renovate.json5"
+          - .github/renovate/**/*
+          - .github/renovate.json5
 area/scripts:
   - changed-files:
-      - any-glob-to-any-file: "scripts/**/*"
+      - any-glob-to-any-file: scripts/**/*
 area/talos:
   - changed-files:
-      - any-glob-to-any-file: "talos/**/*"
+      - any-glob-to-any-file: talos/**/*
 area/taskfile:
   - changed-files:
       - any-glob-to-any-file:
-          - ".taskfiles/**/*"
+          - .taskfiles/**/*
           - "Taskfile.yaml"
-# Clusters
-cluster/base:
+area/terraform:
   - changed-files:
-      - any-glob-to-any-file: kubernetes/apps/base/**/*
+      - any-glob-to-any-file: terraform/**/*
+# Clusters
 cluster/main:
   - changed-files:
-      - any-glob-to-any-file: kubernetes/apps/main/**/*
-      - any-glob-to-any-file: talos/main/**/*
+      - any-glob-to-any-file: kubernetes/**/main/**/*
 cluster/network:
   - changed-files:
-      - any-glob-to-any-file: kubernetes/apps/network/**/*
-      - any-glob-to-any-file: talos/network/**/*
+      - any-glob-to-any-file: kubernetes/**/network/**/*
 cluster/registry:
   - changed-files:
-      - any-glob-to-any-file: kubernetes/apps/registry/**/*
-      - any-glob-to-any-file: talos/registry/**/*
+      - any-glob-to-any-file: kubernetes/**/registry/**/*
 cluster/test:
   - changed-files:
-      - any-glob-to-any-file: kubernetes/apps/test/**/*
-      - any-glob-to-any-file: talos/test/**/*
+      - any-glob-to-any-file: kubernetes/**/test/**/*
