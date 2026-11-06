@@ -1,0 +1,19 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: tekton-cnpg
+spec:
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/instance: kochhaus
+            app.kubernetes.io/name: postgresql
+            k8s:io.kubernetes.pod.namespace: dbms
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+  endpointSelector:
+    matchLabels:
+      app: tekton-results-api
