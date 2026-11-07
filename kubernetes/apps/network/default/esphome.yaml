@@ -6,8 +6,8 @@ metadata:
   name: esphome
 spec:
   components:
-    - ../../../../components/network/volsync
     - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/restore
   dependsOn:
     - name: multus-networks
       namespace: network
@@ -23,10 +23,6 @@ spec:
       KOPIUR_PUID: "2000"
       KOPIUR_PGID: "2000"
       KOPIUR_CAPACITY: 1Gi
-      VOLSYNC_CLAIM: esphome
-      VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_PUID: "2000"
-      VOLSYNC_PGID: "2000"
   prune: true
   sourceRef:
     kind: GitRepository
