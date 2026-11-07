@@ -21,7 +21,6 @@ spec:
       GATUS_SUBDOMAIN: zigbee
       KOPIUR_PUID: "1022"
       KOPIUR_PGID: "1022"
-      KOPIUR_CLAIM: zigbee2mqtt-config
       KOPIUR_CAPACITY: 1Gi
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_PUID: "1022"
