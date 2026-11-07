@@ -29,5 +29,6 @@ spec:
     keepWeekly: 4
   sources:
     - pvc:
-        name: ${APP}
+        # remove KOPIUR_CLAIM once we have renamed every PVC
+        name: ${KOPIUR_CLAIM:=${APP}}
   volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=${SNAPSHOTCLASS}}
