@@ -20,6 +20,7 @@ spec:
       APP: changedetection
       KOPIUR_PUID: "65532"
       KOPIUR_PGID: "65532"
+      KOPIUR_CLAIM: changedetection-config
       KOPIUR_CAPACITY: 1Gi
   prune: true
   sourceRef:
