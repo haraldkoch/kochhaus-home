@@ -7,7 +7,10 @@ metadata:
 spec:
   components:
     - ../../../../components/network/volsync
+    - ../../../../components/kopiur/backup
   dependsOn:
+    - name: kopiur
+      namespace: storage
     - name: longhorn
       namespace: storage
     - name: volsync
@@ -17,6 +20,9 @@ spec:
   postBuild:
     substitute:
       APP: populator-test
+      KOPIUR_CAPACITY: 2Gi
+      KOPIUR_PGID: "65533"
+      KOPIUR_PUID: "65533"
       VOLSYNC_CAPACITY: 2Gi
       VOLSYNC_PGID: "65533"
       VOLSYNC_PUID: "65533"
