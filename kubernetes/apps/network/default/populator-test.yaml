@@ -6,14 +6,12 @@ metadata:
   name: populator-test
 spec:
   components:
-    - ../../../../components/network/volsync
     - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/restore
   dependsOn:
     - name: kopiur
       namespace: storage
     - name: longhorn
-      namespace: storage
-    - name: volsync
       namespace: storage
   interval: 1h
   path: ./kubernetes/apps/base/default/populator-test
@@ -23,9 +21,6 @@ spec:
       KOPIUR_CAPACITY: 2Gi
       KOPIUR_PGID: "65533"
       KOPIUR_PUID: "65533"
-      VOLSYNC_CAPACITY: 2Gi
-      VOLSYNC_PGID: "65533"
-      VOLSYNC_PUID: "65533"
   prune: true
   sourceRef:
     kind: GitRepository
