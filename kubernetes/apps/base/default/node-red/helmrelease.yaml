@@ -52,4 +52,4 @@ spec:
             namespace: network
     persistence:
       data:
-        existingClaim: ${VOLSYNC_CLAIM}
+        existingClaim: "{{ .Release.Name }}"
