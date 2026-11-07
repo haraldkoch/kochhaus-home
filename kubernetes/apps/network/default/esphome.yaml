@@ -13,8 +13,6 @@ spec:
       namespace: network
     - name: longhorn
       namespace: storage
-    - name: volsync
-      namespace: storage
   interval: 1h
   path: ./kubernetes/apps/base/default/esphome
   postBuild:
