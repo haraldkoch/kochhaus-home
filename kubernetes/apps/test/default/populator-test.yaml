@@ -8,6 +8,7 @@ spec:
   components:
     - ../../../../components/keda/nfs-scaler
     - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/bootstrap
   dependsOn:
     - name: keda
       namespace: observability
