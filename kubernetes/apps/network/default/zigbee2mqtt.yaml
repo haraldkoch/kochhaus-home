@@ -6,8 +6,8 @@ metadata:
   name: zigbee2mqtt
 spec:
   components:
-    - ../../../../components/network/volsync
     - ../../../../components/kopiur/backup
+    - ../../../../components/kopiur/restore
   dependsOn:
     - name: longhorn
       namespace: storage
@@ -22,9 +22,6 @@ spec:
       KOPIUR_PUID: "1022"
       KOPIUR_PGID: "1022"
       KOPIUR_CAPACITY: 1Gi
-      VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_PUID: "1022"
-      VOLSYNC_PGID: "1022"
   prune: true
   sourceRef:
     kind: GitRepository
