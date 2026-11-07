@@ -7,6 +7,7 @@ namespace: default
 components:
   - ../../../components/namespace
   - ../../../components/psa-baseline
+  - ../../../components/kopiur/secret
 
 replacements:
   - path: ../../../components/replacements/ks.yaml
