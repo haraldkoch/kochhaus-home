@@ -65,7 +65,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: "${VOLSYNC_CLAIM}"
+        existingClaim: "{{ .Release.Name }}"
         advancedMounts:
           changedetection:
             app:
