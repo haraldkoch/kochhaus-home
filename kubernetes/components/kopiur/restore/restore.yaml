@@ -3,25 +3,12 @@
 apiVersion: kopiur.home-operations.com/v1alpha1
 kind: Restore
 metadata:
-  name: ${APP}-kopiur-restore
+  name: ${APP}
 spec:
-  credentialProjection:
-    enabled: true
   policy:
-    onMissingSnapshot: Fail
-  repository:
-    kind: ClusterRepository
-    name: mnemosyne
+    onMissingSnapshot: Continue
   source:
-    identity:
-      hostname: ${KOPIUR_HOSTNAME}
-      offset: ${KOPIUR_OFFSET:=0}
-      sourcePath: ${KOPIUR_SOURCE_PATH:=/data}
-      username: ${KOPIUR_USERNAME:=${APP}}
+    fromPolicy:
+      name: ${APP}
   target:
-    pvc:
-      accessModes:
-        - ${KOPIUR_ACCESSMODES:=ReadWriteOnce}
-      capacity: ${KOPIUR_CAPACITY:=5Gi}
-      name: ${APP}-kopiur-restore
-      storageClassName: ${KOPIUR_STORAGECLASS:=${STORAGECLASS}}
+    populator: {}
