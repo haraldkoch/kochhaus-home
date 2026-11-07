@@ -7,6 +7,7 @@ metadata:
 spec:
   components:
     - ../../../../components/network/volsync
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: longhorn
       namespace: storage
@@ -17,10 +18,14 @@ spec:
   postBuild:
     substitute:
       APP: node-red
+      KOPIUR_PUID: "1000"
+      KOPIUR_PGID: "1000"
+      KOPIUR_CLAIM: node-red-config-v2
+      KOPIUR_CAPACITY: 1Gi
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_CLAIM: node-red-config-v2
-      VOLSYNC_GID: "1000"
-      VOLSYNC_UID: "1000"
+      VOLSYNC_PUID: "1000"
+      VOLSYNC_PGID: "1000"
   prune: true
   sourceRef:
     kind: GitRepository

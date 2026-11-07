@@ -7,6 +7,7 @@ metadata:
 spec:
   components:
     - ../../../../components/network/volsync
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: multus-networks
       namespace: network
@@ -19,6 +20,9 @@ spec:
   postBuild:
     substitute:
       APP: esphome
+      KOPIUR_PUID: "2000"
+      KOPIUR_PGID: "2000"
+      KOPIUR_CAPACITY: 1Gi
       VOLSYNC_CLAIM: esphome
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_PUID: "2000"

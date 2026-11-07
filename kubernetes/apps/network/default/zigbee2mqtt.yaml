@@ -7,6 +7,7 @@ metadata:
 spec:
   components:
     - ../../../../components/network/volsync
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: longhorn
       namespace: storage
@@ -18,9 +19,13 @@ spec:
     substitute:
       APP: zigbee2mqtt
       GATUS_SUBDOMAIN: zigbee
+      KOPIUR_PUID: "1022"
+      KOPIUR_PGID: "1022"
+      KOPIUR_CLAIM: zigbee2mqtt-config
+      KOPIUR_CAPACITY: 1Gi
       VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_GID: "1022"
-      VOLSYNC_UID: "1022"
+      VOLSYNC_PUID: "1022"
+      VOLSYNC_PGID: "1022"
   prune: true
   sourceRef:
     kind: GitRepository
