@@ -154,3 +154,17 @@ tasks:
     preconditions:
       - which flux helm
 
+  refresh-konflate:
+    desc: Force a refresh of a PR in konflate
+    cmd: http --ignore-stdin POST https://konflate-{{.cluster}}.kochhaus.dev/api/prs/12992/refresh Authorization:"Bearer {{.push_secret}}"
+    preconditions:
+      - kubectl --context {{.cluster}} --namespace flux-system get secret konflate
+      - which base64 http
+    requires:
+      vars:
+        - cluster
+        - pr
+    vars:
+      push_secret:
+        sh: kubectl --context {{.cluster}} --namespace flux-system get secrets konflate -o jsonpath='{.data.KONFLATE_PUSH_TOKEN}' | base64 -d
+        secret: true
