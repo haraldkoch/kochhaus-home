@@ -16,4 +16,4 @@ TASK_X_ENV_PRECEDENCE = 1
 TASK_X_MAP_VARIABLES = 0
 
 [tools]
-"github:home-operations/flate" = "0.7.0"
+"github:home-operations/flate" = "0.7.3"
