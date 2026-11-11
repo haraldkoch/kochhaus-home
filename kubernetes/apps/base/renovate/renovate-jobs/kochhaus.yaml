@@ -85,7 +85,7 @@ spec:
       value: enabled
     - name: RENOVATE_CACHE_PRIVATE_PACKAGES
       value: "true"
-  image: ghcr.io/renovatebot/renovate:44.227.4-full@sha256:91ba02ef0acbc982c3ae545616383089365fab6d0a610559f3e1c6cec3f85fdc
+  image: ghcr.io/renovatebot/renovate:44.230.0-full@sha256:7dc99e627662f65b7f6d8f47b6a3beec4c6c0cba05ecfa394783b170f182fcbc
   metadata:
     labels:
       app.kubernetes.io/name: renovate-jobs
