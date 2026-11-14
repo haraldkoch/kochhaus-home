@@ -23,3 +23,10 @@ spec:
           namespace: network
     webhook:
       enabled: true
+      route:
+        enabled: true
+        hostnames:
+          - renovate-webhook.${CLUSTER_DOMAIN}
+        parentRefs:
+          - name: envoy-external
+            namespace: network
