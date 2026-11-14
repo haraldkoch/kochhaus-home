@@ -53,7 +53,7 @@ spec:
       value: debug
     - name: RENOVATE_ALLOWED_COMMANDS
       value: |-
-        ["pnpm run bundle", "^mise install && mise lock$"]
+        ["pnpm run bundle", "^mise install$", "^mise lock$"]
     - name: RENOVATE_ALLOWED_UNSAFE_EXECUTIONS
       value: |-
         ["mise"]
@@ -85,21 +85,9 @@ spec:
       value: enabled
     - name: RENOVATE_CACHE_PRIVATE_PACKAGES
       value: "true"
-  image: ghcr.io/renovatebot/renovate:44.239.1-full@sha256:4731f8527b03404ab59c1af030a912b1451be7ad7f05f070d619e50603cd19e2
   metadata:
     labels:
       app.kubernetes.io/name: renovate-jobs
-  # we have 3 nodes
-  parallelism: 3
-  provider:
-    name: github
-  resources:
-    requests:
-      cpu: 100m
-      memory: 128Mi
-  schedule: 5 0-23/4 * * *
   secretRef: doug-piranha
-  webhook:
-    enabled: true
-    authentication:
-      enabled: false
+  templateRef:
+    name: shared-settings
