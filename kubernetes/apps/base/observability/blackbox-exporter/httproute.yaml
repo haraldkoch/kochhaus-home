@@ -5,13 +5,13 @@ kind: HTTPRoute
 metadata:
   name: blackbox-exporter
 spec:
+  hostnames:
+    - ${SUBDOMAIN}.${CLUSTER_DOMAIN}
   parentRefs:
     - name: envoy-internal
       namespace: network
-      sectionName: https
-  hostnames:
-    - ${SUBDOMAIN}.${CLUSTER_DOMAIN}
   rules:
     - backendRefs:
         - name: blackbox-exporter
+          namespace: observability
           port: 9115

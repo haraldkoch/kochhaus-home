@@ -7,11 +7,9 @@ metadata:
 spec:
   chartRef:
     kind: OCIRepository
-    name: prometheus-blackbox-exporter
+    name: blackbox-exporter
   interval: 1h
   values:
-    fullnameOverride: blackbox-exporter
-    pspEnabled: false
     config:
       modules:
         icmp:
@@ -29,27 +27,9 @@ spec:
           timeout: 5s
           tcp:
             preferred_ip_protocol: ip4
+    fullnameOverride: blackbox-exporter
     podAnnotations:
       reloader.stakater.com/auto: "true"
-    securityContext:
-      readOnlyRootFilesystem: true
-      allowPrivilegeEscalation: false
-      capabilities:
-        add:
-          - "NET_RAW"
-    service:
-      ipFamilyPolicy: PreferDualStack
-    resources:
-      requests:
-        cpu: 15m
-        memory: 64M
-      limits:
-        memory: 64M
-    serviceMonitor:
-      enabled: true
-      defaults:
-        interval: 30s
-        scrapeTimeout: 30s
     prometheusRule:
       enabled: true
       rules:
@@ -61,3 +41,23 @@ spec:
           annotations:
             summary: |-
               The host {{ $labels.target }} is currently unreachable
+    resources:
+      requests:
+        cpu: 15m
+        memory: 64M
+      limits:
+        memory: 64M
+    securityContext:
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        add:
+          - "NET_RAW"
+    service:
+      ipFamilyPolicy: PreferDualStack
+    serviceMonitor:
+      enabled: true
+      scrapeTimeout: 30s
+      selfMonitor:
+        enabled: true
+      interval: 30s
