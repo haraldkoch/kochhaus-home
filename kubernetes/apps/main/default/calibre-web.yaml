@@ -7,11 +7,9 @@ metadata:
 spec:
   components:
     - ../../../../components/anubis
-    - ../../../../components/keda/nfs-scaler
     - ../../../../components/main/volsync
+    - ../../../../components/zeroscaler
   dependsOn:
-    - name: keda
-      namespace: observability
     - name: volsync
       namespace: storage
   interval: 1h

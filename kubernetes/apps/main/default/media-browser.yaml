@@ -6,10 +6,7 @@ metadata:
   name: media-browser
 spec:
   components:
-    - ../../../../components/keda/nfs-scaler
-  dependsOn:
-    - name: keda
-      namespace: observability
+    - ../../../../components/zeroscaler
   interval: 1h
   path: ./kubernetes/apps/base/default/media-browser
   postBuild:

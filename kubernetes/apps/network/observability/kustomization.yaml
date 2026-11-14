@@ -17,7 +17,6 @@ resources:
   - ./grafana.yaml
   - ./json-exporter.yaml
   - ./karma.yaml
-  - ./keda.yaml
   - ./kube-prometheus-stack.yaml
   - ./network-ups-tools.yaml
   - ./omada-exporter.yaml

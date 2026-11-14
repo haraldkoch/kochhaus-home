@@ -7,8 +7,8 @@ metadata:
 spec:
   components:
     - ../../../../components/dragonfly
-    - ../../../../components/keda/nfs-scaler
     - ../../../../components/main/volsync
+    - ../../../../components/zeroscaler
   interval: 1h
   path: ./kubernetes/apps/base/default/silo
   postBuild:

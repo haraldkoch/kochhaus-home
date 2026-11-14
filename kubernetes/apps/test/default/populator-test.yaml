@@ -6,12 +6,10 @@ metadata:
   name: populator-test
 spec:
   components:
-    - ../../../../components/keda/nfs-scaler
     - ../../../../components/kopiur/backup
     - ../../../../components/kopiur/bootstrap
+    - ../../../../components/zeroscaler
   dependsOn:
-    - name: keda
-      namespace: observability
     - name: kopiur
       namespace: storage
   interval: 1h
