@@ -3,10 +3,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: network-ups-tools-exporter
+  name: blackbox-exporter
 spec:
   interval: 1h
-  path: ./kubernetes/apps/base/observability/network-ups-tools/exporter
+  path: ./kubernetes/apps/base/observability/exporters/blackbox-exporter
+  postBuild:
+    substitute:
+      APP: blackbox-exporter
+      GATUS_SUBDOMAIN: blackbox-${CLUSTER}
+      SUBDOMAIN: blackbox-${CLUSTER}
   prune: true
   sourceRef:
     kind: GitRepository

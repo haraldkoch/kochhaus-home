@@ -12,5 +12,6 @@ replacements:
 
 resources:
   - ./node-exporter/ks.yaml
-  - ./smartctl-exporter.yaml
   - ./victoria-logs.yaml
+  # Exporters
+  - ./exporters

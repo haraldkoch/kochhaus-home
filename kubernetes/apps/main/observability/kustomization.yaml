@@ -11,7 +11,6 @@ replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./blackbox-exporter.yaml
   - ./gatus.yaml
   - ./goldpinger.yaml
   - ./grafana.yaml
@@ -20,8 +19,7 @@ resources:
   - ./kube-prometheus-stack.yaml
   - ./network-ups-tools.yaml
   - ./silence-operator.yaml
-  - ./smartctl-exporter.yaml
   - ./smokeping.yaml
-  - ./speedtest-exporter.yaml
-  - ./tplink-plug-exporter.yaml
   - ./victoria-logs.yaml
+  # Exporters
+  - ./exporters

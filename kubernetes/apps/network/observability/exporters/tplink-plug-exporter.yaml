@@ -3,10 +3,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: dnssec-exporter
+  name: tplink-plug-exporter
 spec:
   interval: 1h
-  path: ./kubernetes/apps/base/observability/dnssec-exporter
+  path: ./kubernetes/apps/base/observability/exporters/tplink-plug-exporter
+  postBuild:
+    substitute:
+      SUBDOMAIN: exporters
   prune: true
   sourceRef:
     kind: GitRepository

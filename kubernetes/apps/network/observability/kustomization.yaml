@@ -11,19 +11,12 @@ replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
-  - ./blackbox-exporter.yaml
-  - ./dnssec-exporter.yaml
   - ./gatus.yaml
   - ./grafana.yaml
-  - ./json-exporter.yaml
   - ./karma.yaml
   - ./kube-prometheus-stack.yaml
-  - ./network-ups-tools.yaml
-  - ./omada-exporter.yaml
-  - ./opnsense-exporter.yaml
   # silence-operator does not yet support arm64
   # - ./silence-operator.yaml
-  - ./smartctl-exporter.yaml
-  - ./snmp-exporter.yaml
-  - ./tplink-plug-exporter.yaml
   - ./victoria-logs.yaml
+  # Exporters
+  - ./exporters

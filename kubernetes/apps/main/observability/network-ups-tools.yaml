@@ -6,7 +6,7 @@ metadata:
   name: network-ups-tools
 spec:
   interval: 1h
-  path: ./kubernetes/apps/base/observability/network-ups-tools/app
+  path: ./kubernetes/apps/base/observability/network-ups-tools
   prune: true
   sourceRef:
     kind: GitRepository
