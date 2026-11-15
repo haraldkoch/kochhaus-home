@@ -25,6 +25,8 @@ spec:
       enabled: true
       route:
         enabled: true
+        annotations:
+          gatus.home-operations.com/enabled: 'false'
         hostnames:
           - renovate-webhook.${CLUSTER_DOMAIN}
         parentRefs:
