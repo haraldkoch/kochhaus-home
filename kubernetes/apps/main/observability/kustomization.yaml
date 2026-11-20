@@ -18,6 +18,7 @@ resources:
   - ./kromgo.yaml
   - ./kube-prometheus-stack.yaml
   - ./network-ups-tools.yaml
+  - ./prometheus-adapter.yaml
   - ./silence-operator.yaml
   - ./smokeping.yaml
   - ./victoria-logs.yaml

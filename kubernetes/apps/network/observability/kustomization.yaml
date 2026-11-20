@@ -15,6 +15,7 @@ resources:
   - ./grafana.yaml
   - ./karma.yaml
   - ./kube-prometheus-stack.yaml
+  - ./prometheus-adapter.yaml
   # silence-operator does not yet support arm64
   # - ./silence-operator.yaml
   - ./victoria-logs.yaml
