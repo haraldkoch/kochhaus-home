@@ -65,7 +65,7 @@ spec:
               tag: latest@sha256:e7a6ad6fd3e53229f9f372666bb39628511919fd20ba966962880440137f9ba3
             command: &command
               - silo
-            env: &env
+            env:
               PORT: &port 8080
               # Jellyfin/Emby compatibility listener
               JF_PORT: &jfPort 8096
@@ -131,20 +131,17 @@ spec:
             image: *image
             command: *command
             env:
-              <<: *env
               MODE: transcode
               POD_NAME:
                 valueFrom:
                   fieldRef:
                     fieldPath: metadata.name
-              NODE_NAME:
-                value: $(POD_NAME)
-                dependsOn: POD_NAME
-              # Must match the URL the node is registered under in the admin UI.
-              NODE_URL:
-                value: http://$(POD_NAME).silo-transcode.default.svc.cluster.local:8080
-                dependsOn: POD_NAME
               SILO_CORE_URL: http://silo.default.svc.cluster.local:8080
+              SILO_NODE_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: silo-secret
+                    key: TRANSCODE_KEY
             probes:
               liveness: &nodeProbes
                 enabled: true
@@ -173,7 +170,7 @@ spec:
             port: *jfPort
           metrics:
             port: 9091
-      # Headless for the stable per-pod NODE_URLs
+            # Headless for the stable per-pod NODE_URLs
       transcode:
         controller: transcode
         clusterIP: None
@@ -233,6 +230,11 @@ spec:
         type: cilium
         controller: silo
         ingress:
+          - fromControllers:
+              - transcode
+            toPorts:
+              - ports:
+                  - {port: "8080", protocol: TCP}
           - fromEndpoints:
               - matchLabels:
                   k8s:io.kubernetes.pod.namespace: network
@@ -274,7 +276,7 @@ spec:
                   - {port: "8096", protocol: TCP}
         egress:
           - toControllers:
-              - transcode
+              - silo
             toPorts:
               - ports:
                   - {port: "8080", protocol: TCP}
@@ -342,6 +344,11 @@ spec:
                   app.kubernetes.io/name: dragonfly
                   app: silo-dragonfly-db
         egress:
+          - toControllers:
+              - silo
+            toPorts:
+              - ports:
+                  - {port: "8080", protocol: TCP}
           # redis / dragonfly
           - toEndpoints:
               - matchLabels:
