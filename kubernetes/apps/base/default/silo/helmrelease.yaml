@@ -144,6 +144,7 @@ spec:
               NODE_URL:
                 value: http://$(POD_NAME).silo-transcode.default.svc.cluster.local:8080
                 dependsOn: POD_NAME
+              SILO_CORE_URL: http://silo.default.svc.cluster.local:8080
             probes:
               liveness: &nodeProbes
                 enabled: true
