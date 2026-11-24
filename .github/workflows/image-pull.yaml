@@ -62,7 +62,9 @@ jobs:
 
   success:
     if: ${{ !cancelled() }}
-    needs: pull
+    needs:
+      - filter
+      - pull
     name: Image Pull - Success
     runs-on: ubuntu-latest
     steps:
