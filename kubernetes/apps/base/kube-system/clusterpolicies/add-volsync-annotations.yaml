@@ -1,0 +1,54 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/master-standalone-strict/mutatingadmissionpolicy-admissionregistration-v1.json
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingAdmissionPolicy
+metadata:
+  name: add-volsync-annotations
+  annotations:
+    policies.kyverno.io/category: Other
+    policies.kyverno.io/subject: Job,Annotation
+    policies.kyverno.io/description: >-
+      The VolSync controller requires certain annotations on Jobs to function correctly.
+      The annotation volsync.kochhaus.io/enabled=true must be added to the Jobs.
+spec:
+  failurePolicy: Fail
+  reinvocationPolicy: IfNeeded
+  matchConstraints:
+    namespaceSelector:
+      matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: In
+          values:
+            - downloads
+    resourceRules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE"]
+        resources: ["jobs"]
+  matchConditions:
+    - name: not-ignored
+      expression: object.metadata.?annotations['kyverno.io/ignore'].orValue('') != 'true'
+    - name: is-volsync-job
+      expression: object.metadata.?annotations['app.kubernetes.io/created-by'].orValue('') == 'volsync'
+    - name: labels-absent
+      expression: >-
+        !object.metadata.?labels['setGateway'].hasValue()
+  mutations:
+    - patchType: ApplyConfiguration
+      applyConfiguration:
+        expression: >-
+          Object{
+            metadata: Object.metadata{
+              labels:
+                "setGateway": "false"
+                "network": "linode"
+            }
+          }
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/master-standalone-strict/mutatingadmissionpolicybinding-admissionregistration-v1.json
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingAdmissionPolicyBinding
+metadata:
+  name: add-volsync-annotations
+spec:
+  policyName: add-volsync-annotations

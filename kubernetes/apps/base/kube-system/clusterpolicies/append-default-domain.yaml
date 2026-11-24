@@ -1,0 +1,47 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/master-standalone-strict/mutatingadmissionpolicy-admissionregistration-v1.json
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingAdmissionPolicy
+metadata:
+  name: append-default-domain-httproute
+  annotations:
+    policies.kyverno.io/title: Append Default Domain to HTTPRoute
+    policies.kyverno.io/category: Networking
+    policies.kyverno.io/description: >-
+      Automatically appends a default domain suffix to raw, dotless hostnames
+      defined inside Gateway API HTTPRoute resources.
+spec:
+  failurePolicy: Fail
+  reinvocationPolicy: Never
+  matchConstraints:
+    resourceRules:
+      - apiGroups: ["gateway.networking.k8s.io"]
+        apiVersions: ["v1", "v1beta1"]
+        operations: ["CREATE", "UPDATE"]
+        resources: ["httproutes"]
+  matchConditions:
+    # Only apply if a hostname does not already contain a dot (e.g., 'myapp')
+    - name: has-dotless-hostname
+      expression: >-
+        has(object.spec.hostnames) &&
+        object.spec.hostnames.exists(h, !h.contains('.'))
+  mutations:
+    - patchType: JSONPatch
+      jsonPatch:
+        expression: >-
+          [
+            JSONPatch{
+              op: "replace",
+              path: "/spec/hostnames",
+              value: object.spec.hostnames.map(h,
+                h.contains('.') ? h : h + '.${PUBLIC_DOMAIN}')
+            }
+          ]
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/refs/heads/master/master-standalone-strict/mutatingadmissionpolicybinding-admissionregistration-v1.json
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingAdmissionPolicyBinding
+metadata:
+  name: append-default-domain-httproute
+spec:
+  policyName: append-default-domain-httproute
