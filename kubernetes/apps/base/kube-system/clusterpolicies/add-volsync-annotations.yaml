@@ -27,7 +27,7 @@ spec:
         resources: ["jobs"]
   matchConditions:
     - name: not-ignored
-      expression: object.metadata.?annotations['kyverno.io/ignore'].orValue('') != 'true'
+      expression: object.metadata.?annotations['policy.home.arpa/ignore'].orValue('') != 'true'
     - name: is-volsync-job
       expression: object.metadata.?annotations['app.kubernetes.io/created-by'].orValue('') == 'volsync'
     - name: labels-absent

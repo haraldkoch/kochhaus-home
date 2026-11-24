@@ -29,7 +29,7 @@ spec:
         resources: ["pods"]
   matchConditions:
     - name: not-ignored
-      expression: object.metadata.?annotations['kyverno.io/ignore'].orValue('') != 'true'
+      expression: object.metadata.?annotations['policy.home.arpa/ignore'].orValue('') != 'true'
     - name: has-local-volume
       expression: object.spec.?volumes.orValue([]).exists(v, has(v.emptyDir) || has(v.hostPath))
     - name: annotation-absent

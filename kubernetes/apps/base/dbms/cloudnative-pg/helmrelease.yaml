@@ -14,7 +14,7 @@ spec:
       create: true
     config:
       data:
-        INHERITED_ANNOTATIONS: kyverno.io/ignore
+        INHERITED_ANNOTATIONS: policy.home.arpa/ignore
     monitoring:
       podMonitorEnabled: false
       grafanaDashboard:

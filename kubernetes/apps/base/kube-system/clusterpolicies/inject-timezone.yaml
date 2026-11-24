@@ -23,7 +23,7 @@ spec:
         resources: ["pods"]
   matchConditions:
     - name: not-ignored
-      expression: object.metadata.?annotations['kyverno.io/ignore'].orValue('') != 'true'
+      expression: object.metadata.?annotations['policy.home.arpa/ignore'].orValue('') != 'true'
     # JSON patches append, so skip pods that already have the timezone volume.
     - name: not-already-injected
       expression: >-

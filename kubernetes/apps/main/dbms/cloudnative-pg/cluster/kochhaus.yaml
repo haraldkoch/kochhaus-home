@@ -5,7 +5,7 @@ kind: Cluster
 metadata:
   name: kochhaus
   annotations:
-    kyverno.io/ignore: "true"
+    policy.home.arpa/ignore: "true"
 spec:
   # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
   imageName: ghcr.io/cloudnative-pg/postgresql:18.6

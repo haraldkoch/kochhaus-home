@@ -29,7 +29,7 @@ spec:
         resources: ["pods"]
   matchConditions:
     - name: not-ignored
-      expression: object.metadata.?annotations['kyverno.io/ignore'].orValue('') != 'true'
+      expression: object.metadata.?annotations['policy.home.arpa/ignore'].orValue('') != 'true'
     - name: has-cpu-limit
       expression: >-
         object.spec.?containers.orValue([]).exists(c,
