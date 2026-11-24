@@ -39,9 +39,7 @@ spec:
         expression: >-
           Object{
             metadata: Object.metadata{
-              labels:
-                "setGateway": "false"
-                "network": "linode"
+              labels: { "setGateway": "false", "network": "linode" }
             }
           }
 ---

@@ -11,6 +11,12 @@ replacements:
   - path: ../../../components/replacements/ks.yaml
 
 resources:
+  # cluster policies are loaded here
+  - ../../../apps/base/kube-system/clusterpolicies/add-safe-to-evict.yaml
+  - ../../../apps/base/kube-system/clusterpolicies/add-volsync-annotations.yaml
+  - ../../../apps/base/kube-system/clusterpolicies/deny-ingress.yaml
+  - ../../../apps/base/kube-system/clusterpolicies/remove-cpu-limits.yaml
+  # applications
   - ./cilium.yaml
   - ./coredns.yaml
   - ./descheduler.yaml
