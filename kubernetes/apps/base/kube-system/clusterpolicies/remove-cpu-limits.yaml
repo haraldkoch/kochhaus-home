@@ -4,13 +4,6 @@ apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingAdmissionPolicy
 metadata:
   name: remove-cpu-limit
-  annotations:
-    policies.kyverno.io/title: Remove CPU limits
-    policies.kyverno.io/category: Best Practices
-    policies.kyverno.io/severity: medium
-    policies.kyverno.io/subject: Pod
-    policies.kyverno.io/description: >-
-      This policy removes CPU limits from all Pods.
 spec:
   failurePolicy: Fail
   reinvocationPolicy: IfNeeded
@@ -21,7 +14,6 @@ spec:
           operator: NotIn
           values:
             - kube-system
-            - kyverno
     resourceRules:
       - apiGroups: [""]
         apiVersions: ["v1"]

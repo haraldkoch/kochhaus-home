@@ -4,10 +4,6 @@ apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingAdmissionPolicy
 metadata:
   name: deny-ingress
-  annotations:
-    policies.kyverno.io/title: Deny Ingress on this cluster
-    policies.kyverno.io/severity: high
-    policies.kyverno.io/subject: Ingress
 spec:
   failurePolicy: Fail
   matchConstraints:

@@ -4,14 +4,6 @@ apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingAdmissionPolicy
 metadata:
   name: inject-timezone
-  annotations:
-    policies.kyverno.io/title: Inject timezone
-    policies.kyverno.io/category: Other
-    policies.kyverno.io/subject: Pod
-    policies.kyverno.io/description: >-
-      This policy injects an initContainer to Pods and setup TZ
-      environment variable so the container will have the correct
-      time.
 spec:
   failurePolicy: Fail
   reinvocationPolicy: Never

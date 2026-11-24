@@ -4,12 +4,6 @@ apiVersion: admissionregistration.k8s.io/v1
 kind: MutatingAdmissionPolicy
 metadata:
   name: add-volsync-annotations
-  annotations:
-    policies.kyverno.io/category: Other
-    policies.kyverno.io/subject: Job,Annotation
-    policies.kyverno.io/description: >-
-      The VolSync controller requires certain annotations on Jobs to function correctly.
-      The annotation volsync.kochhaus.io/enabled=true must be added to the Jobs.
 spec:
   failurePolicy: Fail
   reinvocationPolicy: IfNeeded
