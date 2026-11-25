@@ -26,7 +26,7 @@ spec:
           main:
             image:
               repository: ghcr.io/haraldkoch/kubectl
-              tag: 1.37.2@sha256:467f08b7e32ed05e36607a6f6c22a30600ec2243f3386f8b18845f9605d058c2
+              tag: 1.37.3@sha256:a3045db874b0ae5bfbe6eb9ea7e7c0ff8f90a789892b3f69d5653a7d4b53191c
             command:
               - /bin/sh
               - -xc
