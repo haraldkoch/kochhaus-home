@@ -15,25 +15,33 @@ spec:
           values:
             - downloads
     resourceRules:
-      - apiGroups: [""]
-        apiVersions: ["v1"]
-        operations: ["CREATE"]
-        resources: ["jobs"]
+      - apiGroups:
+          - "batch"
+        apiVersions:
+          - "v1"
+        operations:
+          - "CREATE"
+        resources:
+          - "jobs"
   matchConditions:
     - name: not-ignored
       expression: object.metadata.?annotations['policy.home.arpa/ignore'].orValue('') != 'true'
     - name: is-volsync-job
-      expression: object.metadata.?annotations['app.kubernetes.io/created-by'].orValue('') == 'volsync'
+      expression: object.metadata.?labels['app.kubernetes.io/created-by'].orValue('') == 'volsync'
     - name: labels-absent
       expression: >-
-        !object.metadata.?labels['setGateway'].hasValue()
+        !object.spec.template.?metadata.?labels['setGateway'].hasValue()
   mutations:
     - patchType: ApplyConfiguration
       applyConfiguration:
         expression: >-
           Object{
-            metadata: Object.metadata{
-              labels: { "setGateway": "false", "network": "linode" }
+            spec: Object.spec{
+              template: Object.spec.template{
+                metadata: Object.spec.template.metadata{
+                  labels: { "setGateway": "false", "network": "linode" }
+                }
+              }
             }
           }
 ---
