@@ -75,6 +75,14 @@ spec:
         - ports:
             - port: "8080"
               protocol: TCP
+
+    # Allow egress to mnemosyne (because containers)
+    - toCIDR:
+        - 192.168.10.11/32
+      toPorts:
+        - ports:
+            - port: "3900"
+              protocol: TCP
 ---
 # Policy for volsync backup jobs
 apiVersion: cilium.io/v2
